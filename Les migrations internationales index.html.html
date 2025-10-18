@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Migrations Internationales - CAP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #34495e;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        nav button {
+            background: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            color: #34495e;
+            font-weight: bold;
+        }
+        
+        nav button:hover {
+            background: #3498db;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        nav button.active {
+            background: #3498db;
+            color: white;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        h3 {
+            color: #3498db;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .card {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .card-important {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+        }
+        
+        .card-danger {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        
+        .card-success {
+            background: #d4edda;
+            border-left-color: #28a745;
+        }
+        
+        .schema {
+            background: white;
+            border: 2px solid #3498db;
+            border-radius: 10px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .flux-box {
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 10px;
+            border-radius: 8px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .flux-depart {
+            background: #e74c3c;
+        }
+        
+        .flux-accueil {
+            background: #27ae60;
+        }
+        
+        .lexique-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .lexique-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .lexique-item strong {
+            display: block;
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+        
+        .quiz-question {
+            background: #f8f9fa;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px solid #3498db;
+        }
+        
+        .quiz-options {
+            margin: 15px 0;
+        }
+        
+        .quiz-option {
+            display: block;
+            padding: 12px;
+            margin: 10px 0;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+        
+        .quiz-option.correct {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .quiz-option.incorrect {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+        
+        .btn-check {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 15px;
+            transition: all 0.3s;
+        }
+        
+        .btn-check:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .btn-answer {
+            background: #9b59b6;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        
+        .btn-answer:hover {
+            background: #8e44ad;
+        }
+        
+        .result {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .result.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .result.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .mnemonic {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 1.2em;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        ul, ol {
+            margin: 15px 0 15px 30px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .highlight {
+            background: #fff3cd;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .answer-box {
+            display: none;
+            margin-top: 10px;
+            padding: 15px;
+            background: #d4edda;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            nav {
+                flex-direction: column;
+            }
+            
+            nav button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌍 Les Migrations Internationales</h1>
+            <p>Cours interactif - CAP 2ème année</p>
+        </header>
+        
+        <nav>
+            <button onclick="showSection('cours')" class="nav-btn active">📚 Le Cours</button>
+            <button onclick="showSection('lexique')" class="nav-btn">📖 Lexique</button>
+            <button onclick="showSection('methode')" class="nav-btn">🎯 Méthode</button>
+            <button onclick="showSection('mnemo')" class="nav-btn">🧠 Moyens Mnémotechniques</button>
+            <button onclick="showSection('exercices')" class="nav-btn">✏️ Exercices</button>
+            <button onclick="showSection('quiz')" class="nav-btn">🎮 Quiz</button>
+        </nav>
+        
+        <div class="content">
+            <!-- SECTION COURS -->
+            <div id="cours" class="section active">
+                <h2>📚 Le Cours Complet</h2>
+                
+                <div class="card card-important">
+                    <h3>🎯 Problématique</h3>
+                    <p><strong>Qu'est-ce qu'une migration ? Et en quoi est-elle un enjeu majeur aujourd'hui ?</strong></p>
+                </div>
+                
+                <h3>I. Qu'est-ce qu'une migration ?</h3>
+                
+                <div class="card">
+                    <p><strong>📌 Définition :</strong> Une migration est un <span class="highlight">déplacement durable d'une population d'un territoire à un autre</span>.</p>
+                </div>
+                
+                <div class="schema">
+                    <h4>Les deux types de migrations</h4>
+                    <div class="flux-box" style="background: #9b59b6;">
+                        🏠 MIGRATION INTERNE<br>
+                        <small>À l'intérieur d'un même pays</small>
+                    </div>
+                    <div class="flux-box" style="background: #e74c3c;">
+                        ✈️ MIGRATION INTERNATIONALE<br>
+                        <small>Entre deux pays différents</small>
+                    </div>
+                    <p style="margin-top: 20px; font-weight: bold;">📊 En 2023 : environ 300 millions de migrants internationaux (3% de la population mondiale)</p>
+                </div>
+                
+                <h3>II. Les flux migratoires dans le monde</h3>
+                
+                <div class="card card-danger">
+                    <h4>🔴 Principales zones de DÉPART</h4>
+                    <ul>
+                        <li>Afrique de l'Ouest</li>
+                        <li>Afrique du Nord et Moyen-Orient</li>
+                        <li>Amérique centrale et Caraïbes</li>
+                        <li>Asie du Sud et du Sud-Est</li>
+                    </ul>
+                </div>
+                
+                <div class="card card-success">
+                    <h4>🟢 Principales zones d'ACCUEIL</h4>
+                    <ul>
+                        <li>Amérique du Nord</li>
+                        <li>Europe</li>
+                        <li>Australie</li>
+                        <li>Amérique du Sud</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>🎨 Les trois types de flux migratoires</h4>
+                    <ol>
+                        <li><strong style="color: #3498db;">Flux de travailleurs qualifiés et non-qualifiés</strong> (en bleu sur la carte)</li>
+                        <li><strong style="color: #9b59b6;">Flux de travailleurs très qualifiés</strong> (en violet) → "Brain Drain" (fuite des cerveaux)</li>
+                        <li><strong style="color: #e74c3c;">Déplacement de réfugiés</strong> (en rouge)</li>
+                    </ol>
+                </div>
+                
+                <h3>III. Pourquoi les gens migrent-ils ? (Les causes)</h3>
+                
+                <div class="card">
+                    <h4>💼 A. Facteurs économiques</h4>
+                    <p>C'est la <strong>principale cause</strong> des migrations :</p>
+                    <ul>
+                        <li>Recherche de meilleures conditions de vie</li>
+                        <li>Recherche d'emploi</li>
+                        <li>Regroupement familial</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>⚔️ B. Facteurs politiques</h4>
+                    <ul>
+                        <li>Guerres et conflits</li>
+                        <li>Persécutions</li>
+                        <li>Violations des droits humains</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h4>🌪️ C. Facteurs environnementaux</h4>
+                    <p><em>(Non représentés sur la carte mais importants !)</em></p>
+                    <ul>
+                        <li>Catastrophes naturelles</li>
+                        <li>Changement climatique</li>
+                        <li>Sécheresses, inondations</li>
+                    </ul>
+                </div>
+                
+                <h3>IV. Les conséquences des migrations</h3>
+                
+                <div class="schema">
+                    <h4>Pour les PAYS D'ORIGINE ⬅️</h4>
+                    <div style="text-align: left; margin: 20px;">
+                        <p>❌ <strong>Conséquences négatives :</strong></p>
+                        <ul>
+                            <li>"Brain Drain" = Fuite des cerveaux (départ des personnes qualifiées)</li>
+                            <li>Diminution de la population active</li>
+                        </ul>
+                        <p>✅ <strong>Conséquences positives :</strong></p>
+                        <ul>
+                            <li>Transferts d'argent envoyés par les migrants à leurs familles</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="schema">
+                    <h4>Pour les PAYS D'ACCUEIL ➡️</h4>
+                    <div style="text-align: left; margin: 20px;">
+                        <p>✅ <strong>Conséquences :</strong></p>
+                        <ul>
+                            <li>Augmentation de la population</li>
+                            <li>Apport de main-d'œuvre</li>
+                            <li>Diversité culturelle (enrichissement)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h3>V. Les défis et enjeux des migrations</h3>
+                
+                <div class="card">
+                    <h4>🤝 1. Intégration des migrants</h4>
+                    <ul>
+                        <li>Lutte contre les discriminations</li>
+                        <li>Accès aux services publics (santé, éducation)</li>
+                        <li>Apprentissage de la langue</li>
+                    </ul>
+                    <p><strong>Exemples :</strong> lois anti-discriminations, accès aux soins, formations linguistiques</p>
+                </div>
+                
+                <div class="card">
+                    <h4>🛂 2. Gestion des flux migratoires</h4>
+                    <ul>
+                        <li>Contrôle des frontières</li>
+                        <li>Politiques d'immigration</li>
+                    </ul>
+                    <p><strong>Exemples :</strong> Frontex, renforcement des frontières de l'espace Schengen (Pologne, Grèce, Italie, Royaume-Uni)</p>
+                </div>
+                
+                <div class="card">
+                    <h4>🌍 3. Coopération internationale</h4>
+                    <ul>
+                        <li>Aide au développement des pays d'origine</li>
+                        <li>Lutte contre les passeurs</li>
+                    </ul>
+                    <p><strong>Exemples :</strong> AFD (Agence Française de Développement), FED (Fonds Européen de Développement), Europol</p>
+                </div>
+                
+                <div class="card card-important">
+                    <h3>🔍 Esprit Critique</h3>
+                    <p>⚠️ La carte étudiée présente une <strong>vision simplifiée</strong> des migrations :</p>
+                    <ul>
+                        <li>Elle ne montre pas toutes les motivations</li>
+                        <li>Il manque des données chiffrées</li>
+                        <li>La réalité est plus complexe</li>
+                    </ul>
+                    <p><strong>→ Il faut toujours croiser plusieurs sources pour comprendre un phénomène complexe !</strong></p>
+                </div>
+            </div>
+            
+            <!-- SECTION LEXIQUE -->
+            <div id="lexique" class="section">
+                <h2>📖 Lexique des Mots-Clés</h2>
+                
+                <div class="lexique-grid">
+                    <div class="lexique-item">
+                        <strong>Migration</strong>
+                        Déplacement durable d'une population d'un territoire vers un autre.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Migration interne</strong>
+                        Déplacement à l'intérieur d'un même pays (exemple : de la campagne vers la ville).
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Migration internationale</strong>
+                        Déplacement entre deux pays différents.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Migrant</strong>
+                        Personne qui quitte son pays d'origine pour s'installer dans un autre pays.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Réfugié</strong>
+                        Personne qui fuit son pays à cause d'une guerre, de persécutions ou de violences.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Flux migratoire</strong>
+                        Mouvement de population entre une zone de départ et une zone d'arrivée.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Brain Drain (fuite des cerveaux)</strong>
+                        Départ des personnes les plus qualifiées d'un pays vers un autre pays.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Pays d'origine</strong>
+                        Pays que quitte le migrant.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Pays d'accueil</strong>
+                        Pays où arrive et s'installe le migrant.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Intégration</strong>
+                        Processus par lequel un migrant s'installe durablement dans son pays d'accueil (apprentissage de la langue, accès à l'emploi, etc.).
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Frontex</strong>
+                        Agence européenne de contrôle des frontières extérieures de l'Union Européenne.
+                    </div>
+                    
+                    <div class="lexique-item">
+                        <strong>Espace Schengen</strong>
+                        Zone de libre circulation entre 27 pays européens (pas de contrôles aux frontières intérieures).
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECTION MÉTHODE -->
+            <div id="methode" class="section">
+                <h2>🎯 Méthode pour analyser un document</h2>
+                
+                <div class="card">
+                    <h3>Étape 1 : INTRODUCTION - Présenter le document</h3>
+                    <p>Je dois identifier :</p>
+                    <ul>
+                        <li>📄 La <strong>nature</strong> du document (carte, texte, graphique, photo...)</li>
+                        <li>✍️ L'<strong>auteur</strong> (qui l'a créé ?)</li>
+                        <li>📅 La <strong>date</strong></li>
+                        <li>🔗 La <strong>source</strong> (d'où vient le document ?)</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Étape 2 : DÉCRIRE - Ce que je vois</h3>
+                    <p>Je décris objectivement ce que je vois :</p>
+                    <ul>
+                        <li>Le titre</li>
+                        <li>Les éléments principaux (zones, flux, couleurs...)</li>
+                        <li>La légende</li>
+                    </ul>
+                    <p><strong>⚠️ Je reste factuel, je ne donne pas encore mon avis !</strong></p>
+                </div>
+                
+                <div class="card">
+                    <h3>Étape 3 : PROBLÉMATIQUE</h3>
+                    <p>Je formule la question principale à laquelle le document répond.</p>
+                    <p><strong>Exemple :</strong> "Qu'est-ce qu'une migration ? En quoi est-elle un enjeu majeur ?"</p>
+                </div>
+                
+                <div class="card">
+                    <h3>Étape 4 : ANALYSER - Expliquer et comprendre</h3>
+                    <p>Je réponds à la problématique en utilisant :</p>
+                    <ul>
+                        <li>✅ Les informations du document</li>
+                        <li>✅ Mes connaissances personnelles</li>
+                        <li>✅ Des exemples concrets</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Étape 5 : ESPRIT CRITIQUE</h3>
+                    <p>Je prends du recul sur le document :</p>
+                    <ul>
+                        <li>🤔 Quelles sont ses limites ?</li>
+                        <li>❓ Que manque-t-il ?</li>
+                        <li>📊 Les informations sont-elles complètes ?</li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h3>Étape 6 : CONCLUSION</h3>
+                    <p>Je fais une synthèse :</p>
+                    <ul>
+                        <li>Je réponds clairement à la problématique</li>
+                        <li>J'ouvre éventuellement sur un autre sujet lié</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- SECTION MNÉMOTECHNIQUES -->
+            <div id="mnemo" class="section">
+                <h2>🧠 Moyens Mnémotechniques</h2>
+                
+                <div class="mnemonic">
+                    🎯 Pour retenir les 3 CAUSES des migrations :<br>
+                    <strong>"EPE"</strong><br>
+                    <strong>E</strong>conomiques - <strong>P</strong>olitiques - <strong>E</strong>nvironnementaux
+                </div>
+                
+                <div class="mnemonic">
+                    🌍 Pour retenir les zones de DÉPART :<br>
+                    <strong>"AAMA"</strong><br>
+                    <strong>A</strong>frique Ouest - <strong>A</strong>frique Nord/Moyen-Orient<br>
+                    <strong>M</strong>érique centrale - <strong>A</strong>sie Sud/Sud-Est
+                </div>
+                
+                <div class="mnemonic">
+                    ✈️ Pour retenir les zones d'ACCUEIL :<br>
+                    <strong>"EEAA"</strong><br>
+                    <strong>E</strong>urope - <strong>E</strong>tats-Unis (Amérique Nord)<br>
+                    <strong>A</strong>ustralie - <strong>A</strong>mérique Sud
+                </div>
+                
+                <div class="mnemonic">
+                    🎨 Pour retenir les 3 types de FLUX :<br>
+                    <strong>"BVR" comme un feu tricolore</strong><br>
+                    <strong>B</strong>leu = travailleurs qualifiés/non-qualifiés<br>
+                    <strong>V</strong>iolet = très qualifiés (Brain Drain)<br>
+                    <strong>R</strong>ouge = réfugiés (danger)
+                </div>
+                
+                <div class="mnemonic">
+                    🤝 Pour retenir les 3 DÉFIS :<br>
+                    <strong>"IGC"</strong><br>
+                    <strong>I</strong>ntégration - <strong>G</strong>estion des flux - <strong>C</strong>oopération internationale
+                </div>
+                
+                <div class="card">
+                    <h3>💡 Astuce pour le Brain Drain</h3>
+                    <p><strong>"Brain"</strong> = cerveau en anglais<br>
+                    <strong>"Drain"</strong> = vider, drainer<br>
+                    → Les cerveaux (personnes qualifiées) "se vident" du pays = ils partent !</p>
+                    <p style="margin-top: 15px;">🧠💨 Imagine un cerveau qui s'envole du pays !</p>
+                </div>
+                
+                <div class="card">
+                    <h3>📊 Chiffre à retenir absolument</h3>
+                    <p style="font-size: 2em; text-align: center; color: #e74c3c;">
+                        <strong>300 millions</strong><br>
+                        <span style="font-size: 0.5em;">de migrants internationaux en 2023</span><br>
+                        <span style="font-size: 0.5em;">= 3% de la population mondiale</span>
+                    </p>
+                    <p><strong>Astuce :</strong> 3% → 3 sur 100 personnes → environ 1 personne sur 33 dans le monde est migrante</p>
+                </div>
+            </div>
+            
+            <!-- SECTION EXERCICES -->
+            <div id="exercices" class="section">
+                <h2>✏️ Exercices d'Entraînement</h2>
+                
+                <div class="card">
+                    <h3>Exercice 1 : Compléter les phrases</h3>
+                    <p>Complète avec le bon mot :</p>
+                    <ol>
+                        <li>Une migration est un déplacement __________ d'une population.</li>
+                        <li>On compte environ __________ millions de migrants internationaux en 2023.</li>
+                        <li>Le "Brain Drain" signifie la fuite des __________.</li>
+                        <li>Les trois causes principales des migrations sont : économiques, __________ et environnementaux.</li>
+                        <li>__________ est l'agence européenne de contrôle des frontières.</li>
+                    </ol>
+                    <button class="btn-check" onclick="toggleAnswers('answers1')">Voir les réponses</button>
+                    <div id="answers1" class="answer-box">
+                        <strong>Réponses :</strong>
+                        <ol>
+                            <li>durable</li>
+                            <li>300</li>
+                            <li>cerveaux</li>
+                            <li>politiques</li>
+                            <li>Frontex</li>
+                        </ol>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h3>Exercice 2 : Vrai ou Faux ?</h3>
+                    <ol>
+                        <li>Une migration interne se fait entre deux pays. <button class="btn-answer" onclick="toggleAnswers('ex2q1')">?</button>
+                        <div id="ex2q1" class="answer-box">→ <strong>FAUX</strong> (c'est à l'intérieur d'un même pays)</div></li>
+                        
+                        <li>L'Europe est une zone d'accueil de migrants. <button class="btn-answer" onclick="toggleAnswers('ex2q2')">?</button>
+                        <div id="ex2q2" class="answer-box">→ <strong>VRAI</strong></div></li>
+                        
+                        <li>Le regroupement familial est une cause politique de migration. <button class="btn-answer" onclick="toggleAnswers('ex2q3')">?</button>
+                        <div id="ex2q3" class="answer-box">→ <strong>FAUX</strong> (c'est une cause économique)</div></li>
+                        
+                        <li>Les réfugiés fuient leur pays à cause de guerres ou persécutions. <button class="btn-answer" onclick="toggleAnswers('ex2q4')">?</button>
+                        <div id="ex2q4" class="answer-box">→ <strong>VRAI</strong></div></li>
+                        
+                        <li>Le "Brain Drain" est positif pour les pays d'origine. <button class="btn-answer" onclick="toggleAnswers('ex2q5')">?</button>
+                        <div id="ex2q5" class="answer-box">→ <strong>FAUX</strong> (c'est une perte de personnes qualifiées)</div></li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>Exercice 3 : Relier les causes aux exemples</h3>
+                    <p>Relie chaque situation à sa cause principale :</p>
+                    <ol>
+                        <li>Ahmed fuit la Syrie à cause de la guerre → <button class="btn-answer" onclick="toggleAnswers('ex3q1')">?</button>
+                        <div id="ex3q1" class="answer-box"><strong>Cause politique</strong></div></li>
+                        
+                        <li>Maria cherche du travail en Espagne → <button class="btn-answer" onclick="toggleAnswers('ex3q2')">?</button>
+                        <div id="ex3q2" class="answer-box"><strong>Cause économique</strong></div></li>
+                        
+                        <li>Une famille fuit une inondation au Bangladesh → <button class="btn-answer" onclick="toggleAnswers('ex3q3')">?</button>
+                        <div id="ex3q3" class="answer-box"><strong>Cause environnementale</strong></div></li>
+                        
+                        <li>Un médecin part travailler aux États-Unis → <button class="btn-answer" onclick="toggleAnswers('ex3q4')">?</button>
+                        <div id="ex3q4" class="answer-box"><strong>Cause économique (Brain Drain)</strong></div></li>
+                    </ol>
+                </div>
+                
+                <div class="card">
+                    <h3>Exercice 4 : Les zones de départ et d'accueil</h3>
+                    <p>Complète le tableau :</p>
+                    <table style="width: 100%; border-collapse: collapse; margin: 15px 0;">
+                        <tr style="background: #3498db; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">Région</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Départ ou Accueil ?</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Amérique du Nord</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><button class="btn-answer" onclick="toggleAnswers('ex4q1')">?</button>
+                            <div id="ex4q1" class="answer-box">Accueil</div></td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 10px; border: 1px solid #ddd;">Afrique de l'Ouest</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><button class="btn-answer" onclick="toggleAnswers('ex4q2')">?</button>
+                            <div id="ex4q2" class="answer-box">Départ</div></td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Europe</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><button class="btn-answer" onclick="toggleAnswers('ex4q3')">?</button>
+                            <div id="ex4q3" class="answer-box">Accueil</div></td>
+                        </tr>
+                        <tr style="background: #f8f9fa;">
+                            <td style="padding: 10px; border: 1px solid #ddd;">Asie du Sud</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;"><button class="btn-answer" onclick="toggleAnswers('ex4q4')">?</button>
+                            <div id="ex4q4" class="answer-box">Départ</div></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- SECTION QUIZ -->
+            <div id="quiz" class="section">
+                <h2>🎮 Quiz Interactif</h2>
+                
+                <div class="quiz-question">
+                    <h3>Question 1 : Combien de migrants internationaux compte-t-on en 2023 ?</h3>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="a"> 100 millions
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="b"> 300 millions
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q1" value="c"> 500 millions
+                        </label>
+                    </div>
+                    <button class="btn-check" onclick="checkAnswer('q1', 'b', 'result1')">Vérifier</button>
+                    <div id="result1"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h3>Question 2 : Que signifie "Brain Drain" ?</h3>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="a"> L'arrivée de personnes qualifiées
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="b"> La fuite des cerveaux (départ des personnes qualifiées)
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q2" value="c"> Le contrôle des frontières
+                        </label>
+                    </div>
+                    <button class="btn-check" onclick="checkAnswer('q2', 'b', 'result2')">Vérifier</button>
+                    <div id="result2"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h3>Question 3 : Quelle est la principale cause des migrations internationales ?</h3>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="a"> Les facteurs environnementaux
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="b"> Les facteurs économiques
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q3" value="c"> Les facteurs politiques
+                        </label>
+                    </div>
+                    <button class="btn-check" onclick="checkAnswer('q3', 'b', 'result3')">Vérifier</button>
+                    <div id="result3"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h3>Question 4 : Qu'est-ce que Frontex ?</h3>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="a"> Une agence de contrôle des frontières européennes
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="b"> Un type de migration
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q4" value="c"> Une zone de libre circulation
+                        </label>
+                    </div>
+                    <button class="btn-check" onclick="checkAnswer('q4', 'a', 'result4')">Vérifier</button>
+                    <div id="result4"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h3>Question 5 : Quelle région N'EST PAS une zone d'accueil majeure ?</h3>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q5" value="a"> Europe
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q5" value="b"> Amérique du Nord
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q5" value="c"> Afrique de l'Ouest
+                        </label>
+                    </div>
+                    <button class="btn-check" onclick="checkAnswer('q5', 'c', 'result5')">Vérifier</button>
+                    <div id="result5"></div>
+                </div>
+                
+                <div class="quiz-question">
+                    <h3>Question 6 : Quels sont les trois grands défis liés aux migrations ?</h3>
+                    <div class="quiz-options">
+                        <label class="quiz-option">
+                            <input type="radio" name="q6" value="a"> Intégration, Gestion des flux, Coopération internationale
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q6" value="b"> Économie, Politique, Environnement
+                        </label>
+                        <label class="quiz-option">
+                            <input type="radio" name="q6" value="c"> Départ, Accueil, Transit
+                        </label>
+                    </div>
+                    <button class="btn-check" onclick="checkAnswer('q6', 'a', 'result6')">Vérifier</button>
+                    <div id="result6"></div>
+                </div>
+                
+                <div id="finalScore" style="display: none;" class="card card-success">
+                    <h3 style="text-align: center;">🎉 Score Final</h3>
+                    <p style="text-align: center; font-size: 2em; color: #27ae60;" id="scoreDisplay"></p>
+                    <p style="text-align: center;">Continue à réviser pour obtenir 6/6 !</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let score = 0;
+        let answeredQuestions = 0;
+        
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function toggleAnswers(id) {
+            const element = document.getElementById(id);
+            if (element.style.display === 'none' || element.style.display === '') {
+                element.style.display = 'block';
+            } else {
+                element.style.display = 'none';
+            }
+        }
+        
+        function checkAnswer(questionName, correctAnswer, resultId) {
+            const selected = document.querySelector(`input[name="${questionName}"]:checked`);
+            const resultDiv = document.getElementById(resultId);
+            const options = document.querySelectorAll(`input[name="${questionName}"]`);
+            
+            if (!selected) {
+                resultDiv.innerHTML = '<div class="result error">⚠️ Veuillez sélectionner une réponse</div>';
+                return;
+            }
+            
+            options.forEach(option => {
+                option.parentElement.classList.remove('correct', 'incorrect');
+                if (option.value === correctAnswer) {
+                    option.parentElement.classList.add('correct');
+                } else if (option.checked) {
+                    option.parentElement.classList.add('incorrect');
+                }
+                option.disabled = true;
+            });
+            
+            if (selected.value === correctAnswer) {
+                resultDiv.innerHTML = '<div class="result success">✅ Bravo ! Bonne réponse !</div>';
+                score++;
+            } else {
+                resultDiv.innerHTML = '<div class="result error">❌ Pas tout à fait... La bonne réponse est maintenant affichée en vert.</div>';
+            }
+            
+            answeredQuestions++;
+            
+            if (answeredQuestions === 6) {
+                document.getElementById('finalScore').style.display = 'block';
+                document.getElementById('scoreDisplay').textContent = score + ' / 6';
+            }
+        }
+    </script>
+</body>
+</html>
