@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commentaire - L'Ensorcelée</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        nav {
+            background: #34495e;
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        nav button {
+            background: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+        
+        nav button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        nav button.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .texte-original {
+            background: #f8f9fa;
+            padding: 30px;
+            border-left: 5px solid #667eea;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-style: italic;
+            line-height: 1.8;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .note strong {
+            color: #856404;
+        }
+        
+        .methodologie {
+            background: #e8f5e9;
+            border-left: 4px solid #4caf50;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .methodologie h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .exercice {
+            background: #e3f2fd;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .exercice h4 {
+            color: #1565c0;
+            margin-bottom: 15px;
+        }
+        
+        .correction {
+            background: #f3e5f5;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 25px 0;
+            border-left: 5px solid #9c27b0;
+        }
+        
+        .plan-partie {
+            background: white;
+            border: 2px solid #667eea;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .plan-partie h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        ul {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+        
+        li {
+            margin: 8px 0;
+        }
+        
+        .citation {
+            color: #764ba2;
+            font-weight: 600;
+        }
+        
+        .grille-relecture {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .grille-relecture th,
+        .grille-relecture td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        .grille-relecture th {
+            background: #667eea;
+            color: white;
+        }
+        
+        .grille-relecture tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .checkbox-cell {
+            text-align: center;
+            width: 100px;
+        }
+        
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        
+        .conseil {
+            background: #fff8e1;
+            border-left: 4px solid #ffa726;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .vocabulaire {
+            background: #fce4ec;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        .procede {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Commentaire de texte</h1>
+            <p>Jules Barbey d'Aurevilly, <em>L'Ensorcelée</em> (1854)</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Objet d'étude : Le roman et le récit du Moyen Âge au XXIe siècle</p>
+        </header>
+        
+        <nav>
+            <button onclick="showSection('methode')" class="active">📖 Méthode</button>
+            <button onclick="showSection('texte')">📜 Texte</button>
+            <button onclick="showSection('analyse')">🔍 Analyse</button>
+            <button onclick="showSection('plan')">📋 Plan détaillé</button>
+            <button onclick="showSection('exercices')">✍️ Exercices</button>
+            <button onclick="showSection('correction')">✅ Correction</button>
+        </nav>
+        
+        <div class="content">
+            <!-- Section Méthode -->
+            <div id="methode" class="section active">
+                <h2>🎯 Méthodologie du commentaire</h2>
+                
+                <div class="methodologie">
+                    <h4>🔹 Étape 1 : Lire et comprendre le texte</h4>
+                    <p>Lis le texte 2 à 3 fois pour repérer :</p>
+                    <ul>
+                        <li>Le <strong>cadre</strong> (lieu, époque, atmosphère)</li>
+                        <li>Les <strong>émotions</strong> dominantes</li>
+                        <li>Les <strong>procédés d'écriture</strong> (figures de style, vocabulaire)</li>
+                    </ul>
+                </div>
+                
+                <div class="methodologie">
+                    <h4>🔹 Étape 2 : Identifier le thème et les enjeux</h4>
+                    <p>Pose-toi ces questions :</p>
+                    <ul>
+                        <li>De quoi parle le texte ?</li>
+                        <li>Quelle image l'auteur construit-il ?</li>
+                        <li>Quel message ou quelle émotion veut-il transmettre ?</li>
+                    </ul>
+                </div>
+                
+                <div class="methodologie">
+                    <h4>🔹 Étape 3 : Formuler une problématique</h4>
+                    <p>Crée une question qui lie le <strong>fond</strong> (les idées) et la <strong>forme</strong> (les procédés).</p>
+                    <p><strong>Exemple :</strong> Comment Barbey d'Aurevilly fait-il de la description d'un paysage un lieu d'imaginaire et d'effroi ?</p>
+                </div>
+                
+                <div class="methodologie">
+                    <h4>🔹 Étape 4 : Construire un plan (2 ou 3 parties)</h4>
+                    <p>Chaque partie développe une idée principale appuyée par des citations.</p>
+                </div>
+                
+                <div class="methodologie">
+                    <h4>🔹 Étape 5 : Rédiger</h4>
+                    <p><strong>Introduction :</strong> Présentation + problématique + plan</p>
+                    <p><strong>Développement :</strong> Idée + exemple + analyse</p>
+                    <p><strong>Conclusion :</strong> Bilan + ouverture</p>
+                </div>
+                
+                <div class="note">
+                    <strong>💡 Conseil :</strong> Un bon commentaire montre comment l'auteur écrit (les procédés) pour créer un effet sur le lecteur.
+                </div>
+            </div>
+            
+            <!-- Section Texte -->
+            <div id="texte" class="section">
+                <h2>📜 Texte à commenter</h2>
+                
+                <div class="note">
+                    <strong>Contexte :</strong> Ce texte évoque la lande normande de Lessay, paysage désertique dans lequel se déroule le récit de <em>L'Ensorcelée</em>.
+                </div>
+                
+                <div class="texte-original">
+                    <p>« Placé entre la Haie-du-Puits et Coutances, ce désert normand, où l'on ne rencontrait ni arbres, ni maisons, ni haies, ni traces d'homme ou de bêtes que celles du passant ou du troupeau du matin dans la poussière, s'il faisait sec, ou dans l'argile détrempée du sentier, s'il avait plu, déployait une grandeur de solitude et de tristesse désolée qu'il n'était pas facile d'oublier.</p>
+                    
+                    <p>La lande, disait-on, avait sept lieues de tour. Ce qui est certain, c'est que, pour la traverser en droite ligne, il fallait à un homme à cheval et bien monté plus d'une couple d'heures. Dans l'opinion de tout le pays, c'était un passage redoutable. Quand de Saint-Sauveur-le-Vicomte, cette bourgade jolie comme un village d'Écosse et qui a vu Du Guesclin défendre son donjon contre les Anglais, ou du littoral de la presqu'île, on avait affaire à Coutances et que, pour arriver plus vite, on voulait prendre la traverse, car la route départementale et les voitures publiques n'étaient pas de ce côté, on s'associait plusieurs pour passer la terrible lande ; et c'était si bien en usage qu'on citait longtemps comme des téméraires, dans les paroisses, les hommes, en très petit nombre, il est vrai, qui avaient passé seuls à Lessay de nuit ou de jour.</p>
+                    
+                    <p>On parlait vaguement d'assassinats qui s'y étaient commis à d'autres époques. Et vraiment, un tel lieu prêtait à de telles traditions. Il aurait été difficile de choisir une place plus commode pour détrousser un voyageur ou pour dépêcher un ennemi. L'étendue, devant et autour de soi, était si considérable et si claire qu'on pouvait découvrir de très loin, pour les éviter ou les fuir, les personnes qui auraient pu venir au secours des gens attaqués par les bandits de ces parages, et, dans la nuit, un si vaste silence aurait dévoré tous les cris qu'on aurait poussés dans son sein.</p>
+                    
+                    <p>Mais ce n'était pas tout. Si l'on en croyait les récits des charretiers qui s'y attardaient, la lande de Lessay était le théâtre des plus singulières apparitions. Dans le langage du pays, il y revenait. Pour ces populations musculaires, braves et prudentes, qui s'arment de précautions et de courage contre un danger tangible et certain, c'était là le côté véritablement sinistre et menaçant de la lande, car l'imagination continuera d'être, d'ici longtemps, la plus puissante réalité qu'il y ait dans la vie des hommes. Aussi cela seul, bien plus que l'idée d'une attaque nocturne, faisait trembler le pied de frêne dans la main du plus vigoureux gaillard qui se hasardait à passer Lessay à la tombée. »</p>
+                </div>
+                
+                <h3>📝 Vocabulaire clé</h3>
+                <div class="vocabulaire">
+                    <p><strong>Lieue :</strong> unité de longueur valant 4 kilomètres</p>
+                    <p><strong>Un homme à cheval et bien monté :</strong> qui voyage en montant un bon cheval</p>
+                    <p><strong>Du Guesclin :</strong> célèbre guerrier du XIVe siècle</p>
+                    <p><strong>Dépêcher :</strong> en finir avec quelqu'un en le tuant</p>
+                    <p><strong>Tangible :</strong> perceptible</p>
+                    <p><strong>Pied de frêne :</strong> bâton de bois utilisé pour assommer ou tuer quelqu'un</p>
+                </div>
+            </div>
+            
+            <!-- Section Analyse -->
+            <div id="analyse" class="section">
+                <h2>🔍 Analyse littéraire</h2>
+                
+                <h3>🎨 Principaux procédés utilisés</h3>
+                
+                <div class="plan-partie">
+                    <h4>1. L'accumulation et l'énumération</h4>
+                    <p><span class="citation">« ni arbres, ni maisons, ni haies »</span></p>
+                    <p><strong>Effet :</strong> Cette répétition de la négation « ni » insiste sur le vide absolu et crée une impression d'immensité désertique.</p>
+                </div>
+                
+                <div class="plan-partie">
+                    <h4>2. Le champ lexical de la solitude et de la désolation</h4>
+                    <p><span class="citation">« désert », « solitude », « tristesse désolée », « redoutable »</span></p>
+                    <p><strong>Effet :</strong> Ces mots créent une atmosphère mélancolique et angoissante.</p>
+                </div>
+                
+                <div class="plan-partie">
+                    <h4>3. L'hyperbole</h4>
+                    <p><span class="citation">« un si vaste silence aurait dévoré tous les cris »</span></p>
+                    <p><strong>Effet :</strong> L'exagération dramatise le danger et personnifie le silence qui devient une force menaçante.</p>
+                </div>
+                
+                <div class="plan-partie">
+                    <h4>4. La personnification</h4>
+                    <p><span class="citation">« un tel lieu prêtait à de telles traditions »</span></p>
+                    <p><strong>Effet :</strong> Le paysage devient acteur, il semble favoriser les légendes et les crimes.</p>
+                </div>
+                
+                <div class="plan-partie">
+                    <h4>5. Le registre fantastique</h4>
+                    <p><span class="citation">« apparitions », « il y revenait » (les fantômes)</span></p>
+                    <p><strong>Effet :</strong> Le texte bascule du réel vers le surnaturel, créant une ambiguïté inquiétante.</p>
+                </div>
+                
+                <div class="conseil">
+                    <strong>💡 Astuce d'analyse :</strong> Toujours relier le procédé à son effet. Ne pas dire seulement « il y a une métaphore », mais expliquer « cette métaphore crée une impression de... »
+                </div>
+                
+                <h3>🎭 Les trois dimensions du texte</h3>
+                
+                <div class="note">
+                    <strong>1. Dimension réaliste :</strong> Description géographique précise (lieux nommés, distances, détails topographiques)
+                </div>
+                
+                <div class="note">
+                    <strong>2. Dimension historique :</strong> Références à Du Guesclin, aux assassinats passés, créant une profondeur temporelle
+                </div>
+                
+                <div class="note">
+                    <strong>3. Dimension fantastique :</strong> Apparitions, croyances populaires, imagination qui devient « la plus puissante réalité »
+                </div>
+            </div>
+            
+            <!-- Section Plan détaillé -->
+            <div id="plan" class="section">
+                <h2>📋 Plan détaillé corrigé</h2>
+                
+                <div class="note">
+                    <strong>🎯 Problématique :</strong> Comment Barbey d'Aurevilly fait-il de la description d'un paysage un lieu d'imaginaire et d'effroi ?
+                </div>
+                
+                <h3>📝 Introduction (modèle)</h3>
+                <div class="correction">
+                    <p>Dans cet extrait de <em>L'Ensorcelée</em> (1854), Jules Barbey d'Aurevilly, figure majeure du romantisme noir, décrit la lande de Lessay, un lieu désert et angoissant de Normandie où se déroule son récit. Cette description liminaire établit l'atmosphère du roman en mêlant réalité géographique et imagination populaire. Comment l'auteur transforme-t-il ce paysage en un espace à la fois réel et fantastique, symbole des peurs humaines ? Nous verrons d'abord que Barbey peint un paysage grandiose et désertique, puis qu'il en fait un lieu associé au danger et au mystère, avant d'analyser comment l'imaginaire populaire transfigure cet espace.</p>
+                </div>
+                
+                <h3>I. Un paysage grandiose et désertique</h3>
+                <div class="plan-partie">
+                    <h4>A. L'immensité et le vide</h4>
+                    <ul>
+                        <li><strong>Accumulation négative :</strong> <span class="citation">« ni arbres, ni maisons, ni haies »</span> → insiste sur l'absence totale de civilisation</li>
+                        <li><strong>Précisions topographiques :</strong> <span class="citation">« sept lieues de tour »</span>, <span class="citation">« plus d'une couple d'heures »</span> → dimensions impressionnantes</li>
+                        <li><strong>Lexique de l'étendue :</strong> <span class="citation">« désert normand »</span>, <span class="citation">« grandeur »</span>, <span class="citation">« vaste »</span></li>
+                    </ul>
+                    <p><strong>Analyse :</strong> L'auteur crée d'emblée une impression de vide total et d'isolement qui écrase l'homme face à la nature.</p>
+                </div>
+                
+                <div class="plan-partie">
+                    <h4>B. Une atmosphère mélancolique</h4>
+                    <ul>
+                        <li><strong>Champ lexical de la tristesse :</strong> <span class="citation">« solitude »</span>, <span class="citation">« tristesse désolée »</span></li>
+                        <li><strong>Adjectifs connotés négativement :</strong> <span class="citation">« redoutable »</span>, <span class="citation">« terrible »</span></li>
+                        <li><strong>Impact mémoriel :</strong> <span class="citation">« qu'il n'était pas facile d'oublier »</span> → la lande marque durablement les esprits</li>
+                    </ul>
+                    <p><strong>Analyse :</strong> Le paysage devient oppressant, suscitant mélancolie et inquiétude chez celui qui le traverse.</p>
+                </div>
+                
+                <h3>II. Un lieu associé au danger et au mystère</h3>
+                <div class="plan-partie">
+                    <h4>A. La peur collective</h4>
+                    <ul>
+                        <li><strong>Opinion unanime :</strong> <span class="citation">« Dans l'opinion de tout le pays, c'était un passage redoutable »</span></li>
+                        <li><strong>Comportements révélateurs :</strong> <span class="citation">« on s'associait plusieurs pour passer »</span> → personne n'ose traverser seul</li>
+                        <li><strong>Mise en valeur des téméraires :</strong> <span class="citation">« on citait longtemps comme des téméraires »</span> → traverser seul relève de l'exploit</li>
+                    </ul>
+                    <p><strong>Analyse :</strong> La réputation de la lande s'appuie sur une tradition collective qui entretient la peur.</p>
+                </div>
+                
+                <div class="plan-partie">
+                    <h4>B. Un décor propice au crime</h4>
+                    <ul>
+                        <li><strong>Allusions historiques :</strong> <span class="citation">« assassinats qui s'y étaient commis »</span> → passé sombre et violent</li>
+                        <li><strong>Description stratégique :</strong> <span class="citation">« difficile de choisir une place plus commode pour détrousser un voyageur »</span></li>
+                        <li><strong>Hyperbole dramatique :</strong> <span class="citation">« un si vaste silence aurait dévoré tous les cris »</span> → personnification du silence menaçant</li>
+                    </ul>
+                    <p><strong>Analyse :</strong> La topographie même du lieu favorise les crimes, renforçant son caractère sinistre. Le narrateur montre comment la géographie influence l'imaginaire.</p>
+                </div>
+                
+                <h3>III. La puissance de l'imaginaire populaire</h3>
+                <div class="plan-partie">
+                    <h4>A. Le basculement vers le fantastique</h4>
+                    <ul>
+                        <li><strong>Transition décisive :</strong> <span class="citation">« Mais ce n'était pas tout »</span> → annonce un nouveau niveau de peur</li>
+                        <li><strong>Témoignages locaux :</strong> <span class="citation">« Si l'on en croyait les récits des charretiers »</span> → récits oraux qui alimentent les légendes</li>
+                        <li><strong>Lexique du surnaturel :</strong> <span class="citation">« singulières apparitions »</span>, <span class="citation">« il y revenait »</span> (euphémisme pour dire que les fantômes hantent le lieu)</li>
+                    </ul>
+                    <p><strong>Analyse :</strong> Le texte glisse du réalisme vers le fantastique, créant une ambiguïté typique du romantisme noir.</p>
+                </div>
+                
+                <div class="plan-partie">
+                    <h4>B. L'imagination comme « réalité » la plus puissante</h4>
+                    <ul>
+                        <li><strong>Réflexion philosophique :</strong> <span class="citation">« l'imagination continuera d'être, d'ici longtemps, la plus puissante réalité qu'il y ait dans la vie des hommes »</span></li>
+                        <li><strong>Paradoxe :</strong> La peur du surnaturel dépasse la peur du danger réel → <span class="citation">« cela seul, bien plus que l'idée d'une attaque nocturne, faisait trembler »</span></li>
+                        <li><strong>Image finale :</strong> <span class="citation">« trembler le pied de frêne dans la main du plus vigoureux gaillard »</span> → même les hommes les plus forts sont vulnérables face à l'imagination</li>
+                    </ul>
+                    <p><strong>Analyse :</strong> Barbey développe une vision romantique où l'imagination façonne le réel. Les croyances populaires transforment le paysage en espace hanté, et cette transformation mentale est plus puissante que la réalité matérielle.</p>
+                </div>
+                
+                <h3>🎬 Conclusion (modèle)</h3>
+                <div class="correction">
+                    <p>À travers cette description de la lande de Lessay, Barbey d'Aurevilly dépasse la simple évocation géographique pour créer un véritable espace symbolique. Par une écriture évocatrice mêlant réalisme et fantastique, il montre comment l'imagination populaire transfigure le paysage en lieu hanté. La lande devient le reflet des peurs humaines et illustre une conception romantique où le visible et l'invisible se confondent. Cette ouverture du roman annonce un récit où le surnaturel jouera un rôle central, comme dans d'autres œuvres du romantisme noir français telles que <em>La Vénus d'Ille</em> de Mérimée (1837) ou les contes fantastiques de Maupassant.</p>
+                </div>
+            </div>
+            
+            <!-- Section Exercices -->
+            <div id="exercices" class="section">
+                <h2>✍️ Exercices d'entraînement</h2>
+                
+                <div class="exercice">
+                    <h4>Exercice 1 : Repérage des procédés</h4>
+                    <p>Relis le texte et relève :</p>
+                    <ul>
+                        <li>3 exemples d'accumulation ou d'énumération</li>
+                        <li>5 mots appartenant au champ lexical de la peur</li>
+                        <li>2 figures de style qui personnifient le paysage</li>
+                    </ul>
+                </div>
+                
+                <div class="exercice">
+                    <h4>Exercice 2 : Analyse de citation</h4>
+                    <p>Analyse cette phrase en identifiant le procédé et son effet :</p>
+                    <p style="font-style: italic; margin: 15px 0;">« un si vaste silence aurait dévoré tous les cris qu'on aurait poussés dans son sein »</p>
+                    <p><strong>Questions :</strong></p>
+                    <ul>
+                        <li>Quelle figure de style reconnais-tu ?</li>
+                        <li>Quel effet cette phrase produit-elle sur le lecteur ?</li>
+                        <li>Comment cette phrase illustre-t-elle l'atmosphère du texte ?</li>
+                    </ul>
+                </div>
+                
+                <div class="exercice">
+                    <h4>Exercice 3 : Rédiger une sous-partie</h4>
+                    <p>À partir des éléments suivants, rédige une sous-partie complète de commentaire :</p>
+                    <ul>
+                        <li><strong>Idée :</strong> Le paysage inspire la peur collective</li>
+                        <li><strong>Citation :</strong> « on s'associait plusieurs pour passer la terrible lande »</li>
+                        <li><strong>Analyse :</strong> Explique comment cette pratique révèle la peur unanime des habitants</li>
+                    </ul>
+                </div>
+                
+                <div class="exercice">
+                    <h4>Exercice 4 : Formuler une problématique</h4>
+                    <p>À partir du thème « la transformation du paysage en lieu fantastique », propose 3 problématiques différentes possibles.</p>
+                </div>
+                
+                <div class="exercice">
+                    <h4>Exercice 5 : Rédiger une introduction</h4>
+                    <p>En suivant le modèle proposé dans le plan détaillé, rédige ton introduction complète en présentant :</p>
+                    <ul>
+                        <li>L'auteur et l'œuvre</li>
+                        <li>Le contexte du passage</li>
+                        <li>Une problématique claire</li>
+                        <li>L'annonce du plan</li>
+                    </ul>
+                </div>
+                
+                <div class="conseil">
+                    <strong>💡 Conseil de rédaction :</strong> Dans une sous-partie, suis toujours cette structure : IDÉE → CITATION → ANALYSE. Ne jamais citer sans expliquer !
+                </div>
+            </div>
+            
+            <!-- Section Correction -->
+            <div id="correction" class="section">
+                <h2>✅ Corrections des exercices</h2>
+                
+                <h3>Correction Exercice 1 : Repérage des procédés</h3>
+                <div class="correction">
+                    <h4>Accumulations et énumérations :</h4>
+                    <ul>
+                        <li><span class="citation">« ni arbres, ni maisons, ni haies, ni traces d'homme ou de bêtes »</span> → accumulation de négations</li>
+                        <li><span class="citation">« dans la poussière, s'il faisait sec, ou dans l'argile détrempée du sentier, s'il avait plu »</span> → énumération des conditions climatiques</li>
+                        <li><span class="citation">« solitude et de tristesse désolée »</span> → accumulation de sentiments négatifs</li>
+                    </ul>
+                    
+                    <h4>Champ lexical de la peur :</h4>
+                    <ul>
+                        <li><span class="procede">redoutable</span></li>
+                        <li><span class="procede">terrible</span></li>
+                        <li><span class="procede">téméraires</span></li>
+                        <li><span class="procede">sinistre</span></li>
+                        <li><span class="procede">menaçant</span></li>
+                        <li><span class="procede">trembler</span></li>
+                    </ul>
+                    
+                    <h4>Personnifications du paysage :</h4>
+                    <ul>
+                        <li><span class="citation">« un tel lieu prêtait à de telles traditions »</span> → le lieu devient complice des légendes</li>
+                        <li><span class="citation">« un si vaste silence aurait dévoré tous les cris »</span> → le silence devient un monstre dévoreur</li>
+                    </ul>
+                </div>
+                
+                <h3>Correction Exercice 2 : Analyse de citation</h3>
+                <div class="correction">
+                    <p><strong>Citation :</strong> <span class="citation">« un si vaste silence aurait dévoré tous les cris qu'on aurait poussés dans son sein »</span></p>
+                    
+                    <p><strong>Procédés identifiés :</strong></p>
+                    <ul>
+                        <li><span class="procede">Hyperbole</span> → « si vaste », exagération de la dimension du silence</li>
+                        <li><span class="procede">Personnification</span> → le silence « dévore », il devient un être vivant et menaçant</li>
+                        <li><span class="procede">Métaphore</span> → le silence est comparé à un monstre qui engloutit</li>
+                    </ul>
+                    
+                    <p><strong>Effet produit :</strong></p>
+                    <p>Cette phrase crée une atmosphère d'angoisse totale. Le silence n'est pas simplement l'absence de bruit, il devient une force active et hostile qui anéantit toute possibilité de secours. L'utilisation du conditionnel passé (« aurait dévoré ») renforce le caractère hypothétique et terrifiant : même les cris de détresse seraient inutiles dans cet espace.</p>
+                    
+                    <p><strong>Lien avec l'atmosphère du texte :</strong></p>
+                    <p>Cette image illustre parfaitement l'isolement mortel de la lande. Elle montre que le danger ne vient pas seulement des bandits ou des fantômes, mais du lieu lui-même qui devient hostile et mortifère. C'est un élément clé du registre fantastique : le paysage n'est plus un simple décor, il est une menace vivante.</p>
+                </div>
+                
+                <h3>Correction Exercice 3 : Rédiger une sous-partie</h3>
+                <div class="correction">
+                    <h4>Exemple de rédaction :</h4>
+                    <p>Le paysage inspire une peur collective qui se manifeste à travers les comportements des habitants. Barbey souligne que <span class="citation">« on s'associait plusieurs pour passer la terrible lande »</span>. Cette pratique sociale révèle l'ampleur de la terreur qu'inspire le lieu : personne n'ose l'affronter seul. L'emploi du pronom indéfini « on » généralise le comportement à l'ensemble de la population, montrant qu'il s'agit d'une peur partagée par tous, indépendamment du courage individuel. L'adjectif « terrible » qualifiant la lande intensifie cette impression et souligne que la réputation sinistre du lieu est solidement ancrée dans les mentalités. Cette peur collective transforme la traversée de la lande en un véritable rite social où la solidarité devient une nécessité vitale face à un danger qui dépasse l'individu.</p>
+                </div>
+                
+                <h3>Correction Exercice 4 : Formuler une problématique</h3>
+                <div class="correction">
+                    <h4>Trois problématiques possibles :</h4>
+                    <ol>
+                        <li><strong>Comment Barbey d'Aurevilly transforme-t-il la description réaliste d'un paysage en un tableau fantastique et angoissant ?</strong></li>
+                        <li><strong>Par quels procédés l'auteur fait-il de la lande de Lessay un espace où se confondent réalité géographique et imaginaire terrifiant ?</strong></li>
+                        <li><strong>En quoi ce passage illustre-t-il la conception romantique selon laquelle l'imagination transfigure le réel ?</strong></li>
+                    </ol>
+                    
+                    <div class="note">
+                        <strong>💡 Remarque :</strong> Une bonne problématique doit être une question ouverte qui guide l'analyse et met en relation le fond (les thèmes) et la forme (les procédés littéraires).
+                    </div>
+                </div>
+                
+                <h3>Correction Exercice 5 : Exemple d'introduction rédigée</h3>
+                <div class="correction">
+                    <p>Jules Barbey d'Aurevilly (1808-1889), écrivain normand et figure majeure du romantisme noir français, publie en 1854 <em>L'Ensorcelée</em>, roman qui mêle passion amoureuse, mystère et surnaturel dans le cadre de la Normandie rurale. Dans cet extrait du premier chapitre, l'auteur décrit la lande de Lessay, vaste étendue désertique qui constitue le cadre géographique et symbolique du récit. Cette description liminaire, loin d'être un simple décor réaliste, transforme le paysage en un espace chargé de menaces réelles et imaginaires. Comment Barbey d'Aurevilly fait-il de cette description un lieu d'effroi où se confondent réalité et fantastique ? Nous analyserons d'abord la dimension grandiose et désertique du paysage, puis nous verrons comment l'auteur en fait un lieu associé au danger et au crime, avant d'étudier la manière dont l'imaginaire populaire transfigure cet espace en un lieu hanté.</p>
+                </div>
+                
+                <h3>📋 Grille d'auto-évaluation</h3>
+                <table class="grille-relecture">
+                    <thead>
+                        <tr>
+                            <th>Points à vérifier</th>
+                            <th class="checkbox-cell">Fait ✓</th>
+                            <th>Commentaires personnels</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>J'ai présenté correctement le texte et l'auteur</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Ma problématique est claire et en lien avec la consigne</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Chaque paragraphe contient : idée + citation + analyse</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>J'ai cité le texte avec précision (entre guillemets)</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>J'ai nommé et expliqué les procédés littéraires</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Mon style est clair, les phrases sont bien construites</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>J'ai évité les répétitions</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>Je termine par une conclusion avec ouverture</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                        <tr>
+                            <td>J'ai relu mon devoir pour corriger les fautes</td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td><input type="text" style="width: 100%; border: none; background: transparent;"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="conseil">
+                    <strong>🎯 Conseils finaux pour le jour du bac :</strong>
+                    <ul>
+                        <li>Lis le texte 3 fois minimum avant de commencer</li>
+                        <li>Passe 30 minutes à préparer (analyse, plan) avant de rédiger</li>
+                        <li>Garde 10 minutes à la fin pour te relire</li>
+                        <li>N'oublie pas de sauter des lignes entre les parties</li>
+                        <li>Cite toujours entre guillemets et explique chaque citation</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showSection(sectionId) {
+            // Masquer toutes les sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Afficher la section sélectionnée
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Mettre à jour les boutons actifs
+            const buttons = document.querySelectorAll('nav button');
+            buttons.forEach(button => {
+                button.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Scroller en haut
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>
