@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Français A1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .section h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .texte {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 1.8;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .texte p {
+            margin-bottom: 15px;
+        }
+        
+        .lexique {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .lexique-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .lexique-item strong {
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        
+        .questions {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .question {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .reponse {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-left: 3px solid #4caf50;
+            border-radius: 5px;
+        }
+        
+        .btn-reponse {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .btn-reponse:hover {
+            background: #764ba2;
+        }
+        
+        .conjugaison {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .conjugaison table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .conjugaison td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .conjugaison td:first-child {
+            font-weight: bold;
+            color: #667eea;
+            width: 40%;
+        }
+        
+        .exercice {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .exercice-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        input[type="text"] {
+            padding: 8px;
+            border: 2px solid #667eea;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 150px;
+        }
+        
+        .btn-corriger {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-corriger:hover {
+            background: #45a049;
+        }
+        
+        .correct {
+            background: #e8f5e9 !important;
+        }
+        
+        .incorrect {
+            background: #ffebee !important;
+        }
+        
+        .category-title {
+            color: #764ba2;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Cours de Français</h1>
+            <p>Niveau A1 - La famille de Lucas</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Pour élève chinois (13 ans)</p>
+        </div>
+        
+        <div class="content">
+            <!-- TEXTE -->
+            <div class="section">
+                <h2>📖 TEXTE : La famille de Lucas</h2>
+                <div class="texte">
+                    <p>Bonjour ! Je m'appelle Lucas. J'ai treize ans et j'habite à Lyon avec ma famille.</p>
+                    <p>Mon père s'appelle Pierre. Il a quarante-deux ans. Il est professeur de mathématiques dans un collège. Il est grand et gentil. Il aime le football et la musique.</p>
+                    <p>Ma mère s'appelle Sophie. Elle a trente-neuf ans. Elle est médecin dans un hôpital. Elle est petite et très intelligente. Elle adore lire des livres et faire du yoga.</p>
+                    <p>J'ai une petite sœur. Elle s'appelle Emma et elle a neuf ans. Elle est élève en CM1. Elle est jolie et un peu bavarde ! Elle aime dessiner et jouer avec notre chat.</p>
+                    <p>Notre chat s'appelle Moustache. Il a trois ans. Il est gris et blanc. Il est paresseux mais très mignon. Il adore dormir sur le canapé.</p>
+                    <p>Le week-end, nous aimons passer du temps ensemble. Nous allons souvent au parc ou au cinéma. J'aime beaucoup ma famille !</p>
+                </div>
+            </div>
+            
+            <!-- LEXIQUE -->
+            <div class="section">
+                <h2>📚 LEXIQUE</h2>
+                
+                <div class="category-title">La famille (家庭)</div>
+                <div class="lexique">
+                    <div class="lexique-item"><strong>le père</strong> (父亲) = dad</div>
+                    <div class="lexique-item"><strong>la mère</strong> (母亲) = mom</div>
+                    <div class="lexique-item"><strong>le frère</strong> (兄弟) = brother</div>
+                    <div class="lexique-item"><strong>la sœur</strong> (姐妹) = sister</div>
+                </div>
+                
+                <div class="category-title">Les adjectifs (形容词)</div>
+                <div class="lexique">
+                    <div class="lexique-item"><strong>grand(e)</strong> (高的) = tall</div>
+                    <div class="lexique-item"><strong>petit(e)</strong> (矮的/小的) = small</div>
+                    <div class="lexique-item"><strong>gentil(le)</strong> (和善的) = kind</div>
+                    <div class="lexique-item"><strong>intelligent(e)</strong> (聪明的) = intelligent</div>
+                    <div class="lexique-item"><strong>joli(e)</strong> (漂亮的) = pretty</div>
+                    <div class="lexique-item"><strong>bavard(e)</strong> (健谈的) = talkative</div>
+                </div>
+            </div>
+            
+            <!-- QUESTIONS -->
+            <div class="section">
+                <h2>❓ QUESTIONS SUR LE TEXTE</h2>
+                <div class="questions">
+                    <div class="question">
+                        <strong>1.</strong> Comment s'appelle le garçon ? Quel âge a-t-il ?
+                        <button class="btn-reponse" onclick="toggleReponse(1)">Voir la réponse</button>
+                        <div class="reponse" id="rep1">Il s'appelle Lucas. Il a treize ans.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>2.</strong> Où habite Lucas ?
+                        <button class="btn-reponse" onclick="toggleReponse(2)">Voir la réponse</button>
+                        <div class="reponse" id="rep2">Il habite à Lyon.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>3.</strong> Quelle est la profession du père de Lucas ?
+                        <button class="btn-reponse" onclick="toggleReponse(3)">Voir la réponse</button>
+                        <div class="reponse" id="rep3">Il est professeur de mathématiques.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>4.</strong> Que fait la mère de Lucas ? Qu'est-ce qu'elle aime faire ?
+                        <button class="btn-reponse" onclick="toggleReponse(4)">Voir la réponse</button>
+                        <div class="reponse" id="rep4">Elle est médecin. Elle aime lire et faire du yoga.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>5.</strong> Comment s'appelle le chat ? Quelle est sa couleur ?
+                        <button class="btn-reponse" onclick="toggleReponse(5)">Voir la réponse</button>
+                        <div class="reponse" id="rep5">Il s'appelle Moustache. Il est gris et blanc.</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE AVOIR -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe AVOIR</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>J'ai</td><td>(我有) = I have</td></tr>
+                        <tr><td>Tu as</td><td>(你有) = You have</td></tr>
+                        <tr><td>Il/Elle a</td><td>(他/她有) = He/She has</td></tr>
+                        <tr><td>Nous avons</td><td>(我们有) = We have</td></tr>
+                        <tr><td>Vous avez</td><td>(您/你们有) = You have</td></tr>
+                        <tr><td>Ils/Elles ont</td><td>(他们/她们有) = They have</td></tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE ÊTRE -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe ÊTRE</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je suis</td><td>(我是) = I am</td></tr>
+                        <tr><td>Tu es</td><td>(你是) = You are</td></tr>
+                        <tr><td>Il/Elle est</td><td>(他/她是) = He/She is</td></tr>
+                        <tr><td>Nous sommes</td><td>(我们是) = We are</td></tr>
+                        <tr><td>Vous êtes</td><td>(您/你们是) = You are</td></tr>
+                        <tr><td>Ils/Elles sont</td><td>(他们/她们是) = They are</td></tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE ALLER -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe ALLER</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je vais</td><td>(我去) = I go</td></tr>
+                        <tr><td>Tu vas</td><td>(你去) = You go</td></tr>
+                        <tr><td>Il/Elle va</td><td>(他/她去) = He/She goes</td></tr>
+                        <tr><td>Nous allons</td><td>(我们去) = We go</td></tr>
+                        <tr><td>Vous allez</td><td>(您/你们去) = You go</td></tr>
+                        <tr><td>Ils/Elles vont</td><td>(他们/她们去) = They go</td></tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE FAIRE -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe FAIRE</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je fais</td><td>(我做) = I do/make</td></tr>
+                        <tr><td>Tu fais</td><td>(你做) = You do/make</td></tr>
+                        <tr><td>Il/Elle fait</td><td>(他/她做) = He/She does/makes</td></tr>
+                        <tr><td>Nous faisons</td><td>(我们做) = We do/make</td></tr>
+                        <tr><td>Vous faites</td><td>(您/你们做) = You do/make</td></tr>
+                        <tr><td>Ils/Elles font</td><td>(他们/她们做) = They do/make</td></tr>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- EXERCICES -->
+            <div class="section">
+                <h2>✏️ EXERCICES INTERACTIFS</h2>
+                
+                <h3 style="color: #667eea; margin-bottom: 15px;">Exercice 1 : Complète avec ÊTRE</h3>
+                <div class="exercice" id="ex1">
+                    <div class="exercice-item">1. Vous <input type="text" id="e1_1" data-answer="êtes"> professeur ?</div>
+                    <div class="exercice-item">2. Je <input type="text" id="e1_2" data-answer="suis"> élève.</div>
+                    <div class="exercice-item">3. Ils <input type="text" id="e1_3" data-answer="sont"> gentils.</div>
+                    <div class="exercice-item">4. Lucas <input type="text" id="e1_4" data-answer="est"> français.</div>
+                    <div class="exercice-item">5. Nous <input type="text" id="e1_5" data-answer="sommes"> en classe.</div>
+                    <div class="exercice-item">6. Tu <input type="text" id="e1_6" data-answer="es"> intelligent.</div>
+                    <div class="exercice-item">7. Elles <input type="text" id="e1_7" data-answer="sont"> bavardes.</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex1')">Corriger l'exercice 1</button>
+                
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">Exercice 2 : Complète avec ALLER</h3>
+                <div class="exercice" id="ex2">
+                    <div class="exercice-item">1. Emma <input type="text" id="e2_1" data-answer="va"> au parc.</div>
+                    <div class="exercice-item">2. Vous <input type="text" id="e2_2" data-answer="allez"> où ?</div>
+                    <div class="exercice-item">3. Ils <input type="text" id="e2_3" data-answer="vont"> au restaurant.</div>
+                    <div class="exercice-item">4. Je <input type="text" id="e2_4" data-answer="vais"> à l'école.</div>
+                    <div class="exercice-item">5. Tu <input type="text" id="e2_5" data-answer="vas"> au cinéma ?</div>
+                    <div class="exercice-item">6. Nous <input type="text" id="e2_6" data-answer="allons"> chez le médecin.</div>
+                    <div class="exercice-item">7. Elles <input type="text" id="e2_7" data-answer="vont"> à la bibliothèque.</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex2')">Corriger l'exercice 2</button>
+                
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">Exercice 3 : Complète avec FAIRE</h3>
+                <div class="exercice" id="ex3">
+                    <div class="exercice-item">1. Sophie <input type="text" id="e3_1" data-answer="fait"> du yoga.</div>
+                    <div class="exercice-item">2. Nous <input type="text" id="e3_2" data-answer="faisons"> nos devoirs.</div>
+                    <div class="exercice-item">3. Je <input type="text" id="e3_3" data-answer="fais"> du sport.</div>
+                    <div class="exercice-item">4. Vous <input type="text" id="e3_4" data-answer="faites"> quoi ce soir ?</div>
+                    <div class="exercice-item">5. Ils <input type="text" id="e3_5" data-answer="font"> la cuisine.</div>
+                    <div class="exercice-item">6. Tu <input type="text" id="e3_6" data-answer="fais"> du vélo ?</div>
+                    <div class="exercice-item">7. Elles <input type="text" id="e3_7" data-answer="font"> des exercices.</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex3')">Corriger l'exercice 3</button>
+                
+                <h3 style="color: #667eea; margin-bottom: 15px; margin-top: 30px;">Exercice 4 : AVOIR, ÊTRE, ALLER ou FAIRE ?</h3>
+                <div class="exercice" id="ex4">
+                    <div class="exercice-item">1. Elles <input type="text" id="e4_1" data-answer="sont"> médecins.</div>
+                    <div class="exercice-item">2. Tu <input type="text" id="e4_2" data-answer="as"> un chat ?</div>
+                    <div class="exercice-item">3. Nous <input type="text" id="e4_3" data-answer="faisons"> du sport le samedi.</div>
+                    <div class="exercice-item">4. Elle <input type="text" id="e4_4" data-answer="va"> à la bibliothèque.</div>
+                    <div class="exercice-item">5. J'<input type="text" id="e4_5" data-answer="ai"> treize ans.</div>
+                    <div class="exercice-item">6. Ils <input type="text" id="e4_6" data-answer="vont"> au cinéma ce soir.</div>
+                    <div class="exercice-item">7. Vous <input type="text" id="e4_7" data-answer="faites"> vos devoirs ?</div>
+                    <div class="exercice-item">8. Nous <input type="text" id="e4_8" data-answer="avons"> une grande famille.</div>
+                    <div class="exercice-item">9. Le père <input type="text" id="e4_9" data-answer="est"> professeur.</div>
+                    <div class="exercice-item">10. Elles <input type="text" id="e4_10" data-answer="ont"> des livres intéressants.</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex4')">Corriger l'exercice 4</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleReponse(num) {
+            const reponse = document.getElementById('rep' + num);
+            if (reponse.style.display === 'none' || reponse.style.display === '') {
+                reponse.style.display = 'block';
+            } else {
+                reponse.style.display = 'none';
+            }
+        }
+        
+        function corriger(exId) {
+            const exercice = document.getElementById(exId);
+            const inputs = exercice.querySelectorAll('input[type="text"]');
+            let score = 0;
+            let total = inputs.length;
+            
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    input.parentElement.classList.add('correct');
+                    input.parentElement.classList.remove('incorrect');
+                    score++;
+                } else {
+                    input.parentElement.classList.add('incorrect');
+                    input.parentElement.classList.remove('correct');
+                }
+            });
+            
+            alert(`Score : ${score}/${total} ✨\n${score === total ? 'Excellent travail ! 太棒了！' : 'Continue, tu progresses ! 加油！'}`);
+        }
+    </script>
+</body>
+</html>
