@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Manon Lescaut - Révisions Bac Général</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+        
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .score-container {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        
+        .score-item {
+            text-align: center;
+        }
+        
+        .score-number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .score-label {
+            font-size: 0.9em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .category {
+            margin: 40px 0;
+        }
+        
+        .category-title {
+            background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 1.5em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .question-card {
+            background: #f8f9fa;
+            border-left: 5px solid #3498db;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .question-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .question-number {
+            background: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        
+        .question-text {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            margin: 15px 0;
+        }
+        
+        .option {
+            background: white;
+            padding: 12px 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .option:hover {
+            border-color: #3498db;
+            background: #e3f2fd;
+        }
+        
+        .option-letter {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .answer-section {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            display: none;
+        }
+        
+        .answer-section.show {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .answer-title {
+            color: #e67e22;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .correct-answer {
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.05em;
+            margin-bottom: 10px;
+        }
+        
+        .explanation {
+            color: #555;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+        
+        .show-answer-btn {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            box-shadow: 0 4px 15px rgba(243,156,18,0.3);
+        }
+        
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(243,156,18,0.4);
+        }
+        
+        .show-answer-btn:active {
+            transform: translateY(0);
+        }
+        
+        .citation-question {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            font-style: italic;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            margin: 30px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #27ae60 0%, #2ecc71 100%);
+            height: 100%;
+            width: 0%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .reset-btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: bold;
+            display: block;
+            margin: 40px auto;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(231,76,60,0.3);
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(231,76,60,0.4);
+        }
+        
+        .difficulty {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .difficulty-easy {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .difficulty-medium {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .difficulty-hard {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .completion-message {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+            animation: bounceIn 0.6s ease;
+        }
+        
+        .completion-message.show {
+            display: block;
+        }
+        
+        @keyframes bounceIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.3);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .completion-message h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            header h1 {
+                font-size: 1.8em;
+            }
+            .category-title {
+                font-size: 1.2em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Quiz Manon Lescaut</h1>
+            <p>Révisions pour le Bac Général de Français</p>
+            <div class="score-container">
+                <div class="score-item">
+                    <div class="score-number" id="answered">0</div>
+                    <div class="score-label">Réponses vues</div>
+                </div>
+                <div class="score-item">
+                    <div class="score-number" id="total">40</div>
+                    <div class="score-label">Questions totales</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+            
+            <div class="completion-message" id="completionMsg">
+                <h2>🎉 Bravo ! Quiz terminé !</h2>
+                <p>Vous avez consulté toutes les réponses. Prenez le temps de bien les relire avant l'examen.</p>
+            </div>
+
+            <!-- CATÉGORIE 1 : CONTEXTE ET AUTEUR -->
+            <div class="category">
+                <div class="category-title">
+                    📖 Contexte et Auteur
+                </div>
+                
+                <div class="question-card">
+                    <span class="question-number">Question 1</span>
+                    <span class="difficulty difficulty-easy">Facile</span>
+                    <div class="question-text">Quel est le véritable nom de l'Abbé Prévost ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Antoine-François Prévost d'Exiles</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>François-Marie Arouet</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Pierre Marivaux de Chambord</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">A) Antoine-François Prévost d'Exiles</div>
+                        <div class="explanation">
+                            L'auteur est né en 1697 à Hesdin. Il a mené une vie mouvementée entre l'armée, le couvent et l'exil. Il est surtout connu sous le nom d'Abbé Prévost, bien qu'il ait quitté les ordres religieux.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 2</span>
+                    <span class="difficulty difficulty-easy">Facile</span>
+                    <div class="question-text">En quelle année "Histoire du chevalier Des Grieux et de Manon Lescaut" a-t-elle été publiée ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>1715</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>1731</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>1750</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) 1731</div>
+                        <div class="explanation">
+                            L'œuvre est publiée en 1731, au cœur du Siècle des Lumières. Elle fait partie du tome VII des "Mémoires et aventures d'un homme de qualité qui s'est retiré du monde".
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 3</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">À quel courant littéraire Manon Lescaut appartient-il principalement ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Le romantisme</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Le réalisme</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Le roman sensible / sentimentalisme</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">C) Le roman sensible / sentimentalisme</div>
+                        <div class="explanation">
+                            Manon Lescaut est un roman précurseur du romantisme, marqué par le sentimentalisme du XVIIIe siècle. Il met en avant les passions, les émotions et le conflit entre raison et sentiment. Il annonce le mouvement romantique qui arrivera au XIXe siècle.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 4</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quelle structure narrative caractérise Manon Lescaut ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Récit à la troisième personne, narration omnisciente</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Récit-cadre avec narration enchâssée (récit dans le récit)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Récit épistolaire (échange de lettres)</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Récit-cadre avec narration enchâssée</div>
+                        <div class="explanation">
+                            L'œuvre commence par le récit de l'Homme de qualité (narrateur premier) qui rencontre Des Grieux. Puis Des Grieux prend la parole et raconte sa propre histoire (narrateur second). C'est une technique du roman-mémoires, typique du XVIIIe siècle.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE 2 : INTRIGUE ET PERSONNAGES -->
+            <div class="category">
+                <div class="category-title">
+                    🎭 Intrigue et Personnages
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 5</span>
+                    <span class="difficulty difficulty-easy">Facile</span>
+                    <div class="question-text">Où Des Grieux rencontre-t-il Manon pour la première fois ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>À Paris</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>À Amiens</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>À Pacy-sur-Eure</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) À Amiens</div>
+                        <div class="explanation">
+                            La rencontre a lieu à Amiens, devant une hôtellerie où arrive le coche d'Arras. Des Grieux a 17 ans et est sur le point de rentrer chez son père. Cette rencontre bouleverse instantanément sa vie.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 6</span>
+                    <span class="difficulty difficulty-easy">Facile</span>
+                    <div class="question-text">Quelle était la destination initiale de Manon lorsque Des Grieux la rencontre ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Elle devait se marier avec un riche bourgeois</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Elle devait entrer au couvent pour devenir religieuse</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Elle partait travailler comme gouvernante</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Elle devait entrer au couvent</div>
+                        <div class="explanation">
+                            Manon était "envoyée par ses parents pour être religieuse". Cet obstacle renforce le caractère transgressif de leur fuite immédiate et annonce les difficultés futures du couple.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 7</span>
+                    <span class="difficulty difficulty-easy">Facile</span>
+                    <div class="question-text">Quel est le nom de l'ami fidèle de Des Grieux qui tente de le ramener à la raison ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Tiberge</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Lescaut</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>M. de G... M...</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">A) Tiberge</div>
+                        <div class="explanation">
+                            Tiberge représente la vertu et la raison. Il reste l'ami fidèle de Des Grieux malgré sa déchéance et l'aide financièrement à plusieurs reprises, tout en essayant de le convaincre d'abandonner Manon.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 8</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Qui est le frère de Manon ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Un prêtre respectable qui désapprouve sa conduite</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Lescaut, un homme peu scrupuleux qui encourage ses liaisons lucratives</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Un officier qui essaie de protéger l'honneur familial</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Lescaut, un homme peu scrupuleux</div>
+                        <div class="explanation">
+                            Lescaut est le frère de Manon, un personnage ambigu et malhonnête. Il pousse Manon vers des liaisons avec des hommes riches et participe aux escroqueries du couple. Il meurt assassiné suite à une querelle.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 9</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Où Manon meurt-elle ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Dans une prison à Paris</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Dans le désert de Louisiane (Amérique)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Sur le bateau qui les emmenait en déportation</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Dans le désert de Louisiane</div>
+                        <div class="explanation">
+                            Après avoir été déportés en Louisiane, Manon et Des Grieux tentent de fuir vers une colonie anglaise. Épuisée, Manon meurt dans le désert. Des Grieux creuse sa tombe avec ses mains et passe 24 heures prostré sur son corps avant d'être secouru.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 10</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Combien de fois approximativement Manon trahit-elle Des Grieux dans le roman ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Une seule fois</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Trois fois</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Cinq fois ou plus</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Trois fois (principales trahisons)</div>
+                        <div class="explanation">
+                            Manon trahit Des Grieux principalement trois fois : avec M. de B..., puis avec le vieux G... M..., et enfin avec le fils du fermier général. Chaque fois, elle est attirée par la richesse et le luxe, mais affirme toujours aimer Des Grieux.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE 3 : THÈMES ET ANALYSE -->
+            <div class="category">
+                <div class="category-title">
+                    💭 Thèmes et Analyse Littéraire
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 11</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quel est le thème central de Manon Lescaut ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>La critique sociale et politique du XVIIIe siècle</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Le conflit entre passion amoureuse et raison/vertu</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>L'aventure coloniale en Amérique</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Le conflit entre passion et raison/vertu</div>
+                        <div class="explanation">
+                            Le roman explore le pouvoir destructeur de la passion amoureuse qui fait sombrer Des Grieux, jeune homme vertueux, dans la déchéance morale et sociale. Il interroge la possibilité de concilier amour et vertu.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 12</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quel rôle joue l'argent dans la relation entre Manon et Des Grieux ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Il est totalement absent, seul l'amour compte</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Il est l'obstacle principal : Manon trahit Des Grieux pour des hommes riches</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Des Grieux refuse de travailler par orgueil</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) L'argent est l'obstacle principal</div>
+                        <div class="explanation">
+                            Manon, attirée par le luxe et le confort matériel, trahit régulièrement Des Grieux pour des protecteurs fortunés. L'argent devient le moteur des infidélités et pousse Des Grieux à la tricherie au jeu et au vol. C'est un thème central du roman.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 13</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quelle est l'ambiguïté du personnage de Manon ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Elle est clairement une manipulatrice cynique</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Elle est à la fois sincère dans son amour et attirée par l'argent</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Elle est une victime innocente de la société</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Sincère dans son amour ET attirée par l'argent</div>
+                        <div class="explanation">
+                            Manon est un personnage complexe et ambigu. Elle semble sincèrement aimer Des Grieux tout en le trompant pour de l'argent. Elle pleure, regrette, mais recommence. Cette ambiguïté fait d'elle un personnage fascinant et moderne. Le lecteur ne peut trancher : victime de sa nature ou manipulatrice ?
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 14</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Comment peut-on qualifier l'évolution de Des Grieux ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Une ascension sociale grâce à l'amour</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Une déchéance morale et sociale progressive</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Un parcours stable sans véritable transformation</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Une déchéance morale et sociale progressive</div>
+                        <div class="explanation">
+                            Des Grieux passe de jeune aristocrate vertueux destiné aux ordres à un homme qui triche au jeu, vole, tue, et finit déporté. Sa chute est progressive et irréversible. C'est un anti-héros qui suscite à la fois pitié et fascination.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 15</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quel registre littéraire domine dans Manon Lescaut ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Le registre comique</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Le registre pathétique et tragique</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Le registre satirique</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Le registre pathétique et tragique</div>
+                        <div class="explanation">
+                            Le roman suscite la compassion (pathétique) par les malheurs du narrateur et sa souffrance amoureuse. Il contient aussi des éléments tragiques : fatalité de la passion, issue fatale (mort de Manon), impuissance face au destin. Les exclamations, les regrets rétrospectifs renforcent ce registre.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE 4 : CITATIONS -->
+            <div class="category">
+                <div class="category-title">
+                    💬 Citations Célèbres
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 16</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">À qui Des Grieux attribue-t-il cette phrase célèbre ?</div>
+                    <div class="citation-question">
+                        "Je me trouvai enflammé tout d'un coup jusqu'au transport"
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Lors de sa première rencontre avec Manon</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Lors de leurs retrouvailles après une trahison</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Lors de leur arrivée en Louisiane</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">A) Lors de sa première rencontre avec Manon</div>
+                        <div class="explanation">
+                            Cette citation illustre le coup de foudre immédiat. La métaphore du feu ("enflammé") et l'hyperbole ("jusqu'au transport") montrent la violence de la passion qui s'empare de Des Grieux dès le premier regard. Ce moment scelle son destin.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 17</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Complétez cette phrase célèbre de Des Grieux :</div>
+                    <div class="citation-question">
+                        "Hélas ! que ne le marquais-je un jour plus tôt ! j'aurais porté chez mon père..."
+                    </div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>...toute ma fortune</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>...toute mon innocence</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>...toute ma sagesse</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) "...toute mon innocence"</div>
+                        <div class="explanation">
+                            Cette phrase exprime le regret rétrospectif. L'innocence symbolise la vertu, la pureté morale perdue. Si Des Grieux était parti un jour plus tôt, il n'aurait jamais rencontré Manon et aurait gardé sa vertu intacte. Cette phrase annonce la tragédie à venir.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 18</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quelle célèbre phrase prononce Des Grieux après la mort de Manon ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>"Je restai plus de vingt-quatre heures la bouche attachée sur le visage et sur les mains de ma chère Manon"</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>"La mort m'a enfin délivré de cette passion fatale"</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>"Je ne reverrai jamais plus son visage adoré"</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">A) "Je restai plus de vingt-quatre heures..."</div>
+                        <div class="explanation">
+                            Cette scène pathétique de la mort de Manon est l'une des plus célèbres du roman. Des Grieux, prostré sur le corps de Manon, refuse de la quitter pendant 24 heures. Il creuse ensuite sa tombe avec ses mains. Cette image illustre la dévotion absolue et tragique de Des Grieux.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 19</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Comment Des Grieux décrit-il Manon lors de leur première rencontre ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>"Elle me parut si charmante"</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>"Elle était d'une beauté divine"</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>"Elle avait l'air d'une princesse"</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">A) "Elle me parut si charmante"</div>
+                        <div class="explanation">
+                            Prévost utilise un vocabulaire sobre mais efficace. L'adjectif "charmante" évoque à la fois la beauté physique et le pouvoir de séduction (le charme = ensorcellement). L'intensif "si" amplifie l'effet sur Des Grieux.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE 5 : STRUCTURE ET ÉCRITURE -->
+            <div class="category">
+                <div class="category-title">
+                    ✍️ Structure et Techniques d'Écriture
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 20</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Qui est le narrateur premier de l'œuvre (narrateur-cadre) ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Le Chevalier Des Grieux</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>L'Homme de qualité (Renoncour)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>L'Abbé Prévost lui-même</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) L'Homme de qualité (Renoncour)</div>
+                        <div class="explanation">
+                            L'Homme de qualité rencontre Des Grieux à Pacy-sur-Eure alors que Manon est déportée. Plus tard, Des Grieux lui raconte toute son histoire. Ce procédé de récit enchâssé crée une distance narrative et donne une légitimité au récit.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 21</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quel est le point de vue narratif dans le récit de Des Grieux ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Point de vue omniscient (narrateur qui sait tout)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Point de vue interne (focalisation interne)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Point de vue externe (narrateur témoin objectif)</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Point de vue interne (focalisation interne)</div>
+                        <div class="explanation">
+                            Le récit est à la première personne : Des Grieux raconte sa propre histoire. Nous avons accès à ses pensées, ses émotions, mais nous ne connaissons les autres personnages (notamment Manon) qu'à travers sa perception subjective. Cela crée une ambiguïté sur Manon.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 22</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quel est l'effet de la narration rétrospective dans Manon Lescaut ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Elle crée du suspense car on ignore la fin</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Elle crée un effet pathétique et annonce la tragédie</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Elle rend le récit plus objectif</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Elle crée un effet pathétique et annonce la tragédie</div>
+                        <div class="explanation">
+                            Des Grieux raconte son histoire après la mort de Manon, avec le recul du temps. Les regrets ("Hélas !"), les conditionnels passés ("j'aurais porté..."), les commentaires rétrospectifs créent une atmosphère de fatalité et de nostalgie. Le lecteur sait que l'histoire finira mal.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 23</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Pourquoi peut-on considérer Manon Lescaut comme un roman-mémoires ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Parce que c'est l'autobiographie de l'Abbé Prévost</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Parce que Des Grieux raconte sa vie passée à la première personne</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Parce qu'il est constitué de lettres</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Des Grieux raconte sa vie passée à la première personne</div>
+                        <div class="explanation">
+                            Le roman-mémoires était un genre très populaire au XVIIIe siècle. Un personnage raconte rétrospectivement sa propre histoire, créant l'illusion d'authenticité. Ce genre permet l'analyse psychologique et la justification morale du narrateur.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 24</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quelle figure de style domine dans la description de la passion de Des Grieux ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>La métaphore du feu et de l'embrasement</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>L'ironie et le sarcasme</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>La périphrase descriptive</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">A) La métaphore du feu et de l'embrasement</div>
+                        <div class="explanation">
+                            "Enflammé", "transport", "ardeur"... Le champ lexical du feu traduit la violence, l'intensité et le caractère destructeur de la passion. C'est une métaphore classique de l'amour-passion qui consume et détruit celui qui en est victime.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE 6 : CONTEXTE SOCIAL ET HISTORIQUE -->
+            <div class="category">
+                <div class="category-title">
+                    🏛️ Société et Contexte Historique
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 25</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quelle était la punition pour les "filles de mauvaise vie" au XVIIIe siècle ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>L'emprisonnement à perpétuité</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>La déportation en Amérique (Louisiane)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>La peine de mort</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) La déportation en Amérique</div>
+                        <div class="explanation">
+                            Au XVIIIe siècle, les femmes jugées immorales (prostituées, femmes adultères) pouvaient être déportées vers les colonies françaises d'Amérique, notamment la Louisiane. C'est le sort de Manon dans le roman. Cette pratique historique était réelle.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 26</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quelle critique sociale transparaît dans Manon Lescaut ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>La critique de l'Église et de la religion</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>La critique de la vénalité et de la corruption sociale</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>La critique du système monarchique</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) La critique de la vénalité et de la corruption</div>
+                        <div class="explanation">
+                            Prévost critique une société où tout s'achète : l'amour, la liberté, la justice. Les riches protecteurs corrompent les jeunes femmes, la police se laisse acheter, la justice est arbitraire. Cette critique s'inscrit dans l'esprit des Lumières.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 27</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quelle institution Des Grieux devait-il initialement rejoindre ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>L'armée royale</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>L'ordre de Malte (chevalier)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>L'Église (il devait devenir prêtre)</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">C) L'Église (il devait devenir prêtre)</div>
+                        <div class="explanation">
+                            Des Grieux était destiné à entrer dans les ordres religieux. Sa famille noble l'avait destiné à une carrière ecclésiastique. Sa rencontre avec Manon brise ce destin et le fait renoncer à la vertu et à la religion. Le contraste entre sa vocation initiale et sa déchéance est maximal.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 28</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quel lieu symbolise l'enfermement et la punition dans le roman ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Le couvent où Manon est enfermée</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Saint-Lazare (maison de correction)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>La Bastille</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Saint-Lazare</div>
+                        <div class="explanation">
+                            Des Grieux est enfermé à Saint-Lazare, une maison de correction religieuse, à la demande de son père. Manon organise son évasion. Plus tard, Manon elle-même est enfermée à l'Hôpital (prison pour femmes) avant sa déportation. Ces lieux symbolisent la répression sociale et familiale.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE 7 : RÉCEPTION ET POSTÉRITÉ -->
+            <div class="category">
+                <div class="category-title">
+                    🎨 Réception et Postérité de l'œuvre
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 29</span>
+                    <span class="difficulty difficulty-medium">Moyen</span>
+                    <div class="question-text">Quelle a été la réaction initiale du public et de la censure face à Manon Lescaut ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Succès immédiat et unanime</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>L'œuvre a été censurée pour immoralité</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Indifférence totale du public</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) L'œuvre a été censurée pour immoralité</div>
+                        <div class="explanation">
+                            Manon Lescaut a été condamnée et censurée dès sa publication pour immoralité. On reprochait à Prévost de représenter le vice de manière trop séduisante et de ne pas condamner suffisamment les personnages. Malgré (ou grâce à) cette censure, le roman connut un immense succès clandestin.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 30</span>
+                    <span class="difficulty difficulty-easy">Facile</span>
+                    <div class="question-text">Manon Lescaut a inspiré de nombreuses adaptations. Laquelle est la plus célèbre ?</div>
+                    <div class="options">
+                        <div class="option">
+                            <div class="option-letter">A</div>
+                            <span>Une comédie musicale de Broadway</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">B</div>
+                            <span>Un opéra de Massenet (1884)</span>
+                        </div>
+                        <div class="option">
+                            <div class="option-letter">C</div>
+                            <span>Une série télévisée moderne</span>
+                        </div>
+                    </div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Réponse correcte :</div>
+                        <div class="correct-answer">B) Un opéra de Massenet (1884)</div>
+                        <div class="explanation">
+                            L'opéra "Manon" de Jules Massenet (1884) est l'adaptation la plus célèbre. Il y a aussi eu l'opéra "Manon Lescaut" de Puccini (1893). Le roman a également inspiré des films, notamment celui de Henri-Georges Clouzot (1949).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CATÉGORIE 8 : ANALYSE APPROFONDIE -->
+            <div class="category">
+                <div class="category-title">
+                    🔬 Analyse Approfondie pour l'Oral
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 31</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Comment peut-on interpréter le titre complet de l'œuvre : "Histoire du chevalier Des Grieux et de Manon Lescaut" ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            Le titre place Des Grieux en premier (avec son titre nobiliaire "chevalier") et Manon en second (avec son simple nom de famille). Cela souligne la primauté du narrateur masculin et reflète la hiérarchie sociale. Pourtant, c'est Manon qui est restée dans la postérité : on parle de "Manon Lescaut" et non de "Des Grieux". Paradoxe intéressant qui montre la fascination pour ce personnage féminin ambigu.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 32</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">En quoi Tiberge est-il un personnage-repoussoir pour Des Grieux ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            Tiberge représente ce que Des Grieux aurait dû devenir : un homme vertueux, raisonnable, qui entre dans les ordres. Il est le double inversé de Des Grieux. Leur amitié persistante malgré tout montre que Des Grieux conserve une part de lucidité sur sa déchéance. Tiberge incarne la voix de la raison et de la morale, mais elle reste impuissante face à la passion.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 33</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quelle fonction a le personnage du père de Des Grieux dans le roman ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            Le père représente l'autorité familiale et sociale. Il tente à plusieurs reprises de séparer son fils de Manon (enfermement à Saint-Lazare, déshéritage). Cependant, il finit par pardonner et accepter la passion de son fils. Cette évolution montre la puissance de l'amour paternel mais aussi l'impuissance des institutions face à la passion. Le père incarne l'ordre social que Des Grieux transgresse.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 34</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Comment interpréter la mort de Manon dans le désert américain ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            La mort de Manon est hautement symbolique. Le désert représente un espace vide, hors de la société corrompue. C'est le seul lieu où leur amour pourrait être pur, mais il est déjà trop tard. Manon meurt épuisée, peut-être purifiée par la souffrance. Cette fin tragique est nécessaire : dans la société du XVIIIe siècle, leur amour transgressif ne peut survivre. La mort de Manon est à la fois punition (morale) et libération (romantique).
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 35</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Pourquoi peut-on considérer Des Grieux comme un narrateur peu fiable ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            Des Grieux raconte sa propre histoire pour se justifier. Il présente Manon uniquement à travers sa perception amoureuse et aveugle. On ne connaît jamais vraiment les motivations de Manon : l'aime-t-elle sincèrement ? Est-elle manipulatrice ? Le récit à la première personne crée cette ambiguïté fondamentale. De plus, Des Grieux minimise souvent sa responsabilité (il rejette la faute sur la passion, la fatalité). Cette non-fiabilité rend le roman moderne et complexe.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 36</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">En quoi Manon Lescaut annonce-t-il le romantisme du XIXe siècle ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            Le roman annonce le romantisme par plusieurs aspects : primauté de la passion sur la raison, héros marginal en conflit avec la société, expression intense des émotions (registre pathétique), fatalité tragique, idéalisation de l'amour jusqu'à la mort, critique sociale implicite. Des Grieux préfigure les héros romantiques torturés (René de Chateaubriand, Werther de Goethe). Le couple maudit annonce les amours impossibles romantiques.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 37</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quelle est la fonction de l'espace américain (Louisiane) dans le roman ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            L'Amérique représente d'abord un lieu de punition et d'exil (déportation). Mais elle devient rapidement un espace de possible régénération : loin de la société corrompue française, le couple pourrait recommencer. Le gouverneur leur offre même la possibilité de se marier. C'est un espace d'utopie qui échoue : même en Amérique, les obstacles persistent (le neveu du gouverneur). Le désert final est l'ultime purification, mais elle est mortelle.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 38</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Comment Prévost utilise-t-il l'ironie dramatique dans son récit ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            L'ironie dramatique naît du décalage entre le Des Grieux narrateur (qui connaît la fin tragique) et le Des Grieux personnage (qui l'ignore). Dès l'incipit, le narrateur annonce sa chute ("Hélas ! que ne le marquais-je un jour plus tôt !"). Le lecteur sait que chaque moment de bonheur est éphémère, que chaque promesse de Manon sera trahie. Cette ironie renforce le pathos et la dimension tragique.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 39</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Quel est le rôle du hasard et de la fatalité dans Manon Lescaut ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse :</div>
+                        <div class="explanation">
+                            La rencontre initiale est due au hasard (Des Grieux se promène par curiosité). Mais ensuite, tout semble inéluctable : les séparations, les retrouvailles, les trahisons suivent un cycle fatal. Des Grieux a l'impression d'être le jouet du destin. Cette fatalité est renforcée par la narration rétrospective qui donne l'impression que tout était écrit d'avance. La passion apparaît comme une force supérieure qui écrase l'individu, thème pré-romantique.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-card">
+                    <span class="question-number">Question 40</span>
+                    <span class="difficulty difficulty-hard">Difficile</span>
+                    <div class="question-text">Peut-on lire Manon Lescaut comme une critique des Lumières ou comme une illustration de leurs valeurs ?</div>
+                    <button class="show-answer-btn" onclick="toggleAnswer(this)">Afficher la réponse</button>
+                    <div class="answer-section">
+                        <div class="answer-title">✅ Analyse complexe :</div>
+                        <div class="explanation">
+                            <strong>Critique des Lumières :</strong> Le roman montre l'échec de la raison face aux passions. Des Grieux connaît la morale mais ne peut s'y conformer. La raison (Tiberge) est impuissante.<br><br>
+                            <strong>Illustration des Lumières :</strong> Critique sociale (corruption, vénalité), questionnement moral (qui est coupable ?), refus du manichéisme (Manon n'est ni ange ni démon), observation psychologique fine, relativisme moral (la passion peut-elle justifier le vice ?).<br><br>
+                            <strong>Conclusion :</strong> Manon Lescaut est un roman ambigu qui participe de l'esprit des Lumières par sa critique sociale tout en montrant les limites du rationalisme face aux passions humaines.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="reset-btn" onclick="resetQuiz()">🔄 Réinitialiser le Quiz</button>
+
+        </div>
+    </div>
+
+    <script>
+        let answeredCount = 0;
+        const totalQuestions = 40;
+
+        function toggleAnswer(button) {
+            const answerSection = button.nextElementSibling;
+            const isShowing = answerSection.classList.contains('show');
+            
+            if (!isShowing) {
+                answerSection.classList.add('show');
+                button.textContent = 'Masquer la réponse';
+                button.style.background = 'linear-gradient(135deg, #95a5a6 0%, #7f8c8d 100%)';
+                
+                answeredCount++;
+                updateProgress();
+            } else {
+                answerSection.classList.remove('show');
+                button.textContent = 'Afficher la réponse';
+                button.style.background = 'linear-gradient(135deg, #f39c12 0%, #e67e22 100%)';
+                
+                answeredCount--;
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            document.getElementById('answered').textContent = answeredCount;
+            const percentage = (answeredCount / totalQuestions) * 100;
+            document.getElementById('progress').style.width = percentage + '%';
+            
+            if (answeredCount === totalQuestions) {
+                document.getElementById('completionMsg').classList.add('show');
+            } else {
+                document.getElementById('completionMsg').classList.remove('show');
+            }
+        }
+
+        function resetQuiz() {
+            const allButtons = document.querySelectorAll('.show-answer-btn');
+            const allAnswers = document.querySelectorAll('.answer-section');
+            
+            allButtons.forEach(button => {
+                button.textContent = 'Afficher la réponse';
+                button.style.background = 'linear-gradient(135deg, #f39c12 0%, #e67e22 100%)';
+            });
+            
+            allAnswers.forEach(answer => {
+                answer.classList.remove('show');
+            });
+            
+            answeredCount = 0;
+            updateProgress();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
