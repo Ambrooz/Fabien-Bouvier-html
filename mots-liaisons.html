@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELF B2 Junior : Les connecteurs logiques</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            line-height: 1.7;
+        }
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #667eea;
+            text-align: center;
+            border-bottom: 4px solid #764ba2;
+            padding-bottom: 15px;
+            font-size: 2.2em;
+        }
+        h2 {
+            color: #667eea;
+            margin-top: 35px;
+            padding-left: 15px;
+            border-left: 5px solid #764ba2;
+        }
+        h3 {
+            color: #764ba2;
+            margin-top: 25px;
+        }
+        .section {
+            background-color: #f8f9ff;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+        .dialogue {
+            background: linear-gradient(to right, #f8f9ff, #fff);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .dialogue p {
+            margin: 12px 0;
+            font-size: 1.05em;
+        }
+        .speaker {
+            font-weight: bold;
+            color: #667eea;
+        }
+        .connector {
+            background-color: #ffd93d;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+            color: #333;
+        }
+        .category-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        .category-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        .connector-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .connector-item {
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        .connector-term {
+            font-weight: bold;
+            color: #667eea;
+            font-size: 1.1em;
+        }
+        .connector-example {
+            color: #555;
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 0.95em;
+        }
+        .exercise {
+            background-color: #fff9e6;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border: 2px solid #ffd93d;
+        }
+        .exercise input[type="text"] {
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            width: 90%;
+            margin: 8px 0;
+            transition: border-color 0.3s;
+        }
+        .exercise input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        textarea {
+            width: 95%;
+            min-height: 120px;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 16px;
+            margin: 10px 0;
+            resize: vertical;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .show-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+        .show-btn:hover {
+            transform: scale(1.05);
+        }
+        .answer-box {
+            background: linear-gradient(to right, #d4fc79, #96e6a1);
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #27ae60;
+            display: none;
+        }
+        .answer-box.show {
+            display: block;
+        }
+        .tip-box {
+            background-color: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #2196f3;
+            margin: 15px 0;
+        }
+        .tip-icon {
+            color: #2196f3;
+            font-weight: bold;
+            font-size: 1.1em;
+        }
+        .warning-box {
+            background-color: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #ff9800;
+            margin: 15px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+        tr:hover {
+            background-color: #f8f9ff;
+        }
+        .exam-tip {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            color: #333;
+            font-weight: 500;
+        }
+        .level-badge {
+            background-color: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function toggleAnswer(id) {
+            var element = document.getElementById(id);
+            if (element.classList.contains('show')) {
+                element.classList.remove('show');
+            } else {
+                element.classList.add('show');
+            }
+        }
+    </script>
+    
+    <div class="container">
+        <h1>🎓 DELF B2 Junior</h1>
+        <h2 style="text-align: center; color: #764ba2; border: none; padding: 0;">Les connecteurs logiques et mots de liaison</h2>
+        <p style="text-align: center; color: #666; font-size: 1.1em;">Maîtrisez l'art de structurer vos arguments pour l'examen</p>
+
+        <div class="exam-tip">
+            <strong>🎯 Objectif DELF B2 :</strong> Savoir utiliser des connecteurs variés et précis pour structurer un texte argumentatif, présenter des opinions nuancées et organiser vos idées de manière cohérente à l'écrit comme à l'oral.
+        </div>
+
+        <div class="section">
+            <h2>💬 1. Dialogue : Débat sur l'utilisation des réseaux sociaux</h2>
+            <div class="dialogue">
+                <p><span class="speaker">Léa :</span> <span class="connector">À mon avis</span>, les réseaux sociaux sont devenus indispensables dans notre société. <span class="connector">En effet</span>, ils nous permettent de rester connectés avec nos amis et notre famille.</p>
+                
+                <p><span class="speaker">Tom :</span> <span class="connector">Certes</span>, c'est un avantage indéniable. <span class="connector">Cependant</span>, il ne faut pas ignorer les dangers. <span class="connector">D'une part</span>, ils créent une dépendance chez les jeunes. <span class="connector">D'autre part</span>, ils exposent nos données personnelles.</p>
+                
+                <p><span class="speaker">Léa :</span> <span class="connector">Bien que</span> ces risques existent, <span class="connector">je pense que</span> les bénéfices l'emportent. <span class="connector">Par exemple</span>, les réseaux sociaux facilitent la mobilisation pour des causes importantes. <span class="connector">De plus</span>, ils offrent des opportunités professionnelles.</p>
+                
+                <p><span class="speaker">Tom :</span> <span class="connector">Certes</span>, mais <span class="connector">en revanche</span>, ils propagent également de fausses informations. <span class="connector">C'est pourquoi</span> il est essentiel d'éduquer les jeunes à un usage responsable. <span class="connector">En outre</span>, les études montrent une corrélation entre leur utilisation excessive et l'anxiété.</p>
+                
+                <p><span class="speaker">Léa :</span> <span class="connector">Tout bien considéré</span>, <span class="connector">il me semble que</span> le problème ne vient pas des réseaux sociaux eux-mêmes <span class="connector">mais plutôt</span> de la façon dont on les utilise. <span class="connector">Ainsi</span>, <span class="connector">au lieu de</span> les interdire, on devrait apprendre à les utiliser intelligemment.</p>
+                
+                <p><span class="speaker">Tom :</span> <span class="connector">En définitive</span>, nous sommes d'accord sur un point : l'éducation est la clé. <span class="connector">Néanmoins</span>, <span class="connector">selon moi</span>, les plateformes elles-mêmes doivent assumer leur responsabilité. <span class="connector">Par conséquent</span>, une régulation plus stricte s'impose.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 2. Les connecteurs logiques par catégorie</h2>
+            
+            <table>
+                <tr>
+                    <th>Catégorie</th>
+                    <th>Connecteurs principaux</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><strong>ADDITION</strong></td>
+                    <td>De plus, en outre, par ailleurs, d'une part... d'autre part</td>
+                    <td>De plus, cela réduit les coûts.</td>
+                </tr>
+                <tr>
+                    <td><strong>OPPOSITION</strong></td>
+                    <td>Cependant, néanmoins, en revanche, bien que + subj.</td>
+                    <td>Cependant, je ne suis pas d'accord.</td>
+                </tr>
+                <tr>
+                    <td><strong>CAUSE</strong></td>
+                    <td>Car, en effet, étant donné que, puisque</td>
+                    <td>Il est absent car il est malade.</td>
+                </tr>
+                <tr>
+                    <td><strong>CONSÉQUENCE</strong></td>
+                    <td>Donc, par conséquent, ainsi, c'est pourquoi</td>
+                    <td>Ainsi, nous avons réussi.</td>
+                </tr>
+                <tr>
+                    <td><strong>BUT</strong></td>
+                    <td>Pour, afin de/que, dans le but de</td>
+                    <td>J'étudie pour réussir.</td>
+                </tr>
+                <tr>
+                    <td><strong>EXEMPLE</strong></td>
+                    <td>Par exemple, notamment, tel(le) que</td>
+                    <td>Plusieurs pays, notamment la France.</td>
+                </tr>
+                <tr>
+                    <td><strong>CONCLUSION</strong></td>
+                    <td>En conclusion, en définitive, bref, tout bien considéré</td>
+                    <td>En définitive, c'était positif.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🎯 3. Exprimer son opinion (essentiel pour le DELF B2)</h2>
+            
+            <table>
+                <tr>
+                    <th>Expression</th>
+                    <th>Niveau de certitude</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td><strong>À mon avis / Selon moi</strong></td>
+                    <td>Opinion personnelle</td>
+                    <td>À mon avis, cette solution est la meilleure.</td>
+                </tr>
+                <tr>
+                    <td><strong>Je pense / crois / estime que</strong></td>
+                    <td>Conviction moyenne</td>
+                    <td>Je pense qu'il faut changer d'approche.</td>
+                </tr>
+                <tr>
+                    <td><strong>Je suis convaincu(e) que</strong></td>
+                    <td>Forte conviction</td>
+                    <td>Je suis convaincu que nous réussirons.</td>
+                </tr>
+                <tr>
+                    <td><strong>Il me semble que</strong></td>
+                    <td>Opinion nuancée</td>
+                    <td>Il me semble que tu as raison.</td>
+                </tr>
+                <tr>
+                    <td><strong>Il est évident / clair que</strong></td>
+                    <td>Certitude</td>
+                    <td>Il est évident qu'il faut agir.</td>
+                </tr>
+                <tr>
+                    <td><strong>On ne peut nier que</strong></td>
+                    <td>Fait incontestable</td>
+                    <td>On ne peut nier que le climat change.</td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="tip-box">
+            <span class="tip-icon">💡 ASTUCE DELF B2 :</span> Variez vos connecteurs ! N'utilisez pas toujours "mais", "donc", "parce que". Les examinateurs apprécient la richesse lexicale.
+        </div>
+
+        <div class="section">
+            <h2>✏️ 4. Exercices</h2>
+
+            <h3>Exercice 1 : Identifiez la fonction du connecteur</h3>
+            <div class="exercise">
+                <p>Indiquez si le connecteur exprime : <strong>ADDITION, OPPOSITION, CAUSE, CONSÉQUENCE, BUT ou CONCLUSION</strong></p>
+                
+                <p>1. Il a travaillé dur. <u>Par conséquent</u>, il a réussi. → <input type="text"></p>
+                <p>2. <u>Bien qu'</u>il pleuve, je vais courir. → <input type="text"></p>
+                <p>3. J'étudie <u>afin de</u> réussir l'examen. → <input type="text"></p>
+                <p>4. J'aime le sport. <u>De plus</u>, c'est bon pour la santé. → <input type="text"></p>
+                <p>5. Il est absent <u>car</u> il est malade. → <input type="text"></p>
+                <p>6. <u>En définitive</u>, cette solution est la meilleure. → <input type="text"></p>
+                <p>7. <u>Néanmoins</u>, je ne suis pas d'accord. → <input type="text"></p>
+                <p>8. <u>Ainsi</u>, nous avons atteint nos objectifs. → <input type="text"></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex1-answers')">Voir les réponses</button>
+            <div id="ex1-answers" class="answer-box">
+                <strong>Réponses :</strong><br>
+                1. CONSÉQUENCE • 2. OPPOSITION • 3. BUT • 4. ADDITION • 5. CAUSE • 6. CONCLUSION • 7. OPPOSITION • 8. CONSÉQUENCE
+            </div>
+
+            <h3>Exercice 2 : Complétez avec le connecteur approprié</h3>
+            <div class="exercise">
+                <p><em>Choisissez parmi : cependant, en effet, par conséquent, de plus, c'est pourquoi, néanmoins, notamment, en définitive</em></p>
+                
+                <p>1. Les réseaux sociaux présentent des avantages. <input type="text" style="width: 200px;">, ils peuvent aussi être dangereux.</p>
+                
+                <p>2. Le réchauffement climatique est une réalité. <input type="text" style="width: 200px;">, les glaciers fondent rapidement.</p>
+                
+                <p>3. L'éducation est essentielle. <input type="text" style="width: 200px;">, elle doit être accessible à tous. <input type="text" style="width: 200px;">, il faut investir dans les écoles.</p>
+                
+                <p>4. Plusieurs pays européens, <input type="text" style="width: 200px;"> la France et l'Allemagne, ont adopté cette mesure.</p>
+                
+                <p>5. <input type="text" style="width: 200px;">, nous devons agir maintenant pour protéger notre planète.</p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex2-answers')">Voir les réponses</button>
+            <div id="ex2-answers" class="answer-box">
+                <strong>Réponses suggérées :</strong><br>
+                1. Cependant / Néanmoins<br>
+                2. En effet<br>
+                3. C'est pourquoi / Par conséquent<br>
+                4. notamment<br>
+                5. En définitive
+            </div>
+
+            <h3>Exercice 3 : Reliez les phrases avec le connecteur demandé</h3>
+            <div class="exercise">
+                <p>1. (OPPOSITION) Le sport est bénéfique. Beaucoup de gens n'en font pas.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>2. (CAUSE) Il a raté son train. Il s'est réveillé trop tard.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>3. (CONSÉQUENCE) La pollution augmente. La qualité de l'air se dégrade.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>4. (BUT) Elle étudie beaucoup. Elle veut devenir médecin.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>5. (ADDITION) Les transports en commun sont écologiques. Ils sont économiques.<br>
+                → <input type="text" style="width: 100%;"></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex3-answers')">Voir les réponses</button>
+            <div id="ex3-answers" class="answer-box">
+                <strong>Réponses suggérées :</strong><br>
+                1. Le sport est bénéfique. Cependant / Néanmoins / Pourtant, beaucoup de gens n'en font pas.<br>
+                2. Il a raté son train car / parce qu'il s'est réveillé trop tard.<br>
+                3. La pollution augmente. Par conséquent / Ainsi / C'est pourquoi, la qualité de l'air se dégrade.<br>
+                4. Elle étudie beaucoup pour / afin de devenir médecin.<br>
+                5. Les transports en commun sont écologiques. De plus / En outre / Par ailleurs, ils sont économiques.
+            </div>
+
+            <h3>Exercice 4 : Texte à compléter (Type DELF B2)</h3>
+            <div class="exercise">
+                <p><strong>Sujet :</strong> Les avantages et inconvénients du télétravail</p>
+                <p>Complétez le texte avec les connecteurs appropriés :</p>
+                
+                <textarea>
+Le télétravail s'est généralisé ces dernières années. __________, cette évolution soulève des questions importantes.
+
+__________, le télétravail présente de nombreux avantages. __________, il permet d'économiser du temps de transport. __________, les employés gagnent en flexibilité et peuvent mieux concilier vie professionnelle et personnelle.
+
+__________, cette pratique comporte aussi des inconvénients. __________, l'isolement social peut affecter la santé mentale des travailleurs. __________, la frontière entre vie privée et vie professionnelle devient floue.
+
+__________ ces difficultés, beaucoup d'entreprises continuent à favoriser le télétravail __________ il réduit leurs coûts immobiliers. __________, une solution hybride semble être le meilleur compromis. __________,  il est essentiel de trouver un équilibre adapté à chaque situation.
+                </textarea>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex4-answers')">Voir les réponses</button>
+            <div id="ex4-answers" class="answer-box">
+                <strong>Proposition de correction :</strong><br>
+                Le télétravail s'est généralisé ces dernières années. <strong>Cependant / Néanmoins</strong>, cette évolution soulève des questions importantes.<br><br>
+                
+                <strong>D'une part / En premier lieu</strong>, le télétravail présente de nombreux avantages. <strong>Par exemple / Notamment</strong>, il permet d'économiser du temps de transport. <strong>De plus / En outre</strong>, les employés gagnent en flexibilité et peuvent mieux concilier vie professionnelle et personnelle.<br><br>
+                
+                <strong>D'autre part / En revanche</strong>, cette pratique comporte aussi des inconvénients. <strong>En effet</strong>, l'isolement social peut affecter la santé mentale des travailleurs. <strong>Par ailleurs / De plus</strong>, la frontière entre vie privée et vie professionnelle devient floue.<br><br>
+                
+                <strong>Malgré / En dépit de</strong> ces difficultés, beaucoup d'entreprises continuent à favoriser le télétravail <strong>car / parce qu'</strong>il réduit leurs coûts immobiliers. <strong>Par conséquent / Ainsi</strong>, une solution hybride semble être le meilleur compromis. <strong>En définitive / Tout bien considéré</strong>, il est essentiel de trouver un équilibre adapté à chaque situation.
+            </div>
+
+            <h3>Exercice 5 : Transformez les phrases (Type production écrite DELF B2)</h3>
+            <div class="exercise">
+                <p><strong>Réécrivez ces phrases en utilisant le connecteur demandé :</strong></p>
+                
+                <p>1. Il pleut. Je prends mon parapluie. (CONSÉQUENCE)<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>2. Elle est fatiguée. Elle continue à travailler. (OPPOSITION avec "bien que")<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>3. Il veut réussir. Il étudie beaucoup. (BUT)<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>4. Les jeunes adorent les réseaux sociaux. Les adultes les utilisent de plus en plus. (ADDITION)<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>5. Le climat change. Les températures augmentent chaque année. (CAUSE)<br>
+                → <input type="text" style="width: 100%;"></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex5-answers')">Voir les réponses</button>
+            <div id="ex5-answers" class="answer-box">
+                <strong>Réponses suggérées :</strong><br>
+                1. Il pleut, par conséquent / donc / c'est pourquoi je prends mon parapluie.<br>
+                2. Bien qu'elle soit fatiguée, elle continue à travailler.<br>
+                3. Il étudie beaucoup pour / afin de / dans le but de réussir.<br>
+                4. Les jeunes adorent les réseaux sociaux. De plus / En outre / Par ailleurs, les adultes les utilisent de plus en plus.<br>
+                5. Le climat change car / parce que / étant donné que les températures augmentent chaque année.
+            </div>
+
+            <h3>Exercice 6 : Corrigez les erreurs de connecteurs</h3>
+            <div class="exercise">
+                <p><strong>Ces phrases contiennent des erreurs dans l'utilisation des connecteurs. Corrigez-les :</strong></p>
+                
+                <p>1. J'aime le sport donc je déteste courir.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>2. Malgré il est intelligent, il a échoué.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>3. Il travaille beaucoup pour il veut réussir.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>4. Par exemple, il fait beau aujourd'hui.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>5. Elle est malade. Ainsi, elle va à l'école.<br>
+                → <input type="text" style="width: 100%;"></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex6-answers')">Voir les réponses</button>
+            <div id="ex6-answers" class="answer-box">
+                <strong>Réponses :</strong><br>
+                1. J'aime le sport <strong>mais / cependant</strong> je déteste courir. (opposition, pas conséquence)<br>
+                2. <strong>Bien qu'</strong>il soit intelligent, il a échoué. (malgré + nom / bien que + subjonctif)<br>
+                3. Il travaille beaucoup <strong>parce qu'</strong>il veut réussir / <strong>pour</strong> réussir. (pour + infinitif / pour que + subj.)<br>
+                4. <strong>En effet / Aujourd'hui</strong>, il fait beau. ("par exemple" introduit un exemple, pas une constatation)<br>
+                5. Elle est malade. <strong>Cependant / Néanmoins / Pourtant</strong>, elle va à l'école. (opposition logique)
+            </div>
+
+            <h3>Exercice 7 : Choisissez le meilleur connecteur (QCM)</h3>
+            <div class="exercise">
+                <p>1. Le tabac est dangereux. _____, beaucoup de gens continuent à fumer.<br>
+                a) Donc  b) Car  c) Néanmoins  d) Ainsi<br>
+                Réponse : <input type="text" style="width: 100px;"></p>
+                
+                <p>2. _____ la crise économique, le chômage augmente.<br>
+                a) Malgré  b) À cause de  c) Bien que  d) Cependant<br>
+                Réponse : <input type="text" style="width: 100px;"></p>
+                
+                <p>3. Il faut protéger l'environnement _____ les générations futures puissent vivre dans un monde sain.<br>
+                a) pour  b) afin que  c) car  d) donc<br>
+                Réponse : <input type="text" style="width: 100px;"></p>
+                
+                <p>4. De nombreuses villes, _____ Paris et Lyon, investissent dans les transports écologiques.<br>
+                a) cependant  b) donc  c) notamment  d) néanmoins<br>
+                Réponse : <input type="text" style="width: 100px;"></p>
+                
+                <p>5. _____, nous devons repenser notre mode de consommation.<br>
+                a) Par exemple  b) En définitive  c) D'autre part  d) En effet<br>
+                Réponse : <input type="text" style="width: 100px;"></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex7-answers')">Voir les réponses</button>
+            <div id="ex7-answers" class="answer-box">
+                <strong>Réponses :</strong><br>
+                1. c) Néanmoins (opposition)<br>
+                2. b) À cause de (cause négative + nom)<br>
+                3. b) afin que (but + subjonctif)<br>
+                4. c) notamment (exemple)<br>
+                5. b) En définitive (conclusion)
+            </div>
+
+            <h3>Exercice 8 : Production écrite guidée (Type DELF B2)</h3>
+            <div class="exercise">
+                <p><strong>Sujet :</strong> Faut-il interdire les téléphones portables dans les écoles ?</p>
+                <p><strong>Consigne :</strong> Rédigez un court texte argumentatif (150-200 mots) en utilisant AU MINIMUM 8 connecteurs différents parmi ceux étudiés. Soulignez-les dans votre texte.</p>
+                
+                <textarea style="min-height: 200px;" placeholder="Écrivez votre texte ici..."></textarea>
+                
+                <div class="tip-box">
+                    <span class="tip-icon">💡 Structure suggérée :</span> Introduction (présentation du sujet) → Arguments pour → Arguments contre → Conclusion nuancée
+                </div>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex8-answers')">Voir un exemple de réponse</button>
+            <div id="ex8-answers" class="answer-box">
+                <strong>Exemple de réponse :</strong><br><br>
+                L'interdiction des téléphones portables dans les écoles fait débat. <strong>À mon avis</strong>, cette question mérite une réflexion approfondie.<br><br>
+                
+                <strong>D'une part</strong>, interdire les portables présente des avantages. <strong>En effet</strong>, ils perturbent les cours et favorisent la distraction. <strong>De plus</strong>, ils peuvent être utilisés pour le cyberharcèlement. <strong>Par conséquent</strong>, leur interdiction permettrait aux élèves de mieux se concentrer.<br><br>
+                
+                <strong>D'autre part</strong>, les téléphones peuvent être des outils pédagogiques utiles. <strong>Par exemple</strong>, ils permettent d'accéder rapidement à l'information. <strong>En outre</strong>, ils enseignent l'usage responsable des technologies.<br><br>
+                
+                <strong>Bien que</strong> les arguments pour l'interdiction soient valables, <strong>selon moi</strong>, une approche modérée serait préférable. <strong>Au lieu d'</strong>interdire totalement, on pourrait réglementer leur usage. <strong>En définitive</strong>, l'éducation au numérique reste la meilleure solution.
+            </div>
+
+            <h3>Exercice 9 : Enrichissement lexical - Remplacez les connecteurs basiques</h3>
+            <div class="exercise">
+                <p><strong>Remplacez les connecteurs trop simples par des alternatives plus sophistiquées :</strong></p>
+                
+                <p>1. Les jeunes passent trop de temps sur Internet. <u>Mais</u> c'est devenu indispensable.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>2. La pollution augmente. <u>Alors</u> nous devons agir.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>3. Il fait froid <u>parce qu'</u>il neige.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>4. J'aime lire. <u>Et aussi</u> j'aime écrire.<br>
+                → <input type="text" style="width: 100%;"></p>
+                
+                <p>5. <u>Pour finir</u>, cette solution est la meilleure.<br>
+                → <input type="text" style="width: 100%;"></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex9-answers')">Voir les réponses</button>
+            <div id="ex9-answers" class="answer-box">
+                <strong>Réponses suggérées :</strong><br>
+                1. Les jeunes passent trop de temps sur Internet. <strong>Cependant / Néanmoins / Toutefois</strong>, c'est devenu indispensable.<br>
+                2. La pollution augmente. <strong>Par conséquent / C'est pourquoi / Dès lors</strong>, nous devons agir.<br>
+                3. Il fait froid <strong>étant donné qu' / vu qu' / puisqu'</strong>il neige.<br>
+                4. J'aime lire. <strong>De plus / En outre / Par ailleurs</strong>, j'aime écrire.<br>
+                5. <strong>En définitive / En conclusion / Tout bien considéré</strong>, cette solution est la meilleure.
+            </div>
+
+            <h3>Exercice 10 : Analyse de texte argumentatif</h3>
+            <div class="exercise">
+                <p><strong>Lisez ce texte et identifiez tous les connecteurs logiques. Indiquez leur fonction :</strong></p>
+                
+                <div style="background-color: white; padding: 15px; border-radius: 5px; margin: 15px 0;">
+                    <p>La question du réchauffement climatique est urgente. <strong>En effet</strong>, les scientifiques sont unanimes : la planète se réchauffe à une vitesse alarmante. <strong>D'une part</strong>, les catastrophes naturelles se multiplient. <strong>D'autre part</strong>, de nombreuses espèces animales disparaissent. <strong>Par conséquent</strong>, il est impératif d'agir rapidement.</p>
+                    
+                    <p><strong>Certes</strong>, certains pays ont commencé à prendre des mesures. <strong>Néanmoins</strong>, ces efforts restent insuffisants. <strong>C'est pourquoi</strong> une mobilisation mondiale est nécessaire. <strong>En définitive</strong>, notre survie dépend de nos actions présentes.</p>
+                </div>
+                
+                <p>Complétez le tableau :</p>
+                <textarea style="min-height: 150px;" placeholder="Connecteur 1 : En effet - Fonction : CAUSE
+Connecteur 2 : ..."></textarea>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex10-answers')">Voir les réponses</button>
+            <div id="ex10-answers" class="answer-box">
+                <strong>Analyse des connecteurs :</strong><br>
+                1. <strong>En effet</strong> - CAUSE/JUSTIFICATION (explique pourquoi c'est urgent)<br>
+                2. <strong>D'une part</strong> - ADDITION/ÉNUMÉRATION (1er argument)<br>
+                3. <strong>D'autre part</strong> - ADDITION/ÉNUMÉRATION (2e argument)<br>
+                4. <strong>Par conséquent</strong> - CONSÉQUENCE (résultat logique)<br>
+                5. <strong>Certes</strong> - CONCESSION (reconnaît un point)<br>
+                6. <strong>Néanmoins</strong> - OPPOSITION (nuance l'affirmation précédente)<br>
+                7. <strong>C'est pourquoi</strong> - CONSÉQUENCE (conclusion logique)<br>
+                8. <strong>En définitive</strong> - CONCLUSION (synthèse finale)
+            </div>
+        </div>
+
+        <div class="section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <h2 style="color: white; border: none;">🎯 Conseils pour l'examen DELF B2</h2>
+            
+            <div style="background-color: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                <h3 style="color: white;">✅ À FAIRE :</h3>
+                <p>• Variez vos connecteurs (évitez de répéter "mais", "donc", "parce que")</p>
+                <p>• Utilisez au moins 6-8 connecteurs différents dans une production écrite</p>
+                <p>• Structurez clairement : introduction → arguments → conclusion</p>
+                <p>• Nuancez vos opinions avec "certes... mais", "bien que", "néanmoins"</p>
+                <p>• Relisez pour vérifier la cohérence logique</p>
+            </div>
+            
+            <div style="background-color: rgba(255,255,255,0.2); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                <h3 style="color: white;">❌ À ÉVITER :</h3>
+                <p>• Les connecteurs trop simples ou répétitifs</p>
+                <p>• Les erreurs de construction (ex: "malgré + verbe conjugué")</p>
+                <p>• L'absence de nuance (tout blanc ou tout noir)</p>
+                <p>• Les connecteurs mal placés dans la phrase</p>
+                <p>• Utiliser un connecteur sans comprendre son sens exact</p>
+            </div>
+        </div>
+
+        <h3>Exercice 11 : Débat écrit - Pour ou contre les devoirs à la maison ?</h3>
+            <div class="exercise">
+                <p><strong>Consigne :</strong> Écrivez un texte argumentatif structuré (200-250 mots) sur le sujet suivant :</p>
+                <div style="background-color: #667eea; color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    <strong>Sujet :</strong> Certaines écoles ont décidé de supprimer les devoirs à la maison. Pensez-vous que c'est une bonne décision ? Justifiez votre opinion avec des arguments précis.
+                </div>
+                
+                <p><strong>Critères d'évaluation (comme au DELF B2) :</strong></p>
+                <p>✓ Utilisez au moins 10 connecteurs logiques variés<br>
+                ✓ Présentez des arguments pour ET contre<br>
+                ✓ Donnez votre opinion personnelle nuancée<br>
+                ✓ Incluez au moins 2 exemples concrets<br>
+                ✓ Structurez clairement : introduction, développement, conclusion</p>
+                
+                <textarea style="min-height: 250px;" placeholder="Rédigez votre texte argumentatif ici..."></textarea>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex11-answers')">Voir un exemple de réponse</button>
+            <div id="ex11-answers" class="answer-box">
+                <strong>Exemple de réponse (B2) :</strong><br><br>
+                
+                La question des devoirs à la maison divise les parents et les enseignants. <strong>Selon moi</strong>, cette décision comporte à la fois des avantages et des inconvénients qu'il convient d'examiner.<br><br>
+                
+                <strong>D'une part</strong>, supprimer les devoirs présente des bénéfices indéniables. <strong>En effet</strong>, les élèves pourraient profiter davantage de leur temps libre pour pratiquer des activités sportives ou artistiques. <strong>De plus</strong>, cela réduirait le stress des familles, <strong>notamment</strong> celles où les parents travaillent tard. <strong>Par ailleurs</strong>, certaines études montrent que les devoirs ne garantissent pas toujours de meilleurs résultats scolaires.<br><br>
+                
+                <strong>D'autre part</strong>, les devoirs jouent un rôle important dans l'apprentissage. <strong>Tout d'abord</strong>, ils permettent aux élèves de consolider leurs connaissances. <strong>En outre</strong>, ils développent l'autonomie et le sens des responsabilités. <strong>C'est pourquoi</strong> une suppression totale pourrait désavantager certains élèves.<br><br>
+                
+                <strong>Bien que</strong> je comprenne les arguments en faveur de la suppression, <strong>je pense que</strong> la solution idéale serait un compromis. <strong>Au lieu d'</strong>éliminer complètement les devoirs, on pourrait en réduire la quantité et les adapter selon l'âge. <strong>En définitive</strong>, l'équilibre entre travail scolaire et bien-être reste essentiel pour la réussite des élèves.
+            </div>
+
+            <h3>Exercice 12 : Reconstruction de texte - Remettez dans l'ordre</h3>
+            <div class="exercise">
+                <p><strong>Les phrases suivantes sont dans le désordre. Numérotez-les de 1 à 8 pour reconstituer un texte cohérent :</strong></p>
+                
+                <p><input type="text" style="width: 50px;"> Par conséquent, de nombreuses espèces marines sont menacées.</p>
+                
+                <p><input type="text" style="width: 50px;"> La pollution des océans constitue un problème majeur pour notre planète.</p>
+                
+                <p><input type="text" style="width: 50px;"> En définitive, nous devons tous agir pour protéger nos océans.</p>
+                
+                <p><input type="text" style="width: 50px;"> Néanmoins, des solutions existent, notamment le recyclage et la réduction des plastiques.</p>
+                
+                <p><input type="text" style="width: 50px;"> De plus, cette pollution affecte également la santé humaine.</p>
+                
+                <p><input type="text" style="width: 50px;"> En effet, des millions de tonnes de déchets plastiques se retrouvent chaque année dans les mers.</p>
+                
+                <p><input type="text" style="width: 50px;"> D'autre part, les gouvernements doivent imposer des réglementations plus strictes.</p>
+                
+                <p><input type="text" style="width: 50px;"> C'est pourquoi il est urgent de sensibiliser le public à ce problème.</p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex12-answers')">Voir les réponses</button>
+            <div id="ex12-answers" class="answer-box">
+                <strong>Ordre correct :</strong><br>
+                1. La pollution des océans constitue un problème majeur pour notre planète.<br>
+                2. En effet, des millions de tonnes de déchets plastiques se retrouvent chaque année dans les mers.<br>
+                3. Par conséquent, de nombreuses espèces marines sont menacées.<br>
+                4. De plus, cette pollution affecte également la santé humaine.<br>
+                5. C'est pourquoi il est urgent de sensibiliser le public à ce problème.<br>
+                6. Néanmoins, des solutions existent, notamment le recyclage et la réduction des plastiques.<br>
+                7. D'autre part, les gouvernements doivent imposer des réglementations plus strictes.<br>
+                8. En définitive, nous devons tous agir pour protéger nos océans.
+            </div>
+
+            <h3>Exercice 13 : Synthèse de documents (Type épreuve DELF B2)</h3>
+            <div class="exercise">
+                <p><strong>Situation :</strong> Vous avez lu deux articles avec des opinions opposées sur l'uniforme scolaire. Rédigez une synthèse objective (150 mots) présentant les deux points de vue.</p>
+                
+                <div style="background-color: #fff; padding: 15px; border-left: 4px solid #667eea; margin: 15px 0;">
+                    <strong>Article 1 - Pour l'uniforme :</strong><br>
+                    L'uniforme scolaire favorise l'égalité entre élèves et réduit les discriminations liées à l'apparence. Il simplifie le quotidien des familles et renforce le sentiment d'appartenance à l'établissement.
+                </div>
+                
+                <div style="background-color: #fff; padding: 15px; border-left: 4px solid #764ba2; margin: 15px 0;">
+                    <strong>Article 2 - Contre l'uniforme :</strong><br>
+                    L'uniforme bride la créativité et l'expression personnelle des jeunes. Il représente un coût financier important pour les familles et ne résout pas les vrais problèmes de harcèlement scolaire.
+                </div>
+                
+                <textarea style="min-height: 180px;" placeholder="Rédigez votre synthèse en restant objectif et en utilisant des connecteurs variés..."></textarea>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex13-answers')">Voir un exemple de réponse</button>
+            <div id="ex13-answers" class="answer-box">
+                <strong>Exemple de synthèse objective :</strong><br><br>
+                
+                La question de l'uniforme scolaire suscite des débats contradictoires.<br><br>
+                
+                <strong>D'un côté</strong>, ses défenseurs avancent plusieurs arguments. <strong>Tout d'abord</strong>, l'uniforme favoriserait l'égalité entre élèves en réduisant les discriminations vestimentaires. <strong>De plus</strong>, il simplifierait le quotidien des familles. <strong>En outre</strong>, il renforcerait le sentiment d'appartenance à l'établissement.<br><br>
+                
+                <strong>De l'autre côté</strong>, ses opposants soulèvent des objections importantes. <strong>Selon eux</strong>, l'uniforme entraverait la créativité et l'expression personnelle des jeunes. <strong>Par ailleurs</strong>, il représenterait un coût financier considérable. <strong>Enfin</strong>, il ne résoudrait pas les problèmes de harcèlement scolaire.<br><br>
+                
+                <strong>Ainsi</strong>, cette question divise les opinions entre ceux qui y voient un outil d'égalité et ceux qui le considèrent comme une contrainte inutile.
+            </div>
+
+            <h3>Exercice 14 : Les pièges à éviter - Vrai ou Faux</h3>
+            <div class="exercise">
+                <p><strong>Indiquez si ces affirmations sont VRAIES ou FAUSSES :</strong></p>
+                
+                <p>1. On peut utiliser "malgré" suivi d'un verbe conjugué. <input type="text" style="width: 100px;"></p>
+                
+                <p>2. "Bien que" est toujours suivi du subjonctif. <input type="text" style="width: 100px;"></p>
+                
+                <p>3. "Par exemple" peut être utilisé pour conclure un texte. <input type="text" style="width: 100px;"></p>
+                
+                <p>4. "En effet" et "donc" ont la même fonction. <input type="text" style="width: 100px;"></p>
+                
+                <p>5. On peut commencer plusieurs phrases d'affilée par "De plus". <input type="text" style="width: 100px;"></p>
+                
+                <p>6. "Certes... mais" permet de nuancer son propos. <input type="text" style="width: 100px;"></p>
+                
+                <p>7. "Au lieu de" est suivi d'un infinitif. <input type="text" style="width: 100px;"></p>
+                
+                <p>8. "C'est pourquoi" exprime la cause. <input type="text" style="width: 100px;"></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex14-answers')">Voir les réponses</button>
+            <div id="ex14-answers" class="answer-box">
+                <strong>Réponses et explications :</strong><br>
+                1. <strong>FAUX</strong> - "Malgré" + nom / "Bien que" + subjonctif<br>
+                2. <strong>VRAI</strong> - Toujours : bien qu'il soit, bien qu'elle fasse...<br>
+                3. <strong>FAUX</strong> - "Par exemple" introduit un exemple, pas une conclusion<br>
+                4. <strong>FAUX</strong> - "En effet" = cause/justification / "donc" = conséquence<br>
+                5. <strong>FAUX</strong> - Il faut varier : de plus, en outre, par ailleurs...<br>
+                6. <strong>VRAI</strong> - C'est un outil de concession essentiel<br>
+                7. <strong>VRAI</strong> - Au lieu de partir, au lieu d'attendre...<br>
+                8. <strong>FAUX</strong> - "C'est pourquoi" exprime la CONSÉQUENCE
+            </div>
+
+            <h3>Exercice 15 : Expression orale - Préparez un monologue</h3>
+            <div class="exercise">
+                <p><strong>Sujet d'expression orale (Type DELF B2) :</strong></p>
+                <div style="background-color: #667eea; color: white; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                    De plus en plus de jeunes préfèrent regarder des vidéos en ligne plutôt que de lire des livres. Que pensez-vous de cette évolution ?
+                </div>
+                
+                <p><strong>Préparez un plan détaillé (3 minutes de présentation) :</strong></p>
+                
+                <p><strong>INTRODUCTION :</strong><br>
+                <textarea style="min-height: 60px;" placeholder="Présentez le sujet et annoncez votre plan..."></textarea></p>
+                
+                <p><strong>DÉVELOPPEMENT - Arguments :</strong><br>
+                <textarea style="min-height: 100px;" placeholder="Listez vos arguments avec des connecteurs (D'une part... D'autre part... En outre...)"></textarea></p>
+                
+                <p><strong>CONCLUSION :</strong><br>
+                <textarea style="min-height: 60px;" placeholder="Résumez votre position (En définitive... Selon moi...)"></textarea></p>
+            </div>
+            
+            <button class="show-btn" onclick="toggleAnswer('ex15-answers')">Voir un plan modèle</button>
+            <div id="ex15-answers" class="answer-box">
+                <strong>Plan modèle :</strong><br><br>
+                
+                <strong>INTRODUCTION :</strong><br>
+                De nos jours, la lecture traditionnelle perd du terrain face aux contenus numériques. <strong>Selon moi</strong>, cette évolution soulève des questions importantes. <strong>Je vais donc</strong> examiner les avantages et inconvénients de cette tendance.<br><br>
+                
+                <strong>DÉVELOPPEMENT :</strong><br>
+                <strong>D'une part</strong>, les vidéos offrent des avantages indéniables. <strong>Tout d'abord</strong>, elles rendent l'apprentissage plus dynamique et visuel. <strong>De plus</strong>, elles sont facilement accessibles. <strong>Par exemple</strong>, on peut apprendre une langue via YouTube.<br><br>
+                
+                <strong>D'autre part</strong>, la lecture possède des bénéfices irremplaçables. <strong>En effet</strong>, elle développe l'imagination et la concentration. <strong>En outre</strong>, elle enrichit le vocabulaire. <strong>Néanmoins</strong>, elle demande plus d'efforts.<br><br>
+                
+                <strong>CONCLUSION :</strong><br>
+                <strong>Bien que</strong> les vidéos soient pratiques, <strong>je pense que</strong> la lecture reste essentielle. <strong>En définitive</strong>, l'idéal serait de combiner les deux supports. <strong>Ainsi</strong>, on bénéficierait des avantages de chacun.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 Grille d'auto-évaluation DELF B2</h2>
+            <p>Évaluez vos productions écrites avec cette grille :</p>
+            
+            <table>
+                <tr>
+                    <th style="width: 50%;">Critère</th>
+                    <th>Points</th>
+                    <th>Ma note</th>
+                </tr>
+                <tr>
+                    <td><strong>Richesse des connecteurs</strong><br>J'utilise au moins 8 connecteurs variés</td>
+                    <td>/5</td>
+                    <td style="background-color: #f0f0f0;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Correction grammaticale</strong><br>Mes connecteurs sont bien construits (malgré + nom, bien que + subj.)</td>
+                    <td>/5</td>
+                    <td style="background-color: #f0f0f0;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Cohérence logique</strong><br>Mes connecteurs sont bien choisis et au bon endroit</td>
+                    <td>/5</td>
+                    <td style="background-color: #f0f0f0;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Structure du texte</strong><br>Introduction, développement argumenté, conclusion</td>
+                    <td>/5</td>
+                    <td style="background-color: #f0f0f0;"></td>
+                </tr>
+                <tr>
+                    <td><strong>Nuance de l'opinion</strong><br>J'utilise "certes...mais", "bien que", opinions modérées</td>
+                    <td>/5</td>
+                    <td style="background-color: #f0f0f0;"></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>TOTAL</strong></td>
+                    <td style="background-color: #667eea; color: white; font-weight: bold;">/25</td>
+                </tr>
+            </table>
+            
+            <div class="tip-box">
+                <strong>Barème :</strong> 20-25 = Excellent niveau B2 | 15-19 = Bon niveau B2 | 10-14 = Niveau B2 à consolider | Moins de 10 = Révisions nécessaires
+            </div>
+        </div>
+
+        <div class="section" style="background-color: #e8f4f8; text-align: center;">
+            <h2>🎉 Félicitations !</h2>
+            <p style="font-size: 1.1em;">Vous avez terminé cette leçon complète sur les connecteurs logiques niveau B2.</p>
+            <p><strong>Prochain défi :</strong> Essayez d'utiliser au moins 10 connecteurs différents dans votre prochaine production écrite !</p>
+            <div class="level-badge">NIVEAU B2</div>
+            <div class="level-badge">DELF B2 JUNIOR</div>
+            <div class="level-badge">15 EXERCICES</div>
+        </div>
