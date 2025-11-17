@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Parfum des fleurs la nuit - Leïla Slimani</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #667eea;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            color: #764ba2;
+            font-size: 1.3em;
+            font-style: italic;
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+            padding: 20px;
+            border-left: 5px solid #667eea;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .info-box h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .text-extrait {
+            background: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 30px 0;
+            border: 2px solid #e0e0e0;
+            font-size: 1.05em;
+            line-height: 2;
+            text-align: justify;
+        }
+        
+        .section {
+            margin: 40px 0;
+        }
+        
+        .section h2 {
+            color: #764ba2;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #764ba2;
+        }
+        
+        .section h3 {
+            color: #667eea;
+            font-size: 1.4em;
+            margin: 25px 0 15px 0;
+        }
+        
+        .question {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+            transform: translateX(5px);
+        }
+        
+        .question-text {
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            color: #555;
+        }
+        
+        .answer.show {
+            max-height: 1000px;
+        }
+        
+        .toggle-icon {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .lexique-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .lexique-item {
+            background: linear-gradient(135deg, #f6f8fb 0%, #e9ecef 100%);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+        }
+        
+        .lexique-term {
+            font-weight: bold;
+            color: #764ba2;
+            font-size: 1.1em;
+        }
+        
+        .lexique-def {
+            margin-top: 8px;
+            color: #555;
+        }
+        
+        .references {
+            background: linear-gradient(135deg, #fff5f5 0%, #ffe9e9 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .reference-item {
+            margin: 15px 0;
+            padding-left: 20px;
+            border-left: 3px solid #e74c3c;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+        
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+        
+        .writing-section {
+            background: linear-gradient(135deg, #fff9e6 0%, #ffe9cc 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .criteria {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border-left: 4px solid #f39c12;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .lexique-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Le Parfum des fleurs la nuit</h1>
+            <p class="subtitle">Leïla Slimani - Séquence pédagogique</p>
+            <p style="margin-top: 15px; color: #666;">Extrait pages 71-75 (Édition Gallimard Folio n°7073, 2021)</p>
+        </header>
+
+        <div class="info-box">
+            <h3>📚 Dominantes</h3>
+            <p>Lecture analytique - Écriture</p>
+            <h3 style="margin-top: 15px;">🎯 Objectifs</h3>
+            <ul style="margin-left: 20px; margin-top: 10px;">
+                <li>Analyser l'évocation autobiographique et sensorielle</li>
+                <li>Comprendre la symbolique de la nuit dans la construction identitaire</li>
+                <li>Rédiger un texte argumenté sur la liberté et les transgressions</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📖 Texte intégral</h2>
+            <div class="text-extrait">
+                <p>Au centre du musée, se dressent de grands monolithes noirs, éclairés de l'intérieur. À travers les vitres teintées de ces terrariums géants, on aperçoit les branches et les feuilles du galant de nuit appelé aussi « mesk el arabi ». Je marche entre ces terrariums comme dans une forêt de verre où la nature est tenue prisonnière. Je connais bien cet arbre. Au Maroc, c'est une plante familière, chantée par les poètes et tous les amoureux. Elle a pour particularité de dégager l'odeur la plus forte du règne végétal et, comme le datura, autre arbre qui enfant me fascinait, ses fleurs ne s'ouvrent que la nuit. Je songe que la nature a des tours étranges. Les fleurs n'apparaissent qu'une fois l'ombre venue, comme si l'arbre voulait préserver sa beauté, la garder secrète, ne pas l'exposer aux regards comme je rêve, moi aussi, de me tenir loin du monde. Son parfum est réservé aux heures nocturnes. Est-ce une façon de dialoguer avec les insectes de la nuit ? Est-ce parce que c'est dans le noir que les parfums révèlent le mieux leur puissance, leur profondeur ? Hicham Berrada, qui a conçu cette installation, a choisi d'inverser le cycle de la plante. Durant la journée, le terrarium reste opaque, le jasmin est plongé dans l'obscurité mais l'odeur embaume le musée. La nuit, au contraire, l'éclairage au sodium reproduit les conditions d'une journée d'été ensoleillée. Tout est inversé, sens dessus dessous, l'artiste là encore se fait démiurge, apprenti sorcier, illusionniste. Je pense à ce que Tchekhov dit des grands écrivains. Ce sont ceux qui font surgir la neige en plein été et qui décrivent si bien les flocons que vous vous sentez saisi par le froid et que vous frissonnez.</p>
+
+                <p>À Rabat, il y avait un galant de nuit près de la porte d'entrée de ma maison. En été, quand le soir tombait, nous gardions la fenêtre ouverte pour provoquer des courants d'air et mon père disait : « Vous sentez ? C'est le galant de nuit ! » Année après année, cela ne cessait de l'émerveiller. Il suffit que je ferme les yeux pour me souvenir de ce parfum entêtant et sucré. Les larmes me montent aux paupières. Les voilà, mes revenants. La voilà, l'odeur du pays de l'enfance, disparu, englouti.</p>
+
+                <p>Je m'appelle la nuit. Tel est le sens de mon prénom, Leïla, en arabe. Mais je doute que cela suffise à expliquer l'attirance que j'ai eue, très tôt, pour la vie nocturne. Le jour, chacun se comportait selon ce qu'on attendait de lui. On voulait sauver les apparences, se présenter sous les traits de la vertu, du conformisme, de la bienséance. À mes yeux d'enfant, les heures du jour étaient consacrées aux activités triviales et répétitives. C'était le territoire de l'ennui et des obligations. Puis la nuit arrivait. On nous envoyait nous coucher et je soupçonnais que, pendant notre sommeil, d'autres acteurs montaient sur scène. Les gens s'exprimaient d'une autre façon, les femmes étaient belles, elles avaient relevé leurs cheveux, elles montraient leur peau brillante et parfumée. Elles me semblaient à la fois fragiles, quand elles buvaient trop, quand elles riaient mais il émanait d'elles, aussi, une force invincible. Ces métamorphoses m'émerveillaient.</p>
+
+                <p>Et quand j'ai eu l'âge de sortir, ou même un peu avant, une sorte de rage s'est emparée de moi. Une urgence, une faim qui m'enjoignaient de traverser la nuit moi aussi. Je ne voulais pas être une petite fille sage. Le galant de nuit c'est l'odeur de mes mensonges, de mes amours adolescentes, des cigarettes fumées en cachette et des fêtes interdites. C'est le parfum de la liberté. L'arbre était là, juste devant la porte en fer que je poussais, le plus doucement possible, pour aller retrouver mes amis. Je quittais la maison la nuit et rentrais au petit matin, accueillie par le même parfum. Puissant dans l'ombre, évanescent quand l'aube se levait.</p>
+
+                <p>À l'adolescence, je découvrais les bars, les cabarets, les discothèques, les fêtes dans un cabanon sur la plage, les rues sombres et vides de ma capitale torpide. À une certaine heure de la nuit, les gentilles filles retournaient chez elles et les autres entraient en scène. À cette époque, les prostituées m'ont fascinée, troublée, bouleversée. Dans un cabaret, près de Mohammedia, des hommes gros et libidineux étaient assis devant une scène sur laquelle des femmes aux cuisses flasques dansaient. Les hommes les attiraient sur leurs genoux, leur servaient un verre de mauvais whisky et les embrassaient dans le cou. Je me souviens d'une femme qui s'est déshabillée devant moi dans les toilettes d'un bar à Tanger et qui riait de la méchanceté des clients et de leur bêtise. J'étais grisée par ma liberté et, en même temps, j'avais peur. Je me disais que je serais punie de ne pas savoir me tenir à ma place. Que, s'il m'arrivait quelque chose, je l'aurais bien cherché. La nuit, quand les garçons s'amusaient à faire des courses de voitures à contresens sur l'autoroute entre Rabat et Casablanca, je pensais : « Tu ne dois pas mourir parce que ça tuerait maman. » Mais, comme Blanche dans Un tramway nommé Désir, j'ai pu compter souvent sur la bonté des inconnus. Un soir, dans un bar de Casablanca, j'attendais des amis et j'étais la seule fille. Le barman m'a dit qu'il fallait toujours s'asseoir au comptoir, le plus près possible du serveur. « Le secret, m'a-t-il confié, c'est d'avoir ton propre briquet. Si tu demandes du feu à un homme, il va croire que tu veux engager la conversation et il se sentira en droit de te draguer. Tu ne pourras plus t'en débarrasser. Alors si tu fumes, aie toujours un briquet. »</p>
+
+                <p>Ce monde a disparu. Et je ne veux pas le déflorer. Il deviendra un roman peut-être car seule la littérature pourrait faire ressurgir ces vies englouties. Cela fait vingt ans que j'ai quitté mon pays et j'éprouve une espèce de mélancolie, un sentiment de m'être éloignée à jamais des sensations de mon enfance.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 Lexique</h2>
+            <div class="lexique-grid">
+                <div class="lexique-item">
+                    <div class="lexique-term">Galant de nuit</div>
+                    <div class="lexique-def">Jasmin d'Arabie (Cestrum nocturnum), plante aux fleurs blanches qui s'ouvrent la nuit et dégagent un parfum très intense. En arabe : "mesk el arabi".</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Terrarium</div>
+                    <div class="lexique-def">Espace clos, transparent, où l'on cultive des plantes en recréant leur environnement naturel.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Datura</div>
+                    <div class="lexique-def">Plante toxique aux fleurs en forme de trompettes qui s'ouvrent la nuit. Utilisée dans certaines cultures pour ses propriétés hallucinogènes.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Démiurge</div>
+                    <div class="lexique-def">Créateur, organisateur d'un monde. Dans la philosophie platonicienne, divinité qui organise le chaos initial.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Entêtant</div>
+                    <div class="lexique-def">Qui monte à la tête, qui envahit les sens par sa puissance (en parlant d'une odeur).</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Revenants</div>
+                    <div class="lexique-def">Ici, souvenirs qui reviennent hanter la mémoire, fantômes du passé qui ressurgissent.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Bienséance</div>
+                    <div class="lexique-def">Respect des règles de la politesse et de la morale sociale, des convenances.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Triviales</div>
+                    <div class="lexique-def">Banales, ordinaires, sans intérêt particulier.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Évanescent</div>
+                    <div class="lexique-def">Qui s'évanouit, disparaît progressivement, qui est fugitif et léger.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Torpide</div>
+                    <div class="lexique-def">Engourdi, comme assoupi, qui semble endormi ou ralenti.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Libidineux</div>
+                    <div class="lexique-def">Qui est dominé par le désir sexuel, lubrique.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Grisée</div>
+                    <div class="lexique-def">Enivrée, étourdie par une sensation agréable (comme par l'alcool).</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Déflorer</div>
+                    <div class="lexique-def">Ici au sens figuré : altérer la pureté, la fraîcheur, l'innocence d'un souvenir en le racontant.</div>
+                </div>
+                <div class="lexique-item">
+                    <div class="lexique-term">Englouti</div>
+                    <div class="lexique-def">Disparu, submergé, avalé comme par les flots. Métaphore de l'oubli et de la disparition.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🎭 Références littéraires et culturelles</h2>
+            
+            <div class="references">
+                <div class="reference-item">
+                    <h4>Anton Tchekhov (1860-1904)</h4>
+                    <p>Écrivain et dramaturge russe, maître de la nouvelle. Slimani fait référence à sa conception de l'écriture : les grands écrivains sont ceux qui peuvent "faire surgir la neige en plein été", c'est-à-dire créer des sensations si puissantes qu'elles deviennent réelles pour le lecteur.</p>
+                </div>
+
+                <div class="reference-item">
+                    <h4>Un tramway nommé Désir (1947) - Tennessee Williams</h4>
+                    <p>Pièce de théâtre américaine dont l'héroïne, Blanche DuBois, prononce la célèbre réplique : "J'ai toujours compté sur la bonté des étrangers". Personnage fragile et déchu, en quête de dignité et de protection. Slimani établit un parallèle avec sa propre vulnérabilité lors de ses sorties nocturnes.</p>
+                </div>
+
+                <div class="reference-item">
+                    <h4>Hicham Berrada (1986-)</h4>
+                    <p>Artiste contemporain franco-marocain. Son travail explore les processus naturels et leur manipulation artistique. L'installation évoquée dans le texte inverse le cycle naturel du galant de nuit, créant une expérience sensorielle déstabilisante.</p>
+                </div>
+
+                <div class="reference-item">
+                    <h4>Contexte historique : Le Maroc des années 1990-2000</h4>
+                    <p>Slimani évoque son adolescence au Maroc, pays alors marqué par le règne d'Hassan II (jusqu'en 1999), période de tensions entre modernité et tradition, entre conformisme social et aspirations à la liberté individuelle. La vie nocturne devient un espace de transgression pour la jeunesse urbaine.</p>
+                </div>
+
+                <div class="reference-item">
+                    <h4>Géographie : Rabat, Casablanca, Tanger, Mohammedia</h4>
+                    <p><strong>Rabat</strong> : capitale administrative et politique du Maroc<br>
+                    <strong>Casablanca</strong> : capitale économique, ville cosmopolite<br>
+                    <strong>Tanger</strong> : ville portuaire du nord, historiquement lieu de liberté et de bohème<br>
+                    <strong>Mohammedia</strong> : ville côtière entre Rabat et Casablanca</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>❓ Questions de compréhension</h2>
+            
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    1. Où se déroule la scène d'ouverture du texte ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    La scène se déroule dans un musée, devant une installation artistique d'Hicham Berrada composée de grands terrariums contenant des galants de nuit. La narratrice observe cette œuvre qui lui rappelle son enfance marocaine.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    2. Quelle est la particularité du galant de nuit ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Le galant de nuit possède plusieurs particularités : il dégage "l'odeur la plus forte du règne végétal", ses fleurs ne s'ouvrent que la nuit (comme le datura), et son parfum est donc "réservé aux heures nocturnes". C'est une plante chantée par les poètes au Maroc.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    3. Comment l'artiste Hicham Berrada a-t-il transformé le cycle naturel de la plante ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Hicham Berrada a inversé le cycle naturel : durant la journée, le terrarium reste opaque et le jasmin est plongé dans l'obscurité (mais son odeur embaume le musée). La nuit, au contraire, un éclairage artificiel reproduit les conditions d'une journée d'été ensoleillée. "Tout est inversé, sens dessus dessous".
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    4. Quel souvenir d'enfance est évoqué par le parfum du galant de nuit ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Le parfum évoque un souvenir précis : à Rabat, il y avait un galant de nuit près de la porte d'entrée de la maison familiale. En été, le soir, son père disait : "Vous sentez ? C'est le galant de nuit !", et cela l'émerveillait année après année. Ce souvenir émeut profondément la narratrice : "Les larmes me montent aux paupières".
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    5. Que signifie le prénom "Leïla" en arabe ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Le prénom "Leïla" signifie "la nuit" en arabe. La narratrice écrit : "Je m'appelle la nuit. Tel est le sens de mon prénom, Leïla, en arabe." Cependant, elle doute que cela suffise à expliquer son attirance pour la vie nocturne.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    6. Comment la narratrice oppose-t-elle le jour et la nuit dans son enfance ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Le jour</strong> est associé au conformisme ("sauver les apparences"), aux "activités triviales et répétitives", au "territoire de l'ennui et des obligations". <br><br>
+                    <strong>La nuit</strong> est le moment des métamorphoses, où "les femmes étaient belles", où les gens s'exprimaient différemment. C'était un monde fascinant, mystérieux, dont les enfants étaient exclus mais qu'elle désirait ardemment découvrir.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    7. Quels sentiments contradictoires la narratrice éprouve-t-elle lors de ses sorties nocturnes ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Elle éprouve à la fois la griserie de la liberté et la peur de la punition. Elle écrit : "J'étais grisée par ma liberté et, en même temps, j'avais peur. Je me disais que je serais punie de ne pas savoir me tenir à ma place." Elle ressent aussi de la culpabilité vis-à-vis de sa mère, pensant lors des situations dangereuses : "Tu ne dois pas mourir parce que ça tuerait maman."
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    8. Quelle référence littéraire la narratrice mentionne-t-elle pour évoquer sa confiance envers les inconnus ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Elle fait référence à Blanche, personnage de la pièce "Un tramway nommé Désir" de Tennessee Williams, qui dit : "J'ai toujours compté sur la bonté des étrangers." Cette référence souligne à la fois sa vulnérabilité et les protections inattendues qu'elle a reçues (comme le conseil du barman sur le briquet).
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    9. Pourquoi la narratrice refuse-t-elle de "déflorer" ce monde disparu ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Elle veut préserver l'intégrité et la pureté de ces souvenirs. "Déflorer" signifierait les altérer en les racontant de manière triviale. Elle pense que "seule la littérature pourrait faire ressurgir ces vies englouties" - la forme romanesque serait la seule manière digne de restituer ce passé sans le trahir.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    10. Quel sentiment domine à la fin du texte ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    La mélancolie et la nostalgie dominent : "Cela fait vingt ans que j'ai quitté mon pays et j'éprouve une espèce de mélancolie, un sentiment de m'être éloignée à jamais des sensations de mon enfance." L'exil est vécu comme une séparation définitive d'avec le monde sensoriel et affectif de l'enfance.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📝 Questions de grammaire</h2>
+            
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    1. "Je marche entre ces terrariums comme dans une forêt de verre" - Identifiez et analysez la comparaison.
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Comparaison :</strong> "comme dans une forêt de verre"<br>
+                    <strong>Comparé :</strong> "ces terrariums"<br>
+                    <strong>Outil de comparaison :</strong> "comme"<br>
+                    <strong>Comparant :</strong> "une forêt de verre"<br>
+                    <strong>Effet :</strong> Cette comparaison crée une image poétique et paradoxale (la forêt, élément naturel, devient artificielle avec le verre). Elle souligne l'enfermement de la nature et crée une atmosphère étrange, presque inquiétante.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    2. "Les larmes me montent aux paupières" - Analysez la construction de cette phrase et son effet.
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Sujet :</strong> "Les larmes" (sujet inversé, placé avant le verbe)<br>
+                    <strong>Verbe :</strong> "montent" (verbe de mouvement au présent de l'indicatif)<br>
+                    <strong>COI :</strong> "me" (pronom personnel complément d'objet indirect)<br>
+                    <strong>Complément de lieu :</strong> "aux paupières"<br>
+                    <strong>Effet :</strong> La construction avec le sujet inversé crée un effet de surprise et de soudaineté. Le verbe "monter" suggère un mouvement irrépressible de l'émotion. L'image est physique et sensible, montrant l'intensité de l'émotion déclenchée par la mémoire olfactive.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    3. Relevez trois phrases interrogatives dans le premier paragraphe. Quelle est leur fonction ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Trois interrogations :</strong><br>
+                    1. "Est-ce une façon de dialoguer avec les insectes de la nuit ?"<br>
+                    2. "Est-ce parce que c'est dans le noir que les parfums révèlent le mieux leur puissance, leur profondeur ?"<br>
+                    <strong>Fonction :</strong> Ce sont des interrogations rhétoriques (ou délibératives) qui n'attendent pas de réponse précise. Elles traduisent la réflexion intérieure de la narratrice, son questionnement face aux mystères de la nature. Elles invitent le lecteur à partager cette méditation contemplative.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    4. "Une urgence, une faim qui m'enjoignaient de traverser la nuit" - Analysez les figures de style.
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Métaphore 1 :</strong> "une urgence" - le désir de sortir est présenté comme une nécessité vitale<br>
+                    <strong>Métaphore 2 :</strong> "une faim" - le besoin de liberté est comparé à un besoin physiologique fondamental<br>
+                    <strong>Personnification :</strong> Ces sentiments "m'enjoignaient" (verbe d'action humaine) - ils sont présentés comme des forces actives qui commandent<br>
+                    <strong>Effet :</strong> Ces métaphores soulignent le caractère irrépressible, presque animal, du désir de transgression adolescente. L'accumulation ("rage", "urgence", "faim") crée une gradation dramatique.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    5. Identifiez les temps verbaux dominants dans le texte et expliquez leur usage.
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Présent de l'indicatif :</strong> "se dressent", "je marche", "je connais" - utilisé pour la scène au musée (présent de narration, rend le récit vivant et immédiat)<br>
+                    <strong>Imparfait de l'indicatif :</strong> "il y avait", "nous gardions", "cela ne cessait" - utilisé pour les souvenirs d'enfance (imparfait de description et d'habitude)<br>
+                    <strong>Passé composé :</strong> "j'ai quitté", "j'ai eu" - utilisé pour les événements ponctuels du passé<br>
+                    <strong>Effet :</strong> L'alternance entre présent (scène actuelle au musée) et passé (souvenirs) crée un va-et-vient temporel qui reflète le fonctionnement de la mémoire déclenchée par l'odeur.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    6. "Puissant dans l'ombre, évanescent quand l'aube se levait" - Analysez cette construction parallèle.
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Figure de style :</strong> Antithèse (opposition de deux réalités contraires)<br>
+                    <strong>Structure parallèle :</strong><br>
+                    - Adjectif + complément circonstanciel<br>
+                    - "Puissant dans l'ombre" // "évanescent quand l'aube se levait"<br>
+                    <strong>Opposition sémantique :</strong> puissant ≠ évanescent / ombre ≠ aube<br>
+                    <strong>Effet :</strong> Cette construction symétrique souligne le contraste entre nuit et jour, entre la plénitude du parfum nocturne et sa disparition progressive. Elle reflète aussi la double vie de l'adolescente : transgressive la nuit, conforme le jour.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    7. Relevez et analysez l'usage des pronoms personnels "je", "nous", "on" dans le texte.
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>"Je" :</strong> dominant, marque l'écriture autobiographique et la subjectivité de la narratrice<br>
+                    <strong>"Nous" :</strong> "nous gardions" - renvoie à la famille, à l'enfance partagée<br>
+                    <strong>"On" :</strong> "On nous envoyait", "On voulait sauver les apparences" - désigne la société, les conventions sociales, le monde des adultes qui impose ses règles<br>
+                    <strong>Effet :</strong> Le passage du "nous" (famille) au "je" (individu) au "on" (société) structure le texte autour de la tension entre le collectif et l'individuel, entre conformisme et liberté personnelle.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    8. "Ce monde a disparu. Et je ne veux pas le déflorer." - Pourquoi deux phrases courtes ici ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Effet des phrases courtes :</strong><br>
+                    - Rythme ralenti, presque solennel<br>
+                    - Mise en valeur de chaque affirmation<br>
+                    - Crée une pause méditative<br>
+                    - Souligne le caractère définitif de la disparition<br>
+                    - La coordination "Et" en début de phrase (normalement évitée) ajoute une dimension orale, émotive<br>
+                    <strong>Contraste :</strong> Ces phrases brèves succèdent à de longues phrases descriptives, créant une rupture qui marque le retour au présent et la prise de conscience mélancolique.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💭 Questions sur le temps pour soi</h2>
+            
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    1. En quoi la nuit représente-t-elle un "temps à soi" pour la narratrice ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    La nuit est un espace-temps libéré des contraintes sociales et familiales. C'est le moment où la narratrice peut échapper aux attentes ("Je ne voulais pas être une petite fille sage"), où elle peut construire son identité propre loin du regard normalisateur du jour. La nuit devient son territoire personnel, celui de la liberté et de l'authenticité, par opposition au jour qui appartient aux "activités triviales et répétitives" et aux obligations sociales.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    2. Pourquoi la narratrice s'identifie-t-elle au galant de nuit ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Plusieurs parallèles s'établissent :<br>
+                    - Comme le galant de nuit qui "ne s'ouvre que la nuit", elle ne révèle sa vraie nature que dans l'obscurité<br>
+                    - L'arbre "voulait préserver sa beauté, la garder secrète" tout comme elle rêve de "se tenir loin du monde"<br>
+                    - Son prénom "Leïla" signifie "la nuit", créant un lien identitaire profond<br>
+                    - Le galant de nuit est "réservé aux heures nocturnes", période où elle accède à sa liberté<br>
+                    Cette identification exprime son besoin de secret, d'intimité, d'un espace personnel protégé.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    3. Le "temps à soi" de la narratrice est-il vraiment libre ? Quelles contraintes pèsent sur elle ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Non, même dans la transgression, des contraintes persistent :<br>
+                    - <strong>La culpabilité maternelle :</strong> "Tu ne dois pas mourir parce que ça tuerait maman"<br>
+                    - <strong>La peur de la punition :</strong> "Je serais punie de ne pas savoir me tenir à ma place"<br>
+                    - <strong>Le danger réel :</strong> situations à risque (courses de voitures, bars mal famés)<br>
+                    - <strong>Le regard social :</strong> distinction entre "gentilles filles" et "les autres"<br>
+                    - <strong>La vulnérabilité féminine :</strong> besoin de stratégies de protection (le conseil du briquet)<br>
+                    Ce "temps à soi" est donc conquis dans la tension et l'angoisse, il n'est jamais totalement libre.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    4. Quelle différence y a-t-il entre le "temps à soi" de l'enfance et celui de l'adolescence ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>Dans l'enfance :</strong><br>
+                    - Le "temps à soi" est celui de l'observation et de l'imagination<br>
+                    - Elle devine un monde nocturne fascinant mais inaccessible<br>
+                    - "Je soupçonnais que, pendant notre sommeil, d'autres acteurs montaient sur scène"<br>
+                    - C'est un temps de désir frustré, de curiosité empêchée<br><br>
+                    
+                    <strong>À l'adolescence :</strong><br>
+                    - Le "temps à soi" devient action et transgression<br>
+                    - "Une sorte de rage s'est emparée de moi. Une urgence, une faim"<br>
+                    - Elle peut enfin "traverser la nuit", accéder à ce monde fantasmé<br>
+                    - C'est un temps de conquête de la liberté, même au prix du danger
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    5. Le musée offre-t-il aussi un "temps à soi" ? De quelle nature ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Oui, le musée offre un temps contemplatif et mémoriel :<br>
+                    - C'est un espace de solitude propice à la réflexion ("Je marche")<br>
+                    - Un lieu où le passé peut ressurgir par la médiation artistique<br>
+                    - Un temps suspendu où la mémoire s'active ("Il suffit que je ferme les yeux pour me souvenir")<br>
+                    - Un espace protégé où l'émotion peut s'exprimer ("Les larmes me montent aux paupières")<br>
+                    C'est un "temps à soi" différent de celui de la nuit transgressive : c'est un temps intérieur, introspectif, qui permet la réconciliation avec le passé à travers l'art.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    6. Quelle vision de la liberté féminine le texte propose-t-il ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    Le texte propose une vision complexe et ambivalente :<br>
+                    - <strong>La liberté est possible</strong> mais au prix de la transgression et du danger<br>
+                    - <strong>Elle nécessite des stratégies</strong> (s'asseoir au comptoir, avoir son propre briquet)<br>
+                    - <strong>Elle crée une division</strong> entre "gentilles filles" et "les autres"<br>
+                    - <strong>Elle s'accompagne de fascination</strong> pour celles qui en paient le prix (les prostituées)<br>
+                    - <strong>Elle génère culpabilité et peur</strong> ("s'il m'arrivait quelque chose, je l'aurais bien cherché")<br>
+                    La liberté féminine apparaît comme un combat permanent, non comme un droit évident, et elle expose aux dangers et aux jugements sociaux.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    7. Pourquoi la narratrice associe-t-elle "temps à soi" et mensonge ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    "Le galant de nuit c'est l'odeur de mes mensonges" : cette phrase révèle que :<br>
+                    - Pour accéder à son "temps à soi", elle devait mentir à sa famille<br>
+                    - La liberté personnelle nécessitait le secret et la dissimulation<br>
+                    - La société ne lui permettait pas d'assumer ouvertement ses désirs<br>
+                    - Le mensonge devient un outil de survie et d'émancipation<br>
+                    - Cette association crée une ambiguïté morale : le "temps à soi" est à la fois libérateur et coupable<br>
+                    Le mensonge n'est pas ici présenté comme une faute morale mais comme une nécessité imposée par un contexte social répressif.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    8. En quoi l'exil modifie-t-il le rapport au "temps à soi" ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    L'exil transforme radicalement ce rapport :<br>
+                    - <strong>Distance temporelle :</strong> "vingt ans que j'ai quitté mon pays"<br>
+                    - <strong>Perte sensorielle :</strong> éloignement "à jamais des sensations de mon enfance"<br>
+                    - <strong>Impossibilité du retour :</strong> "Ce monde a disparu"<br>
+                    - <strong>Transformation du souvenir :</strong> le "temps à soi" du passé devient objet de nostalgie et de littérature<br>
+                    - <strong>Nouvelle forme de "temps à soi" :</strong> l'écriture comme espace de liberté et de reconstruction mémorielle<br>
+                    L'exil fait passer du "temps à soi" vécu (les nuits marocaines) au "temps à soi" remémoré et recréé par l'écriture.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    9. Comparez le "temps à soi" imposé par l'art (l'installation de Berrada) et celui que la narratrice s'est créé (les sorties nocturnes).
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    <strong>L'installation artistique :</strong><br>
+                    - Temps contemplatif, passif, offert par l'artiste<br>
+                    - Manipulation artificielle du temps naturel (inversion jour/nuit)<br>
+                    - Expérience sensorielle contrôlée dans un espace sécurisé (le musée)<br>
+                    - Déclenche la mémoire involontaire<br><br>
+                    
+                    <strong>Les sorties nocturnes :</strong><br>
+                    - Temps actif, conquis par la transgression<br>
+                    - Participation au temps naturel (la vraie nuit)<br>
+                    - Expérience sensorielle dangereuse, imprévisible<br>
+                    - Crée de nouveaux souvenirs à travers l'action<br><br>
+                    
+                    <strong>Point commun :</strong> Dans les deux cas, la nuit permet une transformation, une métamorphose de soi loin des normes du jour.
+                </div>
+            </div>
+
+            <div class="question" onclick="toggleAnswer(this)">
+                <div class="question-text">
+                    10. Que signifie finalement "avoir un temps à soi" d'après ce texte ?
+                    <span class="toggle-icon">+</span>
+                </div>
+                <div class="answer">
+                    D'après ce texte, "avoir un temps à soi" signifie :<br><br>
+                    
+                    <strong>1. Un espace de construction identitaire :</strong> se définir soi-même plutôt que de correspondre aux attentes sociales<br><br>
+                    
+                    <strong>2. Un temps libéré du regard normatif :</strong> échapper aux "apparences", à la "vertu", au "conformisme", à la "bienséance"<br><br>
+                    
+                    <strong>3. Un accès à l'authenticité :</strong> pouvoir révéler sa vraie nature, comme le galant de nuit qui ne s'ouvre que dans l'intimité de la nuit<br><br>
+                    
+                    <strong>4. Un risque assumé :</strong> accepter le danger, la culpabilité, la peur pour préserver sa liberté<br><br>
+                    
+                    <strong>5. Un territoire de mémoire :</strong> créer des expériences qui deviendront les fondements de son identité future<br><br>
+                    
+                    <strong>6. Un besoin vital :</strong> non un luxe mais une nécessité existentielle ("une urgence, une faim")<br><br>
+                    
+                    Le "temps à soi" n'est pas simplement du temps libre, c'est un temps où l'on peut devenir soi-même, même si cela implique transgression et souffrance.
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>✍️ Sujet de production écrite</h2>
+            
+            <div class="writing-section">
+                <h3>Consigne</h3>
+                <p>Dans cet extrait, Leïla Slimani évoque la nuit comme un espace de liberté et de transgression qui s'oppose aux contraintes du jour. Elle écrit : <em>"Le galant de nuit c'est l'odeur de mes mensonges, de mes amours adolescentes, des cigarettes fumées en cachette et des fêtes interdites. C'est le parfum de la liberté."</em></p>
+                
+                <p style="margin-top: 20px; font-weight: bold;">Selon vous, la liberté passe-t-elle nécessairement par la transgression et la désobéissance ?</p>
+                
+                <p style="margin-top: 15px;">Vous rédigerez une démonstration structurée (introduction, développement en plusieurs paragraphes, conclusion) où vous présenterez différents arguments illustrés d'exemples précis.</p>
+                
+                <div class="criteria">
+                    <h4>Critères d'évaluation (sur 20 points)</h4>
+                    
+                    <p><strong>Contenu et argumentation (12 points)</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Une introduction qui présente le sujet et annonce le plan (2 points)</li>
+                        <li>Des arguments variés et développés (5 points)</li>
+                        <li>Des exemples précis tirés de l'extrait, de vos lectures ou de votre expérience (3 points)</li>
+                        <li>Une conclusion qui apporte une réponse nuancée (2 points)</li>
+                    </ul>
+                    
+                    <p style="margin-top: 15px;"><strong>Qualité de l'expression (8 points)</strong></p>
+                    <ul style="margin-left: 20px;">
+                        <li>Maîtrise de la langue (orthographe, syntaxe, vocabulaire) (4 points)</li>
+                        <li>Organisation claire en paragraphes distincts (2 points)</li>
+                        <li>Connecteurs logiques et progression de la pensée (2 points)</li>
+                        <li>Longueur : 2 à 3 pages (25 à 35 lignes numérotées)</li>
+                    </ul>
+                </div>
+                
+                <h3 style="margin-top: 25px;">Pistes de réflexion</h3>
+                <ul style="margin-left: 20px; line-height: 2;">
+                    <li>La transgression est-elle une étape nécessaire de la construction identitaire, notamment à l'adolescence ?</li>
+                    <li>Peut-on être libre sans désobéir aux normes sociales ou familiales ?</li>
+                    <li>Quelles limites doit-on fixer à la transgression ?</li>
+                    <li>Le regard des autres contraint-il nécessairement notre liberté ?</li>
+                    <li>La nuit libère-t-elle vraiment ou permet-elle simplement d'échapper temporairement aux normes ?</li>
+                    <li>Les règles et interdits peuvent-ils aussi être protecteurs ?</li>
+                    <li>Existe-t-il différentes formes de liberté (liberté d'action, de pensée, de création) ?</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 Pour aller plus loin</h2>
+            
+            <h3>Thèmes littéraires à explorer</h3>
+            <table>
+                <tr>
+                    <th>Thème</th>
+                    <th>Œuvres suggérées</th>
+                </tr>
+                <tr>
+                    <td><strong>La nuit symbolique</strong></td>
+                    <td>Baudelaire, <em>Les Fleurs du mal</em> ("Harmonie du soir")<br>
+                    Rimbaud, <em>Une saison en enfer</em><br>
+                    Jean Genet, <em>Journal du voleur</em></td>
+                </tr>
+                <tr>
+                    <td><strong>La mémoire olfactive</strong></td>
+                    <td>Proust, <em>Du côté de chez Swann</em> (la madeleine)<br>
+                    Patrick Süskind, <em>Le Parfum</em></td>
+                </tr>
+                <tr>
+                    <td><strong>L'adolescence transgressive</strong></td>
+                    <td>Colette, <em>Claudine à l'école</em><br>
+                    Marguerite Duras, <em>L'Amant</em><br>
+                    Annie Ernaux, <em>Mémoire de fille</em></td>
+                </tr>
+                <tr>
+                    <td><strong>L'exil et la nostalgie</strong></td>
+                    <td>Albert Camus, <em>Le Premier Homme</em><br>
+                    Amin Maalouf, <em>Les Désorientés</em><br>
+                    Tahar Ben Jelloun, <em>L'Enfant de sable</em></td>
+                </tr>
+                <tr>
+                    <td><strong>Écriture du moi</strong></td>
+                    <td>Virginia Woolf, <em>Une chambre à soi</em><br>
+                    Simone de Beauvoir, <em>Mémoires d'une jeune fille rangée</em></td>
+                </tr>
+            </table>
+            
+            <h3 style="margin-top: 30px;">Liens avec d'autres œuvres de Leïla Slimani</h3>
+            <div class="references">
+                <div class="reference-item">
+                    <h4>Chanson douce (2016) - Prix Goncourt</h4>
+                    <p>Premier roman de Slimani explorant les thèmes de la maternité, de l'enfermement domestique et de la violence.</p>
+                </div>
+                <div class="reference-item">
+                    <h4>Dans le jardin de l'ogre (2014)</h4>
+                    <p>Roman sur l'addiction sexuelle et la quête de liberté d'une femme mariée.</p>
+                </div>
+                <div class="reference-item">
+                    <h4>Le Pays des autres - trilogie (2020-2024)</h4>
+                    <p>Saga familiale au Maroc explorant colonisation, indépendance, et condition féminine.</p>
+                </div>
+                <div class="reference-item">
+                    <h4>Sexe et mensonges (2017)</h4>
+                    <p>Enquête sur la sexualité au Maroc, thématique présente dans notre extrait à travers les sorties nocturnes.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleAnswer(element) {
+            const answer = element.querySelector('.answer');
+            const icon = element.querySelector('.toggle-icon');
+            
+            answer.classList.toggle('show');
+            icon.textContent = answer.classList.contains('show') ? '−' : '+';
+        }
+    </script>
+</body>
+</html>
