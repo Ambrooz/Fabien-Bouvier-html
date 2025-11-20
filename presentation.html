@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Français A1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #2193b0;
+        }
+        
+        .section h2 {
+            color: #2193b0;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .texte {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 1.8;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            font-size: 1.1em;
+        }
+        
+        .texte p {
+            margin-bottom: 15px;
+        }
+        
+        .audio-note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .audio-note strong {
+            color: #856404;
+        }
+        
+        .lexique {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .lexique-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .lexique-item strong {
+            color: #2193b0;
+            font-size: 1.1em;
+        }
+        
+        .pronunciation {
+            color: #666;
+            font-style: italic;
+            margin-top: 5px;
+            font-size: 0.95em;
+        }
+        
+        .questions {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        
+        .question {
+            margin-bottom: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .reponse {
+            display: none;
+            margin-top: 10px;
+            padding: 10px;
+            background: #e8f5e9;
+            border-left: 3px solid #4caf50;
+            border-radius: 5px;
+        }
+        
+        .btn-reponse {
+            background: #2193b0;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        
+        .btn-reponse:hover {
+            background: #1a7a91;
+        }
+        
+        .conjugaison {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .conjugaison table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .conjugaison td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .conjugaison td:first-child {
+            font-weight: bold;
+            color: #2193b0;
+            width: 35%;
+        }
+        
+        .exercice {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .exercice-item {
+            margin-bottom: 12px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        input[type="text"] {
+            padding: 8px;
+            border: 2px solid #2193b0;
+            border-radius: 5px;
+            font-size: 1em;
+            width: 180px;
+        }
+        
+        .btn-corriger {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.1em;
+            margin-top: 20px;
+            display: block;
+            width: 100%;
+        }
+        
+        .btn-corriger:hover {
+            background: #45a049;
+        }
+        
+        .correct {
+            background: #e8f5e9 !important;
+        }
+        
+        .incorrect {
+            background: #ffebee !important;
+        }
+        
+        .category-title {
+            color: #1a7a91;
+            font-size: 1.2em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .grammar-note {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #2193b0;
+        }
+        
+        .example {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Cours de Français</h1>
+            <p>Niveau A1 - Ma routine quotidienne</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Pour adulte russophone</p>
+        </div>
+        
+        <div class="content">
+            <!-- TEXTE -->
+            <div class="section">
+                <h2>📖 TEXTE : La journée de Marie</h2>
+                <div class="audio-note">
+                    <strong>💡 Conseil pour l'écoute :</strong> Lisez le texte à voix haute plusieurs fois. Enregistrez-vous et réécoutez. Cela vous aidera à reconnaître les mots à l'oral !
+                </div>
+                <div class="texte">
+                    <p>Bonjour ! Je m'appelle Marie. J'ai trente-deux ans et j'habite à Paris.</p>
+                    <p>Tous les matins, je me réveille à sept heures. Je me lève tout de suite et je vais dans la salle de bain. Je me lave le visage et je me brosse les dents. Ensuite, je m'habille et je prends mon petit-déjeuner : du café et des tartines.</p>
+                    <p>Mon mari s'appelle Thomas. Il a trente-cinq ans. Il est ingénieur dans une grande entreprise. Le matin, il se prépare rapidement parce qu'il commence le travail à huit heures et demie.</p>
+                    <p>Moi, je suis professeure de français dans une école de langues. J'aime beaucoup mon travail. Mes élèves sont sympathiques et motivés. Je fais des cours le matin et l'après-midi.</p>
+                    <p>Le soir, nous rentrons à la maison vers dix-neuf heures. Nous préparons le dîner ensemble. Thomas fait souvent des pâtes parce qu'il adore cuisiner ! Moi, je fais la salade.</p>
+                    <p>Après le dîner, nous nous détendons. Nous regardons un film ou nous lisons. Nous nous couchons vers vingt-trois heures.</p>
+                    <p>Le week-end, nous aimons nous promener dans Paris. Nous allons au musée, au restaurant ou au cinéma. C'est notre moment préféré de la semaine !</p>
+                </div>
+            </div>
+            
+            <!-- LEXIQUE -->
+            <div class="section">
+                <h2>📚 LEXIQUE</h2>
+                
+                <div class="category-title">La routine quotidienne (Ежедневная рутина)</div>
+                <div class="lexique">
+                    <div class="lexique-item">
+                        <strong>se réveiller</strong> (просыпаться) = to wake up
+                        <div class="pronunciation">🔊 [sə ʁeveje]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>se lever</strong> (вставать) = to get up
+                        <div class="pronunciation">🔊 [sə ləve]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>se laver</strong> (мыться) = to wash
+                        <div class="pronunciation">🔊 [sə lave]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>s'habiller</strong> (одеваться) = to get dressed
+                        <div class="pronunciation">🔊 [sabije]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>se préparer</strong> (готовиться) = to prepare oneself
+                        <div class="pronunciation">🔊 [sə pʁepaʁe]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>se détendre</strong> (расслабляться) = to relax
+                        <div class="pronunciation">🔊 [sə detɑ̃dʁ]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>se coucher</strong> (ложиться спать) = to go to bed
+                        <div class="pronunciation">🔊 [sə kuʃe]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>se promener</strong> (гулять) = to take a walk
+                        <div class="pronunciation">🔊 [sə pʁɔmne]</div>
+                    </div>
+                </div>
+                
+                <div class="category-title">Le temps (Время)</div>
+                <div class="lexique">
+                    <div class="lexique-item">
+                        <strong>le matin</strong> (утро) = morning
+                        <div class="pronunciation">🔊 [lə matɛ̃]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>l'après-midi</strong> (после обеда) = afternoon
+                        <div class="pronunciation">🔊 [lapʁɛmidi]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>le soir</strong> (вечер) = evening
+                        <div class="pronunciation">🔊 [lə swaʁ]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>le week-end</strong> (выходные) = weekend
+                        <div class="pronunciation">🔊 [lə wikɛnd]</div>
+                    </div>
+                </div>
+                
+                <div class="category-title">Verbes utiles (Полезные глаголы)</div>
+                <div class="lexique">
+                    <div class="lexique-item">
+                        <strong>prendre</strong> (брать, принимать) = to take
+                        <div class="pronunciation">🔊 [pʁɑ̃dʁ]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>préparer</strong> (готовить) = to prepare
+                        <div class="pronunciation">🔊 [pʁepaʁe]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>rentrer</strong> (возвращаться) = to return home
+                        <div class="pronunciation">🔊 [ʁɑ̃tʁe]</div>
+                    </div>
+                    <div class="lexique-item">
+                        <strong>cuisiner</strong> (готовить еду) = to cook
+                        <div class="pronunciation">🔊 [kɥizine]</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QUESTIONS -->
+            <div class="section">
+                <h2>❓ QUESTIONS SUR LE TEXTE</h2>
+                <div class="questions">
+                    <div class="question">
+                        <strong>1.</strong> À quelle heure Marie se réveille-t-elle ?
+                        <button class="btn-reponse" onclick="toggleReponse(1)">Voir la réponse</button>
+                        <div class="reponse" id="rep1">Elle se réveille à sept heures.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>2.</strong> Que fait Marie dans la salle de bain ?
+                        <button class="btn-reponse" onclick="toggleReponse(2)">Voir la réponse</button>
+                        <div class="reponse" id="rep2">Elle se lave le visage et elle se brosse les dents.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>3.</strong> Quelle est la profession de Thomas ?
+                        <button class="btn-reponse" onclick="toggleReponse(3)">Voir la réponse</button>
+                        <div class="reponse" id="rep3">Il est ingénieur.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>4.</strong> Que fait Marie comme travail ?
+                        <button class="btn-reponse" onclick="toggleReponse(4)">Voir la réponse</button>
+                        <div class="reponse" id="rep4">Elle est professeure de français dans une école de langues.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>5.</strong> Qui prépare le dîner ? Qu'est-ce qu'ils font ?
+                        <button class="btn-reponse" onclick="toggleReponse(5)">Voir la réponse</button>
+                        <div class="reponse" id="rep5">Ils préparent le dîner ensemble. Thomas fait des pâtes et Marie fait la salade.</div>
+                    </div>
+                    
+                    <div class="question">
+                        <strong>6.</strong> À quelle heure se couchent-ils ?
+                        <button class="btn-reponse" onclick="toggleReponse(6)">Voir la réponse</button>
+                        <div class="reponse" id="rep6">Ils se couchent vers vingt-trois heures (23h00).</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE VERBES PRONOMINAUX -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Les verbes pronominaux (Возвратные глаголы)</h2>
+                
+                <div class="grammar-note">
+                    <strong>Qu'est-ce qu'un verbe pronominal ?</strong><br>
+                    C'est un verbe qui utilise un pronom réfléchi (me, te, se, nous, vous, se).<br>
+                    En russe : comme "умываться", "одеваться", "называться"
+                </div>
+                
+                <h3 style="color: #2193b0; margin: 20px 0 10px 0;">Exemple : SE LEVER (вставать)</h3>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je me lève</td><td>(я встаю) = I get up</td></tr>
+                        <tr><td>Tu te lèves</td><td>(ты встаёшь) = You get up</td></tr>
+                        <tr><td>Il/Elle se lève</td><td>(он/она встаёт) = He/She gets up</td></tr>
+                        <tr><td>Nous nous levons</td><td>(мы встаём) = We get up</td></tr>
+                        <tr><td>Vous vous levez</td><td>(вы встаёте) = You get up</td></tr>
+                        <tr><td>Ils/Elles se lèvent</td><td>(они встают) = They get up</td></tr>
+                    </table>
+                </div>
+                
+                <h3 style="color: #2193b0; margin: 20px 0 10px 0;">Exemple : S'HABILLER (одеваться)</h3>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je m'habille</td><td>(я одеваюсь) = I get dressed</td></tr>
+                        <tr><td>Tu t'habilles</td><td>(ты одеваешься) = You get dressed</td></tr>
+                        <tr><td>Il/Elle s'habille</td><td>(он/она одевается) = He/She gets dressed</td></tr>
+                        <tr><td>Nous nous habillons</td><td>(мы одеваемся) = We get dressed</td></tr>
+                        <tr><td>Vous vous habillez</td><td>(вы одеваетесь) = You get dressed</td></tr>
+                        <tr><td>Ils/Elles s'habillent</td><td>(они одеваются) = They get dressed</td></tr>
+                    </table>
+                </div>
+                
+                <div class="example">
+                    <strong>Exemples :</strong><br>
+                    • Je me réveille à 7h. = Я просыпаюсь в 7 часов.<br>
+                    • Nous nous promenons le dimanche. = Мы гуляем в воскресенье.<br>
+                    • Elle se couche tard. = Она поздно ложится спать.
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE AVOIR -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe AVOIR (иметь)</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>J'ai</td><td>(у меня есть) = I have</td></tr>
+                        <tr><td>Tu as</td><td>(у тебя есть) = You have</td></tr>
+                        <tr><td>Il/Elle a</td><td>(у него/неё есть) = He/She has</td></tr>
+                        <tr><td>Nous avons</td><td>(у нас есть) = We have</td></tr>
+                        <tr><td>Vous avez</td><td>(у вас есть) = You have</td></tr>
+                        <tr><td>Ils/Elles ont</td><td>(у них есть) = They have</td></tr>
+                    </table>
+                </div>
+                <div class="example">
+                    <strong>Exemples :</strong><br>
+                    • J'ai trente-deux ans. = Мне 32 года.<br>
+                    • Tu as un chat ? = У тебя есть кошка?<br>
+                    • Nous avons beaucoup de travail. = У нас много работы.
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE ÊTRE -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe ÊTRE (быть)</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je suis</td><td>(я есть/я) = I am</td></tr>
+                        <tr><td>Tu es</td><td>(ты есть/ты) = You are</td></tr>
+                        <tr><td>Il/Elle est</td><td>(он/она есть) = He/She is</td></tr>
+                        <tr><td>Nous sommes</td><td>(мы есть/мы) = We are</td></tr>
+                        <tr><td>Vous êtes</td><td>(вы есть/вы) = You are</td></tr>
+                        <tr><td>Ils/Elles sont</td><td>(они есть/они) = They are</td></tr>
+                    </table>
+                </div>
+                <div class="example">
+                    <strong>Exemples :</strong><br>
+                    • Je suis professeure. = Я учительница.<br>
+                    • Il est ingénieur. = Он инженер.<br>
+                    • Nous sommes contents. = Мы довольны.
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE ALLER -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe ALLER (идти, ехать)</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je vais</td><td>(я иду/еду) = I go</td></tr>
+                        <tr><td>Tu vas</td><td>(ты идёшь/едешь) = You go</td></tr>
+                        <tr><td>Il/Elle va</td><td>(он/она идёт/едет) = He/She goes</td></tr>
+                        <tr><td>Nous allons</td><td>(мы идём/едем) = We go</td></tr>
+                        <tr><td>Vous allez</td><td>(вы идёте/едете) = You go</td></tr>
+                        <tr><td>Ils/Elles vont</td><td>(они идут/едут) = They go</td></tr>
+                    </table>
+                </div>
+                <div class="example">
+                    <strong>Exemples :</strong><br>
+                    • Je vais au travail. = Я иду на работу.<br>
+                    • Nous allons au musée. = Мы идём в музей.<br>
+                    • Ils vont au restaurant. = Они идут в ресторан.
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE FAIRE -->
+            <div class="section">
+                <h2>📝 GRAMMAIRE : Le verbe FAIRE (делать)</h2>
+                <div class="conjugaison">
+                    <table>
+                        <tr><td>Je fais</td><td>(я делаю) = I do/make</td></tr>
+                        <tr><td>Tu fais</td><td>(ты делаешь) = You do/make</td></tr>
+                        <tr><td>Il/Elle fait</td><td>(он/она делает) = He/She does/makes</td></tr>
+                        <tr><td>Nous faisons</td><td>(мы делаем) = We do/make</td></tr>
+                        <tr><td>Vous faites</td><td>(вы делаете) = You do/make</td></tr>
+                        <tr><td>Ils/Elles font</td><td>(они делают) = They do/make</td></tr>
+                    </table>
+                </div>
+                <div class="example">
+                    <strong>Exemples :</strong><br>
+                    • Je fais du sport. = Я занимаюсь спортом.<br>
+                    • Thomas fait la cuisine. = Томас готовит.<br>
+                    • Nous faisons une promenade. = Мы гуляем.
+                </div>
+            </div>
+            
+            <!-- EXERCICES -->
+            <div class="section">
+                <h2>✏️ EXERCICES INTERACTIFS</h2>
+                
+                <h3 style="color: #2193b0; margin-bottom: 15px;">Exercice 1 : Complète avec les verbes pronominaux</h3>
+                <div class="exercice" id="ex1">
+                    <div class="exercice-item">1. Je <input type="text" id="e1_1" data-answer="me réveille"> à 7 heures. (se réveiller)</div>
+                    <div class="exercice-item">2. Tu <input type="text" id="e1_2" data-answer="te lèves"> tôt le matin ? (se lever)</div>
+                    <div class="exercice-item">3. Elle <input type="text" id="e1_3" data-answer="s'habille"> rapidement. (s'habiller)</div>
+                    <div class="exercice-item">4. Nous <input type="text" id="e1_4" data-answer="nous promenons"> dans le parc. (se promener)</div>
+                    <div class="exercice-item">5. Vous <input type="text" id="e1_5" data-answer="vous couchez"> à quelle heure ? (se coucher)</div>
+                    <div class="exercice-item">6. Ils <input type="text" id="e1_6" data-answer="se préparent"> pour sortir. (se préparer)</div>
+                    <div class="exercice-item">7. Marie <input type="text" id="e1_7" data-answer="se lave"> les mains. (se laver)</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex1')">Corriger l'exercice 1</button>
+                
+                <h3 style="color: #2193b0; margin-bottom: 15px; margin-top: 30px;">Exercice 2 : ÊTRE ou AVOIR ?</h3>
+                <div class="exercice" id="ex2">
+                    <div class="exercice-item">1. Marie <input type="text" id="e2_1" data-answer="est"> professeure.</div>
+                    <div class="exercice-item">2. J'<input type="text" id="e2_2" data-answer="ai"> trente ans.</div>
+                    <div class="exercice-item">3. Nous <input type="text" id="e2_3" data-answer="sommes"> contents.</div>
+                    <div class="exercice-item">4. Tu <input type="text" id="e2_4" data-answer="as"> un mari ?</div>
+                    <div class="exercice-item">5. Ils <input type="text" id="e2_5" data-answer="sont"> ingénieurs.</div>
+                    <div class="exercice-item">6. Vous <input type="text" id="e2_6" data-answer="avez"> des enfants ?</div>
+                    <div class="exercice-item">7. Elle <input type="text" id="e2_7" data-answer="a"> une grande maison.</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex2')">Corriger l'exercice 2</button>
+                
+                <h3 style="color: #2193b0; margin-bottom: 15px; margin-top: 30px;">Exercice 3 : ALLER ou FAIRE ?</h3>
+                <div class="exercice" id="ex3">
+                    <div class="exercice-item">1. Je <input type="text" id="e3_1" data-answer="vais"> au travail.</div>
+                    <div class="exercice-item">2. Nous <input type="text" id="e3_2" data-answer="faisons"> du sport.</div>
+                    <div class="exercice-item">3. Elle <input type="text" id="e3_3" data-answer="va"> au musée.</div>
+                    <div class="exercice-item">4. Vous <input type="text" id="e3_4" data-answer="faites"> la cuisine ?</div>
+                    <div class="exercice-item">5. Ils <input type="text" id="e3_5" data-answer="vont"> au restaurant.</div>
+                    <div class="exercice-item">6. Tu <input type="text" id="e3_6" data-answer="fais"> quoi ce soir ?</div>
+                    <div class="exercice-item">7. Marie et Thomas <input type="text" id="e3_7" data-answer="vont"> au cinéma.</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex3')">Corriger l'exercice 3</button>
+                
+                <h3 style="color: #2193b0; margin-bottom: 15px; margin-top: 30px;">Exercice 4 : Verbes mélangés (ÊTRE, AVOIR, ALLER, FAIRE, verbes pronominaux)</h3>
+                <div class="exercice" id="ex4">
+                    <div class="exercice-item">1. Le matin, je <input type="text" id="e4_1" data-answer="me réveille"> à 7 heures.</div>
+                    <div class="exercice-item">2. Thomas <input type="text" id="e4_2" data-answer="est"> ingénieur.</div>
+                    <div class="exercice-item">3. Nous <input type="text" id="e4_3" data-answer="avons"> deux enfants.</div>
+                    <div class="exercice-item">4. Vous <input type="text" id="e4_4" data-answer="allez"> au bureau ?</div>
+                    <div class="exercice-item">5. Elle <input type="text" id="e4_5" data-answer="fait"> du yoga tous les jours.</div>
+                    <div class="exercice-item">6. Tu <input type="text" id="e4_6" data-answer="te couches"> tard le soir ?</div>
+                    <div class="exercice-item">7. J'<input type="text" id="e4_7" data-answer="ai"> trente-deux ans.</div>
+                    <div class="exercice-item">8. Ils <input type="text" id="e4_8" data-answer="vont"> au cinéma le week-end.</div>
+                    <div class="exercice-item">9. Nous <input type="text" id="e4_9" data-answer="nous promenons"> dans Paris.</div>
+                    <div class="exercice-item">10. Marie <input type="text" id="e4_10" data-answer="est"> professeure de français.</div>
+                    <div class="exercice-item">11. Vous <input type="text" id="e4_11" data-answer="faites"> quoi ce soir ?</div>
+                    <div class="exercice-item">12. Je <input type="text" id="e4_12" data-answer="m'habille"> et je prends mon petit-déjeuner.</div>
+                </div>
+                <button class="btn-corriger" onclick="corriger('ex4')">Corriger l'exercice 4</button>
+            </div>
+            
+            <!-- SECTION PRONONCIATION -->
+            <div class="section">
+                <h2>🔊 CONSEILS DE PRONONCIATION</h2>
+                <div class="grammar-note">
+                    <strong>Pour améliorer votre compréhension orale :</strong>
+                </div>
+                
+                <div class="lexique">
+                    <div class="lexique-item">
+                        <strong>1. Les liaisons</strong><br>
+                        • nous_allons [nuz‿alɔ̃]<br>
+                        • ils_ont [ilz‿ɔ̃]<br>
+                        • vous_êtes [vuz‿ɛt]
+                    </div>
+                    <div class="lexique-item">
+                        <strong>2. Les "e" muets</strong><br>
+                        • je me lève = [ʒəmlɛv]<br>
+                        • je me réveille = [ʒəmʁevɛj]<br>
+                        Le "e" disparaît souvent !
+                    </div>
+                    <div class="lexique-item">
+                        <strong>3. Lettres finales</strong><br>
+                        • petit [pəti] - le "t" ne se prononce pas<br>
+                        • tard [taʁ] - le "d" ne se prononce pas<br>
+                        • nous prenons [pʁənɔ̃] - pas de "s"
+                    </div>
+                    <div class="lexique-item">
+                        <strong>4. Pratiquez !</strong><br>
+                        📱 Utilisez Google Traduction pour écouter<br>
+                        🎙️ Enregistrez-vous<br>
+                        👂 Écoutez des podcasts lents (français facile)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SECTION EXPRESSION ORALE -->
+            <div class="section">
+                <h2>💬 POUR PARLER : Phrases utiles</h2>
+                <div class="grammar-note">
+                    <strong>Mémorisez ces phrases complètes pour parler plus facilement :</strong>
+                </div>
+                
+                <div class="conjugaison">
+                    <h3 style="color: #2193b0; margin: 15px 0;">Parler de soi</h3>
+                    <div class="example">
+                        • Je m'appelle... (Меня зовут...)<br>
+                        • J'ai... ans. (Мне... лет.)<br>
+                        • J'habite à... (Я живу в...)<br>
+                        • Je suis... (profession) (Я...)<br>
+                        • Je travaille à/dans... (Я работаю в...)
+                    </div>
+                    
+                    <h3 style="color: #2193b0; margin: 15px 0;">Parler de sa routine</h3>
+                    <div class="example">
+                        • Je me réveille à... heures. (Я просыпаюсь в...)<br>
+                        • Je prends mon petit-déjeuner. (Я завтракаю.)<br>
+                        • Je vais au travail. (Я еду на работу.)<br>
+                        • Je rentre à la maison. (Я возвращаюсь домой.)<br>
+                        • Je me couche à... heures. (Я ложусь спать в...)
+                    </div>
+                    
+                    <h3 style="color: #2193b0; margin: 15px 0;">Parler de ses goûts</h3>
+                    <div class="example">
+                        • J'aime... (Я люблю...)<br>
+                        • J'adore... (Я обожаю...)<br>
+                        • Je n'aime pas... (Я не люблю...)<br>
+                        • Je préfère... (Я предпочитаю...)<br>
+                        • Mon activité préférée est... (Моё любимое занятие...)
+                    </div>
+                </div>
+            </div>
+            
+            <!-- EXERCICE DE PRODUCTION -->
+            <div class="section">
+                <h2>✍️ EXERCICE FINAL : Parlez de vous !</h2>
+                <div class="audio-note">
+                    <strong>💡 Exercice oral :</strong> Enregistrez-vous en train de parler de votre routine quotidienne. Utilisez les phrases du cours !
+                </div>
+                
+                <div class="questions">
+                    <div class="question">
+                        <strong>Écrivez 5-8 phrases sur votre journée typique :</strong><br>
+                        <div style="margin-top: 15px; font-style: italic; color: #666;">
+                            Exemple :<br>
+                            "Je m'appelle Anna. J'habite à Moscou. Le matin, je me réveille à 8 heures. Je prends mon petit-déjeuner : du thé et du pain. Je vais au travail en métro. Le soir, je rentre à la maison et je fais du sport. Je me couche à 23 heures."
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="grammar-note" style="margin-top: 20px;">
+                    <strong>🎯 Objectif :</strong> Répétez vos phrases à voix haute 5 fois par jour pendant une semaine. C'est comme ça qu'on apprend à parler naturellement !
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleReponse(num) {
+            const reponse = document.getElementById('rep' + num);
+            if (reponse.style.display === 'none' || reponse.style.display === '') {
+                reponse.style.display = 'block';
+            } else {
+                reponse.style.display = 'none';
+            }
+        }
+        
+        function corriger(exId) {
+            const exercice = document.getElementById(exId);
+            const inputs = exercice.querySelectorAll('input[type="text"]');
+            let score = 0;
+            let total = inputs.length;
+            
+            inputs.forEach(input => {
+                const userAnswer = input.value.trim().toLowerCase();
+                const correctAnswer = input.dataset.answer.toLowerCase();
+                
+                if (userAnswer === correctAnswer) {
+                    input.parentElement.classList.add('correct');
+                    input.parentElement.classList.remove('incorrect');
+                    score++;
+                } else {
+                    input.parentElement.classList.add('incorrect');
+                    input.parentElement.classList.remove('correct');
+                }
+            });
+            
+            alert(`Score : ${score}/${total} ✨\n${score === total ? 'Отлично! Excellent travail !' : 'Продолжайте! Continue comme ça !'}`);
+        }
+    </script>
+</body>
+</html>
