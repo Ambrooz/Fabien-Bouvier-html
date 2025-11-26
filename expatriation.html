@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Français C1-C2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #2d3748;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0F2027 0%, #203A43 50%, #2C5364 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .flag {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            background: #f7fafc;
+            border-left: 5px solid #667eea;
+        }
+        
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .icon {
+            font-size: 1.2em;
+        }
+        
+        .text-content {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+        
+        .text-content h3 {
+            color: #2d3748;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .text-content p {
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+        
+        .question {
+            background: white;
+            padding: 15px 20px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border-left: 4px solid #48bb78;
+            transition: all 0.3s ease;
+        }
+        
+        .question:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(72, 187, 120, 0.2);
+        }
+        
+        .question strong {
+            color: #2f855a;
+        }
+        
+        .grammar-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .grammar-box h4 {
+            color: #d63031;
+            margin-bottom: 10px;
+        }
+        
+        .example {
+            background: white;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .exercise {
+            background: white;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 2px solid #e2e8f0;
+        }
+        
+        .exercise-title {
+            color: #5a67d8;
+            font-weight: bold;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+        
+        .exercise-item {
+            margin: 12px 0;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 5px;
+        }
+        
+        .write-area {
+            width: 100%;
+            min-height: 40px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            background: #fefefe;
+            font-family: 'Georgia', serif;
+            font-size: 1em;
+            transition: all 0.3s ease;
+        }
+        
+        .write-area:focus {
+            outline: none;
+            border-color: #667eea;
+            background: #f7fafc;
+        }
+        
+        .blank-line {
+            display: inline-block;
+            min-width: 150px;
+            border-bottom: 2px solid #667eea;
+            margin: 0 5px;
+            padding: 0 5px;
+        }
+        
+        .answer-toggle {
+            background: #48bb78;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .answer-toggle:hover {
+            background: #38a169;
+            transform: scale(1.05);
+        }
+        
+        .answers {
+            display: none;
+            background: #e6fffa;
+            padding: 15px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #48bb78;
+        }
+        
+        .answers.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .vocab-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-top: 3px solid #ed8936;
+        }
+        
+        .vocab-card strong {
+            color: #c05621;
+            display: block;
+            margin-bottom: 8px;
+        }
+        
+        .footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 2px 6px;
+            border-radius: 3px;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .answer-toggle {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="flag">🇫🇷</div>
+            <h1>Cours de Français C1-C2</h1>
+            <p>Niveau Avancé - Pour Heather</p>
+            <p style="font-size: 0.9em; margin-top: 10px;">Thème : L'expatriation et la quête d'équilibre entre deux cultures</p>
+        </div>
+        
+        <div class="content">
+            <!-- TEXTE COMPLET -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📖</span> Texte de compréhension</h2>
+                <div class="text-content">
+                    <h3>Entre deux rives : quand la passion devient projet de vie</h3>
+                    
+                    <p>L'expatriation n'est jamais un simple déménagement géographique. C'est une métamorphose profonde qui bouleverse nos repères, nos habitudes, et parfois même notre identité. Pour ceux qui franchissent l'Atlantique, attirés par le mode de vie méditerranéen, le choc culturel se double d'une fascination qui ne s'estompe jamais tout à fait.</p>
+                    
+                    <p>Nombreux sont les Américains qui, après avoir goûté à la douceur de vivre française, se retrouvent tiraillés entre deux mondes. D'un côté, l'efficacité, le dynamisme et l'esprit entrepreneurial qui caractérisent la culture américaine ; de l'autre, <span class="highlight">l'art de prendre son temps</span>, les terrasses ensoleillées où l'on refait le monde autour d'un verre de vin, et cette capacité à privilégier l'être sur l'avoir.</p>
+                    
+                    <p>Cette dichotomie se manifeste dans les gestes les plus quotidiens. Aux États-Unis, on travaille pour réussir ; en France, on travaille pour vivre. Le petit appartement avec vue sur la mer vaut-il mieux que la grande maison avec jardin ? Les repas pris à la va-vite devant l'ordinateur peuvent-ils rivaliser avec le déjeuner de deux heures en famille ? Ces questions, qui paraissent anodines, révèlent en réalité des philosophies de vie diamétralement opposées.</p>
+                    
+                    <p>L'apprentissage de la langue devient alors bien plus qu'une simple acquisition de compétences linguistiques. C'est une clé qui ouvre les portes d'une autre façon de penser, de ressentir, d'interagir avec le monde. Chaque expression idiomatique traduit une vision du monde, chaque tournure grammaticale reflète une logique culturelle. Maîtriser le subjonctif, ce n'est pas seulement conjuguer correctement ; c'est intégrer cette nuance si française entre le réel et le virtuel, entre le fait établi et la possibilité envisagée.</p>
+                    
+                    <p>Pour les expatriés qui exercent des métiers innovants, notamment dans le domaine de l'éducation et des nouvelles technologies, cette double culture peut devenir un atout majeur. Ils peuvent servir de pont entre les approches pédagogiques américaines, axées sur l'expérimentation et l'innovation technologique, et la tradition française qui valorise la rigueur intellectuelle et la culture générale. Cette position d'interface leur permet de proposer des solutions originales, enrichies par les deux systèmes.</p>
+                    
+                    <p>Néanmoins, cette dualité culturelle comporte aussi ses défis. Le sentiment d'appartenance devient flou : on n'est plus tout à fait américain, sans être encore véritablement français. Les fêtes de Thanksgiving prennent une saveur nostalgique quand on les célèbre loin des siens, tandis que les traditions françaises restent teintées d'une certaine extériorité. Cette position d'entre-deux, bien qu'inconfortable, offre paradoxalement une liberté unique : celle de choisir le meilleur des deux mondes et de créer sa propre synthèse culturelle.</p>
+                    
+                    <p>Le véritable enjeu réside peut-être dans la capacité à assumer pleinement cette identité hybride, à ne plus chercher à "être comme" mais à simplement "être", avec toute la richesse que confère cette double appartenance. Car au fond, n'est-ce pas cette ouverture sur l'altérité, cette capacité à embrasser la complexité, qui fait la force des véritables citoyens du monde ?</p>
+                </div>
+            </div>
+            
+            <!-- VOCABULAIRE -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📝</span> Vocabulaire thématique</h2>
+                <div class="vocab-grid">
+                    <div class="vocab-card">
+                        <strong>L'expatriation</strong>
+                        s'expatrier, l'exil, le déracinement, l'enracinement, se fondre dans, s'intégrer, s'acclimater
+                    </div>
+                    <div class="vocab-card">
+                        <strong>Les émotions</strong>
+                        être tiraillé(e) entre, être déchiré(e), ressentir de la nostalgie, le mal du pays (homesickness), se sentir chez soi, appartenir à
+                    </div>
+                    <div class="vocab-card">
+                        <strong>Le mode de vie</strong>
+                        la douceur de vivre, l'art de vivre, le rythme effréné, prendre son temps, savourer l'instant, la qualité de vie
+                    </div>
+                    <div class="vocab-card">
+                        <strong>Les valeurs</strong>
+                        privilégier, valoriser, accorder de l'importance à, faire primer, mettre l'accent sur
+                    </div>
+                    <div class="vocab-card">
+                        <strong>Expressions idiomatiques</strong>
+                        refaire le monde, à la va-vite, au fond, être teintée de, servir de pont
+                    </div>
+                    <div class="vocab-card">
+                        <strong>Adjectifs utiles</strong>
+                        anodin(e), flou(e), inconfortable, paradoxalement, véritablement
+                    </div>
+                </div>
+            </div>
+            
+            <!-- QUESTIONS -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">💭</span> Questions de réflexion</h2>
+                <div class="question">
+                    <strong>1. Analyse textuelle :</strong> Comment l'auteur structure-t-il son argumentation pour mettre en lumière les contradictions de l'expatriation ?
+                </div>
+                <textarea class="write-area" placeholder="Écrivez votre réponse ici..."></textarea>
+                
+                <div class="question">
+                    <strong>2. Réflexion personnelle :</strong> En quoi votre expérience de la France confirme-t-elle ou nuance-t-elle la vision présentée dans le texte ? Donnez des exemples concrets.
+                </div>
+                <textarea class="write-area" placeholder="Écrivez votre réponse ici..."></textarea>
+                
+                <div class="question">
+                    <strong>3. Débat culturel :</strong> Pensez-vous que la phrase "aux États-Unis, on travaille pour réussir ; en France, on travaille pour vivre" soit un cliché ou une vérité profonde ? Argumentez.
+                </div>
+                <textarea class="write-area" placeholder="Écrivez votre réponse ici..."></textarea>
+                
+                <div class="question">
+                    <strong>4. Application professionnelle :</strong> Comment votre double perspective culturelle pourrait-elle enrichir le système éducatif français ? Quelles innovations américaines seraient pertinentes à adapter ?
+                </div>
+                <textarea class="write-area" placeholder="Écrivez votre réponse ici..."></textarea>
+                
+                <div class="question">
+                    <strong>5. Question existentielle :</strong> L'auteur évoque "l'identité hybride". Ressentez-vous ce sentiment d'entre-deux ? Comment le vivez-vous au quotidien ?
+                </div>
+                <textarea class="write-area" placeholder="Écrivez votre réponse ici..."></textarea>
+            </div>
+            
+            <!-- GRAMMAIRE -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">📚</span> Point de grammaire : Le Subjonctif</h2>
+                <div class="grammar-box">
+                    <h4>LE SUBJONCTIF : Doute et Possibilité</h4>
+                    <p style="margin: 15px 0;">Le subjonctif s'utilise dans les propositions subordonnées après :</p>
+                    <div class="example">
+                        <strong>Sentiment :</strong> Je regrette qu'elle <u>ne vienne pas</u> / J'ai peur qu'il <u>pleuve</u>
+                    </div>
+                    <div class="example">
+                        <strong>Volonté :</strong> J'aimerais que tu <u>puisses</u> venir / Je veux qu'elle <u>réussisse</u>
+                    </div>
+                    <div class="example">
+                        <strong>Doute :</strong> Je doute qu'il <u>soit</u> là / Il est possible qu'elle <u>parte</u>
+                    </div>
+                    <div class="example">
+                        <strong>Concession :</strong> Bien qu'elle <u>parle</u> français... / Quoiqu'il <u>fasse</u>...
+                    </div>
+                    <div class="example">
+                        <strong>But :</strong> Pour que tu <u>comprennes</u> / Afin qu'il <u>sache</u>
+                    </div>
+                </div>
+                
+                <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                    <strong>⚠️ Nuances importantes :</strong><br>
+                    • Je pense qu'elle <strong>vient</strong> (indicatif - certitude)<br>
+                    • Je ne pense pas qu'elle <strong>vienne</strong> (subjonctif - doute)<br>
+                    • Il est probable qu'elle <strong>viendra</strong> (indicatif - forte probabilité)<br>
+                    • Il est possible qu'elle <strong>vienne</strong> (subjonctif - possibilité)
+                </div>
+            </div>
+            
+            <!-- EXERCICES -->
+            <div class="section">
+                <h2 class="section-title"><span class="icon">✍️</span> Exercices pratiques</h2>
+                
+                <!-- EXERCICE 1 -->
+                <div class="exercise">
+                    <div class="exercise-title">Exercice 1 : Indicatif ou Subjonctif ?</div>
+                    <div class="exercise-item">
+                        1. Je suis certaine que ce mode de vie me <span class="blank-line"></span> (convenir) parfaitement.
+                    </div>
+                    <div class="exercise-item">
+                        2. Il est possible que nous <span class="blank-line"></span> (déménager) en France l'année prochaine.
+                    </div>
+                    <div class="exercise-item">
+                        3. Bien qu'elle <span class="blank-line"></span> (parler) français depuis deux ans, elle manque encore de confiance.
+                    </div>
+                    <div class="exercise-item">
+                        4. Je pense que tu <span class="blank-line"></span> (devoir) rencontrer ces personnes avant de prendre ta décision.
+                    </div>
+                    <div class="exercise-item">
+                        5. Il faudrait que je <span class="blank-line"></span> (être) plus régulière dans ma pratique du français.
+                    </div>
+                    <div class="exercise-item">
+                        6. J'espère que mon projet <span class="blank-line"></span> (aboutir) et que je <span class="blank-line"></span> (pouvoir) m'installer à Nice.
+                    </div>
+                    <div class="exercise-item">
+                        7. Je ne crois pas qu'il <span class="blank-line"></span> (être) nécessaire d'abandonner sa culture d'origine.
+                    </div>
+                    <div class="exercise-item">
+                        8. Il est évident que l'immersion <span class="blank-line"></span> (faciliter) l'apprentissage de la langue.
+                    </div>
+                    
+                    <button class="answer-toggle" onclick="toggleAnswers('ex1')">Voir les réponses ✓</button>
+                    <div id="ex1" class="answers">
+                        <strong>Réponses :</strong><br>
+                        1. <strong>convient</strong> (indicatif - certitude avec "je suis certaine")<br>
+                        2. <strong>déménagions</strong> (subjonctif - possibilité avec "il est possible que")<br>
+                        3. <strong>parle</strong> (subjonctif - concession avec "bien que")<br>
+                        4. <strong>dois</strong> (indicatif - opinion personnelle avec "je pense que")<br>
+                        5. <strong>sois</strong> (subjonctif - nécessité avec "il faudrait que")<br>
+                        6. <strong>aboutisse / puisse</strong> (subjonctif avec "espérer", style soutenu)<br>
+                        7. <strong>soit</strong> (subjonctif - négation du verbe de croyance "je ne crois pas que")<br>
+                        8. <strong>facilite</strong> (indicatif - évidence avec "il est évident que")
+                    </div>
+                </div>
+                
+                <!-- EXERCICE 2 -->
+                <div class="exercise">
+                    <div class="exercise-title">Exercice 2 : Transformez les phrases</div>
+                    <p style="margin-bottom: 15px;"><em>Utilisez les expressions données entre parenthèses</em></p>
+                    
+                    <div class="exercise-item">
+                        1. Elle comprendra mieux la culture française avec le temps.<br>
+                        (Je doute que) → <span class="blank-line" style="width: 80%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        2. Nous trouverons un appartement avec terrasse.<br>
+                        (J'aimerais que) → <span class="blank-line" style="width: 80%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        3. Tu réussiras à créer un pont entre les deux systèmes éducatifs.<br>
+                        (Il faut que) → <span class="blank-line" style="width: 80%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        4. Vous vous adaptez rapidement au rythme de vie méditerranéen.<br>
+                        (Bien que) → <span class="blank-line" style="width: 80%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        5. Les technologies innovantes transformeront l'éducation.<br>
+                        (Il est certain que) → <span class="blank-line" style="width: 80%"></span>
+                    </div>
+                    
+                    <button class="answer-toggle" onclick="toggleAnswers('ex2')">Voir les réponses ✓</button>
+                    <div id="ex2" class="answers">
+                        <strong>Réponses :</strong><br>
+                        1. Je doute qu'elle <strong>comprenne</strong> mieux la culture française avec le temps.<br>
+                        2. J'aimerais que nous <strong>trouvions</strong> un appartement avec terrasse.<br>
+                        3. Il faut que tu <strong>réussisses</strong> à créer un pont entre les deux systèmes éducatifs.<br>
+                        4. Bien que vous vous <strong>adaptiez</strong> rapidement au rythme de vie méditerranéen...<br>
+                        5. Il est certain que les technologies innovantes <strong>transformeront</strong> l'éducation. (indicatif)
+                    </div>
+                </div>
+                
+                <!-- EXERCICE 3 -->
+                <div class="exercise">
+                    <div class="exercise-title">Exercice 3 : Révision des conjugaisons</div>
+                    
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong>Verbe POUVOIR :</strong><br>
+                        • Présent (je) : <span class="blank-line"></span><br>
+                        • Imparfait (nous) : <span class="blank-line"></span><br>
+                        • Futur (ils) : <span class="blank-line"></span><br>
+                        • Conditionnel présent (tu) : <span class="blank-line"></span><br>
+                        • Subjonctif présent (que je) : <span class="blank-line"></span>
+                    </div>
+                    
+                    <div style="background: #f7fafc; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <strong>Verbe VIVRE :</strong><br>
+                        • Présent (elle) : <span class="blank-line"></span><br>
+                        • Imparfait (vous) : <span class="blank-line"></span><br>
+                        • Passé composé (j') : <span class="blank-line"></span><br>
+                        • Conditionnel présent (nous) : <span class="blank-line"></span><br>
+                        • Subjonctif présent (qu'ils) : <span class="blank-line"></span>
+                    </div>
+                    
+                    <button class="answer-toggle" onclick="toggleAnswers('ex3')">Voir les réponses ✓</button>
+                    <div id="ex3" class="answers">
+                        <strong>POUVOIR :</strong><br>
+                        • je <strong>peux</strong><br>
+                        • nous <strong>pouvions</strong><br>
+                        • ils <strong>pourront</strong><br>
+                        • tu <strong>pourrais</strong><br>
+                        • que je <strong>puisse</strong><br><br>
+                        
+                        <strong>VIVRE :</strong><br>
+                        • elle <strong>vit</strong><br>
+                        • vous <strong>viviez</strong><br>
+                        • j'<strong>ai vécu</strong><br>
+                        • nous <strong>vivrions</strong><br>
+                        • qu'ils <strong>vivent</strong>
+                    </div>
+                </div>
+                
+                <!-- EXERCICE 4 -->
+                <div class="exercise">
+                    <div class="exercise-title">Exercice 4 : Complétez avec la bonne conjonction</div>
+                    <p style="margin-bottom: 15px;"><em>Choisissez parmi : bien que, pour que, avant que, sans que, à condition que, afin que</em></p>
+                    
+                    <div class="exercise-item">
+                        1. Je t'explique cela <span class="blank-line"></span> tu comprennes mieux la situation.
+                    </div>
+                    <div class="exercise-item">
+                        2. <span class="blank-line"></span> elle soit fatiguée, elle continue à travailler.
+                    </div>
+                    <div class="exercise-item">
+                        3. Il faut partir <span class="blank-line"></span> il ne soit trop tard.
+                    </div>
+                    <div class="exercise-item">
+                        4. Je viendrai <span class="blank-line"></span> tu m'appelles demain.
+                    </div>
+                    <div class="exercise-item">
+                        5. Elle est partie <span class="blank-line"></span> je la voie.
+                    </div>
+                    <div class="exercise-item">
+                        6. J'ai préparé ce document <span class="blank-line"></span> vous ayez toutes les informations.
+                    </div>
+                    
+                    <button class="answer-toggle" onclick="toggleAnswers('ex4')">Voir les réponses ✓</button>
+                    <div id="ex4" class="answers">
+                        <strong>Réponses :</strong><br>
+                        1. <strong>pour que / afin que</strong> (but)<br>
+                        2. <strong>Bien que</strong> (concession)<br>
+                        3. <strong>avant que</strong> (temps)<br>
+                        4. <strong>à condition que</strong> (condition)<br>
+                        5. <strong>sans que</strong> (négation)<br>
+                        6. <strong>afin que / pour que</strong> (but)
+                    </div>
+                </div>
+                
+                <!-- EXERCICE 5 -->
+                <div class="exercise">
+                    <div class="exercise-title">Exercice 5 : Expression écrite</div>
+                    <p style="margin-bottom: 15px;"><strong>Sujet :</strong> "Si je pouvais concevoir le mode de vie idéal, en piochant dans les cultures française et américaine..."</p>
+                    <p style="margin-bottom: 15px; font-size: 0.9em; color: #666;"><em>Rédigez un texte de 150-200 mots. Utilisez :<br>
+                    • Au moins 3 structures au conditionnel<br>
+                    • Au moins 2 phrases avec le subjonctif<br>
+                    • Des connecteurs logiques variés (d'une part/d'autre part, en revanche, néanmoins, par ailleurs...)</em></p>
+                    
+                    <textarea class="write-area" style="min-height: 200px;" placeholder="Écrivez votre texte ici..."></textarea>
+                </div>
+                
+                <!-- EXERCICE 6 -->
+                <div class="exercise">
+                    <div class="exercise-title">Exercice 6 : Trouvez les erreurs</div>
+                    <p style="margin-bottom: 15px;"><em>Corrigez les phrases suivantes (mode ou conjugaison incorrects)</em></p>
+                    
+                    <div class="exercise-item">
+                        1. Je pense qu'il fasse beau demain.<br>
+                        Correction : <span class="blank-line" style="width: 70%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        2. Il est évident qu'elle soit la meilleure candidate.<br>
+                        Correction : <span class="blank-line" style="width: 70%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        3. J'aimerais que tu viens avec nous.<br>
+                        Correction : <span class="blank-line" style="width: 70%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        4. Bien qu'il a beaucoup d'argent, il n'est pas heureux.<br>
+                        Correction : <span class="blank-line" style="width: 70%"></span>
+                    </div>
+                    <div class="exercise-item">
+                        5. Je doute qu'elle peut venir demain.<br>
+                        Correction : <span class="blank-line" style="width: 70%"></span>
+                    </div>
+                    
+                    <button class="answer-toggle" onclick="toggleAnswers('ex6')">Voir les réponses ✓</button>
+                    <div id="ex6" class="answers">
+                        <strong>Réponses :</strong><br>
+                        1. Je pense qu'il <strong>fera</strong> beau demain. (indicatif après "je pense que")<br>
+                        2. Il est évident qu'elle <strong>est</strong> la meilleure candidate. (indicatif après "il est évident")<br>
+                        3. J'aimerais que tu <strong>viennes</strong> avec nous. (subjonctif après "j'aimerais que")<br>
+                        4. Bien qu'il <strong>ait</strong> beaucoup d'argent, il n'est pas heureux. (subjonctif après "bien que")<br>
+                        5. Je doute qu'elle <strong>puisse</strong> venir demain. (subjonctif après "je doute que")
+                    </div>
+                </div>
+                
+                <!-- EXERCICE 7 -->
+                <div class="exercise">
+                    <div class="exercise-title">Exercice 7 : Expression orale - Débat</div>
+                    <p style="margin-bottom: 15px;"><strong>Préparez vos arguments pour débattre de l'une de ces questions :</strong></p>
+                    
+                    <div style="background: #e6fffa; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>Question A :</strong> Vaut-il mieux s'adapter complètement à la culture du pays d'accueil ou maintenir ses traditions d'origine ?
+                    </div>
+                    
+                    <div style="background: #fef5e7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>Question B :</strong> Les nouvelles technologies facilitent-elles ou compliquent-elles l'expatriation ?
+                    </div>
+                    
+                    <div style="background: #fce4ec; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <strong>Question C :</strong> L'apprentissage d'une langue étrangère peut-il réellement changer notre vision du monde ?
+                    </div>
+                    
+                    <p style="margin-top: 15px; font-size: 0.9em; color: #666;"><em>Notez vos arguments principaux ci-dessous :</em></p>
+                    <textarea class="write-area" style="min-height: 150px;" placeholder="Arguments pour... Arguments contre..."></textarea>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>✨ Bon courage pour ce cours ! N'hésite pas à partager tes réflexions ! ✨</p>
+            <p style="margin-top: 10px; font-size: 0.9em;">Préparé avec soin pour ton niveau C1-C2 🎯</p>
+            <p style="margin-top: 15px; font-size: 0.85em; opacity: 0.8;">Fabien - Cours de français</p>
+        </div>
+    </div>
+    
+    <script>
+        function toggleAnswers(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('show');
+        }
+    </script>
+</body>
+</html>
