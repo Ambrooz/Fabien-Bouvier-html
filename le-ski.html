@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Ski en France</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #3498db;
+        }
+        
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        
+        .section p {
+            line-height: 1.8;
+            color: #34495e;
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+        
+        .vocab-box {
+            background: #e8f4f8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #3498db;
+        }
+        
+        .vocab-box h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .vocab-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .vocab-item {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            font-size: 0.95em;
+        }
+        
+        .vocab-item strong {
+            color: #3498db;
+        }
+        
+        .dialogue-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .dialogue-box h2 {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .dialogue-line {
+            margin: 15px 0;
+            padding: 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .speaker {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .questions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .questions h3 {
+            color: #856404;
+            margin-bottom: 15px;
+        }
+        
+        .questions ol {
+            margin-left: 25px;
+        }
+        
+        .questions li {
+            margin: 10px 0;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .grammar-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .grammar-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        
+        .grammar-section h3 {
+            color: #3498db;
+            margin: 20px 0 10px 0;
+        }
+        
+        .example-box {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #3498db;
+        }
+        
+        .exercise {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .exercise h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-item {
+            margin: 10px 0;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        
+        .answer {
+            display: none;
+            background: #d4edda;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .show-answer-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .show-answer-btn:hover {
+            background: #2980b9;
+        }
+        
+        .show-answer-btn.active {
+            background: #27ae60;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+            background: white;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        th {
+            background: #3498db;
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎿 Le Ski en France ⛷️</h1>
+            <p>Texte, Dialogue, Grammaire & Exercices</p>
+        </div>
+        
+        <div class="content">
+            <!-- Texte principal -->
+            <div class="section">
+                <h2>📖 Texte : Une Journée de Ski à Chamonix</h2>
+                
+                <p>Hier, Julie et Marc sont allés skier à Chamonix, dans les Alpes françaises. Ils ont pris le téléphérique très tôt le matin pour profiter de la poudreuse fraîche. Marc a chaussé ses skis rapidement, mais Julie a eu du mal avec ses chaussures de ski – elles étaient trop serrées !</p>
+                
+                <p>Leur moniteur, Pierre, les a accompagnés sur les pistes bleues pour commencer. « N'oubliez pas de plier vos genoux ! » leur a-t-il rappelé. Julie a fait beaucoup de progrès. Elle est descendue sans tomber une seule fois. Marc, lui, a chuté trois fois sur une piste rouge difficile, mais il a bien ri.</p>
+                
+                <p>À midi, ils ont déjeuné dans un chalet d'altitude. Ils ont mangé une délicieuse raclette avec de la charcuterie et des pommes de terre. L'après-midi, ils ont exploré le domaine skiable. Le temps était magnifique : un ciel bleu et le Mont Blanc brillait sous le soleil.</p>
+                
+                <p>En fin de journée, leurs jambes étaient fatiguées mais ils étaient très contents. Julie a acheté un forfait pour toute la semaine car elle a adoré son expérience. Marc a promis de revenir l'année prochaine. Ils sont rentrés à leur hôtel vers 17h, épuisés mais heureux.</p>
+                
+                <div class="vocab-box">
+                    <h3>📚 Lexique</h3>
+                    <div class="vocab-list">
+                        <div class="vocab-item"><strong>La poudreuse :</strong> neige fraîche et légère</div>
+                        <div class="vocab-item"><strong>Chausser ses skis :</strong> mettre ses skis</div>
+                        <div class="vocab-item"><strong>Serré(e) :</strong> trop étroit, qui serre</div>
+                        <div class="vocab-item"><strong>Un moniteur :</strong> professeur de ski</div>
+                        <div class="vocab-item"><strong>Plier les genoux :</strong> courber les jambes</div>
+                        <div class="vocab-item"><strong>Chuter / tomber :</strong> perdre l'équilibre</div>
+                        <div class="vocab-item"><strong>Un chalet d'altitude :</strong> restaurant en montagne</div>
+                        <div class="vocab-item"><strong>Le domaine skiable :</strong> ensemble des pistes</div>
+                        <div class="vocab-item"><strong>Un forfait :</strong> ticket pour les remontées</div>
+                        <div class="vocab-item"><strong>Épuisé(e) :</strong> très fatigué(e)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Questions sur le texte -->
+            <div class="questions">
+                <h3>❓ Questions sur le texte</h3>
+                <ol>
+                    <li>Pourquoi Julie et Marc sont-ils partis tôt le matin ?</li>
+                    <li>Quel problème Julie a-t-elle eu avant de commencer à skier ?</li>
+                    <li>Combien de fois Marc est-il tombé ? Sur quelle couleur de piste ?</li>
+                    <li>Qu'ont-ils mangé à midi et où ?</li>
+                </ol>
+                <button class="show-answer-btn" onclick="toggleAnswer('answers-text')">Voir les réponses</button>
+                <div id="answers-text" class="answer">
+                    <strong>Réponses :</strong><br>
+                    1. Ils sont partis tôt pour profiter de la poudreuse fraîche.<br>
+                    2. Ses chaussures de ski étaient trop serrées.<br>
+                    3. Marc est tombé trois fois sur une piste rouge.<br>
+                    4. Ils ont mangé une raclette avec de la charcuterie et des pommes de terre dans un chalet d'altitude.
+                </div>
+            </div>
+            
+            <!-- Dialogue -->
+            <div class="dialogue-box">
+                <h2>💬 Dialogue : À la location de skis</h2>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">L'employé :</div>
+                    <div>Bonjour ! Vous désirez louer des skis ?</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">Sophie :</div>
+                    <div>Oui, bonjour. J'ai besoin d'un équipement complet pour une semaine.</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">L'employé :</div>
+                    <div>Parfait ! Quelle est votre pointure ?</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">Sophie :</div>
+                    <div>Je fais du 38. Et je suis débutante, je n'ai jamais skié.</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">L'employé :</div>
+                    <div>D'accord. Je vais vous donner des skis courts, ce sera plus facile pour apprendre. Avez-vous besoin d'un casque aussi ?</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">Sophie :</div>
+                    <div>Oui, s'il vous plaît. Et je voudrais aussi louer des bâtons.</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">L'employé :</div>
+                    <div>Bien sûr. Voilà vos skis, vos chaussures, votre casque et vos bâtons. N'oubliez pas : gardez vos genoux pliés et regardez devant vous, pas vos pieds !</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">Sophie :</div>
+                    <div>Merci pour les conseils ! Mon cours commence dans une heure. Je suis un peu nerveuse !</div>
+                </div>
+                
+                <div class="dialogue-line">
+                    <div class="speaker">L'employé :</div>
+                    <div>Vous verrez, c'est merveilleux ! Bonne journée et bon ski !</div>
+                </div>
+            </div>
+            
+            <!-- Grammaire 1 : Déterminants possessifs -->
+            <div class="grammar-section">
+                <h2>📝 Grammaire 1 : Les Déterminants Possessifs</h2>
+                
+                <p>Les déterminants possessifs indiquent à qui appartient quelque chose. Ils s'accordent avec l'objet possédé (et non avec le possesseur).</p>
+                
+                <table>
+                    <tr>
+                        <th>Possesseur</th>
+                        <th>Masculin singulier</th>
+                        <th>Féminin singulier</th>
+                        <th>Pluriel</th>
+                    </tr>
+                    <tr>
+                        <td>Je</td>
+                        <td>mon ski</td>
+                        <td>ma veste</td>
+                        <td>mes gants</td>
+                    </tr>
+                    <tr>
+                        <td>Tu</td>
+                        <td>ton ski</td>
+                        <td>ta veste</td>
+                        <td>tes gants</td>
+                    </tr>
+                    <tr>
+                        <td>Il/Elle</td>
+                        <td>son ski</td>
+                        <td>sa veste</td>
+                        <td>ses gants</td>
+                    </tr>
+                    <tr>
+                        <td>Nous</td>
+                        <td>notre ski</td>
+                        <td>notre veste</td>
+                        <td>nos gants</td>
+                    </tr>
+                    <tr>
+                        <td>Vous</td>
+                        <td>votre ski</td>
+                        <td>votre veste</td>
+                        <td>vos gants</td>
+                    </tr>
+                    <tr>
+                        <td>Ils/Elles</td>
+                        <td>leur ski</td>
+                        <td>leur veste</td>
+                        <td>leurs gants</td>
+                    </tr>
+                </table>
+                
+                <div class="example-box">
+                    <strong>⚠️ Attention !</strong><br>
+                    Devant un mot féminin commençant par une voyelle ou un h muet, on utilise <strong>mon, ton, son</strong> (et non ma, ta, sa) :<br>
+                    - mon amie (et non "ma amie")<br>
+                    - ton altitude<br>
+                    - son expérience
+                </div>
+                
+                <div class="example-box">
+                    <strong>📌 Exemples dans le contexte du ski :</strong><br>
+                    - Julie a oublié <strong>ses</strong> gants dans le téléphérique.<br>
+                    - Nous avons rangé <strong>nos</strong> skis dans le casier.<br>
+                    - Le moniteur a perdu <strong>son</strong> bâton sur la piste.<br>
+                    - Vous avez laissé <strong>votre</strong> forfait à l'hôtel ?<br>
+                    - Les enfants ont mis <strong>leurs</strong> casques.
+                </div>
+                
+                <div class="exercise">
+                    <h4>Exercice 1 : Complétez avec le bon déterminant possessif</h4>
+                    
+                    <div class="exercise-item">
+                        1. Marc a oublié ______ chaussures de ski. (il)
+                    </div>
+                    <div class="exercise-item">
+                        2. Nous avons acheté ______ forfaits pour la semaine. (nous)
+                    </div>
+                    <div class="exercise-item">
+                        3. Tu as pris ______ casque ? (tu)
+                    </div>
+                    <div class="exercise-item">
+                        4. Julie cherche ______ gants rouges. (elle)
+                    </div>
+                    <div class="exercise-item">
+                        5. Les enfants adorent ______ moniteur. (ils)
+                    </div>
+                    <div class="exercise-item">
+                        6. J'ai mis ______ écharpe dans le sac. (je)
+                    </div>
+                    <div class="exercise-item">
+                        7. Vous avez rangé ______ skis ? (vous)
+                    </div>
+                    <div class="exercise-item">
+                        8. Pierre et Sophie ont loué ______ équipement. (ils)
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answers-ex1')">Voir les réponses</button>
+                    <div id="answers-ex1" class="answer">
+                        <strong>Réponses :</strong><br>
+                        1. ses | 2. nos | 3. ton | 4. ses | 5. leur | 6. mon | 7. vos | 8. leur
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <h4>Exercice 2 : Traduisez en français</h4>
+                    
+                    <div class="exercise-item">
+                        1. My skis are red. → _________________________
+                    </div>
+                    <div class="exercise-item">
+                        2. Her jacket is warm. → _________________________
+                    </div>
+                    <div class="exercise-item">
+                        3. Our instructor is very patient. → _________________________
+                    </div>
+                    <div class="exercise-item">
+                        4. Their experience was wonderful. → _________________________
+                    </div>
+                    <div class="exercise-item">
+                        5. Your (vous) hotel is near the slopes. → _________________________
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answers-ex2')">Voir les réponses</button>
+                    <div id="answers-ex2" class="answer">
+                        <strong>Réponses :</strong><br>
+                        1. Mes skis sont rouges.<br>
+                        2. Sa veste est chaude.<br>
+                        3. Notre moniteur est très patient.<br>
+                        4. Leur expérience était merveilleuse.<br>
+                        5. Votre hôtel est près des pistes.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Grammaire 2 : Passé composé -->
+            <div class="grammar-section">
+                <h2>📝 Grammaire 2 : Le Passé Composé</h2>
+                
+                <p>Le passé composé sert à exprimer une action passée et terminée. Il se forme avec un auxiliaire (avoir ou être) au présent + le participe passé du verbe.</p>
+                
+                <h3>Formation avec AVOIR (la majorité des verbes)</h3>
+                <div class="example-box">
+                    Sujet + <strong>avoir au présent</strong> + <strong>participe passé</strong><br><br>
+                    <strong>Exemples :</strong><br>
+                    - J'<strong>ai skié</strong> toute la journée.<br>
+                    - Tu <strong>as mangé</strong> une raclette.<br>
+                    - Il <strong>a loué</strong> des skis.<br>
+                    - Nous <strong>avons pris</strong> le téléphérique.<br>
+                    - Vous <strong>avez fait</strong> du ski.<br>
+                    - Elles <strong>ont adoré</strong> la montagne.
+                </div>
+                
+                <h3>Formation avec ÊTRE (verbes de déplacement + verbes pronominaux)</h3>
+                <div class="example-box">
+                    <strong>Verbes avec ÊTRE :</strong> aller, venir, arriver, partir, entrer, sortir, monter, descendre, tomber, rester, naître, mourir, devenir, retourner, passer (par)<br><br>
+                    ⚠️ <strong>Accord du participe passé</strong> avec le sujet !<br><br>
+                    - Elle <strong>est allée</strong> à Chamonix.<br>
+                    - Marc <strong>est tombé</strong> trois fois.<br>
+                    - Nous <strong>sommes montés</strong> en téléphérique.<br>
+                    - Elles <strong>sont descendues</strong> rapidement.
+                </div>
+                
+                <h3>Participes passés courants</h3>
+                <table>
+                    <tr>
+                        <th>Infinitif</th>
+                        <th>Participe passé</th>
+                        <th>Infinitif</th>
+                        <th>Participe passé</th>
+                    </tr>
+                    <tr>
+                        <td>skier</td>
+                        <td>skié</td>
+                        <td>être</td>
+                        <td>été</td>
+                    </tr>
+                    <tr>
+                        <td>manger</td>
+                        <td>mangé</td>
+                        <td>avoir</td>
+                        <td>eu</td>
+                    </tr>
+                    <tr>
+                        <td>prendre</td>
+                        <td>pris</td>
+                        <td>faire</td>
+                        <td>fait</td>
+                    </tr>
+                    <tr>
+                        <td>voir</td>
+                        <td>vu</td>
+                        <td>venir</td>
+                        <td>venu</td>
+                    </tr>
+                    <tr>
+                        <td>pouvoir</td>
+                        <td>pu</td>
+                        <td>aller</td>
+                        <td>allé</td>
+                    </tr>
+                    <tr>
+                        <td>devoir</td>
+                        <td>dû</td>
+                        <td>tomber</td>
+                        <td>tombé</td>
+                    </tr>
+                </table>
+                
+                <div class="exercise">
+                    <h4>Exercice 3 : Mettez les verbes au passé composé</h4>
+                    
+                    <div class="exercise-item">
+                        1. Hier, nous (aller) __________ skier à Val d'Isère.
+                    </div>
+                    <div class="exercise-item">
+                        2. Julie (chausser) __________ ses skis rapidement.
+                    </div>
+                    <div class="exercise-item">
+                        3. Marc (tomber) __________ trois fois sur la piste rouge.
+                    </div>
+                    <div class="exercise-item">
+                        4. Les enfants (descendre) __________ la piste bleue.
+                    </div>
+                    <div class="exercise-item">
+                        5. Tu (manger) __________ une bonne raclette ?
+                    </div>
+                    <div class="exercise-item">
+                        6. Je (prendre) __________ le téléphérique ce matin.
+                    </div>
+                    <div class="exercise-item">
+                        7. Sophie (arriver) __________ à 8 heures.
+                    </div>
+                    <div class="exercise-item">
+                        8. Vous (faire) __________ du ski de fond ?
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answers-ex3')">Voir les réponses</button>
+                    <div id="answers-ex3" class="answer">
+                        <strong>Réponses :</strong><br>
+                        1. sommes allés | 2. a chaussé | 3. est tombé | 4. sont descendus | 5. as mangé | 6. ai pris | 7. est arrivée | 8. avez fait
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <h4>Exercice 4 : Avoir ou être ? Complétez et accordez si nécessaire</h4>
+                    
+                    <div class="exercise-item">
+                        1. Marie __________ (partir) à la montagne hier.
+                    </div>
+                    <div class="exercise-item">
+                        2. Nous __________ (acheter) nos forfaits en ligne.
+                    </div>
+                    <div class="exercise-item">
+                        3. Les skieurs __________ (monter) en télécabine.
+                    </div>
+                    <div class="exercise-item">
+                        4. Tu __________ (voir) le Mont Blanc ?
+                    </div>
+                    <div class="exercise-item">
+                        5. Julie et Sophie __________ (rester) trois jours à Chamonix.
+                    </div>
+                    <div class="exercise-item">
+                        6. J'__________ (louer) des skis pour la semaine.
+                    </div>
+                    <div class="exercise-item">
+                        7. Le moniteur __________ (expliquer) la technique.
+                    </div>
+                    <div class="exercise-item">
+                        8. Elles __________ (venir) de Paris ce matin.
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answers-ex4')">Voir les réponses</button>
+                    <div id="answers-ex4" class="answer">
+                        <strong>Réponses :</strong><br>
+                        1. est partie | 2. avons acheté | 3. sont montés | 4. as vu | 5. sont restées | 6. ai loué | 7. a expliqué | 8. sont venues
+                    </div>
+                </div>
+                
+                <div class="exercise">
+                    <h4>Exercice 5 : Racontez votre journée de ski au passé composé</h4>
+                    
+                    <p>Transformez ce texte au présent en passé composé :</p>
+                    
+                    <div class="exercise-item">
+                        <em>« Je vais à la montagne avec mes amis. Nous prenons le téléphérique à 9 heures. Le temps est magnifique. Je skie sur les pistes bleues et je tombe seulement une fois ! À midi, nous mangeons dans un chalet. L'après-midi, mes amis descendent une piste noire, mais je reste sur les pistes rouges. Nous rentrons à l'hôtel vers 17 heures. »</em>
+                    </div>
+                    
+                    <button class="show-answer-btn" onclick="toggleAnswer('answers-ex5')">Voir la réponse</button>
+                    <div id="answers-ex5" class="answer">
+                        <strong>Réponse :</strong><br>
+                        « Je <strong>suis allé(e)</strong> à la montagne avec mes amis. Nous <strong>avons pris</strong> le téléphérique à 9 heures. Le temps <strong>a été</strong> magnifique. J'<strong>ai skié</strong> sur les pistes bleues et je <strong>suis tombé(e)</strong> seulement une fois ! À midi, nous <strong>avons mangé</strong> dans un chalet. L'après-midi, mes amis <strong>sont descendus</strong> une piste noire, mais je <strong>suis resté(e)</strong> sur les pistes rouges. Nous <strong>sommes rentrés</strong> à l'hôtel vers 17 heures. »
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleAnswer(id) {
+            const answer = document.getElementById(id);
+            const btn = event.target;
+            
+            if (answer.style.display === 'none' || answer.style.display === '') {
+                answer.style.display = 'block';
+                btn.textContent = 'Cacher les réponses';
+                btn.classList.add('active');
+            } else {
+                answer.style.display = 'none';
+                btn.textContent = 'Voir les réponses';
+                btn.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>
