@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✏️ Exercices - L'Heure, La Météo et Les Vêtements (A1)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.8;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 50px 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.3em;
+            opacity: 0.95;
+            font-style: italic;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .exercise-section {
+            background: #f7fafc;
+            border-radius: 20px;
+            padding: 35px;
+            margin-bottom: 35px;
+            border-left: 8px solid #e53e3e;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        h2 {
+            color: #c53030;
+            font-size: 2em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .question-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border-left: 5px solid #4299e1;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+        }
+
+        .question-number {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #2b6cb0;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        input[type="text"] {
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1.1em;
+            margin: 5px;
+            min-width: 150px;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+        }
+
+        .answer-line {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f7fafc;
+            border-radius: 8px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(72,187,120,0.4);
+            margin: 15px 5px 5px 0;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(72,187,120,0.6);
+        }
+
+        .answer-section {
+            display: none;
+            background: #e6fffa;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 20px;
+            border-left: 5px solid #38b2ac;
+        }
+
+        .answer-section.show {
+            display: block;
+            animation: slideDown 0.4s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .answer-title {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #234e52;
+            margin-bottom: 15px;
+        }
+
+        .correct-answer {
+            color: #2f855a;
+            font-weight: bold;
+        }
+
+        .note {
+            background: #fefcbf;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ecc94b;
+            font-style: italic;
+        }
+
+        .instruction-box {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            border-left: 5px solid #e17055;
+        }
+
+        select {
+            border: 2px solid #cbd5e0;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1.1em;
+            margin: 5px;
+            min-width: 180px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
+        }
+
+        .grid-exercise {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .emoji-large {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            input[type="text"] {
+                min-width: 100%;
+                display: block;
+                margin: 10px 0;
+            }
+
+            select {
+                min-width: 100%;
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>✏️ Exercices Pratiques</h1>
+            <p class="subtitle">L'Heure, La Météo et Les Vêtements</p>
+            <p class="subtitle">Niveau A1 • Практические упражнения</p>
+        </header>
+
+        <div class="content">
+
+            <!-- EXERCICE 1 : L'HEURE -->
+            <div class="exercise-section">
+                <h2>🕐 Exercice 1 : Écrire l'heure</h2>
+                
+                <div class="instruction-box">
+                    <strong>📝 Consigne :</strong> Écrivez l'heure en français. Complétez les phrases.<br>
+                    <em>Инструкция: Напишите время по-французски. Завершите предложения.</em>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">
+                        8:00 → Il est <input type="text" id="q1_1" placeholder="..."> heures.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 2</div>
+                    <div class="question-text">
+                        1:00 → Il est <input type="text" id="q1_2" placeholder="..."> heure.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 3</div>
+                    <div class="question-text">
+                        3:15 → Il est trois heures <input type="text" id="q1_3" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 4</div>
+                    <div class="question-text">
+                        5:30 → Il est cinq heures <input type="text" id="q1_4" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 5</div>
+                    <div class="question-text">
+                        6:45 → Il est sept heures <input type="text" id="q1_5" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 6</div>
+                    <div class="question-text">
+                        12:00 (jour) → Il est <input type="text" id="q1_6" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 7</div>
+                    <div class="question-text">
+                        00:00 → Il est <input type="text" id="q1_7" placeholder="..."> .
+                    </div>
+                </div>
+
+                <button class="btn" onclick="toggleAnswer('answer1')">Voir les réponses ✓</button>
+
+                <div id="answer1" class="answer-section">
+                    <div class="answer-title">✅ RÉPONSES CORRECTES :</div>
+                    <p><strong>1.</strong> Il est <span class="correct-answer">huit</span> heures.</p>
+                    <p><strong>2.</strong> Il est <span class="correct-answer">une</span> heure.</p>
+                    <p><strong>3.</strong> Il est trois heures <span class="correct-answer">et quart</span>.</p>
+                    <p><strong>4.</strong> Il est cinq heures <span class="correct-answer">et demie</span>.</p>
+                    <p><strong>5.</strong> Il est sept heures <span class="correct-answer">moins le quart</span>.</p>
+                    <p><strong>6.</strong> Il est <span class="correct-answer">midi</span>.</p>
+                    <p><strong>7.</strong> Il est <span class="correct-answer">minuit</span>.</p>
+                    <div class="note">💡 Rappel : "moins le quart" = -15 minutes / "et quart" = +15 minutes</div>
+                </div>
+            </div>
+
+            <!-- EXERCICE 2 : MOMENTS DE LA JOURNÉE -->
+            <div class="exercise-section">
+                <h2>🌅 Exercice 2 : Les moments de la journée</h2>
+                
+                <div class="instruction-box">
+                    <strong>📝 Consigne :</strong> Ajoutez "du matin", "de l'après-midi" ou "du soir".<br>
+                    <em>Инструкция: Добавьте "du matin" (утра), "de l'après-midi" (дня) или "du soir" (вечера).</em>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">
+                        7:00 (7 AM) → Il est sept heures <input type="text" id="q2_1" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 2</div>
+                    <div class="question-text">
+                        14:00 (2 PM) → Il est deux heures <input type="text" id="q2_2" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 3</div>
+                    <div class="question-text">
+                        20:00 (8 PM) → Il est huit heures <input type="text" id="q2_3" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 4</div>
+                    <div class="question-text">
+                        10:30 (10:30 AM) → Il est dix heures et demie <input type="text" id="q2_4" placeholder="..."> .
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 5</div>
+                    <div class="question-text">
+                        22:15 (10:15 PM) → Il est dix heures et quart <input type="text" id="q2_5" placeholder="..."> .
+                    </div>
+                </div>
+
+                <button class="btn" onclick="toggleAnswer('answer2')">Voir les réponses ✓</button>
+
+                <div id="answer2" class="answer-section">
+                    <div class="answer-title">✅ RÉPONSES CORRECTES :</div>
+                    <p><strong>1.</strong> Il est sept heures <span class="correct-answer">du matin</span>.</p>
+                    <p><strong>2.</strong> Il est deux heures <span class="correct-answer">de l'après-midi</span>.</p>
+                    <p><strong>3.</strong> Il est huit heures <span class="correct-answer">du soir</span>.</p>
+                    <p><strong>4.</strong> Il est dix heures et demie <span class="correct-answer">du matin</span>.</p>
+                    <p><strong>5.</strong> Il est dix heures et quart <span class="correct-answer">du soir</span>.</p>
+                    <div class="note">💡 Du matin (5h-12h) / De l'après-midi (12h-18h) / Du soir (18h-23h)</div>
+                </div>
+            </div>
+
+            <!-- EXERCICE 3 : LA MÉTÉO -->
+            <div class="exercise-section">
+                <h2>☀️ Exercice 3 : Décrire la météo</h2>
+                
+                <div class="instruction-box">
+                    <strong>📝 Consigne :</strong> Complétez avec le bon verbe ou expression météo.<br>
+                    <em>Инструкция: Дополните правильным глаголом или выражением о погоде.</em>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">
+                        <span class="emoji-large">☀️</span><br>
+                        Il <input type="text" id="q3_1" placeholder="..."> beau aujourd'hui !
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 2</div>
+                    <div class="question-text">
+                        <span class="emoji-large">🌧️</span><br>
+                        Il <input type="text" id="q3_2" placeholder="..."> . Prenez un parapluie !
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 3</div>
+                    <div class="question-text">
+                        <span class="emoji-large">❄️</span><br>
+                        Il <input type="text" id="q3_3" placeholder="..."> . Les enfants font un bonhomme de neige.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 4</div>
+                    <div class="question-text">
+                        <span class="emoji-large">❄️</span><br>
+                        Il <input type="text" id="q3_4" placeholder="..."> froid en hiver en Russie.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 5</div>
+                    <div class="question-text">
+                        <span class="emoji-large">💨</span><br>
+                        Il y a <input type="text" id="q3_5" placeholder="..."> aujourd'hui.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 6</div>
+                    <div class="question-text">
+                        <span class="emoji-large">🌞</span><br>
+                        Il fait <input type="text" id="q3_6" placeholder="..."> en été.
+                    </div>
+                </div>
+
+                <button class="btn" onclick="toggleAnswer('answer3')">Voir les réponses ✓</button>
+
+                <div id="answer3" class="answer-section">
+                    <div class="answer-title">✅ RÉPONSES CORRECTES :</div>
+                    <p><strong>1.</strong> Il <span class="correct-answer">fait</span> beau aujourd'hui !</p>
+                    <p><strong>2.</strong> Il <span class="correct-answer">pleut</span>. Prenez un parapluie !</p>
+                    <p><strong>3.</strong> Il <span class="correct-answer">neige</span>. Les enfants font un bonhomme de neige.</p>
+                    <p><strong>4.</strong> Il <span class="correct-answer">fait</span> froid en hiver en Russie.</p>
+                    <p><strong>5.</strong> Il y a <span class="correct-answer">du vent</span> aujourd'hui.</p>
+                    <p><strong>6.</strong> Il fait <span class="correct-answer">chaud</span> en été.</p>
+                    <div class="note">💡 Structure : "Il fait..." (+ adjectif) / "Il pleut/neige" (verbes) / "Il y a..." (+ nom)</div>
+                </div>
+            </div>
+
+            <!-- EXERCICE 4 : LES SAISONS -->
+            <div class="exercise-section">
+                <h2>🌸 Exercice 4 : Les saisons</h2>
+                
+                <div class="instruction-box">
+                    <strong>📝 Consigne :</strong> Complétez avec la bonne saison et la préposition correcte.<br>
+                    <em>Инструкция: Дополните правильным временем года и предлогом.</em>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">
+                        🌸 <input type="text" id="q4_1" placeholder="Au/En"> <input type="text" id="q4_1b" placeholder="saison">, les fleurs poussent.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 2</div>
+                    <div class="question-text">
+                        ☀️ <input type="text" id="q4_2" placeholder="Au/En"> <input type="text" id="q4_2b" placeholder="saison">, je vais à la plage.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 3</div>
+                    <div class="question-text">
+                        🍂 <input type="text" id="q4_3" placeholder="Au/En"> <input type="text" id="q4_3b" placeholder="saison">, les feuilles tombent.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 4</div>
+                    <div class="question-text">
+                        ❄️ <input type="text" id="q4_4" placeholder="Au/En"> <input type="text" id="q4_4b" placeholder="saison">, il neige souvent.
+                    </div>
+                </div>
+
+                <button class="btn" onclick="toggleAnswer('answer4')">Voir les réponses ✓</button>
+
+                <div id="answer4" class="answer-section">
+                    <div class="answer-title">✅ RÉPONSES CORRECTES :</div>
+                    <p><strong>1.</strong> <span class="correct-answer">Au printemps</span>, les fleurs poussent.</p>
+                    <p><strong>2.</strong> <span class="correct-answer">En été</span>, je vais à la plage.</p>
+                    <p><strong>3.</strong> <span class="correct-answer">En automne</span>, les feuilles tombent.</p>
+                    <p><strong>4.</strong> <span class="correct-answer">En hiver</span>, il neige souvent.</p>
+                    <div class="note">💡 Exception : AU printemps (masculin) / EN été, EN automne, EN hiver</div>
+                </div>
+            </div>
+
+            <!-- EXERCICE 5 : CONJUGAISON PORTER -->
+            <div class="exercise-section">
+                <h2>👕 Exercice 5 : Conjuguer PORTER</h2>
+                
+                <div class="instruction-box">
+                    <strong>📝 Consigne :</strong> Conjuguez le verbe PORTER au présent.<br>
+                    <em>Инструкция: Проспрягайте глагол PORTER (носить) в настоящем времени.</em>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">
+                        Je <input type="text" id="q5_1" placeholder="..."> un jean noir.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 2</div>
+                    <div class="question-text">
+                        Tu <input type="text" id="q5_2" placeholder="..."> une belle robe.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 3</div>
+                    <div class="question-text">
+                        Il <input type="text" id="q5_3" placeholder="..."> un costume gris.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 4</div>
+                    <div class="question-text">
+                        Nous <input type="text" id="q5_4" placeholder="..."> des manteaux chauds.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 5</div>
+                    <div class="question-text">
+                        Vous <input type="text" id="q5_5" placeholder="..."> des chaussures élégantes.
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 6</div>
+                    <div class="question-text">
+                        Elles <input type="text" id="q5_6" placeholder="..."> des jupes colorées.
+                    </div>
+                </div>
+
+                <button class="btn" onclick="toggleAnswer('answer5')">Voir les réponses ✓</button>
+
+                <div id="answer5" class="answer-section">
+                    <div class="answer-title">✅ RÉPONSES CORRECTES :</div>
+                    <p><strong>1.</strong> Je <span class="correct-answer">porte</span> un jean noir.</p>
+                    <p><strong>2.</strong> Tu <span class="correct-answer">portes</span> une belle robe.</p>
+                    <p><strong>3.</strong> Il <span class="correct-answer">porte</span> un costume gris.</p>
+                    <p><strong>4.</strong> Nous <span class="correct-answer">portons</span> des manteaux chauds.</p>
+                    <p><strong>5.</strong> Vous <span class="correct-answer">portez</span> des chaussures élégantes.</p>
+                    <p><strong>6.</strong> Elles <span class="correct-answer">portent</span> des jupes colorées.</p>
+                    <div class="note">💡 PORTER est un verbe régulier du 1er groupe (-ER)</div>
+                </div>
+            </div>
+
+            <!-- EXERCICE 6 : LES VÊTEMENTS ET LA MÉTÉO -->
+            <div class="exercise-section">
+                <h2>🌦️ Exercice 6 : Quels vêtements porter ?</h2>
+                
+                <div class="instruction-box">
+                    <strong>📝 Consigne :</strong> Choisissez les vêtements appropriés selon la météo.<br>
+                    <em>Инструкция: Выберите подходящую одежду в зависимости от погоды.</em>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">
+                        ❄️ Il fait très froid. Je porte...<br>
+                        <select id="q6_1">
+                            <option value="">-- Choisissez --</option>
+                            <option value="short">un short</option>
+                            <option value="manteau">un manteau et une écharpe</option>
+                            <option value="maillot">un maillot de bain</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 2</div>
+                    <div class="question-text">
+                        🌧️ Il pleut. J'ai besoin de...<br>
+                        <select id="q6_2">
+                            <option value="">-- Choisissez --</option>
+                            <option value="lunettes">lunettes de soleil</option>
+                            <option value="parapluie">un parapluie et des bottes</option>
+                            <option value="chapeau">un chapeau de paille</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 3</div>
+                    <div class="question-text">
+                        🌞 Il fait très chaud en été. Je porte...<br>
+                        <select id="q6_3">
+                            <option value="">-- Choisissez --</option>
+                            <option value="tshirt">un t-shirt et un short</option>
+                            <option value="pull">un pull épais</option>
+                            <option value="manteau2">un manteau</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 4</div>
+                    <div class="question-text">
+                        💼 Je vais au travail. Je porte...<br>
+                        <select id="q6_4">
+                            <option value="">-- Choisissez --</option>
+                            <option value="pyjama">un pyjama</option>
+                            <option value="costume">une chemise et un pantalon</option>
+                            <option value="bikini">un bikini</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn" onclick="toggleAnswer('answer6')">Voir les réponses ✓</button>
+
+                <div id="answer6" class="answer-section">
+                    <div class="answer-title">✅ RÉPONSES CORRECTES :</div>
+                    <p><strong>1.</strong> <span class="correct-answer">un manteau et une écharpe</span> (pour avoir chaud)</p>
+                    <p><strong>2.</strong> <span class="correct-answer">un parapluie et des bottes</span> (pour rester sec)</p>
+                    <p><strong>3.</strong> <span class="correct-answer">un t-shirt et un short</span> (vêtements légers)</p>
+                    <p><strong>4.</strong> <span class="correct-answer">une chemise et un pantalon</span> (tenue professionnelle)</p>
+                    <div class="note">💡 Adaptez toujours vos vêtements à la météo et à l'occasion !</div>
+                </div>
+            </div>
+
+            <!-- EXERCICE 7 : COMPRÉHENSION DU DIALOGUE -->
+            <div class="exercise-section">
+                <h2>💬 Exercice 7 : Questions sur le dialogue</h2>
+                
+                <div class="instruction-box">
+                    <strong>📝 Consigne :</strong> Répondez aux questions sur le dialogue "Une journée à Paris".<br>
+                    <em>Инструкция: Ответьте на вопросы по диалогу "Один день в Париже".</em>
+                </div>
+
+                <div class="question-box">
+                    <div class="question-number">Question 1</div>
+                    <div class="question-text">
+                        Quelle heure est-il quand Sophie parle à Marie ?<br>
