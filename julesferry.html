@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Jules Ferry et la IIIe République</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: #333; padding: 20px; }
+        .container { max-width: 1000px; margin: 0 auto; background: white; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); overflow: hidden; }
+        header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px 30px; text-align: center; }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        header p { font-size: 1.2em; opacity: 0.9; }
+        nav { background: #f8f9fa; padding: 20px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; border-bottom: 3px solid #667eea; }
+        nav button { background: white; border: 2px solid #667eea; color: #667eea; padding: 12px 24px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; transition: all 0.3s; }
+        nav button:hover { background: #667eea; color: white; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3); }
+        .content { padding: 40px 30px; }
+        .section { display: none; animation: fadeIn 0.5s; }
+        .section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        h2 { color: #667eea; font-size: 2em; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 3px solid #667eea; }
+        h3 { color: #764ba2; font-size: 1.5em; margin-top: 30px; margin-bottom: 15px; }
+        h4 { color: #667eea; font-size: 1.2em; margin-top: 20px; margin-bottom: 10px; }
+        .problematique { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; margin: 20px 0; font-size: 1.1em; font-weight: bold; }
+        .info-box { background: #f0f4ff; border-left: 5px solid #667eea; padding: 20px; margin: 20px 0; border-radius: 5px; }
+        .highlight { background: #fff3cd; padding: 15px; border-left: 4px solid #ffc107; margin: 15px 0; border-radius: 5px; }
+        .deux-colonnes { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0; }
+        .colonne { background: #f8f9fa; padding: 20px; border-radius: 10px; border: 2px solid #667eea; }
+        ul { margin-left: 20px; margin-top: 10px; }
+        li { margin-bottom: 8px; }
+        .lexique-item { background: #f8f9fa; padding: 15px; margin-bottom: 15px; border-radius: 8px; border-left: 4px solid #764ba2; }
+        .lexique-term { font-weight: bold; color: #764ba2; font-size: 1.1em; margin-bottom: 5px; }
+        .mnemo-card { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); padding: 20px; margin: 15px 0; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        .quiz-question { background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 10px; border: 2px solid #667eea; }
+        .quiz-option { background: white; border: 2px solid #ddd; padding: 12px; margin: 8px 0; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+        .quiz-option:hover { border-color: #667eea; background: #f0f4ff; }
+        .quiz-option.correct { background: #d4edda; border-color: #28a745; }
+        .quiz-option.incorrect { background: #f8d7da; border-color: #dc3545; }
+        .check-btn { background: #667eea; color: white; border: none; padding: 12px 30px; border-radius: 25px; cursor: pointer; font-size: 1em; font-weight: bold; margin-top: 15px; }
+        .score-display { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 10px; text-align: center; font-size: 1.5em; font-weight: bold; margin-top: 20px; }
+        .exercice-box { background: #f8f9fa; padding: 20px; margin: 15px 0; border-radius: 10px; border: 2px solid #764ba2; }
+        .answer-reveal { background: #d4edda; padding: 15px; margin-top: 10px; border-radius: 5px; display: none; }
+        .reveal-btn { background: #28a745; color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; font-size: 0.9em; margin-top: 10px; }
+        .timeline { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; }
+        .timeline-item { padding: 15px; margin: 10px 0; background: white; border-left: 4px solid #667eea; border-radius: 5px; }
+        .timeline-date { font-weight: bold; color: #667eea; font-size: 1.1em; }
+        @media (max-width: 768px) { header h1 { font-size: 1.8em; } .deux-colonnes { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Jules Ferry et la IIIe République</h1>
+            <p>Cours interactif - CAP 2ème année</p>
+        </header>
+
+        <nav>
+            <button onclick="showSection('cours')">📚 Le Cours</button>
+            <button onclick="showSection('lexique')">📖 Lexique</button>
+            <button onclick="showSection('mnemo')">🧠 Moyens Mnémotechniques</button>
+            <button onclick="showSection('exercices')">✏️ Exercices</button>
+            <button onclick="showSection('quiz')">🎮 Quiz</button>
+        </nav>
+
+        <div class="content">
+            <div id="cours" class="section active">
+                <h2>📚 Le Cours Complet</h2>
+                <div class="problematique">🎯 Qui était Jules Ferry ? Comment Jules Ferry a marqué la IIIe République ?</div>
+                
+                <h3>I. Jules Ferry, opposant au Second Empire et à l'Ordre Moral</h3>
+                <div class="info-box"><strong>Jules Ferry (1832-1893)</strong> était un homme politique républicain français qui s'est opposé au Second Empire de Napoléon III et à l'ordre moral.</div>
+                
+                <h4>📰 Début de carrière : Le journaliste engagé</h4>
+                <p>Jules Ferry commence comme <strong>journaliste de tendance républicaine</strong>. Il se fait connaître en 1868 avec la publication des <em>"Comptes fantastiques d'Haussmann"</em> où il critique et se moque de la politique urbaine menée par Napoléon III et le baron Haussmann à Paris.</p>
+
+                <h4>🏛️ Carrière politique sous la IIIe République</h4>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">1870</div>
+                        Après l'effondrement du Second Empire, il devient <strong>Préfet de la Seine</strong>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1870-1871</div>
+                        <strong>Maire de Paris</strong> pendant le siège de Paris par les Prussiens
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1871</div>
+                        Élu <strong>député</strong>, il s'oppose aux royalistes et conservateurs
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1879-1880</div>
+                        <strong>Ministre de l'Instruction publique</strong> (éducation)
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">1880-1881 et 1883-1885</div>
+                        <strong>Président du Conseil</strong> (Premier ministre)
+                    </div>
+                </div>
+
+                <p>Il est apprécié pour ses <strong>opinions républicaines et anticléricales</strong> (opposition à l'influence de l'Église catholique dans la politique).</p>
+
+                <h4>🗽 Développement des libertés publiques</h4>
+                <p>Jules Ferry favorise le développement des libertés en France :</p>
+                <ul>
+                    <li><strong>Mai 1881 :</strong> Loi sur la liberté de réunion (droit de se rassembler)</li>
+                    <li><strong>Juillet 1881 :</strong> Loi sur la liberté de la presse (liberté d'expression écrite)</li>
+                    <li><strong>1884 :</strong> Loi autorisant la création de syndicats de salariés en France</li>
+                </ul>
+
+                <h3>II. L'œuvre scolaire de Jules Ferry</h3>
+                
+                <div class="highlight">
+                    ⚠️ <strong>Situation avant Jules Ferry :</strong><br>
+                    • L'école était <strong>payante</strong> et réservée aux plus riches<br>
+                    • La France était majoritairement rurale<br>
+                    • Les enfants commençaient à travailler très tôt (dès 5 ans)<br>
+                    • Beaucoup ne savaient ni lire, ni écrire<br>
+                    • Seules les familles aisées pouvaient envoyer leurs enfants à l'école, souvent tenue par des religieux
+                </div>
+
+                <h4>🎯 Les motivations de Jules Ferry</h4>
+                <p>En 1879, Jules Ferry arrive au pouvoir comme <strong>Ministre de l'Instruction publique</strong>. Lui et les républicains pensent que :</p>
+                <ul>
+                    <li>La jeunesse doit échapper à l'influence de l'<strong>Église catholique</strong>, alors violemment antirépublicaine</li>
+                    <li>Il faut <strong>instruire la population</strong> pour que la France garde son statut de "grand pays"</li>
+                    <li>Le manque d'éducation avait contribué à la <strong>défaite contre la Prusse</strong> en 1870</li>
+                </ul>
+
+                <h4>📜 Les Lois Ferry : Une révolution scolaire</h4>
+                <div class="deux-colonnes">
+                    <div class="colonne">
+                        <h4>Les 3 piliers (1881-1882)</h4>
+                        <ul>
+                            <li>✅ <strong>GRATUITE</strong><br>Accessible à tous, pas seulement aux riches</li>
+                            <li>✅ <strong>LAÏQUE</strong><br>Indépendante de toute religion</li>
+                            <li>✅ <strong>OBLIGATOIRE</strong><br>Tous les enfants doivent y aller</li>
+                        </ul>
+                        <p style="text-align: center; font-weight: bold; margin-top: 15px;">De 6 à 13 ans</p>
+                    </div>
+                    <div class="colonne">
+                        <h4>🎓 Conséquences positives</h4>
+                        <ul>
+                            <li>Tous les enfants peuvent aller à l'école</li>
+                            <li>Formation de <strong>citoyens éclairés</strong></li>
+                            <li>Apprentissage de la lecture et de l'écriture pour tous</li>
+                            <li>Réduction de l'analphabétisme</li>
+                            <li>Égalité des chances (en théorie)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box">
+                    <strong>💡 Le saviez-vous ?</strong><br>
+                    Les lois Ferry ont été votées pendant que Jules Ferry était <strong>Ministre de l'Instruction publique ET Président du Conseil</strong> (Premier ministre). Il avait donc beaucoup de pouvoir pour faire passer ses réformes !
+                </div>
+
+                <h3>III. La politique coloniale de Jules Ferry</h3>
+
+                <h4>🌍 Le choix de la colonisation</h4>
+                <p>Contrairement à beaucoup de républicains qui voulaient faire la guerre à l'Allemagne pour reprendre l'<strong>Alsace-Lorraine</strong> (perdues en 1870), Jules Ferry était <strong>contre la guerre avec les Allemands</strong>. Il préfère s'orienter vers des guerres plus "faciles" : les <strong>conquêtes coloniales</strong>.</p>
+
+                <div class="info-box">
+                    <strong>🌍 Territoires conquis sous Jules Ferry :</strong>
+                    <ul>
+                        <li><strong>1881 :</strong> La Tunisie (protectorat)</li>
+                        <li><strong>1883-1885 :</strong> Le Tonkin en Indochine (actuel Vietnam)</li>
+                        <li><strong>1885 :</strong> Madagascar (conquête complétée plus tard)</li>
+                        <li>Une partie de l'<strong>Afrique équatoriale</strong></li>
+                    </ul>
+                </div>
+
+                <h4>💰 Les objectifs de l'empire colonial</h4>
+                <ul>
+                    <li><strong>Économiques :</strong> Approvisionner la France en matières premières peu coûteuses</li>
+                    <li><strong>Économiques :</strong> Développer l'économie française par le commerce</li>
+                    <li><strong>Politiques :</strong> Redonner à la France son prestige de "grande nation"</li>
+                    <li><strong>Idéologiques :</strong> "Mission civilisatrice" (idée raciste de supériorité européenne)</li>
+                </ul>
+
+                <div class="highlight">
+                    ⚠️ <strong>La chute de Ferry</strong><br>
+                    Jules Ferry est contraint de <strong>démissionner en mars 1885</strong>, suite à la défaite de l'armée française à <strong>Lạng Sơn en Indochine</strong>. Il est alors surnommé "Ferry-Tonkin" ou "Ferry-Famine" par ses opposants.
+                </div>
+
+                <h3>🔍 Esprit Critique</h3>
+
+                <h4>⚖️ Les limites et aspects négatifs</h4>
+                <div class="deux-colonnes">
+                    <div class="colonne">
+                        <h4>❌ L'école républicaine</h4>
+                        <ul>
+                            <li><strong>Pas de mixité :</strong> garçons et filles séparés</li>
+                            <li>Éducation des filles <strong>pas prioritaire</strong></li>
+                            <li><strong>Méthodes brutales :</strong>
+                                <ul>
+                                    <li>Bonnet d'âne</li>
+                                    <li>Châtiments corporels</li>
+                                    <li>Punitions sévères</li>
+                                </ul>
+                            </li>
+                            <li>Éducation patriotique et militaire très présente</li>
+                        </ul>
+                    </div>
+                    <div class="colonne">
+                        <h4>❌ La colonisation</h4>
+                        <ul>
+                            <li>Exploitation des peuples colonisés</li>
+                            <li>Violences et guerres de conquête</li>
+                            <li>Idéologie raciste de supériorité</li>
+                            <li>Destruction de cultures locales</li>
+                            <li>Travail forcé dans les colonies</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>📝 Conclusion</h3>
+
+                <div class="info-box">
+                    <strong>🎯 Jules Ferry : un héritage complexe</strong>
+                    
+                    <p><strong>✅ Aspects positifs :</strong></p>
+                    <ul>
+                        <li>Émancipation politique et sociale des citoyens</li>
+                        <li>Développement des libertés publiques (réunion, presse, syndicats)</li>
+                        <li>Démocratisation de l'éducation</li>
+                        <li>Formation de citoyens éclairés</li>
+                    </ul>
+                    
+                    <p><strong>❌ Aspects négatifs :</strong></p>
+                    <ul>
+                        <li>Politique coloniale violente et raciste</li>
+                        <li>École républicaine avec des limites (pas de mixité, méthodes brutales)</li>
+                        <li>Éducation patriotique pour préparer à la guerre</li>
+                    </ul>
+                    
+                    <p><strong>🔗 Lien avec EMC :</strong> Les libertés individuelles et collectives établies sous Ferry sont toujours en vigueur aujourd'hui en France.</p>
+                </div>
+            </div>
+
+            <div id="lexique" class="section">
+                <h2>📖 Lexique</h2>
+                <div class="lexique-item"><div class="lexique-term">Jules Ferry (1832-1893)</div>Homme politique républicain français, ministre de l'Instruction publique et Président du Conseil. Créateur des lois sur l'école gratuite, laïque et obligatoire.</div>
+                <div class="lexique-item"><div class="lexique-term">IIIe République</div>Régime politique français de 1870 à 1940, qui succède au Second Empire.</div>
+                <div class="lexique-item"><div class="lexique-term">Second Empire</div>Régime politique de Napoléon III (1852-1870) contre lequel Jules Ferry s'est opposé.</div>
+                <div class="lexique-item"><div class="lexique-term">Ordre moral</div>Période (1873-1877) où les conservateurs tentent d'imposer les valeurs catholiques et traditionnelles.</div>
+                <div class="lexique-item"><div class="lexique-term">Républicain</div>Personne qui soutient la République comme forme de gouvernement, opposée à la monarchie.</div>
+                <div class="lexique-item"><div class="lexique-term">Anticlérical</div>Opposé à l'influence du clergé (Église catholique) dans les affaires politiques et l'éducation.</div>
+                <div class="lexique-item"><div class="lexique-term">Laïque</div>Indépendant de toute religion. L'école laïque n'enseigne aucune religion et respecte toutes les croyances.</div>
+                <div class="lexique-item"><div class="lexique-term">Gratuite</div>Sans frais à payer. L'école devient accessible à tous, pas seulement aux familles riches.</div>
+                <div class="lexique-item"><div class="lexique-term">Obligatoire</div>Imposé par la loi. Tous les enfants de 6 à 13 ans doivent aller à l'école.</div>
+                <div class="lexique-item"><div class="lexique-term">Ministre de l'Instruction publique</div>Ministre de l'éducation. Jules Ferry occupe ce poste de 1879 à 1883.</div>
+                <div class="lexique-item"><div class="lexique-term">Président du Conseil</div>Chef du gouvernement français sous la IIIe République (équivalent du Premier ministre aujourd'hui).</div>
+                <div class="lexique-item"><div class="lexique-term">Préfet de la Seine</div>Représentant de l'État pour le département de la Seine (région parisienne).</div>
+                <div class="lexique-item"><div class="lexique-term">Colonisation</div>Conquête et exploitation de territoires étrangers par un pays. La France crée un empire colonial sous Ferry.</div>
+                <div class="lexique-item"><div class="lexique-term">Empire colonial</div>Ensemble des territoires conquis et administrés par un pays. La France possédait des colonies en Afrique et en Asie.</div>
+                <div class="lexique-item"><div class="lexique-term">Tunisie, Madagascar, Tonkin</div>Territoires conquis par la France sous Jules Ferry pour développer l'empire colonial français.</div>
+                <div class="lexique-item"><div class="lexique-term">Syndicat</div>Organisation qui défend les droits et intérêts des travailleurs. Autorisé en France en 1884.</div>
+                <div class="lexique-item"><div class="lexique-term">Alsace-Lorraine</div>Régions françaises perdues lors de la guerre de 1870 contre la Prusse (Allemagne).</div>
+            </div>
+
+            <div id="mnemo" class="section">
+                <h2>🧠 Moyens Mnémotechniques</h2>
+                <div class="mnemo-card"><h3>🎯 Les 3 actions de Ferry</h3><strong>"ROC"</strong><br><strong>R</strong>épublicain (libertés)<br><strong>O</strong>bligatoire (école)<br><strong>C</strong>olonial (empire)</div>
+                <div class="mnemo-card"><h3>📚 Les 3 caractéristiques de l'école</h3><strong>"GLO"</strong> ✨<br><strong>G</strong>ratuite<br><strong>L</strong>aïque<br><strong>O</strong>bligatoire</div>
+                <div class="mnemo-card"><h3>📅 Les dates 1881-1882</h3>💡 1881 + 1 = 1882<br>Deux années consécutives pour les lois Ferry !</div>
+                <div class="mnemo-card"><h3>🌍 Territoires colonisés</h3><strong>"Tu Ma To"</strong><br><strong>Tu</strong>nisie (1881)<br><strong>Ma</strong>dagascar (1885)<br><strong>To</strong>nkin (1883-85)</div>
+                <div class="mnemo-card"><h3>🗽 Lois sur les libertés</h3><strong>"RPS"</strong><br><strong>R</strong>éunion (mai 1881)<br><strong>P</strong>resse (juillet 1881)<br><strong>S</strong>yndicats (1884)</div>
+                <div class="mnemo-card"><h3>🏛️ Postes de Jules Ferry</h3><strong>"PDMP"</strong><br><strong>P</strong>réfet<br><strong>D</strong>éputé<br><strong>M</strong>inistre<br><strong>P</strong>résident du Conseil</div>
+                <div class="mnemo-card"><h3>📏 Âge de scolarité</h3><strong>6 à 13 ans</strong><br>💡 6 + 7 = 13<br>7 années d'école obligatoire !</div>
+            </div>
+
+            <div id="exercices" class="section">
+                <h2>✏️ Exercices d'Entraînement</h2>
+
+                <h3>Exercice 1 : Complétez les phrases</h3>
+                <div class="exercice-box">
+                    <ol>
+                        <li>Jules Ferry était un homme politique _____________.</li>
+                        <li>En 1868, il publie "_____________" pour critiquer Napoléon III.</li>
+                        <li>Les lois Ferry rendent l'école gratuite, _____________ et obligatoire.</li>
+                        <li>L'école devient obligatoire de _____ à _____ ans.</li>
+                        <li>Jules Ferry a été _____________ de Paris pendant le siège prussien.</li>
+                        <li>Il occupe le poste de Ministre de l'_____________ publique.</li>
+                        <li>Jules Ferry démissionne en 1885 après la défaite en _____________.</li>
+                    </ol>
+                    <button class="reveal-btn" onclick="toggleAnswer('ex1')">Voir les réponses</button>
+                    <div id="ex1" class="answer-reveal">
+                        <strong>Réponses :</strong>
+                        <ol>
+                            <li>républicain</li>
+                            <li>Les Comptes fantastiques d'Haussmann</li>
+                            <li>laïque</li>
+                            <li>6 à 13</li>
+                            <li>maire</li>
+                            <li>Instruction</li>
+                            <li>Indochine (ou Tonkin)</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>Exercice 2 : Vrai ou Faux ?</h3>
+                <div class="exercice-box">
+                    <ol>
+                        <li>Jules Ferry soutenait le Second Empire de Napoléon III. <strong>?</strong></li>
+                        <li>Avant les lois Ferry, l'école était gratuite pour tous. <strong>?</strong></li>
+                        <li>L'école laïque signifie qu'elle est indépendante de la religion. <strong>?</strong></li>
+                        <li>Jules Ferry voulait faire la guerre à l'Allemagne pour reprendre l'Alsace-Lorraine. <strong>?</strong></li>
+                        <li>Les lois Ferry datent de 1881-1882. <strong>?</strong></li>
+                        <li>Jules Ferry a été Président du Conseil (Premier ministre). <strong>?</strong></li>
+                        <li>La mixité existait dans les écoles de Jules Ferry. <strong>?</strong></li>
+                        <li>Jules Ferry a autorisé la création de syndicats en 1884. <strong>?</strong></li>
+                    </ol>
+                    <button class="reveal-btn" onclick="toggleAnswer('ex2')">Voir les réponses</button>
+                    <div id="ex2" class="answer-reveal">
+                        <strong>Réponses :</strong>
+                        <ol>
+                            <li><strong>FAUX</strong> - Il s'opposait au Second Empire</li>
+                            <li><strong>FAUX</strong> - Elle était payante et réservée aux riches</li>
+                            <li><strong>VRAI</strong></li>
+                            <li><strong>FAUX</strong> - Il préférait la colonisation</li>
+                            <li><strong>VRAI</strong></li>
+                            <li><strong>VRAI</strong> - Deux fois (1880-81 et 1883-85)</li>
+                            <li><strong>FAUX</strong> - Garçons et filles étaient séparés</li>
+                            <li><strong>VRAI</strong></li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>Exercice 3 : Associez les dates aux événements</h3>
+                <div class="exercice-box">
+                    <p>Reliez chaque date à l'événement correspondant :</p>
+                    <strong>Dates :</strong> 1868 - 1870 - 1881 (mai) - 1881 (juillet) - 1881-1882 - 1884 - 1885<br><br>
+                    <strong>Événements :</strong>
+                    <ul>
+                        <li>Lois sur l'école gratuite, laïque et obligatoire</li>
+                        <li>Publication des "Comptes fantastiques d'Haussmann"</li>
+                        <li>Maire de Paris</li>
+                        <li>Loi sur la liberté de réunion</li>
+                        <li>Loi sur la liberté de la presse</li>
+                        <li>Loi sur les syndicats</li>
+                        <li>Démission après la défaite en Indochine</li>
+                    </ul>
+                    <button class="reveal-btn" onclick="toggleAnswer('ex3')">Voir les réponses</button>
+                    <div id="ex3" class="answer-reveal">
+                        <strong>Réponses :</strong>
+                        <ul>
+                            <li><strong>1868</strong> : Publication des "Comptes fantastiques d'Haussmann"</li>
+                            <li><strong>1870</strong> : Maire de Paris</li><function_calls>
+<invoke name="artifacts">
+<parameter name="command">update</parameter>
+<parameter name="id">jules-ferry-page</parameter>
+<parameter name="old_str">                            <li><strong>1870</strong> : Maire de Paris</li></parameter>
+<parameter name="new_str">                            <li><strong>1870</strong> : Maire de Paris</li>
+                            <li><strong>Mai 1881</strong> : Loi sur la liberté de réunion</li>
+                            <li><strong>Juillet 1881</strong> : Loi sur la liberté de la presse</li>
+                            <li><strong>1881-1882</strong> : Lois sur l'école gratuite, laïque et obligatoire</li>
+                            <li><strong>1884</strong> : Loi sur les syndicats</li>
+                            <li><strong>1885</strong> : Démission après la défaite en Indochine</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Exercice 4 : Classement chronologique</h3>
+                <div class="exercice-box">
+                    <p>Remettez ces fonctions de Jules Ferry dans l'ordre chronologique :</p>
+                    <ul>
+                        <li>Député</li>
+                        <li>Président du Conseil</li>
+                        <li>Maire de Paris</li>
+                        <li>Journaliste</li>
+                        <li>Préfet de la Seine</li>
+                        <li>Ministre de l'Instruction publique</li>
+                    </ul>
+                    <button class="reveal-btn" onclick="toggleAnswer('ex4')">Voir les réponses</button>
+                    <div id="ex4" class="answer-reveal">
+                        <strong>Ordre chronologique :</strong>
+                        <ol>
+                            <li><strong>Journaliste</strong> (avant 1870)</li>
+                            <li><strong>Préfet de la Seine</strong> (1870)</li>
+                            <li><strong>Maire de Paris</strong> (1870-1871)</li>
+                            <li><strong>Député</strong> (1871)</li>
+                            <li><strong>Ministre de l'Instruction publique</strong> (1879-1883)</li>
+                            <li><strong>Président du Conseil</strong> (1880-1881 puis 1883-1885)</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>Exercice 5 : Les territoires colonisés</h3>
+                <div class="exercice-box">
+                    <p>Complétez le tableau :</p>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr style="background: #667eea; color: white;">
+                            <th style="padding: 10px; border: 1px solid #ddd;">Territoire</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Continent</th>
+                            <th style="padding: 10px; border: 1px solid #ddd;">Année</th>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Tunisie</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">?</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">?</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Tonkin</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">?</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">?</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border: 1px solid #ddd;">Madagascar</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">?</td>
+                            <td style="padding: 10px; border: 1px solid #ddd;">?</td>
+                        </tr>
+                    </table>
+                    <button class="reveal-btn" onclick="toggleAnswer('ex5')">Voir les réponses</button>
+                    <div id="ex5" class="answer-reveal">
+                        <strong>Réponses :</strong>
+                        <ul>
+                            <li><strong>Tunisie</strong> : Afrique, 1881</li>
+                            <li><strong>Tonkin</strong> : Asie (Indochine), 1883-1885</li>
+                            <li><strong>Madagascar</strong> : Afrique, 1885</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Exercice 6 : Questions de réflexion</h3>
+                <div class="exercice-box">
+                    <ol>
+                        <li>Pourquoi Jules Ferry voulait-il que l'école soit laïque ?</li>
+                        <li>Quelles sont les conséquences positives des lois Ferry sur l'école ?</li>
+                        <li>Quelles sont les limites de l'école républicaine de Ferry ?</li>
+                        <li>Pourquoi Ferry a-t-il démissionné en 1885 ?</li>
+                    </ol>
+                    <button class="reveal-btn" onclick="toggleAnswer('ex6')">Voir les réponses</button>
+                    <div id="ex6" class="answer-reveal">
+                        <strong>Réponses :</strong>
+                        <ol>
+                            <li>Pour soustraire l'éducation à l'influence de l'Église catholique, alors antirépublicaine, et former des citoyens libres.</li>
+                            <li>Démocratisation de l'éducation, réduction de l'analphabétisme, formation de citoyens éclairés, égalité d'accès à l'instruction.</li>
+                            <li>Pas de mixité, éducation des filles négligée, méthodes pédagogiques brutales, éducation très patriotique et militaire.</li>
+                            <li>À cause de la défaite militaire française à Lạng Sơn en Indochine (Tonkin).</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div id="quiz" class="section">
+                <h2>🎮 Quiz Interactif</h2>
+
+                <div class="quiz-question">
+                    <strong>Question 1 : Quelle publication a rendu Jules Ferry célèbre en 1868 ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Les Misérables</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Les Comptes fantastiques d'Haussmann</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Le Capital</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 2 : En quelle année sont votées les lois Ferry sur l'école ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">1870-1871</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">1881-1882</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">1890-1891</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 3 : Quelles sont les 3 caractéristiques de l'école Ferry ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Gratuite, Laïque, Obligatoire</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Payante, Religieuse, Facultative</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Mixte, Moderne, Gratuite</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 4 : Quel poste Jules Ferry a-t-il occupé de 1879 à 1883 ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Président de la République</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Ministre de l'Instruction publique</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Ministre de la Guerre</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 5 : Quel territoire Jules Ferry a-t-il conquis en 1881 ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Algérie</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Tunisie</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Maroc</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 6 : De quel âge à quel âge l'école devient-elle obligatoire ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">5 à 12 ans</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">6 à 13 ans</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">7 à 14 ans</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 7 : Quelle loi Ferry autorise en 1884 ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Le droit de vote des femmes</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">La création de syndicats</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Le divorce</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 8 : Pourquoi Jules Ferry démissionne-t-il en 1885 ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">À cause d'un scandale financier</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">À cause de la défaite en Indochine</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Pour raisons de santé</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 9 : Que signifie "laïque" ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Obligatoire pour tous</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Indépendant de toute religion</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Gratuit</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 10 : Quel était le surnom négatif donné à Jules Ferry ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Ferry-Prussien</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Ferry-Tonkin</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Ferry-l'Empereur</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 11 : Quelle loi est votée en juillet 1881 ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Liberté de réunion</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Liberté de la presse</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Liberté de culte</div>
+                </div>
+
+                <div class="quiz-question">
+                    <strong>Question 12 : Quelle fonction Jules Ferry a-t-il occupée pendant le siège de Paris ?</strong>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Préfet de la Seine</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, true)">Maire de Paris</div>
+                    <div class="quiz-option" onclick="checkAnswer(this, false)">Député de Paris</div>
+                </div>
+
+                <div id="scoreDisplay" class="score-display" style="display:none;">
+                    🎉 Score Final : <span id="score">0</span>/12
+                    <div style="margin-top: 10px; font-size: 0.8em;" id="scoremessage"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let score = 0;
+        let answered = 0;
+        const totalQuestions = 12;
+
+        function showSection(id) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function toggleAnswer(id) {
+            const el = document.getElementById(id);
+            el.style.display = el.style.display === 'none' ? 'block' : 'none';
+        }
+
+        function checkAnswer(el, correct) {
+            if (el.classList.contains('correct') || el.classList.contains('incorrect')) return;
+            
+            const parent = el.parentElement;
+            const options = parent.querySelectorAll('.quiz-option');
+            
+            options.forEach(opt => {
+                opt.style.pointerEvents = 'none';
+            });
+            
+            if (correct) {
+                el.classList.add('correct');
+                el.innerHTML += ' ✓';
+                score++;
+            } else {
+                el.classList.add('incorrect');
+                el.innerHTML += ' ✗';
+            }
+            
+            answered++;
+            if (answered === totalQuestions) {
+                document.getElementById('scoreDisplay').style.display = 'block';
+                document.getElementById('score').textContent = score;
+                
+                const msg = document.getElementById('scoremessage');
+                if (score === totalQuestions) {
+                    msg.textContent = 'Parfait ! Tu maîtrises parfaitement le cours ! 🏆';
+                } else if (score >= 10) {
+                    msg.textContent = 'Excellent ! Continue comme ça ! 👏';
+                } else if (score >= 8) {
+                    msg.textContent = 'Très bien ! Encore un petit effort ! 💪';
+                } else if (score >= 6) {
+                    msg.textContent = 'Bien ! Révise encore un peu ! 📚';
+                } else {
+                    msg.textContent = 'Il faut encore travailler ! Relis le cours ! 📖';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
