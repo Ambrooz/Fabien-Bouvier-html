@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cours de Français - Daniela</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .slide-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px;
+            border-radius: 20px;
+            max-width: 900px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.8em;
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #764ba2;
+            font-size: 2em;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-top: 25px;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            font-size: 1.2em;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .dialogue {
+            background: #fff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .person {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .person1 {
+            background: #e3f2fd;
+            border-left: 4px solid #2196F3;
+        }
+
+        .person2 {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+        }
+
+        .vocabulary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .vocab-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-top: 4px solid #667eea;
+        }
+
+        .vocab-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .exercise {
+            background: #fff8e1;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border: 2px solid #ffd54f;
+        }
+
+        .exercise h3 {
+            color: #f57c00;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1em;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.1em;
+            border-radius: 25px;
+            cursor: pointer;
+            margin: 10px 5px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: white;
+            color: #667eea;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #ffd54f 0%, #ffeb3b 100%);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .phonetic {
+            color: #9c27b0;
+            font-style: italic;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="slide" id="slide1">
+        <div class="slide-content">
+            <h1>🎓 Bienvenue Daniela !</h1>
+            
+            <h2>Objectif : Niveau A1 → A2</h2>
+            
+            <div class="example-box">
+                <h3>📋 Ton profil d'apprentissage</h3>
+                <p><span class="emoji">👔</span><strong>Objectif principal :</strong> Réussir au travail</p>
+                <p><span class="emoji">💬</span><strong>Utilisation :</strong> Discussions informelles</p>
+                <p><span class="emoji">⏰</span><strong>Durée :</strong> 3-6 mois</p>
+                <p><span class="emoji">🛵</span><strong>Fréquence :</strong> 2 heures par semaine</p>
+            </div>
+
+            <div class="example-box">
+                <h3>🎯 Nos priorités ensemble</h3>
+                <ul>
+                    <li><strong>Maîtrise orale</strong> - Parler avec fluidité</li>
+                    <li><strong>Assurance</strong> - Gagner en confiance</li>
+                    <li><strong>Précision</strong> - Utiliser la bonne grammaire</li>
+                    <li><strong>Vocabulaire</strong> - Enrichir tes connaissances</li>
+                    <li><strong>Prononciation</strong> - Améliorer ton accent</li>
+                    <li><strong>Compréhension orale et écrite</strong></li>
+                    <li><strong>Expression écrite</strong> - Écrire correctement</li>
+                </ul>
+            </div>
+            
+            <div class="dialogue" style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);">
+                <h3>💬 Dialogue modèle : Première rencontre</h3>
+                <div class="person person1">
+                    <strong>Sophie (ton professeur) :</strong> Bonjour Daniela ! Je suis très heureuse de te rencontrer. Comment vas-tu aujourd'hui ?
+                </div>
+                <div class="person person2">
+                    <strong>Daniela :</strong> Bonjour Sophie ! Je vais bien, merci. Et toi, comment vas-tu ?
+                </div>
+                <div class="person person1">
+                    <strong>Sophie :</strong> Je vais très bien, merci ! Alors, tu peux te présenter un peu ? D'où viens-tu ?
+                </div>
+                <div class="person person2">
+                    <strong>Daniela :</strong> Oui, bien sûr. Je m'appelle Daniela. Je viens de [ton pays] mais maintenant j'habite à Grasse, dans le sud de la France. C'est une belle ville avec beaucoup de parfumeries !
+                </div>
+                <div class="person person1">
+                    <strong>Sophie :</strong> Oh oui, Grasse est magnifique ! Et qu'est-ce que tu fais comme travail ?
+                </div>
+                <div class="person person2">
+                    <strong>Daniela :</strong> Je travaille dans [ton domaine]. J'ai besoin de parler français tous les jours avec mes collègues et mes clients. C'est important pour moi de bien communiquer.
+                </div>
+                <div class="person person1">
+                    <strong>Sophie :</strong> Je comprends parfaitement. C'est super que tu apprennes le français pour ton travail ! Depuis combien de temps tu apprends le français ?
+                </div>
+                <div class="person person2">
+                    <strong>Daniela :</strong> J'apprends depuis quelques mois. J'ai passé mon examen DELF A1 récemment et je suis contente parce que j'ai réussi ! Maintenant, je veux améliorer ma grammaire et ma prononciation pour atteindre le niveau A2.
+                </div>
+                <div class="person person1">
+                    <strong>Sophie :</strong> Félicitations pour ton DELF A1 ! C'est vraiment bien. Et qu'est-ce que tu aimes faire pendant ton temps libre ?
+                </div>
+                <div class="person person2">
+                    <strong>Daniela :</strong> J'aime beaucoup lire des livres et voyager. J'adore découvrir de nouveaux endroits et de nouvelles cultures. Et toi, tu aimes voyager ?
+                </div>
+                <div class="person person1">
+                    <strong>Sophie :</strong> Oui, j'adore ça aussi ! Nous allons avoir beaucoup de choses à nous raconter en français. Quels sont tes objectifs précis pour les prochains mois ?
+                </div>
+                <div class="person person2">
+                    <strong>Daniela :</strong> Je veux pouvoir participer aux réunions au travail sans stress. Je veux aussi écrire des emails professionnels corrects et parler avec plus de confiance. Je prends deux cours par semaine avec toi pour progresser rapidement.
+                </div>
+                <div class="person person1">
+                    <strong>Sophie :</strong> Parfait ! Avec deux cours par semaine et ta motivation, tu vas faire de grands progrès. Nous allons travailler ensemble sur la grammaire, le vocabulaire professionnel et surtout la pratique orale. Tu es prête à commencer ?
+                </div>
+                <div class="person person2">
+                    <strong>Daniela :</strong> Oui, je suis très motivée ! Allons-y !
+                </div>
+                <div class="person person1">
+                    <strong>Sophie :</strong> Excellent ! Alors commençons notre première leçon. Aujourd'hui, nous révisons les bases de la présentation et nous ajoutons du vocabulaire professionnel. C'est parti ! 🚀
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide2">
+        <div class="slide-content">
+            <h2>📝 Leçon 1 : Se présenter en détail (Révision A1 + Progression A2)</h2>
+            
+            <h3>Les informations de base (A1)</h3>
+            <div class="vocabulary">
+                <div class="vocab-card">
+                    <strong>Je m'appelle...</strong>
+                    <p class="phonetic">[ʒə mapɛl]</p>
+                    <p>My name is...</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>J'ai ... ans</strong>
+                    <p class="phonetic">[ʒe ... ɑ̃]</p>
+                    <p>I am ... years old</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Je suis de...</strong>
+                    <p class="phonetic">[ʒə sɥi də]</p>
+                    <p>I am from...</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>J'habite à...</strong>
+                    <p class="phonetic">[ʒabit a]</p>
+                    <p>I live in...</p>
+                </div>
+            </div>
+
+            <h3>Vocabulaire professionnel (A2)</h3>
+            <div class="vocabulary">
+                <div class="vocab-card">
+                    <strong>Je travaille comme...</strong>
+                    <p>I work as...</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Je suis employé(e) chez...</strong>
+                    <p>I am employed at...</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Mes responsabilités incluent...</strong>
+                    <p>My responsibilities include...</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Je collabore avec...</strong>
+                    <p>I collaborate with...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide3">
+        <div class="slide-content">
+            <h2>📚 Grammaire : Les verbes au présent (révision + approfondissement)</h2>
+            
+            <h3>Les verbes essentiels</h3>
+            <div class="example-box">
+                <h4>ÊTRE (to be)</h4>
+                <p>Je <span class="highlight">suis</span><br>
+                Tu <span class="highlight">es</span><br>
+                Il/Elle/On <span class="highlight">est</span><br>
+                Nous <span class="highlight">sommes</span><br>
+                Vous <span class="highlight">êtes</span><br>
+                Ils/Elles <span class="highlight">sont</span></p>
+            </div>
+
+            <div class="example-box">
+                <h4>AVOIR (to have)</h4>
+                <p>J'<span class="highlight">ai</span><br>
+                Tu <span class="highlight">as</span><br>
+                Il/Elle/On <span class="highlight">a</span><br>
+                Nous <span class="highlight">avons</span><br>
+                Vous <span class="highlight">avez</span><br>
+                Ils/Elles <span class="highlight">ont</span></p>
+            </div>
+
+            <div class="example-box">
+                <h4>ALLER (to go)</h4>
+                <p>Je <span class="highlight">vais</span><br>
+                Tu <span class="highlight">vas</span><br>
+                Il/Elle/On <span class="highlight">va</span><br>
+                Nous <span class="highlight">allons</span><br>
+                Vous <span class="highlight">allez</span><br>
+                Ils/Elles <span class="highlight">vont</span></p>
+            </div>
+
+            <h3>Verbes réguliers -ER (A2)</h3>
+            <div class="example-box">
+                <p><strong>TRAVAILLER</strong> (to work)</p>
+                <p>Je <span class="highlight">travaille</span> dans un bureau<br>
+                Tu <span class="highlight">travailles</span> avec des clients<br>
+                Nous <span class="highlight">travaillons</span> ensemble<br>
+                Ils <span class="highlight">travaillent</span> en équipe</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide4">
+        <div class="slide-content">
+            <h2>✍️ Exercices pratiques</h2>
+            
+            <div class="exercise">
+                <h3>Exercice 1 : Structure de base - Bien choisir le verbe</h3>
+                <p>Complète avec <strong>je m'appelle</strong>, <strong>je suis</strong> ou <strong>j'ai</strong> :</p>
+                
+                <p>1. _______ Daniela. (Mon nom est Daniela)</p>
+                <input type="text" id="ex1q1" placeholder="Ta réponse">
+                
+                <p>2. _______ 25 ans. (Mon âge est 25 ans)</p>
+                <input type="text" id="ex1q2" placeholder="Ta réponse">
+                
+                <p>3. _______ employée dans une entreprise. (Ma profession)</p>
+                <input type="text" id="ex1q3" placeholder="Ta réponse">
+                
+                <p>4. _______ deux cours de français par semaine. (Je possède deux cours)</p>
+                <input type="text" id="ex1q4" placeholder="Ta réponse">
+                
+                <p>5. _______ motivée pour apprendre le français. (Ma caractéristique)</p>
+                <input type="text" id="ex1q5" placeholder="Ta réponse">
+                
+                <button onclick="checkExercise1()">Vérifier</button>
+                <div id="feedback1" style="margin-top: 15px; font-weight: bold;"></div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercice 2 : Conjugaison des verbes</h3>
+                <p>Complète les phrases avec le bon verbe :</p>
+                <p>1. Je _______ (être) content d'apprendre le français.</p>
+                <input type="text" id="ex2q1" placeholder="Ta réponse">
+                
+                <p>2. Nous _______ (avoir) deux cours par semaine.</p>
+                <input type="text" id="ex2q2" placeholder="Ta réponse">
+                
+                <p>3. Ils _______ (travailler) dans le même bureau.</p>
+                <input type="text" id="ex2q3" placeholder="Ta réponse">
+                
+                <button onclick="checkExercise2()">Vérifier</button>
+                <div id="feedback2" style="margin-top: 15px; font-weight: bold;"></div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercice 3 : Questions sur le travail</h3>
+                <p>Réponds aux questions suivantes :</p>
+                <p>1. Où travaillez-vous ?</p>
+                <input type="text" id="ex3q1" placeholder="J'habite à...">
+                
+                <p>2. Qu'est-ce que vous faites comme travail ?</p>
+                <input type="text" id="ex3q2" placeholder="Je travaille comme...">
+                
+                <p>3. Pourquoi apprenez-vous le français ?</p>
+                <textarea id="ex3q3" rows="3" placeholder="J'apprends le français parce que..."></textarea>
+                
+                <button onclick="saveExercise3()">Sauvegarder mes réponses</button>
+                <div id="feedback3" style="margin-top: 15px; font-weight: bold;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide5">
+        <div class="slide-content">
+            <h2>🎙️ Pratique de la prononciation</h2>
+            
+            <h3>Sons difficiles en français</h3>
+            <div class="example-box">
+                <h4>Le son "R" français</h4>
+                <p><strong>Pratique :</strong> Répète ces mots</p>
+                <p class="highlight">Bonjour - Travail - Paris - Merci - Bureau</p>
+                <p><em>Astuce : Le "R" français vient de la gorge, pas de la langue !</em></p>
+            </div>
+
+            <div class="example-box">
+                <h4>Les nasales</h4>
+                <p><strong>AN/EN</strong> : <span class="highlight">dans, temps, appartement</span></p>
+                <p><strong>ON</strong> : <span class="highlight">bonjour, maison, prénom</span></p>
+                <p><strong>IN/AIN/EIN</strong> : <span class="highlight">matin,omain, plein</span></p>
+                <p><strong>UN</strong> : <span class="highlight">lundi, un</span></p>
+            </div>
+
+            <div class="example-box">
+                <h4>Phrases à pratiquer à voix haute</h4>
+                <p>1. Je m'appelle Daniela et je travaille à Grasse.</p>
+                <p>2. Bonjour, comment allez-vous aujourd'hui ?</p>
+                <p>3. J'apprends le français pour mon travail.</p>
+                <p>4. Nous avons une réunion importante demain matin.</p>
+                <p>5. Pouvez-vous répéter s'il vous plaît ?</p>
+            </div>
+
+            <div class="dialogue">
+                <h3>🎯 Mini-dialogue pour s'entraîner</h3>
+                <p><strong>Lis ces phrases plusieurs fois :</strong></p>
+                <div class="person person1">
+                    <strong>A :</strong> Bonjour ! Comment tu t'appelles ?
+                </div>
+                <div class="person person2">
+                    <strong>B :</strong> Je m'appelle Daniela. Et toi ?
+                </div>
+                <div class="person person1">
+                    <strong>A :</strong> Moi, c'est Pierre. Tu viens d'où ?
+                </div>
+                <div class="person person2">
+                    <strong>B :</strong> Je viens de [ton pays] mais j'habite à Grasse maintenant.
+                </div>
+                <div class="person person1">
+                    <strong>A :</strong> Ah super ! Qu'est-ce que tu fais dans la vie ?
+                </div>
+                <div class="person person2">
+                    <strong>B :</strong> Je travaille dans [ton domaine]. Et toi ?
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide6">
+        <div class="slide-content">
+            <h2>📖 Vocabulaire professionnel (Niveau A2)</h2>
+            
+            <h3>Au bureau</h3>
+            <div class="vocabulary">
+                <div class="vocab-card">
+                    <strong>Le bureau</strong>
+                    <p>The office</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>La réunion</strong>
+                    <p>The meeting</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Le collègue</strong>
+                    <p>The colleague</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Le projet</strong>
+                    <p>The project</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>L'ordinateur</strong>
+                    <p>The computer</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Le document</strong>
+                    <p>The document</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>Le client</strong>
+                    <p>The client</p>
+                </div>
+                <div class="vocab-card">
+                    <strong>L'équipe</strong>
+                    <p>The team</p>
+                </div>
+            </div>
+
+            <h3>Phrases utiles au travail</h3>
+            <div class="example-box">
+                <p>✓ <span class="highlight">Je travaille sur un projet important.</span></p>
+                <p>✓ <span class="highlight">J'ai une réunion à 14 heures.</span></p>
+                <p>✓ <span class="highlight">Pouvez-vous m'aider s'il vous plaît ?</span></p>
+                <p>✓ <span class="highlight">Je ne comprends pas. Pouvez-vous répéter ?</span></p>
+                <p>✓ <span class="highlight">C'est urgent / Ce n'est pas urgent.</span></p>
+                <p>✓ <span class="highlight">Je dois finir ce travail aujourd'hui.</span></p>
+                <p>✓ <span class="highlight">Merci pour votre aide !</span></p>
+            </div>
+
+            <h3>Expressions de politesse</h3>
+            <div class="example-box">
+                <p>🙂 <strong>S'il vous plaît</strong> - Please (formal)</p>
+                <p>🙂 <strong>Merci beaucoup</strong> - Thank you very much</p>
+                <p>🙂 <strong>Excusez-moi</strong> - Excuse me (formal)</p>
+                <p>🙂 <strong>Pardon</strong> - Sorry / Pardon</p>
+                <p>🙂 <strong>Bonne journée !</strong> - Have a good day!</p>
+                <p>🙂 <strong>À bientôt !</strong> - See you soon!</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide7">
+        <div class="slide-content">
+            <h2>🎯 Devoirs pour la semaine</h2>
+            
+            <div class="exercise">
+                <h3>📝 Devoirs d'écriture</h3>
+                <p><strong>1. Écris un email professionnel simple (8-10 phrases)</strong></p>
+                <p>Imagine que tu écris à un collègue. Utilise :</p>
+                <ul>
+                    <li>Une salutation : "Bonjour..."</li>
+                    <li>Une phrase de présentation</li>
+                    <li>L'objet de ton email</li>
+                    <li>Une formule de politesse : "Cordialement"</li>
+                </ul>
+                <textarea id="homework1" rows="10" placeholder="Bonjour [Nom],
+
+Je m'appelle... Je vous écris parce que..."></textarea>
+                <button onclick="saveHomework()">💾 Sauvegarder mon devoir</button>
+            </div>
+
+            <div class="exercise">
+                <h3>🗣️ Devoirs oraux</h3>
+                <p><strong>À pratiquer à voix haute chaque jour :</strong></p>
+                <ol style="list-style: decimal; padding-left: 20px;">
+                    <li>Présente-toi pendant 2 minutes devant un miroir</li>
+                    <li>Lis les dialogues des slides précédents</li>
+                    <li>Pratique les sons difficiles (R, nasales)</li>
+                    <li>Enregistre-toi et réécoute pour t'améliorer</li>
+                </ol>
+            </div>
+
+            <div class="example-box">
+                <h3>📚 Conseils pour bien pratiquer</h3>
+                <ul>
+                    <li>Pratique un peu chaque jour plutôt que beaucoup une fois par semaine</li>
+                    <li>Parle français dès que possible - même tout seul devant le miroir !</li>
+                    <li>N'aie pas peur de faire des erreurs - c'est comme ça qu'on apprend</li>
+                    <li>Essaie de penser en français 5 minutes par jour</li>
+                    <li>Regarde des vidéos courtes en français avec sous-titres</li>
+                </ul>
+            </div>
+
+            <div class="example-box" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);">
+                <h3>💪 Conseils pour progresser rapidement</h3>
+                <p><strong>N'aie pas peur de faire des erreurs !</strong> C'est comme ça qu'on apprend.</p>
+                <p><strong>Pratique un peu chaque jour</strong> plutôt que beaucoup une fois par semaine.</p>
+                <p><strong>Parle français dès que possible</strong> - même tout seul !</p>
+                <p><strong>Sois patient avec toi-même</strong> - tu fais déjà des progrès incroyables ! 🌟</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide8">
+        <div class="slide-content">
+            <h2>📅 Pour continuer ton apprentissage</h2>
+            
+            <div class="example-box">
+                <h3>🎯 Plan pour les prochaines semaines</h3>
+                <p><strong>Semaine 1-2 :</strong> Révision A1 + Introduction A2 (présentation, verbes de base)</p>
+                <p><strong>Semaine 3-4 :</strong> Vocabulaire professionnel + Temps du passé (passé composé)</p>
+                <p><strong>Semaine 5-6 :</strong> Conversations au travail + Grammaire avancée (pronoms)</p>
+                <p><strong>Semaine 7-8 :</strong> Pratique écrite intensive + Prononciation perfectionnement</p>
+                <p><strong>Semaine 9-10 :</strong> Expression orale fluide + Compréhension auditive</p>
+                <p><strong>Semaine 11-12 :</strong> Simulation d'examens A2 + Révision générale</p>
+            </div>
+
+            <div class="example-box" style="background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%);">
+                <h3>✨ Tes prochaines étapes</h3>
+                <ul>
+                    <li>Révise ce cours avant notre première session en direct</li>
+                    <li>Fais tous les exercices et note tes questions</li>
+                    <li>Commence à pratiquer les phrases à voix haute chaque jour</li>
+                    <li>Prépare une présentation de 2 minutes sur toi pour notre première rencontre</li>
+                    <li>Identifie 3 situations au travail où tu aimerais parler français</li>
+                </ul>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <button onclick="resetCourse()" style="margin: 10px;">🔄 Recommencer le cours</button>
+                <button onclick="window.print()" style="margin: 10px;">🖨️ Imprimer le cours</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">←</button>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 8;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            slides.forEach(slide => slide.style.display = 'none');
+            
+            if (n > totalSlides) currentSlide = 1;
+            if (n
