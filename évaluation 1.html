@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de Français - Niveau Intermédiaire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-width: 800px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .info-bar {
+            background: #f8f9fa;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #e9ecef;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .student-info {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .student-info input {
+            padding: 8px 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        .student-info input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .timer {
+            background: #e74c3c;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 8px rgba(231, 76, 60, 0.3);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .question-text {
+            margin-bottom: 10px;
+            color: #2c3e50;
+            line-height: 1.6;
+        }
+
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        select:focus, input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+        }
+
+        .inline-inputs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .inline-inputs .question {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .inline-inputs input {
+            width: 100%;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .actions {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        .instructions {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 5px solid #ff6b6b;
+        }
+
+        .instructions h3 {
+            color: #d63031;
+            margin-bottom: 10px;
+        }
+
+        .weather-icons {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .weather-icon {
+            text-align: center;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            min-width: 60px;
+        }
+
+        .weather-icon span {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container {
+                margin: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .info-bar {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .student-info {
+                justify-content: center;
+            }
+            
+            .inline-inputs {
+                flex-direction: column;
+            }
+            
+            .actions {
+                flex-direction: column;
+            }
+        }
+
+        .completion-indicator {
+            float: right;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #ddd;
+            position: relative;
+        }
+
+        .completion-indicator.completed {
+            background: #27ae60;
+        }
+
+        .completion-indicator.completed::after {
+            content: '✓';
+            color: white;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="header">
+            <h1>🇫🇷 Quiz de Français</h1>
+            <p>Niveau Intermédiaire - Grammaire et Vocabulaire</p>
+        </div>
+
+        <div class="info-bar">
+            <div class="student-info">
+                <input type="text" id="studentName" placeholder="Nom de l'étudiant" required>
+                <input type="email" id="studentEmail" placeholder="Email">
+                <input type="text" id="className" placeholder="Classe">
+            </div>
+            <div class="timer" id="timer">⏱️ Temps restant: 30:00</div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <div class="content">
+            <div class="instructions">
+                <h3>📋 Instructions importantes</h3>
+                <p><strong>Durée :</strong> 30 minutes • <strong>Points totaux :</strong> 25 points</p>
+                <p>• Répondez directement dans les champs ci-dessous</p>
+                <p>• Ne quittez pas la page avant de télécharger vos réponses</p>
+                <p>• Cliquez sur "Télécharger mes réponses" à la fin pour obtenir votre fichier</p>
+            </div>
+
+            <!-- Section 1: Groupes de verbes -->
+            <div class="section" data-section="1">
+                <h2><span class="section-number">1</span>Groupes de verbes <span class="completion-indicator" id="section1-indicator"></span></h2>
+                <p><em>Choisissez le bon groupe pour chaque verbe (1 pt chacun)</em></p>
+                
+                <div class="question">
+                    <div class="question-number">Question 1.</div>
+                    <div class="question-text">Le verbe « finir » appartient au groupe :</div>
+                    <select name="q1" id="q1" onchange="updateProgress()">
+                        <option value="">-- Choisissez --</option>
+                        <option value="1er">1er groupe</option>
+                        <option value="2eme">2ème groupe</option>
+                        <option value="3eme">3ème groupe</option>
+                    </select>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 2.</div>
+                    <div class="question-text">Le verbe « parler » est du :</div>
+                    <select name="q2" id="q2" onchange="updateProgress()">
+                        <option value="">-- Choisissez --</option>
+                        <option value="1er">1er groupe</option>
+                        <option value="2eme">2ème groupe</option>
+                        <option value="3eme">3ème groupe</option>
+                    </select>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 3.</div>
+                    <div class="question-text">Le verbe « prendre » est du :</div>
+                    <select name="q3" id="q3" onchange="updateProgress()">
+                        <option value="">-- Choisissez --</option>
+                        <option value="1er">1er groupe</option>
+                        <option value="2eme">2ème groupe</option>
+                        <option value="3eme">3ème groupe</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Section 2: Verbes pronominaux -->
+            <div class="section" data-section="2">
+                <h2><span class="section-number">2</span>Verbes pronominaux <span class="completion-indicator" id="section2-indicator"></span></h2>
+                <p><em>Conjuguez les verbes au présent (1 pt chacun)</em></p>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 4.</div>
+                        <div class="question-text">Nous (se réveiller) _____ à 7 heures.</div>
+                        <input type="text" name="q4" id="q4" onchange="updateProgress()" placeholder="nous...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 5.</div>
+                        <div class="question-text">Tu (se laver) _____ les mains.</div>
+                        <input type="text" name="q5" id="q5" onchange="updateProgress()" placeholder="tu...">
+                    </div>
+                </div>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 6.</div>
+                        <div class="question-text">Elles (s'habiller) _____ rapidement.</div>
+                        <input type="text" name="q6" id="q6" onchange="updateProgress()" placeholder="elles...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 7.</div>
+                        <div class="question-text">Il (se coucher) _____ tard.</div>
+                        <input type="text" name="q7" id="q7" onchange="updateProgress()" placeholder="il...">
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 8.</div>
+                    <div class="question-text">Vous (se promener) _____ dans le parc.</div>
+                    <input type="text" name="q8" id="q8" onchange="updateProgress()" placeholder="vous...">
+                </div>
+            </div>
+
+            <!-- Section 3: Météo -->
+            <div class="section" data-section="3">
+                <h2><span class="section-number">3</span>La météo ☀️🌧️ <span class="completion-indicator" id="section3-indicator"></span></h2>
+                <p><em>Répondez en 1-2 phrases complètes (2 pts chacun)</em></p>
+
+                <div class="weather-icons">
+                    <div class="weather-icon"><span>☀️</span>Soleil</div>
+                    <div class="weather-icon"><span>🌧️</span>Pluie</div>
+                    <div class="weather-icon"><span>❄️</span>Neige</div>
+                    <div class="weather-icon"><span>☁️</span>Nuages</div>
+                    <div class="weather-icon"><span>🌤️</span>Nuageux</div>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 9.</div>
+                    <div class="question-text">Quelle est la météo aujourd'hui chez toi ? (utilisez le présent)</div>
+                    <textarea name="q9" id="q9" onchange="updateProgress()" placeholder="Aujourd'hui, il fait..."></textarea>
+                </div>
+
+                <div class="question">
+                    <div class="question-number">Question 10.</div>
+                    <div class="question-text">Décrivez le temps qu'il fait en été dans votre pays.</div>
+                    <textarea name="q10" id="q10" onchange="updateProgress()" placeholder="En été, dans mon pays..."></textarea>
+                </div>
+            </div>
+
+            <!-- Section 4: Corps humain -->
+            <div class="section" data-section="4">
+                <h2><span class="section-number">4</span>Le corps humain 👤 <span class="completion-indicator" id="section4-indicator"></span></h2>
+                <p><em>Traduisez en français (0,5 pt chacun)</em></p>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 11.</div>
+                        <div class="question-text">Belly → </div>
+                        <input type="text" name="q11" id="q11" onchange="updateProgress()" placeholder="le/la...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 12.</div>
+                        <div class="question-text">Elbow → </div>
+                        <input type="text" name="q12" id="q12" onchange="updateProgress()" placeholder="le/la...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 13.</div>
+                        <div class="question-text">Knee → </div>
+                        <input type="text" name="q13" id="q13" onchange="updateProgress()" placeholder="le/la...">
+                    </div>
+                </div>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 14.</div>
+                        <div class="question-text">Throat → </div>
+                        <input type="text" name="q14" id="q14" onchange="updateProgress()" placeholder="le/la...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 15.</div>
+                        <div class="question-text">Mouth → </div>
+                        <input type="text" name="q15" id="q15" onchange="updateProgress()" placeholder="le/la...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 16.</div>
+                        <div class="question-text">Ear → </div>
+                        <input type="text" name="q16" id="q16" onchange="updateProgress()" placeholder="le/la...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 5: Présent -->
+            <div class="section" data-section="5">
+                <h2><span class="section-number">5</span>Conjugaison au présent <span class="completion-indicator" id="section5-indicator"></span></h2>
+                <p><em>Conjuguez les verbes au présent (1 pt chacun)</em></p>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 17.</div>
+                        <div class="question-text">Je (aller) _____ à l'école.</div>
+                        <input type="text" name="q17" id="q17" onchange="updateProgress()" placeholder="je...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 18.</div>
+                        <div class="question-text">Il (manger) _____ une pomme.</div>
+                        <input type="text" name="q18" id="q18" onchange="updateProgress()" placeholder="il...">
+                    </div>
+                </div>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 19.</div>
+                        <div class="question-text">Nous (être) _____ très contents.</div>
+                        <input type="text" name="q19" id="q19" onchange="updateProgress()" placeholder="nous...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 20.</div>
+                        <div class="question-text">Vous (avoir) _____ un stylo ?</div>
+                        <input type="text" name="q20" id="q20" onchange="updateProgress()" placeholder="vous...">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Production écrite -->
+            <div class="section" data-section="6">
+                <h2><span class="section-number">6</span>Production écrite ✍️ <span class="completion-indicator" id="section6-indicator"></span></h2>
+                <p><em>Expression écrite (4 pts)</em></p>
+
+                <div class="question">
+                    <div class="question-number">Question 21.</div>
+                    <div class="question-text">Décrivez en 3-4 phrases votre routine le matin. Utilisez le présent et au moins un verbe pronominal.</div>
+                    <textarea name="q21" id="q21" onchange="updateProgress()" placeholder="Le matin, je me réveille... Puis je me lève... Ensuite..."></textarea>
+                </div>
+            </div>
+
+            <!-- Section 7: Expressions santé -->
+            <div class="section" data-section="7">
+                <h2><span class="section-number">7</span>Santé et malaise 🤒 <span class="completion-indicator" id="section7-indicator"></span></h2>
+                <p><em>Regardez les images et complétez les expressions (1 pt chacun)</em></p>
+
+                <div class="health-icons" style="display: flex; justify-content: space-around; margin: 20px 0; flex-wrap: wrap; gap: 15px;">
+                    <div class="health-icon" style="text-align: center; padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); min-width: 100px;">
+                        <span style="font-size: 40px; display: block; margin-bottom: 8px;">🤢</span>
+                        <small style="color: #666;">Nausée</small>
+                    </div>
+                    <div class="health-icon" style="text-align: center; padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); min-width: 100px;">
+                        <span style="font-size: 40px; display: block; margin-bottom: 8px;">🤕</span>
+                        <small style="color: #666;">Mal de tête</small>
+                    </div>
+                    <div class="health-icon" style="text-align: center; padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); min-width: 100px;">
+                        <span style="font-size: 40px; display: block; margin-bottom: 8px;">😴</span>
+                        <small style="color: #666;">Fatigue</small>
+                    </div>
+                    <div class="health-icon" style="text-align: center; padding: 15px; background: white; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); min-width: 100px;">
+                        <span style="font-size: 40px; display: block; margin-bottom: 8px;">🥵</span>
+                        <small style="color: #666;">Fièvre</small>
+                    </div>
+                </div>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 22.</div>
+                        <div class="question-text">🤢 Je suis malade : J'ai _____ de vomir.</div>
+                        <input type="text" name="q22" id="q22" onchange="updateProgress()" placeholder="j'ai...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 23.</div>
+                        <div class="question-text">🤕 Je suis malade : J'ai des _____.</div>
+                        <input type="text" name="q23" id="q23" onchange="updateProgress()" placeholder="j'ai des...">
+                    </div>
+                </div>
+
+                <div class="inline-inputs">
+                    <div class="question">
+                        <div class="question-number">Question 24.</div>
+                        <div class="question-text">😴 Je suis malade : Je suis _____.</div>
+                        <input type="text" name="q24" id="q24" onchange="updateProgress()" placeholder="je suis...">
+                    </div>
+
+                    <div class="question">
+                        <div class="question-number">Question 25.</div>
+                        <div class="question-text">🥵 Je suis malade : J'ai _____ .</div>
+                        <input type="text" name="q25" id="q25" onchange="updateProgress()" placeholder="j'ai...">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" onclick="downloadAnswers()">
+                📥 Télécharger mes réponses
+            </button>
+            <button class="btn btn-secondary" onclick="resetForm()">
+                🔄 Réinitialiser
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Timer functionality
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        let timerInterval;
+
+        function startTimer() {
+            timerInterval = setInterval(function() {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert("⏰ Temps écoulé ! Téléchargez vos réponses maintenant.");
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const timerElement = document.getElementById('timer');
+            
+            timerElement.textContent = `⏱️ Temps restant: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+            
+            // Change color when time is running low
+            if (timeLeft <= 300) { // 5 minutes
+                timerElement.style.background = '#e74c3c';
+            } else if (timeLeft <= 600) { // 10 minutes
+                timerElement.style.background = '#f39c12';
+            }
+        }
+
+        // Progress tracking
+        function updateProgress() {
+            const totalQuestions = 25;
+            let answeredQuestions = 0;
+            
+            // Count answered questions
+            for (let i = 1; i <= totalQuestions; i++) {
+                const element = document.getElementById(`q${i}`);
+                if (element && element.value.trim() !== '') {
+                    answeredQuestions++;
+                }
+            }
+            
+            // Update progress bar
+            const progressPercentage = (answeredQuestions / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progressPercentage + '%';
+            
+            // Update section indicators
+            updateSectionIndicators();
+        }
+
+        function updateSectionIndicators() {
+            const sections = {
+                1: [1, 2, 3],
+                2: [4, 5, 6, 7, 8],
+                3: [9, 10],
+                4: [11, 12, 13, 14, 15, 16],
+                5: [17, 18, 19, 20],
+                6: [21],
+                7: [22, 23, 24, 25]
+            };
+
+            Object.keys(sections).forEach(sectionNum => {
+                const questions = sections[sectionNum];
+                let completedQuestions = 0;
+                
+                questions.forEach(qNum => {
+                    const element = document.getElementById(`q${qNum}`);
+                    if (element && element.value.trim() !== '') {
+                        completedQuestions++;
+                    }
+                });
+                
+                const indicator = document.getElementById(`section${sectionNum}-indicator`);
+                if (completedQuestions === questions.length) {
+                    indicator.classList.add('completed');
+                } else {
+                    indicator.classList.remove('completed');
+                }
+            });
+        }
+
+        // Download functionality
+        function downloadAnswers() {
+            const studentName = document.getElementById('studentName').value || 'Étudiant Anonyme';
+            const studentEmail = document.getElementById('studentEmail').value || 'Non spécifié';
+            const className = document.getElementById('className').value || 'Non spécifié';
+            
+            if (!studentName || studentName === 'Étudiant Anonyme') {
+                alert('⚠️ Veuillez entrer votre nom avant de télécharger.');
+                document.getElementById('studentName').focus();
+                return;
+            }
+            
+            let answersText = `QUIZ DE FRANÇAIS - RÉPONSES\n`;
+            answersText += `================================\n\n`;
+            answersText += `Nom: ${studentName}\n`;
+            answersText += `Email: ${studentEmail}\n`;
+            answersText += `Classe: ${className}\n`;
+            answersText += `Date: ${new Date().toLocaleDateString('fr-FR')}\n`;
+            answersText += `Heure de soumission: ${new Date().toLocaleTimeString('fr-FR')}\n\n`;
+            
+            // Add section headers and answers
+            const sectionTitles = {
+                1: "1) GROUPES DE VERBES",
+                2: "2) VERBES PRONOMINAUX", 
+                3: "3) LA MÉTÉO",
+                4: "4) CORPS HUMAIN",
+                5: "5) CONJUGAISON AU PRÉSENT",
+                6: "6) PRODUCTION ÉCRITE",
+                7: "7) SANTÉ ET MALAISE"
+            };
+
+            const questions = [
+                "Le verbe « finir » appartient au groupe :",
+                "Le verbe « parler » est du :",
+                "Le verbe « prendre » est du :",
+                "Nous (se réveiller) _____ à 7 heures.",
+                "Tu (se laver) _____ les mains avant le dîner.",
+                "Elles (s'habiller) _____ rapidement.",
+                "Il (se coucher) _____ tard le soir.",
+                "Vous (se promener) _____ dans le parc.",
+                "Quelle est la météo aujourd'hui chez toi ?",
+                "Décrivez le temps qu'il fait en été dans votre pays.",
+                "Belly →",
+                "Elbow →",
+                "Knee →",
+                "Throat →",
+                "Mouth →",
+                "Ear →",
+                "Je (aller) _____ à l'école.",
+                "Il (manger) _____ une pomme.",
+                "Nous (être) _____ très contents.",
+                "Vous (avoir) _____ un stylo ?",
+                "Décrivez votre routine le matin :",
+                "J'ai _____ de vomir.",
+                "J'ai des _____.",
+                "Je suis _____.",
+                "J'ai _____."
+            ];
+
+            const sections = {
+                1: [1, 2, 3],
+                2: [4, 5, 6, 7, 8],
+                3: [9, 10],
+                4: [11, 12, 13, 14, 15, 16],
+                5: [17, 18, 19, 20],
+                6: [21],
+                7: [22, 23, 24, 25]
+            };
+
+            Object.keys(sections).forEach(sectionNum => {
+                answersText += `${sectionTitles[sectionNum]}\n`;
+                answersText += `-`.repeat(sectionTitles[sectionNum].length) + `\n`;
+                
+                sections[sectionNum].forEach(qNum => {
+                    const element = document.getElementById(`q${
