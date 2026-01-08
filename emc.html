@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Révisions EMC - Terminale Bac Pro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .section h3 {
+            color: #764ba2;
+            font-size: 1.3em;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .definition {
+            background: #e8eaf6;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #5c6bc0;
+        }
+
+        .definition strong {
+            color: #5c6bc0;
+            font-size: 1.1em;
+        }
+
+        .cours {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #ff9800;
+        }
+
+        .question {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .question:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .question-title {
+            font-weight: bold;
+            color: #667eea;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .question-title::after {
+            content: "▼";
+            font-size: 0.8em;
+            transition: transform 0.3s ease;
+        }
+
+        .question.active .question-title::after {
+            transform: rotate(180deg);
+        }
+
+        .answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            margin-top: 10px;
+            padding-top: 0;
+        }
+
+        .question.active .answer {
+            max-height: 1000px;
+            padding-top: 10px;
+            border-top: 1px solid #e0e0e0;
+        }
+
+        ul, ol {
+            margin-left: 25px;
+            margin-top: 10px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .important {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #f44336;
+        }
+
+        .important strong {
+            color: #c62828;
+        }
+
+        .quiz-container {
+            background: #e3f2fd;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #2196f3;
+        }
+
+        .quiz-container h2 {
+            color: #2196f3;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .quiz-question {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .quiz-question h4 {
+            color: #2196f3;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .quiz-options {
+            margin: 10px 0;
+        }
+
+        .quiz-option {
+            display: block;
+            padding: 12px 15px;
+            margin: 8px 0;
+            background: #f5f5f5;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .quiz-option:hover {
+            background: #e0e0e0;
+            transform: translateX(5px);
+        }
+
+        .quiz-option input[type="radio"] {
+            margin-right: 10px;
+        }
+
+        .quiz-submit {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+            display: block;
+            width: 200px;
+            margin: 20px auto;
+        }
+
+        .quiz-submit:hover {
+            background: #1976d2;
+            transform: scale(1.05);
+        }
+
+        .quiz-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 6px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .quiz-result.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .quiz-result.incorrect {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        .quiz-score {
+            background: #fff9c4;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #f57f17;
+            display: none;
+        }
+
+        .hidden-answer {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #4caf50;
+            display: none;
+        }
+
+        .hidden-answer.show {
+            display: block;
+        }
+
+        .show-answer-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .show-answer-btn:hover {
+            background: #388e3c;
+        }
+
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .section {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 Révisions EMC</h1>
+            <div class="subtitle">Enseignement Moral et Civique - Terminale Bac Pro</div>
+        </header>
+
+        <div class="content">
+            <div class="section">
+                <h2>🏛️ Thème 1 : La démocratie et les institutions</h2>
+                
+                <div class="cours">
+                    <h3>Cours : Les fondements de la démocratie</h3>
+                    <p>La démocratie est un régime politique dans lequel le pouvoir appartient au peuple. Elle repose sur plusieurs principes fondamentaux : la souveraineté populaire, l'égalité des citoyens, le respect des libertés fondamentales et la séparation des pouvoirs.</p>
+                    <p>En France, la démocratie s'exerce de manière représentative : les citoyens élisent des représentants qui exercent le pouvoir en leur nom. Le suffrage universel direct est au cœur de cette démocratie.</p>
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Démocratie :</strong> Régime politique où les élections sont libres, où il y a séparation des pouvoirs (législatif, exécutif, judiciaire) et où les droits politiques sont garantis à tous les citoyens.
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Souveraineté populaire :</strong> Principe selon lequel le pouvoir politique appartient au peuple qui l'exerce par le vote et par ses représentants élus.
+                </div>
+
+                <div class="cours">
+                    <h3>Les institutions françaises</h3>
+                    <p><strong>Le pouvoir exécutif :</strong> Le Président de la République (élu pour 5 ans) et le Gouvernement (Premier ministre et ministres) appliquent les lois.</p>
+                    <p><strong>Le pouvoir législatif :</strong> L'Assemblée nationale (577 députés élus pour 5 ans) et le Sénat (348 sénateurs élus pour 6 ans) votent les lois.</p>
+                    <p><strong>Le pouvoir judiciaire :</strong> Les tribunaux jugent et sanctionnent le non-respect des lois.</p>
+                    <p><strong>Le Conseil constitutionnel :</strong> Vérifie la conformité des lois à la Constitution.</p>
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Institutions européennes :</strong> Le Parlement européen (élu au suffrage universel direct) vote les lois européennes avec le Conseil de l'UE. La Commission européenne propose les lois et veille à leur application.
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Quels sont les trois pouvoirs dans une démocratie et pourquoi sont-ils séparés ?</div>
+                    <div class="answer">
+                        Les trois pouvoirs sont :
+                        <ul>
+                            <li><strong>Le pouvoir législatif</strong> : vote les lois (Parlement : Assemblée nationale et Sénat)</li>
+                            <li><strong>Le pouvoir exécutif</strong> : applique les lois (Président de la République et Gouvernement)</li>
+                            <li><strong>Le pouvoir judiciaire</strong> : juge et sanctionne le non-respect des lois (tribunaux)</li>
+                        </ul>
+                        Ils sont séparés pour éviter la concentration du pouvoir et garantir les libertés. C'est le principe de séparation des pouvoirs établi par Montesquieu.
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Citez trois valeurs fondamentales de la République française</div>
+                    <div class="answer">
+                        Les trois valeurs de la devise républicaine sont :
+                        <ul>
+                            <li><strong>Liberté</strong> : chaque citoyen peut agir et penser librement dans le respect de la loi</li>
+                            <li><strong>Égalité</strong> : tous les citoyens ont les mêmes droits et devoirs</li>
+                            <li><strong>Fraternité</strong> : solidarité entre tous les citoyens</li>
+                        </ul>
+                        On peut également citer la laïcité, principe essentiel depuis 1905.
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>👥 Thème 2 : Droits de l'Homme et citoyenneté</h2>
+                
+                <div class="cours">
+                    <h3>Cours : Les Droits de l'Homme</h3>
+                    <p>La <strong>Déclaration des Droits de l'Homme et du Citoyen</strong> de 1789 établit les droits fondamentaux en France. La <strong>Déclaration universelle des Droits de l'Homme</strong> de 1948 (ONU) étend ces principes à l'échelle mondiale après les horreurs de la Seconde Guerre mondiale.</p>
+                    <p>Ces textes garantissent des droits fondamentaux : droit à la vie, liberté d'expression, droit à l'éducation, droit à un procès équitable, interdiction de la torture et de l'esclavage.</p>
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Droits de l'Homme :</strong> Ensemble des droits fondamentaux et universels reconnus à tous les êtres humains sans distinction de race, de sexe, de religion ou d'origine. Ils incluent les droits civils, politiques, économiques, sociaux et culturels.
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Citoyenneté :</strong> Ensemble des droits et devoirs d'un citoyen dans une société. La citoyenneté implique la participation à la vie démocratique (vote, engagement associatif, bénévolat) et le respect des lois.
+                </div>
+
+                <div class="cours">
+                    <h3>Égalité et non-discrimination</h3>
+                    <p>Le principe d'égalité signifie que tous les citoyens ont les mêmes droits et devoirs devant la loi, sans discrimination liée au sexe, à l'origine, au handicap, à l'orientation sexuelle, à la religion ou à l'apparence physique.</p>
+                    <p>Plusieurs lois protègent contre les discriminations : loi sur l'égalité professionnelle entre hommes et femmes, loi sur l'égalité des droits et des chances des personnes handicapées (2005), lois anti-discrimination.</p>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Quels sont les principaux droits garantis par la Déclaration universelle de 1948 ?</div>
+                    <div class="answer">
+                        La Déclaration universelle des Droits de l'Homme de 1948 garantit notamment :
+                        <ul>
+                            <li><strong>Le droit à la vie</strong> et à la sûreté de sa personne</li>
+                            <li><strong>L'interdiction de l'esclavage</strong> et de la torture</li>
+                            <li><strong>L'égalité devant la loi</strong> et le droit à un procès équitable</li>
+                            <li><strong>La liberté d'expression</strong>, de pensée et de conscience</li>
+                            <li><strong>Le droit à l'éducation</strong> et au travail</li>
+                            <li><strong>Le droit à un niveau de vie suffisant</strong> (nourriture, logement, santé)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Comment un citoyen peut-il s'engager dans la société ?</div>
+                    <div class="answer">
+                        Les modes d'engagement citoyen sont variés :
+                        <ul>
+                            <li><strong>Le vote</strong> : participation aux élections pour choisir ses représentants</li>
+                            <li><strong>L'engagement associatif</strong> : participer à une association (sport, culture, humanitaire)</li>
+                            <li><strong>Le bénévolat</strong> : donner de son temps pour aider les autres</li>
+                            <li><strong>Le service civique</strong> : mission d'intérêt général de 6 à 12 mois</li>
+                            <li><strong>La participation à des projets citoyens</strong> : budgets participatifs, conseils de quartier</li>
+                            <li><strong>L'engagement syndical ou politique</strong> : défendre des idées et des valeurs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>⚖️ Thème 3 : Liberté, laïcité et règles de vie</h2>
+                
+                <div class="cours">
+                    <h3>Cours : Les libertés fondamentales</h3>
+                    <p>Les libertés fondamentales sont garanties par plusieurs textes : la Déclaration des Droits de l'Homme et du Citoyen de 1789, le Préambule de la Constitution de 1946 et la Constitution de 1958. Elles comprennent les libertés individuelles (liberté d'expression, de conscience, de circulation) et les libertés collectives (liberté de réunion, d'association, de manifestation).</p>
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Liberté d'expression :</strong> Droit de communiquer ses opinions et ses idées par tous les moyens (parole, écriture, médias, réseaux sociaux) dans le respect de la loi.
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Laïcité :</strong> Séparation entre l'État et les religions établie par la loi de 1905. L'État est neutre, garantit la liberté de conscience et traite également toutes les croyances. La laïcité repose sur trois piliers : liberté de conscience, séparation des Églises et de l'État, égalité de tous devant la loi.
+                </div>
+
+                <div class="cours">
+                    <h3>Les règles de vie en société</h3>
+                    <p><strong>Le civisme</strong> désigne le respect des lois et des règles de vie en communauté. Il implique le respect d'autrui, des biens publics et de l'environnement.</p>
+                    <p><strong>La résolution des conflits</strong> passe par le dialogue, la négociation et le respect mutuel. Les institutions (médiateurs, tribunaux) peuvent aider à résoudre pacifiquement les litiges.</p>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Quelles sont les limites de la liberté d'expression en France ?</div>
+                    <div class="answer">
+                        La liberté d'expression n'est pas absolue. Elle est limitée par la loi pour protéger :
+                        <ul>
+                            <li>La dignité humaine (interdiction de l'injure, de la diffamation)</li>
+                            <li>L'ordre public (interdiction de la provocation à la haine, à la violence)</li>
+                            <li>Certains groupes (interdiction du racisme, de l'antisémitisme, de l'homophobie)</li>
+                            <li>La vie privée et la présomption d'innocence</li>
+                        </ul>
+                        Le négationnisme (nier l'existence des crimes contre l'humanité) est également puni par la loi.
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Comment la laïcité s'applique-t-elle dans l'espace public ?</div>
+                    <div class="answer">
+                        Dans l'espace public, la laïcité s'applique différemment selon les lieux :
+                        <ul>
+                            <li><strong>Les agents de l'État</strong> (fonctionnaires, enseignants) doivent respecter une stricte neutralité religieuse</li>
+                            <li><strong>Les usagers des services publics</strong> peuvent exprimer leurs convictions religieuses</li>
+                            <li><strong>Dans les écoles publiques</strong> : la loi de 2004 interdit les signes religieux ostensibles aux élèves</li>
+                            <li><strong>Dans la rue et les lieux publics</strong> : chacun peut exprimer ses convictions tant qu'il ne trouble pas l'ordre public</li>
+                        </ul>
+                        La laïcité protège la liberté de croire ou de ne pas croire et garantit l'égalité entre tous.
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>📱 Thème 4 : Médias, information et débat démocratique</h2>
+                
+                <div class="cours">
+                    <h3>Cours : Le rôle des médias</h3>
+                    <p>Les médias (presse écrite, radio, télévision, Internet) ont plusieurs missions essentielles en démocratie : <strong>informer</strong> les citoyens de manière objective, <strong>contrôler</strong> l'action des gouvernants (on parle de "quatrième pouvoir"), <strong>animer</strong> le débat public et <strong>éduquer</strong> aux enjeux de société.</p>
+                    <p>La liberté de la presse est protégée par la loi de 1881, mais elle s'accompagne de responsabilités : vérifier les sources, distinguer faits et opinions, respecter la vie privée.</p>
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Fake news :</strong> Fausses informations diffusées volontairement pour tromper l'opinion publique, manipuler le débat démocratique ou nuire à des personnes ou institutions.
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Esprit critique :</strong> Capacité à analyser une information, à vérifier ses sources, à distinguer le vrai du faux et à se forger sa propre opinion de manière éclairée.
+                </div>
+
+                <div class="cours">
+                    <h3>Les dangers de la désinformation</h3>
+                    <p>À l'ère des réseaux sociaux, les fake news se propagent rapidement. Elles peuvent avoir des conséquences graves : manipulation de l'opinion, déstabilisation démocratique, stigmatisation de groupes, théories du complot.</p>
+                    <p>Pour lutter contre la désinformation : vérifier les sources, croiser les informations, utiliser des sites de fact-checking (Décodex, AFP Factuel), se méfier des titres sensationnels et des images détournées.</p>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Comment développer son esprit critique face aux informations ?</div>
+                    <div class="answer">
+                        Pour développer son esprit critique face aux médias :
+                        <ul>
+                            <li><strong>Vérifier les sources</strong> : qui publie l'information ? Est-ce un média reconnu ?</li>
+                            <li><strong>Croiser les informations</strong> : consulter plusieurs médias différents</li>
+                            <li><strong>Distinguer fait et opinion</strong> : différencier information objective et commentaire</li>
+                            <li><strong>Repérer les fake news</strong> : se méfier des titres sensationnels, vérifier les dates et images</li>
+                            <li><strong>Utiliser le fact-checking</strong> : sites spécialisés dans la vérification</li>
+                            <li><strong>S'interroger sur les intentions</strong> : pourquoi cette information est diffusée ?</li>
+                            <li><strong>Éviter le partage impulsif</strong> : réfléchir avant de relayer une information</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Pourquoi le pluralisme est-il essentiel en démocratie ?</div>
+                    <div class="answer">
+                        Le pluralisme est essentiel car il permet :
+                        <ul>
+                            <li>La <strong>confrontation des idées</strong> et le débat démocratique</li>
+                            <li>La <strong>représentation de toutes les opinions</strong> dans la société</li>
+                            <li>Un <strong>contrôle mutuel des pouvoirs</strong> et des partis politiques</li>
+                            <li>Des <strong>choix éclairés</strong> pour les citoyens grâce à la diversité des points de vue</li>
+                            <li>La <strong>protection contre les dérives autoritaires</strong> et la pensée unique</li>
+                        </ul>
+                        Le pluralisme s'exprime par la liberté de la presse, la multiplicité des partis politiques et le respect des minorités.
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>🧬 Thème 5 : Bioéthique, OGM et enjeux scientifiques</h2>
+                
+                <div class="cours">
+                    <h3>Cours : Les enjeux bioéthiques</h3>
+                    <p>Les progrès scientifiques et médicaux soulèvent des questions éthiques importantes : jusqu'où peut-on aller dans la manipulation du vivant ? Comment concilier liberté individuelle et protection de la dignité humaine ? En France, les lois de bioéthique encadrent ces pratiques et sont régulièrement révisées.</p>
+                    <p>Le <strong>Comité consultatif national d'éthique (CCNE)</strong>, créé en 1983, donne des avis sur ces questions et organise des débats citoyens.</p>
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Bioéthique :</strong> Réflexion sur les questions morales et éthiques soulevées par les recherches et applications biomédicales touchant au vivant et à l'être humain (PMA, fin de vie, recherches sur l'embryon, manipulations génétiques).
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - OGM (Organismes Génétiquement Modifiés) :</strong> Organismes dont le matériel génétique a été modifié par des techniques de génie génétique pour leur conférer de nouvelles propriétés (résistance aux maladies, meilleurs rendements).
+                </div>
+
+                <div class="cours">
+                    <h3>Les OGM : enjeux et débats</h3>
+                    <p><strong>Enjeux agricoles :</strong> Augmentation des rendements, résistance aux parasites et aux maladies, adaptation aux changements climatiques, réduction de l'usage de pesticides.</p>
+                    <p><strong>Enjeux environnementaux :</strong> Impact sur la biodiversité, risques de contamination des cultures traditionnelles, dépendance des agriculteurs aux semenciers, effets sur les insectes pollinisateurs.</p>
+                    <p><strong>Enjeux éthiques :</strong> Débats sur la sécurité alimentaire à long terme, la brevetabilité du vivant, le principe de précaution, le droit des consommateurs à être informés.</p>
+                </div>
+
+                <div class="definition">
+                    <strong>Définition - Dignité humaine :</strong> Principe selon lequel tout être humain possède une valeur absolue qui interdit de le traiter comme un objet ou un moyen. Ce principe fonde l'interdiction de l'esclavage, de la torture et encadre les pratiques biomédicales.
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Quels sont les grands débats bioéthiques actuels ?</div>
+                    <div class="answer">
+                        Les principaux débats concernent :
+                        <ul>
+                            <li><strong>La procréation médicalement assistée (PMA)</strong> : ouverture à toutes les femmes depuis 2021</li>
+                            <li><strong>La gestation pour autrui (GPA)</strong> : interdite en France, débat sur sa légalisation</li>
+                            <li><strong>La fin de vie</strong> : droit à l'euthanasie et au suicide assisté, soins palliatifs</li>
+                            <li><strong>Les recherches sur l'embryon</strong> : limites éthiques de la recherche</li>
+                            <li><strong>Les manipulations génétiques</strong> : thérapie génique, CRISPR, bébés génétiquement modifiés</li>
+                            <li><strong>L'intelligence artificielle en médecine</strong> : protection des données de santé, diagnostic automatisé</li>
+                            <li><strong>Les droits des animaux</strong> : expérimentation animale, bien-être animal</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="question">
+                    <div class="question-title">❓ Quels sont les arguments pour et contre les OGM ?</div>
+                    <div class="answer">
+                        <strong>Arguments favorables :</strong>
+                        <ul>
+                            <li>Augmentation des rendements agricoles pour nourrir une population croissante</li>
+                            <li>Résistance aux maladies et aux conditions climatiques extrêmes</li>
+                            <li>Réduction de l'usage des pesticides chimiques</li>
+                            <li>Enrichissement nutritionnel (ex : riz doré enrichi en vitamine A)</li>
+                        </ul>
+                        <strong>Arguments défavorables :</strong>
+                        <ul>
+                            <li>Risques pour la biodiversité et contamination des cultures bio</li>
+                            <li>Effets à long terme sur la santé humaine encore mal connus</li>
+                            <li>Dépendance économique des agriculteurs aux grandes entreprises</li>
+                            <li>Questions éthiques sur la brevetabilité du vivant</li>
+                            <li>Application du principe de précaution</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Section -->
+            <div class="quiz-container">
+                <h2>📝 Quiz de révision - Testez vos connaissances</h2>
+                
+                <div class="quiz-question">
+                    <h4>Question 1 : Quels sont les trois pouvoirs dans une démocratie ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q1" value="a"> a) Législatif, Exécutif, Judiciaire</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="b"> b) Président, Premier ministre, Parlement</label>
+                        <label class="quiz-option"><input type="radio" name="q1" value="c"> c) État, Région, Commune</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(1)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer1">
+                        <strong>Réponse correcte : a) Législatif, Exécutif, Judiciaire</strong><br>
+                        Ces trois pouvoirs sont séparés pour éviter la concentration des pouvoirs et garantir les libertés fondamentales (principe de Montesquieu).
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 2 : Quelle est la devise de la République française ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q2" value="a"> a) Liberté, Égalité, Propriété</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="b"> b) Liberté, Égalité, Fraternité</label>
+                        <label class="quiz-option"><input type="radio" name="q2" value="c"> c) Liberté, Justice, Solidarité</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(2)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer2">
+                        <strong>Réponse correcte : b) Liberté, Égalité, Fraternité</strong><br>
+                        Cette devise est inscrite sur les frontons des mairies et des écoles depuis la IIIe République.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 3 : En quelle année a été adoptée la Déclaration universelle des Droits de l'Homme ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q3" value="a"> a) 1789</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="b"> b) 1948</label>
+                        <label class="quiz-option"><input type="radio" name="q3" value="c"> c) 1958</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(3)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer3">
+                        <strong>Réponse correcte : b) 1948</strong><br>
+                        Adoptée par l'ONU le 10 décembre 1948, après les horreurs de la Seconde Guerre mondiale.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 4 : Quelle loi française établit la séparation des Églises et de l'État ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q4" value="a"> a) Loi de 1881 sur la liberté de la presse</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="b"> b) Loi de 1905 sur la laïcité</label>
+                        <label class="quiz-option"><input type="radio" name="q4" value="c"> c) Loi de 1975 sur l'IVG</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(4)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer4">
+                        <strong>Réponse correcte : b) Loi de 1905 sur la laïcité</strong><br>
+                        Cette loi établit la neutralité de l'État et garantit la liberté de conscience.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 5 : Qu'est-ce qu'une "fake news" ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q5" value="a"> a) Une information vérifiée par plusieurs sources</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="b"> b) Une fausse information diffusée volontairement</label>
+                        <label class="quiz-option"><input type="radio" name="q5" value="c"> c) Une information publiée exclusivement en ligne</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(5)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer5">
+                        <strong>Réponse correcte : b) Une fausse information diffusée volontairement</strong><br>
+                        Les fake news visent à tromper l'opinion publique, manipuler le débat démocratique ou nuire à des personnes.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 6 : Que signifie l'acronyme OGM ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q6" value="a"> a) Organisme Génétiquement Modifié</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="b"> b) Organisation Générale des Marchés</label>
+                        <label class="quiz-option"><input type="radio" name="q6" value="c"> c) Observation Génétique du Milieu</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(6)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer6">
+                        <strong>Réponse correcte : a) Organisme Génétiquement Modifié</strong><br>
+                        Organisme dont le matériel génétique a été modifié par génie génétique pour lui conférer de nouvelles propriétés.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 7 : Quel est le rôle du Conseil constitutionnel ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q7" value="a"> a) Juger les crimes et délits</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="b"> b) Vérifier la conformité des lois à la Constitution</label>
+                        <label class="quiz-option"><input type="radio" name="q7" value="c"> c) Élaborer les projets de loi</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(7)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer7">
+                        <strong>Réponse correcte : b) Vérifier la conformité des lois à la Constitution</strong><br>
+                        Le Conseil constitutionnel est le gardien de la Constitution française.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 8 : Quelle institution européenne est élue au suffrage universel direct ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q8" value="a"> a) La Commission européenne</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="b"> b) Le Parlement européen</label>
+                        <label class="quiz-option"><input type="radio" name="q8" value="c"> c) Le Conseil de l'Union européenne</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(8)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer8">
+                        <strong>Réponse correcte : b) Le Parlement européen</strong><br>
+                        Les députés européens sont élus tous les 5 ans par les citoyens des États membres.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 9 : Qu'est-ce que le principe de précaution ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q9" value="a"> a) Agir en cas de certitude de risque</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="b"> b) Agir en cas de suspicion de risque grave</label>
+                        <label class="quiz-option"><input type="radio" name="q9" value="c"> c) Ne jamais prendre de risques</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(9)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer9">
+                        <strong>Réponse correcte : b) Agir en cas de suspicion de risque grave</strong><br>
+                        Ce principe est souvent invoqué dans les débats sur les OGM et les innovations technologiques.
+                    </div>
+                </div>
+
+                <div class="quiz-question">
+                    <h4>Question 10 : Que signifie CCNE ?</h4>
+                    <div class="quiz-options">
+                        <label class="quiz-option"><input type="radio" name="q10" value="a"> a) Conseil Constitutionnel National d'Éthique</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="b"> b) Comité Consultatif National d'Éthique</label>
+                        <label class="quiz-option"><input type="radio" name="q10" value="c"> c) Commission Centrale des Normes Éthiques</label>
+                    </div>
+                    <button class="show-answer-btn" onclick="showAnswer(10)">Voir la réponse</button>
+                    <div class="hidden-answer" id="answer10">
+                        <strong>Réponse correcte : b) Comité Consultatif National d'Éthique</strong><br>
+                        Créé en 1983, il donne des avis sur les questions éthiques soulevées par les progrès scientifiques.
+                    </div>
+                </div>
+
+                <button class="quiz-submit" onclick="checkQuiz()">Corriger le quiz</button>
+                
+                <div class="quiz-score" id="quiz-score"></div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Révisions EMC - Terminale Bac Pro | Année scolaire 2023-2024</p>
+            <p>Les réponses sont cachées par défaut, cliquez sur les questions pour les dévoiler</p>
+        </footer>
+    </div>
+
+    <script>
+        // Gestion des questions déroulantes dans le cours
+        const questions = document.querySelectorAll('.question');
+        questions.forEach(question => {
+            question.addEventListener('click', () => {
+                question.classList.toggle('active');
+            });
+        });
+
+        // Fonction pour afficher les réponses cachées du quiz
+        function showAnswer(questionNumber) {
+            const answerElement = document.getElementById(`answer${questionNumber}`);
+            answerElement.classList.toggle('show');
+        }
+
+        // Fonction pour corriger le quiz
+        function checkQuiz() {
+            const correctAnswers = {
+                q1: 'a',
+                q2: 'b',
+                q3: 'b',
+                q4: 'b',
+                q5: 'b',
+                q6: 'a',
+                q7: 'b',
+                q8: 'b',
+                q9: 'b',
+                q10: 'b'
+            };
+
+            let score = 0;
+            const totalQuestions = Object.keys(correctAnswers).length;
+
+            // Vérifier chaque question
+            for (let i = 1; i <= totalQuestions; i++) {
+                const questionName = `q${i}`;
+                const selectedOption = document.querySelector(`input[name="${questionName}"]:checked`);
+                
+                if (selectedOption) {
+                    if (selectedOption.value === correctAnswers[questionName]) {
+                        score++;
+                    }
+                }
+            }
+
+            // Afficher le score
+            const scoreElement = document.getElementById('quiz-score');
+            const percentage = (score / totalQuestions) * 100;
+            
+            let message = '';
+            if (percentage >= 80) {
+                message = `🎉 Excellent ! Vous avez obtenu ${score}/${totalQuestions} (${percentage}%)`;
+            } else if (percentage >= 60) {
+                message = `👍 Bien ! Vous avez obtenu ${score}/${totalQuestions} (${percentage}%)`;
+            } else if (percentage >= 40) {
+                message = `👌 Pas mal ! Vous avez obtenu ${score}/${totalQuestions} (${percentage}%)`;
+            } else {
+                message = `📚 Continuez à réviser ! Vous avez obtenu ${score}/${totalQuestions} (${percentage}%)`;
+            }
+
+            scoreElement.innerHTML = message;
+            scoreElement.style.display = 'block';
+
+            // Faire défiler jusqu'au score
+            scoreElement.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
