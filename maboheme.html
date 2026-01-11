@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Linéaire : Ma bohème - Rimbaud</title>
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-gold: #f59e0b;
+            --dark-gold: #b45309;
+            --light-cream: #fffbeb;
+            --earth-brown: #92400e;
+            --light-brown: #fef3c7;
+            --purple: #8b5cf6;
+            --pink: #ec4899;
+            --light-bg: #f8f9fa;
+            --text-dark: #2d2d2d;
+            --text-light: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 25px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #fff7ed 100%);
+        }
+        header {
+            background: linear-gradient(135deg, var(--earth-brown), var(--accent-gold));
+            color: white;
+            padding: 2.5rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 8px 20px rgba(146, 64, 14, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "🌟";
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+        h1, h2, h3 { margin: 1.3em 0 0.7em; }
+        .section-title {
+            color: var(--earth-brown);
+            border-bottom: 3px solid var(--accent-gold);
+            padding-bottom: 0.5em;
+            font-size: 1.8em;
+        }
+        .poem-container {
+            background: linear-gradient(to right, var(--light-cream), #fef3c7);
+            padding: 2rem;
+            border-left: 6px solid var(--accent-gold);
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+        .poem-line {
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+            padding: 0.2rem 0.5rem;
+        }
+        .poem-line:hover {
+            background-color: rgba(245, 158, 11, 0.15);
+            padding-left: 15px;
+            border-radius: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.8rem 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 1rem 1.2rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: linear-gradient(to right, var(--light-brown), #fde68a);
+            color: var(--earth-brown);
+            font-weight: 700;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        tr:hover {
+            background-color: rgba(245, 158, 11, 0.05);
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--light-brown), #fef3c7);
+            border-left: 5px solid var(--accent-gold);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        .conclusion {
+            background: linear-gradient(135deg, var(--earth-brown), var(--dark-gold));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            box-shadow: 0 8px 20px rgba(146, 64, 14, 0.3);
+        }
+        .tag {
+            background: linear-gradient(to right, var(--accent-gold), var(--purple));
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9em;
+            margin-right: 0.5rem;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .sub-title {
+            color: var(--earth-brown);
+            border-left: 5px solid var(--accent-gold);
+            padding-left: 1rem;
+            margin: 1.8rem 0 1rem;
+            font-size: 1.3em;
+            background: linear-gradient(to right, rgba(245, 158, 11, 0.1), transparent);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 0 6px 6px 0;
+        }
+        .intro-analyse {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border-left: 5px solid var(--accent-gold);
+            padding: 1.3rem;
+            margin: 1.5rem 0 1.8rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05em;
+        }
+        .interpretation {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 5px solid var(--earth-brown);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05em;
+        }
+        .grammar-points {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border-left: 5px solid var(--secondary-blue);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+        .big-ideas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .idea-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+            border-top: 5px solid var(--accent-gold);
+            transition: transform 0.3s ease;
+        }
+        .idea-card:hover {
+            transform: translateY(-5px);
+        }
+        .idea-card h4 {
+            color: var(--earth-brown);
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        .idea-card h4:before {
+            content: "✨";
+            margin-right: 10px;
+        }
+        .timing-indicator {
+            background: linear-gradient(to right, var(--accent-gold), var(--earth-brown));
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 0.5rem 0 1.5rem;
+            font-size: 0.9em;
+        }
+        .key-term {
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--earth-brown);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            header { padding: 2rem 1rem; }
+            .big-ideas { grid-template-columns: 1fr; }
+            table { font-size: 0.9em; }
+            th, td { padding: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌟 Ma bohème (Fantaisie) - 1870</h1>
+    <p>Arthur Rimbaud • Cahiers de Douai • Parcours : Émancipations créatrices</p>
+    <p>Analyse linéaire détaillée pour l'oral du Bac de français 2026</p>
+    <div class="timing-indicator">Durée estimée : 12 minutes</div>
+</header>
+
+<section class="poem-container">
+    <h2>📜 Le Texte intégral</h2>
+    <div class="poem-line">Je m'en allais, les poings dans mes poches crevées ;</div>
+    <div class="poem-line">Mon paletot aussi devenait idéal ;</div>
+    <div class="poem-line">J'allais sous le ciel, Muse ! et j'étais ton féal ;</div>
+    <div class="poem-line">Oh ! là ! là ! que d'amours splendides j'ai rêvées !</div><br>
+    
+    <div class="poem-line">Mon unique culotte avait un large trou.</div>
+    <div class="poem-line">- Petit-Poucet rêveur, j'égrenais dans ma course</div>
+    <div class="poem-line">Des rimes. Mon auberge était à la Grande-Ourse.</div>
+    <div class="poem-line">- Mes étoiles au ciel avaient un doux frou-frou</div><br>
+    
+    <div class="poem-line">Et je les écoutais, assis au bord des routes,</div>
+    <div class="poem-line">Ces bons soirs de septembre où je sentais des gouttes</div>
+    <div class="poem-line">De rosée à mon front, comme un vin de vigueur ;</div><br>
+    
+    <div class="poem-line">Où, rimant au milieu des ombres fantastiques,</div>
+    <div class="poem-line">Comme des lyres, je tirais les élastiques</div>
+    <div class="poem-line">De mes souliers blessés, un pied près de mon cœur !</div>
+</section>
+
+<section>
+    <h2 class="section-title">📚 Introduction</h2>
+    <p>Écrit en 1870 alors que Rimbaud n'a que seize ans, <em>Ma bohème</em> est un sonnet qui célèbre la liberté du poète vagabond. Contrairement à la <em>Vénus Anadyomène</em> qui dégradait le mythe, ce poème élabore un mythe personnel : celui du <span class="key-term">poète-mendiant</span>, libre et créateur malgré la misère matérielle. Il s'agit d'une « fantaisie » autobiographique où Rimbaud transforme sa fugue de l'automne 1870 en épopée poétique.</p>
+    
+    <p><strong>Contexte :</strong> Le poème s'inspire des errances de Rimbaud qui, adolescent, fugue plusieurs fois de Charleville. Cette « bohème » n'est pas celle des artistes parisiens mais celle d'un adolescent qui fuit la provincialité et cherche l'aventure poétique.</p>
+    
+    <p><strong>Problématique :</strong> Comment Rimbaud transforme-t-il l'expérience de la pauvreté et de l'errance en une célébration de la liberté créatrice, édifiant ainsi un mythe personnel du poète-voyageur ?</p>
+    
+    <div class="highlight">
+        <strong>Plan détaillé :</strong>
+        <ul>
+            <li><strong>I. L'envol du poète vagabond</strong> (1er quatrain) : affirmation d'une liberté joyeuse</li>
+            <li><strong>II. La transfiguration poétique de la misère</strong> (2e quatrain) : la pauvreté sublimée par l'imaginaire</li>
+            <li><strong>III. L'harmonie cosmique et la création poétique</strong> (tercets) : communion avec l'univers et genèse du poème</li>
+        </ul>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">💡 Grandes Idées Directrices</h2>
+    <div class="big-ideas">
+        <div class="idea-card">
+            <h4>1. La liberté conquise par l'errance</h4>
+            <p>Rimbaud fait de la fugue un acte libérateur. L'errance n'est pas subie mais choisie, permettant au poète d'échapper aux contraintes sociales et familiales pour trouver sa vérité créatrice.</p>
+        </div>
+        <div class="idea-card">
+            <h4>2. La sublimation poétique de la pauvreté</h4>
+            <p>Les vêtements troués et la misère matérielle sont transfigurés par la métaphore poétique. Le dénuement devient richesse spirituelle, la privation source d'invention.</p>
+        </div>
+        <div class="idea-card">
+            <h4>3. Le mythe personnel du poète-voyant</h4>
+            <p>Rimbaud élabore ici une figure du poète inspiré par le voyage et la nature, annonçant la théorie du « voyant » qu'il développera dans sa lettre à Paul Demeny en 1871.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">🎨 I. L'envol du poète vagabond</h2>
+    <h3 class="sub-title">Affirmation d'une liberté joyeuse</h3>
+    
+    <div class="intro-analyse">
+        <p>Le premier quatrain établit d'emblée le ton de l'évasion heureuse. Nous allons montrer comment Rimbaud, à travers un jeu d'antithèses et une syntaxe dynamique, transforme l'acte de fuguer en un départ enthousiaste, célébrant la liberté conquise malgré l'apparence misérable. L'<span class="key-term">allégresse du départ</span> contraste avec la pauvreté matérielle.</p>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Procédé</th>
+            <th>Vers / Citation</th>
+            <th>Analyse</th>
+            <th>Effet produit</th>
+        </tr>
+        <tr>
+            <td><span class="key-term">Antithèse matérialité/spiritualité</span></td>
+            <td>v.1-2 : « poches crevées » / « devenait idéal »</td>
+            <td>Opposition entre le concret misérable (vêtements troués) et l'abstraction sublime (« idéal »). Le paletot se spiritualise.</td>
+            <td>Transfiguration de la misère : la pauvreté matérielle devient richesse poétique.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Interjection lyrique</span></td>
+            <td>v.4 : « Oh ! là ! là ! »</td>
+            <td>Exclamation populaire, spontanée, exprimant l'émerveillement. Répétition qui mime l'enthousiasme.</td>
+            <td>Crée un ton de gaieté juvénile, presque enfantin. Souligne l'exaltation du poète.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Alliance de mots</span></td>
+            <td>v.4 : « amours splendides »</td>
+            <td>Association d'un terme concret (« amours ») avec un adjectif éclatant (« splendides »).</td>
+            <td>Évocation de rêves grandioses et romanesques. Le rêve compense la réalité pauvre.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Inversion sujet-verbe</span></td>
+            <td>v.4 : « j'ai rêvées »</td>
+            <td>Place du participe passé avant le sujet, accord avec « amours » (antéposé).</td>
+            <td>Mise en relief des « amours splendides ». Rythme chantant, effet d'emphase.</td>
+        </tr>
+    </table>
+    
+    <div class="interpretation">
+        <strong>Interprétation approfondie :</strong> 
+        <p>Le vers « Mon paletot aussi devenait idéal » opère une <span class="key-term">métamorphose alchimique</span> caractéristique de Rimbaud. Le vêtement usé, au lieu d'être une honte, se spiritualise. Cette alchimie poétique préfigure la formule des <em>Illuminations</em> : « Je m'habituai à l'hallucination simple ». Le « aussi » est important : il indique que tout, même le plus trivial, participe à cette transfiguration.</p>
+        <p>L'apostrophe à la « Muse » (v.3) est <span class="key-term">ironiquement respectueuse</span>. Rimbaud se déclare son « féal » (vassal fidèle) tout en adoptant une attitude de rebelle (fugue, vêtements en loques). Cette contradiction apparente définit le paradoxe du poète rimbaldien : libre par rapport aux conventions sociales, mais soumis à l'inspiration poétique.</p>
+    </div>
+    
+    <div class="grammar-points">
+        <h4>🔍 Points de grammaire caractéristiques</h4>
+        
+        <p><strong>1. L'emploi de l'imparfait itératif « Je m'en allais »</strong> : L'imparfait suggère une action répétée, habituelle. Ce n'est pas une fugue unique mais un comportement caractéristique. Il crée une atmosphère de récit, de confidence autobiographique. Cette forme verbale inscrit l'errance dans la durée, en fait un mode de vie.</p>
+        
+        <p><strong>2. La dislocation syntaxique « Oh ! là ! là ! que d'amours splendides j'ai rêvées »</strong> : L'exclamation est détachée, en tête de phrase. La structure exclamative avec « que de » exprime l'intensité. L'accord du participe passé « rêvées » avec le COD antéposé « amours » (féminin pluriel) montre une maîtrise classique de la syntaxe, qui contraste avec le sujet rebelle.</p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">🎨 II. La transfiguration poétique de la misère</h2>
+    <h3 class="sub-title">La pauvreté sublimée par l'imaginaire</h3>
+    
+    <div class="intro-analyse">
+        <p>Le deuxième quatrain opère un travail systématique de réenchantement du réel. Chaque élément de la pauvreté (vêtement troué, absence de toit) est transformé par une comparaison mythologique ou cosmique. Nous analyserons comment Rimbaud <span class="key-term">poétise le dénuement</span>, faisant de la misère le terreau de l'invention créatrice.</p>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Procédé</th>
+            <th>Vers / Citation</th>
+            <th>Analyse</th>
+            <th>Effet produit</th>
+        </tr>
+        <tr>
+            <td><span class="key-term">Comparaison mythologique</span></td>
+            <td>v.6 : « Petit-Poucet rêveur »</td>
+            <td>Assimilation au héros du conte qui sème des cailloux. Rimbaud sème des rimes. L'adjectif « rêveur » modernise le personnage.</td>
+            <td>L'errance devient quête initiatique. Le poète trouve son chemin grâce à la poésie.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Métaphore cosmique</span></td>
+            <td>v.7 : « Mon auberge était à la Grande-Ourse »</td>
+            <td>La constellation remplace l'auberge réelle. Le gîte n'est plus terrestre mais céleste.</td>
+            <td>Sublimation totale : le sans-abri a pour demeure l'univers. La liberté est infinie.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Synesthésie</span></td>
+            <td>v.8 : « doux frou-frou »</td>
+            <td>Association du tact (« doux ») et de l'ouïe (« frou-frou », son léger). Attribution d'une qualité sensorielle aux étoiles.</td>
+            <td>L'univers devient familier, sensible. Les étoiles sont complices, presque humaines.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Parataxe</span></td>
+            <td>v.5-8 : Phrases courtes, juxtaposées</td>
+            <td>Succession de notations sans liens logiques explicites, reliées par des tirets.</td>
+            <td>Crée un effet de spontanéité, d'improvisation. Imite la marche et les pensées qui défilent.</td>
+        </tr>
+    </table>
+    
+    <div class="interpretation">
+        <strong>Interprétation approfondie :</strong>
+        <p>La figure de <span class="key-term">Petit-Poucet</span> est cruciale. Dans le conte, le héris sème des cailloux pour retrouver son chemin. Rimbaud, lui, sème des rimes : la poésie est à la fois trace laissée et fil d'Ariane. Cette comparaison révèle une conception de la création poétique comme <span class="key-term">marquage du monde</span>. Le poète, en errant, inscrit son passage par les vers qu'il compose mentalement.</p>
+        <p>« Mon auberge était à la Grande-Ourse » est une <span class="key-term">métaphore d'exil sublime</span>. Ne pas avoir de toit devient une chance : le poète habite le cosmos. Cette image annonce le Rimbaud des <em>Illuminations</em> qui écrira : « J'ai tendu des cordes de clocher à clocher ; des guirlandes de fenêtre à fenêtre ; des chaînes d'or d'étoile à étoile, et je danse. » L'errance terrestre se double d'une errance céleste.</p>
+    </div>
+    
+    <div class="grammar-points">
+        <h4>🔍 Points de grammaire caractéristiques</h4>
+        
+        <p><strong>1. L'emploi du tiret comme ponctuation expressive</strong> : Les tirets (v.6 et v.8) créent des pauses, des ruptures dans le discours. Ils marquent un changement de perspective, une parenthèse dans la rêverie. Cette ponctuation atypique pour un sonnet classique montre la liberté que prend Rimbaud avec la forme.</p>
+        
+        <p><strong>2. La construction « Mes étoiles [...] avaient un doux frou-frou »</span></strong> : Personnification des étoiles par l'attribution d'un possessif (« Mes ») et d'une sensation (« frou-frou »). Le terme « frou-frou » (onomatopée) est un mot familier, trivial même, appliqué aux étoiles. Ce mélange de registres est typique de Rimbaud.</p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">🎨 III. L'harmonie cosmique et la création poétique</h2>
+    <h3 class="sub-title">Communion avec l'univers et genèse du poème</h3>
+    
+    <div class="intro-analyse">
+        <p>Les tercets dépeignent un moment de plénitude où le poète, assis au bord de la route, entre en communion avec la nuit et crée. Nous étudierons comment Rimbaud <span class="key-term">tisse des liens sensoriels et métaphoriques</span> entre son corps, les éléments et l'acte d'écriture, faisant de la poésie une expérience physique totale.</p>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Procédé</th>
+            <th>Vers / Citation</th>
+            <th>Analyse</th>
+            <th>Effet produit</th>
+        </tr>
+        <tr>
+            <td><span class="key-term">Comparaison sensorielle</span></td>
+            <td>v.11 : « comme un vin de vigueur »</td>
+            <td>La rosée est comparée à un vin tonifiant. Sensation de fraîcheur et d'énergie.</td>
+            <td>La nature enivre et fortifie le poète. L'inspiration est une force physique.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Métaphore musicale</span></td>
+            <td>v.13 : « Comme des lyres »</td>
+            <td>Les élastiques des souliers sont comparés aux cordes d'une lyre, instrument d'Apollon.</td>
+            <td>Le geste trivial (resserrer ses souliers) devient acte artistique. Le poète est un musicien.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Oxymore</span></td>
+            <td>v.14 : « souliers blessés »</td>
+            <td>Attribution d'une souffrance humaine à un objet. Les souliers sont usés comme un corps meurtri.</td>
+            <td>Crée une complicité pathétique entre le poète et ses affaires. Tout participe à l'aventure.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Chute symphonique</span></td>
+            <td>v.14 : « un pied près de mon cœur ! »</td>
+            <td>Image finale qui rapproche le pied (marche) et le cœur (sentiment, inspiration).</td>
+            <td>Réunit l'errance physique et la vie intérieure. La poésie naît du corps en mouvement.</td>
+        </tr>
+    </table>
+    
+    <div class="interpretation">
+        <strong>Interprétation approfondie :</strong>
+        <p>La comparaison des élastiques de souliers avec des <span class="key-term">lyres</span> est un sommet de la transfiguration rimbaldienne. L'objet le plus prosaïque (une chaussure usée) devient instrument de musique sacrée. Cette image synthétise tout le projet du poème : révéler le merveilleux dans le quotidien, le sublime dans le trivial. Rimbaud <span class="key-term">détourne les références classiques</span> (la lyre d'Apollon) pour célébrer une poésie moderne, ancrée dans le concret.</p>
+        <p>La position « un pied près de mon cœur » est une <span class="key-term">image de concentration créatrice</span>. Le corps se replie sur lui-même, l'extérieur (la marche) rejoint l'intérieur (l'émotion). Cette posture évoque à la fois le repos du voyageur et la tension de l'artiste qui va créer. Le cœur, siège des sentiments, devient aussi le foyer de l'inspiration. Rimbaud suggère ainsi que la poésie naît d'une <span class="key-term">écoute intérieure</span> rendue possible par l'errance.</p>
+    </div>
+    
+    <div class="grammar-points">
+        <h4>🔍 Points de grammaire caractéristiques</h4>
+        
+        <p><strong>1. La relative « où » répétée (v.10 et v.12)</strong> : « Ces bons soirs de septembre <strong>où</strong> je sentais... » / « <strong>Où</strong>, rimant au milieu... ». La reprise du pronom relatif crée une amplification lyrique. Elle détaille les moments privilégiés, insiste sur leur caractère exceptionnel. Syntaxiquement, cela donne une structure circulaire, enveloppante.</p>
+        
+        <p><strong>2. L'apposition « un pied près de mon cœur »</strong> : Ce groupe nominal est en apposition à l'ensemble de l'action. Il n'est pas introduit par une conjonction, ce qui lui donne un caractère de notation soudaine, d'image frappante. Cette construction condensée, typique du style de Rimbaud, clôt le poème sur une vision.</p>
+    </div>
+</section>
+
+<section class="conclusion">
+    <h2>✅ Conclusion & Ouverture</h2>
+    <p><strong>Bilan :</strong> <em>Ma bohème</em> est bien une « fantaisie » au double sens de caprice imaginatif et de composition musicale légère. Rimbaud y élabore un <span class="key-term">mythe autobiographique</span> où la misère matérielle devient la condition de la liberté et de la création. Par un jeu constant de transfigurations métaphoriques, il convertit les signes de la pauvreté (vêtements troués, absence de toit, souliers usés) en emblèmes de la vocation poétique. Ce poème apparaît comme un <span class="key-term">art poétique en acte</span> : la poésie naît de l'errance, du dénuement accepté, et de la capacité à réenchanter le réel.</p>
+    
+    <p><strong>Ouverture :</strong> On peut rapprocher cette célébration de l'errance créatrice du <em>Bateau ivre</em> (1871) où le « je » se fait navire libéré de ses amarres. On peut aussi évoquer, en contrepoint, les poèmes de la misère subie comme <em>Les Effarés</em> (1870). Enfin, la figure du poète-vagabond annonce les <em>Illuminations</em> et leur exploration des « villes » et des « chemins ». Rimbaud influence durablement la figure du poète maudit, que reprendra Verlaine (bien que dans une tonalité plus mélancolique).</p>
+    
+    <div style="background: rgba(255,255,255,0.2); padding: 1.5rem; border-radius: 8px; margin-top: 1.5rem;">
+        <strong>Pour aller plus loin à l'oral :</strong>
+        <ul>
+            <li>Lien avec la « Lettre du voyant » (15 mai 1871) : « Le Poète se fait voyant par un long, immense et raisonné dérèglement de tous les sens. »</li>
+            <li>Comparaison avec « Bohémiens en voyage » de Baudelaire (Tableaux parisiens) : une vision plus sombre de l'errance.</li>
+            <li>Écho dans la chanson française : Georges Brassens (« La Mauvaise Réputation ») ou Léo Ferré.</li>
+        </ul>
+    </div>
+</section>
+
+</body>
+</html>
