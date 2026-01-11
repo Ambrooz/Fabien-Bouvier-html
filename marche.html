@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 Au marché - Niveau A1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 4px solid;
+        }
+        
+        .dialogue-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .dialogue-section .section-title {
+            color: #d63447;
+            border-color: #d63447;
+        }
+        
+        .dialogue {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        
+        .dialogue-line {
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .client {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .vendeur {
+            background: #fff3e0;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .speaker {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .grammar-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        }
+        
+        .grammar-section .section-title {
+            color: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+        
+        .grammar-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border-left: 5px solid #ff6b6b;
+        }
+        
+        .grammar-box h3 {
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+        
+        .example {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #ffc107;
+        }
+        
+        .vocab-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+        
+        .vocab-section .section-title {
+            color: #4a90e2;
+            border-color: #4a90e2;
+        }
+        
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .vocab-card {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border: 3px solid #4a90e2;
+        }
+        
+        .vocab-word {
+            font-weight: bold;
+            color: #4a90e2;
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+        
+        .exercises-section {
+            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
+        }
+        
+        .exercises-section .section-title {
+            color: #9b59b6;
+            border-color: #9b59b6;
+        }
+        
+        .exercise {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 3px solid #9b59b6;
+        }
+        
+        .exercise h3 {
+            color: #9b59b6;
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+        
+        .question {
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            background: #9b59b6;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin-top: 5px;
+            transition: all 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #9b59b6;
+            box-shadow: 0 0 10px rgba(155, 89, 182, 0.2);
+        }
+        
+        .check-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.2s;
+        }
+        
+        .check-btn:hover {
+            transform: scale(1.05);
+        }
+        
+        .answer {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #28a745;
+        }
+        
+        .answer.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .highlight {
+            background: #ffeb3b;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .comparison-table th {
+            background: #ff6b6b;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+        
+        .tip-box {
+            background: #e1f5fe;
+            border-left: 5px solid #03a9f4;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+        
+        .tip-box strong {
+            color: #0277bd;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🛒 Au marché</h1>
+            <p>✨ Niveau A1 - Poser des questions et comparer ✨</p>
+        </div>
+        
+        <div class="content">
+            <!-- DIALOGUE -->
+            <div class="section dialogue-section">
+                <div class="section-title">📝 Dialogue : Sophie fait ses courses</div>
+                
+                <div class="dialogue">
+                    <div class="dialogue-line client">
+                        <div class="speaker">👩 Sophie :</div>
+                        <div>Bonjour ! Combien coûtent les fraises ?</div>
+                    </div>
+                    
+                    <div class="dialogue-line vendeur">
+                        <div class="speaker">👨 Le vendeur :</div>
+                        <div>Bonjour madame ! Elles coûtent 5 euros le kilo.</div>
+                    </div>
+                    
+                    <div class="dialogue-line client">
+                        <div class="speaker">👩 Sophie :</div>
+                        <div>Et les framboises, quel est le prix ?</div>
+                    </div>
+                    
+                    <div class="dialogue-line vendeur">
+                        <div class="speaker">👨 Le vendeur :</div>
+                        <div>Les framboises sont plus chères, 8 euros le kilo.</div>
+                    </div>
+                    
+                    <div class="dialogue-line client">
+                        <div class="speaker">👩 Sophie :</div>
+                        <div>Quelles sont les meilleures fraises ? Les grosses ou les petites ?</div>
+                    </div>
+                    
+                    <div class="dialogue-line vendeur">
+                        <div class="speaker">👨 Le vendeur :</div>
+                        <div>Les petites sont les meilleures ! Elles sont plus sucrées.</div>
+                    </div>
+                    
+                    <div class="dialogue-line client">
+                        <div class="speaker">👩 Sophie :</div>
+                        <div>Bon, je prends un kilo de fraises. Où sont les tomates ?</div>
+                    </div>
+                    
+                    <div class="dialogue-line vendeur">
+                        <div class="speaker">👨 Le vendeur :</div>
+                        <div>Les tomates sont là-bas, à côté des salades. Elles sont moins chères aujourd'hui !</div>
+                    </div>
+                    
+                    <div class="dialogue-line client">
+                        <div class="speaker">👩 Sophie :</div>
+                        <div>Parfait ! Pourquoi elles sont moins chères ?</div>
+                    </div>
+                    
+                    <div class="dialogue-line vendeur">
+                        <div class="speaker">👨 Le vendeur :</div>
+                        <div>Parce que c'est la saison ! C'est le meilleur moment pour acheter des tomates.</div>
+                    </div>
+                    
+                    <div class="dialogue-line client">
+                        <div class="speaker">👩 Sophie :</div>
+                        <div>Quand est-ce que vous fermez ?</div>
+                    </div>
+                    
+                    <div class="dialogue-line vendeur">
+                        <div class="speaker">👨 Le vendeur :</div>
+                        <div>Je ferme à 13 heures. Voilà vos fraises, ça fait 5 euros.</div>
+                    </div>
+                    
+                    <div class="dialogue-line client">
+                        <div class="speaker">👩 Sophie :</div>
+                        <div>Merci beaucoup ! À bientôt !</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- VOCABULAIRE -->
+            <div class="section vocab-section">
+                <div class="section-title">🔑 Vocabulaire essentiel</div>
+                
+                <div class="vocab-grid">
+                    <div class="vocab-card">
+                        <div class="vocab-word">🍓 les fraises</div>
+                        <div>strawberries</div>
+                    </div>
+                    
+                    <div class="vocab-card">
+                        <div class="vocab-word">🫐 les framboises</div>
+                        <div>raspberries</div>
+                    </div>
+                    
+                    <div class="vocab-card">
+                        <div class="vocab-word">🍅 les tomates</div>
+                        <div>tomatoes</div>
+                    </div>
+                    
+                    <div class="vocab-card">
+                        <div class="vocab-word">💰 coûter</div>
+                        <div>to cost</div>
+                    </div>
+                    
+                    <div class="vocab-card">
+                        <div class="vocab-word">💵 le prix</div>
+                        <div>the price</div>
+                    </div>
+                    
+                    <div class="vocab-card">
+                        <div class="vocab-word">🍬 sucré(e)</div>
+                        <div>sweet</div>
+                    </div>
+                    
+                    <div class="vocab-card">
+                        <div class="vocab-word">🌱 la saison</div>
+                        <div>the season</div>
+                    </div>
+                    
+                    <div class="vocab-card">
+                        <div class="vocab-word">🕐 fermer</div>
+                        <div>to close</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE 1 : LA FORME INTERROGATIVE -->
+            <div class="section grammar-section">
+                <div class="section-title">📖 Grammaire 1 : La forme interrogative</div>
+                
+                <div class="grammar-box">
+                    <h3>💡 Comment poser des questions ?</h3>
+                    
+                    <p style="margin-bottom: 20px;">Il y a trois façons de poser des questions en français :</p>
+                    
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Type</th>
+                            <th>Structure</th>
+                            <th>Exemple</th>
+                        </tr>
+                        <tr>
+                            <td><strong>1. Intonation ⬆️</strong><br>(le plus simple)</td>
+                            <td>Phrase normale + intonation montante</td>
+                            <td>Tu aimes les fraises <span class="highlight">?</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>2. Est-ce que ❓</strong><br>(le plus courant)</td>
+                            <td>Est-ce que + sujet + verbe</td>
+                            <td><span class="highlight">Est-ce que</span> tu aimes les fraises ?</td>
+                        </tr>
+                        <tr>
+                            <td><strong>3. Inversion 🔄</strong><br>(plus formel)</td>
+                            <td>Verbe + tiret + sujet</td>
+                            <td><span class="highlight">Aimes-tu</span> les fraises ?</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="grammar-box">
+                    <h3>🔍 Les mots interrogatifs</h3>
+                    
+                    <div class="example">
+                        <strong>Combien</strong> (How much/many) → <span class="highlight">Combien</span> coûtent les fraises ?
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Quel/Quelle/Quels/Quelles</strong> (Which/What) → <span class="highlight">Quel</span> est le prix ?
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Où</strong> (Where) → <span class="highlight">Où</span> sont les tomates ?
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Quand</strong> (When) → <span class="highlight">Quand</span> est-ce que vous fermez ?
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Pourquoi</strong> (Why) → <span class="highlight">Pourquoi</span> elles sont moins chères ?
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Comment</strong> (How) → <span class="highlight">Comment</span> tu t'appelles ?
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Astuce :</strong> Pour les débutants, utilisez "est-ce que" + mot interrogatif :<br>
+                    • <span class="highlight">Où est-ce que</span> tu habites ?<br>
+                    • <span class="highlight">Quand est-ce que</span> tu travailles ?<br>
+                    • <span class="highlight">Pourquoi est-ce que</span> tu études le français ?
+                </div>
+            </div>
+            
+            <!-- GRAMMAIRE 2 : LES COMPARAISONS -->
+            <div class="section grammar-section">
+                <div class="section-title">📖 Grammaire 2 : Les comparaisons</div>
+                
+                <div class="grammar-box">
+                    <h3>⚖️ Comparer avec les adjectifs</h3>
+                    
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Comparaison</th>
+                            <th>Structure</th>
+                            <th>Exemple</th>
+                        </tr>
+                        <tr>
+                            <td><strong>Supériorité ⬆️</strong></td>
+                            <td>plus + adjectif + que</td>
+                            <td>Les framboises sont <span class="highlight">plus chères que</span> les fraises.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Infériorité ⬇️</strong></td>
+                            <td>moins + adjectif + que</td>
+                            <td>Les fraises sont <span class="highlight">moins chères que</span> les framboises.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Égalité =</strong></td>
+                            <td>aussi + adjectif + que</td>
+                            <td>Les pommes sont <span class="highlight">aussi bonnes que</span> les poires.</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="grammar-box">
+                    <h3>🏆 Le superlatif (le plus / le moins)</h3>
+                    
+                    <div class="example">
+                        <strong>Le/La/Les plus + adjectif</strong> → Les petites fraises sont <span class="highlight">les meilleures</span> !
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Le/La/Les moins + adjectif</strong> → Les tomates sont <span class="highlight">les moins chères</span> aujourd'hui.
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Le/La/Les meilleur(e)(s)</strong> → C'est <span class="highlight">le meilleur</span> moment pour acheter !
+                    </div>
+                    
+                    <div class="example">
+                        <strong>Le/La/Les pire(s)</strong> → C'est <span class="highlight">le pire</span> marché de la ville. (😞)
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>⚠️ Attention aux irréguliers :</strong><br>
+                    • bon → <span class="highlight">meilleur</span> (not "plus bon") → le meilleur<br>
+                    • bien → <span class="highlight">mieux</span> (not "plus bien")<br>
+                    • mauvais → <span class="highlight">pire</span> (or "plus mauvais") → le pire
+                </div>
+            </div>
+            
+            <!-- EXERCICES -->
+            <div class="section exercises-section">
+                <div class="section-title">✏️ Exercices pratiques</div>
+                
+                <!-- Exercice 1 -->
+                <div class="exercise">
+                    <h3>📝 Exercice 1 : Forme interrogative</h3>
+                    <p>Transformez les phrases avec "Est-ce que" :</p>
+                    
+                    <div class="question">
+                        <span class="question-number">1</span>
+                        <p>Tu aimes les fraises. → _____________________________ ?</p>
+                        <input type="text" id="q1-1" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q1-1', 'Est-ce que tu aimes les fraises')">Vérifier</button>
+                        <div class="answer" id="answer-q1-1">
+                            <strong>✅ Réponse :</strong> Est-ce que tu aimes les fraises ?
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">2</span>
+                        <p>Vous fermez à quelle heure. → _____________________________ ?</p>
+                        <input type="text" id="q1-2" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q1-2', 'À quelle heure est-ce que vous fermez')">Vérifier</button>
+                        <div class="answer" id="answer-q1-2">
+                            <strong>✅ Réponse :</strong> À quelle heure est-ce que vous fermez ? (ou : Quand est-ce que vous fermez ?)
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">3</span>
+                        <p>Les tomates coûtent combien. → _____________________________ ?</p>
+                        <input type="text" id="q1-3" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q1-3', 'Combien est-ce que les tomates coûtent')">Vérifier</button>
+                        <div class="answer" id="answer-q1-3">
+                            <strong>✅ Réponse :</strong> Combien est-ce que les tomates coûtent ? (ou : Combien coûtent les tomates ?)
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exercice 2 -->
+                <div class="exercise">
+                    <h3>📝 Exercice 2 : Les mots interrogatifs</h3>
+                    <p>Complétez avec : Où / Quand / Combien / Quel / Pourquoi / Comment</p>
+                    
+                    <div class="question">
+                        <span class="question-number">1</span>
+                        <p>____________ sont les fraises ? → Elles sont là-bas.</p>
+                        <input type="text" id="q2-1" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q2-1', 'Où')">Vérifier</button>
+                        <div class="answer" id="answer-q2-1">
+                            <strong>✅ Réponse :</strong> Où
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">2</span>
+                        <p>____________ coûtent les pommes ? → 3 euros le kilo.</p>
+                        <input type="text" id="q2-2" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q2-2', 'Combien')">Vérifier</button>
+                        <div class="answer" id="answer-q2-2">
+                            <strong>✅ Réponse :</strong> Combien
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">3</span>
+                        <p>____________ est-ce que vous fermez ? → À 13 heures.</p>
+                        <input type="text" id="q2-3" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q2-3', 'Quand')">Vérifier</button>
+                        <div class="answer" id="answer-q2-3">
+                            <strong>✅ Réponse :</strong> Quand (ou : À quelle heure)
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">4</span>
+                        <p>____________ elles sont moins chères ? → Parce que c'est la saison.</p>
+                        <input type="text" id="q2-4" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q2-4', 'Pourquoi')">Vérifier</button>
+                        <div class="answer" id="answer-q2-4">
+                            <strong>✅ Réponse :</strong> Pourquoi
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exercice 3 -->
+                <div class="exercise">
+                    <h3>📝 Exercice 3 : Les comparaisons</h3>
+                    <p>Complétez avec : plus... que / moins... que / aussi... que</p>
+                    
+                    <div class="question">
+                        <span class="question-number">1</span>
+                        <p>Les framboises sont ____________ chères ____________ les fraises. (⬆️)</p>
+                        <input type="text" id="q3-1" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q3-1', 'plus chères que')">Vérifier</button>
+                        <div class="answer" id="answer-q3-1">
+                            <strong>✅ Réponse :</strong> plus chères que
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">2</span>
+                        <p>Les tomates sont ____________ chères ____________ hier. (⬇️)</p>
+                        <input type="text" id="q3-2" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q3-2', 'moins chères que')">Vérifier</button>
+                        <div class="answer" id="answer-q3-2">
+                            <strong>✅ Réponse :</strong> moins chères que (ou : qu')
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">3</span>
+                        <p>Les petites fraises sont ____________ sucrées ____________ les grosses. (=)</p>
+                        <input type="text" id="q3-3" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q3-3', 'aussi sucrées que')">Vérifier</button>
+                        <div class="answer" id="answer-q3-3">
+                            <strong>✅ Réponse :</strong> aussi sucrées que
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Exercice 4 -->
+                <div class="exercise">
+                    <h3>📝 Exercice 4 : Le superlatif</h3>
+                    <p>Complétez avec : le/la/les plus... / le/la/les moins... / le/la/les meilleur(e)(s) / le/la/les pire(s)</p>
+                    
+                    <div class="question">
+                        <span class="question-number">1</span>
+                        <p>Ces fraises sont ____________ (good - superlatif) du marché !</p>
+                        <input type="text" id="q4-1" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q4-1', 'les meilleures')">Vérifier</button>
+                        <div class="answer" id="answer-q4-1">
+                            <strong>✅ Réponse :</strong> les meilleures
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">2</span>
+                        <p>C'est ____________ (bon - superlatif) moment pour acheter des tomates.</p>
+                        <input type="text" id="q4-2" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q4-2', 'le meilleur')">Vérifier</button>
+                        <div class="answer" id="answer-q4-2">
+                            <strong>✅ Réponse :</strong> le meilleur
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">3</span>
+                        <p>Ces cerises sont ____________ (chères - superlatif) du marché.</p>
+                        <input type="text" id="q4-3" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q4-3', 'les plus chères')">Vérifier</button>
+                        <div class="answer" id="answer-q4-3">
+                            <strong>✅ Réponse :</strong> les plus chères
+                        </div>
+                    </div>
+                    
+                    <div class="question">
+                        <span class="question-number">4</span>
+                        <p>C'est ____________ (mauvais - superlatif) marché de la ville.</p>
+                        <input type="text" id="q4-4" placeholder="Écris ta réponse ici...">
+                        <button class="check-btn" onclick="checkAnswer('q4-4', 'le pire')">Vérifier</button>
+                        <div class="answer" id="answer-q4-4">
+                            <strong>✅ Réponse :</strong> le pire (ou : le plus mauvais)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswer(inputId, correctAnswer) {
+            const input = document.getElementById(inputId);
+            const answer = document.getElementById('answer-' + inputId);
+            const userAnswer = input.value.trim().toLowerCase();
+            const normalizedCorrect = correctAnswer.toLowerCase();
+            
+            // Check if answer is correct (allow some flexibility)
+            const isCorrect = userAnswer === normalizedCorrect || 
+                             (normalizedCorrect.includes('est-ce que') && userAnswer.includes('est-ce que'));
+            
+            if (isCorrect) {
+                answer.innerHTML = `<strong>✅ Réponse :</strong> ${correctAnswer}<br><span style="color: #28a745;">✓ Bravo ! Votre réponse est correcte.</span>`;
+                answer.style.borderLeftColor = '#28a745';
+                answer.style.backgroundColor = '#d4edda';
+                answer.style.color = '#155724';
+            } else {
+                answer.innerHTML = `<strong>✅ Réponse :</strong> ${correctAnswer}<br><span style="color: #721c24;">✗ Presque ! Vérifiez votre réponse.</span>`;
+                answer.style.borderLeftColor = '#f5c6cb';
+                answer.style.backgroundColor = '#f8d7da';
+                answer.style.color = '#721c24';
+            }
+            
+            answer.classList.add('show');
+        }
+    </script>
+</body>
+</html>
