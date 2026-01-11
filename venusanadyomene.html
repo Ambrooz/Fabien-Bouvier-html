@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyse Linéaire : Vénus Anadyomène - Rimbaud</title>
+    <style>
+        :root {
+            --primary-blue: #1e3a8a;
+            --secondary-blue: #3b82f6;
+            --accent-teal: #10b981;
+            --dark-teal: #065f46;
+            --light-teal: #ecfdf5;
+            --purple: #8b5cf6;
+            --dark-purple: #6d28d9;
+            --pink: #ec4899;
+            --dark-pink: #be185d;
+            --orange: #f97316;
+            --dark-orange: #c2410c;
+            --light-bg: #f8f9fa;
+            --text-dark: #2d2d2d;
+            --text-light: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.8;
+            color: var(--text-dark);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 25px 20px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #eef2ff 100%);
+        }
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--purple));
+            color: white;
+            padding: 2.8rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 2.8rem;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: "🌊";
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+        h1, h2, h3 { margin: 1.5em 0 0.8em; }
+        .section-title {
+            color: var(--dark-teal);
+            border-bottom: 3px solid var(--accent-teal);
+            padding-bottom: 0.5em;
+            font-size: 1.9em;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .poem-container {
+            background: linear-gradient(to right, #ffffff, #fefce8);
+            padding: 2.2rem;
+            border-left: 6px solid var(--accent-teal);
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+            margin: 2rem 0;
+            font-style: italic;
+            font-size: 1.1em;
+            border-top: 1px solid #e5e7eb;
+            border-right: 1px solid #e5e7eb;
+        }
+        .poem-line {
+            margin: 0.5rem 0;
+            transition: all 0.3s ease;
+        }
+        .poem-line:hover {
+            background-color: rgba(16, 185, 129, 0.1);
+            padding-left: 10px;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        th, td {
+            border: 1px solid #d1d5db;
+            padding: 1rem 1.2rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background: linear-gradient(to right, var(--light-teal), #d1fae5);
+            color: var(--dark-teal);
+            font-weight: 700;
+            font-size: 1.05em;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+        tr:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        .highlight {
+            background: linear-gradient(135deg, var(--light-teal), #dbfbeb);
+            border-left: 5px solid var(--accent-teal);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        .conclusion {
+            background: linear-gradient(135deg, var(--primary-blue), var(--dark-purple));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 3rem;
+            box-shadow: 0 8px 20px rgba(30, 58, 138, 0.3);
+        }
+        .tag {
+            background: linear-gradient(to right, var(--accent-teal), var(--purple));
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.9em;
+            margin-right: 0.5rem;
+            display: inline-block;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .sub-title {
+            color: var(--primary-blue);
+            border-left: 5px solid var(--secondary-blue);
+            padding-left: 1rem;
+            margin: 2rem 0 1.2rem;
+            font-size: 1.3em;
+            background: linear-gradient(to right, rgba(59, 130, 246, 0.1), transparent);
+            padding-top: 0.5rem;
+            padding-bottom: 0.5rem;
+            border-radius: 0 6px 6px 0;
+        }
+        .intro-analyse {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 5px solid var(--secondary-blue);
+            padding: 1.5rem;
+            margin: 1.5rem 0 2rem;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.1em;
+            box-shadow: 0 3px 8px rgba(59, 130, 246, 0.1);
+        }
+        .interpretation {
+            background: linear-gradient(135deg, #fdf2f8, #fce7f3);
+            border-left: 5px solid var(--pink);
+            padding: 1.5rem;
+            margin: 1.8rem 0;
+            border-radius: 0 8px 8px 0;
+            font-size: 1.05em;
+        }
+        .grammar-points {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 5px solid var(--orange);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(251, 191, 36, 0.2);
+        }
+        .big-ideas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2.5rem 0;
+        }
+        .idea-card {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border-top: 5px solid;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .idea-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .idea-card:nth-child(1) { border-color: var(--primary-blue); }
+        .idea-card:nth-child(2) { border-color: var(--accent-teal); }
+        .idea-card:nth-child(3) { border-color: var(--purple); }
+        .idea-card:nth-child(4) { border-color: var(--pink); }
+        .idea-card h4 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        .idea-card h4:before {
+            content: "✨";
+            margin-right: 10px;
+            font-size: 1.3rem;
+        }
+        .timing-indicator {
+            background: linear-gradient(to right, var(--accent-teal), var(--purple));
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            margin: 0.5rem 0 1.5rem;
+            font-size: 0.9em;
+        }
+        .key-term {
+            background: rgba(139, 92, 246, 0.15);
+            color: var(--dark-purple);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+            header { padding: 2rem 1rem; }
+            .big-ideas { grid-template-columns: 1fr; }
+            table { font-size: 0.9em; }
+            th, td { padding: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌊 Vénus Anadyomène (1870)</h1>
+    <p>Arthur Rimbaud • Cahiers de Douai • Parcours : Émancipations créatrices</p>
+    <p>Analyse linéaire détaillée pour l'oral du Bac de français 2026</p>
+    <div class="timing-indicator">Durée estimée : 12-15 minutes</div>
+</header>
+
+<section class="poem-container">
+    <h2>📜 Le Texte intégral</h2>
+    <div class="poem-line">Comme d'un cercueil vert en fer-blanc, une tête</div>
+    <div class="poem-line">De femme à cheveux bruns fortement pommadés</div>
+    <div class="poem-line">D'une vieille baignoire émerge, lente et bête,</div>
+    <div class="poem-line">Avec des déficits assez mal ravaudés ;</div><br>
+    
+    <div class="poem-line">Puis le col gras et gris, les larges omoplates</div>
+    <div class="poem-line">Qui saillent ; le dos court qui rentre et qui ressort ;</div>
+    <div class="poem-line">Puis les rondeurs des reins semblent prendre l'essor ;</div>
+    <div class="poem-line">La graisse sous la peau paraît en feuilles plates ;</div><br>
+    
+    <div class="poem-line">L'échine est un peu rouge, et le tout sent un goût</div>
+    <div class="poem-line">Horrible étrangement ; on remarque surtout</div>
+    <div class="poem-line">Des singularités qu'il faut voir à la loupe…</div><br>
+    
+    <div class="poem-line">Les reins portent deux mots gravés : <em>Clara Venus</em> ;</div>
+    <div class="poem-line">Et tout ce corps remue et tend sa large croupe</div>
+    <div class="poem-line">Belle hideusement d'un ulcère à l'anus.</div>
+</section>
+
+<section>
+    <h2 class="section-title">📚 Introduction</h2>
+    <p>En 1870, à seulement seize ans, Rimbaud compose ce sonnet virulent, extrait des <em>Cahiers de Douai</em>. Il détourne avec une ironie mordante le mythe classique de <strong>Vénus Anadyomène</strong> (Vénus sortant des eaux), célébré par Botticelli ou Ingres, pour en proposer une version grotesque, crue et moderne. Ce poème constitue un manifeste esthétique de la provocation juvénile.</p>
+    
+    <p><strong>Contexte historique :</strong> Écrit pendant la guerre franco-prussienne, ce poème reflète le rejet de Rimbaud envers une société bourgeoise qu'il juge hypocrite et décadente. Le choix de la Vénus, symbole traditionnel de beauté et d'amour, comme cible de sa subversion, est particulièrement significatif.</p>
+    
+    <p><strong>Problématique :</strong> Comment Rimbaud utilise-t-il la forme classique du sonnet pour subvertir les canons de la beauté idéale et libérer une nouvelle esthétique de la laideur et du réel trivial, annonçant ainsi la modernité poétique ?</p>
+    
+    <div class="highlight">
+        <strong>Plan détaillé :</strong>
+        <ul>
+            <li><strong>I. Une naissance grotesque et parodique</strong> (1er quatrain) : détournement immédiat du mythe</li>
+            <li><strong>II. Une dissection clinique et répugnante du corps</strong> (2e quatrain + 1er tercet) : regard médical et sensoriel</li>
+            <li><strong>III. La pointe finale : l'oxymore de la beauté abjecte</strong> (dernier tercet) : triomphe de la provocation</li>
+        </ul>
+        <p><strong>Objectif :</strong> Montrer comment Rimbaud opère une triple subversion : mythologique, esthétique et linguistique.</p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">💡 Grandes Idées Directrices</h2>
+    <div class="big-ideas">
+        <div class="idea-card">
+            <h4>1. La subversion du mythe</h4>
+            <p>Rimbaud détourne délibérément le mythe classique de Vénus pour en faire une anti-naissance, remplaçant l'écume marine par une baignoire sordide et la déesse de beauté par un corps vieilli et dégradé.</p>
+        </div>
+        <div class="idea-card">
+            <h4>2. L'esthétique de la laideur</h4>
+            <p>Le poète développe une véritable poétique du repoussant, explorant systématiquement les registres du grotesque, du médical et du scatologique pour défier les conventions esthétiques.</p>
+        </div>
+        <div class="idea-card">
+            <h4>3. La libération du langage</h4>
+            <p>Rimbaud s'affranchit des taboux linguistiques en utilisant un vocabulaire cru, technique et trivial, créant ainsi un nouveau registre poétique qui annonce la modernité.</p>
+        </div>
+        <div class="idea-card">
+            <h4>4. Le regard clinique</h4>
+            <p>Le poème adopte une perspective quasi-scientifique de dissection, fragmentant le corps en parties déshumanisées et appliquant un lexique médical à une scène traditionnellement érotique.</p>
+        </div>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">🎨 I. Une naissance grotesque et parodique</h2>
+    <h3 class="sub-title">Le cadre sordide remplace l'océan mythique</h3>
+    
+    <div class="intro-analyse">
+        <p>Dès le premier quatrain, Rimbaud opère un renversement brutal du mythe traditionnel de Vénus. Nous allons examiner comment, à travers une comparaison choquante et un vocabulaire délibérément trivial, le poète remplace la naissance divine dans l'écume marine par une émergence sordide dans une baignoire, posant ainsi les bases d'une esthétique nouvelle fondée sur la laideur et le grotesque. Cette <span class="key-term">anti-création</span> programme toute la subversion du poème.</p>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Procédé</th>
+            <th>Vers / Citation</th>
+            <th>Analyse</th>
+            <th>Effet produit</th>
+        </tr>
+        <tr>
+            <td><span class="key-term">Comparaison macabre</span></td>
+            <td>v.1 : « Comme d'un cercueil vert en fer-blanc »</td>
+            <td>La baignoire rouillée assimilée à un cercueil transforme la naissance en mort. Le fer-blanc évoque la pauvreté, l'industrialisation.</td>
+            <td>Renversement immédiat de l'horizon d'attente mythologique. Crée un climat funèbre et désacralisant.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Adjectifs dégradants</span></td>
+            <td>v.3 : « lente et bête »</td>
+            <td>Animalisation et attribution de stupidité à la figure féminine. Contraste avec la grâce attendue d'une déesse.</td>
+            <td>Supprime toute transcendance divine. Réduit le sujet à un état infra-humain.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Lexique trivial / réaliste</span></td>
+            <td>v.2 : « cheveux bruns fortement pommadés »</td>
+            <td>La pommade évoque un artifice grossier, une saleté accumulée, un soin de pauvre.</td>
+            <td>Évoque une prostituée misérable plutôt qu'une déesse. Ancrage dans la réalité sociale basse.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Métaphore économique</span></td>
+            <td>v.4 : « déficits assez mal ravaudés »</td>
+            <td>Le corps présenté comme une entité économique déficitaire, « ravaudée » comme un vieux vêtement.</td>
+            <td>Déshumanisation totale. Le corps devient objet de réparation approximative.</td>
+        </tr>
+    </table>
+    
+    <div class="interpretation">
+        <strong>Interprétation approfondie :</strong> 
+        <p>Ce premier quatrain fonctionne comme un <span class="key-term">contre-mythe</span> fondateur. Rimbaud ne se contente pas de critiquer l'idéalisation classique ; il l'enterre littéralement dans un « cercueil vert en fer-blanc ». La couleur verte, traditionnellement associée à l'espérance et à la nature, devient ici signe de pourriture et d'oxydation. Cette Vénus n'est pas née de l'écume mais d'un objet domestique usé, soulignant ainsi la désacralisation du corps féminin dans la société moderne.</p>
+        <p>L'expression « lente et bête » participe d'une <span class="key-term">dé-divinisation</span> radicale : non seulement la grâce est absente, mais l'émergence elle-même est caractérisée par une lourdeur physique et intellectuelle. Rimbaud inverse ici le topos de la nymphe légère et aérienne pour lui substituer une présence pesante et stupide.</p>
+    </div>
+    
+    <div class="grammar-points">
+        <h4>🔍 Points de grammaire caractéristiques de ce passage</h4>
+        
+        <p><strong>1. La comparaison introductive « Comme d'un... »</strong> : Cette construction syntaxique place d'emblée le poème sous le signe de l'analogie, mais une analogie dégradante. La comparaison, figure traditionnelle de l'éloge, est ici détournée pour créer un effet de choc. La préposition « de » indique l'origine mais une origine funèbre (« cercueil ») plutôt que divine.</p>
+        
+        <p><strong>2. L'accumulation d'adjectifs dépréciatifs</strong> : On note une concentration d'adjectifs à valeur péjorative (« vieille », « lente », « bête », « mal ravaudés ») qui s'accumulent pour créer un effet de saturation négative. La place des adjectifs (parfois après le nom : « cheveux bruns », parfois avant : « vieille baignoire ») crée une variété rythmique qui contraste avec l'uniformité du jugement dépréciatif.</p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">🎨 II. Une dissection clinique et répugnante du corps</h2>
+    
+    <h3 class="sub-title">A. Le corps décomposé pièce par pièce (2e quatrain)</h3>
+    
+    <div class="intro-analyse">
+        <p>Le deuxième quatrain poursuit la déconstruction du corps féminin. Rimbaud adopte ici une perspective clinique et fragmentaire qui rappelle une dissection médicale. Nous allons analyser comment, à travers un lexique anatomique précis et des effets sonores calculés, le poète transforme le corps en un assemblage de parties disgracieuses, éliminant toute sensualité ou harmonie. Ce regard <span class="key-term">mécaniste</span> et <span class="key-term">fragmentaire</span> constitue une violence faite à l'unité corporelle traditionnelle.</p>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Procédé</th>
+            <th>Vers / Citation</th>
+            <th>Analyse</th>
+            <th>Effet produit</th>
+        </tr>
+        <tr>
+            <td><span class="key-term">Allitération en [g] / [r]</span></td>
+            <td>v.5 : « col gras et gris »</td>
+            <td>Sons gras, lourds, visqueux qui imitent phonétiquement la matière décrite. La répétition du [g] évoque un gargouillement.</td>
+            <td>Sensation physique de répulsion renforcée par la matérialité sonore des mots.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Lexique anatomique / médical</span></td>
+            <td>v.5-6 : « larges omoplates qui saillent », « dos court »</td>
+            <td>Termes précis d'anatomie appliqués avec objectivité clinique. « Saillent » suggère une difformité.</td>
+            <td>Corps réduit à une carcasse disgracieuse, objet d'étude scientifique plutôt que de désir.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Métaphore dégradante</span></td>
+            <td>v.8 : « graisse [...] en feuilles plates »</td>
+            <td>Comparaison de la graisse sous-cutanée avec des feuilles plates, matière inerte et sans vie.</td>
+            <td>Perte totale de sensualité et de vie. Le corps devient matière première, presque végétale.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Vision cinétique</span></td>
+            <td>v.6-7 : « qui rentre et qui ressort », « semblent prendre l'essor »</td>
+            <td>Mouvements contradictoires et grotesques. L'essor, terme normalement noble, est ironiquement appliqué aux « rondeurs des reins ».</td>
+            <td>Création d'une dynamique absurde, renforçant l'aspect grotesque de la scène.</td>
+        </tr>
+    </table>
+
+    <h3 class="sub-title">B. L'entrée en scène des autres sens (1er tercet)</h3>
+    
+    <div class="intro-analyse">
+        <p>Dans ce premier tercet, Rimbaud intensifie l'expérience sensorielle en passant du visuel à l'olfactif et même au gustatif. Nous allons montrer comment cette multiplication des sensations contribue à créer une impression de dégoût total, tandis que les points de suspension créent un suspense malsain avant la révélation finale. Cette <span class="key-term">synesthésie négative</span> marque l'apogée de l'exploration sensorielle répugnante.</p>
+    </div>
+    
+    <div class="interpretation">
+        <p><strong>Interprétation approfondie :</strong> Le tercet opère un <span class="key-term">changement de focalisation sensorielle</span> crucial. Après la dissection visuelle, Rimbaud mobilise l'odorat (« sent ») et même le goût (« goût horrible ») dans une confusion sensorielle délibérée. L'adverbe « étrangement » souligne l'étrangeté de cette perception olfactive-gustative, comme si le corps émettait une substance palpable dans l'air.</p>
+        <p>La mention de la « loupe » (v.11) pousse à l'extrême le regard clinique : il ne s'agit plus seulement d'observer, mais d'examiner avec un outil d'optique qui grossit les défauts. Les points de suspension créent une <span class="key-term">suspension énonciative</span> qui laisse le lecteur dans l'attente angoissante de révélations encore pires. Rimbaud suggère ainsi que les « singularités » sont si repoussantes qu'elles nécessitent un examen minutieux mais sont peut-être indicibles.</p>
+        <p>L'expression « L'échine est un peu rouge » maintient le ton clinique tout en introduisant une nuance de souffrance physique (irritation, inflammation) qui prépare la révélation finale de l'ulcère.</p>
+    </div>
+    
+    <div class="grammar-points">
+        <h4>🔍 Points de grammaire caractéristiques de ce passage</h4>
+        
+        <p><strong>1. L'asyndète et la parataxe</strong> : Les vers 5-8 présentent une succession de notations sans connecteurs logiques forts (« Puis... », « Puis... »), créant un effet d'accumulation et de morcellement. Cette construction paratactique reflète la fragmentation du corps en parties disjointes, chaque élément étant présenté comme une pièce détachée sans relation organique avec les autres.</p>
+        
+        <p><strong>2. L'expression « le tout sent un goût »</strong> : Construction syntaxique remarquable qui confond deux sens différents (odorat et goût). Cette synesthésie grammaticale crée une confusion sensorielle qui renforce l'impression de malaise. L'emploi de « goût » après « sent » (normalement « sentir une odeur ») produit un effet de dissonance linguistique qui correspond à la dissonance sensorielle décrite.</p>
+    </div>
+</section>
+
+<section>
+    <h2 class="section-title">🎨 III. La pointe finale : l'oxymore de la beauté abjecte</h2>
+    <h3 class="sub-title">Le triomphe ironique de l'abjection</h3>
+    
+    <div class="intro-analyse">
+        <p>Le dernier tercet constitue le point culminant du sonnet où toutes les tensions s'exacerbent. Nous allons analyser comment Rimbaud, à travers un jeu d'oppositions et une insistance sur les détails les plus crus, parvient à formuler un oxymore définitif qui renverse complètement les canons esthétiques traditionnels et affirme une nouvelle conception de la beauté. Cette <span class="key-term">pointe</span> finale résume tout le projet subversif du poème.</p>
+    </div>
+    
+    <table>
+        <tr>
+            <th>Procédé</th>
+            <th>Vers / Citation</th>
+            <th>Analyse</th>
+            <th>Effet produit</th>
+        </tr>
+        <tr>
+            <td><span class="key-term">Ironie + inscription latine</span></td>
+            <td>v.12 : « Clara Venus »</td>
+            <td>« Vénus Claire » tatouée sur un corps immonde. Le latin, langue des humanités, est détourné.</td>
+            <td>Moquerie cinglante des idéaux classiques. L'écart entre le nom et la réalité crée un effet satirique violent.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Oxymore final</span></td>
+            <td>v.14 : « Belle hideusement »</td>
+            <td>Union de contraires qui définit une nouvelle beauté : la beauté dans l'horreur même.</td>
+            <td>Définition même du projet rimbaldien : création d'une esthétique qui intègre le repoussant.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Chute scatologique brutale</span></td>
+            <td>v.14 : « ulcère à l'anus »</td>
+            <td>Mot cru, médical, désignant une zone taboue. L'ulcère suggère infection, pourriture.</td>
+            <td>Explosion finale, choc maximal. Franchissement ultime du tabou linguistique et social.</td>
+        </tr>
+        <tr>
+            <td><span class="key-term">Mouvement contradictoire</span></td>
+            <td>v.13 : « remue et tend sa large croupe »</td>
+            <td>Geste simultané d'agitation et d'offrande érotique, mais dégradé par le contexte.</td>
+            <td>Parodie de séduction, dernier avatar de la Vénus devenue prostituée obscène.</td>
+        </tr>
+    </table>
+    
+    <div class="interpretation">
+        <strong>Interprétation approfondie :</strong> 
+        <p>Le tatouage « Clara Venus » constitue le <span class="key-term">point de bascule ironique</span> maximal. Cette inscription fonctionne comme une étiquette ironique sur un produit avarié. Le latin, langue de la culture savante et de la liturgie, est ici profané, appliqué à la chair abîmée comme un dernier sarcasme. Rimbaud souligne ainsi l'écart entre les représentations culturelles idéalisées et la réalité triviale des corps.</p>
+        <p>L'oxymore « Belle hideusement » est l'<span class="key-term">aboutissement théorique</span> du poème. Il ne s'agit pas simplement de dire la laideur, mais de postuler que la beauté peut naître de sa représentation même. Rimbaud annonce ici ce que Baudelaire avait esquissé dans « Une Charogne » : une esthétique qui intègre la décomposition et l'abjection comme matériau poétique légitime.</p>
+        <p>La chute ultime sur « ulcère à l'anus » accomplit la <span class="key-term">transgression totale</span>. En désignant explicitement cette zone taboue et en l'associant à une maladie, Rimbaud brise tous les interdits sociaux et linguistiques. Cette crudité calculée vise moins à provoquer pour provoquer qu'à élargir radicalement le champ de l'exprimable poétique. Le corps, jusque dans ses fonctions et pathologies les plus honteuses, devient sujet de poésie.</p>
+    </div>
+    
+    <div class="grammar-points">
+        <h4>🔍 Points de grammaire caractéristiques de ce passage</h4>
+        
+        <p><strong>1. L'antéposition de l'adverbe « hideusement »</strong> : Dans l'expression « Belle hideusement », l'adverbe est placé entre l'adjectif et le complément, une construction inhabituelle qui attire l'attention sur l'oxymore. Normalement, on attendrait « hideusement belle » ou « belle d'une manière hideuse ». Cette dislocation syntaxique reflète la dislocation esthétique opérée par Rimbaud.</p>
+        
+        <p><strong>2. La structure binaire asymétrique du dernier vers</strong> : Le vers se divise en deux parties inégales : « Belle hideusement » (3 syllabes) / « d'un ulcère à l'anus » (9 syllabes). Cette disproportion met en relief la chute scatologique, qui occupe l'essentiel du vers. La préposition « d'un » introduit l'origine de cette « beauté », créant un lien causal pervers entre la maladie et l'effet esthétique.</p>
+    </div>
+</section>
+
+<section class="conclusion">
+    <h2>✅ Conclusion & Ouverture</h2>
+    <p><strong>Bilan :</strong> Par la forme parfaite du sonnet, Rimbaud enferme volontairement une vision répugnante : le contraste renforce la violence du propos. Ce poème de jeunesse annonce déjà le Rimbaud de <em>Une Saison en enfer</em> : « Je est un autre », et surtout la volonté de « changer la vie » en brisant les conventions esthétiques. Rimbaud accomplit une triple émancipation : <span class="key-term">émancipation du sujet poétique</span> (qui peut être laid), <span class="key-term">émancipation du langage</span> (qui peut dire l'indicible), et <span class="key-term">émancipation de la forme</span> (le sonnet classique contraint une matière scandaleuse).</p>
+    
+    <p><strong>Ouverture :</strong> On peut mettre en regard ce contre-blason avec « Une Charogne » de Baudelaire (esthétique de la laideur comme voie d'accès à une vérité poétique) ou avec les toiles réalistes/naturalistes de Courbet (refus de l'idéalisation). Plus largement, ce poème préfigure les avant-gardes du XXe siècle (Dada, le surréalisme) qui feront de la provocation et de la transgression des principes esthétiques fondateurs. Enfin, on peut lier cette Vénus dégradée à la figure de la « Muse venale » que Rimbaud évoquera dans d'autres poèmes, interrogeant le statut de l'art et de l'artiste dans la société moderne.</p>
+    
+    <div class="highlight" style="background: rgba(255,255,255,0.2); border-left: 5px solid #fbbf24;">
+        <strong>Pour aller plus loin à l'oral :</strong>
+        <ul>
+            <li>Comparaison avec « Vénus sortant des eaux » d'Ingres (peinture néo-classique, 1808-1848)</li>
+            <li>Évolution de la figure de Vénus dans la poésie française (de Ronsard à Baudelaire)</li>
+            <li>Lien avec la théorie des « Voyant » que Rimbaud développera dans la « Lettre du voyant » (1871)</li>
+        </ul>
+    </div>
+</section>
+
+</body>
+</html>
