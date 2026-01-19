@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🇫🇷 Les Marques Françaises</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .texte-principal {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 20px 0;
+            line-height: 1.8;
+            font-size: 1.05em;
+        }
+
+        .dialogue {
+            background: #fff9e6;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #ffd700;
+        }
+
+        .dialogue-line {
+            margin: 15px 0;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .dialogue-line strong {
+            color: #764ba2;
+            font-size: 1.1em;
+        }
+
+        .lexique {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .lexique-item {
+            margin: 10px 0;
+            padding: 8px;
+        }
+
+        .lexique-item strong {
+            color: #2e7d32;
+        }
+
+        .grammar-box {
+            background: #f3e5f5;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border: 2px solid #764ba2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .exercice {
+            background: #fff3e0;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 25px 0;
+            border-left: 5px solid #ff9800;
+        }
+
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+        }
+
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            margin: 10px 5px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+
+        .reponse {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 10px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .reponse.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .correct {
+            color: #4caf50;
+            font-weight: bold;
+        }
+
+        .incorrect {
+            color: #f44336;
+            font-weight: bold;
+        }
+
+        .exemple {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        .attention {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #f44336;
+        }
+
+        .brand-emoji {
+            font-size: 1.5em;
+            margin-right: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2em;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+            }
+            
+            button {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇫🇷 Les Marques Françaises</h1>
+        <p class="subtitle">Texte, Dialogue, Grammaire & Exercices - Niveau A2</p>
+
+        <h2>📖 Texte : Une Journée Shopping à Paris</h2>
+        <div class="texte-principal">
+            <p>Samedi dernier, Emma et Lucas ont passé la journée à faire du shopping à Paris. Le matin, ils sont allés dans une pharmacie pour acheter des produits <strong>Le Petit Marseillais</strong>. Emma pense que ces gels douche sont meilleurs que les autres marques parce qu'ils sentent bon et ils sont naturels. Lucas dit qu'il préfère le savon au miel de lavande.</p>
+            
+            <p>Ensuite, ils ont visité la parfumerie <strong>Fragonard</strong> près de l'Opéra. Le vendeur leur a expliqué que cette maison de parfums existe depuis 1926. Emma a senti plus de dix parfums différents ! Elle a choisi "Fleur d'Oranger" parce qu'elle trouve que c'est le plus élégant. Lucas pense qu'elle a fait un bon choix.</p>
+            
+            <p>À midi, ils ont déjeuné dans un café. Emma a commandé un yaourt <strong>Danone</strong> avec son repas. Elle dit que les yaourts français sont aussi bons que les yaourts de son pays, mais moins sucrés. Lucas a bu un verre de <strong>Ricard</strong> comme apéritif. Il explique que c'est une boisson traditionnelle française à l'anis, mais il trouve qu'elle est un peu forte.</p>
+            
+            <p>L'après-midi, ils sont entrés dans une papeterie pour acheter des stylos <strong>BIC</strong>. Le vendeur a raconté que cette marque française est célèbre dans le monde entier. Emma pense que ces stylos sont meilleurs marché que les autres et aussi efficaces. Elle a acheté un paquet de dix stylos pour l'université.</p>
+            
+            <p>Le soir, Emma était fatiguée mais contente. Elle dit qu'elle a découvert beaucoup de marques françaises intéressantes. Lucas pense que ces produits représentent bien le mode de vie français : la qualité, la tradition et l'élégance.</p>
+        </div>
+
+        <h3>📚 Lexique</h3>
+        <div class="lexique">
+            <div class="lexique-item"><strong>Un gel douche :</strong> produit liquide pour se laver</div>
+            <div class="lexique-item"><strong>Sentir bon :</strong> avoir une bonne odeur</div>
+            <div class="lexique-item"><strong>Une maison de parfums :</strong> entreprise qui fabrique des parfums</div>
+            <div class="lexique-item"><strong>Exister depuis :</strong> être présent depuis une date</div>
+            <div class="lexique-item"><strong>Faire un choix :</strong> choisir, prendre une décision</div>
+            <div class="lexique-item"><strong>Un apéritif :</strong> boisson avant le repas</div>
+            <div class="lexique-item"><strong>L'anis :</strong> plante au goût de réglisse</div>
+            <div class="lexique-item"><strong>Fort(e) :</strong> qui a beaucoup de goût ou d'alcool</div>
+            <div class="lexique-item"><strong>Meilleur marché :</strong> moins cher</div>
+            <div class="lexique-item"><strong>Efficace :</strong> qui fonctionne bien</div>
+            <div class="lexique-item"><strong>Célèbre :</strong> connu, fameux</div>
+            <div class="lexique-item"><strong>Représenter :</strong> symboliser, montrer</div>
+        </div>
+
+        <h3>❓ Questions sur le texte</h3>
+        <div class="exercice">
+            <div class="question">
+                <strong>1.</strong> Pourquoi Emma pense que les produits Le Petit Marseillais sont bons ?
+                <button onclick="toggleReponse('rep1')">Voir la réponse</button>
+                <div class="reponse" id="rep1">
+                    <strong>Réponse :</strong> Emma pense qu'ils sont bons parce qu'ils sentent bon et ils sont naturels.
+                </div>
+            </div>
+            <div class="question">
+                <strong>2.</strong> Depuis quand la parfumerie Fragonard existe ?
+                <button onclick="toggleReponse('rep2')">Voir la réponse</button>
+                <div class="reponse" id="rep2">
+                    <strong>Réponse :</strong> La parfumerie Fragonard existe depuis 1926.
+                </div>
+            </div>
+            <div class="question">
+                <strong>3.</strong> Qu'est-ce qu'Emma dit sur les yaourts français ?
+                <button onclick="toggleReponse('rep3')">Voir la réponse</button>
+                <div class="reponse" id="rep3">
+                    <strong>Réponse :</strong> Elle dit que les yaourts français sont aussi bons que les yaourts de son pays, mais moins sucrés.
+                </div>
+            </div>
+            <div class="question">
+                <strong>4.</strong> Pourquoi Emma a acheté des stylos BIC ?
+                <button onclick="toggleReponse('rep4')">Voir la réponse</button>
+                <div class="reponse" id="rep4">
+                    <strong>Réponse :</strong> Elle les a achetés parce qu'ils sont meilleurs marché que les autres et aussi efficaces.
+                </div>
+            </div>
+        </div>
+
+        <h2>💬 Dialogue : Dans une Parfumerie</h2>
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <strong>Le vendeur :</strong> Bonjour ! Je peux vous aider ?
+            </div>
+            <div class="dialogue-line">
+                <strong>Sophie :</strong> Oui, bonjour. Je cherche un parfum pour offrir à ma mère. Je pense qu'elle aime les parfums floraux.
+            </div>
+            <div class="dialogue-line">
+                <strong>Le vendeur :</strong> Parfait ! Je vous recommande notre collection "Belle de Grasse". Ce sont des parfums que nous fabriquons ici, à Grasse. Je pense que votre mère va adorer !
+            </div>
+            <div class="dialogue-line">
+                <strong>Sophie :</strong> C'est intéressant ! Mon amie dit que les parfums de Grasse sont les meilleurs du monde. C'est vrai ?
+            </div>
+            <div class="dialogue-line">
+                <strong>Le vendeur :</strong> Grasse est la capitale mondiale du parfum ! Beaucoup de gens pensent que nos parfums sont plus authentiques que les parfums industriels. Sentez celui-ci : c'est notre "Rose de Mai".
+            </div>
+            <div class="dialogue-line">
+                <strong>Sophie :</strong> Mmm, c'est magnifique ! Il sent aussi bon que le parfum que ma grand-mère utilisait. Mais je trouve qu'il est un peu fort pour ma mère.
+            </div>
+            <div class="dialogue-line">
+                <strong>Le vendeur :</strong> Dans ce cas, essayez "Fleur d'Oranger". C'est plus doux. Les clientes disent que c'est le parfum le plus élégant de notre collection.
+            </div>
+            <div class="dialogue-line">
+                <strong>Sophie :</strong> Oh oui ! Je pense que c'est parfait. Il est moins fort que l'autre, mais aussi raffiné. Je le prends !
+            </div>
+            <div class="dialogue-line">
+                <strong>Le vendeur :</strong> Excellent choix ! Je suis sûr que votre mère va dire que c'est le meilleur cadeau qu'elle a reçu !
+            </div>
+        </div>
+
+        <h2>📝 Grammaire 1 : QUI et QUE (pronoms relatifs)</h2>
+        <div class="grammar-box">
+            <p><strong>QUI</strong> et <strong>QUE</strong> permettent de relier deux phrases et d'éviter les répétitions.</p>
+            
+            <h3>🔹 QUI (sujet du verbe)</h3>
+            <p>On utilise <strong>QUI</strong> quand il remplace le sujet du verbe qui suit.</p>
+            <div class="exemple">
+                <p>• J'achète un parfum. Ce parfum sent bon.</p>
+                <p>→ J'achète un parfum <strong>qui</strong> sent bon.</p>
+                <br>
+                <p>• Emma connaît une marque. Cette marque est française.</p>
+                <p>→ Emma connaît une marque <strong>qui</strong> est française.</p>
+            </div>
+
+            <h3>🔹 QUE (objet du verbe)</h3>
+            <p>On utilise <strong>QUE</strong> quand il remplace l'objet (COD) du verbe qui suit.</p>
+            <div class="exemple">
+                <p>• Le parfum est magnifique. J'ai acheté ce parfum.</p>
+                <p>→ Le parfum <strong>que</strong> j'ai acheté est magnifique.</p>
+                <br>
+                <p>• Les produits sont naturels. Emma aime ces produits.</p>
+                <p>→ Les produits <strong>qu'</strong>Emma aime sont naturels.</p>
+            </div>
+
+            <div class="attention">
+                <p><strong>⚠️ Attention !</strong></p>
+                <p>• QUI + VERBE : Le stylo <strong>qui</strong> écrit bien</p>
+                <p>• QUE + SUJET + VERBE : Le stylo <strong>que</strong> j'achète</p>
+                <p>• QUE devient QU' devant une voyelle : qu'il, qu'elle, qu'on</p>
+            </div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 1 : Complétez avec QUI ou QUE (QU')</h3>
+            <div class="question">
+                <strong>1.</strong> C'est un parfum _____ sent très bon.
+                <input type="text" id="ex1q1" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>2.</strong> Le gel douche _____ j'utilise est naturel.
+                <input type="text" id="ex1q2" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>3.</strong> Les stylos _____ elle a achetés sont bleus.
+                <input type="text" id="ex1q3" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>4.</strong> La marque _____ est la plus célèbre est française.
+                <input type="text" id="ex1q4" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>5.</strong> Le yaourt _____ Lucas préfère est à la vanille.
+                <input type="text" id="ex1q5" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>6.</strong> C'est une boisson _____ on boit avant le repas.
+                <input type="text" id="ex1q6" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>7.</strong> Les produits _____ ils vendent sont de qualité.
+                <input type="text" id="ex1q7" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>8.</strong> Le parfum _____ tu m'as offert est magnifique.
+                <input type="text" id="ex1q8" placeholder="Écrivez votre réponse">
+            </div>
+            <button onclick="verifierExercice1()">Vérifier mes réponses</button>
+            <button onclick="montrerReponses1()">Voir les réponses</button>
+            <div class="reponse" id="rep-ex1">
+                <strong>Réponses correctes :</strong><br>
+                1. qui | 2. que (qu') | 3. qu' | 4. qui | 5. que | 6. qu' | 7. qu' | 8. que
+            </div>
+        </div>
+
+        <h2>📝 Grammaire 2 : JE PENSE QUE... / IL DIT QUE...</h2>
+        <div class="grammar-box">
+            <p>Pour exprimer une opinion ou rapporter les paroles de quelqu'un, on utilise <strong>QUE</strong> après certains verbes.</p>
+            
+            <h3>🔹 Verbes d'opinion :</h3>
+            <table>
+                <tr>
+                    <th>Verbe</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td>penser que</td>
+                    <td>Je <strong>pense que</strong> ce parfum est cher.</td>
+                </tr>
+                <tr>
+                    <td>croire que</td>
+                    <td>Elle <strong>croit que</strong> c'est une bonne marque.</td>
+                </tr>
+                <tr>
+                    <td>trouver que</td>
+                    <td>Nous <strong>trouvons que</strong> les produits sont naturels.</td>
+                </tr>
+            </table>
+
+            <h3>🔹 Verbes de parole :</h3>
+            <table>
+                <tr>
+                    <th>Verbe</th>
+                    <th>Exemple</th>
+                </tr>
+                <tr>
+                    <td>dire que</td>
+                    <td>Il <strong>dit que</strong> les stylos BIC sont efficaces.</td>
+                </tr>
+                <tr>
+                    <td>expliquer que</td>
+                    <td>Le vendeur <strong>explique que</strong> c'est une tradition.</td>
+                </tr>
+                <tr>
+                    <td>raconter que</td>
+                    <td>Elle <strong>raconte que</strong> la marque existe depuis 1926.</td>
+                </tr>
+            </table>
+
+            <div class="attention">
+                <p><strong>⚠️ Attention à l'élision !</strong></p>
+                <p>QUE devient QU' devant une voyelle :</p>
+                <p>• Je pense <strong>qu'il</strong> est bon.</p>
+                <p>• Elle dit <strong>qu'elle</strong> aime ce produit.</p>
+            </div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 2 : Complétez avec le bon verbe (penser, dire, trouver, croire, expliquer)</h3>
+            <div class="question">
+                <strong>1.</strong> Emma _____ que les produits Le Petit Marseillais sont naturels.
+                <input type="text" id="ex2q1" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>2.</strong> Le vendeur _____ que cette maison de parfums existe depuis 1926.
+                <input type="text" id="ex2q2" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>3.</strong> Lucas _____ que le Ricard est un peu fort.
+                <input type="text" id="ex2q3" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>4.</strong> Je _____ que les stylos BIC sont les meilleurs.
+                <input type="text" id="ex2q4" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>5.</strong> Sophie _____ que sa mère va adorer ce cadeau.
+                <input type="text" id="ex2q5" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>6.</strong> Les clientes _____ que c'est le parfum le plus élégant.
+                <input type="text" id="ex2q6" placeholder="Écrivez votre réponse">
+            </div>
+            <button onclick="verifierExercice2()">Vérifier mes réponses</button>
+            <button onclick="montrerReponses2()">Voir les réponses</button>
+            <div class="reponse" id="rep-ex2">
+                <strong>Réponses possibles :</strong><br>
+                1. pense / trouve / dit | 2. explique / dit | 3. trouve / dit / pense | 4. pense / trouve / crois | 5. pense / croit / dit | 6. disent / pensent / trouvent
+            </div>
+        </div>
+
+        <h2>📝 Grammaire 3 : Les Comparatifs (plus, moins, aussi, autant)</h2>
+        <div class="grammar-box">
+            <h3>🔹 Comparatif avec les adjectifs :</h3>
+            <table>
+                <tr>
+                    <th>Supériorité</th>
+                    <th>Égalité</th>
+                    <th>Infériorité</th>
+                </tr>
+                <tr>
+                    <td><strong>plus</strong> + adjectif + <strong>que</strong></td>
+                    <td><strong>aussi</strong> + adjectif + <strong>que</strong></td>
+                    <td><strong>moins</strong> + adjectif + <strong>que</strong></td>
+                </tr>
+                <tr>
+                    <td>Ce parfum est <strong>plus cher que</strong> l'autre.</td>
+                    <td>Il est <strong>aussi bon que</strong> celui-là.</td>
+                    <td>Il est <strong>moins fort que</strong> le premier.</td>
+                </tr>
+            </table>
+
+            <h3>🔹 Comparatif avec les verbes :</h3>
+            <table>
+                <tr>
+                    <th>Supériorité</th>
+                    <th>Égalité</th>
+                    <th>Infériorité</th>
+                </tr>
+                <tr>
+                    <td>verbe + <strong>plus que</strong></td>
+                    <td>verbe + <strong>autant que</strong></td>
+                    <td>verbe + <strong>moins que</strong></td>
+                </tr>
+                <tr>
+                    <td>Elle travaille <strong>plus que</strong> moi.</td>
+                    <td>Il dort <strong>autant que</strong> toi.</td>
+                    <td>Je mange <strong>moins que</strong> lui.</td>
+                </tr>
+            </table>
+
+            <h3>🔹 Comparatif avec les noms :</h3>
+            <table>
+                <tr>
+                    <th>Supériorité</th>
+                    <th>Égalité</th>
+                    <th>Infériorité</th>
+                </tr>
+                <tr>
+                    <td><strong>plus de</strong> + nom + <strong>que</strong></td>
+                    <td><strong>autant de</strong> + nom + <strong>que</strong></td>
+                    <td><strong>moins de</strong> + nom + <strong>que</strong></td>
+                </tr>
+                <tr>
+                    <td>J'ai <strong>plus de stylos que</strong> toi.</td>
+                    <td>Il a <strong>autant d'argent que</strong> moi.</td>
+                    <td>Elle a <strong>moins de temps que</strong> lui.</td>
+                </tr>
+            </table>
+
+            <div class="attention">
+                <p><strong>⚠️ Attention aux comparatifs irréguliers !</strong></p>
+                <table>
+                    <tr>
+                        <th>Adjectif</th>
+                        <th>Comparatif</th>
+                        <th>Exemple</th>
+                    </tr>
+                    <tr>
+                        <td>bon → </td>
+                        <td><strong>meilleur</strong></td>
+                        <td>Ce parfum est <strong>meilleur que</strong> l'autre.</td>
+                    </tr>
+                    <tr>
+                        <td>bien → </td>
+                        <td><strong>mieux</strong></td>
+                        <td>Elle travaille <strong>mieux que</strong> moi.</td>
+                    </tr>
+                    <tr>
+                        <td>mauvais → </td>
+                        <td><strong>pire</strong> (ou plus mauvais)</td>
+                        <td>C'est <strong>pire que</strong> hier.</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="exemple">
+                <p><strong>Exemples avec les marques :</strong></p>
+                <p>• Les produits Le Petit Marseillais sont <strong>plus naturels que</strong> les autres.</p>
+                <p>• Les yaourts français sont <strong>aussi bons que</strong> les yaourts italiens.</p>
+                <p>• Les stylos BIC sont <strong>moins chers que</strong> les stylos de luxe.</p>
+                <p>• Emma a acheté <strong>plus de parfums que</strong> Lucas.</p>
+                <p>• Ce gel douche sent <strong>aussi bon que</strong> celui de ma grand-mère.</p>
+                <p>• Les parfums de Grasse sont <strong>meilleurs que</strong> les parfums industriels.</p>
+            </div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 3 : Complétez avec plus, moins, aussi, autant (de)</h3>
+            <div class="question">
+                <strong>1.</strong> Ce parfum est _____ cher que l'autre. (supériorité)
+                <input type="text" id="ex3q1" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>2.</strong> Les yaourts Danone sont _____ bons que les yaourts grecs. (égalité)
+                <input type="text" id="ex3q2" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>3.</strong> Emma a _____ argent que Lucas. (infériorité)
+                <input type="text" id="ex3q3" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>4.</strong> Les stylos BIC coûtent _____ que les autres marques. (infériorité)
+                <input type="text" id="ex3q4" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>5.</strong> J'ai _____ parfums que toi. (égalité avec nom)
+                <input type="text" id="ex3q5" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>6.</strong> Ce gel douche sent _____ bon que celui-là. (égalité)
+                <input type="text" id="ex3q6" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>7.</strong> Il y a _____ clients aujourd'hui qu'hier. (supériorité avec nom)
+                <input type="text" id="ex3q7" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>8.</strong> Elle travaille _____ que son frère. (supériorité avec verbe)
+                <input type="text" id="ex3q8" placeholder="Écrivez votre réponse">
+            </div>
+            <button onclick="verifierExercice3()">Vérifier mes réponses</button>
+            <button onclick="montrerReponses3()">Voir les réponses</button>
+            <div class="reponse" id="rep-ex3">
+                <strong>Réponses correctes :</strong><br>
+                1. plus | 2. aussi | 3. moins d' | 4. moins | 5. autant de | 6. aussi | 7. plus de | 8. plus
+            </div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 4 : Complétez avec MEILLEUR(E)(S) ou MIEUX</h3>
+            <div class="question">
+                <strong>1.</strong> Ce parfum est _____ que l'autre.
+                <input type="text" id="ex4q1" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>2.</strong> Emma parle français _____ que Lucas.
+                <input type="text" id="ex4q2" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>3.</strong> Les produits naturels sont _____ pour la santé.
+                <input type="text" id="ex4q3" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>4.</strong> Je me sens _____ aujourd'hui qu'hier.
+                <input type="text" id="ex4q4" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>5.</strong> Les parfums de Grasse sont les _____ du monde.
+                <input type="text" id="ex4q5" placeholder="Écrivez votre réponse">
+            </div>
+            <div class="question">
+                <strong>6.</strong> Ce stylo écrit _____ que celui-là.
+                <input type="text" id="ex4q6" placeholder="Écrivez votre réponse">
+            </div>
+            <button onclick="verifierExercice4()">Vérifier mes réponses</button>
+            <button onclick="montrerReponses4()">Voir les réponses</button>
+            <div class="reponse" id="rep-ex4">
+                <strong>Réponses correctes :</strong><br>
+                1. meilleur | 2. mieux | 3. meilleurs | 4. mieux | 5. meilleurs | 6. mieux
+            </div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 5 : Faites des phrases complètes avec les éléments donnés</h3>
+            <p><em>Utilisez QUI/QUE et les comparatifs</em></p>
+            <div class="question">
+                <strong>1.</strong> Le Petit Marseillais / marque / je / préférer / être / naturel / les autres
+                <input type="text" id="ex5q1" placeholder="Écrivez votre phrase complète">
+            </div>
+            <div class="question">
+                <strong>2.</strong> Emma / penser / le parfum / elle / acheter / sentir / bon / l'autre
+                <input type="text" id="ex5q2" placeholder="Écrivez votre phrase complète">
+            </div>
+            <div class="question">
+                <strong>3.</strong> Les stylos BIC / être / les stylos / coûter / cher
+                <input type="text" id="ex5q3" placeholder="Écrivez votre phrase complète">
+            </div>
+            <button onclick="montrerReponses5()">Voir des exemples de réponses</button>
+            <div class="reponse" id="rep-ex5">
+                <strong>Exemples de réponses possibles :</strong><br>
+                1. Le Petit Marseillais est la marque que je préfère parce qu'elle est plus naturelle que les autres.<br>
+                2. Emma pense que le parfum qu'elle a acheté sent aussi bon que l'autre.<br>
+                3. Les stylos BIC sont les stylos qui coûtent moins cher. / Les stylos BIC sont les stylos qui coûtent le moins cher.
+            </div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 6 : Expression écrite</h3>
+            <p><strong>Sujet :</strong> Écrivez un petit texte (80-100 mots) sur vos marques préférées.</p>
+            <p>Utilisez :</p>
+            <ul style="margin: 15px 0 15px 30px;">
+                <li>QUI et QUE (au moins 2 fois)</li>
+                <li>Je pense que... / Je trouve que... (au moins 2 fois)</li>
+                <li>Des comparatifs : plus...que, moins...que, aussi...que, meilleur, mieux (au moins 3 fois)</li>
+            </ul>
+            <textarea id="expression" rows="8" style="width: 100%; padding: 15px; border: 2px solid #667eea; border-radius: 10px; font-size: 1em; font-family: inherit; margin: 15px 0;"></textarea>
+            <button onclick="montrerExemple()">Voir un exemple</button>
+            <div class="reponse" id="rep-exemple">
+                <strong>Exemple de production :</strong><br><br>
+                "J'adore les marques françaises qui sont élégantes et de qualité. Ma marque préférée est L'Occitane parce que je pense que leurs produits sont meilleurs que les produits industriels. J'utilise une crème que j'ai achetée à Grasse et je trouve qu'elle sent aussi bon qu'un parfum. Les cosmétiques français sont plus chers que les autres, mais ils sont aussi plus naturels. Je crois que la qualité est plus importante que le prix. Ma mère dit qu'elle préfère les marques traditionnelles parce qu'elles respectent mieux l'environnement."
+            </div>
+        </div>
+
+        <h2>🎯 Culture : Les Marques Françaises Célèbres</h2>
+        <div class="texte-principal">
+            <h3><span class="brand-emoji">🧼</span>Le Petit Marseillais</h3>
+            <p>Marque de cosmétiques et d'hygiène créée en 1980. Elle est connue pour ses gels douche aux parfums naturels et inspirés de la Provence (miel de lavande, fleur d'oranger, etc.).</p>
+            
+            <h3><span class="brand-emoji">🥛</span>Danone</h3>
+            <p>Entreprise française fondée en 1919 par Isaac Carasso. Elle est devenue un leader mondial des produits laitiers. Le nom vient du surnom de son fils : "Danon" en catalan.</p>
+            
+            <h3><span class="brand-emoji">🌸</span>Fragonard</h3>
+            <p>Maison de parfums fondée en 1926 à Grasse, capitale mondiale du parfum. Elle porte le nom du peintre Jean-Honoré Fragonard. On peut visiter leurs usines et musées à Grasse.</p>
+            
+            <h3><span class="brand-emoji">🖊️</span>BIC</h3>
+            <p>Créée en 1945 par Marcel Bich. BIC est célèbre pour avoir démocratisé le stylo à bille. La marque produit aussi des rasoirs et des briquets. Le nom "BIC" vient du nom du fondateur sans le "h".</p>
+            
+            <h3><span class="brand-emoji">🍷</span>Ricard</h3>
+            <p>Boisson anisée créée en 1932 par Paul Ricard à Marseille. C'est l'apéritif le plus populaire en France. On le boit dilué avec de l'eau froide (il devient blanc).</p>
+        </div>
+
+    </div>
+
+    <script>
+        function toggleReponse(id) {
+            const element = document.getElementById(id);
+            element.classList.toggle('show');
+        }
+
+        function montrerReponses1() {
+            document.getElementById('rep-ex1').classList.add('show');
+        }
+
+        function montrerReponses2() {
+            document.getElementById('rep-ex2').classList.add('show');
+        }
+
+        function montrerReponses3() {
+            document.getElementById('rep-ex3').classList.add('show');
+        }
+
+        function montrerReponses4() {
+            document.getElementById('rep-ex4').classList.add('show');
+        }
+
+        function montrerReponses5() {
+            document.getElementById('rep-ex5').classList.add('show');
+        }
+
+        function montrerExemple() {
+            document.getElementById('rep-exemple').classList.add('show');
+        }
+
+        function normalizeAnswer(answer) {
+            return answer.toLowerCase().trim().replace(/[.,;]/g, '').replace(/\s+/g, ' ');
+        }
+
+        function verifierExercice1() {
+            const reponses = {
+                'ex1q1': 'qui',
+                'ex1q2': ['que', "qu'"],
+                'ex1q3': ["qu'", 'que'],
+                'ex1q4': 'qui',
+                'ex1q5': ['que', "qu'"],
+                'ex1q6': ["qu'", 'que'],
+                'ex1q7': ["qu'", 'que'],
+                'ex1q8': ['que', "qu'"]
+            };
+
+            let score = 0;
+            for (let id in reponses) {
+                const input = document.getElementById(id);
+                const userAnswer = normalizeAnswer(input.value);
+                const correctAnswers = Array.isArray(reponses[id]) ? reponses[id] : [reponses[id]];
+                
+                if (correctAnswers.some(ans => normalizeAnswer(ans) === userAnswer)) {
+                    input.style.backgroundColor = '#c8e6c9';
+                    input.style.borderColor = '#4caf50';
+                    score++;
+                } else {
+                    input.style.backgroundColor = '#ffcdd2';
+                    input.style.borderColor = '#f44336';
+                }
+            }
+            alert(`Votre score : ${score}/8`);
+        }
+
+        function verifierExercice2() {
+            const reponsesAcceptees = {
+                'ex2q1': ['pense', 'trouve', 'dit', 'croit'],
+                'ex2q2': ['explique', 'dit'],
+                'ex2q3': ['trouve', 'dit', 'pense'],
+                'ex2q4': ['pense', 'trouve', 'crois'],
+                'ex2q5': ['pense', 'croit', 'dit'],
+                'ex2q6': ['disent', 'pensent', 'trouvent']
+            };
+
+            let score = 0;
+            for (let id in reponsesAcceptees) {
+                const input = document.getElementById(id);
+                const userAnswer = normalizeAnswer(input.value);
+                
+                if (reponsesAcceptees[id].some(ans => normalizeAnswer(ans) === userAnswer)) {
+                    input.style.backgroundColor = '#c8e6c9';
+                    input.style.borderColor = '#4caf50';
+                    score++;
+                } else {
+                    input.style.backgroundColor = '#ffcdd2';
+                    input.style.borderColor = '#f44336';
+                }
+            }
+            alert(`Votre score : ${score}/6`);
+        }
+
+        function verifierExercice3() {
+            const reponses = {
+                'ex3q1': 'plus',
+                'ex3q2': 'aussi',
+                'ex3q3': ["moins d'", "moins d", 'moins'],
+                'ex3q4': 'moins',
+                'ex3q5': ['autant de', 'autant d', "autant d'"],
+                'ex3q6': 'aussi',
+                'ex3q7': ['plus de', 'plus d', "plus d'"],
+                'ex3q8': 'plus'
+            };
+
+            let score = 0;
+            for (let id in reponses) {
+                const input = document.getElementById(id);
+                const userAnswer = normalizeAnswer(input.value);
+                const correctAnswers = Array.isArray(reponses[id]) ? reponses[id] : [reponses[id]];
+                
+                if (correctAnswers.some(ans => normalizeAnswer(ans) === userAnswer)) {
+                    input.style.backgroundColor = '#c8e6c9';
+                    input.style.borderColor = '#4caf50';
+                    score++;
+                } else {
+                    input.style.backgroundColor = '#ffcdd2';
+                    input.style.borderColor = '#f44336';
+                }
+            }
+            alert(`Votre score : ${score}/8`);
+        }
+
+        function verifierExercice4() {
+            const reponses = {
+                'ex4q1': ['meilleur', 'meilleure'],
+                'ex4q2': 'mieux',
+                'ex4q3': ['meilleurs', 'meilleur', 'meilleures', 'meilleure'],
+                'ex4q4': 'mieux',
+                'ex4q5': ['meilleurs', 'meilleures'],
+                'ex4q6': 'mieux'
+            };
+
+            let score = 0;
+            for (let id in reponses) {
+                const input = document.getElementById(id);
+                const userAnswer = normalizeAnswer(input.value);
+                const correctAnswers = Array.isArray(reponses[id]) ? reponses[id] : [reponses[id]];
+                
+                if (correctAnswers.some(ans => normalizeAnswer(ans) === userAnswer)) {
+                    input.style.backgroundColor = '#c8e6c9';
+                    input.style.borderColor = '#4caf50';
+                    score++;
+                } else {
+                    input.style.backgroundColor = '#ffcdd2';
+                    input.style.borderColor = '#f44336';
+                }
+            }
+            alert(`Votre score : ${score}/6`);
+        }
+    </script>
+</body>
+</html>
