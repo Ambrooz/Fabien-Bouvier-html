@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercice DELF B1 : À la gare - Rater son train</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-top: 0;
+        }
+        
+        h2 {
+            color: #2980b9;
+            margin-top: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        
+        h3 {
+            color: #16a085;
+            margin-top: 25px;
+        }
+        
+        .dialogue {
+            background-color: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .character {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .vocab-box {
+            background-color: #e8f4fc;
+            border: 2px dashed #3498db;
+            padding: 20px;
+            margin: 25px 0;
+            border-radius: 8px;
+        }
+        
+        .vocab-item {
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dotted #bdc3c7;
+        }
+        
+        .vocab-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .exercise {
+            background-color: #fff8e1;
+            border: 2px solid #f1c40f;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .grammar-review {
+            background-color: #e8f5e9;
+            border: 2px solid #4caf50;
+            padding: 25px;
+            margin: 30px 0;
+            border-radius: 8px;
+        }
+        
+        .grammar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        .grammar-table th, .grammar-table td {
+            border: 1px solid #81c784;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .grammar-table th {
+            background-color: #a5d6a7;
+            color: #2e7d32;
+        }
+        
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px 0;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .input-box:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .answer-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .answer-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        .hidden-answer {
+            background-color: #f1f8e9;
+            border: 1px solid #7cb342;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 6px;
+            display: none;
+        }
+        
+        .show {
+            display: block;
+        }
+        
+        .correct-answer {
+            color: #27ae60;
+            font-weight: bold;
+        }
+        
+        .tip {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        
+        .scenario {
+            background-color: #fff3e0;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+        
+        .role {
+            font-weight: bold;
+            color: #d35400;
+        }
+        
+        .constraint {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        
+        .section-title {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 40px 0 20px 0;
+        }
+        
+        .example-box {
+            background-color: #f3e5f5;
+            padding: 15px;
+            border-left: 4px solid #9c27b0;
+            margin: 15px 0;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .highlight {
+            background-color: #fff9c4;
+            padding: 3px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .grammar-table {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>DELF B1 - Exercice d'Expression Orale</h1>
+        <h2>Scénario B : À la gare - Tu as raté ton train</h2>
+        
+        <div class="scenario">
+            <p><span class="role">Ton rôle :</span> Tu as raté ton train pour Lyon. Tu dois résoudre cette situation à la gare.</p>
+            <p><span class="constraint">Contraintes :</span></p>
+            <ol>
+                <li>Comprendre pourquoi tu as raté le train</li>
+                <li>Trouver une solution alternative</li>
+                <li>Obtenir un remboursement ou un échange</li>
+                <li>Prévenir quelqu'un de ton retard</li>
+            </ol>
+            <p><span class="role">Mon rôle :</span> Je suis l'agent à la gare.</p>
+        </div>
+        
+        <div class="section-title">PARTIE 1 : DIALOGUE TYPE</div>
+        
+        <div class="dialogue">
+            <div class="character">CLIENT (Toi) :</div>
+            <p>Bonjour, excusez-moi de vous déranger. J'ai raté mon train pour Lyon qui devait partir à 14h30.</p>
+            
+            <div class="character">AGENT (Moi) :</div>
+            <p>Bonjour. Je suis désolé d'entendre ça. Pouvez-vous me montrer votre billet, s'il vous plaît?</p>
+            
+            <div class="character">CLIENT :</div>
+            <p>Oui, bien sûr, le voici. Je ne comprends pas ce qui s'est passé, je pensais être à l'heure.</p>
+            
+            <div class="character">AGENT :</div>
+            <p>Votre billet indique bien le train de 14h30. Il est maintenant 14h45. Malheureusement, le train est parti à l'heure.</p>
+            
+            <div class="character">CLIENT :</div>
+            <p>Oh non... <span class="highlight">Est-ce qu'il y aurait</span> une autre possibilité? Un autre train pour Lyon aujourd'hui?</p>
+            
+            <div class="character">AGENT :</div>
+            <p>Oui, il y a un train à 16h15 et un autre à 18h40. Mais ce sont des trains différents, vous devrez peut-être payer un supplément.</p>
+            
+            <div class="character">CLIENT :</div>
+            <p><span class="highlight">Pourriez-vous</span> m'expliquer comment ça fonctionne? <span class="highlight">Est-ce que je pourrais</span> échanger mon billet sans frais?</p>
+            
+            <div class="character">AGENT :</div>
+            <p>Normalement, avec ce type de billet, vous pouvez l'échanger une fois sans frais. Je vais vérifier.</p>
+            
+            <div class="character">CLIENT :</div>
+            <p>Merci beaucoup. Et si je prends le train de 16h15, à quelle heure <span class="highlight">arriverais-je</span> à Lyon?</p>
+            
+            <div class="character">AGENT :</div>
+            <p>Ce train arrive à 19h05. Vous avez un rendez-vous important?</p>
+            
+            <div class="character">CLIENT :</div>
+            <p>Oui, je dois rencontrer des amis pour dîner. Je vais devoir les prévenir de mon retard.</p>
+            
+            <div class="character">AGENT :</div>
+            <p>D'accord, je peux vous échanger votre billet pour le train de 16h15 sans frais. Vous avez de la chance!</p>
+            
+            <div class="character">CLIENT :</div>
+            <p>Parfait! Merci infiniment pour votre aide. Je vais attendre ici et prévenir mes amis.</p>
+        </div>
+        
+        <div class="section-title">PARTIE 2 : VOCABULAIRE ESSENTIEL</div>
+        
+        <div class="vocab-box">
+            <div class="vocab-item">
+                <strong>Rater un train</strong> : Manquer un train, ne pas être à l'heure pour prendre le train.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Un billet</strong> : Le ticket pour voyager en train.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Échanger un billet</strong> : Changer son billet pour une autre heure ou date.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Un remboursement</strong> : Récupérer son argent quand on ne peut pas voyager.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Un supplément</strong> : Un paiement additionnel.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Partir à l'heure</strong> : Départ ponctuel, sans retard.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Une solution alternative</strong> : Une autre possibilité, un plan B.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Prévenir quelqu'un</strong> : Informer quelqu'un d'une nouvelle, souvent d'un problème.
+            </div>
+            
+            <div class="vocab-item">
+                <strong>Un agent de gare</strong> : La personne qui travaille à la gare et qui peut aider.
+            </div>
+        </div>
+        
+        <div class="section-title">PARTIE 3 : EXERCICES D'EXPRESSION</div>
+        
+        <div class="exercise">
+            <h3>Exercice 1 : Formules de politesse</h3>
+            <p>Complète les phrases avec les expressions appropriées :</p>
+            
+            <p>1. Pour attirer l'attention de l'agent poliment :</p>
+            <input type="text" class="input-box" id="q1" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(1)">Voir la réponse</button>
+            <div class="hidden-answer" id="a1">
+                <p class="correct-answer">"Bonjour, excusez-moi de vous déranger."</p>
+                <p class="correct-answer">OU "Pardon, pourriez-vous m'aider s'il vous plaît?"</p>
+            </div>
+            
+            <p>2. Pour demander une explication :</p>
+            <input type="text" class="input-box" id="q2" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(2)">Voir la réponse</button>
+            <div class="hidden-answer" id="a2">
+                <p class="correct-answer">"Pourriez-vous m'expliquer comment ça fonctionne?"</p>
+                <p class="correct-answer">OU "Est-ce que vous pourriez me donner plus de détails?"</p>
+            </div>
+            
+            <p>3. Pour proposer une solution :</p>
+            <input type="text" class="input-box" id="q3" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(3)">Voir la réponse</button>
+            <div class="hidden-answer" id="a3">
+                <p class="correct-answer">"Est-ce qu'il y aurait une autre possibilité?"</p>
+                <p class="correct-answer">OU "Serait-il possible de...?"</p>
+            </div>
+            
+            <div class="tip">
+                <strong>Astuce :</strong> Utilisez le conditionnel ("pourriez-vous", "serait-il possible") pour être plus poli.
+            </div>
+        </div>
+        
+        <div class="exercise">
+            <h3>Exercice 2 : Réagir aux problèmes</h3>
+            <p>Imagine que l'agent te dit ces choses. Comment réagis-tu?</p>
+            
+            <p>1. L'agent dit : "Je suis désolé, mais votre billet n'est pas échangeable."</p>
+            <input type="text" class="input-box" id="q4" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(4)">Voir la réponse</button>
+            <div class="hidden-answer" id="a4">
+                <p class="correct-answer">"Je comprends, mais est-ce qu'il n'y a vraiment aucune exception? C'est un cas de force majeure."</p>
+                <p class="correct-answer">OU "Pourriez-vous vérifier avec un supérieur s'il vous plaît?"</p>
+            </div>
+            
+            <p>2. L'agent dit : "Le prochain train est complet, il n'y a plus de places."</p>
+            <input type="text" class="input-box" id="q5" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(5)">Voir la réponse</button>
+            <div class="hidden-answer" id="a5">
+                <p class="correct-answer">"Est-ce qu'il y a une liste d'attente? Ou un autre train plus tard?"</p>
+                <p class="correct-answer">OU "Et pour demain matin, y a-t-il des places disponibles?"</p>
+            </div>
+            
+            <p>3. L'agent dit : "Vous devez payer un supplément de 30 euros."</p>
+            <input type="text" class="input-box" id="q6" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(6)">Voir la réponse</button>
+            <div class="hidden-answer" id="a6">
+                <p class="correct-answer">"Je n'ai pas prévu ce budget supplémentaire. Y a-t-il une solution moins chère?"</p>
+                <p class="correct-answer">OU "Est-ce que vous pourriez faire un geste commercial s'il vous plaît?"</p>
+            </div>
+        </div>
+        
+        <div class="section-title">PARTIE 4 : RÉVISION GRAMMATICALE - LE CONDITIONNEL</div>
+        
+        <div class="grammar-review">
+            <h3>📚 RÉVISION RAPIDE : Le Conditionnel Présent</h3>
+            
+            <p>Le conditionnel s'utilise principalement pour :</p>
+            <ol>
+                <li><strong>La politesse</strong> : Demander quelque chose gentiment</li>
+                <li><strong>Exprimer un souhait</strong> : Ce que tu aimerais faire</li>
+                <li><strong>Donner un conseil</strong> : Ce que quelqu'un devrait faire</li>
+            </ol>
+            
+            <div class="example-box">
+                <p><strong>Exemples dans le dialogue :</strong></p>
+                <ul>
+                    <li>"<span class="highlight">Est-ce qu'il y aurait</span> une autre possibilité?" (politesse)</li>
+                    <li>"<span class="highlight">Pourriez-vous</span> m'expliquer..." (politesse)</li>
+                    <li>"À quelle heure <span class="highlight">arriverais-je</span> à Lyon?" (demande polie)</li>
+                </ul>
+            </div>
+            
+            <h4>Formation du conditionnel :</h4>
+            <p>Radical du futur + terminaisons de l'imparfait (-ais, -ais, -ait, -ions, -iez, -aient)</p>
+            
+            <table class="grammar-table">
+                <thead>
+                    <tr>
+                        <th>Verbe</th>
+                        <th>Radical futur</th>
+                        <th>Conditionnel (je)</th>
+                        <th>Conditionnel (vous)</th>
+                        <th>Utilisation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Pouvoir</td>
+                        <td>pourr-</td>
+                        <td>je pourrais</td>
+                        <td>vous pourriez</td>
+                        <td>Demander poliment</td>
+                    </tr>
+                    <tr>
+                        <td>Vouloir</td>
+                        <td>voudr-</td>
+                        <td>je voudrais</td>
+                        <td>vous voudriez</td>
+                        <td>Exprimer un souhait</td>
+                    </tr>
+                    <tr>
+                        <td>Devoir</td>
+                        <td>devr-</td>
+                        <td>je devrais</td>
+                        <td>vous devriez</td>
+                        <td>Donner un conseil</td>
+                    </tr>
+                    <tr>
+                        <td>Avoir</td>
+                        <td>aur-</td>
+                        <td>j'aurais</td>
+                        <td>vous auriez</td>
+                        <td>Exprimer une possibilité</td>
+                    </tr>
+                    <tr>
+                        <td>Être</td>
+                        <td>ser-</td>
+                        <td>je serais</td>
+                        <td>vous seriez</td>
+                        <td>Exprimer une condition</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="tip">
+                <strong>Astuce pour le DELF :</strong> Utilise au moins 3-4 fois le conditionnel dans ton jeu de rôle pour montrer que tu maîtrises cette forme!
+            </div>
+        </div>
+        
+        <div class="exercise">
+            <h3>Exercice 3 : Pratique du Conditionnel</h3>
+            <p>Transforme ces phrases directes en phrases plus polies avec le conditionnel :</p>
+            
+            <p>1. "Vous m'expliquez le problème." →</p>
+            <input type="text" class="input-box" id="q7" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(7)">Voir la réponse</button>
+            <div class="hidden-answer" id="a7">
+                <p class="correct-answer">"<span class="highlight">Pourriez-vous</span> m'expliquer le problème?"</p>
+                <p class="correct-answer">OU "Est-ce que vous <span class="highlight">pourriez</span> m'expliquer le problème?"</p>
+            </div>
+            
+            <p>2. "Vous me donnez un autre billet." →</p>
+            <input type="text" class="input-box" id="q8" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(8)">Voir la réponse</button>
+            <div class="hidden-answer" id="a8">
+                <p class="correct-answer">"<span class="highlight">Pourriez-vous</span> me donner un autre billet?"</p>
+                <p class="correct-answer">OU "<span class="highlight">Serait-il</span> possible d'avoir un autre billet?"</p>
+            </div>
+            
+            <p>3. "Vous vérifiez s'il y a d'autres trains." →</p>
+            <input type="text" class="input-box" id="q9" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(9)">Voir la réponse</button>
+            <div class="hidden-answer" id="a9">
+                <p class="correct-answer">"<span class="highlight">Pourriez-vous</span> vérifier s'il y a d'autres trains?"</p>
+                <p class="correct-answer">OU "Est-ce que vous <span class="highlight">pourriez</span> vérifier s'il y a d'autres trains?"</p>
+            </div>
+            
+            <p>4. "J'ai besoin d'un remboursement." (exprime ton besoin plus poliment) →</p>
+            <input type="text" class="input-box" id="q10" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(10)">Voir la réponse</button>
+            <div class="hidden-answer" id="a10">
+                <p class="correct-answer">"<span class="highlight">J'aimerais</span> obtenir un remboursement."</p>
+                <p class="correct-answer">OU "<span class="highlight">Je voudrais</span> savoir si un remboursement est possible."</p>
+            </div>
+        </div>
+        
+        <div class="exercise">
+            <h3>Exercice 4 : Connecteurs logiques</h3>
+            <p>Complète les phrases avec les connecteurs appropriés : cependant, donc, par contre, d'abord, ensuite.</p>
+            
+            <p>1. "J'ai raté mon train pour Lyon. ________, j'ai besoin d'une solution alternative."</p>
+            <input type="text" class="input-box" id="q11" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(11)">Voir la réponse</button>
+            <div class="hidden-answer" id="a11">
+                <p class="correct-answer">"donc"</p>
+            </div>
+            
+            <p>2. "Je voudrais échanger mon billet. ________, j'aimerais savoir si c'est possible sans frais."</p>
+            <input type="text" class="input-box" id="q12" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(12)">Voir la réponse</button>
+            <div class="hidden-answer" id="a12">
+                <p class="correct-answer">"Ensuite"</p>
+                <p class="correct-answer">OU "Puis"</p>
+            </div>
+            
+            <p>3. "Ce train a un supplément de 20€. ________, l'autre option est gratuite."</p>
+            <input type="text" class="input-box" id="q13" placeholder="Écrivez votre réponse ici...">
+            <button class="answer-btn" onclick="showAnswer(13)">Voir la réponse</button>
+            <div class="hidden-answer" id="a13">
+                <p class="correct-answer">"Par contre"</p>
+                <p class="correct-answer">OU "Cependant"</p>
+            </div>
+        </div>
+        
+        <div class="section-title">PARTIE 5 : SIMULATION COMPLÈTE</div>
+        
+        <div class="exercise">
+            <h3>Exercice 5 : Préparation au jeu de rôle</h3>
+            <p>Maintenant, prépare-toi pour le jeu de rôle complet. Écris 4 questions que tu pourrais poser à l'agent :</p>
+            
+            <p>Question 1 (pour comprendre la situation - utilise le conditionnel) :</p>
+            <input type="text" class="input-box" id="q14" placeholder="Écrivez votre question ici...">
+            
+            <p>Question 2 (pour trouver une solution - utilise le conditionnel) :</p>
+            <input type="text" class="input-box" id="q15" placeholder="Écrivez votre question ici...">
+            
+            <p>Question 3 (pour négocier - utilise le conditionnel) :</p>
+            <input type="text" class="input-box" id="q16" placeholder="Écrivez votre question ici...">
+            
+            <p>Question 4 (pour confirmer) :</p>
+            <input type="text" class="input-box" id="q17" placeholder="Écrivez votre question ici...">
+            
+            <div class="tip">
+                <strong>Conseil pour l'examen :</strong> Prends 30 secondes avant de commencer pour noter mentalement tes objectifs (1. comprendre 2. solution 3. négocier 4. confirmer).
+            </div>
+            
+            <button class="answer-btn" onclick="showAllAnswers()" style="background-color: #16a085; margin-top: 20px;">
+                Voir des exemples de questions
+            </button>
+            
+            <div class="hidden-answer" id="a14">
+                <p><strong>Exemples de questions (avec conditionnel) :</strong></p>
+                <ol>
+                    <li>"<span class="highlight">Pourriez-vous</span> m'expliquer pourquoi j'ai raté le train exactement?"</li>
+                    <li>"<span class="highlight">Est-ce qu'il y aurait</span> d'autres trains pour Lyon aujourd'hui?"</li>
+                    <li>"<span class="highlight">Serait-il</span> possible d'échanger mon billet sans payer de supplément?"</li>
+                    <li>"<span class="highlight">Pourriez-vous</span> confirmer que mon nouveau billet est valable pour le train de 16h15?"</li>
+                </ol>
+            </div>
+        </div>
+        
+        <div class="tip" style="margin-top: 40px;">
+            <strong>Rappel des critères d'évaluation DELF B1 :</strong>
+            <ul>
+                <li>Capacité à interagir dans des situations courantes</li>
+                <li>Capacité à faire face à un problème imprévu</li>
+                <li>Utilisation de formules de politesse adaptées</li>
+                <li>Fluidité et cohérence du discours</li>
+                <li>Correction grammaticale acceptable (quelques erreurs sont permises)</li>
+            </ul>
+            
+            <p><strong>Objectif pour cet exercice :</strong> Utiliser le conditionnel au moins 4 fois pendant l'interaction!</p>
+        </div>
+    </div>
+
+    <script>
+        function showAnswer(questionNumber) {
+            const answerElement = document.getElementById('a' + questionNumber);
+            answerElement.classList.add('show');
+        }
+        
+        function showAllAnswers() {
+            const answerElement = document.getElementById('a14');
+            answerElement.classList.add('show');
+        }
+        
+        // Ajout d'une fonction pour valider les réponses tapées
+        document.querySelectorAll('.input-box').forEach(input => {
+            input.addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    // Trouver le bouton suivant et cliquer dessus
+                    const nextButton = this.nextElementSibling;
+                    if (nextButton && nextButton.classList.contains('answer-btn')) {
+                        nextButton.click();
+                    }
+                }
+            });
+        });
+        
+        // Surligner les exemples de conditionnel dans le dialogue au chargement
+        document.addEventListener('DOMContentLoaded', function() {
+            const conditionnelExamples = document.querySelectorAll('.highlight');
+            conditionnelExamples.forEach(el => {
+                el.style.transition = 'background-color 0.5s';
+                setTimeout(() => {
+                    el.style.backgroundColor = '#fff9c4';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+</html>
