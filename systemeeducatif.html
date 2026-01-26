@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon : Le système éducatif français</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        body {
+            background-color: #f9f7f4;
+            color: #333;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        header {
+            background: linear-gradient(135deg, #0055a4 0%, #ef4135 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        h1 {
+            margin: 0;
+            font-size: 2.2em;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        .subtitle {
+            font-style: italic;
+            margin-top: 10px;
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .nav-btn {
+            background-color: white;
+            color: #0055a4;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            background-color: #f0f7ff;
+            transform: translateY(-2px);
+        }
+        section {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border-left: 5px solid #0055a4;
+            display: none;
+        }
+        .active-section {
+            display: block;
+        }
+        h2 {
+            color: #0055a4;
+            border-bottom: 2px solid #ef4135;
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        .text-container {
+            background-color: #f5f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid #dde7ff;
+        }
+        .vocab-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed #ccc;
+        }
+        .vocab-term {
+            font-weight: bold;
+            color: #0055a4;
+            font-size: 1.1em;
+        }
+        .grammar-point {
+            background-color: #fff9e6;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffcc00;
+            margin: 20px 0;
+        }
+        .exercise {
+            background-color: #f0f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .question {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 8px;
+            border-left: 3px solid #4CAF50;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #0055a4;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0,85,164,0.3);
+        }
+        .answer {
+            background-color: #e8f5e8;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+            border-left: 4px solid #4CAF50;
+        }
+        .toggle-btn {
+            background-color: #0055a4;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        .toggle-btn:hover {
+            background-color: #003d7a;
+        }
+        .true-false {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 10px;
+            background-color: white;
+            border-radius: 8px;
+        }
+        .true-false input {
+            margin-right: 15px;
+            transform: scale(1.3);
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .icon {
+            margin-right: 10px;
+            font-size: 1.5em;
+            color: #ef4135;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+            color: #666;
+            font-size: 0.9em;
+        }
+        .note {
+            background-color: #fff0f0;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ef4135;
+            margin: 15px 0;
+            font-style: italic;
+        }
+        .highlight {
+            background-color: #ffffcc;
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+        .expression-box {
+            background-color: #f0f7ff;
+            border: 1px solid #cce0ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .expression {
+            font-weight: bold;
+            color: #0055a4;
+        }
+        .drag-drop {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            min-height: 100px;
+        }
+        .draggable {
+            background-color: #e6f2ff;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            display: inline-block;
+            cursor: move;
+            border: 1px solid #99ccff;
+        }
+        .drop-zone {
+            background-color: #f9f9f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin: 10px 0;
+            min-height: 50px;
+            border: 2px solid #ddd;
+        }
+        .progress-bar {
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background-color: #4CAF50;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .score-display {
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #0055a4;
+            margin: 15px 0;
+        }
+        .correction-btn {
+            background-color: #ef4135;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .correction-btn:hover {
+            background-color: #d32f2f;
+        }
+        .feedback {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            display: none;
+        }
+        .correct {
+            background-color: #d4edda;
+            border-left: 4px solid #28a745;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            border-left: 4px solid #dc3545;
+        }
+        .exercise-counter {
+            background-color: #0055a4;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Le système éducatif français</h1>
+        <div class="subtitle">Leçon complète avec exercices de grammaire et expressions françaises</div>
+        <div class="nav">
+            <button class="nav-btn" onclick="showSection('texte')">📚 Texte</button>
+            <button class="nav-btn" onclick="showSection('vocabulaire')">📖 Vocabulaire</button>
+            <button class="nav-btn" onclick="showSection('grammaire1')">✏️ Grammaire 1</button>
+            <button class="nav-btn" onclick="showSection('grammaire2')">✏️ Grammaire 2</button>
+            <button class="nav-btn" onclick="showSection('expressions')">💬 Expressions</button>
+            <button class="nav-btn" onclick="showSection('exercices')">📝 Exercices</button>
+        </div>
+    </header>
+    
+    <section id="texte" class="active-section">
+        <div class="section-title">
+            <div class="icon">📚</div>
+            <h2>Texte de référence</h2>
+        </div>
+        <div class="text-container">
+            <p><strong>Le système éducatif français</strong></p>
+            <p>Le système éducatif français, héritier de la tradition républicaine, repose sur des principes intangibles : gratuité, laïcité et obligation scolaire de 3 à 16 ans. Structuré en trois cycles – primaire (maternelle et élémentaire), collège et lycée – il conduit les élèves jusqu'au baccalauréat, diplôme créé par Napoléon en 1808. L'école maternelle, spécificité française dès 3 ans, favorise l'éveil et la socialisation, tandis que l'école élémentaire (CP au CM2) enseigne les fondamentaux. Au collège (de la 6e à la 3e), les élèves découvrent un système pluridisciplinaire avant d'aborder au lycée soit une filière générale (avec spécialités), soit technologique ou professionnelle.</p>
+            
+            <p>L'année scolaire, rythmée par cinq périodes de travail entrecoupées de vacances, privilégie un apprentissage progressif. Les établissements publics, majoritaires, appliquent un programme national tout en bénéficiant d'une autonomie pédagogique. L'évaluation continue et les examens nationaux (brevet, bac) jalonnent le parcours. Depuis 2019, la réforme du lycée a introduit des spécialités (maths, sciences humaines…) permettant aux élèves de personnaliser leur cursus. Parallèlement, la voie professionnelle (CAP, bac pro) et l'apprentissage offrent des alternatives concrètes vers l'emploi, avec 700 000 apprentis en 2023.</p>
+            
+            <p>Bien que performant (classé 5e mondial par PISA 2022), le système éducatif français doit relever plusieurs défis majeurs. Les inégalités sociales et territoriales persistent : un enfant de cadre a 4,5 fois plus de chances d'obtenir un bac général qu'un enfant d'ouvrier. Le taux d'échec en première année universitaire (60%) interroge sur l'orientation post-bac. Le numérique peine à s'implanter malgré le plan "1 élève, 1 tablette". Pourtant, des atouts subsistent : 85% de réussite au bac, un réseau de 250 000 enseignants, et des innovations comme les "cités éducatives" dans les quartiers défavorisés. La France maintient ainsi un équilibre entre tradition républicaine et adaptation aux enjeux contemporains, même si des progrès restent nécessaires pour réduire les fractures éducatives.</p>
+        </div>
+    </section>
+    
+    <section id="vocabulaire">
+        <div class="section-title">
+            <div class="icon">📖</div>
+            <h2>Vocabulaire</h2>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Intangibles</div>
+            <div>Qui ne peuvent être modifiés, remis en cause ; sacrés, inviolables.</div>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Laïcité</div>
+            <div>Principe de séparation de la société civile et de la société religieuse, l'État n'exerçant aucun pouvoir religieux et les Églises aucun pouvoir politique.</div>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Pluridisciplinaire</div>
+            <div>Qui concerne plusieurs disciplines, plusieurs matières d'enseignement.</div>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Filière</div>
+            <div>Voie de formation, parcours éducatif (général, technologique, professionnel).</div>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Cursus</div>
+            <div>Parcours éducatif, ensemble des études suivies par quelqu'un.</div>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Jalonner</div>
+            <div>Marquer les étapes d'un parcours, d'une progression.</div>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Atouts</div>
+            <div>Avantages, points forts.</div>
+        </div>
+        
+        <div class="vocab-item">
+            <div class="vocab-term">Fractures éducatives</div>
+            <div>Inégalités importantes dans l'accès à l'éducation ou dans la réussite scolaire.</div>
+        </div>
+        
+        <div class="note">
+            <strong>Note culturelle :</strong> En France, les classes sont numérotées à l'envers par rapport aux États-Unis. La "6e" correspond à la première année de collège (équivalent de la 6th grade), la "3e" à la dernière année de collège (équivalent de la 9th grade). Le "CP" (cours préparatoire) est la première année d'école élémentaire.
+        </div>
+    </section>
+    
+    <section id="grammaire1">
+        <div class="section-title">
+            <div class="icon">✏️</div>
+            <h2>Grammaire : L'expression de la concession</h2>
+            <span class="exercise-counter">Exercice 1</span>
+        </div>
+        
+        <div class="grammar-point">
+            <p><strong>Observation :</strong> Dans le texte, on trouve cette structure : <span class="highlight">"Bien que performant, le système éducatif français doit relever plusieurs défis majeurs."</span></p>
+            
+            <p><strong>Règle :</strong> La concession exprime une opposition entre deux faits. On utilise souvent :</p>
+            <ul>
+                <li><strong>Bien que / Quoique</strong> + subjonctif : <em>Bien qu'il soit performant, le système a des défis.</em></li>
+                <li><strong>Malgré / En dépit de</strong> + nom : <em>Malgré sa performance, le système a des défis.</em></li>
+                <li><strong>Même si</strong> + indicatif : <em>Même si le système est performant, il a des défis.</em></li>
+                <li><strong>Pour autant</strong> (en milieu de phrase) : <em>Le système est performant, il n'en a pas moins des défis pour autant.</em></li>
+            </ul>
+            
+            <p><strong>Remarque :</strong> Dans le texte, "bien que performant" est une construction elliptique où le verbe "être" est sous-entendu. La forme complète serait "bien qu'il soit performant".</p>
+            
+            <div class="exercise">
+                <h3>Exercice 1 : Transformez ces phrases en utilisant une expression de concession</h3>
+                
+                <div class="question">
+                    <p>1. Le système éducatif français est performant. Il a des défis à relever.</p>
+                    <input type="text" id="grammaire1-q1" placeholder="Votre phrase transformée...">
+                    <button class="toggle-btn" onclick="toggleAnswer('grammaire1-a1')">Voir la réponse</button>
+                    <div id="grammaire1-a1" class="answer">
+                        <strong>Plusieurs possibilités :</strong><br>
+                        - Bien qu'il soit performant, le système éducatif français a des défis à relever.<br>
+                        - Malgré sa performance, le système éducatif français a des défis à relever.<br>
+                        - Même s'il est performant, le système éducatif français a des défis à relever.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>2. Le baccalauréat existe depuis 1808. Il a subi de nombreuses réformes.</p>
+                    <input type="text" id="grammaire1-q2" placeholder="Votre phrase transformée...">
+                    <button class="toggle-btn" onclick="toggleAnswer('grammaire1-a2')">Voir la réponse</button>
+                    <div id="grammaire1-a2" class="answer">
+                        <strong>Exemples :</strong><br>
+                        - Bien qu'il existe depuis 1808, le baccalauréat a subi de nombreuses réformes.<br>
+                        - En dépit de son ancienneté (création en 1808), le baccalauréat a subi de nombreuses réformes.
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>3. La France a un bon système éducatif. Des inégalités persistent.</p>
+                    <input type="text" id="grammaire1-q3" placeholder="Votre phrase transformée...">
+                    <button class="toggle-btn" onclick="toggleAnswer('grammaire1-a3')">Voir la réponse</button>
+                    <div id="grammaire1-a3" class="answer">
+                        <strong>Exemples :</strong><br>
+                        - Quoique la France ait un bon système éducatif, des inégalités persistent.<br>
+                        - Même si la France a un bon système éducatif, des inégalités persistent.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="grammaire2">
+        <div class="section-title">
+            <div class="icon">✏️</div>
+            <h2>Grammaire : Les articulateurs logiques</h2>
+            <span class="exercise-counter">Exercice 2</span>
+        </div>
+        
+        <div class="grammar-point">
+            <p><strong>Observation :</strong> Dans le texte, on trouve plusieurs articulateurs logiques qui structurent le raisonnement : <span class="highlight">"tandis que", "parallèlement", "pourtant", "ainsi", "même si"</span>.</p>
+            
+            <p><strong>Règle :</strong> Les articulateurs logiques servent à relier les idées et à structurer un texte. Voici les principales catégories :</p>
+            
+            <div class="expression-box">
+                <p><span class="expression">Addition :</span> et, de plus, en outre, par ailleurs, également</p>
+                <p><span class="expression">Opposition :</span> mais, cependant, néanmoins, pourtant, en revanche, par contre</p>
+                <p><span class="expression">Cause :</span> car, parce que, puisque, étant donné que, en effet</p>
+                <p><span class="expression">Conséquence :</span> donc, ainsi, par conséquent, de ce fait, c'est pourquoi</p>
+                <p><span class="expression">But :</span> pour, afin de, dans le but de, de manière à</p>
+                <p><span class="expression">Temps :</span> alors que, tandis que, pendant que, lorsque</p>
+            </div>
+            
+            <div class="exercise">
+                <h3>Exercice 2 : Complétez les phrases avec l'articulateur logique approprié</h3>
+                
+                <div class="question">
+                    <p>1. L'école maternelle favorise l'éveil et la socialisation, __________ l'école élémentaire enseigne les fondamentaux.</p>
+                    <input type="text" id="grammaire2-q1" placeholder="Votre réponse...">
+                    <button class="toggle-btn" onclick="toggleAnswer('grammaire2-a1')">Voir la réponse</button>
+                    <div id="grammaire2-a1" class="answer">
+                        <strong>Réponse :</strong> tandis que
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>2. Le système éducatif français est performant, __________ il doit relever plusieurs défis majeurs.</p>
+                    <input type="text" id="grammaire2-q2" placeholder="Votre réponse...">
+                    <button class="toggle-btn" onclick="toggleAnswer('grammaire2-a2')">Voir la réponse</button>
+                    <div id="grammaire2-a2" class="answer">
+                        <strong>Réponse :</strong> cependant / néanmoins / pourtant
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>3. La France a un réseau de 250 000 enseignants, __________ elle maintient un équilibre entre tradition et adaptation.</p>
+                    <input type="text" id="grammaire2-q3" placeholder="Votre réponse...">
+                    <button class="toggle-btn" onclick="toggleAnswer('grammaire2-a3')">Voir la réponse</button>
+                    <div id="grammaire2-a3" class="answer">
+                        <strong>Réponse :</strong> ainsi / c'est pourquoi / par conséquent
+                    </div>
+                </div>
+                
+                <div class="question">
+                    <p>4. __________ le système éducatif français est classé 5e mondial, des progrès restent nécessaires.</p>
+                    <input type="text" id="grammaire2-q4" placeholder="Votre réponse...">
+                    <button class="toggle-btn" onclick="toggleAnswer('grammaire2-a4')">Voir la réponse</button>
+                    <div id="grammaire2-a4" class="answer">
+                        <strong>Réponse :</strong> Bien que / Même si / Quoique
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="expressions">
+        <div class="section-title">
+            <div class="icon">💬</div>
+            <h2>Expressions françaises liées à l'éducation</h2>
+            <span class="exercise-counter">Exercice 3</span>
+        </div>
+        
+        <div class="expression-box">
+            <p><span class="expression">Avoir la bosse des maths :</span> Être doué en mathématiques</p>
+            <p><span class="expression">Être fort en thème :</span> Être très bon en version latine ou grecque (par extension, être très érudit)</p>
+            <p><span class="expression">Passer avec mention :</span> Réussir un examen avec une distinction (mention bien, très bien)</p>
+            <p><span class="expression">Redoubler une classe :</span> Recommencer une année scolaire</p>
+            <p><span class="expression">Sauter une classe :</span> Passer directement à la classe supérieure</p>
+            <p><span class="expression">Être un cancre :</span> Être un mauvais élève</p>
+            <p><span class="expression">Bûcher ses examens :</span> Travailler intensivement pour préparer ses examens</p>
+            <p><span class="expression">Être à l'école de la vie :</span> Apprendre par l'expérience plutôt que par les études</p>
+            <p><span class="expression">Être un élève modèle :</span> Être un élève exemplaire</p>
+            <p><span class="expression">Avoir un bon dossier scolaire :</span> Avoir de bons résultats tout au long de sa scolarité</p>
+        </div>
+        
+        <div class="exercise">
+            <h3>Exercice 3 : Associez les expressions à leur définition</h3>
+            
+            <div class="question">
+                <p>1. "Il a __________, il est reçu à Polytechnique !"</p>
+                <input type="text" id="expressions-q1" placeholder="Quelle expression?">
+                <button class="toggle-btn" onclick="toggleAnswer('expressions-a1')">Voir la réponse</button>
+                <div id="expressions-a1" class="answer">
+                    <strong>Réponse :</strong> la bosse des maths
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>2. "Marie a __________ en terminale, elle n'avait que des félicitations."</p>
+                <input type="text" id="expressions-q2" placeholder="Quelle expression?">
+                <button class="toggle-btn" onclick="toggleAnswer('expressions-a2')">Voir la réponse</button>
+                <div id="expressions-a2" class="answer">
+                    <strong>Réponse :</strong> passé avec mention
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>3. "Pierre doit __________ sa cinquième, ses résultats sont insuffisants."</p>
+                <input type="text" id="expressions-q3" placeholder="Quelle expression?">
+                <button class="toggle-btn" onclick="toggleAnswer('expressions-a3')">Voir la réponse</button>
+                <div id="expressions-a3" class="answer">
+                    <strong>Réponse :</strong> redoubler
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>4. "Luc __________ pour le bac toute la semaine."</p>
+                <input type="text" id="expressions-q4" placeholder="Quelle expression?">
+                <button class="toggle-btn" onclick="toggleAnswer('expressions-a4')">Voir la réponse</button>
+                <div id="expressions-a4" class="answer">
+                    <strong>Réponse :</strong> bûche
+                </div>
+            </div>
+            
+            <div class="question">
+                <p>5. Créez une phrase originale avec l'expression "être à l'école de la vie" :</p>
+                <input type="text" id="expressions-q5" placeholder="Votre phrase...">
+                <button class="toggle-btn" onclick="toggleAnswer('expressions-a5')">Voir un exemple</button>
+                <div id="expressions-a5" class="answer">
+                    <strong>Exemple :</strong> "Après ses voyages autour du monde, il a vraiment été à l'école de la vie et en a tiré de précieuses leçons."
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="exercices">
+        <div class="section-title">
+            <div class="icon">📝</div>
+            <h2>Exercices de compréhension et rédaction</h2>
+            <span class="exercise-counter">Exercice 4</span>
+        </div>
+        
+        <div class="exercise">
+            <h3>Exercice 4 : Questions de compréhension</h3>
+            
+            <div class="question">
+                <p>1. Quel est l'âge de début de l'obligation scolaire en France ?</p>
+                <input type="text" id="comprehension-q1" placeholder="Votre réponse ici...">
+                <div id="feedback1" class="feedback"></div>
+            </div>
+            
+            <div class="question">
+                <p>2. Combien y avait-il d'apprentis en France en 2023 ?</p>
+                <input type="text" id="comprehension-q2" placeholder="Votre réponse ici...">
+                <div id="feedback2" class="feedback"></div>
+            </div>
+            
+            <div class="question">
+                <p>3. Quel pourcentage d'élèves obtiennent leur baccalauréat ?</p>
+                <input type="text" id="comprehension-q3" placeholder="Votre réponse ici...">
+                <div id="feedback3" class="feedback"></div>
+            </div>
+            
+            <div class="question">
+                <p>4. Quelle réforme a modifié l'organisation du lycée ?</p>
+                <input type="text" id="comprehension-q4" placeholder="Votre réponse ici...">
+                <div id="feedback4" class="feedback"></div>
+            </div>
+            
+            <h3>Vrai ou Faux ?</h3>
+            
+            <div class="true-false">
+                <input type="checkbox" id="tf1">
+                <label for="tf1">1. Le baccalauréat existe depuis la Révolution française.</label>
+                <div id="feedback5" class="feedback"></div>
+            </div>
+            
+            <div class="true-false">
+                <input type="checkbox" id="tf2">
+                <label for="tf2">2. Tous les établissements scolaires appliquent strictement le même programme.</label>
+                <div id="feedback6" class="feedback"></div>
+            </div>
+            
+            <div class="true-false">
+                <input type="checkbox" id="tf3">
+                <label for="tf3">3. L'école maternelle est obligatoire dès 2 ans.</label>
+                <div id="feedback7" class="feedback"></div>
+            </div>
+            
+            <div class="true-false">
+                <input type="checkbox" id="tf4">
+                <label for="tf4">4. La France est dans le top 5 des systèmes éducatifs mondiaux.</label>
+                <div id="feedback8" class="feedback"></div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            
+            <div class="score-display" id="scoreDisplay">Score : 0/8</div>
+            
+            <button class="correction-btn" onclick="checkAnswers()">Corriger mes réponses</button>
+        </div>
+        
+        <div class="exercise">
+            <h3>Exercice 5 : Rédaction (optionnel)</h3>
+            <p>Comparez un aspect du système éducatif français avec le système américain, en utilisant au moins deux articulateurs logiques et une expression de concession.</p>
+            <textarea id="redaction" placeholder="Votre texte de comparaison ici..." rows="6" style="width:100%; padding:10px; border-radius:5px; border:1px solid #ccc; margin-top:10px;"></textarea>
+            <button class="toggle-btn" onclick="toggleAnswer('redaction-exemple')">Voir un exemple</button>
+            <div id="redaction-exemple" class="answer">
+                <strong>Exemple :</strong><br>
+                "Alors que le système éducatif français est très centralisé avec un programme national unique, le système américain varie considérablement d'un État à l'autre. Bien que la France ait rendu l'école obligatoire dès 3 ans, mettant l'accent sur l'éducation précoce, aux États-Unis l'école commence généralement à 5-6 ans. Cependant, les deux systèmes doivent faire face à des défis similaires concernant les inégalités sociales. Par conséquent, malgré leurs différences structurelles, les deux pays cherchent à améliorer l'équité dans l'éducation."
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <p>Leçon créée spécialement pour une ancienne professeure de français vivant aux États-Unis</p>
+        <p>Basée sur le texte "Le système éducatif français" - Exercices de grammaire et expressions françaises</p>
+    </footer>
+
+    <script>
+        // Navigation entre les sections
+        function showSection(sectionId) {
+            // Masquer toutes les sections
+            document.querySelectorAll('section').forEach(section => {
+                section.classList.remove('active-section');
+            });
+            
+            // Afficher la section sélectionnée
+            document.getElementById(sectionId).classList.add('active-section');
+            
+            // Mettre à jour le style des boutons de navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.style.backgroundColor = 'white';
+                btn.style.color = '#0055a4';
+            });
+            
+            // Mettre en évidence le bouton actif (simplifié)
+            event.target.style.backgroundColor = '#f0f7ff';
+        }
+        
+        // Afficher/masquer les réponses
+        function toggleAnswer(answerId) {
+            const answerElement = document.getElementById(answerId);
+            if (answerElement.style.display === "block") {
+                answerElement.style.display = "none";
+            } else {
+                answerElement.style.display = "block";
+            }
+        }
+        
+        // Correction des exercices de compréhension
+        function checkAnswers() {
+            const correctAnswers = [
+                "3 ans",
+                "700 000",
+                "85%",
+                "La réforme du lycée de 2019",
+                false, // tf1
+                false, // tf2
+                false, // tf3
+                true   // tf4
+            ];
+            
+            let score = 0;
+            const totalQuestions = 8;
+            
+            // Questions 1-4
+            for (let i = 1; i <= 4; i++) {
+                const userAnswer = document.getElementById(`comprehension-q${i}`).value.trim().toLowerCase();
+                const correctAnswer = correctAnswers[i-1].toLowerCase();
+                const feedbackElement = document.getElementById(`feedback${i}`);
+                
+                if (userAnswer.includes(correctAnswer) || 
+                    (i === 4 && (userAnswer.includes("2019") || userAnswer.includes("réforme")))) {
+                    feedbackElement.textContent = "✓ Correct !";
+                    feedbackElement.className = "feedback correct";
+                    score++;
+                } else {
+                    feedbackElement.textContent = `✗ Incorrect. La réponse est : ${correctAnswers[i-1]}`;
+                    feedbackElement.className = "feedback incorrect";
+                }
+                feedbackElement.style.display = "block";
+            }
+            
+            // Questions Vrai/Faux
+            for (let i = 1; i <= 4; i++) {
+                const userAnswer = document.getElementById(`tf${i}`).checked;
+                const correctAnswer = correctAnswers[i+3];
+                const feedbackElement = document.getElementById(`feedback${i+4}`);
+                
+                if (userAnswer === correctAnswer) {
+                    feedbackElement.textContent = `✓ Correct ! C'est ${correctAnswer ? "vrai" : "faux"}.`;
+                    feedbackElement.className = "feedback correct";
+                    score++;
+                } else {
+                    feedbackElement.textContent = `✗ Incorrect. C'est ${correctAnswer ? "vrai" : "faux"}.`;
+                    feedbackElement.className = "feedback incorrect";
+                }
+                feedbackElement.style.display = "block";
+            }
+            
+            // Mettre à jour la barre de progression et le score
+            const progressPercentage = (score / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = `${progressPercentage}%`;
+            document.getElementById('scoreDisplay').textContent = `Score : ${score}/${totalQuestions}`;
+            
+            // Message personnalisé selon le score
+            let message = "";
+            if (score === totalQuestions) {
+                message = " Excellent ! Vous maîtrisez parfaitement le sujet. ";
+            } else if (score >= totalQuestions * 0.7) {
+                message = " Très bien ! Vous avez une bonne compréhension du texte. ";
+            } else if (score >= totalQuestions * 0.5) {
+                message = " Pas mal ! Continuez à travailler. ";
+            } else {
+                message = " Relisez le texte et réessayez ! ";
+            }
+            
+            document.getElementById('scoreDisplay').innerHTML += `<br><small>${message}</small>`;
+        }
+        
+        // Permet d'utiliser la touche Entrée pour valider les réponses
+        document.querySelectorAll('input[type="text"]').forEach(input => {
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const nextButton = this.nextElementSibling;
+                    if (nextButton && nextButton.classList.contains('toggle-btn')) {
+                        nextButton.click();
+                    }
+                }
+            });
+        });
+        
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Activer la première section
+            document.getElementById('texte').classList.add('active-section');
+        });
+    </script>
+</body>
+</html>
