@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕐 L'Heure, La Météo et Les Vêtements</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 5px solid #667eea;
+            padding-left: 15px;
+            font-size: 1.8em;
+        }
+
+        h3 {
+            color: #667eea;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .dialogue-box {
+            background: #f8f9ff;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .dialogue-line {
+            margin: 10px 0;
+            padding: 8px;
+        }
+
+        .speaker {
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        .tip-box {
+            background: #fff9e6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #ffc107;
+        }
+
+        .warning-box {
+            background: #ffe6e6;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #f44336;
+        }
+
+        .note-box {
+            background: #e6f7ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #2196f3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+
+        tr:hover {
+            background: #f0f2ff;
+        }
+
+        .vocab-item {
+            background: #f8f9ff;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: transform 0.2s;
+        }
+
+        .vocab-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+        }
+
+        .emoji {
+            font-size: 2em;
+        }
+
+        .vocab-content {
+            flex: 1;
+        }
+
+        .french {
+            font-weight: bold;
+            color: #764ba2;
+            font-size: 1.2em;
+        }
+
+        .translation {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        .phonetic {
+            color: #999;
+            font-style: italic;
+            font-size: 0.85em;
+        }
+
+        .exercise {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            color: white;
+        }
+
+        .exercise h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .question {
+            background: white;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .question-text {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .option {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .option:hover {
+            background: #e6eaff;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #e6eaff;
+        }
+
+        .option.correct {
+            background: #c8e6c9;
+            border-color: #4caf50;
+        }
+
+        .option.incorrect {
+            background: #ffcdd2;
+            border-color: #f44336;
+        }
+
+        .input-answer {
+            width: 100%;
+            padding: 12px;
+            font-size: 1em;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        .btn {
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin: 10px 5px;
+        }
+
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+
+        .score {
+            text-align: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            color: #667eea;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            h2 {
+                font-size: 1.4em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🕐 L'Heure, La Météo et Les Vêtements</h1>
+        <div class="subtitle">Niveau A1 • Pour adulte anglophone<br>Time, Weather and Clothes</div>
+
+        <h2>📖 DIALOGUE : Une journée à Paris</h2>
+        
+        <div class="tip-box">
+            💡 <strong>Listening tip:</strong> Read the dialogue aloud several times. Record yourself and listen again. This will help you recognize words when spoken!
+        </div>
+
+        <div class="dialogue-box">
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> Bonjour Marie ! Quelle heure est-il ?</div>
+            <div class="dialogue-line"><span class="speaker">Marie :</span> Il est neuf heures du matin. Tu as rendez-vous ?</div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> Oui, j'ai rendez-vous chez le dentiste à dix heures et quart.</div>
+            <div class="dialogue-line"><span class="speaker">Marie :</span> Quel temps fait-il aujourd'hui ?</div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> Il fait froid et il pleut. C'est un mauvais temps ! Je porte mon manteau gris et mes bottes noires.</div>
+            <div class="dialogue-line"><span class="speaker">Marie :</span> Ah oui, il fait mauvais. Moi, je porte une veste rouge et un pantalon bleu. J'ai aussi mon parapluie !</div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> Tu as raison ! En hiver, il faut toujours un parapluie à Paris. Et toi, tu travailles aujourd'hui ?</div>
+            <div class="dialogue-line"><span class="speaker">Marie :</span> Oui, je travaille de midi à dix-huit heures. Mon cours commence à midi et demi.</div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> D'accord. Et ce soir ?</div>
+            <div class="dialogue-line"><span class="speaker">Marie :</span> Ce soir, j'ai un dîner avec Thomas à vingt heures. Il fait nuit tôt en ce moment !</div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> C'est vrai ! Bon, je dois partir. À bientôt !</div>
+            <div class="dialogue-line"><span class="speaker">Marie :</span> À bientôt Sophie ! Bonne journée !</div>
+        </div>
+
+        <h2>🕐 DIRE L'HEURE (Telling the time)</h2>
+
+        <h3>📌 Basic structure</h3>
+        <p><strong>Question:</strong> Quelle heure est-il ? (What time is it?)</p>
+        <p><strong>Answer:</strong> Il est + [heure]</p>
+
+        <h3>⏰ Hours</h3>
+        <table>
+            <tr>
+                <th>Français</th>
+                <th>English</th>
+            </tr>
+            <tr>
+                <td><strong>Il est une heure.</strong></td>
+                <td>1:00 (It's 1 o'clock)</td>
+            </tr>
+            <tr>
+                <td><strong>Il est deux heures.</strong></td>
+                <td>2:00 (It's 2 o'clock)</td>
+            </tr>
+            <tr>
+                <td><strong>Il est midi.</strong></td>
+                <td>12:00 (It's noon)</td>
+            </tr>
+            <tr>
+                <td><strong>Il est minuit.</strong></td>
+                <td>00:00 (It's midnight)</td>
+            </tr>
+        </table>
+
+        <h3>⏰ Minutes</h3>
+        <table>
+            <tr>
+                <th>Français</th>
+                <th>Heure</th>
+                <th>English</th>
+            </tr>
+            <tr>
+                <td><strong>Il est trois heures cinq.</strong></td>
+                <td>3:05</td>
+                <td>3:05 (five past three)</td>
+            </tr>
+            <tr>
+                <td><strong>Il est trois heures et quart.</strong></td>
+                <td>3:15</td>
+                <td>3:15 (quarter past three)</td>
+            </tr>
+            <tr>
+                <td><strong>Il est trois heures et demie.</strong></td>
+                <td>3:30</td>
+                <td>3:30 (half past three)</td>
+            </tr>
+            <tr>
+                <td><strong>Il est quatre heures moins le quart.</strong></td>
+                <td>3:45</td>
+                <td>3:45 (quarter to four)</td>
+            </tr>
+            <tr>
+                <td><strong>Il est quatre heures moins dix.</strong></td>
+                <td>3:50</td>
+                <td>3:50 (ten to four)</td>
+            </tr>
+        </table>
+
+        <div class="warning-box">
+            ⚠️ <strong>Attention!</strong> For 1 o'clock: <strong>une heure</strong> (singular)<br>
+            For 2h and more: <strong>deux heures, trois heures...</strong> (plural)
+        </div>
+
+        <h3>🌅 Times of day</h3>
+        
+        <div class="vocab-item">
+            <div class="emoji">🌅</div>
+            <div class="vocab-content">
+                <div class="french">du matin</div>
+                <div class="phonetic">[dy matɛ̃]</div>
+                <div class="translation">in the morning • 7h du matin = 7:00 AM</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">☀️</div>
+            <div class="vocab-content">
+                <div class="french">de l'après-midi</div>
+                <div class="phonetic">[də lapʁɛmidi]</div>
+                <div class="translation">in the afternoon • 3h de l'après-midi = 3:00 PM</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🌙</div>
+            <div class="vocab-content">
+                <div class="french">du soir</div>
+                <div class="phonetic">[dy swaʁ]</div>
+                <div class="translation">in the evening • 8h du soir = 8:00 PM</div>
+            </div>
+        </div>
+
+        <h2>☀️ LA MÉTÉO (Weather)</h2>
+
+        <h3>📌 Main question</h3>
+        <p style="font-size: 1.2em; font-weight: bold; color: #667eea;">Quel temps fait-il ?</p>
+        <p>What's the weather like?</p>
+
+        <h3>🌤️ Weather expressions</h3>
+
+        <div class="vocab-item">
+            <div class="emoji">☀️</div>
+            <div class="vocab-content">
+                <div class="french">Il fait beau.</div>
+                <div class="translation">It's nice weather / The weather is nice</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🌞</div>
+            <div class="vocab-content">
+                <div class="french">Il fait chaud.</div>
+                <div class="translation">It's hot</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">❄️</div>
+            <div class="vocab-content">
+                <div class="french">Il fait froid.</div>
+                <div class="translation">It's cold</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">☁️</div>
+            <div class="vocab-content">
+                <div class="french">Il fait mauvais.</div>
+                <div class="translation">The weather is bad</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🌧️</div>
+            <div class="vocab-content">
+                <div class="french">Il pleut.</div>
+                <div class="translation">It's raining</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">❄️</div>
+            <div class="vocab-content">
+                <div class="french">Il neige.</div>
+                <div class="translation">It's snowing</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">💨</div>
+            <div class="vocab-content">
+                <div class="french">Il y a du vent.</div>
+                <div class="translation">It's windy</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🌫️</div>
+            <div class="vocab-content">
+                <div class="french">Il y a du brouillard.</div>
+                <div class="translation">It's foggy</div>
+            </div>
+        </div>
+
+        <h3>🌡️ Les saisons (The seasons)</h3>
+
+        <table>
+            <tr>
+                <th>Saison</th>
+                <th>Français</th>
+                <th>English</th>
+                <th>Exemple</th>
+            </tr>
+            <tr>
+                <td>🌸</td>
+                <td><strong>le printemps</strong></td>
+                <td>spring</td>
+                <td>Au printemps, il fait doux.</td>
+            </tr>
+            <tr>
+                <td>☀️</td>
+                <td><strong>l'été</strong></td>
+                <td>summer</td>
+                <td>En été, il fait chaud.</td>
+            </tr>
+            <tr>
+                <td>🍂</td>
+                <td><strong>l'automne</strong></td>
+                <td>autumn/fall</td>
+                <td>En automne, il pleut souvent.</td>
+            </tr>
+            <tr>
+                <td>❄️</td>
+                <td><strong>l'hiver</strong></td>
+                <td>winter</td>
+                <td>En hiver, il fait froid.</td>
+            </tr>
+        </table>
+
+        <div class="note-box">
+            📝 <strong>Tip:</strong> We say <strong>au printemps</strong> BUT <strong>en été / en automne / en hiver</strong>
+        </div>
+
+        <h2>👔 LES VÊTEMENTS (Clothes)</h2>
+
+        <h3>📌 Verb PORTER (to wear)</h3>
+
+        <table>
+            <tr>
+                <th>Pronom</th>
+                <th>Conjugaison</th>
+                <th>Exemple</th>
+            </tr>
+            <tr>
+                <td><strong>Je</strong></td>
+                <td>porte</td>
+                <td>Je porte un jean.</td>
+            </tr>
+            <tr>
+                <td><strong>Tu</strong></td>
+                <td>portes</td>
+                <td>Tu portes une robe.</td>
+            </tr>
+            <tr>
+                <td><strong>Il/Elle</strong></td>
+                <td>porte</td>
+                <td>Elle porte une jupe.</td>
+            </tr>
+            <tr>
+                <td><strong>Nous</strong></td>
+                <td>portons</td>
+                <td>Nous portons des manteaux.</td>
+            </tr>
+            <tr>
+                <td><strong>Vous</strong></td>
+                <td>portez</td>
+                <td>Vous portez un costume.</td>
+            </tr>
+            <tr>
+                <td><strong>Ils/Elles</strong></td>
+                <td>portent</td>
+                <td>Ils portent des chaussures.</td>
+            </tr>
+        </table>
+
+        <h3>👕 Essential clothing</h3>
+
+        <div class="vocab-item">
+            <div class="emoji">👕</div>
+            <div class="vocab-content">
+                <div class="french">un t-shirt</div>
+                <div class="translation">a t-shirt (m)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">👔</div>
+            <div class="vocab-content">
+                <div class="french">une chemise</div>
+                <div class="translation">a shirt (f)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">👗</div>
+            <div class="vocab-content">
+                <div class="french">une robe</div>
+                <div class="translation">a dress (f)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">👖</div>
+            <div class="vocab-content">
+                <div class="french">un pantalon</div>
+                <div class="translation">pants/trousers (m)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">👖</div>
+            <div class="vocab-content">
+                <div class="french">un jean</div>
+                <div class="translation">jeans (m)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">👗</div>
+            <div class="vocab-content">
+                <div class="french">une jupe</div>
+                <div class="translation">a skirt (f)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🧥</div>
+            <div class="vocab-content">
+                <div class="french">un manteau</div>
+                <div class="translation">a coat (m)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🧥</div>
+            <div class="vocab-content">
+                <div class="french">une veste</div>
+                <div class="translation">a jacket (f)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">👟</div>
+            <div class="vocab-content">
+                <div class="french">des chaussures (f)</div>
+                <div class="translation">shoes</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">👢</div>
+            <div class="vocab-content">
+                <div class="french">des bottes (f)</div>
+                <div class="translation">boots</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🧣</div>
+            <div class="vocab-content">
+                <div class="french">une écharpe</div>
+                <div class="translation">a scarf (f)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🧢</div>
+            <div class="vocab-content">
+                <div class="french">un chapeau</div>
+                <div class="translation">a hat (m)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">☂️</div>
+            <div class="vocab-content">
+                <div class="french">un parapluie</div>
+                <div class="translation">an umbrella (m)</div>
+            </div>
+        </div>
+
+        <div class="vocab-item">
+            <div class="emoji">🧦</div>
+            <div class="vocab-content">
+                <div class="french">des chaussettes (f)</div>
+                <div class="translation">socks</div>
+            </div>
+        </div>
+
+        <div class="warning-box">
+            ⚠️ <strong>Important!</strong> Clothes must agree with colors:<br>
+            • un pantalon <strong>noir</strong> (masculine)<br>
+            • une robe <strong>noire</strong> (feminine)<br>
+            • des chaussures <strong>noires</strong> (plural)
+        </div>
+
+        <h2>✏️ EXERCICES INTERACTIFS</h2>
+
+        <!-- Exercise 1 -->
+        <div class="exercise">
+            <h3>Exercice 1 : Quelle heure est-il ?</h3>
+            <p style="margin-bottom: 20px;">Choose the correct time expression for each clock:</p>
+
+            <div class="question">
+                <div class="question-text">1. 🕐 What time is it? → 1:15</div>
+                <div class="options">
+                    <div class="option" onclick="checkAnswer(1, 'a', 'b')">
+                        a) Il est une heure et quart
+                    </div>
+                    <div class="option" onclick="checkAnswer(1, 'b', 'b')">
+                        b) Il est deux heures et quart
+                    </div>
+                    <div class="option" onclick="checkAnswer(1, 'c', 'b')">
+                        c) Il est une heure et demie
+                    </div>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. 🕐 What time is it? → 3:30</div>
+                <div class="options">
+                    <div class="option" onclick="checkAnswer(2, 'a', 'c')">
+                        a) Il est trois heures et quart
+                    </div>
+                    <div class="option" onclick="checkAnswer(2, 'b', 'c')">
+                        b) Il est quatre heures moins le quart
+                    </div>
+                    <div class="option" onclick="checkAnswer(2, 'c', 'c')">
+                        c) Il est trois heures et demie
+                    </div>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. 🕐 What time is it? → 4:45</div>
+                <div class="options">
+                    <div class="option" onclick="checkAnswer(3, 'a', 'b')">
+                        a) Il est quatre heures et demie
+                    </div>
+                    <div class="option" onclick="checkAnswer(3, 'b', 'b')">
+                        b) Il est cinq heures moins le quart
+                    </div>
+                    <div class="option" onclick="checkAnswer(3, 'c', 'b')">
+                        c) Il est cinq heures et quart
+                    </div>
+                </div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. 🕐 What time is it? → 12:00 (midday)</div>
+                <div class="options">
+                    <div class="option" onclick="checkAnswer(4, 'a', 'a')">
+                        a) Il est midi
+                    </div>
+                    <div class="option" onclick="checkAnswer(4, 'b', 'a')">
+                        b) Il est minuit
+                    </div>
+                    <div class="option" onclick="checkAnswer(4, 'c', 'a')">
+                        c) Il est douze heures
+                    </div>
+                </div>
+                <div class="feedback" id="feedback4"></div>
+            </div>
+
+            <div class="score" id="score1" style="display: none;"></div>
+        </div>
+
+        <!-- Exercise 2 -->
+        <div class="exercise">
+            <h3>Exercice 2 : La météo et les vêtements</h3>
+            <p style="margin-bottom: 20px;">Complete the sentences with the appropriate weather expression or clothing item:</p>
+
+            <div class="question">
+                <div class="question-text">1. En hiver, _______________. (It's cold)</div>
+                <input type="text" class="input-answer" id="ex2q1" placeholder="Your answer...">
+                <button class="btn" onclick="checkText(1, 'il fait froid')">Vérifier</button>
+                <div class="feedback" id="ex2feedback1"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">2. Quand il pleut, je porte un _______________. (umbrella)</div>
+                <input type="text" class="input-answer" id="ex2q2" placeholder="Your answer...">
+                <button class="btn" onclick="checkText(2, 'parapluie')">Vérifier</button>
+                <div class="feedback" id="ex2feedback2"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">3. En été, _______________. (It's hot)</div>
+                <input type="text" class="input-answer" id="ex2q3" placeholder="Your answer...">
+                <button class="btn" onclick="checkText(3, 'il fait chaud')">Vérifier</button>
+                <div class="feedback" id="ex2feedback3"></div>
+            </div>
+
+            <div class="question">
+                <div class="question-text">4. Quand il fait froid, je porte un _______________. (coat)</div>
+                <input type="text" class="input-answer" id="ex2q4" placeholder="Your answer...">
+                <button class="btn" onclick="checkText(4, 'manteau')">Vérifier</button>
