@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELF B1 - Exercice d'Expression Orale Interactif</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .scenario-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .scenario-box h2 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .role-info {
+            background: rgba(255,255,255,0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .constraints {
+            background: rgba(255,255,255,0.15);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .constraints ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .dialogue-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .dialogue-line {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .user-line {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+        }
+
+        .agent-line {
+            background: #f3e5f5;
+            border-left: 4px solid #9c27b0;
+        }
+
+        .speaker {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+        }
+
+        .vocab-section {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .vocab-item {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .vocab-term {
+            font-weight: bold;
+            color: #d32f2f;
+            font-size: 1.1em;
+        }
+
+        .exercise-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid #667eea;
+        }
+
+        .exercise-section h3 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .exercise-section h3::before {
+            content: "✏️";
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        .question-box {
+            background: #f8f9fa;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+            margin: 10px 0;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .answer-box {
+            background: #e8f5e9;
+            padding: 15px;
+            margin-top: 10px;
+            border-radius: 8px;
+            border-left: 4px solid #4caf50;
+            display: none;
+        }
+
+        .answer-box.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .show-answer-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+        }
+
+        .show-answer-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .show-answer-btn:active {
+            transform: translateY(0);
+        }
+
+        .grammar-section {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .grammar-section h3 {
+            color: #c2185b;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background: #f5f5f5;
+        }
+
+        .tip-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+
+        .tip-box strong {
+            color: #f57c00;
+        }
+
+        .criteria-box {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+
+        .criteria-box h2 {
+            color: #00695c;
+            margin-bottom: 15px;
+        }
+
+        .criteria-box ul {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .criteria-box li {
+            margin: 10px 0;
+            padding-left: 10px;
+        }
+
+        .objective-highlight {
+            background: linear-gradient(135deg, #ffeaa7 0%, #fdcb6e 100%);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #d35400;
+        }
+
+        .section-title {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin: 30px 0 20px 0;
+            font-size: 1.4em;
+        }
+
+        .check-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+
+        .check-btn:hover {
+            background: #45a049;
+        }
+
+        .feedback {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.correct {
+            background: #c8e6c9;
+            color: #2e7d32;
+            display: block;
+        }
+
+        .feedback.incorrect {
+            background: #ffcdd2;
+            color: #c62828;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📚 DELF B1 - Exercice d'Expression Orale</h1>
+            <p>Entraînement interactif</p>
+        </header>
+
+        <div class="content">
+            <!-- SCENARIO -->
+            <div class="scenario-box">
+                <h2>🎭 Scénario C : À la bibliothèque</h2>
+                <h3>Problème avec un livre emprunté</h3>
+                
+                <div class="role-info">
+                    <strong>🧑 Ton rôle :</strong> Tu as emprunté un livre à la bibliothèque il y a trois semaines. En le rapportant aujourd'hui, tu découvres qu'il est abîmé (une page est déchirée). Tu dois résoudre cette situation avec l'agent d'accueil.
+                </div>
+
+                <div class="role-info">
+                    <strong>👤 Mon rôle :</strong> Je suis l'agent à l'accueil de la bibliothèque.
+                </div>
+
+                <div class="constraints">
+                    <strong>📋 Contraintes :</strong>
+                    <ul>
+                        <li>✓ Expliquer ce qui est arrivé au livre</li>
+                        <li>✓ Comprendre les conséquences et le règlement de la bibliothèque</li>
+                        <li>✓ Trouver une solution (réparer, remplacer, payer ?)</li>
+                        <li>✓ Demander à emprunter un autre exemplaire ou un autre livre</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- DIALOGUE TYPE -->
+            <div class="section-title">PARTIE 1 : 💬 DIALOGUE TYPE</div>
+            <div class="dialogue-section">
+                <div class="dialogue-line user-line">
+                    <div class="speaker">👤 USAGER (Toi) :</div>
+                    <p>Bonjour. Je viens rapporter ce livre que j'ai emprunté, mais j'ai un problème. Je viens de remarquer qu'une page est malheureusement déchirée.</p>
+                </div>
+
+                <div class="dialogue-line agent-line">
+                    <div class="speaker">🧑‍💼 AGENT (Moi) :</div>
+                    <p>Bonjour. Je vois, merci de me le signaler. Pouvez-vous me montrer votre carte de bibliothèque et me dire comment c'est arrivé ?</p>
+                </div>
+
+                <div class="dialogue-line user-line">
+                    <div class="speaker">👤 USAGER :</div>
+                    <p>Oui, bien sûr, voici ma carte. En vérité, je ne sais pas exactement. Peut-être que c'est arrivé quand je le transportais dans mon sac. Je suis vraiment désolé.</p>
+                </div>
+
+                <div class="dialogue-line agent-line">
+                    <div class="speaker">🧑‍💼 AGENT :</div>
+                    <p>Je comprends. Selon le règlement, lorsqu'un document est endommagé, l'usager est responsable. Il doit soit le remplacer par un exemplaire identique, soit en payer la valeur.</p>
+                </div>
+
+                <div class="dialogue-line user-line">
+                    <div class="speaker">👤 USAGER :</div>
+                    <p>Je vois... Est-ce qu'il y aurait une autre possibilité ? Par exemple, pourrais-je le réparer moi-même avec du ruban adhésif spécial ?</p>
+                </div>
+
+                <div class="dialogue-line agent-line">
+                    <div class="speaker">🧑‍💼 AGENT :</div>
+                    <p>Non, malheureusement, les réparations "maison" ne sont pas acceptées car elles abîment souvent le livre à long terme. Il faudrait que vous trouviez le même livre en librairie.</p>
+                </div>
+
+                <div class="dialogue-line user-line">
+                    <div class="speaker">👤 USAGER :</div>
+                    <p>D'accord. Et si je ne le trouve pas ? Devrais-je payer une amende fixe ?</p>
+                </div>
+
+                <div class="dialogue-line agent-line">
+                    <div class="speaker">🧑‍💼 AGENT :</div>
+                    <p>Non, ce n'est pas une amende. Il faudrait que vous payiez le prix de remplacement du livre, qui est de 18 euros. En attendant, votre compte est bloqué pour tout nouvel emprunt.</p>
+                </div>
+
+                <div class="dialogue-line user-line">
+                    <div class="speaker">👤 USAGER :</div>
+                    <p>Je comprends. Pourriez-vous me dire où je pourrais trouver ce livre pour l'acheter ? Et, en attendant une solution, serait-il possible d'emprunter un autre livre avec une caution ?</p>
+                </div>
+
+                <div class="dialogue-line agent-line">
+                    <div class="speaker">🧑‍💼 AGENT :</div>
+                    <p>Il faudrait que vous vérifiiez dans les librairies du centre-ville. Pour un nouvel emprunt, c'est possible si vous payez la valeur du livre endommagé comme caution. Vous seriez remboursé quand vous rapporteriez le nouveau livre.</p>
+                </div>
+
+                <div class="dialogue-line user-line">
+                    <div class="speaker">👤 USAGER :</div>
+                    <p>Très bien, merci pour ces solutions. Je vais essayer de le trouver dès aujourd'hui.</p>
+                </div>
+            </div>
+
+            <!-- VOCABULAIRE -->
+            <div class="section-title">PARTIE 2 : 📖 VOCABULAIRE ESSENTIEL</div>
+            <div class="vocab-section">
+                <div class="vocab-item">
+                    <span class="vocab-term">Emprunter</span> : Prendre quelque chose (un livre) pour une durée limitée.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Rapporter / Rendre</span> : Ramener quelque chose qu'on a emprunté.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Être abîmé / endommagé</span> : Être en mauvais état, détérioré.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Une page déchirée</span> : Une page qui a un trou ou une déchirure.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Le règlement</span> : L'ensemble des règles officielles.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Être responsable</span> : Devoir assumer les conséquences de ses actes.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Remplacer</span> : Mettre un nouveau livre à la place de l'ancien.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Payer la valeur</span> : Donner l'argent correspondant au prix du livre.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Une amende</span> : Une somme d'argent à payer comme punition (différent de la valeur de remplacement).
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Un compte bloqué</span> : Un compte temporairement inactif, on ne peut pas l'utiliser.
+                </div>
+                <div class="vocab-item">
+                    <span class="vocab-term">Une caution</span> : Une somme d'argent donnée temporairement comme garantie.
+                </div>
+            </div>
+
+            <!-- EXERCICES -->
+            <div class="section-title">PARTIE 3 : ✏️ EXERCICES D'EXPRESSION</div>
+
+            <!-- Exercice 1 -->
+            <div class="exercise-section">
+                <h3>Exercice 1 : Formules de politesse</h3>
+                
+                <div class="question-box">
+                    <p><strong>1. Pour expliquer un problème de manière polie et assumée :</strong></p>
+                    <input type="text" class="input-field" id="ex1-1" placeholder="Écris ta réponse ici...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer1-1')">Voir les réponses</button>
+                    <div class="answer-box" id="answer1-1">
+                        <strong>✓ Réponses possibles :</strong><br>
+                        "Bonjour, je dois vous signaler que le livre que je rends est endommagé."<br>
+                        OU "J'ai le regret de vous informer qu'une page du livre est déchirée."
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>2. Pour demander le règlement précis :</strong></p>
+                    <input type="text" class="input-field" id="ex1-2" placeholder="Écris ta réponse ici...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer1-2')">Voir les réponses</button>
+                    <div class="answer-box" id="answer1-2">
+                        <strong>✓ Réponses possibles :</strong><br>
+                        "Pourriez-vous m'expliquer clairement ce que je dois faire dans cette situation ?"<br>
+                        OU "Est-ce que vous pourriez me dire quelles sont les procédures ?"
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>3. Pour proposer une solution :</strong></p>
+                    <input type="text" class="input-field" id="ex1-3" placeholder="Écris ta réponse ici...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer1-3')">Voir les réponses</button>
+                    <div class="answer-box" id="answer1-3">
+                        <strong>✓ Réponses possibles :</strong><br>
+                        "Est-ce qu'il y aurait une autre possibilité, comme de le réparer ?"<br>
+                        OU "Serait-il possible de payer en plusieurs fois ?"
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Astuce :</strong> Utilise le conditionnel ("pourriez-vous", "serait-il possible") pour être plus poli.
+                </div>
+            </div>
+
+            <!-- Exercice 2 -->
+            <div class="exercise-section">
+                <h3>Exercice 2 : Réagir aux problèmes</h3>
+                
+                <div class="question-box">
+                    <p><strong>1. L'agent dit : "Je suis désolé, mais notre règlement est très strict, vous devez payer 25 euros."</strong></p>
+                    <p>Comment réagis-tu ?</p>
+                    <textarea class="input-field" id="ex2-1" rows="3" placeholder="Écris ta réponse ici..."></textarea>
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer2-1')">Voir les réponses</button>
+                    <div class="answer-box" id="answer2-1">
+                        <strong>✓ Réponses possibles :</strong><br>
+                        "Je comprends, mais est-ce qu'il n'y a vraiment aucune exception ? Je n'ai pas cette somme sur moi aujourd'hui."<br>
+                        OU "Pourriez-vous vérifier s'il existe un tarif réduit ou un paiement échelonné ?"
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>2. L'agent dit : "Ce livre n'est plus édité, vous ne pourrez pas le remplacer."</strong></p>
+                    <p>Comment réagis-tu ?</p>
+                    <textarea class="input-field" id="ex2-2" rows="3" placeholder="Écris ta réponse ici..."></textarea>
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer2-2')">Voir les réponses</button>
+                    <div class="answer-box" id="answer2-2">
+                        <strong>✓ Réponses possibles :</strong><br>
+                        "Est-ce que je pourrais acheter un livre similaire de même valeur à la place ?"<br>
+                        OU "Et si je faisais un don à la bibliothèque du montant équivalent ?"
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>3. L'agent dit : "Votre carte sera bloquée pendant un mois."</strong></p>
+                    <p>Comment réagis-tu ?</p>
+                    <textarea class="input-field" id="ex2-3" rows="3" placeholder="Écris ta réponse ici..."></textarea>
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer2-3')">Voir les réponses</button>
+                    <div class="answer-box" id="answer2-3">
+                        <strong>✓ Réponses possibles :</strong><br>
+                        "Un mois, c'est très long. Y aurait-il un moyen de réduire cette durée si je règle le problème rapidement ?"<br>
+                        OU "Est-ce que vous pourriez faire une exception, c'est la première fois que cela m'arrive ?"
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRAMMAIRE -->
+            <div class="section-title">PARTIE 4 : 📚 RÉVISION GRAMMATICALE</div>
+            <div class="grammar-section">
+                <h3>"Il faut que" + SUBJONCTIF</h3>
+                
+                <p><strong>Cette structure s'utilise principalement pour :</strong></p>
+                <ul style="background: white; padding: 20px; border-radius: 10px; margin: 15px 0;">
+                    <li>✓ Exprimer une nécessité ou une obligation</li>
+                    <li>✓ Indiquer ce qui est nécessaire dans une situation</li>
+                    <li>✓ Formuler une contrainte administrative ou règlementaire</li>
+                </ul>
+
+                <div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                    <strong>Exemples dans le dialogue :</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>"Il faudrait que vous <strong style="color: #c2185b;">trouviez</strong> le même livre en librairie." (nécessité)</li>
+                        <li>"Il faudrait que vous <strong style="color: #c2185b;">payiez</strong> le prix de remplacement." (obligation)</li>
+                        <li>"Il faudrait que vous <strong style="color: #c2185b;">vérifiiez</strong> dans les librairies du centre-ville." (conseil fort)</li>
+                    </ul>
+                </div>
+
+                <h4 style="margin-top: 20px;">Formation : "Il faut que" + verbe au subjonctif présent</h4>
+
+                <table>
+                    <tr>
+                        <th>Verbe</th>
+                        <th>Subjonctif (je)</th>
+                        <th>Subjonctif (vous)</th>
+                        <th>Utilisation dans le scénario</th>
+                    </tr>
+                    <tr>
+                        <td>Trouver</td>
+                        <td>que je trouve</td>
+                        <td>que vous trouviez</td>
+                        <td>Exprimer la nécessité de remplacer</td>
+                    </tr>
+                    <tr>
+                        <td>Payer</td>
+                        <td>que je paie</td>
+                        <td>que vous payiez</td>
+                        <td>Indiquer l'obligation de règlement</td>
+                    </tr>
+                    <tr>
+                        <td>Vérifier</td>
+                        <td>que je vérifie</td>
+                        <td>que vous vérifiiez</td>
+                        <td>Donner une instruction précise</td>
+                    </tr>
+                    <tr>
+                        <td>Rapporter</td>
+                        <td>que je rapporte</td>
+                        <td>que vous rapportiez</td>
+                        <td>Préciser une condition</td>
+                    </tr>
+                </table>
+
+                <div class="tip-box">
+                    <strong>💡 Astuce pour le DELF :</strong> Utilise "il faut que je..." pour montrer que tu as compris les obligations. Par exemple : "D'accord, donc <em>il faut que je trouve</em> un exemplaire identique."
+                </div>
+            </div>
+
+            <!-- Exercice 3 -->
+            <div class="exercise-section">
+                <h3>Exercice 3 : Pratique de "Il faut que" + subjonctif</h3>
+                <p>Transforme ces obligations en utilisant "il faut que" + subjonctif :</p>
+
+                <div class="question-box">
+                    <p><strong>1. "Je dois remplacer le livre."</strong></p>
+                    <input type="text" class="input-field" id="ex3-1" placeholder="Il faut que...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer3-1')">Voir la réponse</button>
+                    <div class="answer-box" id="answer3-1">
+                        <strong>✓ Réponse :</strong> "Il faut que je <strong>remplace</strong> le livre."
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>2. "Vous devez payer 18 euros."</strong></p>
+                    <input type="text" class="input-field" id="ex3-2" placeholder="Il faut que...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer3-2')">Voir la réponse</button>
+                    <div class="answer-box" id="answer3-2">
+                        <strong>✓ Réponse :</strong> "Il faut que vous <strong>payiez</strong> 18 euros."
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>3. "Tu dois vérifier en librairie."</strong></p>
+                    <input type="text" class="input-field" id="ex3-3" placeholder="Il faut que...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer3-3')">Voir la réponse</button>
+                    <div class="answer-box" id="answer3-3">
+                        <strong>✓ Réponse :</strong> "Il faut que tu <strong>vérifies</strong> en librairie."
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>4. "Nous devons respecter le règlement."</strong></p>
+                    <input type="text" class="input-field" id="ex3-4" placeholder="Il faut que...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer3-4')">Voir la réponse</button>
+                    <div class="answer-box" id="answer3-4">
+                        <strong>✓ Réponse :</strong> "Il faut que nous <strong>respections</strong> le règlement."
+                    </div>
+                </div>
+            </div>
+
+            <!-- Exercice 4 -->
+            <div class="exercise-section">
+                <h3>Exercice 4 : Connecteurs logiques</h3>
+                <p>Complète les phrases avec les connecteurs appropriés : <strong>donc, ensuite, par contre, en effet, finalement</strong></p>
+
+                <div class="question-box">
+                    <p><strong>1. "J'ai découvert que le livre était abîmé. ________, je dois trouver une solution."</strong></p>
+                    <input type="text" class="input-field" id="ex4-1" placeholder="Écris le connecteur...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer4-1')">Voir la réponse</button>
+                    <div class="answer-box" id="answer4-1">
+                        <strong>✓ Réponse :</strong> <strong>"donc"</strong>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>2. "Je voudrais régler ce problème. ________, j'aimerais savoir si je peux emprunter d'autres livres en attendant."</strong></p>
+                    <input type="text" class="input-field" id="ex4-2" placeholder="Écris le connecteur...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer4-2')">Voir la réponse</button>
+                    <div class="answer-box" id="answer4-2">
+                        <strong>✓ Réponse :</strong> <strong>"Ensuite"</strong> OU <strong>"Puis"</strong>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>3. "Je pourrais le réparer moi-même. ________, le règlement l'interdit."</strong></p>
+                    <input type="text" class="input-field" id="ex4-3" placeholder="Écris le connecteur...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer4-3')">Voir la réponse</button>
+                    <div class="answer-box" id="answer4-3">
+                        <strong>✓ Réponse :</strong> <strong>"Par contre"</strong> OU <strong>"Cependant"</strong>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>4. "Le livre s'est abîmé dans mon sac. ________, il y avait d'autres objets lourds."</strong></p>
+                    <input type="text" class="input-field" id="ex4-4" placeholder="Écris le connecteur...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer4-4')">Voir la réponse</button>
+                    <div class="answer-box" id="answer4-4">
+                        <strong>✓ Réponse :</strong> <strong>"En effet"</strong>
+                    </div>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>5. "J'ai cherché dans plusieurs librairies. ________, j'ai trouvé le dernier exemplaire."</strong></p>
+                    <input type="text" class="input-field" id="ex4-5" placeholder="Écris le connecteur...">
+                    <button class="show-answer-btn" onclick="toggleAnswer('answer4-5')">Voir la réponse</button>
+                    <div class="answer-box" id="answer4-5">
+                        <strong>✓ Réponse :</strong> <strong>"Finalement"</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SIMULATION COMPLÈTE -->
+            <div class="section-title">PARTIE 5 : 🎬 SIMULATION COMPLÈTE</div>
+            
+            <div class="exercise-section">
+                <h3>Exercice 5 : Préparation au jeu de rôle</h3>
+                <p>Maintenant, prépare-toi pour le jeu de rôle complet. Écris 4 questions que tu pourrais poser à l'agent :</p>
+
+                <div class="question-box">
+                    <p><strong>Question 1 (pour expliquer la situation - utilise une formule de politesse) :</strong></p>
+                    <textarea class="input-field" rows="2" id="ex5-1" placeholder="Écris ta question ici..."></textarea>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>Question 2 (pour comprendre l'obligation - utilise "il faut que" ou le conditionnel) :</strong></p>
+                    <textarea class="input-field" rows="2" id="ex5-2" placeholder="Écris ta question ici..."></textarea>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>Question 3 (pour négocier ou proposer une solution - utilise le conditionnel) :</strong></p>
+                    <textarea class="input-field" rows="2" id="ex5-3" placeholder="Écris ta question ici..."></textarea>
+                </div>
+
+                <div class="question-box">
+                    <p><strong>Question 4 (pour confirmer la solution) :</strong></p>
+                    <textarea class="input-field" rows="2" id="ex5-4" placeholder="Écris ta question ici..."></textarea>
+                </div>
+
+                <button class="show-answer-btn" onclick="toggleAnswer('answer5')">Voir les exemples de questions</button>
+                <div class="answer-box" id="answer5">
+                    <strong>✓ Exemples de questions :</strong>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>"Bonjour, je dois vous signaler un problème avec un livre que je rapporte."</li>
+                        <li>"Pourriez-vous m'expliquer exactement ce qu'il faut que je fasse selon le règlement ?"</li>
+                        <li>"Serait-il possible de payer en deux fois plutôt qu'en une seule fois ?"</li>
+                        <li>"Pourriez-vous confirmer que ma carte sera réactivée dès que j'aurai réglé le problème ?"</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <strong>💡 Conseil pour l'examen :</strong> Prends 30 secondes avant de commencer pour noter mentalement tes objectifs (1. expliquer 2. comprendre 3. négocier 4. confirmer).
+                </div>
+            </div>
+
+            <!-- CRITÈRES D'ÉVALUATION -->
+            <div class="criteria-box">
+                <h2>✅ Rappel des critères d'évaluation DELF B1</h2>
+                <ul>
+                    <li>✓ Capacité à interagir dans des situations courantes</li>
+                    <li>✓ Capacité à faire face à un problème imprévu</li>
+                    <li>✓ Utilisation de formules de politesse adaptées</li>
+                    <li>✓ Fluidité et cohérence du discours</li>
+                    <li>✓ Correction grammaticale acceptable (quelques erreurs sont permises)</li>
+                </ul>
+
+                <div class="objective-highlight">
+                    🎯 Objectif pour cet exercice : Utiliser le conditionnel pour la politesse ET la structure "il faut que" + subjonctif pour parler des obligations !
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswer(answerId) {
+            const answerBox = document.getElementById(answerId);
+            if (answerBox.classList.contains('show')) {
+                answerBox.classList.remove('show');
+            } else {
+                answerBox.classList.add('show');
+            }
+        }
+
+        // Sauvegarde automatique des réponses dans le localStorage
+        document.querySelectorAll('.input-field').forEach(input => {
+            // Charger les réponses sauvegardées
+            const savedValue = localStorage.getItem(input.id);
+            if (savedValue) {
+                input.value = savedValue;
+            }
+
+            // Sauvegarder au changement
+            input.addEventListener('input', function() {
+                localStorage.setItem(this.id, this.value);
+            });
+        });
+    </script>
+</body>
+</html>
