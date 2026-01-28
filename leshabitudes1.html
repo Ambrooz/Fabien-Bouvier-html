@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Les Habitudes - Apprendre le français</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 2.5em;
+        }
+
+        .section {
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            text-align: center;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .grammar-box {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .rule {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            margin-bottom: 20px;
+        }
+
+        .rule h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .formula {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            text-align: center;
+            padding: 20px;
+            background: #f0f4ff;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .examples {
+            margin-top: 20px;
+        }
+
+        .example {
+            padding: 12px 20px;
+            margin: 10px 0;
+            background: #e8f5e9;
+            border-left: 4px solid #27ae60;
+            border-radius: 5px;
+            font-size: 1.1em;
+        }
+
+        .example strong {
+            color: #27ae60;
+        }
+
+        .adverbs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .adverb-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .adverb-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .adverb-word {
+            font-size: 1.4em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .adverb-percentage {
+            font-size: 1.2em;
+            color: #666;
+            font-weight: bold;
+        }
+
+        .exercise-block {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+        }
+
+        .exercise-header {
+            background: #667eea;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .question {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 12px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 35px;
+            font-weight: bold;
+            margin-right: 15px;
+        }
+
+        .question-text {
+            font-size: 1.15em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .frequency-badge {
+            display: inline-block;
+            background: #ffc107;
+            color: #333;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-left: 10px;
+            font-size: 0.9em;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1.05em;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+
+        select {
+            cursor: pointer;
+            background: white;
+        }
+
+        input[type="text"]:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .choices {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .choice {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            background: white;
+        }
+
+        .choice:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .choice.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        .btn-check {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-check:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-reset {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #7f8c8d;
+            transform: translateY(-2px);
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #27ae60;
+        }
+
+        .feedback.incorrect {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #e74c3c;
+        }
+
+        .score-display {
+            text-align: center;
+            font-size: 1.5em;
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            display: none;
+            font-weight: bold;
+        }
+
+        .score-display.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+
+            .adverbs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 Les Habitudes</h1>
+        
+        <!-- GRAMMAIRE -->
+        <div class="section">
+            <h2 class="section-title">📖 Grammaire</h2>
+            
+            <div class="grammar-box">
+                <div class="rule">
+                    <h3>Position de l'adverbe de fréquence</h3>
+                    <div class="formula">
+                        Sujet + Verbe + Adverbe
+                    </div>
+                    
+                    <div class="examples">
+                        <div class="example">
+                            Je fais <strong>souvent</strong> les courses le lundi
+                        </div>
+                        <div class="example">
+                            Je me lève <strong>toujours</strong> à 7h
+                        </div>
+                        <div class="example">
+                            Elle cuisine <strong>parfois</strong> le soir
+                        </div>
+                        <div class="example">
+                            Nous regardons <strong>rarement</strong> la télévision
+                        </div>
+                        <div class="example">
+                            Je ne mange <strong>jamais</strong> de viande
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rule">
+                    <h3>Les adverbes de fréquence</h3>
+                    <div class="adverbs-grid">
+                        <div class="adverb-card">
+                            <div class="adverb-word">toujours</div>
+                            <div class="adverb-percentage">100%</div>
+                        </div>
+                        <div class="adverb-card">
+                            <div class="adverb-word">souvent</div>
+                            <div class="adverb-percentage">75%</div>
+                        </div>
+                        <div class="adverb-card">
+                            <div class="adverb-word">parfois</div>
+                            <div class="adverb-percentage">50%</div>
+                        </div>
+                        <div class="adverb-card">
+                            <div class="adverb-word">rarement</div>
+                            <div class="adverb-percentage">25%</div>
+                        </div>
+                        <div class="adverb-card">
+                            <div class="adverb-word">jamais</div>
+                            <div class="adverb-percentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 1 -->
+        <div class="section">
+            <h2 class="section-title">✏️ Exercice 1 : Complétez les phrases</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    Ajoutez l'adverbe de fréquence qui correspond au pourcentage
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">1</span>
+                        Le matin, je prends un café.
+                        <span class="frequency-badge">100%</span>
+                    </div>
+                    <input type="text" id="ex1q1" placeholder="Écrivez la phrase avec l'adverbe...">
+                    <div class="feedback" id="ex1feedback1"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">2</span>
+                        Je mange des fruits au petit-déjeuner.
+                        <span class="frequency-badge">75%</span>
+                    </div>
+                    <input type="text" id="ex1q2" placeholder="Écrivez la phrase avec l'adverbe...">
+                    <div class="feedback" id="ex1feedback2"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">3</span>
+                        Le week-end, je fais du sport.
+                        <span class="frequency-badge">50%</span>
+                    </div>
+                    <input type="text" id="ex1q3" placeholder="Écrivez la phrase avec l'adverbe...">
+                    <div class="feedback" id="ex1feedback3"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">4</span>
+                        Je mange de la viande rouge.
+                        <span class="frequency-badge">25%</span>
+                    </div>
+                    <input type="text" id="ex1q4" placeholder="Écrivez la phrase avec l'adverbe...">
+                    <div class="feedback" id="ex1feedback4"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">5</span>
+                        Je regarde la télé le matin.
+                        <span class="frequency-badge">0%</span>
+                    </div>
+                    <input type="text" id="ex1q5" placeholder="Écrivez la phrase avec l'adverbe...">
+                    <div class="feedback" id="ex1feedback5"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-check" onclick="checkExercise1()">🔍 Vérifier</button>
+                    <button class="btn-reset" onclick="resetExercise1()">🔄 Recommencer</button>
+                </div>
+
+                <div class="score-display" id="score1"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 2 -->
+        <div class="section">
+            <h2 class="section-title">✏️ Exercice 2 : Choisissez l'adverbe correct</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    Sélectionnez l'adverbe de fréquence approprié
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">1</span>
+                        Je vais _____ au cinéma le week-end.
+                    </div>
+                    <select id="ex2q1">
+                        <option value="">-- Choisissez --</option>
+                        <option value="toujours">toujours</option>
+                        <option value="souvent">souvent</option>
+                        <option value="parfois">parfois</option>
+                        <option value="rarement">rarement</option>
+                        <option value="jamais">jamais</option>
+                    </select>
+                    <div class="feedback" id="ex2feedback1"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">2</span>
+                        Elle mange _____ au restaurant.
+                    </div>
+                    <select id="ex2q2">
+                        <option value="">-- Choisissez --</option>
+                        <option value="toujours">toujours</option>
+                        <option value="souvent">souvent</option>
+                        <option value="parfois">parfois</option>
+                        <option value="rarement">rarement</option>
+                        <option value="jamais">jamais</option>
+                    </select>
+                    <div class="feedback" id="ex2feedback2"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">3</span>
+                        Nous prenons _____ le métro pour aller au travail.
+                    </div>
+                    <select id="ex2q3">
+                        <option value="">-- Choisissez --</option>
+                        <option value="toujours">toujours</option>
+                        <option value="souvent">souvent</option>
+                        <option value="parfois">parfois</option>
+                        <option value="rarement">rarement</option>
+                        <option value="jamais">jamais</option>
+                    </select>
+                    <div class="feedback" id="ex2feedback3"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">4</span>
+                        Tu fais _____ tes devoirs avant le dîner.
+                    </div>
+                    <select id="ex2q4">
+                        <option value="">-- Choisissez --</option>
+                        <option value="toujours">toujours</option>
+                        <option value="souvent">souvent</option>
+                        <option value="parfois">parfois</option>
+                        <option value="rarement">rarement</option>
+                        <option value="jamais">jamais</option>
+                    </select>
+                    <div class="feedback" id="ex2feedback4"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">5</span>
+                        Ils ne vont _____ à la piscine.
+                    </div>
+                    <select id="ex2q5">
+                        <option value="">-- Choisissez --</option>
+                        <option value="toujours">toujours</option>
+                        <option value="souvent">souvent</option>
+                        <option value="parfois">parfois</option>
+                        <option value="rarement">rarement</option>
+                        <option value="jamais">jamais</option>
+                    </select>
+                    <div class="feedback" id="ex2feedback5"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-check" onclick="checkExercise2()">🔍 Vérifier</button>
+                    <button class="btn-reset" onclick="resetExercise2()">🔄 Recommencer</button>
+                </div>
+
+                <div class="score-display" id="score2"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 3 -->
+        <div class="section">
+            <h2 class="section-title">✏️ Exercice 3 : Parlez de vous</h2>
+            
+            <div class="exercise-block">
+                <div class="exercise-header">
+                    Créez des phrases sur vos habitudes personnelles
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">1</span>
+                        Faire du sport
+                    </div>
+                    <input type="text" id="ex3q1" placeholder="Ex: Je fais souvent du sport le soir">
+                    <div class="feedback" id="ex3feedback1"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">2</span>
+                        Lire des livres
+                    </div>
+                    <input type="text" id="ex3q2" placeholder="Ex: Je lis parfois des livres avant de dormir">
+                    <div class="feedback" id="ex3feedback2"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">3</span>
+                        Cuisiner
+                    </div>
+                    <input type="text" id="ex3q3" placeholder="Ex: Je cuisine rarement des plats compliqués">
+                    <div class="feedback" id="ex3feedback3"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">4</span>
+                        Sortir avec des amis
+                    </div>
+                    <input type="text" id="ex3q4" placeholder="Ex: Je sors toujours avec mes amis le samedi">
+                    <div class="feedback" id="ex3feedback4"></div>
+                </div>
+
+                <div class="question">
+                    <div class="question-text">
+                        <span class="question-number">5</span>
+                        Regarder des films
+                    </div>
+                    <input type="text" id="ex3q5" placeholder="Ex: Je regarde souvent des films le week-end">
+                    <div class="feedback" id="ex3feedback5"></div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn-check" onclick="checkExercise3()">🔍 Vérifier</button>
+                    <button class="btn-reset" onclick="resetExercise3()">🔄 Recommencer</button>
+                </div>
+
+                <div class="score-display" id="score3"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // EXERCICE 1
+        const ex1Answers = {
+            ex1q1: ["le matin je prends toujours un cafe", "je prends toujours un cafe le matin", "le matin, je prends toujours un cafe"],
+            ex1q2: ["je mange souvent des fruits au petit-dejeuner", "je mange souvent des fruits au petit dejeuner"],
+            ex1q3: ["le week-end je fais parfois du sport", "le week-end, je fais parfois du sport", "je fais parfois du sport le week-end"],
+            ex1q4: ["je mange rarement de la viande rouge"],
+            ex1q5: ["je ne regarde jamais la tele le matin", "le matin je ne regarde jamais la tele", "le matin, je ne regarde jamais la tele"]
+        };
+
+        // EXERCICE 2
+        const ex2Answers = {
+            ex2q1: "parfois",
+            ex2q2: "rarement",
+            ex2q3: "toujours",
+            ex2q4: "souvent",
+            ex2q5: "jamais"
+        };
+
+        // EXERCICE 3
+        const adverbs = ["toujours", "souvent", "parfois", "rarement", "jamais"];
+        const verbs = ["fais", "lis", "cuisine", "sors", "regarde"];
+
+        function normalizeText(text) {
+            return text.toLowerCase()
+                .trim()
+                .replace(/[.,!?;:']/g, '')
+                .replace(/\s+/g, ' ')
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+        }
+
+        function checkExercise1() {
+            let score = 0;
+            const total = 5;
+
+            for (let i = 1; i <= total; i++) {
+                const input = document.getElementById(`ex1q${i}`);
+                const feedback = document.getElementById(`ex1feedback${i}`);
+                const userAnswer = normalizeText(input.value);
+                
+                if (userAnswer === '') {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = '❌ Veuillez écrire une réponse';
+                    input.style.borderColor = '#e74c3c';
+                    continue;
+                }
+                
+                const isCorrect = ex1Answers[`ex1q${i}`].some(answer => 
+                    normalizeText(answer) === userAnswer
+                );
+
+                if (isCorrect) {
+                    feedback.className = 'feedback correct show';
+                    feedback.textContent = '✅ Correct !';
+                    input.style.borderColor = '#27ae60';
+                    score++;
+                } else {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = `❌ Réponse attendue : "${ex1Answers[`ex1q${i}`][0]}"`;
+                    input.style.borderColor = '#e74c3c';
+                }
+            }
+
+            displayScore('score1', score, total);
+        }
+
+        function checkExercise2() {
+            let score = 0;
+            const total = 5;
+
+            for (let i = 1; i <= total; i++) {
+                const select = document.getElementById(`ex2q${i}`);
+                const feedback = document.getElementById(`ex2feedback${i}`);
+                const userAnswer = select.value;
+                
+                if (userAnswer === '') {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = '❌ Veuillez choisir une réponse';
+                    select.style.borderColor = '#e74c3c';
+                    continue;
+                }
+                
+                if (userAnswer === ex2Answers[`ex2q${i}`]) {
+                    feedback.className = 'feedback correct show';
+                    feedback.textContent = '✅ Correct !';
+                    select.style.borderColor = '#27ae60';
+                    score++;
+                } else {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = `❌ Réponse correcte : "${ex2Answers[`ex2q${i}`]}"`;
+                    select.style.borderColor = '#e74c3c';
+                }
+            }
+
+            displayScore('score2', score, total);
+        }
+
+        function checkExercise3() {
+            let score = 0;
+            const total = 5;
+
+            for (let i = 1; i <= total; i++) {
+                const input = document.getElementById(`ex3q${i}`);
+                const feedback = document.getElementById(`ex3feedback${i}`);
+                const userAnswer = normalizeText(input.value);
+                
+                if (userAnswer === '') {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = '❌ Veuillez écrire une phrase';
+                    input.style.borderColor = '#e74c3c';
+                    continue;
+                }
+
+                const hasAdverb = adverbs.some(adv => userAnswer.includes(adv));
+                const hasVerb = userAnswer.includes(verbs[i-1]);
+                const verbIndex = userAnswer.indexOf(verbs[i-1]);
+                const adverbAfterVerb = adverbs.some(adv => {
+                    const advIndex = userAnswer.indexOf(adv);
+                    return advIndex > verbIndex && advIndex !== -1;
+                });
+
+                if (hasAdverb && hasVerb && adverbAfterVerb) {
+                    feedback.className = 'feedback correct show';
+                    feedback.textContent = '✅ Bonne structure ! Verbe + Adverbe';
+                    input.style.borderColor = '#27ae60';
+                    score++;
+                } else if (!hasAdverb) {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = '❌ N\'oubliez pas d\'ajouter un adverbe de fréquence';
+                    input.style.borderColor = '#e74c3c';
+                } else if (!adverbAfterVerb) {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = '❌ L\'adverbe doit être placé APRÈS le verbe';
+                    input.style.borderColor = '#e74c3c';
+                } else {
+                    feedback.className = 'feedback incorrect show';
+                    feedback.textContent = '❌ Vérifiez la structure de votre phrase';
+                    input.style.borderColor = '#e74c3c';
+                }
+            }
+
+            displayScore('score3', score, total);
+        }
+
+        function displayScore(scoreId, score, total) {
+            const scoreDisplay = document.getElementById(scoreId);
+            scoreDisplay.className = 'score-display show';
+            
+            if (score === total) {
+                scoreDisplay.style.background = '#d4edda';
+                scoreDisplay.style.color = '#155724';
+                scoreDisplay.innerHTML = `🎉 Parfait ! Score : ${score}/${total}`;
+            } else if (score >= total * 0.6) {
+                scoreDisplay.style.background = '#fff3cd';
+                scoreDisplay.style.color = '#856404';
+                scoreDisplay.innerHTML = `👍 Bien ! Score : ${score}/${total}`;
+            } else {
+                scoreDisplay.style.background = '#f8d7da';
+                scoreDisplay.style.color = '#721c24';
+                scoreDisplay.innerHTML = `💪 Score : ${score}/${total} - Continuez !`;
+            }
+        }
+
+        function resetExercise1() {
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById(`ex1q${i}`);
+                const feedback = document.getElementById(`ex1feedback${i}`);
+                input.value = '';
+                input.style.borderColor = '#ddd';
+                feedback.className = 'feedback';
+            }
+            document.getElementById('score1').className = 'score-display';
+        }
+
+        function resetExercise2() {
+            for (let i = 1; i <= 5; i++) {
+                const select = document.getElementById(`ex2q${i}`);
+                const feedback = document.getElementById(`ex2feedback${i}`);
+                select.value = '';
+                select.style.borderColor = '#ddd';
+                feedback.className = 'feedback';
+            }
+            document.getElementById('score2').className = 'score-display';
+        }
+
+        function resetExercise3() {
+            for (let i = 1; i <= 5; i++) {
+                const input = document.getElementById(`ex3q${i}`);
+                const feedback = document.getElementById(`ex3feedback${i}`);
+                input.value = '';
+                input.style.borderColor = '#ddd';
+                feedback.className = 'feedback';
+            }
+            document.getElementById('score3').className = 'score-display';
+        }
+    </script>
+</body>
+</html>
