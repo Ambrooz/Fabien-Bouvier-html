@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Heure, La Météo et Les Vêtements</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        h2 {
+            font-size: 2rem;
+            color: #2575fc;
+            margin: 30px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #6a11cb;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            color: #6a11cb;
+            margin: 25px 0 15px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 50px;
+            margin-top: 10px;
+        }
+        
+        .section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .dialogue {
+            background-color: #f0f7ff;
+            border-left: 5px solid #2575fc;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .dialogue-line {
+            margin-bottom: 10px;
+            display: flex;
+        }
+        
+        .speaker {
+            font-weight: bold;
+            color: #6a11cb;
+            min-width: 100px;
+        }
+        
+        .tip-box {
+            background-color: #fff8e1;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        .warning-box {
+            background-color: #ffebee;
+            border-left: 5px solid #f44336;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        th {
+            background-color: #6a11cb;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+        
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        .clothing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .clothing-item {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid #eaeaea;
+        }
+        
+        .clothing-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .clothing-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .clothing-name {
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .clothing-translation {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 5px;
+        }
+        
+        .language-tag {
+            display: inline-block;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            margin-right: 5px;
+        }
+        
+        .time-block {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .time-item {
+            flex: 1;
+            min-width: 200px;
+            background-color: #f0f7ff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .season-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .season-emoji {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+        }
+        
+        @media (max-width: 768px) {
+            .clothing-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .time-block {
+                flex-direction: column;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🕐 L'Heure, La Météo et Les Vêtements</h1>
+        <div class="subtitle">Niveau A1 • Pour adulte russophone</div>
+        <div class="subtitle">Время, погода и одежда</div>
+    </header>
+
+    <section class="section">
+        <h2>📖 DIALOGUE : Une journée à Paris</h2>
+        
+        <div class="tip-box">
+            <strong>💡 Conseil pour l'écoute :</strong> Lisez le dialogue à voix haute plusieurs fois. Enregistrez-vous et réécoutez. Cela vous aidera à reconnaître les mots à l'oral !
+        </div>
+        
+        <div class="dialogue">
+            <div class="dialogue-line">
+                <div class="speaker">Sophie :</div>
+                <div>Bonjour Marie ! Quelle heure est-il ?</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Marie :</div>
+                <div>Il est neuf heures du matin. Tu as rendez-vous ?</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Sophie :</div>
+                <div>Oui, j'ai rendez-vous chez le dentiste à dix heures et quart.</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Marie :</div>
+                <div>Quel temps fait-il aujourd'hui ?</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Sophie :</div>
+                <div>Il fait froid et il pleut. C'est un mauvais temps ! Je porte mon manteau gris et mes bottes noires.</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Marie :</div>
+                <div>Ah oui, il fait mauvais. Moi, je porte une veste rouge et un pantalon bleu. J'ai aussi mon parapluie !</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Sophie :</div>
+                <div>Tu as raison ! En hiver, il faut toujours un parapluie à Paris. Et toi, tu travailles aujourd'hui ?</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Marie :</div>
+                <div>Oui, je travaille de midi à dix-huit heures. Mon cours commence à midi et demi.</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Sophie :</div>
+                <div>D'accord. Et ce soir ?</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Marie :</div>
+                <div>Ce soir, j'ai un dîner avec Thomas à vingt heures. Il fait nuit tôt en ce moment !</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Sophie :</div>
+                <div>C'est vrai ! Bon, je dois partir. À bientôt !</div>
+            </div>
+            <div class="dialogue-line">
+                <div class="speaker">Marie :</div>
+                <div>À bientôt Sophie ! Bonne journée !</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>🕐 DIRE L'HEURE (Говорить о времени)</h2>
+        
+        <h3>📌 Structure de base</h3>
+        <p><strong>Question :</strong> Quelle heure est-il ? <span class="language-tag">Который час?</span></p>
+        <p><strong>Réponse :</strong> Il est + [heure]</p>
+        
+        <h3>⏰ Les heures</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Français</th>
+                    <th>Russe</th>
+                    <th>Anglais</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Il est une heure.</td>
+                    <td>1:00 (Час)</td>
+                    <td>It's 1 o'clock</td>
+                </tr>
+                <tr>
+                    <td>Il est deux heures.</td>
+                    <td>2:00 (Два часа)</td>
+                    <td>It's 2 o'clock</td>
+                </tr>
+                <tr>
+                    <td>Il est midi.</td>
+                    <td>12:00 (Полдень)</td>
+                    <td>It's noon</td>
+                </tr>
+                <tr>
+                    <td>Il est minuit.</td>
+                    <td>00:00 (Полночь)</td>
+                    <td>It's midnight</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>⏰ Les minutes</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Français</th>
+                    <th>Heure</th>
+                    <th>Russe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Il est trois heures cinq.</td>
+                    <td>3:05</td>
+                    <td>3 часа 5 минут</td>
+                </tr>
+                <tr>
+                    <td>Il est trois heures et quart.</td>
+                    <td>3:15</td>
+                    <td>3 часа 15 минут (четверть четвёртого)</td>
+                </tr>
+                <tr>
+                    <td>Il est trois heures et demie.</td>
+                    <td>3:30</td>
+                    <td>3 часа 30 минут (половина четвёртого)</td>
+                </tr>
+                <tr>
+                    <td>Il est quatre heures moins le quart.</td>
+                    <td>3:45</td>
+                    <td>Без четверти 4 (без 15 минут 4)</td>
+                </tr>
+                <tr>
+                    <td>Il est quatre heures moins dix.</td>
+                    <td>3:50</td>
+                    <td>Без 10 минут 4</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="warning-box">
+            <strong>⚠️ Attention !</strong> Pour 1 heure : une heure (singulier)<br>
+            Pour 2h et plus : deux heures, trois heures... (pluriel)
+        </div>
+        
+        <h3>🌅 Les moments de la journée</h3>
+        <div class="time-block">
+            <div class="time-item">
+                <h4>du matin</h4>
+                <p>[dy matɛ̃]</p>
+                <p><span class="language-tag">🇷🇺 утра</span> • <span class="language-tag">🇬🇧 in the morning</span></p>
+                <p>7h du matin = 7:00 AM</p>
+            </div>
+            <div class="time-item">
+                <h4>de l'après-midi</h4>
+                <p>[də lapʁɛmidi]</p>
+                <p><span class="language-tag">🇷🇺 дня</span> • <span class="language-tag">🇬🇧 in the afternoon</span></p>
+                <p>3h de l'après-midi = 3:00 PM</p>
+            </div>
+            <div class="time-item">
+                <h4>du soir</h4>
+                <p>[dy swaʁ]</p>
+                <p><span class="language-tag">🇷🇺 вечера</span> • <span class="language-tag">🇬🇧 in the evening</span></p>
+                <p>8h du soir = 8:00 PM</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>☀️ LA MÉTÉO (Погода)</h2>
+        
+        <h3>📌 Question principale</h3>
+        <p><strong>Quel temps fait-il ?</strong></p>
+        <p><span class="language-tag">🇷🇺 Какая погода?</span> • <span class="language-tag">🇬🇧 What's the weather like?</span></p>
+        
+        <h3>🌤️ Le temps qu'il fait</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 60px;">Symbole</th>
+                    <th>Expression</th>
+                    <th>Traduction russe</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">☀️</td>
+                    <td><strong>Il fait beau.</strong></td>
+                    <td>Хорошая погода</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">🌞</td>
+                    <td><strong>Il fait chaud.</strong></td>
+                    <td>Жарко</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">❄️</td>
+                    <td><strong>Il fait froid.</strong></td>
+                    <td>Холодно</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">☁️</td>
+                    <td><strong>Il fait mauvais.</strong></td>
+                    <td>Плохая погода</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">🌧️</td>
+                    <td><strong>Il pleut.</strong></td>
+                    <td>Идёт дождь</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">❄️</td>
+                    <td><strong>Il neige.</strong></td>
+                    <td>Идёт снег</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">💨</td>
+                    <td><strong>Il y a du vent.</strong></td>
+                    <td>Ветрено</td>
+                </tr>
+                <tr>
+                    <td style="text-align: center; font-size: 1.5rem;">🌫️</td>
+                    <td><strong>Il y a du brouillard.</strong></td>
+                    <td>Туман</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>🌡️ Les saisons (Времена года)</h3>
+        <div class="season-item">
+            <div class="season-emoji">🌸</div>
+            <div>
+                <h4>le printemps <span class="language-tag">весна</span></h4>
+                <p><strong>Exemple :</strong> Au printemps, il fait doux.</p>
+            </div>
+        </div>
+        <div class="season-item">
+            <div class="season-emoji">☀️</div>
+            <div>
+                <h4>l'été <span class="language-tag">лето</span></h4>
+                <p><strong>Exemple :</strong> En été, il fait chaud.</p>
+            </div>
+        </div>
+        <div class="season-item">
+            <div class="season-emoji">🍂</div>
+            <div>
+                <h4>l'automne <span class="language-tag">осень</span></h4>
+                <p><strong>Exemple :</strong> En automne, il pleut souvent.</p>
+            </div>
+        </div>
+        <div class="season-item">
+            <div class="season-emoji">❄️</div>
+            <div>
+                <h4>l'hiver <span class="language-tag">зима</span></h4>
+                <p><strong>Exemple :</strong> En hiver, il fait froid.</p>
+            </div>
+        </div>
+        
+        <div class="tip-box">
+            <strong>📝 Astuce :</strong> On dit <strong>au printemps</strong> MAIS <strong>en été / en automne / en hiver</strong>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>👔 LES VÊTEMENTS (Одежда)</h2>
+        
+        <h3>📌 Verbe PORTER (носить)</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Pronom</th>
+                    <th>Conjugaison</th>
+                    <th>Exemple</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Je</td>
+                    <td>porte</td>
+                    <td>Je porte un jean.</td>
+                </tr>
+                <tr>
+                    <td>Tu</td>
+                    <td>portes</td>
+                    <td>Tu portes une robe.</td>
+                </tr>
+                <tr>
+                    <td>Il/Elle</td>
+                    <td>porte</td>
+                    <td>Elle porte une jupe.</td>
+                </tr>
+                <tr>
+                    <td>Nous</td>
+                    <td>portons</td>
+                    <td>Nous portons des manteaux.</td>
+                </tr>
+                <tr>
+                    <td>Vous</td>
+                    <td>portez</td>
+                    <td>Vous portez un costume.</td>
+                </tr>
+                <tr>
+                    <td>Ils/Elles</td>
+                    <td>portent</td>
+                    <td>Ils portent des chaussures.</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>👕 Les vêtements essentiels</h3>
+        <div class="clothing-grid">
+            <!-- Vêtements originaux -->
+            <div class="clothing-item">
+                <div class="clothing-emoji">👕</div>
+                <div class="clothing-name">un t-shirt</div>
+                <div class="clothing-translation">футболка (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👔</div>
+                <div class="clothing-name">une chemise</div>
+                <div class="clothing-translation">рубашка (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👗</div>
+                <div class="clothing-name">une robe</div>
+                <div class="clothing-translation">платье (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👖</div>
+                <div class="clothing-name">un pantalon</div>
+                <div class="clothing-translation">брюки (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👖</div>
+                <div class="clothing-name">un jean</div>
+                <div class="clothing-translation">джинсы (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👗</div>
+                <div class="clothing-name">une jupe</div>
+                <div class="clothing-translation">юбка (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧥</div>
+                <div class="clothing-name">un manteau</div>
+                <div class="clothing-translation">пальто (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧥</div>
+                <div class="clothing-name">une veste</div>
+                <div class="clothing-translation">куртка (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👟</div>
+                <div class="clothing-name">des chaussures (f)</div>
+                <div class="clothing-translation">туфли</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👢</div>
+                <div class="clothing-name">des bottes (f)</div>
+                <div class="clothing-translation">ботинки</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧣</div>
+                <div class="clothing-name">une écharpe</div>
+                <div class="clothing-translation">шарф (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧢</div>
+                <div class="clothing-name">un chapeau</div>
+                <div class="clothing-translation">шляпа (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">☂️</div>
+                <div class="clothing-name">un parapluie</div>
+                <div class="clothing-translation">зонт (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧦</div>
+                <div class="clothing-name">des chaussettes (f)</div>
+                <div class="clothing-translation">носки</div>
+            </div>
+            
+            <!-- Nouveaux vêtements ajoutés -->
+            <div class="clothing-item">
+                <div class="clothing-emoji">🥼</div>
+                <div class="clothing-name">un costume (smoking)</div>
+                <div class="clothing-translation">костюм (m) / смокинг (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🩱</div>
+                <div class="clothing-name">un maillot de bain</div>
+                <div class="clothing-translation">купальник (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👔</div>
+                <div class="clothing-name">une cravate</div>
+                <div class="clothing-translation">галстук (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧢</div>
+                <div class="clothing-name">une casquette</div>
+                <div class="clothing-translation">кепка (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧶</div>
+                <div class="clothing-name">un pull-over</div>
+                <div class="clothing-translation">пуловер (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🛡️</div>
+                <div class="clothing-name">une ceinture</div>
+                <div class="clothing-translation">ремень (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">👓</div>
+                <div class="clothing-name">des lunettes (f)</div>
+                <div class="clothing-translation">очки</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧶</div>
+                <div class="clothing-name">un bonnet</div>
+                <div class="clothing-translation">шапка (f)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🩳</div>
+                <div class="clothing-name">un short</div>
+                <div class="clothing-translation">шорты (m)</div>
+            </div>
+            <div class="clothing-item">
+                <div class="clothing-emoji">🧤</div>
+                <div class="clothing-name">des gants (m)</div>
+                <div class="clothing-translation">перчатки</div>
+            </div>
+        </div>
+        
+        <div class="warning-box">
+            <strong>⚠️ Important !</strong> Les vêtements s'accordent avec les couleurs :<br>
+            • un pantalon noir (masculin)<br>
+            • une robe noire (féminin)<br>
+            • des chaussures noires (pluriel)
+        </div>
+    </section>
+
+    <footer>
+        <p>Cours de français pour débutants - Niveau A1</p>
+        <p>Inclut tous les vêtements demandés : costume/smoking, maillot de bain, cravate, casquette, pull over, ceinture, lunette, bonnet, short, gants</p>
+    </footer>
+</body>
+</html>
