@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préparation à la Dictée - Participe passé et accord</title>
+    <style>
+        :root {
+            --primary: #4A6FA5;
+            --secondary: #FFC857;
+            --accent: #E76F51;
+            --light: #F8F9FA;
+            --dark: #264653;
+            --correct: #2A9D8F;
+            --wrong: #E63946;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', cursive;
+        }
+        
+        body {
+            background-color: #E9F5F9;
+            color: var(--dark);
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background-image: radial-gradient(#c1d8e8 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary), #6A98D4);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border: 8px solid var(--secondary);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header:before {
+            content: "✏️";
+            position: absolute;
+            font-size: 80px;
+            opacity: 0.2;
+            right: 30px;
+            top: 10px;
+            transform: rotate(15deg);
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 0 var(--dark);
+        }
+        
+        h2 {
+            color: var(--primary);
+            border-bottom: 4px dashed var(--secondary);
+            padding-bottom: 10px;
+            margin: 25px 0 15px;
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            color: var(--accent);
+            margin: 20px 0 10px;
+            font-size: 1.4rem;
+        }
+        
+        .subtitle {
+            font-size: 1.3rem;
+            background-color: rgba(255,255,255,0.2);
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 50px;
+            margin-top: 10px;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            border: 5px solid;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .vocabulary-card {
+            border-color: var(--primary);
+        }
+        
+        .rules-card {
+            border-color: var(--correct);
+        }
+        
+        .exercises-card {
+            border-color: var(--accent);
+            grid-column: 1 / -1;
+        }
+        
+        .word-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .word-item {
+            background-color: #EFF7FF;
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-left: 6px solid var(--primary);
+        }
+        
+        .word-item.noun {
+            border-left-color: #4A6FA5;
+        }
+        
+        .word-item.adjective {
+            border-left-color: var(--correct);
+        }
+        
+        .word-item.invariable {
+            border-left-color: var(--accent);
+        }
+        
+        .word-item.verb {
+            border-left-color: #9D4EDD;
+        }
+        
+        .rule-box {
+            background-color: #F0F9F7;
+            padding: 18px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border-left: 6px solid var(--correct);
+        }
+        
+        .highlight {
+            background-color: #FFF9C4;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        
+        .example {
+            font-style: italic;
+            color: #666;
+            margin: 10px 0;
+            padding-left: 15px;
+            border-left: 3px solid #CCC;
+        }
+        
+        .arabic-translation {
+            background-color: #E8F5E9;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-right: 5px solid #4CAF50;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            direction: rtl;
+            text-align: right;
+        }
+        
+        .exercise {
+            background-color: #FFF5F0;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .blank-input {
+            border: 2px dashed #AAA;
+            background-color: #FFF;
+            padding: 8px 12px;
+            border-radius: 8px;
+            width: 120px;
+            text-align: center;
+            font-size: 1rem;
+            margin: 0 5px;
+        }
+        
+        .blank-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: #F0F7FF;
+        }
+        
+        .text-blank {
+            width: 140px;
+        }
+        
+        .check-button, .reveal-button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1rem;
+            cursor: pointer;
+            margin: 15px 10px 10px 0;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .check-button:hover, .reveal-button:hover {
+            background-color: #3A5A95;
+            transform: scale(1.05);
+        }
+        
+        .reveal-button {
+            background-color: var(--accent);
+        }
+        
+        .reveal-button:hover {
+            background-color: #D65F41;
+        }
+        
+        .answer {
+            background-color: #E7F7E7;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            border: 2px solid var(--correct);
+            display: none;
+        }
+        
+        .answer.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .correct {
+            color: var(--correct);
+            font-weight: bold;
+        }
+        
+        .incorrect {
+            color: var(--wrong);
+            font-weight: bold;
+        }
+        
+        .dictation-practice {
+            background-color: #FFFDF0;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 20px;
+            border: 3px dotted var(--secondary);
+        }
+        
+        .sentence {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            padding: 15px;
+            background-color: white;
+            border-radius: 10px;
+            line-height: 1.8;
+        }
+        
+        .tip-box {
+            background-color: #FFF0F5;
+            padding: 15px;
+            border-radius: 12px;
+            margin: 20px 0;
+            border: 3px solid #FFB6C1;
+        }
+        
+        .tip-title {
+            color: #D81B60;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        
+        .reminder {
+            text-align: center;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, var(--secondary), #FFD166);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 30px;
+            font-weight: bold;
+            color: var(--dark);
+        }
+        
+        .category-tag {
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            background-color: #EEE;
+            font-weight: normal;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 3px solid var(--primary);
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .full-text-exercise {
+            background-color: #F5F0FF;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 3px solid #9D4EDD;
+        }
+        
+        .text-with-blanks {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .exercise-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #9D4EDD;
+        }
+        
+        .vocab-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Préparation à la Dictée</h1>
+        <div class="subtitle">Participe passé en -é ou infinitif en -er - L'accord dans le groupe nominal</div>
+    </header>
+    
+    <div class="container">
+        <div class="card vocabulary-card">
+            <h2>📚 Vocabulaire complet à maîtriser</h2>
+            
+            <div class="vocab-section">
+                <h3>Noms à connaître</h3>
+                <div class="word-list">
+                    <div class="word-item noun">Une femme<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Une chevelure<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Le soleil<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">La taille<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Une ceinture<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Le cuir<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Un collier<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Une perle<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Un bracelet<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Une personne<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Une carrure<span class="category-tag">nom</span></div>
+                    <div class="word-item noun">Un bras<span class="category-tag">nom</span></div>
+                </div>
+            </div>
+            
+            <div class="vocab-section">
+                <h3>Verbes à maîtriser</h3>
+                <div class="word-list">
+                    <div class="word-item verb">Rester<span class="category-tag">verbe</span></div>
+                    <div class="word-item verb">Descendre<span class="category-tag">verbe</span></div>
+                    <div class="word-item verb">Mettre<span class="category-tag">verbe</span></div>
+                    <div class="word-item verb">Sembler<span class="category-tag">verbe</span></div>
+                </div>
+            </div>
+            
+            <div class="vocab-section">
+                <h3>Adjectifs à savoir écrire</h3>
+                <div class="word-list">
+                    <div class="word-item adjective">Vieille<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Isolé<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Abandonné<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Creusé<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Serré<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Argenté<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Impressionnant<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Important<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Immense<span class="category-tag">adjectif</span></div>
+                    <div class="word-item adjective">Interminable<span class="category-tag">adjectif</span></div>
+                </div>
+            </div>
+            
+            <div class="vocab-section">
+                <h3>Mots invariables</h3>
+                <div class="word-list">
+                    <div class="word-item invariable">Encore<span class="category-tag">invariable</span></div>
+                    <div class="word-item invariable">Régulièrement<span class="category-tag">invariable</span></div>
+                    <div class="word-item invariable">Souvent<span class="category-tag">invariable</span></div>
+                    <div class="word-item invariable">À cause<span class="category-tag">invariable</span></div>
+                    <div class="word-item invariable">Toujours<span class="category-tag">invariable</span></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card rules-card">
+            <h2>📖 Règles de français</h2>
+            
+            <div class="rule-box">
+                <h3>Participe passé en -é ou infinitif en -er ?</h3>
+                <p>Pour ne pas confondre, on peut essayer de remplacer par un verbe du 3ᵉ groupe comme "prendre" :</p>
+                <ul>
+                    <li>Si on peut dire "pris" → c'est un <span class="highlight">participe passé</span> (en -é)</li>
+                    <li>Si on peut dire "prendre" → c'est un <span class="highlight">infinitif</span> (en -er)</li>
+                </ul>
+                
+                <div class="arabic-translation">
+                    للتمييز بين المصدر (infinitif) بصيغة -er والماضي التام (participe passé) بصيغة -é، يمكن استبدال الفعل بفعل من المجموعة الثالثة مثل "prendre" (يأخذ):
+                    <br>• إذا كان بالإمكان قول "pris" (أخذ) ← يكون الماضي التام (participe passé) بصيغة -é
+                    <br>• إذا كان بالإمكان قول "prendre" (يأخذ) ← يكون المصدر (infinitif) بصيغة -er
+                </div>
+                
+                <div class="example">Exemple : "J'ai mangé" → on peut dire "J'ai pris" → donc c'est "mangé" avec -é.</div>
+                <div class="example">Exemple : "Je vais manger" → on peut dire "Je vais prendre" → donc c'est "manger" avec -er.</div>
+                
+                <div class="arabic-translation">
+                    مثال: "J'ai mangé" (لقد أكلت) ← يمكننا قول "J'ai pris" (لقد أخذت) ← إذن هي "mangé" مع -é
+                    <br>مثال: "Je vais manger" (سوف آكل) ← يمكننا قول "Je vais prendre" (سوف آخذ) ← إذن هي "manger" مع -er
+                </div>
+                
+                <div class="exercise">
+                    <h4>Exercice 1 : -é ou -er ?</h4>
+                    <p>Complète avec la bonne terminaison :</p>
+                    
+                    <div class="sentence">
+                        1. Elle va chant<span id="blank1" contenteditable="true" class="blank-input"></span> une chanson.
+                    </div>
+                    
+                    <div class="sentence">
+                        2. Nous avons écout<span id="blank2" contenteditable="true" class="blank-input"></span> de la musique.
+                    </div>
+                    
+                    <div class="sentence">
+                        3. Il faut descend<span id="blank3" contenteditable="true" class="blank-input"></span> doucement.
+                    </div>
+                    
+                    <div class="sentence">
+                        4. Ils sont rest<span id="blank4" contenteditable="true" class="blank-input"></span> à la maison.
+                    </div>
+                    
+                    <button class="check-button" onclick="checkExercise1()">Vérifier</button>
+                    <button class="reveal-button" onclick="revealExercise1()">Voir les réponses</button>
+                    
+                    <div id="answer1" class="answer">
+                        <p>Réponses correctes :</p>
+                        <ol>
+                            <li>chanter (-er) → on peut dire "Elle va prendre"</li>
+                            <li>écouté (-é) → on peut dire "Nous avons pris"</li>
+                            <li>descendre (-re) → verbe du 3ᵉ groupe</li>
+                            <li>restés (-és) → participe passé avec "sont"</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="rule-box">
+                <h3>L'accord dans le groupe nominal (GN)</h3>
+                <p>Dans un groupe nominal, le nom et l'adjectif s'accordent en genre (masculin/féminin) et en nombre (singulier/pluriel).</p>
+                
+                <div class="arabic-translation">
+                    في المجموعة الإسمية (groupe nominal)، الاسم والصفة يتطابقان في الجنس (مذكر/مؤنث) والعدد (مفرد/جمع).
+                </div>
+                
+                <div class="example">Exemple : "une vieille maison" → "vieille" s'accorde avec "maison" (féminin singulier).</div>
+                <div class="example">Exemple : "des bracelets argentés" → "argentés" s'accorde avec "bracelets" (masculin pluriel).</div>
+                
+                <div class="arabic-translation">
+                    مثال: "une vieille maison" (منزل قديم) ← "vieille" (قديم) تتطابق مع "maison" (منزل - مؤنث مفرد)
+                    <br>مثال: "des bracelets argentés" (أساور فضية) ← "argentés" (فضية) تتطابق مع "bracelets" (أساور - مذكر جمع)
+                </div>
+                
+                <div class="exercise">
+                    <h4>Exercice 2 : Accord des adjectifs</h4>
+                    <p>Accorde correctement les adjectifs :</p>
+                    
+                    <div class="sentence">
+                        1. Une <input type="text" id="adj1" class="blank-input" placeholder="..."> (vieux) femme.
+                    </div>
+                    
+                    <div class="sentence">
+                        2. Des colliers <input type="text" id="adj2" class="blank-input" placeholder="..."> (argenté).
+                    </div>
+                    
+                    <div class="sentence">
+                        3. Un chemin <input type="text" id="adj3" class="blank-input" placeholder="..."> (serré).
+                    </div>
+                    
+                    <div class="sentence">
+                        4. La maison <input type="text" id="adj4" class="blank-input" placeholder="..."> (abandonné).
+                    </div>
+                    
+                    <button class="check-button" onclick="checkExercise2()">Vérifier</button>
+                    <button class="reveal-button" onclick="revealExercise2()">Voir les réponses</button>
+                    
+                    <div id="answer2" class="answer">
+                        <p>Réponses correctes :</p>
+                        <ol>
+                            <li>vieille → accord avec "femme" (féminin singulier)</li>
+                            <li>argentés → accord avec "colliers" (masculin pluriel)</li>
+                            <li>serré → accord avec "chemin" (masculin singulier)</li>
+                            <li>abandonnée → accord avec "maison" (féminin singulier)</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-box">
+                <div class="tip-title">💡 Astuce importante</div>
+                <p>Quand tu hésites entre -é et -er, chuchote "prendre" à la place du verbe. Ton oreille t'aidera à choisir !</p>
+                <div class="arabic-translation">
+                    عندما تتردد بين -é و -er، اهمس بكلمة "prendre" (يأخذ) مكان الفعل. سوف تساعدك أذنك على الاختيار!
+                </div>
+            </div>
+        </div>
+        
+        <div class="card exercises-card">
+            <h2>✏️ Exercices supplémentaires</h2>
+            
+            <div class="exercise">
+                <h3>Exercice 3 : Mots invariables à placer</h3>
+                <p>Choisis le bon mot invariable pour chaque phrase :</p>
+                
+                <div class="sentence">
+                    1. Je vais <select id="inv1" class="blank-input">
+                        <option value="">choisir</option>
+                        <option value="encore">encore</option>
+                        <option value="souvent">souvent</option>
+                        <option value="toujours">toujours</option>
+                    </select> un peu attendre.
+                </div>
+                
+                <div class="sentence">
+                    2. <select id="inv2" class="blank-input">
+                        <option value="">choisir</option>
+                        <option value="À cause">À cause</option>
+                        <option value="Souvent">Souvent</option>
+                        <option value="Toujours">Toujours</option>
+                    </select> du mauvais temps, nous restons.
+                </div>
+                
+                <div class="sentence">
+                    3. Elle vient <select id="inv3" class="blank-input">
+                        <option value="">choisir</option>
+                        <option value="régulièrement">régulièrement</option>
+                        <option value="toujours">toujours</option>
+                        <option value="encore">encore</option>
+                    </select> nous voir.
+                </div>
+                
+                <div class="sentence">
+                    4. Il est <select id="inv4" class="blank-input">
+                        <option value="">choisir</option>
+                        <option value="toujours">toujours</option>
+                        <option value="souvent">souvent</option>
+                        <option value="régulièrement">régulièrement</option>
+                    </select> le premier arrivé.
+                </div>
+                
+                <button class="check-button" onclick="checkExercise3()">Vérifier</button>
+                <button class="reveal-button" onclick="revealExercise3()">Voir les réponses</button>
+                
+                <div id="answer3" class="answer">
+                    <p>Réponses possibles :</p>
+                    <ol>
+                        <li>encore → pour indiquer une durée supplémentaire</li>
+                        <li>À cause → pour indiquer la cause</li>
+                        <li>régulièrement → pour indiquer la fréquence</li>
+                        <li>toujours → pour indiquer la permanence</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="full-text-exercise">
+            <h2 class="exercise-title">📝 Texte à trous - Dictée d'entraînement</h2>
+            <p>Complète le texte avec les mots manquants. Utilise le vocabulaire appris !</p>
+            
+            <div class="text-with-blanks">
+                <p>
+                    La <input type="text" id="trou1" class="blank-input text-blank" placeholder="..."> (vieux) femme
+                    <strong>semble</strong>
+                    <input type="text" id="trou2" class="blank-input text-blank" placeholder="..."> (isolé). Elle
+                    <strong>est restée</strong>
+                    <input type="text" id="trou3" class="blank-input text-blank" placeholder="..."> (abandonner) dans
+                    cette maison pendant longtemps.
+                </p>
+                
+                <p>
+                    Sous le <input type="text" id="trou4" class="blank-input text-blank" placeholder="..."> (soleil),
+                    son <strong>bracelet</strong> en
+                    <input type="text" id="trou5" class="blank-input text-blank" placeholder="..."> (cuir) brille.
+                    Sa <input type="text" id="trou6" class="blank-input text-blank" placeholder="..."> (ceinture) est
+                    <strong>serrée</strong>.
+                </p>
+                
+                <p>
+                    Pour <input type="text" id="trou7" class="blank-input text-blank" placeholder="..."> (descendre)
+                    à la cave, l'escalier est <input type="text" id="trou8" class="blank-input text-blank" placeholder="..."> (creuser)
+                    dans la pierre. C'est <input type="text" id="trou9" class="blank-input text-blank" placeholder="..."> (impressionnant) !
+                </p>
+                
+                <p>
+                    Elle vient <strong>souvent</strong>
+                    nous voir. Nous l'attendons <input type="text" id="trou10" class="blank-input text-blank" placeholder="..."> (toujours)
+                    avec joie.
+                </p>
+            </div>
+            
+            <button class="check-button" onclick="checkFullText()">Vérifier le texte</button>
+            <button class="reveal-button" onclick="revealFullText()">Voir le texte complet</button>
+            
+            <div id="answerFull" class="answer">
+                <h3>Texte complet corrigé :</h3>
+                <div class="sentence" style="background-color: #F0F7FF; font-weight: bold;">
+                    <p>La <span class="correct">vieille</span> femme
+                    <strong>semble</strong>
+                    <span class="correct">isolée</span>. Elle
+                    <strong>est restée</strong>
+                    <span class="correct">abandonnée</span> dans
+                    cette maison pendant longtemps.</p>
+                    
+                    <p>Sous le <span class="correct">soleil</span>,
+                    son <strong>bracelet</strong> en
+                    <span class="correct">cuir</span> brille.
+                    Sa <span class="correct">ceinture</span> est
+                    <strong>serrée</strong>.</p>
+                    
+                    <p>Pour <span class="correct">descendre</span>
+                    à la cave, l'escalier est <span class="correct">creusé</span>
+                    dans la pierre. C'est <span class="correct">impressionnant</span> !</p>
+                    
+                    <p>Elle vient <strong>souvent</strong>
+                    nous voir. Nous l'attendons <span class="correct">toujours</span>
+                    avec joie.</p>
+                </div>
+                <p style="margin-top: 15px;">Bravo ! Tu as complété la dictée d'entraînement.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="reminder">
+        🎯 N'oublie pas de bien relire ta dictée pour vérifier les accords et les terminaisons !
+    </div>
+    
+    <footer>
+        <p>Préparation à la dictée - Participe passé et accord dans le GN</p>
+        <p>© Pour un usage éducatif - Exercices interactifs de français</p>
+    </footer>
+
+    <script>
+        function checkExercise1() {
+            const answers = {
+                blank1: "er",
+                blank2: "é",
+                blank3: "re",
+                blank4: "és"
+            };
+            
+            let allCorrect = true;
+            
+            for (let id in answers) {
+                const element = document.getElementById(id);
+                const userAnswer = element.textContent ? element.textContent.trim().toLowerCase() : "";
+                
+                // Accepter différentes orthographes (avec/sans accents)
+                const normalizedUser = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const normalizedCorrect = answers[id].normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                
+                if (normalizedUser === normalizedCorrect || userAnswer === answers[id]) {
+                    element.style.backgroundColor = "#C8E6C9";
+                    element.style.borderColor = "#2A9D8F";
+                } else {
+                    element.style.backgroundColor = "#FFCDD2";
+                    element.style.borderColor = "#E63946";
+                    allCorrect = false;
+                }
+            }
+            
+            if (allCorrect) {
+                alert("🎉 Excellent ! Toutes tes réponses sont correctes !");
+            } else {
+                alert("Quelques erreurs. Souviens-toi de la technique avec le verbe 'prendre' !");
+            }
+        }
+        
+        function revealExercise1() {
+            document.getElementById('answer1').classList.add('show');
+        }
+        
+        function checkExercise2() {
+            const answers = {
+                adj1: "vieille",
+                adj2: "argentés",
+                adj3: "serré",
+                adj4: "abandonnée"
+            };
+            
+            let allCorrect = true;
+            
+            for (let id in answers) {
+                const element = document.getElementById(id);
+                const userAnswer = element.value ? element.value.trim().toLowerCase() : "";
+                
+                // Accepter différentes orthographes (avec/sans accents)
+                const normalizedUser = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const normalizedCorrect = answers[id].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                
+                if (normalizedUser === normalizedCorrect || userAnswer === answers[id].toLowerCase()) {
+                    element.style.backgroundColor = "#C8E6C9";
+                    element.style.borderColor = "#2A9D8F";
+                } else {
+                    element.style.backgroundColor = "#FFCDD2";
+                    element.style.borderColor = "#E63946";
+                    allCorrect = false;
+                }
+            }
+            
+            if (allCorrect) {
+                alert("👍 Parfait ! Tu maîtrises les accords des adjectifs !");
+            } else {
+                alert("Quelques erreurs d'accord. N'oublie pas : l'adjectif s'accorde avec le nom !");
+            }
+        }
+        
+        function revealExercise2() {
+            document.getElementById('answer2').classList.add('show');
+        }
+        
+        function checkExercise3() {
+            // Plusieurs réponses possibles pour certaines phrases
+            const possibleAnswers = {
+                inv1: ["encore"],
+                inv2: ["à cause"],
+                inv3: ["régulièrement"],
+                inv4: ["toujours"]
+            };
+            
+            let correctCount = 0;
+            const total = Object.keys(possibleAnswers).length;
+            
+            for (let id in possibleAnswers) {
+                const element = document.getElementById(id);
+                const userAnswer = element.value ? element.value.toLowerCase() : "";
+                const possible = possibleAnswers[id];
+                
+                let isCorrect = false;
+                for (let i = 0; i < possible.length; i++) {
+                    if (userAnswer === possible[i].toLowerCase()) {
+                        isCorrect = true;
+                        break;
+                    }
+                }
+                
+                if (isCorrect) {
+                    element.style.backgroundColor = "#C8E6C9";
+                    element.style.borderColor = "#2A9D8F";
+                    correctCount++;
+                } else if (userAnswer) {
+                    element.style.backgroundColor = "#FFCDD2";
+                    element.style.borderColor = "#E63946";
+                }
+            }
+            
+            if (correctCount === total) {
+                alert("🌟 Excellent ! Tu as bien compris le sens de ces mots invariables !");
+            } else {
+                alert(`${correctCount} sur ${total} réponses correctes. Relis bien les définitions !`);
+            }
+        }
+        
+        function revealExercise3() {
+            document.getElementById('answer3').classList.add('show');
+        }
+        
+        function checkFullText() {
+            const answers = {
+                trou1: "vieille",
+                trou2: "isolée",
+                trou3: "abandonnée",
+                trou4: "soleil",
+                trou5: "cuir",
+                trou6: "ceinture",
+                trou7: "descendre",
+                trou8: "creusé",
+                trou9: "impressionnant",
+                trou10: "toujours"
+            };
+            
+            let correctCount = 0;
+            const total = Object.keys(answers).length;
+            
+            for (let id in answers) {
+                const element = document.getElementById(id);
+                const userAnswer = element.value ? element.value.trim().toLowerCase() : "";
+                const correctAnswer = answers[id].toLowerCase();
+                
+                // Accepter différentes orthographes (avec/sans accents)
+                const normalizedUser = userAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                const normalizedCorrect = correctAnswer.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                
+                if (normalizedUser === normalizedCorrect || userAnswer === correctAnswer) {
+                    element.style.backgroundColor = "#C8E6C9";
+                    element.style.borderColor = "#2A9D8F";
+                    correctCount++;
+                } else if (userAnswer) {
+                    element.style.backgroundColor = "#FFCDD2";
+                    element.style.borderColor = "#E63946";
+                }
+            }
+            
+            const percentage = Math.round((correctCount / total) * 100);
+            if (correctCount === total) {
+                alert(`🎊 Incroyable ! ${percentage}% de réussite - Tu es prêt(e) pour la dictée !`);
+            } else if (correctCount >= total * 0.7) {
+                alert(`${correctCount} sur ${total} réponses correctes (${percentage}%). Très bon travail !`);
+            } else {
+                alert(`${correctCount} sur ${total} réponses correctes (${percentage}%). Continue à t'entraîner !`);
+            }
+        }
+        
+        function revealFullText() {
+            document.getElementById('answerFull').classList.add('show');
+        }
+        
+        // Réinitialiser la couleur quand l'utilisateur modifie
+        document.querySelectorAll('.blank-input').forEach(element => {
+            if (element.contentEditable === 'true') {
+                element.addEventListener('input', function() {
+                    this.style.backgroundColor = '';
+                    this.style.borderColor = '';
+                });
+            }
+        });
+        
+        document.querySelectorAll('input[type="text"]').forEach(element => {
+            element.addEventListener('input', function() {
+                this.style.backgroundColor = '';
+                this.style.borderColor = '';
+            });
+        });
+        
+        document.querySelectorAll('select').forEach(element => {
+            element.addEventListener('change', function() {
+                this.style.backgroundColor = '';
+                this.style.borderColor = '';
+            });
+        });
+    </script>
+</body>
+</html>
