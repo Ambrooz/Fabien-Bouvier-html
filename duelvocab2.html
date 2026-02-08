@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>🎮 Duel Vocabulaire Français</title>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+    }
+    
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.5em;
+    }
+    
+    .section {
+      display: none;
+      padding: 20px;
+      margin: 20px 0;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    
+    .active {
+      display: block;
+    }
+    
+    input, button {
+      padding: 15px;
+      margin: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+    
+    input {
+      width: 250px;
+      text-align: center;
+    }
+    
+    button {
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      min-width: 200px;
+    }
+    
+    button:hover {
+      background: #45a049;
+      transform: scale(1.05);
+    }
+    
+    .choice-btn {
+      background: white;
+      color: #333;
+      margin: 10px;
+      padding: 15px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid #ddd;
+      font-size: 18px;
+      min-width: 150px;
+    }
+    
+    .choice-btn:hover {
+      background: #f0f0f0;
+      border-color: #4CAF50;
+    }
+    
+    .correct {
+      background: #4CAF50 !important;
+      color: white !important;
+    }
+    
+    .wrong {
+      background: #f44336 !important;
+      color: white !important;
+    }
+    
+    .word {
+      font-size: 36px;
+      margin: 30px 0;
+      font-weight: bold;
+    }
+    
+    .scores {
+      display: flex;
+      justify-content: space-around;
+      margin: 30px 0;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    .player {
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.2);
+      min-width: 200px;
+    }
+    
+    .player1 {
+      border: 3px solid #FF6B6B;
+    }
+    
+    .player2 {
+      border: 3px solid #4ECDC4;
+    }
+    
+    .timer {
+      font-size: 48px;
+      font-weight: bold;
+      margin: 20px 0;
+      color: #FFD700;
+    }
+    
+    .share-link {
+      background: white;
+      color: #333;
+      padding: 15px;
+      border-radius: 10px;
+      margin: 20px 0;
+      word-break: break-all;
+      text-align: center;
+    }
+    
+    .copy-btn {
+      background: #2196F3 !important;
+    }
+    
+    .message {
+      padding: 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Duel Vocabulaire Français</h1>
+    <p>Affrontez un ami en ligne avec 30 mots français/anglais !</p>
+    
+    <!-- Écran d'accueil -->
+    <div id="home-screen" class="section active">
+      <h2>👋 Bienvenue !</h2>
+      <p>Vous êtes le :</p>
+      <button onclick="createGame()">🎮 JOUEUR 1 (Créer une partie)</button>
+      <br>
+      <button onclick="joinGame()">🔗 JOUEUR 2 (Rejoindre une partie)</button>
+    </div>
+    
+    <!-- Écran Joueur 1 - Création -->
+    <div id="player1-screen" class="section">
+      <h2>👤 Joueur 1</h2>
+      <input id="player1-name" placeholder="Votre prénom">
+      <br>
+      <button onclick="startAsPlayer1()">Créer la partie</button>
+      
+      <div id="share-box" class="hidden">
+        <h3>🔗 Invitez le Joueur 2</h3>
+        <p>Envoyez ce lien à votre ami :</p>
+        <div class="share-link" id="game-link">Chargement...</div>
+        <button class="copy-btn" onclick="copyLink()">📋 Copier le lien</button>
+        <p class="message">En attente du Joueur 2...</p>
+      </div>
+    </div>
+    
+    <!-- Écran Joueur 2 - Rejoindre -->
+    <div id="player2-screen" class="section">
+      <h2>👤 Joueur 2</h2>
+      <input id="player2-name" placeholder="Votre prénom">
+      <br>
+      <button onclick="joinAsPlayer2()">Rejoindre la partie</button>
+      <p class="message" id="player2-message">Entrez votre prénom et cliquez pour rejoindre</p>
+    </div>
+    
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="section">
+      <div class="timer" id="timer">30</div>
+      <div class="word" id="word">Chargement...</div>
+      <div id="choices"></div>
+      
+      <div class="scores">
+        <div class="player player1">
+          <div id="player1-display-name">Joueur 1</div>
+          <div id="player1-score">0</div>
+        </div>
+        <div class="player player2">
+          <div id="player2-display-name">Joueur 2</div>
+          <div id="player2-score">0</div>
+        </div>
+      </div>
+      
+      <p id="game-message">Le jeu va commencer...</p>
+    </div>
+    
+    <!-- Écran de fin -->
+    <div id="end-screen" class="section">
+      <h2>🏆 Fin du Duel !</h2>
+      <div id="winner-message"></div>
+      <div class="scores">
+        <div class="player player1">
+          <div id="final-player1-name">Joueur 1</div>
+          <div id="final-player1-score">0</div>
+        </div>
+        <div class="player player2">
+          <div id="final-player2-name">Joueur 2</div>
+          <div id="final-player2-score">0</div>
+        </div>
+      </div>
+      <button onclick="restartGame()">🔄 Nouvelle partie</button>
+      <button onclick="goHome()">🏠 Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔥 CONFIGURATION FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+      authDomain: "fabien-bouvier.firebaseapp.com",
+      databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "fabien-bouvier",
+      storageBucket: "fabien-bouvier.firebasestorage.app",
+      messagingSenderId: "863046756799",
+      appId: "1:863046756799:web:36a48325658a4286d6190a"
+    };
+    
+    // Initialiser Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    
+    // 30 mots français/anglais
+    const words = [
+      { fr: "chat", en: "cat", choices: ["cat", "dog", "bird", "mouse"] },
+      { fr: "pomme", en: "apple", choices: ["apple", "banana", "pear", "orange"] },
+      { fr: "maison", en: "house", choices: ["house", "car", "school", "garden"] },
+      { fr: "école", en: "school", choices: ["school", "park", "street", "shop"] },
+      { fr: "voiture", en: "car", choices: ["car", "bus", "bike", "train"] },
+      { fr: "chien", en: "dog", choices: ["dog", "cat", "rabbit", "fish"] },
+      { fr: "soleil", en: "sun", choices: ["sun", "moon", "star", "cloud"] },
+      { fr: "eau", en: "water", choices: ["water", "fire", "air", "earth"] },
+      { fr: "feu", en: "fire", choices: ["fire", "water", "ice", "stone"] },
+      { fr: "livre", en: "book", choices: ["book", "pen", "paper", "desk"] },
+      { fr: "fleur", en: "flower", choices: ["flower", "tree", "grass", "leaf"] },
+      { fr: "porte", en: "door", choices: ["door", "window", "wall", "roof"] },
+      { fr: "fenêtre", en: "window", choices: ["window", "door", "curtain", "glass"] },
+      { fr: "table", en: "table", choices: ["table", "chair", "bed", "sofa"] },
+      { fr: "chaise", en: "chair", choices: ["chair", "table", "desk", "bench"] },
+      { fr: "lit", en: "bed", choices: ["bed", "pillow", "blanket", "mattress"] },
+      { fr: "pain", en: "bread", choices: ["bread", "cake", "butter", "cheese"] },
+      { fr: "lait", en: "milk", choices: ["milk", "water", "juice", "coffee"] },
+      { fr: "fromage", en: "cheese", choices: ["cheese", "butter", "yogurt", "cream"] },
+      { fr: "œuf", en: "egg", choices: ["egg", "chicken", "meat", "fish"] },
+      { fr: "riz", en: "rice", choices: ["rice", "pasta", "potato", "bread"] },
+      { fr: "viande", en: "meat", choices: ["meat", "fish", "vegetable", "fruit"] },
+      { fr: "poisson", en: "fish", choices: ["fish", "meat", "chicken", "beef"] },
+      { fr: "fruit", en: "fruit", choices: ["fruit", "vegetable", "meat", "bread"] },
+      { fr: "légume", en: "vegetable", choices: ["vegetable", "fruit", "meat", "grain"] },
+      { fr: "couleur", en: "color", choices: ["color", "shape", "size", "number"] },
+      { fr: "nombre", en: "number", choices: ["number", "letter", "word", "sound"] },
+      { fr: "heure", en: "hour", choices: ["hour", "day", "week", "month"] },
+      { fr: "jour", en: "day", choices: ["day", "night", "evening", "morning"] },
+      { fr: "nuit", en: "night", choices: ["night", "day", "sunset", "dawn"] }
+    ];
+    
+    // Variables globales
+    let playerName = "";
+    let playerNumber = 0;
+    let gameId = "";
+    let gameRef = null;
+    let currentWordIndex = 0;
+    let timer = 30;
+    let timerInterval = null;
+    
+    // === FONCTIONS SIMPLES ===
+    
+    // Changer d'écran
+    function showScreen(screenId) {
+      document.querySelectorAll('.section').forEach(screen => {
+        screen.classList.remove('active');
+      });
+      document.getElementById(screenId).classList.add('active');
+    }
+    
+    // Joueur 1 : Créer une partie
+    function createGame() {
+      showScreen('player1-screen');
+    }
+    
+    function startAsPlayer1() {
+      const name = document.getElementById('player1-name').value.trim();
+      if (!name) {
+        alert("Entrez votre prénom !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 1;
+      
+      // Générer un ID de partie unique
+      gameId = 'game_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      gameRef = database.ref('games/' + gameId);
+      
+      // Créer la partie dans Firebase
+      const gameData = {
+        player1: { name: name, score: 0, ready: true },
+        player2: { name: "", score: 0, ready: false },
+        currentWord: 0,
+        gameStarted: false,
+        gameFinished: false,
+        createdAt: Date.now()
+      };
+      
+      gameRef.set(gameData);
+      
+      // Afficher le lien de partage
+      const gameLink = window.location.href.split('?')[0] + '?game=' + gameId;
+      document.getElementById('game-link').textContent = gameLink;
+      document.getElementById('share-box').classList.remove('hidden');
+      
+      // Écouter les mises à jour
+      listenToGame();
+    }
+    
+    // Copier le lien
+    function copyLink() {
+      const link = document.getElementById('game-link').textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("Lien copié ! Envoyez-le à votre ami.");
+      });
+    }
+    
+    // Joueur 2 : Rejoindre une partie
+    function joinGame() {
+      showScreen('player2-screen');
+    }
+    
+    function joinAsPlayer2() {
+      const name = document.getElementById('player2-name').value.trim();
+      if (!name) {
+        alert("Entrez votre prénom !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 2;
+      
+      // Vérifier si un ID de jeu est dans l'URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        gameId = gameIdFromUrl;
+      } else {
+        // Sinon, demander l'ID
+        gameId = prompt("Entrez l'ID de la partie (demandez au Joueur 1) :");
+        if (!gameId) return;
+      }
+      
+      gameRef = database.ref('games/' + gameId);
+      
+      // Vérifier si la partie existe
+      gameRef.once('value').then(snapshot => {
+        if (!snapshot.exists()) {
+          alert("Partie non trouvée ! Vérifiez l'ID.");
+          return;
+        }
+        
+        // Rejoindre la partie
+        gameRef.update({
+          'player2': { name: name, score: 0, ready: true }
+        });
+        
+        document.getElementById('player2-message').textContent = "Connecté ! Attente du Joueur 1...";
+        
+        // Écouter les mises à jour
+        listenToGame();
+        
+      }).catch(error => {
+        alert("Erreur : " + error.message);
+      });
+    }
+    
+    // Écouter les changements du jeu
+    function listenToGame() {
+      if (!gameRef) return;
+      
+      gameRef.on('value', snapshot => {
+        const gameData = snapshot.val();
+        if (!gameData) return;
+        
+        // Mettre à jour les noms et scores
+        document.getElementById('player1-display-name').textContent = gameData.player1.name || "Joueur 1";
+        document.getElementById('player1-score').textContent = gameData.player1.score || 0;
+        
+        document.getElementById('player2-display-name').textContent = gameData.player2.name || "Joueur 2";
+        document.getElementById('player2-score').textContent = gameData.player2.score || 0;
+        
+        // Mettre à jour l'écran final
+        document.getElementById('final-player1-name').textContent = gameData.player1.name || "Joueur 1";
+        document.getElementById('final-player1-score').textContent = gameData.player1.score || 0;
+        document.getElementById('final-player2-name').textContent = gameData.player2.name || "Joueur 2";
+        document.getElementById('final-player2-score').textContent = gameData.player2.score || 0;
+        
+        // Si les deux joueurs sont prêts, démarrer
+        if (gameData.player1.ready && gameData.player2.ready && !gameData.gameStarted) {
+          gameRef.update({ gameStarted: true });
+        }
+        
+        // Si le jeu a démarré
+        if (gameData.gameStarted) {
+          showScreen('game-screen');
+          currentWordIndex = gameData.currentWord || 0;
+          
+          // Afficher le mot courant
+          showCurrentWord();
+          
+          // Démarrer le timer si ce n'est pas fait
+          if (!timerInterval) {
+            startTimer();
+          }
+        }
+        
+        // Si le jeu est terminé
+        if (gameData.gameFinished) {
+          clearInterval(timerInterval);
+          showEndScreen();
+        }
+      });
+    }
+    
+    // Afficher le mot courant
+    function showCurrentWord() {
+      if (currentWordIndex >= words.length) {
+        gameRef.update({ gameFinished: true });
+        return;
+      }
+      
+      const word = words[currentWordIndex];
+      document.getElementById('word').textContent = `"${word.fr}" = ?`;
+      
+      // Afficher les choix
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+      
+      // Mélanger les choix
+      const shuffledChoices = [...word.choices].sort(() => Math.random() - 0.5);
+      
+      shuffledChoices.forEach(choice => {
+        const button = document.createElement('button');
+        button.className = 'choice-btn';
+        button.textContent = choice;
+        button.onclick = () => checkAnswer(choice, word.en);
+        choicesContainer.appendChild(button);
+      });
+    }
+    
+    // Vérifier la réponse
+    function checkAnswer(choice, correctAnswer) {
+      const buttons = document.querySelectorAll('.choice-btn');
+      
+      // Désactiver tous les boutons
+      buttons.forEach(btn => {
+        btn.onclick = null;
+        if (btn.textContent === correctAnswer) {
+          btn.classList.add('correct');
+        } else if (btn.textContent === choice && choice !== correctAnswer) {
+          btn.classList.add('wrong');
+        }
+      });
+      
+      // Mettre à jour le score
+      if (choice === correctAnswer) {
+        const playerKey = 'player' + playerNumber;
+        gameRef.child(playerKey + '/score').transaction(score => (score || 0) + 10);
+      }
+      
+      // Attendre 2 secondes puis passer au mot suivant
+      setTimeout(() => {
+        const nextWordIndex = currentWordIndex + 1;
+        gameRef.update({ currentWord: nextWordIndex });
+      }, 2000);
+    }
+    
+    // Démarrer le timer
+    function startTimer() {
+      timer = 30;
+      document.getElementById('timer').textContent = timer;
+      
+      timerInterval = setInterval(() => {
+        timer--;
+        document.getElementById('timer').textContent = timer;
+        
+        if (timer <= 0) {
+          clearInterval(timerInterval);
+          // Temps écoulé, passer au mot suivant
+          const nextWordIndex = currentWordIndex + 1;
+          gameRef.update({ currentWord: nextWordIndex });
+        }
+      }, 1000);
+    }
+    
+    // Afficher l'écran de fin
+    function showEndScreen() {
+      gameRef.once('value').then(snapshot => {
+        const gameData = snapshot.val();
+        
+        let winnerMessage = "";
+        if (gameData.player1.score > gameData.player2.score) {
+          winnerMessage = `🏆 ${gameData.player1.name} GAGNE !`;
+        } else if (gameData.player2.score > gameData.player1.score) {
+          winnerMessage = `🏆 ${gameData.player2.name} GAGNE !`;
+        } else {
+          winnerMessage = "🤝 ÉGALITÉ PARFAITE !";
+        }
+        
+        document.getElementById('winner-message').innerHTML = `
+          <h3>${winnerMessage}</h3>
+          <p>Score final : ${gameData.player1.score} - ${gameData.player2.score}</p>
+        `;
+        
+        showScreen('end-screen');
+      });
+    }
+    
+    // Redémarrer le jeu
+    function restartGame() {
+      // Réinitialiser la partie
+      if (gameRef) {
+        gameRef.update({
+          player1: { ...gameData.player1, score: 0 },
+          player2: { ...gameData.player2, score: 0 },
+          currentWord: 0,
+          gameStarted: true,
+          gameFinished: false
+        });
+        
+        clearInterval(timerInterval);
+        timerInterval = null;
+        showScreen('game-screen');
+      }
+    }
+    
+    // Retour à l'accueil
+    function goHome() {
+      playerName = "";
+      playerNumber = 0;
+      gameId = "";
+      gameRef = null;
+      currentWordIndex = 0;
+      clearInterval(timerInterval);
+      timerInterval = null;
+      
+      showScreen('home-screen');
+    }
+    
+    // Au chargement, vérifier si on rejoint une partie via l'URL
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        // C'est le Joueur 2 qui arrive via le lien
+        showScreen('player2-screen');
+        document.getElementById('player2-message').textContent = 
+          "Partie trouvée ! Entrez votre prénom pour rejoindre.";
+      }
+    });
+  </script>
+</body>
+</html>
