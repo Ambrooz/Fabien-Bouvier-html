@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>🎮 Duel Vocabulaire Français - 2 Joueurs EN LIGNE</title>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      color: #fff;
+      margin-bottom: 10px;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .subtitle {
+      color: #b8c1ec;
+      margin-bottom: 30px;
+      font-size: 1.2rem;
+    }
+
+    .box {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(15px);
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Nouvelle section : Comment jouer à distance */
+    .remote-guide {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin: 30px 0;
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 25px;
+      border-radius: 20px;
+      text-align: left;
+    }
+
+    .step-number {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      background: #ff6b6b;
+      color: white;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 40px;
+      font-weight: bold;
+      margin-right: 15px;
+      font-size: 1.2rem;
+    }
+
+    .step-title {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .step-content {
+      color: #b8c1ec;
+      line-height: 1.6;
+    }
+
+    .share-section {
+      background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 30px 0;
+    }
+
+    .share-input {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .share-input input {
+      flex: 1;
+      max-width: 500px;
+      padding: 15px;
+      border-radius: 10px;
+      border: none;
+      font-size: 16px;
+    }
+
+    .copy-btn {
+      background: #2c3e50;
+      color: white;
+      border: none;
+      padding: 15px 25px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .copy-btn:hover {
+      background: #34495e;
+    }
+
+    .copied {
+      background: #2ecc71 !important;
+    }
+
+    .qr-code {
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      display: inline-block;
+      margin: 20px 0;
+    }
+
+    .qr-placeholder {
+      width: 200px;
+      height: 200px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      color: #2c3e50;
+      font-weight: bold;
+      border: 2px dashed #4ecdc4;
+    }
+
+    .connection-status {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .status-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .connected {
+      background: #2ecc71;
+      animation: pulse 1.5s infinite;
+    }
+
+    .disconnected {
+      background: #e74c3c;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    /* Styles existants du jeu (raccourcis) */
+    .game-area {
+      display: none;
+    }
+
+    .word {
+      font-size: 42px;
+      margin: 40px 0;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    #choices {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin: 40px 0;
+    }
+
+    .choice-btn {
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      min-width: 220px;
+      margin: 12px;
+      padding: 18px;
+      font-size: 20px;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .duel-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .player-side {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 20px;
+      padding: 25px;
+    }
+
+    /* Boutons */
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      margin: 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      border: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+      color: white;
+    }
+
+    .tab-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      .remote-guide {
+        grid-template-columns: 1fr;
+      }
+      
+      .duel-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .share-input {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🌐 Duel Vocabulaire Français - JOUER À DISTANCE</h1>
+    <p class="subtitle">Affrontez un ami n'importe où dans le monde !</p>
+
+    <!-- Navigation par onglets -->
+    <div style="margin: 30px 0;">
+      <button class="tab-btn active" onclick="showTab('how-to')">📱 Comment jouer</button>
+      <button class="tab-btn" onclick="showTab('game')" id="game-tab">🎮 Commencer le duel</button>
+    </div>
+
+    <!-- Onglet 1: Comment jouer -->
+    <div id="how-to-tab">
+      <div class="box">
+        <h2>🎯 COMMENT JOUER À DISTANCE</h2>
+        <p>Invitez un ami à jouer avec vous, même s'il est dans une autre ville ou un autre pays !</p>
+        
+        <div class="remote-guide">
+          <div class="step">
+            <div class="step-title"><span class="step-number">1</span> Créer une salle</div>
+            <div class="step-content">
+              Cliquez sur "Créer une partie" ci-dessous. Vous deviendrez le <strong>Joueur 1</strong>. 
+              Un lien unique sera généré pour votre partie.
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-title"><span class="step-number">2</span> Partager le lien</div>
+            <div class="step-content">
+              Envoyez le lien à votre ami par :
+              <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>WhatsApp / Messenger</li>
+                <li>Email</li>
+                <li>SMS</li>
+                <li>Discord / Zoom</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-title"><span class="step-number">3</span> Rejoindre la partie</div>
+            <div class="step-content">
+              Votre ami ouvre le lien sur son téléphone, tablette ou ordinateur.
+              Il devient automatiquement le <strong>Joueur 2</strong>.
+            </div>
+          </div>
+          
+          <div class="step">
+            <div class="step-title"><span class="step-number">4</span> Jouer !</div>
+            <div class="step-content">
+              Les deux joueurs voient les mêmes mots en même temps.
+              Répondez chacun de votre côté, les scores sont mis à jour en direct !
+            </div>
+          </div>
+        </div>
+
+        <div class="share-section" id="share-section" style="display: none;">
+          <h3>🔗 LIEN DE VOTRE PARTIE</h3>
+          <p>Envoyez ce lien à votre ami pour qu'il puisse vous rejoindre :</p>
+          
+          <div class="share-input">
+            <input type="text" id="game-link" readonly value="Chargement...">
+            <button class="copy-btn" onclick="copyLink()" id="copy-btn">📋 Copier</button>
+          </div>
+          
+          <p>OU scannez ce QR Code :</p>
+          <div class="qr-code">
+            <div class="qr-placeholder" id="qr-placeholder">
+              QR Code<br>de la partie
+            </div>
+          </div>
+          
+          <div class="connection-status">
+            <span class="status-dot disconnected" id="player1-status-dot"></span>
+            <span id="connection-status-text">En attente du joueur 2...</span>
+          </div>
+        </div>
+
+        <button class="primary-btn" onclick="createGame()" id="create-btn">🎮 Créer une partie</button>
+        <button class="primary-btn" onclick="joinExistingGame()" style="background: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);">
+          🔗 Rejoindre une partie existante
+        </button>
+      </div>
+
+      <!-- Instructions pour le joueur 2 -->
+      <div class="box" id="join-instructions" style="display: none;">
+        <h2>👤 VOUS ÊTES LE JOUEUR 2</h2>
+        <p>Vous avez rejoint une partie créée par un ami.</p>
+        <div class="connection-status">
+          <span class="status-dot disconnected" id="player2-status-dot"></span>
+          <span id="player2-status-text">Connectez-vous avec votre prénom</span>
+        </div>
+        
+        <div style="margin: 30px 0;">
+          <input id="player2-name" placeholder="Votre prénom" style="width: 300px; padding: 15px;">
+          <br>
+          <button class="primary-btn" onclick="joinAsPlayer2()">Rejoindre en tant que Joueur 2</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Onglet 2: Le jeu -->
+    <div id="game-tab-content" class="hidden">
+      <div class="box game-area" id="game">
+        <div class="game-status" id="status">Chargement du duel...</div>
+        
+        <div class="game-info">
+          <div class="info-item">
+            <div class="info-label">MOT</div>
+            <div class="info-value" id="current-word-index">0/30</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">TEMPS</div>
+            <div class="info-value" id="timer">30s</div>
+          </div>
+          <div class="info-item">
+            <div class="info-label">MANCHE</div>
+            <div class="info-value" id="current-round">1/30</div>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        
+        <div class="word" id="word"></div>
+        <div id="choices"></div>
+        
+        <!-- Affichage Duel -->
+        <div class="duel-container">
+          <div id="player1-side" class="player-side player1-side">
+            <h3 id="player1-name-display">Joueur 1</h3>
+            <div class="player-score" id="player1-score">0</div>
+            <div class="player-status" id="player1-status">En attente</div>
+          </div>
+          
+          <div style="display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold;">
+            VS
+          </div>
+          
+          <div id="player2-side" class="player-side player2-side">
+            <h3 id="player2-name-display">Joueur 2</h3>
+            <div class="player-score" id="player2-score">0</div>
+            <div class="player-status" id="player2-status">En attente</div>
+          </div>
+        </div>
+        
+        <div id="results" class="hidden">
+          <h2>🏆 RÉSULTATS DU DUEL 🏆</h2>
+          <div id="winner-announcement"></div>
+          <button class="primary-btn" onclick="restartGame()">🎮 NOUVELLE PARTIE</button>
+          <button class="primary-btn" onclick="showTab('how-to')" style="background: #3498db;">📱 Retour à l'accueil</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* 🔥 CONFIGURATION FIREBASE 🔥 */
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+      authDomain: "fabien-bouvier.firebaseapp.com",
+      databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "fabien-bouvier",
+      storageBucket: "fabien-bouvier.firebasestorage.app",
+      messagingSenderId: "863046756799",
+      appId: "1:863046756799:web:36a48325658a4286d6190a"
+    };
+
+    // Initialisation Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Variables globales
+    let player = "";
+    let playerNumber = 0;
+    let gameRoomId = "";
+    let gameRef = null;
+    let gameState = {};
+    let timerInterval = null;
+    let timeLeft = 30;
+
+    // 30 mots de vocabulaire
+    const words = [
+      { fr: "chat", choices: ["cat", "dog", "bird", "mouse"], answer: "cat" },
+      { fr: "pomme", choices: ["apple", "banana", "pear", "orange"], answer: "apple" },
+      { fr: "maison", choices: ["house", "car", "school", "garden"], answer: "house" },
+      { fr: "école", choices: ["school", "park", "street", "shop"], answer: "school" },
+      { fr: "voiture", choices: ["car", "bus", "bike", "train"], answer: "car" },
+      { fr: "chien", choices: ["dog", "cat", "rabbit", "fish"], answer: "dog" },
+      { fr: "soleil", choices: ["sun", "moon", "star", "cloud"], answer: "sun" },
+      { fr: "eau", choices: ["water", "fire", "air", "earth"], answer: "water" },
+      { fr: "feu", choices: ["fire", "water", "ice", "stone"], answer: "fire" },
+      { fr: "livre", choices: ["book", "pen", "paper", "desk"], answer: "book" },
+      { fr: "fleur", choices: ["flower", "tree", "grass", "leaf"], answer: "flower" },
+      { fr: "porte", choices: ["door", "window", "wall", "roof"], answer: "door" },
+      { fr: "fenêtre", choices: ["window", "door", "curtain", "glass"], answer: "window" },
+      { fr: "table", choices: ["table", "chair", "bed", "sofa"], answer: "table" },
+      { fr: "chaise", choices: ["chair", "table", "desk", "bench"], answer: "chair" },
+      { fr: "lit", choices: ["bed", "pillow", "blanket", "mattress"], answer: "bed" },
+      { fr: "pain", choices: ["bread", "cake", "butter", "cheese"], answer: "bread" },
+      { fr: "lait", choices: ["milk", "water", "juice", "coffee"], answer: "milk" },
+      { fr: "fromage", choices: ["cheese", "butter", "yogurt", "cream"], answer: "cheese" },
+      { fr: "œuf", choices: ["egg", "chicken", "meat", "fish"], answer: "egg" },
+      { fr: "riz", choices: ["rice", "pasta", "potato", "bread"], answer: "rice" },
+      { fr: "viande", choices: ["meat", "fish", "vegetable", "fruit"], answer: "meat" },
+      { fr: "poisson", choices: ["fish", "meat", "chicken", "beef"], answer: "fish" },
+      { fr: "fruit", choices: ["fruit", "vegetable", "meat", "bread"], answer: "fruit" },
+      { fr: "légume", choices: ["vegetable", "fruit", "meat", "grain"], answer: "vegetable" },
+      { fr: "couleur", choices: ["color", "shape", "size", "number"], answer: "color" },
+      { fr: "nombre", choices: ["number", "letter", "word", "sound"], answer: "number" },
+      { fr: "heure", choices: ["hour", "day", "week", "month"], answer: "hour" },
+      { fr: "jour", choices: ["day", "night", "evening", "morning"], answer: "day" },
+      { fr: "nuit", choices: ["night", "day", "sunset", "dawn"], answer: "night" }
+    ];
+
+    // Navigation par onglets
+    function showTab(tabName) {
+      // Mettre à jour les boutons d'onglets
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      if (tabName === 'how-to') {
+        document.querySelector('[onclick="showTab(\'how-to\')"]').classList.add('active');
+        document.getElementById('how-to-tab').style.display = 'block';
+        document.getElementById('game-tab-content').style.display = 'none';
+      } else {
+        document.getElementById('game-tab').classList.add('active');
+        document.getElementById('how-to-tab').style.display = 'none';
+        document.getElementById('game-tab-content').style.display = 'block';
+      }
+    }
+
+    // Créer une nouvelle partie (Joueur 1)
+    function createGame() {
+      const name = prompt("Entrez votre prénom :");
+      if (!name) return;
+      
+      player = name;
+      playerNumber = 1;
+      
+      // Générer un ID unique pour la partie
+      gameRoomId = 'room_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      gameRef = db.ref("onlineGames/" + gameRoomId);
+      
+      // Créer la partie dans Firebase
+      const initialGameState = {
+        player1: {
+          name: name,
+          score: 0,
+          connected: true,
+          currentAnswer: null,
+          ready: true
+        },
+        player2: {
+          name: "",
+          score: 0,
+          connected: false,
+          currentAnswer: null,
+          ready: false
+        },
+        gameState: {
+          currentWordIndex: 0,
+          gameStarted: false,
+          gameFinished: false,
+          timerRunning: false
+        },
+        createdAt: Date.now()
+      };
+      
+      gameRef.set(initialGameState);
+      
+      // Afficher le lien de partage
+      const gameLink = window.location.href.split('?')[0] + '?room=' + gameRoomId + '&player=2';
+      document.getElementById('game-link').value = gameLink;
+      document.getElementById('share-section').style.display = 'block';
+      document.getElementById('create-btn').style.display = 'none';
+      
+      // Mettre à jour le statut
+      document.getElementById('player1-status-dot').className = 'status-dot connected';
+      document.getElementById('connection-status-text').textContent = 'Vous êtes connecté (Joueur 1)';
+      
+      // Afficher les instructions pour le joueur 2
+      document.getElementById('join-instructions').style.display = 'block';
+      
+      // Écouter les changements dans la partie
+      setupGameListener();
+      
+      // Activer l'onglet jeu
+      document.getElementById('game-tab').style.display = 'inline-block';
+    }
+
+    // Rejoindre une partie existante (Joueur 2 depuis le lien)
+    function joinExistingGame() {
+      // Vérifier si un code de salle est dans l'URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const roomId = urlParams.get('room');
+      
+      if (roomId) {
+        // Rejoindre la salle spécifiée dans l'URL
+        joinGameRoom(roomId, 2);
+      } else {
+        // Demander le code de la salle
+        const roomCode = prompt("Entrez le code de la partie (donné par le Joueur 1) :");
+        if (!roomCode) return;
+        
+        joinGameRoom(roomCode, 2);
+      }
+    }
+
+    // Rejoindre une salle spécifique
+    function joinGameRoom(roomId, expectedPlayerNumber) {
+      gameRoomId = roomId;
+      gameRef = db.ref("onlineGames/" + gameRoomId);
+      
+      // Vérifier si la salle existe
+      gameRef.once("value").then(snapshot => {
+        if (!snapshot.exists()) {
+          alert("Code de partie invalide ! Vérifiez avec le Joueur 1.");
+          return;
+        }
+        
+        const gameData = snapshot.val();
+        
+        // Demander le nom du joueur
+        const name = prompt("Entrez votre prénom :");
+        if (!name) return;
+        
+        player = name;
+        playerNumber = expectedPlayerNumber;
+        
+        // Mettre à jour les informations du joueur
+        const playerKey = "player" + playerNumber;
+        gameRef.child(playerKey).update({
+          name: name,
+          connected: true,
+          ready: true,
+          joinedAt: Date.now()
+        });
+        
+        // Afficher l'interface jeu
+        document.getElementById('player2-name').value = name;
+        document.getElementById('player2-status-dot').className = 'status-dot connected';
+        document.getElementById('player2-status-text').textContent = 'Connecté en tant que ' + name;
+        
+        // Démarrer le jeu si les deux joueurs sont prêts
+        if (playerNumber === 2 && gameData.player1 && gameData.player1.ready) {
+          gameRef.child("gameState/gameStarted").set(true);
+        }
+        
+        // Écouter les changements dans la partie
+        setupGameListener();
+        
+        // Passer à l'onglet jeu
+        showTab('game');
+      });
+    }
+
+    // Rejoindre en tant que Joueur 2 (via le formulaire)
+    function joinAsPlayer2() {
+      const name = document.getElementById('player2-name').value.trim();
+      if (!name) {
+        alert("Entrez votre prénom !");
+        return;
+      }
+      
+      // Générer un ID de partie simple (pour la démo)
+      // En réalité, le Joueur 1 devrait partager un code
+      gameRoomId = 'demo_room';
+      gameRef = db.ref("onlineGames/" + gameRoomId);
+      
+      player = name;
+      playerNumber = 2;
+      
+      // Vérifier/créer la partie
+      gameRef.once("value").then(snapshot => {
+        if (!snapshot.exists()) {
+          // Créer une partie de démo
+          const demoGame = {
+            player1: {
+              name: "Joueur Démo",
+              score: 0,
+              connected: true,
+              ready: true
+            },
+            player2: {
+              name: name,
+              score: 0,
+              connected: true,
+              ready: true
+            },
+            gameState: {
+              currentWordIndex: 0,
+              gameStarted: true,
+              gameFinished: false,
+              timerRunning: true
+            }
+          };
+          
+          gameRef.set(demoGame);
+        } else {
+          // Rejoindre la partie existante
+          gameRef.child("player2").update({
+            name: name,
+            connected: true,
+            ready: true,
+            joinedAt: Date.now()
+          });
+        }
+        
+        // Écouter les changements
+        setupGameListener();
+        
+        // Passer à l'onglet jeu
+        showTab('game');
+      });
+    }
+
+    // Configurer l'écouteur Firebase pour la partie
+    function setupGameListener() {
+      if (!gameRef) return;
+      
+      gameRef.on("value", snapshot => {
+        const gameData = snapshot.val();
+        if (!gameData) return;
+        
+        gameState = gameData.gameState || {};
+        const p1 = gameData.player1 || {};
+        const p2 = gameData.player2 || {};
+        
+        // Mettre à jour l'affichage des joueurs
+        document.getElementById('player1-name-display').textContent = p1.name || "Joueur 1";
+        document.getElementById('player1-score').textContent = p1.score || 0;
+        document.getElementById('player1-status').textContent = 
+          p1.currentAnswer ? (p1.answerCorrect ? "✓ Correct" : "✗ Faux") : "En attente";
+        
+        document.getElementById('player2-name-display').textContent = p2.name || "Joueur 2";
+        document.getElementById('player2-score').textContent = p2.score || 0;
+        document.getElementById('player2-status').textContent = 
+          p2.currentAnswer ? (p2.answerCorrect ? "✓ Correct" : "✗ Faux") : "En attente";
+        
+        // Gérer l'état du jeu
+        if (gameState.gameFinished) {
+          endGame();
+        } else if (gameState.gameStarted) {
+          if (gameState.currentWordIndex < words.length) {
+            showWord(gameState.currentWordIndex);
+          } else {
+            endGame();
+          }
+        }
+      });
+    }
+
+    // Afficher un mot
+    function showWord(index) {
+      if (index >= words.length) return;
+      
+      const w = words[index];
+      document.getElementById('word').textContent = `Que veut dire : "${w.fr}" ?`;
+      document.getElementById('current-word-index').textContent = `${index + 1}/30`;
+      document.getElementById('current-round').textContent = `${index + 1}/30`;
+      
+      // Progression
+      const progress = ((index + 1) / words.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progress}%`;
+      
+      // Afficher les choix
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+      
+      const shuffledChoices = [...w.choices].sort(() => Math.random() - 0.5);
+      
+      shuffledChoices.forEach(choice => {
+        const button = document.createElement('button');
+        button.className = 'choice-btn';
+        button.textContent = choice;
+        button.onclick = () => answer(choice);
+        choicesContainer.appendChild(button);
+      });
+      
+      // Démarrer le timer
+      resetTimer();
+    }
+
+    // Répondre à une question
+    function answer(choice) {
+      if (!gameRef || !player) return;
+      
+      const currentWord = words[gameState.currentWordIndex];
+      const isCorrect = choice === currentWord.answer;
+      
+      // Mettre à jour la réponse du joueur
+      const playerKey = "player" + playerNumber;
+      gameRef.child(playerKey).update({
+        currentAnswer: choice,
+        answerCorrect: isCorrect,
+        lastActive: Date.now()
+      });
+      
+      // Mettre à jour le score
+      if (isCorrect) {
+        gameRef.child(playerKey + "/score").transaction(score => (score || 0) + 10);
+      }
+      
+      // Désactiver les boutons
+      document.querySelectorAll('.choice-btn').forEach(btn => {
+        btn.onclick = null;
+        if (btn.textContent === currentWord.answer) {
+          btn.style.background = '#2ecc71';
+        } else if (btn.textContent === choice && !isCorrect) {
+          btn.style.background = '#e74c3c';
+        }
+      });
+      
+      // Vérifier si les deux ont répondu
+      checkBothAnswered();
+    }
+
+    // Vérifier si les deux joueurs ont répondu
+    function checkBothAnswered() {
+      gameRef.once("value").then(snapshot => {
+        const gameData = snapshot.val();
+        if (!gameData) return;
+        
+        const p1Answered = gameData.player1 && gameData.player1.currentAnswer !== null;
+        const p2Answered = gameData.player2 && gameData.player2.currentAnswer !== null;
+        
+        if (p1Answered && p2Answered) {
+          // Attendre 2 secondes puis passer au mot suivant
+          setTimeout(() => {
+            const nextIndex = gameState.currentWordIndex + 1;
+            if (nextIndex < words.length) {
+              gameRef.child("gameState/currentWordIndex").set(nextIndex);
+              // Réinitialiser les réponses
+              gameRef.child("player1/currentAnswer").set(null);
+              gameRef.child("player2/currentAnswer").set(null);
+            } else {
+              gameRef.child("gameState/gameFinished").set(true);
+            }
+          }, 2000);
+        }
+      });
+    }
+
+    // Réinitialiser le timer
+    function resetTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 30;
+      document.getElementById('timer').textContent = `${timeLeft}s`;
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').textContent = `${timeLeft}s`;
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          // Passer au mot suivant
+          const nextIndex = gameState.currentWordIndex + 1;
+          if (nextIndex < words.length) {
+            gameRef.child("gameState/currentWordIndex").set(nextIndex);
+          } else {
+            gameRef.child("gameState/gameFinished").set(true);
+          }
+        }
+      }, 1000);
+    }
+
+    // Terminer le jeu
+    function endGame() {
+      clearInterval(timerInterval);
+      
+      gameRef.once("value").then(snapshot => {
+        const gameData = snapshot.val();
+        if (!gameData) return;
+        
+        const p1 = gameData.player1 || { name: "Joueur 1", score: 0 };
+        const p2 = gameData.player2 || { name: "Joueur 2", score: 0 };
+        
+        let winnerHTML = "";
+        if (p1.score > p2.score) {
+          winnerHTML = `<div style="font-size: 2rem; color: gold; margin: 20px 0;">🏆 ${p1.name} GAGNE !</div>`;
+        } else if (p2.score > p1.score) {
+          winnerHTML = `<div style="font-size: 2rem; color: gold; margin: 20px 0;">🏆 ${p2.name} GAGNE !</div>`;
+        } else {
+          winnerHTML = `<div style="font-size: 2rem; color: silver; margin: 20px 0;">🤝 ÉGALITÉ !</div>`;
+        }
+        
+        winnerHTML += `
+          <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; margin: 20px 0;">
+            <div><strong>${p1.name}:</strong> ${p1.score} points</div>
+            <div><strong>${p2.name}:</strong> ${p2.score} points</div>
+          </div>
+        `;
+        
+        document.getElementById('winner-announcement').innerHTML = winnerHTML;
+        document.getElementById('results').classList.remove('hidden');
+        document.getElementById('game').classList.add('hidden');
+      });
+    }
+
+    // Redémarrer le jeu
+    function restartGame() {
+      if (!gameRef) return;
+      
+      // Réinitialiser la partie
+      gameRef.update({
+        "player1.score": 0,
+        "player1.currentAnswer": null,
+        "player2.score": 0,
+        "player2.currentAnswer": null,
+        "gameState.currentWordIndex": 0,
+        "gameState.gameFinished": false,
+        "gameState.gameStarted": true
+      });
+      
+      document.getElementById('results').classList.add('hidden');
+      document.getElementById('game').classList.remove('hidden');
+      resetTimer();
+    }
+
+    // Copier le lien
+    function copyLink() {
+      const linkInput = document.getElementById('game-link');
+      linkInput.select();
+      linkInput.setSelectionRange(0, 99999); // Pour mobile
+      
+      navigator.clipboard.writeText(linkInput.value).then(() => {
+        const copyBtn = document.getElementById('copy-btn');
+        const originalText = copyBtn.textContent;
+        copyBtn.textContent = "✓ Copié !";
+        copyBtn.classList.add('copied');
+        
+        setTimeout(() => {
+          copyBtn.textContent = originalText;
+          copyBtn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+
+    // Vérifier l'URL au chargement
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const roomId = urlParams.get('room');
+      const playerParam = urlParams.get('player');
+      
+      if (roomId && playerParam === '2') {
+        // Le joueur 2 arrive via le lien partagé
+        document.getElementById('create-btn').style.display = 'none';
+        document.getElementById('join-instructions').style.display = 'block';
+        document.getElementById('player2-name').focus();
+      }
+    });
+  </script>
+</body>
+</html>
