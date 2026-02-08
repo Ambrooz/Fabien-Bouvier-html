@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercices FLE A1 - Futur proche & Négation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            background-color: #f9f9f9;
+            background-image: linear-gradient(to bottom, #f0f8ff, #f9f9f9);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        h2 {
+            color: #2980b9;
+            background-color: #e8f4fc;
+            padding: 12px 18px;
+            border-radius: 8px;
+            margin-top: 40px;
+            border-left: 5px solid #2980b9;
+        }
+        .intro-text {
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin: 30px 0;
+            line-height: 1.8;
+            border-left: 5px solid #9c27b0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        }
+        .section {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 35px 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-top: 5px solid #3498db;
+        }
+        .future-section {
+            border-top-color: #4CAF50;
+        }
+        .negation-section {
+            border-top-color: #ff9800;
+        }
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0 20px 0;
+            border: 2px solid #4CAF50;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        .negation-input {
+            border-color: #ff9800;
+        }
+        .input-field:focus {
+            border-color: #2e7d32;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        .negation-input:focus {
+            border-color: #ef6c00;
+            box-shadow: 0 0 0 3px rgba(255, 152, 0, 0.2);
+        }
+        .button {
+            background-color: #008CBA;
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 10px 10px 0;
+            transition: all 0.3s;
+            display: inline-block;
+            font-weight: bold;
+        }
+        .button:hover {
+            background-color: #005f73;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        .button-check {
+            background-color: #4CAF50;
+        }
+        .button-check:hover {
+            background-color: #3d8b40;
+        }
+        .button-negation {
+            background-color: #ff9800;
+        }
+        .button-negation:hover {
+            background-color: #ef6c00;
+        }
+        .button-run {
+            background-color: #9c27b0;
+            padding: 18px 40px;
+            font-size: 18px;
+            display: block;
+            margin: 40px auto;
+            text-align: center;
+        }
+        .button-run:hover {
+            background-color: #7b1fa2;
+        }
+        .answer-box {
+            display: none;
+            background-color: #e8f4e8;
+            padding: 20px;
+            border-left: 5px solid #4CAF50;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+            animation: fadeIn 0.5s;
+        }
+        .negation-answer {
+            background-color: #fff3e0;
+            border-left-color: #ff9800;
+        }
+        .drag-area {
+            min-height: 60px;
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            background-color: #fafafa;
+            transition: all 0.3s;
+        }
+        .drag-item {
+            display: inline-block;
+            background-color: #e6f7ff;
+            padding: 12px 24px;
+            border-radius: 25px;
+            border: 2px solid #008CBA;
+            cursor: grab;
+            margin: 8px;
+            user-select: none;
+            font-weight: bold;
+            transition: all 0.2s;
+        }
+        .drag-item:hover {
+            background-color: #d1f0ff;
+            transform: scale(1.05);
+        }
+        .text-area {
+            width: 100%;
+            height: 180px;
+            padding: 18px;
+            border: 2px solid #9c27b0;
+            border-radius: 10px;
+            font-family: sans-serif;
+            font-size: 16px;
+            resize: vertical;
+            margin: 20px 0;
+            line-height: 1.6;
+        }
+        .feedback {
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-weight: bold;
+            animation: fadeIn 0.5s;
+            text-align: left;
+        }
+        .success {
+            background-color: #e8f4e8;
+            border: 2px solid #4CAF50;
+            color: #2e7d32;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 2px solid #ffc107;
+            color: #856404;
+        }
+        .grammar-tip {
+            background-color: #e3f2fd;
+            border-left: 5px solid #2196F3;
+            padding: 22px;
+            margin: 30px 0;
+            border-radius: 0 10px 10px 0;
+            line-height: 1.7;
+        }
+        .negation-tip {
+            background-color: #fff3e0;
+            border-left-color: #ff9800;
+        }
+        .exercise-box {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            border: 1px solid #e0e0e0;
+        }
+        .negation-exercise {
+            background-color: #fff8e1;
+            border-color: #ffd54f;
+        }
+        .highlight {
+            background-color: #fff9c4;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .negation-highlight {
+            background-color: #ffecb3;
+            color: #e65100;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .note-box {
+            background-color: #f0f7ff;
+            border: 2px solid #bbdefb;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 25px 0;
+            font-style: italic;
+        }
+        .character {
+            display: inline-block;
+            background-color: #e1f5fe;
+            padding: 10px 20px;
+            margin: 5px 10px 5px 0;
+            border-radius: 20px;
+            border: 2px solid #0288d1;
+            font-weight: bold;
+        }
+        .speech-bubble {
+            background-color: #f5f5f5;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 4px solid #9c27b0;
+            position: relative;
+        }
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            left: 20px;
+            top: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid #f5f5f5;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🌟 Exercices de français A1 - Futur proche & Négation</h1>
+    
+    <div class="intro-text">
+        <p><strong>👨‍👧‍👦 Une situation du quotidien :</strong> Aujourd'hui, nous allons suivre <span class="character">Clément</span>, un père de famille. Sa fille <span class="character">Léa</span> a un examen important demain, et <span class="character">Clément</span> est un peu inquiet pour elle. Il pense à tout ce qu'ils <strong>vont devoir faire</strong> ce soir et à ce qu'ils <strong>ne vont pas pouvoir faire</strong> à cause des révisions.</p>
+        
+        <p><strong>🗓️ Les projets de la soirée :</strong> D'habitude, le jeudi soir, la famille <strong>va souvent</strong> au cinéma ou <strong>dîne parfois</strong> au restaurant. Mais ce soir, <strong>ils ne vont pas sortir</strong>. Léa <strong>doit absolument</strong> réviser pour son examen de français. Clément <strong>va devoir</strong> l'aider, et sa femme <strong>va préparer</strong> un dîner spécial pour leur donner de l'énergie.</p>
+        
+        <p><strong>💬 Ce que dit Clément :</strong> <em>"Je <strong>vais vérifier</strong> que Léa a bien compris la leçon sur le futur proche. Elle <strong>ne va pas pouvoir</strong> regarder la télévision ce soir. Nous <strong>allons travailler</strong> ensemble jusqu'à 20 heures. Heureusement, elle <strong>veut vraiment</strong> réussir son examen !"</em></p>
+        
+        <p><strong>🎯 Notre objectif :</strong> À travers cette situation, nous allons pratiquer le <strong>futur proche</strong> pour parler des projets et apprendre à former la <strong>négation</strong> avec les verbes modaux. Vous allez voir comment exprimer ce qu'on va faire et ce qu'on ne va pas faire !</p>
+    </div>
+
+    <!-- ==================== SECTION 1 : TRANSFORMATION FUTUR PROCHE ==================== -->
+    <div class="section future-section">
+        <h2>📘 Exercice 1 : Transformer au futur proche</h2>
+        
+        <div class="grammar-tip">
+            <strong>📖 Règle : Le futur proche</strong>
+            <p>On utilise le futur proche pour parler d'une action qui va se passer bientôt.</p>
+            <p><strong>Formule :</strong> <span class="highlight">ALLER</span> (au présent) + <span class="highlight">VERBE À L'INFINITIF</span></p>
+            <p><strong>Exemples avec Clément :</strong></p>
+            <ul>
+                <li>Il <strong>vérifie</strong> les devoirs → Il <strong>va vérifier</strong> les devoirs</li>
+                <li>Nous <strong>dînons</strong> à la maison → Nous <strong>allons dîner</strong> à la maison</li>
+            </ul>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>1. Clément cuisine souvent le soir pour sa famille.</strong> (habitude présente)</p>
+            <input type="text" class="input-field" id="input1" placeholder="Transforme cette phrase au futur proche...">
+            <button class="button button-check" onclick="showAnswer('answer1')">Voir la correction</button>
+            <div class="answer-box" id="answer1">
+                <strong>✅ Réponse correcte :</strong> Clément <strong>va cuisiner</strong> souvent le soir pour sa famille.<br>
+                <em>Explication :</em> "Cuisine" (présent) devient "va cuisiner" (futur proche).
+            </div>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>2. Léa fait ses devoirs après l'école.</strong></p>
+            <input type="text" class="input-field" id="input2" placeholder="Transforme cette phrase au futur proche...">
+            <button class="button button-check" onclick="showAnswer('answer2')">Voir la correction</button>
+            <div class="answer-box" id="answer2">
+                <strong>✅ Réponse correcte :</strong> Léa <strong>va faire</strong> ses devoirs après l'école.<br>
+                <em>Explication :</em> "Fait" (présent) devient "va faire" (futur proche). Le verbe "faire" reste à l'infinitif.
+            </div>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>3. Nous regardons un film ensemble le weekend.</strong></p>
+            <input type="text" class="input-field" id="input3" placeholder="Transforme cette phrase au futur proche...">
+            <button class="button button-check" onclick="showAnswer('answer3')">Voir la correction</button>
+            <div class="answer-box" id="answer3">
+                <strong>✅ Réponse correcte :</strong> Nous <strong>allons regarder</strong> un film ensemble le weekend.<br>
+                <em>Explication :</em> "Regardons" (présent) devient "allons regarder" (futur proche).
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 2 : NÉGATION FUTUR PROCHE ==================== -->
+    <div class="section negation-section">
+        <h2>🚫 Exercice 2 : La négation avec le futur proche et les modaux</h2>
+        
+        <div class="grammar-tip negation-tip">
+            <strong>📖 Règle : La négation au futur proche</strong>
+            <p>La négation <span class="negation-highlight">NE... PAS</span> entoure le verbe <strong>ALLER</strong>, pas l'infinitif !</p>
+            <p><strong>Formule :</strong> Sujet + <strong>NE</strong> + ALLER + <strong>PAS</strong> + verbe à l'infinitif</p>
+            <p><strong>Exemples avec la famille de Clément :</strong></p>
+            <ul>
+                <li>Ils vont sortir → Ils <strong>ne vont pas</strong> sortir</li>
+                <li>Elle va regarder la télé → Elle <strong>ne va pas</strong> regarder la télé</li>
+                <li>Nous allons au restaurant → Nous <strong>n'allons pas</strong> au restaurant</li>
+            </ul>
+            <p><strong>Avec les modaux :</strong> Je peux venir → Je <strong>ne peux pas</strong> venir / Je dois sortir → Je <strong>ne dois pas</strong> sortir</p>
+        </div>
+        
+        <div class="exercise-box negation-exercise">
+            <p><strong>1. Clément va regarder le match à la télévision ce soir.</strong> (mets à la forme négative)</p>
+            <input type="text" class="input-field negation-input" id="negInput1" placeholder="Écris la phrase à la forme négative...">
+            <button class="button button-negation" onclick="showAnswer('negAnswer1')">Voir la correction</button>
+            <div class="answer-box negation-answer" id="negAnswer1">
+                <strong>✅ Réponse correcte :</strong> Clément <strong>ne va pas regarder</strong> le match à la télévision ce soir.<br>
+                <em>Explication :</em> "Ne" avant "va" et "pas" après. Le verbe "regarder" reste à l'infinitif.
+            </div>
+        </div>
+        
+        <div class="exercise-box negation-exercise">
+            <p><strong>2. Léa peut sortir avec ses amis ce soir.</strong> (mets à la forme négative)</p>
+            <input type="text" class="input-field negation-input" id="negInput2" placeholder="Écris la phrase à la forme négative...">
+            <button class="button button-negation" onclick="showAnswer('negAnswer2')">Voir la correction</button>
+            <div class="answer-box negation-answer" id="negAnswer2">
+                <strong>✅ Réponse correcte :</strong> Léa <strong>ne peut pas</strong> sortir avec ses amis ce soir.<br>
+                <em>Explication :</em> Avec les verbes modaux, la négation entoure le modal ("peut").
+            </div>
+        </div>
+        
+        <div class="exercise-box negation-exercise">
+            <p><strong>3. Nous allons devoir travailler tard.</strong> (mets à la forme négative)</p>
+            <input type="text" class="input-field negation-input" id="negInput3" placeholder="Écris la phrase à la forme négative...">
+            <button class="button button-negation" onclick="showAnswer('negAnswer3')">Voir la correction</button>
+            <div class="answer-box negation-answer" id="negAnswer3">
+                <strong>✅ Réponse correcte :</strong> Nous <strong>n'allons pas devoir</strong> travailler tard.<br>
+                <em>Variante :</strong> Nous <strong>ne devrons pas</strong> travailler tard.<br>
+                <em>Explication :</em> Quand "devoir" est avec le futur proche ("allons devoir"), la négation entoure "allons".
+            </div>
+        </div>
+        
+        <div class="exercise-box negation-exercise">
+            <p><strong>4. Tu dois partir maintenant.</strong> (mets à la forme négative)</p>
+            <input type="text" class="input-field negation-input" id="negInput4" placeholder="Écris la phrase à la forme négative...">
+            <button class="button button-negation" onclick="showAnswer('negAnswer4')">Voir la correction</button>
+            <div class="answer-box negation-answer" id="negAnswer4">
+                <strong>✅ Réponse correcte :</strong> Tu <strong>ne dois pas</strong> partir maintenant.<br>
+                <em>Explication :</em> Avec "devoir" au présent, la négation entoure "dois". Cela exprime une interdiction.
+            </div>
+        </div>
+        
+        <div class="exercise-box negation-exercise">
+            <p><strong>5. Ils vont pouvoir venir à la fête.</strong> (mets à la forme négative)</p>
+            <input type="text" class="input-field negation-input" id="negInput5" placeholder="Écris la phrase à la forme négative...">
+            <button class="button button-negation" onclick="showAnswer('negAnswer5')">Voir la correction</button>
+            <div class="answer-box negation-answer" id="negAnswer5">
+                <strong>✅ Réponse correcte :</strong> Ils <strong>ne vont pas pouvoir</strong> venir à la fête.<br>
+                <em>Explication :</em> Avec "aller pouvoir", la négation entoure "vont".
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 3 : MODAUX ==================== -->
+    <div class="section">
+        <h2>🧩 Exercice 3 : Associer les verbes modaux</h2>
+        
+        <div class="grammar-tip">
+            <strong>📖 Les verbes modaux</strong>
+            <p>Ces verbes modifient le sens du verbe principal :</p>
+            <ul>
+                <li><strong>DEVOIR</strong> : obligation (je dois étudier)</li>
+                <li><strong>POUVOIR</strong> : possibilité (je peux venir)</li>
+                <li><strong>VOULOIR</strong> : désir (je veux apprendre)</li>
+                <li><strong>DEVOIR au conditionnel (devrais)</strong> : conseil (tu devrais essayer)</li>
+            </ul>
+            <div class="speech-bubble">
+                <strong>Clément donne des conseils :</strong><br>
+                "Léa, tu <strong>devrais</strong> commencer par les exercices difficiles.<br>
+                Tu <strong>ne dois pas</strong> attendre la dernière minute.<br>
+                Tu <strong>peux</strong> me demander de l'aide si tu <strong>veux</strong>."
+            </div>
+        </div>
+        
+        <div class="note-box">
+            <p><strong>⚠️ Exercice :</strong> Relie chaque phrase à la nuance qu'elle exprime. Fais glisser les mots bleus dans les cases correspondantes.</p>
+        </div>
+        
+        <div style="margin: 25px 0;">
+            <div style="margin-bottom: 20px;">
+                <p><strong>1. "Je vais devoir aider Léa avec ses révisions."</strong></p>
+                <div class="drag-area" id="drop1" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <span style="color: #999; font-style: italic;">Dépose ici le type d'expression</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <p><strong>2. "Tu devrais faire une pause après une heure de travail."</strong></p>
+                <div class="drag-area" id="drop2" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <span style="color: #999; font-style: italic;">Dépose ici le type d'expression</span>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <p><strong>3. "Elle ne peut pas sortir ce soir à cause de son examen."</strong></p>
+                <div class="drag-area" id="drop3" ondrop="drop(event)" ondragover="allowDrop(event)">
+                    <span style="color: #999; font-style: italic;">Dépose ici le type d'expression</span>
+                </div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin: 30px 0; padding: 20px; background-color: #f0f7ff; border-radius: 10px;">
+            <p><strong>Glisse ces mots vers les cases ci-dessus :</strong></p>
+            <span class="drag-item" draggable="true" ondragstart="drag(event)" id="drag1">Conseil</span>
+            <span class="drag-item" draggable="true" ondragstart="drag(event)" id="drag2">Impossibilité</span>
+            <span class="drag-item" draggable="true" ondragstart="drag(event)" id="drag3">Obligation future</span>
+        </div>
+        
+        <button class="button button-check" onclick="checkDragExercise()">Vérifier mes associations</button>
+        <button class="button" onclick="resetDragExercise()">Recommencer l'exercice</button>
+        
+        <div class="answer-box" id="dragAnswer" style="display: none;">
+            <strong>📝 Correction :</strong><br><br>
+            1. "Je vais devoir aider Léa avec ses révisions." → <strong>Obligation future</strong><br>
+            <em>(je vais devoir = I will have to - obligation dans le futur)</em><br><br>
+            2. "Tu devrais faire une pause après une heure de travail." → <strong>Conseil</strong><br>
+            <em>(tu devrais = you should - c'est une recommandation)</em><br><br>
+            3. "Elle ne peut pas sortir ce soir à cause de son examen." → <strong>Impossibilité</strong><br>
+            <em>(ne peut pas = cannot - c'est impossible pour elle)</em>
+        </div>
+    </div>
+
+    <!-- ==================== SECTION 4 : SYNTHÈSE ==================== -->
+    <div class="section">
+        <h2>🎯 Exercice 4 : Complète les phrases (synthèse)</h2>
+        
+        <div class="grammar-tip">
+            <p><strong>Pour cet exercice :</strong> Complète les phrases avec la forme correcte. Attention au contexte (affirmatif ou négatif) !</p>
+            <div class="speech-bubble">
+                <strong>Le plan de la soirée :</strong><br>
+                "Nous <strong>allons dîner</strong> tôt. Léa <strong>ne va pas regarder</strong> la télé. Elle <strong>doit réviser</strong>. Moi, je <strong>vais devoir</strong> l'aider. Nous <strong>ne pouvons pas</strong> faire de bruit."
+            </div>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>1. Ce soir, la famille ________ (aller/dîner) à 19 heures.</strong></p>
+            <input type="text" class="input-field" id="complete1" placeholder="Écris la forme correcte...">
+            <button class="button button-check" onclick="showAnswer('completeAnswer1')">Voir la correction</button>
+            <div class="answer-box" id="completeAnswer1">
+                <strong>✅ Réponse :</strong> Ce soir, la famille <strong>va dîner</strong> à 19 heures.<br>
+                <em>Explication :</em> C'est un projet → futur proche (aller + infinitif).
+            </div>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>2. Léa ________ (pouvoir/sortir) avec ses amis ce soir. (forme négative)</strong></p>
+            <input type="text" class="input-field" id="complete2" placeholder="Écris la forme correcte...">
+            <button class="button button-check" onclick="showAnswer('completeAnswer2')">Voir la correction</button>
+            <div class="answer-box" id="completeAnswer2">
+                <strong>✅ Réponse :</strong> Léa <strong>ne peut pas sortir</strong> avec ses amis ce soir.<br>
+                <em>Explication :</em> C'est impossible pour elle → "pouvoir" à la forme négative.
+            </div>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>3. Clément ________ (devoir/aider) sa fille avec les révisions.</strong></p>
+            <input type="text" class="input-field" id="complete3" placeholder="Écris la forme correcte...">
+            <button class="button button-check" onclick="showAnswer('completeAnswer3')">Voir la correction</button>
+            <div class="answer-box" id="completeAnswer3">
+                <strong>✅ Réponse :</strong> Clément <strong>doit aider</strong> sa fille avec les révisions.<br>
+                <em>Variante acceptée :</strong> <strong>va devoir aider</strong><br>
+                <em>Explication :</em> C'est une obligation → "devoir" au présent ou futur proche.
+            </div>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>4. Ils ________ (aller/regarder) un film après les révisions. (forme négative)</strong></p>
+            <input type="text" class="input-field" id="complete4" placeholder="Écris la forme correcte...">
+            <button class="button button-check" onclick="showAnswer('completeAnswer4')">Voir la correction</button>
+            <div class="answer-box" id="completeAnswer4">
+                <strong>✅ Réponse :</strong> Ils <strong>ne vont pas regarder</strong> un film après les révisions.<br>
+                <em>Explication :</em> Négation du futur proche : "ne" avant "vont", "pas" après.
+            </div>
+        </div>
+        
+        <div class="exercise-box">
+            <p><strong>5. Tu ________ (devoir/être) plus concentré pendant tes révisions. (conseil)</strong></p>
+            <input type="text" class="input-field" id="complete5" placeholder="Écris la forme correcte...">
+            <button class="button button-check" onclick="showAnswer('completeAnswer5')">Voir la correction</button>
+            <div class="answer-box" id="completeAnswer5">
+                <strong>✅ Réponse :</strong> Tu <strong>devrais être</strong> plus concentré pendant tes révisions.<br>
+                <em>Explication :</em> C'est un conseil → "devoir" au conditionnel (devrais).
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== BOUTON RUN ==================== -->
+    <div style="text-align: center; margin: 50px 0;">
+        <button class="button button-run" onclick="runAllExercises()">🚀 RUN - Voir toutes les corrections</button>
+        <p style="color: #666; margin-top: 15px; font-style: italic;">Ce bouton montre toutes les corrections en une seule fois !</p>
+    </div>
+
+    <!-- ==================== RÉSUMÉ FINAL ==================== -->
+    <div class="grammar-tip" style="background-color: #f1f8e9; border-left-color: #7cb342;">
+        <strong>🎓 Résumé de la leçon :</strong>
+        <ul>
+            <li>✅ <strong>Futur proche</strong> : <em>aller + infinitif</em> (je vais dîner, tu vas étudier)</li>
+            <li>✅ <strong>Négation du futur proche</strong> : <em>ne + aller + pas + infinitif</em> (je ne vais pas sortir)</li>
+            <li>✅ <strong>Verbes modaux</strong> : 
+                <ul>
+                    <li><em>devoir</em> : obligation (je dois travailler)</li>
+                    <li><em>pouvoir</em> : possibilité (je peux venir)</li>
+                    <li><em>vouloir</em> : désir (je veux réussir)</li>
+                    <li><em>devrais</em> : conseil (tu devrais essayer)</li>
+                </ul>
+            </li>
+            <li>✅ <strong>Négation des modaux</strong> : <em>ne + modal + pas</em> (je ne peux pas, tu ne dois pas)</li>
+        </ul>
+        <div class="speech-bubble">
+            <strong>Clément conclut :</strong><br>
+            "Maintenant, je <strong>vais préparer</strong> le dîner. Léa <strong>ne va pas s'endormir</strong> tard. Elle <strong>doit se reposer</strong>. Demain, elle <strong>va pouvoir</strong> réussir son examen !"
+        </div>
+    </div>
+
+    <script>
+        // ==================== FONCTIONS GÉNÉRALES ====================
+        function showAnswer(answerId) {
+            const answerBox = document.getElementById(answerId);
+            
+            if (answerBox.style.display === "none" || answerBox.style.display === "") {
+                answerBox.style.display = "block";
+            } else {
+                answerBox.style.display = "none";
+            }
+        }
+        
+        // ==================== EXERCICE 2 : DRAG AND DROP ====================
+        let draggedItem = null;
+        
+        function drag(ev) {
+            draggedItem = ev.target;
+            ev.dataTransfer.setData("text", ev.target.id);
+            ev.target.style.opacity = "0.6";
+        }
+        
+        function allowDrop(ev) {
+            ev.preventDefault();
+        }
+        
+        function drop(ev) {
+            ev.preventDefault();
+            if (draggedItem && ev.target.id && ev.target.id.startsWith('drop')) {
+                ev.target.innerHTML = draggedItem.textContent;
+                ev.target.style.color = '#333';
+                ev.target.style.fontWeight = 'bold';
+                ev.target.style.fontStyle = 'normal';
+                ev.target.style.borderStyle = 'solid';
+                ev.target.style.borderColor = '#4CAF50';
+                ev.target.style.backgroundColor = '#f0f9f0';
+            }
+            if (draggedItem) {
+                draggedItem.style.opacity = "1";
+            }
+        }
+        
+        function checkDragExercise() {
+            const correctPairs = {
+                'drop1': 'Obligation future',
+                'drop2': 'Conseil',
+                'drop3': 'Impossibilité'
+            };
+            
+            let allCorrect = true;
+            
+            for (let dropId in correctPairs) {
+                const dropZone = document.getElementById(dropId);
+                const content = dropZone.textContent.trim();
+                
+                if (content === correctPairs[dropId]) {
+                    dropZone.style.borderColor = '#4CAF50';
+                    dropZone.style.backgroundColor = '#e8f4e8';
+                } else {
+                    dropZone.style.borderColor = '#f44336';
+                    dropZone.style.backgroundColor = '#ffebee';
+                    allCorrect = false;
+                }
+            }
+            
+            // Afficher le résultat
+            const feedback = document.getElementById('dragAnswer');
+            feedback.style.display = 'block';
+            
+            if (allCorrect) {
+                feedback.innerHTML = `<strong>🎉 Excellent ! 3/3</strong><br><br>Toutes tes associations sont correctes !<br><br>`;
+                feedback.innerHTML += `<strong>📝 Rappel :</strong><br><br>`;
+                feedback.innerHTML += `1. "Je vais devoir aider Léa avec ses révisions." → <strong>Obligation future</strong><br>`;
+                feedback.innerHTML += `2. "Tu devrais faire une pause après une heure de travail." → <strong>Conseil</strong><br>`;
+                feedback.innerHTML += `3. "Elle ne peut pas sortir ce soir à cause de son examen." → <strong>Impossibilité</strong>`;
+                feedback.className = 'answer-box success';
+            } else {
+                feedback.innerHTML = `<strong>📝 Correction complète :</strong><br><br>`;
+                feedback.innerHTML += `1. "Je vais devoir aider Léa avec ses révisions." → <strong>Obligation future</strong><br>`;
+                feedback.innerHTML += `<em>(je vais devoir = I will have to - obligation dans le futur)</em><br><br>`;
+                feedback.innerHTML += `2. "Tu devrais faire une pause après une heure de travail." → <strong>Conseil</strong><br>`;
+                feedback.innerHTML += `<em>(tu devrais = you should - c'est une recommandation)</em><br><br>`;
+                feedback.innerHTML += `3. "Elle ne peut pas sortir ce soir à cause de son examen." → <strong>Impossibilité</strong><br>`;
+                feedback.innerHTML += `<em>(ne peut pas = cannot - c'est impossible pour elle)</em>`;
+                feedback.className = 'answer-box';
+            }
+        }
+        
+        function resetDragExercise() {
+            // Réinitialiser les zones de drop
+            document.getElementById('drop1').innerHTML = '<span style="color: #999; font-style: italic;">Dépose ici le type d\'expression</span>';
+            document.getElementById('drop2').innerHTML = '<span style="color: #999; font-style: italic;">Dépose ici le type d\'expression</span>';
+            document.getElementById('drop3').innerHTML = '<span style="color: #999; font-style: italic;">Dépose ici le type d\'expression</span>';
+            
+            // Réinitialiser les styles
+            const dropZones = ['drop1', 'drop2', 'drop3'];
+            dropZones.forEach(id => {
+                const zone = document.getElementById(id);
+                zone.style.borderColor = '';
+                zone.style.backgroundColor = '';
+                zone.style.color = '';
+                zone.style.fontWeight = '';
+                zone.style.fontStyle = '';
+                zone.style.borderStyle = 'dashed';
+            });
+            
+            // Cacher la réponse
+            document.getElementById('dragAnswer').style.display = 'none';
+            
+            // Réinitialiser l'opacité des éléments draggables
+            document.querySelectorAll('.drag-item').forEach(item => {
+                item.style.opacity = "1";
+            });
+        }
+        
+        // ==================== FONCTION RUN GLOBALE ====================
+        function runAllExercises() {
+            // 1. Ouvrir toutes les réponses de l'exercice 1
+            for (let i = 1; i <= 3; i++) {
+                showAnswer('answer' + i);
+            }
+            
+            // 2. Ouvrir toutes les réponses de l'exercice 2 (négation)
+            for (let i = 1; i <= 5; i++) {
+                showAnswer('negAnswer' + i);
+            }
+            
+            // 3. Ouvrir toutes les réponses de l'exercice 4 (synthèse)
+            for (let i = 1; i <= 5; i++) {
+                showAnswer('completeAnswer' + i);
+            }
+            
+            // 4. Vérifier et afficher l'exercice 3 (drag & drop)
+            checkDragExercise();
+            
+            // Message de confirmation
+            setTimeout(() => {
+                alert("✅ Toutes les corrections sont maintenant visibles !\n\nCompare tes réponses avec les corrections proposées.\n\nN'hésite pas à cacher les corrections pour retenter les exercices !");
+            }, 500);
+            
+            // Faire défiler vers le haut
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+</html>
