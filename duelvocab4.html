@@ -1,0 +1,971 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>🎮 La Chasse aux Trésors Français</title>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Comic Sans MS', cursive, sans-serif;
+      background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 3px solid #FFD700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+    
+    h1 {
+      margin-bottom: 10px;
+      font-size: 2.5em;
+      color: #FFD700;
+      text-shadow: 3px 3px 0 #1a2980;
+    }
+    
+    .section {
+      display: none;
+      padding: 25px;
+      margin: 20px 0;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .active {
+      display: block;
+    }
+    
+    input, button {
+      padding: 15px 20px;
+      margin: 12px;
+      border-radius: 12px;
+      border: none;
+      font-size: 18px;
+      font-family: 'Comic Sans MS', cursive;
+    }
+    
+    input {
+      width: 250px;
+      text-align: center;
+      background: white;
+      color: #1a2980;
+      border: 3px solid #FFD700;
+    }
+    
+    button {
+      background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+      min-width: 220px;
+      border: 3px solid #FFD700;
+      transition: all 0.3s;
+    }
+    
+    button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+    }
+    
+    .treasure {
+      font-size: 60px;
+      margin: 20px 0;
+      animation: bounce 2s infinite;
+    }
+    
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .choice-btn {
+      background: white;
+      color: #1a2980;
+      margin: 12px;
+      padding: 18px 30px;
+      border-radius: 15px;
+      cursor: pointer;
+      border: 3px solid #26d0ce;
+      font-size: 20px;
+      min-width: 200px;
+      transition: all 0.3s;
+    }
+    
+    .choice-btn:hover {
+      background: #e6f7ff;
+      transform: translateY(-3px);
+      border-color: #FFD700;
+    }
+    
+    .correct {
+      background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%) !important;
+      color: white !important;
+      border-color: #FFD700 !important;
+      animation: celebrate 0.5s;
+    }
+    
+    .wrong {
+      background: linear-gradient(135deg, #f44336 0%, #c62828 100%) !important;
+      color: white !important;
+      border-color: #FFD700 !important;
+    }
+    
+    @keyframes celebrate {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    .word-box {
+      font-size: 42px;
+      margin: 35px 0;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 25px;
+      border-radius: 20px;
+      border: 3px dashed #FFD700;
+      color: #FFD700;
+    }
+    
+    .scores {
+      display: flex;
+      justify-content: space-around;
+      margin: 35px 0;
+      font-size: 26px;
+      font-weight: bold;
+    }
+    
+    .player {
+      padding: 25px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      min-width: 220px;
+      border: 3px solid;
+    }
+    
+    .player1 {
+      border-color: #FF6B6B;
+      background: rgba(255, 107, 107, 0.2);
+    }
+    
+    .player2 {
+      border-color: #4ECDC4;
+      background: rgba(78, 205, 196, 0.2);
+    }
+    
+    .player-name {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: white;
+    }
+    
+    .player-score {
+      font-size: 40px;
+      color: #FFD700;
+    }
+    
+    .timer {
+      font-size: 50px;
+      font-weight: bold;
+      margin: 25px 0;
+      color: #FFD700;
+      text-shadow: 2px 2px 0 #1a2980;
+      animation: pulse 1s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+    
+    .share-link {
+      background: white;
+      color: #1a2980;
+      padding: 20px;
+      border-radius: 15px;
+      margin: 25px 0;
+      word-break: break-all;
+      text-align: center;
+      font-size: 16px;
+      border: 3px solid #FFD700;
+    }
+    
+    .copy-btn {
+      background: linear-gradient(135deg, #2196F3 0%, #0D47A1 100%) !important;
+    }
+    
+    .message {
+      padding: 20px;
+      border-radius: 15px;
+      margin: 20px 0;
+      background: rgba(255, 255, 255, 0.2);
+      font-size: 18px;
+      border: 2px solid #26d0ce;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .star {
+      color: #FFD700;
+      font-size: 30px;
+      margin: 0 5px;
+    }
+    
+    .progress-bar {
+      width: 100%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin: 25px 0;
+      overflow: hidden;
+    }
+    
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #FF6B6B, #FFD700, #4ECDC4);
+      width: 0%;
+      transition: width 0.5s;
+      border-radius: 10px;
+    }
+    
+    .progress-text {
+      font-size: 18px;
+      color: #FFD700;
+      margin-top: 10px;
+    }
+    
+    /* Écran de fin spécial */
+    .trophy {
+      font-size: 100px;
+      margin: 20px 0;
+      animation: spin 2s infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .confetti {
+      position: fixed;
+      width: 15px;
+      height: 15px;
+      background: #FFD700;
+      animation: fall linear infinite;
+      z-index: 1000;
+    }
+    
+    @keyframes fall {
+      to { transform: translateY(100vh) rotate(360deg); }
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .scores {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .choice-btn {
+        min-width: 100%;
+        margin: 8px 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏴‍☠️ La Chasse aux Trésors Français</h1>
+    <p>Trouve les possessifs cachés et affronte un ami !</p>
+    
+    <!-- Écran d'accueil -->
+    <div id="home-screen" class="section active">
+      <div class="treasure">🗺️⚓</div>
+      <h2>Bienvenue Capitaine !</h2>
+      <p>Prêt pour une aventure linguistique ?</p>
+      <button onclick="createGame()">⭐ CAPITAINE (Créer l'aventure)</button>
+      <br>
+      <button onclick="joinGame()">⚓ MATELOT (Rejoindre l'aventure)</button>
+    </div>
+    
+    <!-- Écran Capitaine (Joueur 1) -->
+    <div id="player1-screen" class="section">
+      <h2>⭐ Tu es le Capitaine !</h2>
+      <p>Donne ton nom de pirate :</p>
+      <input id="player1-name" placeholder="Ton nom de pirate">
+      <br>
+      <button onclick="startAsPlayer1()">🦜 Créer l'aventure</button>
+      
+      <div id="share-box" class="hidden">
+        <h3>📜 Carte au trésor</h3>
+        <p>Donne cette carte à ton matelot :</p>
+        <div class="share-link" id="game-link">Chargement de la carte...</div>
+        <button class="copy-btn" onclick="copyLink()">📋 Copier la carte</button>
+        <p class="message">⏳ En attente du matelot...</p>
+      </div>
+    </div>
+    
+    <!-- Écran Matelot (Joueur 2) -->
+    <div id="player2-screen" class="section">
+      <h2>⚓ Tu es le Matelot !</h2>
+      <p>Donne ton nom de pirate :</p>
+      <input id="player2-name" placeholder="Ton nom de pirate">
+      <br>
+      <button onclick="joinAsPlayer2()">🏴‍☠️ Rejoindre l'aventure</button>
+      <p class="message" id="player2-message">Entre ton nom et rejoins le capitaine !</p>
+    </div>
+    
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="section">
+      <div class="timer" id="timer">30</div>
+      
+      <div class="progress-bar">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div class="progress-text" id="progress-text">Trésor 1/30</div>
+      
+      <div class="word-box" id="word">Prépare-toi !</div>
+      <div id="choices"></div>
+      
+      <div class="scores">
+        <div class="player player1">
+          <div class="player-name" id="player1-display-name">Capitaine</div>
+          <div class="player-score" id="player1-score">0 <span class="star">⭐</span></div>
+        </div>
+        <div class="player player2">
+          <div class="player-name" id="player2-display-name">Matelot</div>
+          <div class="player-score" id="player2-score">0 <span class="star">⭐</span></div>
+        </div>
+      </div>
+      
+      <p id="game-message">La chasse au trésor commence !</p>
+    </div>
+    
+    <!-- Écran de fin -->
+    <div id="end-screen" class="section">
+      <div class="trophy" id="trophy">🏆</div>
+      <h2>🎉 Trésor Découvert !</h2>
+      <div id="winner-message"></div>
+      
+      <div class="scores">
+        <div class="player player1">
+          <div class="player-name" id="final-player1-name">Capitaine</div>
+          <div class="player-score" id="final-player1-score">0 ⭐</div>
+        </div>
+        <div class="player player2">
+          <div class="player-name" id="final-player2-name">Matelot</div>
+          <div class="player-score" id="final-player2-score">0 ⭐</div>
+        </div>
+      </div>
+      
+      <button onclick="restartGame()">🔄 Nouvelle chasse</button>
+      <button onclick="goHome()">🏠 Retour au port</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔥 CONFIGURATION FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+      authDomain: "fabien-bouvier.firebaseapp.com",
+      databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "fabien-bouvier",
+      storageBucket: "fabien-bouvier.firebasestorage.app",
+      messagingSenderId: "863046756799",
+      appId: "1:863046756799:web:36a48325658a4286d6190a"
+    };
+    
+    // Initialiser Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    
+    // 30 questions sur les possessifs (niveau A1)
+    const questions = [
+      {
+        phrase: "C'est ___ livre. (je)",
+        choices: ["mon", "ma", "mes", "ton"],
+        answer: "mon",
+        explication: "Avec 'je', on dit 'mon' pour un nom masculin comme 'livre'"
+      },
+      {
+        phrase: "Voici ___ amie. (je)",
+        choices: ["mon", "ma", "mes", "sa"],
+        answer: "ma",
+        explication: "Avec 'je', on dit 'ma' pour un nom féminin comme 'amie'"
+      },
+      {
+        phrase: "Ce sont ___ crayons. (je)",
+        choices: ["mon", "ma", "mes", "tes"],
+        answer: "mes",
+        explication: "Avec 'je', on dit 'mes' pour plusieurs choses"
+      },
+      {
+        phrase: "C'est ___ vélo. (tu)",
+        choices: ["mon", "ton", "son", "ma"],
+        answer: "ton",
+        explication: "Avec 'tu', on dit 'ton' pour un nom masculin"
+      },
+      {
+        phrase: "Voici ___ maison. (tu)",
+        choices: ["ta", "ton", "tes", "ma"],
+        answer: "ta",
+        explication: "Avec 'tu', on dit 'ta' pour un nom féminin"
+      },
+      {
+        phrase: "Ce sont ___ jouets. (tu)",
+        choices: ["tes", "ton", "ta", "ses"],
+        answer: "tes",
+        explication: "Avec 'tu', on dit 'tes' pour plusieurs choses"
+      },
+      {
+        phrase: "C'est ___ frère. (il)",
+        choices: ["son", "sa", "ses", "ton"],
+        answer: "son",
+        explication: "Avec 'il', on dit 'son' pour un nom masculin"
+      },
+      {
+        phrase: "Voici ___ sœur. (elle)",
+        choices: ["son", "sa", "ses", "ta"],
+        answer: "sa",
+        explication: "Avec 'elle', on dit 'sa' pour un nom féminin"
+      },
+      {
+        phrase: "Ce sont ___ parents. (ils)",
+        choices: ["leurs", "leur", "ses", "vos"],
+        answer: "leurs",
+        explication: "Avec 'ils', on dit 'leurs' pour plusieurs personnes"
+      },
+      {
+        phrase: "C'est ___ chat. (nous)",
+        choices: ["notre", "nos", "votre", "leur"],
+        answer: "notre",
+        explication: "Avec 'nous', on dit 'notre' pour une seule chose"
+      },
+      {
+        phrase: "Voici ___ voiture. (nous)",
+        choices: ["notre", "nos", "votre", "leur"],
+        answer: "notre",
+        explication: "Avec 'nous', on dit 'notre' pour un nom féminin"
+      },
+      {
+        phrase: "Ce sont ___ amis. (nous)",
+        choices: ["nos", "notre", "vos", "leurs"],
+        answer: "nos",
+        explication: "Avec 'nous', on dit 'nos' pour plusieurs amis"
+      },
+      {
+        phrase: "C'est ___ école. (vous)",
+        choices: ["votre", "vos", "notre", "leur"],
+        answer: "votre",
+        explication: "Avec 'vous', on dit 'votre' pour une seule chose"
+      },
+      {
+        phrase: "Ce sont ___ livres. (vous)",
+        choices: ["vos", "votre", "nos", "leurs"],
+        answer: "vos",
+        explication: "Avec 'vous', on dit 'vos' pour plusieurs livres"
+      },
+      {
+        phrase: "Le livre est à moi, c'est ___ livre.",
+        choices: ["mon", "le mien", "ma", "la mienne"],
+        answer: "mon",
+        explication: "Avant un nom, on utilise l'adjectif possessif 'mon'"
+      },
+      {
+        phrase: "Le vélo est à toi, c'est ___ vélo.",
+        choices: ["ton", "le tien", "ta", "la tienne"],
+        answer: "ton",
+        explication: "Avant un nom, on utilise l'adjectif possessif 'ton'"
+      },
+      {
+        phrase: "Cette trousse est à elle, c'est ___ trousse.",
+        choices: ["sa", "la sienne", "son", "le sien"],
+        answer: "sa",
+        explication: "Avant un nom féminin, on dit 'sa' pour 'elle'"
+      },
+      {
+        phrase: "Ces stylos sont à eux, ce sont ___ stylos.",
+        choices: ["leurs", "les leurs", "leur", "le leur"],
+        answer: "leurs",
+        explication: "Avant un nom pluriel, on dit 'leurs'"
+      },
+      {
+        phrase: "Ce cahier est à moi, c'est ___ .",
+        choices: ["le mien", "mon", "ma", "la mienne"],
+        answer: "le mien",
+        explication: "Après 'c'est', sans nom, on dit 'le mien'"
+      },
+      {
+        phrase: "Cette gomme est à toi, c'est ___ .",
+        choices: ["la tienne", "ta", "ton", "le tien"],
+        answer: "la tienne",
+        explication: "Après 'c'est', pour un nom féminin, on dit 'la tienne'"
+      },
+      {
+        phrase: "Ces feutres sont à nous, ce sont ___ .",
+        choices: ["les nôtres", "nos", "notre", "le nôtre"],
+        answer: "les nôtres",
+        explication: "Après 'ce sont', pour plusieurs choses, on dit 'les nôtres'"
+      },
+      {
+        phrase: "Ce ballon est à vous, c'est ___ .",
+        choices: ["le vôtre", "votre", "vos", "la vôtre"],
+        answer: "le vôtre",
+        explication: "Après 'c'est', pour un nom masculin, on dit 'le vôtre'"
+      },
+      {
+        phrase: "Ces cahiers sont à elles, ce sont ___ .",
+        choices: ["les leurs", "leurs", "leur", "le leur"],
+        answer: "les leurs",
+        explication: "Après 'ce sont', pour plusieurs, on dit 'les leurs'"
+      },
+      {
+        phrase: "___ père s'appelle Pierre. (je)",
+        choices: ["Mon", "Ma", "Mes", "Ton"],
+        answer: "Mon",
+        explication: "Devant 'père' (masculin), on dit 'mon'"
+      },
+      {
+        phrase: "___ mère s'appelle Marie. (tu)",
+        choices: ["Ta", "Ton", "Tes", "Sa"],
+        answer: "Ta",
+        explication: "Devant 'mère' (féminin), on dit 'ta'"
+      },
+      {
+        phrase: "___ parents sont gentils. (vous)",
+        choices: ["Vos", "Votre", "Nos", "Leurs"],
+        answer: "Vos",
+        explication: "Devant 'parents' (pluriel), on dit 'vos'"
+      },
+      {
+        phrase: "J'aime ___ école. (je)",
+        choices: ["mon", "ma", "mes", "ton"],
+        answer: "mon",
+        explication: "Devant une voyelle (école), 'mon' au lieu de 'ma'"
+      },
+      {
+        phrase: "Tu as ___ amie ? (tu)",
+        choices: ["ton", "ta", "tes", "son"],
+        answer: "ton",
+        explication: "Devant une voyelle (amie), 'ton' au lieu de 'ta'"
+      },
+      {
+        phrase: "Il aime ___ ami. (il)",
+        choices: ["son", "sa", "ses", "ton"],
+        answer: "son",
+        explication: "Devant une voyelle (ami), on garde 'son'"
+      },
+      {
+        phrase: "Nous faisons ___ devoirs. (nous)",
+        choices: ["nos", "notre", "vos", "leurs"],
+        answer: "nos",
+        explication: "Devant un nom pluriel, on dit 'nos'"
+      }
+    ];
+    
+    // Variables globales
+    let playerName = "";
+    let playerNumber = 0;
+    let gameId = "";
+    let gameRef = null;
+    let currentQuestionIndex = 0;
+    let timer = 30;
+    let timerInterval = null;
+    let lastGameData = null;
+    
+    // === FONCTIONS PRINCIPALES ===
+    
+    // Changer d'écran
+    function showScreen(screenId) {
+      document.querySelectorAll('.section').forEach(screen => {
+        screen.classList.remove('active');
+      });
+      document.getElementById(screenId).classList.add('active');
+    }
+    
+    // Capitaine : Créer une aventure
+    function createGame() {
+      showScreen('player1-screen');
+    }
+    
+    function startAsPlayer1() {
+      const name = document.getElementById('player1-name').value.trim();
+      if (!name) {
+        alert("Arrr ! Donne ton nom de pirate !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 1;
+      
+      // Générer un ID de partie unique
+      gameId = 'treasure_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      gameRef = database.ref('possessiveGames/' + gameId);
+      
+      // Créer la partie dans Firebase
+      const gameData = {
+        player1: { name: name, score: 0, ready: true },
+        player2: { name: "", score: 0, ready: false },
+        currentQuestion: 0,
+        gameStarted: false,
+        gameFinished: false,
+        createdAt: Date.now()
+      };
+      
+      gameRef.set(gameData);
+      
+      // Afficher le lien de partage
+      const gameLink = window.location.href.split('?')[0] + '?game=' + gameId;
+      document.getElementById('game-link').textContent = gameLink;
+      document.getElementById('share-box').classList.remove('hidden');
+      
+      // Écouter les mises à jour
+      listenToGame();
+    }
+    
+    // Copier le lien
+    function copyLink() {
+      const link = document.getElementById('game-link').textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("Carte copiée ! Envoie-la à ton matelot !");
+      });
+    }
+    
+    // Matelot : Rejoindre une aventure
+    function joinGame() {
+      showScreen('player2-screen');
+    }
+    
+    function joinAsPlayer2() {
+      const name = document.getElementById('player2-name').value.trim();
+      if (!name) {
+        alert("Arrr ! Donne ton nom de pirate !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 2;
+      
+      // Vérifier si un ID de jeu est dans l'URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        gameId = gameIdFromUrl;
+      } else {
+        // Sinon, demander l'ID
+        gameId = prompt("Entre le code du trésor (demande au capitaine) :");
+        if (!gameId) return;
+      }
+      
+      gameRef = database.ref('possessiveGames/' + gameId);
+      
+      // Vérifier si la partie existe
+      gameRef.once('value').then(snapshot => {
+        if (!snapshot.exists()) {
+          alert("Trésor non trouvé ! Vérifie le code.");
+          return;
+        }
+        
+        const gameData = snapshot.val();
+        lastGameData = gameData;
+        
+        // Rejoindre la partie
+        gameRef.update({
+          'player2': { name: name, score: 0, ready: true }
+        });
+        
+        document.getElementById('player2-message').textContent = "Connecté ! En attente du capitaine...";
+        
+        // Écouter les mises à jour
+        listenToGame();
+        
+      }).catch(error => {
+        alert("Erreur : " + error.message);
+      });
+    }
+    
+    // Écouter les changements du jeu
+    function listenToGame() {
+      if (!gameRef) return;
+      
+      gameRef.on('value', snapshot => {
+        const gameData = snapshot.val();
+        if (!gameData) return;
+        
+        lastGameData = gameData;
+        
+        // Mettre à jour les noms et scores
+        updatePlayerDisplays(gameData);
+        
+        // Si les deux joueurs sont prêts, démarrer
+        if (gameData.player1.ready && gameData.player2.ready && !gameData.gameStarted) {
+          gameRef.update({ gameStarted: true });
+        }
+        
+        // Si le jeu a démarré
+        if (gameData.gameStarted) {
+          showScreen('game-screen');
+          currentQuestionIndex = gameData.currentQuestion || 0;
+          
+          // Mettre à jour la barre de progression
+          const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+          document.getElementById('progress').style.width = progress + '%';
+          document.getElementById('progress-text').textContent = 
+            `Trésor ${currentQuestionIndex + 1}/${questions.length}`;
+          
+          // Afficher la question courante
+          showCurrentQuestion();
+          
+          // Démarrer le timer si ce n'est pas fait
+          if (!timerInterval) {
+            startTimer();
+          }
+        }
+        
+        // Si le jeu est terminé
+        if (gameData.gameFinished) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          showEndScreen(gameData);
+        }
+      });
+    }
+    
+    // Mettre à jour l'affichage des joueurs
+    function updatePlayerDisplays(gameData) {
+      document.getElementById('player1-display-name').textContent = gameData.player1.name || "Capitaine";
+      document.getElementById('player1-score').innerHTML = (gameData.player1.score || 0) + ' <span class="star">⭐</span>';
+      
+      document.getElementById('player2-display-name').textContent = gameData.player2.name || "Matelot";
+      document.getElementById('player2-score').innerHTML = (gameData.player2.score || 0) + ' <span class="star">⭐</span>';
+      
+      document.getElementById('final-player1-name').textContent = gameData.player1.name || "Capitaine";
+      document.getElementById('final-player1-score').innerHTML = (gameData.player1.score || 0) + ' ⭐';
+      
+      document.getElementById('final-player2-name').textContent = gameData.player2.name || "Matelot";
+      document.getElementById('final-player2-score').innerHTML = (gameData.player2.score || 0) + ' ⭐';
+    }
+    
+    // Afficher la question courante
+    function showCurrentQuestion() {
+      if (currentQuestionIndex >= questions.length) {
+        gameRef.update({ gameFinished: true });
+        return;
+      }
+      
+      const question = questions[currentQuestionIndex];
+      document.getElementById('word').textContent = question.phrase;
+      
+      // Afficher les choix
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+      
+      // Mélanger les choix
+      const shuffledChoices = [...question.choices].sort(() => Math.random() - 0.5);
+      
+      shuffledChoices.forEach(choice => {
+        const button = document.createElement('button');
+        button.className = 'choice-btn';
+        button.textContent = choice;
+        button.onclick = () => checkAnswer(choice, question.answer, question.explication);
+        choicesContainer.appendChild(button);
+      });
+    }
+    
+    // Vérifier la réponse
+    function checkAnswer(choice, correctAnswer, explication) {
+      const buttons = document.querySelectorAll('.choice-btn');
+      
+      // Désactiver tous les boutons
+      buttons.forEach(btn => {
+        btn.onclick = null;
+        if (btn.textContent === correctAnswer) {
+          btn.classList.add('correct');
+        } else if (btn.textContent === choice && choice !== correctAnswer) {
+          btn.classList.add('wrong');
+        }
+      });
+      
+      // Mettre à jour le score
+      if (choice === correctAnswer) {
+        const playerKey = 'player' + playerNumber;
+        gameRef.child(playerKey + '/score').transaction(score => (score || 0) + 10);
+        
+        // Animation de félicitations
+        showCelebration();
+      } else {
+        // Afficher l'explication
+        setTimeout(() => {
+          alert("💡 " + explication);
+        }, 500);
+      }
+      
+      // Attendre 2 secondes puis passer à la question suivante
+      setTimeout(() => {
+        const nextQuestionIndex = currentQuestionIndex + 1;
+        gameRef.update({ currentQuestion: nextQuestionIndex });
+      }, 2000);
+    }
+    
+    // Animation de félicitations
+    function showCelebration() {
+      // Créer des confettis
+      for (let i = 0; i < 30; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.background = ['#FFD700', '#FF6B6B', '#4ECDC4', '#2196F3'][Math.floor(Math.random() * 4)];
+        confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+        document.body.appendChild(confetti);
+        
+        // Supprimer après l'animation
+        setTimeout(() => {
+          confetti.remove();
+        }, 5000);
+      }
+    }
+    
+    // Démarrer le timer
+    function startTimer() {
+      timer = 30;
+      document.getElementById('timer').textContent = timer;
+      
+      timerInterval = setInterval(() => {
+        timer--;
+        document.getElementById('timer').textContent = timer;
+        
+        if (timer <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          // Temps écoulé, passer à la question suivante
+          const nextQuestionIndex = currentQuestionIndex + 1;
+          if (gameRef) {
+            gameRef.update({ currentQuestion: nextQuestionIndex });
+          }
+        }
+      }, 1000);
+    }
+    
+    // Afficher l'écran de fin
+    function showEndScreen(gameData) {
+      if (!gameData) return;
+      
+      let winnerMessage = "";
+      if (gameData.player1.score > gameData.player2.score) {
+        winnerMessage = `🏆 ${gameData.player1.name} a trouvé le trésor !`;
+        document.getElementById('trophy').textContent = '👑';
+      } else if (gameData.player2.score > gameData.player1.score) {
+        winnerMessage = `🏆 ${gameData.player2.name} a trouvé le trésor !`;
+        document.getElementById('trophy').textContent = '⚓';
+      } else {
+        winnerMessage = "🤝 Égalité parfaite ! Partagez le trésor !";
+        document.getElementById('trophy').textContent = '🏆';
+      }
+      
+      document.getElementById('winner-message').innerHTML = `
+        <h3>${winnerMessage}</h3>
+        <p>Trésor final : ${gameData.player1.score} - ${gameData.player2.score} étoiles</p>
+      `;
+      
+      showScreen('end-screen');
+    }
+    
+    // NOUVELLE PARTIE
+    function restartGame() {
+      if (!gameRef || !lastGameData) {
+        alert("Impossible de repartir. Retour au port !");
+        goHome();
+        return;
+      }
+      
+      // Arrêter l'ancien timer
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      
+      // Réinitialiser la partie dans Firebase
+      gameRef.update({
+        player1: { 
+          name: lastGameData.player1.name, 
+          score: 0, 
+          ready: true 
+        },
+        player2: { 
+          name: lastGameData.player2.name, 
+          score: 0, 
+          ready: true 
+        },
+        currentQuestion: 0,
+        gameStarted: true,
+        gameFinished: false
+      });
+      
+      // Réinitialiser les variables locales
+      currentQuestionIndex = 0;
+      timer = 30;
+      
+      // Retourner à l'écran de jeu
+      showScreen('game-screen');
+      
+      // Redémarrer l'écoute
+      listenToGame();
+    }
+    
+    // Retour à l'accueil
+    function goHome() {
+      playerName = "";
+      playerNumber = 0;
+      gameId = "";
+      gameRef = null;
+      currentQuestionIndex = 0;
+      lastGameData = null;
+      
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      
+      showScreen('home-screen');
+      
+      // Nettoyer l'URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
+    // Au chargement, vérifier si on rejoint une partie via l'URL
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        // C'est le Matelot qui arrive via le lien
+        showScreen('player2-screen');
+        document.getElementById('player2-message').textContent = 
+          "Trésor trouvé ! Entre ton nom de pirate pour rejoindre !";
+      }
+    });
+  </script>
+</body>
+</html>
