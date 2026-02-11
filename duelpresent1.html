@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>🎮 Mission Verbes Présent</title>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0c2461 0%, #1e3799 100%);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 25px;
+      backdrop-filter: blur(10px);
+      border: 4px solid #ff9f1a;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+    
+    h1 {
+      margin-bottom: 15px;
+      font-size: 2.8em;
+      color: #ff9f1a;
+      text-shadow: 3px 3px 0 #0c2461;
+      letter-spacing: 1px;
+    }
+    
+    .subtitle {
+      font-size: 1.2em;
+      color: #a4b0be;
+      margin-bottom: 30px;
+    }
+    
+    .section {
+      display: none;
+      padding: 30px;
+      margin: 25px 0;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .active {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    input, button {
+      padding: 18px 25px;
+      margin: 15px;
+      border-radius: 15px;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    
+    input {
+      width: 280px;
+      text-align: center;
+      background: white;
+      color: #0c2461;
+      border: 3px solid #ff9f1a;
+    }
+    
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255, 159, 26, 0.3);
+    }
+    
+    button {
+      background: linear-gradient(135deg, #ff9f1a 0%, #ff7f00 100%);
+      color: white;
+      cursor: pointer;
+      min-width: 250px;
+      border: 3px solid #ff9f1a;
+      box-shadow: 0 5px 15px rgba(255, 159, 26, 0.3);
+    }
+    
+    button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(255, 159, 26, 0.5);
+    }
+    
+    .choice-btn {
+      background: white;
+      color: #0c2461;
+      margin: 12px;
+      padding: 20px 35px;
+      border-radius: 15px;
+      cursor: pointer;
+      border: 3px solid #3742fa;
+      font-size: 20px;
+      font-weight: bold;
+      min-width: 220px;
+      transition: all 0.3s;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .choice-btn:hover {
+      background: #f1f2f6;
+      transform: translateY(-3px);
+      border-color: #ff9f1a;
+    }
+    
+    .correct {
+      background: linear-gradient(135deg, #2ed573 0%, #1dd1a1 100%) !important;
+      color: white !important;
+      border-color: #2ed573 !important;
+      animation: correctAnim 0.6s;
+    }
+    
+    .wrong {
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%) !important;
+      color: white !important;
+      border-color: #ff6b6b !important;
+      animation: wrongAnim 0.6s;
+    }
+    
+    @keyframes correctAnim {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    @keyframes wrongAnim {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    .verb-display {
+      font-size: 48px;
+      margin: 40px 0;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 35px;
+      border-radius: 25px;
+      border: 4px solid #ff9f1a;
+      color: #ff9f1a;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    .subject {
+      color: #74b9ff;
+      font-size: 1.2em;
+    }
+    
+    .verb {
+      color: #ff9f1a;
+      font-size: 1.4em;
+      margin: 0 10px;
+    }
+    
+    .scores {
+      display: flex;
+      justify-content: space-around;
+      margin: 40px 0;
+      gap: 30px;
+    }
+    
+    .player {
+      padding: 30px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      min-width: 250px;
+      border: 3px solid;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .player1 {
+      border-color: #ff6b6b;
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.05));
+    }
+    
+    .player2 {
+      border-color: #74b9ff;
+      background: linear-gradient(135deg, rgba(116, 185, 255, 0.15), rgba(116, 185, 255, 0.05));
+    }
+    
+    .player-name {
+      font-size: 28px;
+      margin-bottom: 15px;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .player-score {
+      font-size: 52px;
+      color: #ff9f1a;
+      font-weight: bold;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    .timer {
+      font-size: 60px;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #ff9f1a;
+      text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+    
+    .share-link {
+      background: white;
+      color: #0c2461;
+      padding: 25px;
+      border-radius: 15px;
+      margin: 30px 0;
+      word-break: break-all;
+      text-align: center;
+      font-size: 18px;
+      border: 3px solid #ff9f1a;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .copy-btn {
+      background: linear-gradient(135deg, #3742fa 0%, #2f3542 100%) !important;
+    }
+    
+    .message {
+      padding: 25px;
+      border-radius: 15px;
+      margin: 25px 0;
+      background: rgba(255, 255, 255, 0.15);
+      font-size: 20px;
+      border: 2px solid #ff9f1a;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .verb-group {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+    
+    .group1 {
+      background: #2ed573;
+      color: white;
+    }
+    
+    .group2 {
+      background: #3742fa;
+      color: white;
+    }
+    
+    .group3 {
+      background: #ff9f1a;
+      color: white;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 25px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      margin: 35px 0;
+      overflow: hidden;
+      border: 2px solid #ff9f1a;
+    }
+    
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #ff6b6b, #ff9f1a, #74b9ff);
+      width: 0%;
+      transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .progress-text {
+      font-size: 22px;
+      color: #ff9f1a;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 800px;
+      margin: 30px auto;
+    }
+    
+    .explication {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 20px;
+      border-radius: 15px;
+      margin: 25px 0;
+      border-left: 5px solid #ff9f1a;
+      text-align: left;
+      font-size: 18px;
+    }
+    
+    .explication strong {
+      color: #ff9f1a;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .scores {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .choices-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .choice-btn {
+        min-width: 100%;
+        margin: 10px 0;
+      }
+      
+      .verb-display {
+        font-size: 36px;
+        padding: 20px;
+        min-height: 150px;
+      }
+      
+      .timer {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Mission : Verbes au Présent</h1>
+    <p class="subtitle">50 verbes - 1er groupe (10) • 2ème groupe (10) • 3ème groupe (30)</p>
+    
+    <!-- Écran d'accueil -->
+    <div id="home-screen" class="section active">
+      <div style="font-size: 80px; margin: 30px 0;">📚⚡</div>
+      <h2>Conjugue et Affronte !</h2>
+      <p>Maîtrise 50 verbes au présent et défie un ami en ligne</p>
+      <button onclick="createGame()">🎮 CAPITAINE (Créer la mission)</button>
+      <br>
+      <button onclick="joinGame()">🔗 COÉQUIPIER (Rejoindre la mission)</button>
+    </div>
+    
+    <!-- Écran Capitaine -->
+    <div id="player1-screen" class="section">
+      <h2>⭐ Tu es le Capitaine</h2>
+      <p>Choisis ton nom pour la mission :</p>
+      <input id="player1-name" placeholder="Ton nom">
+      <br>
+      <button onclick="startAsPlayer1()">🚀 Lancer la mission</button>
+      
+      <div id="share-box" class="hidden">
+        <h3>📡 Lien d'invitation</h3>
+        <p>Envoie ce lien à ton coéquipier :</p>
+        <div class="share-link" id="game-link">Génération du lien...</div>
+        <button class="copy-btn" onclick="copyLink()">📋 Copier le lien</button>
+        <p class="message">⏳ En attente du coéquipier...</p>
+      </div>
+    </div>
+    
+    <!-- Écran Coéquipier -->
+    <div id="player2-screen" class="section">
+      <h2>👥 Tu es le Coéquipier</h2>
+      <p>Choisis ton nom pour la mission :</p>
+      <input id="player2-name" placeholder="Ton nom">
+      <br>
+      <button onclick="joinAsPlayer2()">🤝 Rejoindre la mission</button>
+      <p class="message" id="player2-message">Entre ton nom et rejoins le capitaine !</p>
+    </div>
+    
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="section">
+      <div class="timer" id="timer">45</div>
+      
+      <div class="progress-container">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div class="progress-text" id="progress-text">Verbe 1/50</div>
+      
+      <div class="verb-display" id="verb-display">
+        <div>
+          <span class="subject" id="subject">Je</span>
+          <span class="verb" id="verb">(manger)</span>
+        </div>
+      </div>
+      
+      <div id="verb-group-display" style="margin: 20px 0;"></div>
+      
+      <div class="choices-grid" id="choices"></div>
+      
+      <div id="explication" class="explication hidden">
+        <strong>💡 Explication :</strong> <span id="explication-text"></span>
+      </div>
+      
+      <div class="scores">
+        <div class="player player1">
+          <div class="player-name" id="player1-display-name">Capitaine</div>
+          <div class="player-score" id="player1-score">0</div>
+        </div>
+        <div class="player player2">
+          <div class="player-name" id="player2-display-name">Coéquipier</div>
+          <div class="player-score" id="player2-score">0</div>
+        </div>
+      </div>
+      
+      <p id="game-message" style="font-size: 18px; color: #a4b0be;">
+        Conjugue correctement le verbe au présent !
+      </p>
+    </div>
+    
+    <!-- Écran de fin -->
+    <div id="end-screen" class="section">
+      <div style="font-size: 100px; margin: 30px 0;" id="trophy">🏆</div>
+      <h2>🎉 Mission Accomplie !</h2>
+      <div id="winner-message" style="font-size: 28px; margin: 30px 0;"></div>
+      
+      <div class="scores">
+        <div class="player player1">
+          <div class="player-name" id="final-player1-name">Capitaine</div>
+          <div class="player-score" id="final-player1-score">0</div>
+        </div>
+        <div class="player player2">
+          <div class="player-name" id="final-player2-name">Coéquipier</div>
+          <div class="player-score" id="final-player2-score">0</div>
+        </div>
+      </div>
+      
+      <div id="stats" style="margin: 30px 0; font-size: 18px;"></div>
+      
+      <button onclick="restartGame()">🔄 Nouvelle mission</button>
+      <button onclick="goHome()">🏠 Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔥 CONFIGURATION FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+      authDomain: "fabien-bouvier.firebaseapp.com",
+      databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "fabien-bouvier",
+      storageBucket: "fabien-bouvier.firebasestorage.app",
+      messagingSenderId: "863046756799",
+      appId: "1:863046756799:web:36a48325658a4286d6190a"
+    };
+    
+    // Initialiser Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    
+    // 50 VERBES AU PRÉSENT
+    const verbs = [
+      // ========== 1er GROUPE (10 verbes) ==========
+      {
+        infinitive: "manger",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["mange", "manges", "mange", "mangeons", "mangez", "mangent"],
+        hints: ["Terminaisons : -e, -es, -e, -ons, -ez, -ent"]
+      },
+      {
+        infinitive: "parler",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["parle", "parles", "parle", "parlons", "parlez", "parlent"],
+        hints: ["1er groupe régulier"]
+      },
+      {
+        infinitive: "regarder",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["regarde", "regardes", "regarde", "regardons", "regardez", "regardent"],
+        hints: ["On enlève -er et on ajoute les terminaisons"]
+      },
+      {
+        infinitive: "aimer",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["aime", "aimes", "aime", "aimons", "aimez", "aiment"],
+        hints: ["Attention à l'orthographe : aime, aimes, aiment"]
+      },
+      {
+        infinitive: "jouer",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["joue", "joues", "joue", "jouons", "jouez", "jouent"],
+        hints: ["Régulier, comme tous les verbes en -er"]
+      },
+      {
+        infinitive: "chanter",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["chante", "chantes", "chante", "chantons", "chantez", "chantent"],
+        hints: ["Terminaisons régulières"]
+      },
+      {
+        infinitive: "étudier",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["étudie", "étudies", "étudie", "étudions", "étudiez", "étudient"],
+        hints: ["Verbe en -ier, attention aux terminaisons"]
+      },
+      {
+        infinitive: "travailler",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["travaille", "travailles", "travaille", "travaillons", "travaillez", "travaillent"],
+        hints: ["Double le l devant les terminaisons"]
+      },
+      {
+        infinitive: "écouter",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["écoute", "écoutes", "écoute", "écoutons", "écoutez", "écoutent"],
+        hints: ["Régulier, verbe en -er"]
+      },
+      {
+        infinitive: "habiter",
+        group: 1,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["habite", "habites", "habite", "habitons", "habitez", "habitent"],
+        hints: ["Dernier verbe du 1er groupe"]
+      },
+      
+      // ========== 2ème GROUPE (10 verbes) ==========
+      {
+        infinitive: "finir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["finis", "finis", "finit", "finissons", "finissez", "finissent"],
+        hints: ["Terminaisons : -is, -is, -it, -issons, -issez, -issent"]
+      },
+      {
+        infinitive: "choisir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["choisis", "choisis", "choisit", "choisissons", "choisissez", "choisissent"],
+        hints: ["Comme finir : même terminaisons"]
+      },
+      {
+        infinitive: "réussir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["réussis", "réussis", "réussit", "réussissons", "réussissez", "réussissent"],
+        hints: ["Tous les verbes en -ir du 2ème groupe se conjuguent comme finir"]
+      },
+      {
+        infinitive: "grandir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["grandis", "grandis", "grandit", "grandissons", "grandissez", "grandissent"],
+        hints: ["2ème groupe régulier"]
+      },
+      {
+        infinitive: "rougir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["rougis", "rougis", "rougit", "rougissons", "rougissez", "rougissent"],
+        hints: ["Même modèle que finir"]
+      },
+      {
+        infinitive: "agir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["agis", "agis", "agit", "agissons", "agissez", "agissent"],
+        hints: ["2ème groupe, terminaisons en -is, -it, -issons"]
+      },
+      {
+        infinitive: "bâtir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["bâtis", "bâtis", "bâtit", "bâtissons", "bâtissez", "bâtissent"],
+        hints: ["Comme finir"]
+      },
+      {
+        infinitive: "réfléchir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["réfléchis", "réfléchis", "réfléchit", "réfléchissons", "réfléchissez", "réfléchissent"],
+        hints: ["Accent circonflexe sur le i à certaines personnes"]
+      },
+      {
+        infinitive: "obéir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["obéis", "obéis", "obéit", "obéissons", "obéissez", "obéissent"],
+        hints: ["Verbe en -ir régulier du 2ème groupe"]
+      },
+      {
+        infinitive: "nourrir",
+        group: 2,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["nourris", "nourris", "nourrit", "nourrissons", "nourrissez", "nourrissent"],
+        hints: ["Double le r devant les terminaisons"]
+      },
+      
+      // ========== 3ème GROUPE (30 verbes) ==========
+      {
+        infinitive: "aller",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["vais", "vas", "va", "allons", "allez", "vont"],
+        hints: ["Verbe très irrégulier : vais, vas, va, allons, allez, vont"]
+      },
+      {
+        infinitive: "faire",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["fais", "fais", "fait", "faisons", "faites", "font"],
+        hints: ["Je fais, tu fais, il fait, nous faisons, vous faites, ils font"]
+      },
+      {
+        infinitive: "avoir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["ai", "as", "a", "avons", "avez", "ont"],
+        hints: ["Auxiliaire avoir : j'ai, tu as, il a, nous avons, vous avez, ils ont"]
+      },
+      {
+        infinitive: "être",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["suis", "es", "est", "sommes", "êtes", "sont"],
+        hints: ["Auxiliaire être : je suis, tu es, il est, nous sommes, vous êtes, ils sont"]
+      },
+      {
+        infinitive: "venir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["viens", "viens", "vient", "venons", "venez", "viennent"],
+        hints: ["Comme tenir : viens, viens, vient, venons, venez, viennent"]
+      },
+      {
+        infinitive: "prendre",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["prends", "prends", "prend", "prenons", "prenez", "prennent"],
+        hints: ["Je prends, tu prends, il prend, nous prenons, vous prenez, ils prennent"]
+      },
+      {
+        infinitive: "voir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["vois", "vois", "voit", "voyons", "voyez", "voient"],
+        hints: ["Je vois, tu vois, il voit, nous voyons, vous voyez, ils voient"]
+      },
+      {
+        infinitive: "pouvoir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["peux", "peux", "peut", "pouvons", "pouvez", "peuvent"],
+        hints: ["Je peux, tu peux, il peut, nous pouvons, vous pouvez, ils peuvent"]
+      },
+      {
+        infinitive: "vouloir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["veux", "veux", "veut", "voulons", "voulez", "veulent"],
+        hints: ["Je veux, tu veux, il veut, nous voulons, vous voulez, ils veulent"]
+      },
+      {
+        infinitive: "devoir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["dois", "dois", "doit", "devons", "devez", "doivent"],
+        hints: ["Je dois, tu dois, il doit, nous devons, vous devez, ils doivent"]
+      },
+      {
+        infinitive: "savoir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["sais", "sais", "sait", "savons", "savez", "savent"],
+        hints: ["Je sais, tu sais, il sait, nous savons, vous savez, ils savent"]
+      },
+      {
+        infinitive: "dire",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["dis", "dis", "dit", "disons", "dites", "disent"],
+        hints: ["Je dis, tu dis, il dit, nous disons, vous dites, ils disent"]
+      },
+      {
+        infinitive: "lire",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["lis", "lis", "lit", "lisons", "lisez", "lisent"],
+        hints: ["Comme dire mais avec l au lieu de d"]
+      },
+      {
+        infinitive: "écrire",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["écris", "écris", "écrit", "écrivons", "écrivez", "écrivent"],
+        hints: ["Comme prendre : j'écris, nous écrivons"]
+      },
+      {
+        infinitive: "partir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["pars", "pars", "part", "partons", "partez", "partent"],
+        hints: ["Verbe en -tir : pars, pars, part, partons, partez, partent"]
+      },
+      {
+        infinitive: "sortir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["sors", "sors", "sort", "sortons", "sortez", "sortent"],
+        hints: ["Comme partir : sors, sors, sort, sortons, sortez, sortent"]
+      },
+      {
+        infinitive: "dormir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["dors", "dors", "dort", "dormons", "dormez", "dorment"],
+        hints: ["Verbe en -mir : dors, dors, dort, dormons, dormez, dorment"]
+      },
+      {
+        infinitive: "servir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["sers", "sers", "sert", "servons", "servez", "servent"],
+        hints: ["Comme partir mais en s"]
+      },
+      {
+        infinitive: "ouvrir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["ouvre", "ouvres", "ouvre", "ouvrons", "ouvrez", "ouvrent"],
+        hints: ["Se conjugue comme un verbe du 1er groupe !"]
+      },
+      {
+        infinitive: "courir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["cours", "cours", "court", "courons", "courez", "courent"],
+        hints: ["Comme mourir : cours, cours, court, courons, courez, courent"]
+      },
+      {
+        infinitive: "mourir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["meurs", "meurs", "meurt", "mourons", "mourez", "meurent"],
+        hints: ["Très irrégulier : meurs, meurs, meurt, mourons, mourez, meurent"]
+      },
+      {
+        infinitive: "boire",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["bois", "bois", "boit", "buvons", "buvez", "boivent"],
+        hints: ["Je bois, tu bois, il boit, nous buvons, vous buvez, ils boivent"]
+      },
+      {
+        infinitive: "connaître",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["connais", "connais", "connaît", "connaissons", "connaissez", "connaissent"],
+        hints: ["Comme paraître : connais, connais, connaît, connaissons, connaissez, connaissent"]
+      },
+      {
+        infinitive: "croire",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["crois", "crois", "croit", "croyons", "croyez", "croient"],
+        hints: ["Je crois, tu crois, il croit, nous croyons, vous croyez, ils croient"]
+      },
+      {
+        infinitive: "recevoir",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["reçois", "reçois", "reçoit", "recevons", "recevez", "reçoivent"],
+        hints: ["Je reçois, tu reçois, il reçoit, nous recevons, vous recevez, ils reçoivent"]
+      },
+      {
+        infinitive: "apprendre",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["apprends", "apprends", "apprend", "apprenons", "apprenez", "apprennent"],
+        hints: ["Comme prendre : apprends, apprends, apprend, apprenons, apprenez, apprennent"]
+      },
+      {
+        infinitive: "comprendre",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["comprends", "comprends", "comprend", "comprenons", "comprenez", "comprennent"],
+        hints: ["Comme prendre : comprends, comprends, comprend, comprenons, comprenez, comprennent"]
+      },
+      {
+        infinitive: "attendre",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["attends", "attends", "attend", "attendons", "attendez", "attendent"],
+        hints: ["Verbe en -dre : attends, attends, attend, attendons, attendez, attendent"]
+      },
+      {
+        infinitive: "répondre",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["réponds", "réponds", "répond", "répondons", "répondez", "répondent"],
+        hints: ["Comme attendre : réponds, réponds, répond, répondons, répondez, répondent"]
+      },
+      {
+        infinitive: "vendre",
+        group: 3,
+        subjects: ["je", "tu", "il/elle", "nous", "vous", "ils/elles"],
+        conjugations: ["vends", "vends", "vend", "vendons", "vendez", "vendent"],
+        hints: ["Comme attendre : vends, vends, vend, vendons, vendez, vendent"]
+      }
+    ];
+    
+    // Variables globales
+    let playerName = "";
+    let playerNumber = 0;
+    let gameId = "";
+    let gameRef = null;
+    let currentVerbIndex = 0;
+    let timer = 45; // PLUS DE TEMPS pour répondre
+    let timerInterval = null;
+    let lastGameData = null;
+    let currentSubjectIndex = 0;
+    let correctAnswersCount = 0;
+    
+    // === FONCTIONS PRINCIPALES ===
+    
+    // Changer d'écran
+    function showScreen(screenId) {
+      document.querySelectorAll('.section').forEach(screen => {
+        screen.classList.remove('active');
+      });
+      document.getElementById(screenId).classList.add('active');
+    }
+    
+    // Capitaine : Créer une mission
+    function createGame() {
+      showScreen('player1-screen');
+    }
+    
+    function startAsPlayer1() {
+      const name = document.getElementById('player1-name').value.trim();
+      if (!name) {
+        alert("Entre ton nom pour commencer la mission !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 1;
+      
+      // Générer un ID de partie unique
+      gameId = 'verbMission_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      gameRef = database.ref('verbGames/' + gameId);
+      
+      // Créer la partie dans Firebase
+      const gameData = {
+        player1: { name: name, score: 0, ready: true, correct: 0 },
+        player2: { name: "", score: 0, ready: false, correct: 0 },
+        currentVerb: 0,
+        gameStarted: false,
+        gameFinished: false,
+        createdAt: Date.now()
+      };
+      
+      gameRef.set(gameData);
+      
+      // Afficher le lien de partage
+      const gameLink = window.location.href.split('?')[0] + '?game=' + gameId;
+      document.getElementById('game-link').textContent = gameLink;
+      document.getElementById('share-box').classList.remove('hidden');
+      
+      // Écouter les mises à jour
+      listenToGame();
+    }
+    
+    // Copier le lien
+    function copyLink() {
+      const link = document.getElementById('game-link').textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("Lien copié ! Envoie-le à ton coéquipier !");
+      });
+    }
+    
+    // Coéquipier : Rejoindre une mission
+    function joinGame() {
+      showScreen('player2-screen');
+    }
+    
+    function joinAsPlayer2() {
+      const name = document.getElementById('player2-name').value.trim();
+      if (!name) {
+        alert("Entre ton nom pour rejoindre la mission !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 2;
+      
+      // Vérifier si un ID de jeu est dans l'URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        gameId = gameIdFromUrl;
+      } else {
+        // Sinon, demander l'ID
+        gameId = prompt("Entre le code de la mission (demande au capitaine) :");
+        if (!gameId) return;
+      }
+      
+      gameRef = database.ref('verbGames/' + gameId);
+      
+      // Vérifier si la partie existe
+      gameRef.once('value').then(snapshot => {
+        if (!snapshot.exists()) {
+          alert("Mission non trouvée ! Vérifie le code.");
+          return;
+        }
+        
+        const gameData = snapshot.val();
+        lastGameData = gameData;
+        
+        // Rejoindre la partie
+        gameRef.update({
+          'player2': { name: name, score: 0, ready: true, correct: 0 }
+        });
+        
+        document.getElementById('player2-message').textContent = "Connecté ! En attente du capitaine...";
+        
+        // Écouter les mises à jour
+        listenToGame();
+        
+      }).catch(error => {
+        alert("Erreur : " + error.message);
+      });
+    }
+    
+    // Écouter les changements du jeu
+    function listenToGame() {
+      if (!gameRef) return;
+      
+      gameRef.on('value', snapshot => {
+        const gameData = snapshot.val();
+        if (!gameData) return;
+        
+        lastGameData = gameData;
+        
+        // Mettre à jour les noms et scores
+        updatePlayerDisplays(gameData);
+        
+        // Si les deux joueurs sont prêts, démarrer
+        if (gameData.player1.ready && gameData.player2.ready && !gameData.gameStarted) {
+          gameRef.update({ gameStarted: true });
+        }
+        
+        // Si le jeu a démarré
+        if (gameData.gameStarted) {
+          showScreen('game-screen');
+          currentVerbIndex = gameData.currentVerb || 0;
+          
+          // Mettre à jour la barre de progression
+          const progress = ((currentVerbIndex + 1) / verbs.length) * 100;
+          document.getElementById('progress').style.width = progress + '%';
+          document.getElementById('progress-text').textContent = 
+            `Verbe ${currentVerbIndex + 1}/${verbs.length}`;
+          
+          // Afficher le verbe courant
+          showCurrentVerb();
+          
+          // Démarrer le timer si ce n'est pas fait
+          if (!timerInterval) {
+            startTimer();
+          }
+        }
+        
+        // Si le jeu est terminé
+        if (gameData.gameFinished) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          showEndScreen(gameData);
+        }
+      });
+    }
+    
+    // Mettre à jour l'affichage des joueurs
+    function updatePlayerDisplays(gameData) {
+      document.getElementById('player1-display-name').textContent = gameData.player1.name || "Capitaine";
+      document.getElementById('player1-score').textContent = gameData.player1.score || 0;
+      
+      document.getElementById('player2-display-name').textContent = gameData.player2.name || "Coéquipier";
+      document.getElementById('player2-score').textContent = gameData.player2.score || 0;
+      
+      document.getElementById('final-player1-name').textContent = gameData.player1.name || "Capitaine";
+      document.getElementById('final-player1-score').textContent = gameData.player1.score || 0;
+      
+      document.getElementById('final-player2-name').textContent = gameData.player2.name || "Coéquipier";
+      document.getElementById('final-player2-score').textContent = gameData.player2.score || 0;
+    }
+    
+    // Afficher le verbe courant
+    function showCurrentVerb() {
+      if (currentVerbIndex >= verbs.length) {
+        gameRef.update({ gameFinished: true });
+        return;
+      }
+      
+      const verb = verbs[currentVerbIndex];
+      
+      // Choisir un sujet aléatoire
+      currentSubjectIndex = Math.floor(Math.random() * verb.subjects.length);
+      const subject = verb.subjects[currentSubjectIndex];
+      const correctAnswer = verb.conjugations[currentSubjectIndex];
+      
+      // Afficher le verbe
+      document.getElementById('subject').textContent = subject + " ";
+      document.getElementById('verb').textContent = "(" + verb.infinitive + ")";
+      
+      // Afficher le groupe du verbe
+      const groupDisplay = document.getElementById('verb-group-display');
+      let groupText = "";
+      let groupClass = "";
+      
+      switch(verb.group) {
+        case 1:
+          groupText = "1er groupe (verbes en -er)";
+          groupClass = "group1";
+          break;
+        case 2:
+          groupText = "2ème groupe (verbes en -ir comme finir)";
+          groupClass = "group2";
+          break;
+        case 3:
+          groupText = "3ème groupe (verbes irréguliers)";
+          groupClass = "group3";
+          break;
+      }
+      
+      groupDisplay.innerHTML = `<span class="verb-group ${groupClass}">${groupText}</span>`;
+      
+      // Générer les choix de réponses
+      const choicesContainer = document.getElementById('choices');
+      choicesContainer.innerHTML = '';
+      document.getElementById('explication').classList.add('hidden');
+      
+      // Créer 4 choix dont 1 correct
+      let choices = [correctAnswer];
+      
+      // Ajouter des réponses plausibles mais fausses
+      while (choices.length < 4) {
+        const randomVerbIndex = Math.floor(Math.random() * verbs.length);
+        const randomSubjectIndex = Math.floor(Math.random() * 6);
+        const wrongAnswer = verbs[randomVerbIndex].conjugations[randomSubjectIndex];
+        
+        // Éviter les doublons
+        if (!choices.includes(wrongAnswer) && wrongAnswer !== correctAnswer) {
+          choices.push(wrongAnswer);
+        }
+      }
+      
+      // Mélanger les choix
+      choices = choices.sort(() => Math.random() - 0.5);
+      
+      // Créer les boutons
+      choices.forEach(choice => {
+        const button = document.createElement('button');
+        button.className = 'choice-btn';
+        button.textContent = choice;
+        button.onclick = () => checkAnswer(choice, correctAnswer, verb.hints[0]);
+        choicesContainer.appendChild(button);
+      });
+    }
+    
+    // Vérifier la réponse
+    function checkAnswer(choice, correctAnswer, hint) {
+      const buttons = document.querySelectorAll('.choice-btn');
+      
+      // Désactiver tous les boutons
+      buttons.forEach(btn => {
+        btn.onclick = null;
+        if (btn.textContent === correctAnswer) {
+          btn.classList.add('correct');
+        } else if (btn.textContent === choice && choice !== correctAnswer) {
+          btn.classList.add('wrong');
+        }
+      });
+      
+      // Mettre à jour le score
+      if (choice === correctAnswer) {
+        const playerKey = 'player' + playerNumber;
+        gameRef.child(playerKey + '/score').transaction(score => (score || 0) + 10);
+        gameRef.child(playerKey + '/correct').transaction(correct => (correct || 0) + 1);
+        correctAnswersCount++;
+      } else {
+        // Afficher l'explication
+        document.getElementById('explication-text').textContent = hint;
+        document.getElementById('explication').classList.remove('hidden');
+      }
+      
+      // Attendre 3 secondes (PLUS DE TEMPS) puis passer au verbe suivant
+      setTimeout(() => {
+        const nextVerbIndex = currentVerbIndex + 1;
+        gameRef.update({ currentVerb: nextVerbIndex });
+      }, 3000);
+    }
+    
+    // Démarrer le timer
+    function startTimer() {
+      timer = 45; // 45 SECONDES pour répondre
+      document.getElementById('timer').textContent = timer;
+      
+      timerInterval = setInterval(() => {
+        timer--;
+        document.getElementById('timer').textContent = timer;
+        
+        // Changer la couleur quand il reste peu de temps
+        if (timer <= 10) {
+          document.getElementById('timer').style.color = '#ff6b6b';
+        }
+        
+        if (timer <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          // Temps écoulé, passer au verbe suivant
+          const nextVerbIndex = currentVerbIndex + 1;
+          if (gameRef) {
+            gameRef.update({ currentVerb: nextVerbIndex });
+          }
+        }
+      }, 1000);
+    }
+    
+    // Afficher l'écran de fin
+    function showEndScreen(gameData) {
+      if (!gameData) return;
+      
+      let winnerMessage = "";
+      let trophy = "🏆";
+      
+      if (gameData.player1.score > gameData.player2.score) {
+        winnerMessage = `👑 ${gameData.player1.name} remporte la mission !`;
+        trophy = "👑";
+      } else if (gameData.player2.score > gameData.player1.score) {
+        winnerMessage = `⭐ ${gameData.player2.name} remporte la mission !`;
+        trophy = "⭐";
+      } else {
+        winnerMessage = "🤝 Égalité parfaite ! Vous êtes des champions !";
+        trophy = "🏆";
+      }
+      
+      document.getElementById('trophy').textContent = trophy;
+      
+      const p1Correct = gameData.player1.correct || 0;
+      const p2Correct = gameData.player2.correct || 0;
+      const p1Percentage = Math.round((p1Correct / 50) * 100);
+      const p2Percentage = Math.round((p2Correct / 50) * 100);
+      
+      document.getElementById('winner-message').innerHTML = `
+        <h3>${winnerMessage}</h3>
+        <p>Score final : ${gameData.player1.score} - ${gameData.player2.score} points</p>
+      `;
+      
+      document.getElementById('stats').innerHTML = `
+        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px;">
+          <p><strong>${gameData.player1.name}</strong> : ${p1Correct}/50 verbes corrects (${p1Percentage}%)</p>
+          <p><strong>${gameData.player2.name}</strong> : ${p2Correct}/50 verbes corrects (${p2Percentage}%)</p>
+          <p style="margin-top: 15px; color: #ff9f1a;">✅ 10 verbes du 1er groupe<br>
+          ✅ 10 verbes du 2ème groupe<br>
+          ✅ 30 verbes du 3ème groupe</p>
+        </div>
+      `;
+      
+      showScreen('end-screen');
+    }
+    
+    // NOUVELLE PARTIE
+    function restartGame() {
+      if (!gameRef || !lastGameData) {
+        alert("Impossible de redémarrer. Retour à l'accueil !");
+        goHome();
+        return;
+      }
+      
+      // Arrêter l'ancien timer
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      
+      // Réinitialiser la partie dans Firebase
+      gameRef.update({
+        player1: { 
+          name: lastGameData.player1.name, 
+          score: 0, 
+          ready: true,
+          correct: 0
+        },
+        player2: { 
+          name: lastGameData.player2.name, 
+          score: 0, 
+          ready: true,
+          correct: 0
+        },
+        currentVerb: 0,
+        gameStarted: true,
+        gameFinished: false
+      });
+      
+      // Réinitialiser les variables locales
+      currentVerbIndex = 0;
+      timer = 45;
+      correctAnswersCount = 0;
+      document.getElementById('timer').style.color = '#ff9f1a';
+      
+      // Retourner à l'écran de jeu
+      showScreen('game-screen');
+      
+      // Redémarrer l'écoute
+      listenToGame();
+    }
+    
+    // Retour à l'accueil
+    function goHome() {
+      playerName = "";
+      playerNumber = 0;
+      gameId = "";
+      gameRef = null;
+      currentVerbIndex = 0;
+      lastGameData = null;
+      correctAnswersCount = 0;
+      
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      
+      showScreen('home-screen');
+      
+      // Nettoyer l'URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
+    // Au chargement, vérifier si on rejoint une partie via l'URL
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        // C'est le Coéquipier qui arrive via le lien
+        showScreen('player2-screen');
+        document.getElementById('player2-message').textContent = 
+          "Mission trouvée ! Entre ton nom pour rejoindre !";
+      }
+    });
+  </script>
+</body>
+</html>
