@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon de révision A2 – possessifs & démonstratifs</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(145deg, #f2efe9 0%, #faf7f2 100%);
+            margin: 0;
+            padding: 25px 15px;
+            color: #2f3e46;
+        }
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(3px);
+            padding: 30px 35px;
+            border-radius: 50px 20px 50px 20px;
+            box-shadow: 0 20px 40px -12px rgba(99, 69, 49, 0.25);
+            border: 2px solid #fff3e9;
+        }
+        h1 {
+            color: #c44536;
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 0 0 5px 0;
+            text-shadow: 2px 2px 0 #fadfd7;
+            letter-spacing: -0.5px;
+        }
+        .sous-titre {
+            background: #b7bccf30;
+            border-radius: 60px;
+            padding: 6px 25px;
+            display: inline-block;
+            color: #4d6a77;
+            font-weight: 500;
+            border: 2px dotted #9aaeb9;
+            margin-bottom: 30px;
+        }
+        h2 {
+            background: #fee9dd;
+            padding: 12px 20px 12px 30px;
+            border-radius: 100px 20px 20px 100px;
+            font-size: 1.9rem;
+            color: #2b4e5c;
+            border-left: 10px solid #e07f5f;
+            margin-top: 45px;
+            font-weight: 400;
+        }
+        h3 {
+            color: #d97c5a;
+            font-size: 1.5rem;
+            margin: 25px 0 10px 25px;
+            font-weight: 500;
+            border-bottom: 3px wavy #fbdbc3;
+            display: inline-block;
+        }
+        .carte-verbale {
+            background: #cfdee9;
+            border-radius: 48px 8px 48px 8px;
+            padding: 18px 25px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 22px;
+            margin: 15px 0 25px 0;
+            border: 3px solid white;
+            box-shadow: 0 7px 0 #95aebc;
+        }
+        .pastille {
+            background: #c05c3b;
+            color: white;
+            border-radius: 50px;
+            padding: 6px 22px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            box-shadow: inset 0 -3px 0 #6e2e1b;
+        }
+        .bloc-exo {
+            background: #ffffffde;
+            border-radius: 45px 15px 45px 15px;
+            padding: 25px 30px;
+            margin: 35px 0;
+            border: 3px solid white;
+            box-shadow: 0 10px 20px rgba(180, 120, 80, 0.15);
+            transition: all 0.1s;
+        }
+        .consigne {
+            font-size: 1.2rem;
+            background: #f4d7cc60;
+            padding: 14px 25px;
+            border-radius: 60px;
+            color: #3b2c25;
+            font-weight: 600;
+            margin-bottom: 20px;
+            border: 2px solid #ffc6ad;
+        }
+        .zone-reponse {
+            width: 100%;
+            padding: 16px 20px;
+            font-size: 1.1rem;
+            border: 3px solid #eedac8;
+            border-radius: 40px 8px 40px 8px;
+            background: #fffcf9;
+            margin: 12px 0;
+            resize: vertical;
+            font-family: 'Segoe UI', monospace;
+            box-shadow: inset 2px 2px 10px #f0dbd1;
+        }
+        .zone-reponse:focus {
+            outline: none;
+            border-color: #d28464;
+            background: #fffaf5;
+        }
+        .btn-reveal {
+            background: #e0947c;
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            padding: 12px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            margin: 15px 0 5px 0;
+            border-bottom: 5px solid #a5583d;
+            transition: 0.1s;
+            box-shadow: 0 6px 0 #9b5e4b;
+        }
+        .btn-reveal:active {
+            transform: translateY(5px);
+            border-bottom-width: 2px;
+        }
+        .corrige-cache {
+            background: #e7f0ea;
+            border-left: 12px solid #70ae98;
+            padding: 20px 25px;
+            border-radius: 30px 10px 30px 10px;
+            margin: 20px 0 0 0;
+            font-size: 1.1rem;
+            display: none;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            color: #1f4f3d;
+            box-shadow: 0 5px 0 #acc9bb;
+        }
+        .corrige-cache.montrer {
+            display: block;
+        }
+        .ligne-couleurs {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0 20px;
+        }
+        .couleur {
+            height: 12px;
+            flex: 1;
+            border-radius: 40px;
+        }
+        .c1 { background: #f7bf9f; }
+        .c2 { background: #b0d3d1; }
+        .c3 { background: #f3dbb6; }
+        .c4 { background: #d7b8a7; }
+        hr {
+            border: 4px dotted #e3bfaa;
+            width: 70px;
+            margin: 40px auto;
+        }
+        footer {
+            text-align: right;
+            color: #c2a18b;
+            margin-top: 50px;
+            font-style: italic;
+        }
+        .badge-rose {
+            background: #ffbba8;
+            padding: 5px 18px;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #511f0e;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>✨ révision · du passé composé aux possessifs</h1>
+    <div class="sous-titre">semaines 2 → 8 · rappels + exercices possifs & démonstratifs</div>
+
+    <!-- bandeau couleur -->
+    <div class="ligne-couleurs">
+        <span class="couleur c1"></span><span class="couleur c2"></span><span class="couleur c3"></span><span class="couleur c4"></span>
+    </div>
+
+    <!-- 1. RAPPEL AUXILIAIRES (ÊTRE / AVOIR) avec carte visuelle -->
+    <h2>⚓ auxiliaires être / avoir</h2>
+    <div class="carte-verbale">
+        <span class="pastille">AVOIR</span><span>manger, finir, prendre, voir, acheter, mettre…</span>
+        <span class="pastille" style="background:#317f6e;">ÊTRE</span><span>14 mouv. + pronominaux : aller, venir, partir, arriver, naître, mourir, tomber, rester, monter, descendre, sortir, entrer, retourner, rentrer, devenir, revenir</span>
+    </div>
+    <p style="margin-left: 20px; background: #fff9f0; padding: 10px 20px; border-radius: 60px;">👆 <strong>Accord avec être</strong> : <em>elle est allée, ils sont partis, nous nous sommes promené(e)s</em></p>
+
+    <!-- 2. EXERCICE 1 passé composé (avec cases pour écrire) -->
+    <div class="bloc-exo">
+        <div class="consigne">📝 Exercice 1 – Complète au passé composé (être/avoir + accord si nécessaire)</div>
+        <label>1. Hier, nous (aller) _______________ à la librairie.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>2. Ma collègue (se reposer) _______________ après le déjeuner.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>3. Vous (acheter) _______________ ce joli sac ?</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>4. Elles (partir) _______________ très tôt.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>5. Il (descendre) _______________ les valises du grenier.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. sommes allé(e)s (être + accord éventuel)<br>
+2. s’est reposée (pronominal, être, accord fém. sing.)<br>
+3. avez acheté (avoir, pas d’accord)<br>
+4. sont parties (être, accord fém. plur.)<br>
+5. a descendu (avoir, car COD « les valises »)
+        </div>
+    </div>
+
+    <!-- 3. FUTUR PROCHE & MODAUX (exercice 2) -->
+    <h2>⏩ futur proche & modaux</h2>
+    <div class="bloc-exo">
+        <div class="consigne">🚀 Exercice 2 – Forme des phrases avec l’expression indiquée</div>
+        <label>a) (projet / futur proche) je / acheter / un appartement →</label>
+        <textarea class="zone-reponse" rows="1" placeholder="écris ici..."></textarea>
+        <label>b) (obligation / devoir) nous / finir / le travail →</label>
+        <textarea class="zone-reponse" rows="1" placeholder="écris ici..."></textarea>
+        <label>c) (possibilité négative / pouvoir) tu / venir / à la fête →</label>
+        <textarea class="zone-reponse" rows="1" placeholder="écris ici..."></textarea>
+        <label>d) (intention / vouloir) elles / partir / en voyage →</label>
+        <textarea class="zone-reponse" rows="1" placeholder="écris ici..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+a) Je vais acheter un appartement.<br>
+b) Nous devons finir le travail.<br>
+c) Tu ne peux pas venir à la fête.<br>
+d) Elles veulent partir en voyage.
+        </div>
+    </div>
+
+    <!-- 4. PRONOMS COD/COI (exercice 3) -->
+    <h2>🔁 pronoms COD / COI</h2>
+    <div class="bloc-exo">
+        <div class="consigne">🔤 Exercice 3 – Remplace par <em>le, la, les, lui, leur</em></div>
+        <label>1. Tu vois souvent tes cousines ? → Oui, je ________ vois souvent.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>2. Vous avez téléphoné à la directrice ? → Oui, nous ________ avons téléphoné.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>3. Il a pris le métro ? → Oui, il ________ a pris.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>4. J’ai écrit à mes amies → Je ________ ai écrit.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>5. Tu as embrassé ta mère ? → Oui, je ________ ai embrassée.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. les<br>
+2. lui<br>
+3. l’<br>
+4. leur<br>
+5. l’ (car COD, attention : « je l’ai embrassée » avec accord car placé avant)
+        </div>
+    </div>
+
+    <!-- 5. COMPARATIFS (exercice 4) -->
+    <h2>⚖️ comparatifs</h2>
+    <div class="bloc-exo">
+        <div class="consigne">📊 Exercice 4 – Complète avec plus… que, moins… que, aussi… que</div>
+        <label>1. Tokyo est ________ grand ________ Osaka.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ex: plus ... que"></textarea>
+        <label>2. L’hiver est ________ froid ________ l’été.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>3. Ce livre est ________ intéressant ________ le film.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. plus … que (ou aussi … que, mais Tokyo est effectivement plus grand)<br>
+2. plus … que (ou moins … que si on inverse la phrase)<br>
+3. aussi … que / plus … que (selon l’opinion)
+        </div>
+    </div>
+
+    <!-- 6. IMPARFAIT vs CONDITIONNEL (exercice 5) -->
+    <h2>🔄 imparfait / conditionnel</h2>
+    <div class="bloc-exo">
+        <div class="consigne">🧩 Exercice 5 – Imparfait ou conditionnel ? Conjugue</div>
+        <label>1. Quand j’(être) ________ petite, je (jouer) ________ au parc.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>2. Je (vouloir) ________ un café, s’il vous plaît.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>3. Il (faire) ________ beau, alors nous (sortir) ________ .</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>4. Tu es fatiguée ? Tu (devoir) ________ te reposer.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. étais / jouais (imparfait habitude)<br>
+2. voudrais (conditionnel politesse)<br>
+3. faisait / sommes sortis (imparfait description + PC)<br>
+4. devrais (conditionnel conseil)
+        </div>
+    </div>
+
+    <!-- NOUVEAU : EXERCICE ADJECTIFS POSSESSIFS (exercice 6) -->
+    <h2>🧸 adjectifs possessifs</h2>
+    <div class="bloc-exo">
+        <div class="consigne">📘 Exercice 6 – Complète avec <em>mon, ma, mes, ton, ta, tes, son, sa, ses, notre, nos, votre, vos, leur, leurs</em></div>
+        <label>1. J’ai un chien. C’est ________ chien.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="ta réponse..."></textarea>
+        <label>2. Tu as une sœur ? Comment s’appelle ________ sœur ?</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>3. Nous adorons ________ grands-parents.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>4. Elles habitent chez ________ tante.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>5. Vous avez fini ________ exercices ?</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>6. Il parle souvent de ________ voyages.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. mon<br>
+2. ta<br>
+3. nos<br>
+4. leur<br>
+5. vos<br>
+6. ses
+        </div>
+    </div>
+
+    <!-- NOUVEAU : EXERCICE PRONOMS POSSESSIFS (exercice 7) -->
+    <h2>🔐 pronoms possessifs</h2>
+    <div class="bloc-exo">
+        <div class="consigne">💡 Exercice 7 – Remplace avec <em>le mien, la mienne, les miens, les miennes, le tien…</em> (attention accords)</div>
+        <label>1. C’est ton sac ? Oui, c’est ________ . (le mien / la mienne ?)</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>2. Voici ma voiture. Et ________ est garée où ? (la tienne / le tien ?)</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>3. Ce sont tes clés ? Oui, ce sont ________ . (les miennes)</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>4. J’ai oublié mes lunettes, je peux utiliser ________ ? (les tiennes)</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>5. Leur appartement est grand, mais ________ est plus petit. (le nôtre / la nôtre)</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. le mien (sac = masculin)<br>
+2. la tienne (voiture = féminin)<br>
+3. les miennes (clés = féminin pluriel)<br>
+4. les tiennes (lunettes = fém. plur.)<br>
+5. le nôtre (appartement = masc. sing.)
+        </div>
+    </div>
+
+    <!-- NOUVEAU : ADJECTIFS DÉMONSTRATIFS (exercice 8) -->
+    <h2>👉 adjectifs démonstratifs</h2>
+    <div class="bloc-exo">
+        <div class="consigne">📌 Exercice 8 – Choisis <em>ce, cet, cette, ces</em></div>
+        <label>1. J’aime beaucoup ________ robe (fém. sing.)</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>2. ________ hôtel (masc. commençant par voyelle) est magnifique.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>3. ________ livres (plur.) sont intéressants.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>4. Regarde ________ arbre (masc. consonne) !</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>5. ________ idée (fém.) est géniale.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. cette<br>
+2. cet<br>
+3. ces<br>
+4. cet (arbre commence par voyelle)<br>
+5. cette
+        </div>
+    </div>
+
+    <!-- NOUVEAU : PRONOMS DÉMONSTRATIFS (exercice 9) -->
+    <h2>🎯 pronoms démonstratifs</h2>
+    <div class="bloc-exo">
+        <div class="consigne">✨ Exercice 9 – Utilise <em>celui, celle, ceux, celles</em> (parfois + -ci / -là)</div>
+        <label>1. Quel gâteau veux-tu ? ________ -ci (celui / celle) à la fraise.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>2. J’aime beaucoup ces chaussures, surtout ________ (celles / ceux) en cuir.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>3. Regarde les fleurs : ________ (celles / ceux) du jardin sont écloses.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>4. Parmi tous les romans, j’ai choisi ________ (celui / celle) de Leïla Slimani.</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <label>5. Tu préfères ce canapé ou ________ (celui / celle) -là ?</label>
+        <textarea class="zone-reponse" rows="1" placeholder="..."></textarea>
+        <button class="btn-reveal" onclick="toggleCorrige(this)">🔎 voir la correction</button>
+        <div class="corrige-cache">
+1. celui (gâteau = masc.)<br>
+2. celles (chaussures = fém. plur.)<br>
+3. celles (fleurs = fém. plur.)<br>
+4. celui (roman = masc. sing.)<br>
+5. celui (canapé = masc.)
+        </div>
+    </div>
+
+    <hr>
+    <p style="background: #fef2dd; padding: 20px; border-radius: 80px; text-align: center; font-size: 1.2rem;">✨ N’hésite pas à écrire directement dans les cases, les corrigés sont cachés sous chaque bouton ✨</p>
+    <footer>Fabien · leçon sur mesure · février 2026</footer>
+</div>
+
+<script>
+    function toggleCorrige(btn) {
+        let parent = btn.closest('.bloc-exo');
+        let corrige = parent.querySelector('.corrige-cache');
+        if (corrige) {
+            corrige.classList.toggle('montrer');
+            btn.textContent = corrige.classList.contains('montrer') ? '📘 cacher la correction' : '🔎 voir la correction';
+        }
+    }
+</script>
+</body>
+</html>
