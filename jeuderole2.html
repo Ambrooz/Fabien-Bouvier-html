@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 TEF · TCF Canada – Recherche d'appartement (A2+/B1)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #e9f2f9 100%);
+            color: #1a2b3c;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-radius: 3rem 3rem 2rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 20, 40, 0.4);
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0b3954, #0a4c6e);
+            color: white;
+            padding: 2.5rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::after {
+            content: "🏠🔑";
+            font-size: 8rem;
+            opacity: 0.1;
+            position: absolute;
+            bottom: -20px;
+            right: 20px;
+            transform: rotate(-5deg);
+            pointer-events: none;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .header .sub {
+            font-size: 1.3rem;
+            opacity: 0.95;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .header .sub span {
+            background: rgba(255,255,255,0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ffb347;
+            color: #1a2b3c;
+            font-weight: 700;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .section {
+            padding: 2.5rem 3rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            color: #0b3954;
+        }
+
+        .section-title span {
+            background: #0b3954;
+            color: white;
+            width: 3rem;
+            height: 3rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 60px;
+            font-size: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 12px 30px rgba(0, 30, 60, 0.08);
+            border: 1px solid rgba(0, 100, 150, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .card-light {
+            background: #f0f7fd;
+            border-radius: 2rem;
+            padding: 1.8rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            .header { padding: 2rem 1.5rem; }
+            .section { padding: 2rem 1.5rem; }
+            .header h1 { font-size: 2rem; }
+        }
+
+        .apartment-card {
+            background: linear-gradient(145deg, #ffffff, #f8fcff);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border-left: 8px solid #0b3954;
+        }
+
+        .price-tag {
+            background: #e1f0fa;
+            border-radius: 40px;
+            padding: 0.5rem 1.5rem;
+            font-weight: 700;
+            color: #0b3954;
+            display: inline-block;
+            margin: 0.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        .mission-list, .features-list {
+            list-style: none;
+        }
+
+        .mission-list li, .features-list li {
+            padding: 0.6rem 0;
+            padding-left: 2rem;
+            position: relative;
+            border-bottom: 1px dashed #cbdbe9;
+        }
+
+        .mission-list li::before {
+            content: "🏠";
+            position: absolute;
+            left: 0;
+            color: #0b3954;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #0b3954;
+            font-weight: 700;
+        }
+
+        .phone-dialogue {
+            background: #ffffff;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.02), 0 10px 20px rgba(0, 30, 60, 0.1);
+        }
+
+        .speaker {
+            display: flex;
+            margin: 1.2rem 0;
+            align-items: flex-start;
+        }
+
+        .speaker-chanda {
+            flex-direction: row-reverse;
+        }
+
+        .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            background: #0b3954;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin: 0 1rem;
+            flex-shrink: 0;
+        }
+
+        .bubble {
+            background: #eef5fb;
+            padding: 1rem 1.5rem;
+            border-radius: 2rem 2rem 2rem 0.5rem;
+            max-width: 80%;
+            border: 1px solid #cbe0f0;
+        }
+
+        .speaker-chanda .bubble {
+            background: #dff0fa;
+            border-radius: 2rem 2rem 0.5rem 2rem;
+        }
+
+        .speaker-fabien .avatar {
+            background: #2c5f7c;
+        }
+
+        .tag {
+            background: #e0edf5;
+            color: #0b3954;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            letter-spacing: 0.3px;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .question-item {
+            background: white;
+            border-radius: 30px;
+            padding: 0.6rem 1.2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+            border: 1px solid #c5dcee;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .reformulation-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .reformulation-examples span {
+            background: #def1fc;
+            border-radius: 40px;
+            padding: 0.4rem 1.2rem;
+            font-size: 1rem;
+            border: 1px dashed #0b3954;
+        }
+
+        .exercise {
+            background: #f6fbfe;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+        }
+
+        .btn-like {
+            background: white;
+            border-radius: 30px;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #0b3954;
+            color: #0b3954;
+            font-weight: 600;
+            transition: all 0.2s;
+            cursor: default;
+            display: inline-block;
+            margin: 0.5rem 0;
+        }
+
+        .vocab-badge {
+            background: white;
+            border-radius: 30px;
+            padding: 0.3rem 1rem;
+            border: 1px solid #6da5c9;
+            color: #0b3954;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 0.2rem 0.3rem;
+        }
+
+        .footer-note {
+            background: #0b3954;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <h1>🏠 TEF · TCF Canada<br>Interaction orale – Recherche d'appartement (A2+/B1)</h1>
+            <div class="sub">
+                <span>🎯 Simulation locataire / propriétaire</span>
+                <span>🗝️ F2 meublé – 750€ + 80€ charges</span>
+            </div>
+            <div class="badge">⭐ Jeu de rôle – Prêt pour l'examen !</div>
+        </div>
+
+        <!-- SECTION : ANNONCE IMMOBILIÈRE -->
+        <div class="section">
+            <div class="section-title"><span>🏢</span> À propos du bien (exemple : appartement F2)</div>
+            <div class="apartment-card">
+                <p style="font-size: 1.4rem; font-weight: 700;">Bel appartement F2 · 45m² · Quartier résidentiel calme</p>
+                <div class="price-tag">💰 750 € + 80 € charges = 830 € / mois</div>
+                <div class="grid-2">
+                    <div>
+                        <ul class="mission-list" style="margin-top:0.5rem">
+                            <li>3ème étage avec ascenseur</li>
+                            <li>Chauffage individuel au gaz</li>
+                            <li>Cuisine équipée (plaques, frigo, four)</li>
+                            <li>Balcon orienté sud</li>
+                            <li>DPE : classe D</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="mission-list">
+                            <li>Disponible immédiatement</li>
+                            <li>Bail meublé 1 an (renouvelable)</li>
+                            <li>Dépôt de garantie : 750 € (1 mois hors charges)</li>
+                            <li>Parking en sous-sol : 50 €/mois (option)</li>
+                            <li>Animaux non acceptés</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="margin-top: 1.5rem; background: #e0f0f9; padding: 1rem; border-radius: 30px;">📍 Proche commerces (boulangerie, supermarché) · Bus et tram à 5 min · Écoles à proximité</p>
+            </div>
+        </div>
+
+        <!-- SECTION : PROFIL RECHERCHÉ + CONDITIONS -->
+        <div class="section" style="background: #f0f7fd">
+            <div class="section-title"><span>👤</span> Profil locataire & conditions</div>
+            <div class="grid-2">
+                <div class="card-light">
+                    <h3 style="margin-bottom:1rem; display:flex; gap:0.5rem;">📌 Documents exigés</h3>
+                    <ul class="features-list">
+                        <li>Justificatifs de revenus (CDI, étudiant avec garant…)</li>
+                        <li>Garant obligatoire (souvent parents ou organisme)</li>
+                        <li>Revenus mensuels nets ~3x le loyer (soit ~2250€)</li>
+                        <li>Pièce d'identité, dernier avis d'imposition</li>
+                    </ul>
+                </div>
+                <div class="card-light">
+                    <h3 style="margin-bottom:1rem; display:flex; gap:0.5rem;">⚖️ Conditions de location</h3>
+                    <ul class="features-list">
+                        <li>Dépôt de garantie : 750 € (1 mois hors charges)</li>
+                        <li>État des lieux d'entrée et de sortie</li>
+                        <li>Préavis de sortie : 1 mois (bail meublé)</li>
+                        <li>Assurance habitation obligatoire</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION : DIALOGUE TÉLÉPHONIQUE -->
+        <div class="section">
+            <div class="section-title"><span>📞</span> Appel téléphonique – Prise de rendez-vous</div>
+            <div class="phone-dialogue">
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble"><span class="tag">Chanda (candidate)</span><br>Bonjour, je vous appelle au sujet de l'annonce pour l'appartement F2 à louer près de la mairie. Est-ce qu'il est toujours disponible ?</div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble"><span class="tag">Fabien (propriétaire)</span><br>Bonjour, oui, il est toujours disponible. Je vous écoute.</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble">J'aimerais obtenir plus d'informations avant de planifier une visite. L'annonce mentionne 750€ hors charges, mais pouvez-vous me confirmer le montant total <strong>loyer charges comprises</strong> ?</div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble">Alors oui, le loyer est de 750€, et les charges de 80€, ce qui fait un total de <strong>830€ par mois</strong>. Les charges comprennent l'eau chaude et le chauffage collectifs.</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble">D'accord. <strong>Si je comprends bien</strong>, le chauffage est collectif, donc je n'ai pas de régulation individuelle ? Et est-ce que les charges sont révisables chaque année ?</div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble">C'est exact pour le chauffage. Pour les charges, elles sont provisionnées et régularisées une fois par an sur présentation des justificatifs.</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble">Merci. L'annonce dit que c'est un meublé. <strong>Concrètement</strong>, quels sont les meubles et équipements fournis exactement ?</div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble">Il y a une cuisine équipée avec plaques, frigo et four. Dans le séjour, un canapé et une table basse. La chambre a un lit double avec matelas et un bureau.</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble"><strong>Autre point important : quel est le montant du dépôt de garantie et dans quels délais est-il restitué ?</strong></div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble">Le dépôt de garantie est d'un mois de loyer hors charges, soit 750€. Il est restitué dans un délai maximum de deux mois après l'état des lieux de sortie.</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble">Très bien. <strong>Y a-t-il des frais d'agence</strong> si le dossier passe par vous, ou êtes-vous le propriétaire direct ?</div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble">Je suis le propriétaire direct, donc il n'y a pas de frais d'agence.</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble">C'est une bonne nouvelle. Une dernière question sur le <strong>quartier</strong> : l'annonce mentionne "calme", mais est-ce qu'il y a des commerces de proximité facilement accessibles à pied ?</div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble">Oui, absolument. Boulangerie, supermarché et arrêt de bus à moins de 5 minutes à pied.</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble">Parfait, je vous remercie. Je suis très intéressée. <strong>Est-ce qu'il serait possible de visiter</strong> samedi vers 11h30 ?</div>
+                </div>
+                <div class="speaker speaker-fabien">
+                    <div class="avatar">👨</div>
+                    <div class="bubble">Oui, samedi à 11h30, cela vous convient ?</div>
+                </div>
+                <div class="speaker speaker-chanda">
+                    <div class="avatar">👩</div>
+                    <div class="bubble">Parfait, je serai là. Je vous remercie, au revoir et à samedi !</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION : QUESTIONS ESSENTIELLES -->
+        <div class="section">
+            <div class="section-title"><span>❓</span> Questions essentielles à poser</div>
+            <div class="question-grid">
+                <div class="question-item">1. Le logement est-il toujours disponible ?</div>
+                <div class="question-item">2. Loyer charges comprises ?</div>
+                <div class="question-item">3. Quelles charges sont incluses ?</div>
+                <div class="question-item">4. Montant du dépôt de garantie ?</div>
+                <div class="question-item">5. Y a-t-il des frais d'agence ?</div>
+                <div class="question-item">6. Quels meubles sont fournis ?</div>
+                <div class="question-item">7. Date de disponibilité flexible ?</div>
+                <div class="question-item">8. DPE (diagnostic énergétique) ?</div>
+                <div class="question-item">9. Animaux acceptés ?</div>
+                <div class="question-item">10. Parking, cave, local vélo ?</div>
+                <div class="question-item">11. Voisinage / quartier calme ?</div>
+                <div class="question-item">12. Transports et commerces proches ?</div>
+            </div>
+            <p style="margin-top:1rem; font-style:italic; background:#dff0fa; padding:0.8rem; border-radius:40px;">💡 Astuce : « J'aimerais savoir… », « Pouvez-vous m'indiquer… », « Est-ce que vous pouvez préciser… ? »</p>
+        </div>
+
+        <!-- SECTION : REFORMULATIONS -->
+        <div class="section" style="background:#fafdff">
+            <div class="section-title"><span>🔄</span> Reformulations utiles</div>
+            <div class="reformulation-examples">
+                <span>📌 Si je comprends bien, le loyer est de 830€ charges comprises…</span>
+                <span>📌 Vous voulez dire que le dépôt est restitué sous deux mois ?</span>
+                <span>📌 Donc, concrètement, le lave-linge n'est pas fourni ?</span>
+                <span>📌 En d'autres termes, les charges peuvent augmenter ?</span>
+                <span>📌 Si je résume, le logement est dispo immédiatement…</span>
+                <span>📌 Ce que vous voulez dire, c'est que je dois fournir un garant ?</span>
+            </div>
+            <div class="card-light" style="margin-top:2rem;">
+                <p style="font-weight:600;">✨ Exemple concret :</p>
+                <p><em>Propriétaire :</em> « Les charges de 80€ sont des provisions. »</p>
+                <p><em>👉 Reformulation :</em> « Si je comprends bien, elles peuvent être réajustées en fin d'année selon la consommation réelle ? »</p>
+            </div>
+        </div>
+
+        <!-- SECTION : VOCABULAIRE CLÉ -->
+        <div class="section">
+            <div class="section-title"><span>📚</span> Vocabulaire à maîtriser</div>
+            <div style="display: flex; flex-wrap: wrap; gap: 1rem;">
+                <span class="vocab-badge">🏠 un appartement</span>
+                <span class="vocab-badge">🏢 au dernier étage</span>
+                <span class="vocab-badge">⏰ disponible</span>
+                <span class="vocab-badge">📅 la date d'entrée</span>
+                <span class="vocab-badge">🏘️ le quartier</span>
+                <span class="vocab-badge">💰 le dépôt de garantie</span>
+                <span class="vocab-badge">💶 loyer charges comprises</span>
+                <span class="vocab-badge">📋 l'état des lieux</span>
+                <span class="vocab-badge">👨‍💼 le propriétaire / l'agent</span>
+                <span class="vocab-badge">📍 être situé(e) à</span>
+                <span class="vocab-badge">🔎 se renseigner sur</span>
+                <span class="vocab-badge">🔄 concrètement</span>
+                <span class="vocab-badge">📈 régularisation des charges</span>
+                <span class="vocab-badge">🤝 le voisinage</span>
+                <span class="vocab-badge">🛂 le garant</span>
+            </div>
+        </div>
+
+        <!-- SECTION EXERCICES -->
+        <div class="section">
+            <div class="section-title"><span>🧪</span> TCF – 6 exercices progressifs</div>
+
+            <!-- Exercice 1 -->
+            <div class="exercise">
+                <h3>📘 Exercice 1 – Choisis la bonne question</h3>
+                <p><strong>🧑‍💼 Le propriétaire :</strong> « L'appartement est disponible à partir du 1er mars. »</p>
+                <p>🤔 Quelle question est la plus précise ?</p>
+                <ul style="list-style:none; margin:1rem 0;">
+                    <li>A. « Il est grand l'appartement ? »</li>
+                    <li>B. « Pourquoi le 1er mars ? »</li>
+                    <li>C. « Est-ce qu'une entrée plus tôt, par exemple mi-février, serait envisageable ? »</li>
+                </ul>
+                <p><strong>✅ Réponse : C</strong> – Seule la question C est directement liée à la date de disponibilité et explore une flexibilité.</p>
+            </div>
+
+            <!-- Exercice 2 -->
+            <div class="exercise">
+                <h3>🔄 Exercice 2 – Reformule</h3>
+                <p><strong>🗣️ Le propriétaire :</strong> « La cave et le parking ne sont pas inclus dans le loyer, mais il est possible de louer le parking séparément pour 50€ par mois. »</p>
+                <p><em>Reformule avec « Si je comprends bien… » ou « Donc, concrètement… »</em></p>
+                <p>💬 Exemple : <strong>« Si je comprends bien, le parking est une option payante. »</strong></p>
+                <p>➕ Autre exemple : <strong>« Donc, concrètement, avec parking le loyer total sera de 880€. »</strong></p>
+            </div>
+
+            <!-- Exercice 3 -->
+            <div class="exercise">
+                <h3>✏️ Exercice 3 – Corrige les phrases</h3>
+                <ul style="list-style:none;">
+                    <li>🐞 1. « Quel est les transports près de l'appartement ? »</li>
+                    <li>🐞 2. « J'aimerais savoir est-ce que le logement est meublé ? »</li>
+                    <li>🐞 3. « Y a-t-il un période d'essai pour la location ? »</li>
+                    <li>🐞 4. « Le loyers est de 750 euro ? »</li>
+                </ul>
+                <p style="margin-top:1rem;"><strong>✅ Corrections :</strong></p>
+                <ul style="list-style:none;">
+                    <li>1. « Quels sont les transports près de l'appartement ? »</li>
+                    <li>2. « J'aimerais savoir si le logement est meublé. »</li>
+                    <li>3. « Y a-t-il une période d'essai pour la location ? »</li>
+                    <li>4. « Le loyer est de 750 euros ? »</li>
+                </ul>
+            </div>
+
+            <!-- Exercice 4 -->
+            <div class="exercise">
+                <h3>💬 Exercice 4 – Dialogue à compléter</h3>
+                <p>👩 Chanda : « Bonjour, je vous appelle pour l'appartement F2. Est-ce qu'il est toujours disponible ? »</p>
+                <p>👨 Fabien : « Oui, il est toujours disponible. »</p>
+                <p>👩 Chanda : « D'accord. <input type="text" placeholder="Votre question..." style="border:none;border-bottom:2px solid #0b3954; background:transparent; width:70%;"> »</p>
+                <p>👨 Fabien : « Le loyer est de 750€ hors charges, et les charges de 80€. »</p>
+                <p>👩 Chanda : « Parfait. Et <input type="text" placeholder="..." style="border:none;border-bottom:2px solid #0b3954; background:transparent; width:60%;"> ? »</p>
+                <p><em>Suggestions : "Pouvez-vous me confirmer le montant total, charges comprises ?" / "quel est le montant du dépôt de garantie ?"</em></p>
+            </div>
+
+            <!-- Exercice 5 -->
+            <div class="exercise">
+                <h3>📚 Exercice 5 – Associe</h3>
+                <div class="grid-2">
+                    <ul style="list-style:none;">
+                        <li>1. dépôt de garantie</li>
+                        <li>2. garant</li>
+                        <li>3. loyer charges comprises</li>
+                        <li>4. état des lieux</li>
+                        <li>5. DPE</li>
+                    </ul>
+                    <ul style="list-style:none;">
+                        <li>a. personne qui se porte caution</li>
+                        <li>b. somme versée à la signature (1 mois)</li>
+                        <li>c. total loyer + provisions pour charges</li>
+                        <li>d. document comparant l'état entrée/sortie</li>
+                        <li>e. diagnostic consommation d'énergie</li>
+                    </ul>
+                </div>
+                <p><strong>✅ Associations :</strong> 1→b, 2→a, 3→c, 4→d, 5→e</p>
+            </div>
+
+            <!-- Exercice 6 -->
+            <div class="exercise">
+                <h3>🎭 Exercice 6 – Mini simulation TCF</h3>
+                <p><strong>🎯 Sujet :</strong> Vous appelez pour un appartement (F2, 750€+80€ de charges, meublé, dispo 1er mars).</p>
+                <p><em>Posez au moins :</em><br>
+                - 1 question sur la disponibilité<br>
+                - 1 question sur le loyer/charges<br>
+                - 1 question sur le dépôt de garantie<br>
+                - 1 reformulation avec « Si je comprends bien »<br>
+                - 1 reformulation avec « Donc, concrètement »<br>
+                - 1 question sur l'environnement/quartier</p>
+                <div class="btn-like">👩‍💼 Exemple : « Bonjour, l'appartement est-il dispo ? … Si je comprends bien, le chauffage est inclus dans les charges ? … Donc, concrètement, à la signature je paie premier mois + dépôt ? »</div>
+            </div>
+        </div>
+
+        <!-- JEU DE RÔLE – INSTRUCTIONS FINALES -->
+        <div style="background:#e6f2fa; padding:2.5rem; border-radius: 3rem 3rem 0 0;">
+            <div style="display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; justify-content:center;">
+                <span style="font-size:4rem;">🎭</span>
+                <div>
+                    <h2 style="color:#0b3954; font-size:2rem;">MERCREDI – JEU DE RÔLE TEF</h2>
+                    <p style="font-size:1.3rem;"><strong>Chanda = candidate locataire | Fabien = propriétaire/agent</strong></p>
+                </div>
+            </div>
+            <ul style="margin-top:2rem; list-style:none; display:flex; flex-wrap:wrap; gap:2rem; justify-content:center;">
+                <li>✅ Utilisez les <strong>12 questions</strong> essentielles</li>
+                <li>✅ Reformulez <strong>au moins 3 réponses</strong> (🔄)</li>
+                <li>✅ Vocabulaire : loyer, charges, dépôt, état des lieux, meublé, quartier</li>
+                <li>⏱️ Objectif : <strong>5 à 7 minutes</strong> d'interaction</li>
+            </ul>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer-note">
+            ✅ PRÊT POUR L'EXAMEN ! 🏠🗝️
+        </div>
+    </div>
+</body>
+</html>
