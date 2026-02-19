@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧰 Brico-Dialogue : Acheter son matériel pour salle de bain (B1-B2)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body {
+            background: #e8f0f5;
+            margin: 0;
+            padding: 25px 15px;
+            display: flex;
+            justify-content: center;
+        }
+        .cours-card {
+            max-width: 1150px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            border-radius: 50px;
+            padding: 35px 40px;
+            box-shadow: 0 30px 45px -20px #1f3b4a;
+            border: 1px solid #ffffffd0;
+        }
+        h1 {
+            font-size: 2.7rem;
+            font-weight: 700;
+            color: #003153;
+            margin: 0 0 5px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 5px solid #ffaa33;
+            padding-bottom: 20px;
+        }
+        h1 small {
+            font-size: 1.1rem;
+            background: #003153;
+            color: white;
+            padding: 8px 25px;
+            border-radius: 60px;
+            font-weight: 400;
+        }
+        h2 {
+            color: #0d4b6e;
+            font-size: 2rem;
+            margin: 40px 0 20px;
+            border-left: 12px solid #ffaa33;
+            padding-left: 25px;
+        }
+        h3 {
+            font-size: 1.6rem;
+            color: #154f63;
+            margin: 30px 0 15px;
+        }
+        .dialogue-scene {
+            background: #e4f0f9;
+            border-radius: 40px;
+            padding: 25px 30px;
+            box-shadow: inset 0 2px 10px white, 0 15px 20px -10px #1f4e6f60;
+            border: 2px solid white;
+        }
+        .dialogue-line {
+            display: flex;
+            margin: 18px 0;
+            align-items: flex-start;
+            gap: 15px;
+        }
+        .client-badge {
+            background: #2a6f8d;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 5px 0 #123e52;
+        }
+        .vendeur-badge {
+            background: #bf6f13;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            min-width: 100px;
+            text-align: center;
+            box-shadow: 0 5px 0 #7a4a10;
+        }
+        .parole {
+            background: white;
+            border-radius: 30px;
+            padding: 12px 22px;
+            flex: 1;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 0 #cbdbe8;
+            border: 1px solid #c0d3e3;
+        }
+        .highlight {
+            background: #fff1b8;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 30px;
+            display: inline-block;
+        }
+        .voc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(230px,1fr));
+            gap: 14px;
+            margin: 25px 0;
+        }
+        .voc-item {
+            background: white;
+            border-radius: 60px;
+            padding: 12px 20px;
+            box-shadow: 0 6px 0 #cddde9;
+            border: 2px solid white;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.05rem;
+        }
+        .visserie-spot {
+            background: #fef7e9;
+            border-radius: 40px;
+            padding: 25px;
+            border: 3px solid #ffaa33;
+            margin: 40px 0;
+        }
+        .formules-pratiques {
+            background: #154f63;
+            color: white;
+            border-radius: 40px;
+            padding: 30px 35px;
+            margin: 40px 0;
+        }
+        .formules-pratiques p {
+            font-size: 1.3rem;
+            background: #1e6f8b;
+            padding: 12px 25px;
+            border-radius: 60px;
+        }
+        .exercice-block {
+            background: #f6faff;
+            border-radius: 40px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 2px dashed #ffaa33;
+        }
+        input {
+            background: white;
+            border: 3px solid #bbd5e7;
+            border-radius: 60px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            width: 240px;
+            margin: 8px 12px 8px 0;
+        }
+        input:focus {
+            border-color: #ffaa33;
+            outline: none;
+            box-shadow: 0 0 0 5px #ffaa3350;
+        }
+        button {
+            background: #003153;
+            border: none;
+            color: white;
+            padding: 14px 30px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 1rem;
+            box-shadow: 0 7px 0 #001e32;
+            cursor: pointer;
+            transition: all 0.08s;
+            border: 1px solid white;
+            margin-right: 12px;
+            margin-bottom: 10px;
+        }
+        button:hover {
+            background: #155a80;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 0 #001e32;
+        }
+        .reponse-box {
+            background: #fffae5;
+            border-radius: 40px;
+            padding: 18px 25px;
+            margin: 15px 0 10px;
+            border-left: 15px solid #ffaa33;
+            display: none;
+            font-size: 1.1rem;
+        }
+        .visible {
+            display: block;
+        }
+        .badge-mini {
+            background: #ffaa33;
+            color: #00263b;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+        }
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            color: #3d6379;
+        }
+    </style>
+</head>
+<body>
+<div class="cours-card">
+    <h1>🪛 CLIENT · VENDEUR <small>B1-B2 rénover salle de bain</small></h1>
+    <p style="font-size:1.3rem; color:#003153; margin-bottom: 30px;">🗣️ Dialogue en magasin de bricolage + exercices pour tout acheter (visserie, outillage, plomberie)</p>
+
+    <!-- DIALOGUE CLIENT-VENDEUR (scène unique) -->
+    <section class="dialogue-scene">
+        <h2 style="margin-top:0; border-left-color:#bf6f13;">🛒 Au rayon bricolage · Client & vendeur</h2>
+
+        <div class="dialogue-line">
+            <span class="client-badge">👤 CLIENT</span>
+            <div class="parole">Bonjour, je rénove ma salle de bain et j’ai besoin de <span class="highlight">fixations</span> pour poser un meuble vasque et un porte-serviettes. Déjà, est-ce que vous avez des <strong>vis inox</strong> ?</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="vendeur-badge">🧑‍🔧 VENDEUR</span>
+            <div class="parole">Bonjour ! Oui, tout le rayon visserie est au fond à droite. Pour une salle de bain, l’inox est effectivement le mieux. Quel diamètre et longueur vous faudrait-il ?</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="client-badge">👤 CLIENT</span>
+            <div class="parole">Heu… pour le meuble, on m’a dit vis de <strong>5x60</strong> avec chevilles adaptées au carrelage. Et pour le porte-serviettes, des vis plus petites, <strong>4x40</strong>.</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="vendeur-badge">🧑‍🔧 VENDEUR</span>
+            <div class="parole">Parfait. Côté chevilles, il vous faut des <strong>chevilles Molly</strong> pour le carrelage creux, ou des chevilles nylon à expansion si c’est plein. Je vous conseille les Molly, très solides.</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="client-badge">👤 CLIENT</span>
+            <div class="parole">D’accord. Et j’aurai aussi besoin de <strong>clous</strong> pour des plinthes, mais on m’a parlé de « clous tête homme », c’est quoi exactement ?</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="vendeur-badge">🧑‍🔧 VENDEUR</span>
+            <div class="parole">Ce sont des clous sans tête, très discrets pour les finitions. Idéal pour les plinthes. Vous les trouverez à côté des <strong>écrous</strong> et <strong>rondelles</strong>. Vous avez besoin d’autre chose ?</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="client-badge">👤 CLIENT</span>
+            <div class="parole">Oui, de la <strong>plomberie</strong> : un <strong>flexible de douche</strong> de 1m50, du <strong>ruban téflon</strong> pour les raccords, et un <strong>robinet thermostatique</strong>. Et pour le joint de la douche, du <strong>silicone blanc</strong>.</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="vendeur-badge">🧑‍🔧 VENDEUR</span>
+            <div class="parole">On a tout ça. Pensez aussi à un <strong>pistolet à silicone</strong> si vous n’en avez pas. Et niveau outillage, vous avez un <strong>niveau à bulle</strong> ? Une <strong>perceuse avec foret à carrelage</strong> ?</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="client-badge">👤 CLIENT</span>
+            <div class="parole">J’ai la perceuse, mais pas le foret spécial. Je vais prendre un <strong>foret carbure</strong>. Et un <strong>tournevis cruciforme</strong>. Dites-moi, pour fixer le miroir, quelles vis me conseillez-vous ?</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="vendeur-badge">🧑‍🔧 VENDEUR</span>
+            <div class="parole">Des <strong>vis à tête fraisée inox</strong> avec chevilles nylon. Et si le miroir est lourd, ajoutez des <strong>rondelles</strong> pour répartir la charge.</div>
+        </div>
+        <div class="dialogue-line">
+            <span class="client-badge">👤 CLIENT</span>
+            <div class="parole">Super, je note. Je vais prendre aussi un assortiment d’<strong>écrous frein</strong> et de <strong>rondelles plates</strong>. Merci pour les conseils !</div>
+        </div>
+    </section>
+
+    <!-- VISSERIE DÉTAILLÉE (demande spécifique) -->
+    <div class="visserie-spot">
+        <h3 style="margin-top:0;">🔩 POINT VISSERIE (clous, vis, écrous, rondelles)</h3>
+        <div class="voc-grid">
+            <div class="voc-item"><span style="font-size:2rem;">🔩</span> Vis à bois fraisées (tête plate)</div>
+            <div class="voc-item"><span style="font-size:2rem;">⚙️</span> Vis inox (résiste à l’humidité)</div>
+            <div class="voc-item"><span style="font-size:2rem;">🔨</span> Clou tête homme (sans tête) pour plinthes</div>
+            <div class="voc-item"><span style="font-size:2rem;">🧷</span> Clou à tête plate (usage courant)</div>
+            <div class="voc-item"><span style="font-size:2rem;">🔩🧩</span> Écrou hexagonal + écrou à oreilles</div>
+            <div class="voc-item"><span style="font-size:2rem;">🔄</span> Rondelle plate / rondelle frein</div>
+            <div class="voc-item"><span style="font-size:2rem;">🧱</span> Cheville Molly (plâtre/carrelage creux)</div>
+            <div class="voc-item"><span style="font-size:2rem;">📏</span> Tige filetée + écrous de fixation</div>
+        </div>
+        <p style="background: white; border-radius: 40px; padding: 12px 20px;"><span class="badge-mini">💰 ASTUCE ACHAT</span> « Est-ce que ces vis inox sont adaptées à un usage en milieu humide ? » — toujours vérifier l’emballage : « inox A2 ou A4 ».</p>
+    </div>
+
+    <!-- VOCABULAIRE THÉMATIQUE (par catégorie) -->
+    <h2>📦 Le matériel pour rénover une salle de bain</h2>
+    <div class="voc-grid">
+        <div class="voc-item">🔩 Vis inox (diamètre x longueur)</div>
+        <div class="voc-item">🔩 Écrous (frein, à oreilles, borgnes)</div>
+        <div class="voc-item">🔨 Clous tête homme / tête plate</div>
+        <div class="voc-item">🧰 Chevilles (Molly, nylon, à frapper)</div>
+        <div class="voc-item">🔄 Rondelles plates / éventails</div>
+        <div class="voc-item">🚰 Robinet thermostatique / mitigeur</div>
+        <div class="voc-item">🧴 Flexible douche (métal tressé)</div>
+        <div class="voc-item">🧻 Ruban téflon (étanchéité filetage)</div>
+        <div class="voc-item">🔫 Pistolet à silicone + cartouches</div>
+        <div class="voc-item">🧱 Carrelage / faïence / joint</div>
+        <div class="voc-item">📏 Niveau à bulle / mètre ruban</div>
+        <div class="voc-item">🪚 Scie cloche / foret carbure</div>
+        <div class="voc-item">🚿 Bonde / siphon / receveur</div>
+        <div class="voc-item">🧽 Mastic acrylique / joint silicone</div>
+    </div>
+
+    <!-- FORMULES POUR ACHETER / DEMANDER -->
+    <div class="formules-pratiques">
+        <h3 style="color:white; margin-top:0;">🗣️ Phrases à utiliser avec le vendeur</h3>
+        <p>🔹 « Je cherche des <strong>vis inox</strong> de diamètre 5 et de longueur 40 millimètres. »</p>
+        <p>🔹 « Est-ce que vous avez des <strong>chevilles spéciales</strong> pour du carrelage ? »</p>
+        <p>🔹 « Quelle est la différence entre un <strong>écrou frein</strong> et un écrou normal ? »</p>
+        <p>🔹 « Je voudrais un <strong>kit de fixation</strong> pour meuble sous vasque, avec tiges filetées et rondelles. »</p>
+        <p>🔹 « Est-ce que ces <strong>clous tête homme</strong> conviennent pour des plinthes en MDF ? »</p>
+        <p>🔹 « Pour un raccord de plomberie, vous me conseillez du <strong>ruban téflon</strong> ou de la <strong>filasse</strong> ? »</p>
+    </div>
+
+    <!-- EXERCICES ADAPTÉS au dialogue client-vendeur -->
+    <h2>✏️ Exercices · comme au magasin</h2>
+
+    <!-- EXERCICE 1 : questions du client -->
+    <div class="exercice-block">
+        <h3>🧾 Exercice 1 · Questions client (complétez)</h3>
+        <p>1. « Bonjour, je voudrais des <input type="text" id="ex1_1" placeholder="type de vis"> pour une salle de bain, résistantes à la rouille. »</p>
+        <p>2. « Avez-vous des <input type="text" id="ex1_2" placeholder="outil de mesure"> pour vérifier l’horizontalité du meuble ? »</p>
+        <p>3. « Je cherche des <input type="text" id="ex1_3" placeholder="clous spécifiques"> pour des plinthes (sans tête). »</p>
+        <p>4. « Il me faut du <input type="text" id="ex1_4" placeholder="produit d'étanchéité"> pour les filetages. »</p>
+        <button onclick="toggleReponse('reponse1')">🔍 Voir les réponses (client)</button>
+        <div id="reponse1" class="reponse-box"><strong>Réponses possibles :</strong> 1. vis inox / 2. niveau à bulle / 3. clous tête homme / 4. ruban téflon (ou téflon).</div>
+    </div>
+
+    <!-- EXERCICE 2 : le vendeur répond -->
+    <div class="exercice-block">
+        <h3>🧑‍🔧 Exercice 2 · Réponses du vendeur (remplissez avec le bon outil ou matériel)</h3>
+        <p>Vendeur : « Pour le carrelage, je vous conseille des <input type="text" id="ex2_1" placeholder="type de chevilles"> Molly. »</p>
+        <p>Vendeur : « Les vis inox se trouvent au rayon <input type="text" id="ex2_2" placeholder="rayon"> , à côté des écrous. »</p>
+        <p>Vendeur : « Pour percer le carrelage, il vous faut un <input type="text" id="ex2_3" placeholder="accessoire perceuse"> spécial. »</p>
+        <p>Vendeur : « Voici des <input type="text" id="ex2_4" placeholder="pièces"> plates et des rondelles frein. »</p>
+        <button onclick="toggleReponse('reponse2')">🔍 Voir réponses vendeur</button>
+        <div id="reponse2" class="reponse-box"><strong>Réponses :</strong> 1. chevilles / 2. visserie / 3. foret (carbure) / 4. rondelles.</div>
+    </div>
+
+    <!-- EXERCICE 3 : Quantités et calculs (inspiré du dialogue) -->
+    <div class="exercice-block">
+        <h3>📦 Exercice 3 · Combien en acheter ? (quantités)</h3>
+        <p>🔩 1 paquet de vis contient 25 vis. Il t’en faut 42. Combien de paquets ? <input type="text" id="ex3_1" placeholder="nombre paquets"></p>
+        <p>🧴 Le ruban téflon coûte 2,30€ le rouleau. Tu en prends 3. Total = <input type="text" id="ex3_2" placeholder="prix total"> </p>
+        <p>🔧 Pour fixer 4 étagères avec 6 vis chacune, il faut <input type="text" id="ex3_3" placeholder="nombre de vis"> vis.</p>
+        <p>🛒 Un vendeur recommande d'ajouter 20% de vis en plus. Pour 30 vis, ça fait <input type="text" id="ex3_4" placeholder="vis avec marge"> vis.</p>
+        <button onclick="toggleReponse('reponse3')">🔍 Réponses calculs</button>
+        <div id="reponse3" class="reponse-box"><strong>Résultats :</strong> 1. 2 paquets (25+25=50, assez) / 2. 6,90€ / 3. 24 vis / 4. 36 vis (30 + 6).</div>
+    </div>
+
+    <!-- EXERCICE 4 : Appariement client-vendeur (dialogue à trous) -->
+    <div class="exercice-block">
+        <h3>🗯️ Exercice 4 · Remettez les phrases dans l’ordre (dialogue)</h3>
+        <p>Client : « Est-ce que ces clous conviennent pour des plinthes ? »</p>
+        <p>Vendeur : « <input type="text" id="ex4_1" placeholder="réponse du vendeur"> » (ex : oui, ce sont des clous tête homme)</p>
+        <p>Client : « Je cherche aussi des chevilles pour carrelage. »</p>
+        <p>Vendeur : « <input type="text" id="ex4_2" placeholder="conseil"> »</p>
+        <button onclick="toggleReponse('reponse4')">🔍 Propositions de réponses</button>
+        <div id="reponse4" class="reponse-box"><strong>Réponses libres :</strong> 1. Oui, ce sont des clous tête homme, parfaits. / 2. Prenez des chevilles Molly, elles sont spéciales pour carrelage creux.</div>
+    </div>
+
+    <!-- EXERCICE 5 : Vrai/Faux sur la visserie (format case) -->
+    <div class="exercice-block">
+        <h3>✅ Exercice 5 · Vrai ou Faux ? (entrez V ou F)</h3>
+        <p>a) Les vis inox rouillent dans une salle de bain. <input type="text" id="ex5_1" placeholder="V/F" maxlength="1"></p>
+        <p>b) Un écrou frein empêche le desserrage. <input type="text" id="ex5_2" placeholder="V/F" maxlength="1"></p>
+        <p>c) Les clous tête homme ont une grosse tête plate. <input type="text" id="ex5_3" placeholder="V/F" maxlength="1"></p>
+        <p>d) Le ruban téflon sert à rendre étanche un filetage. <input type="text" id="ex5_4" placeholder="V/F" maxlength="1"></p>
+        <button onclick="toggleReponse('reponse5')">🔍 Vérifier V/F</button>
+        <div id="reponse5" class="reponse-box"><strong>Corrigé :</strong> a) F (inox résiste) ; b) V ; c) F (sans tête) ; d) V.</div>
+    </div>
+
+    <!-- boutons globaux pour tout afficher/cacher -->
+    <div style="display: flex; gap: 15px; margin: 40px 0 20px; flex-wrap: wrap;">
+        <button onclick="afficherTout()">📚 Afficher toutes les réponses</button>
+        <button onclick="cacherTout()">🔒 Cacher toutes les réponses</button>
+    </div>
+
+    <footer>⭐ Niveau B1/B2 · Apprenez à dialoguer avec un vendeur en magasin de bricolage · Matériel pour salle de bain & visserie.</footer>
+</div>
+
+<script>
+    // bascule individuelles
+    function toggleReponse(id) {
+        let el = document.getElementById(id);
+        if(el) el.classList.toggle('visible');
+    }
+
+    function afficherTout() {
+        let all = document.querySelectorAll('.reponse-box');
+        all.forEach(box => box.classList.add('visible'));
+    }
+
+    function cacherTout() {
+        let all = document.querySelectorAll('.reponse-box');
+        all.forEach(box => box.classList.remove('visible'));
+    }
+</script>
+</body>
+</html>
