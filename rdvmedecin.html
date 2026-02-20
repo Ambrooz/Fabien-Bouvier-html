@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TEF · TCF Canada - Interaction orale (Consultation médicale)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: #f0f7fc;
+            color: #1a2b3c;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 40px 40px 30px 30px;
+            box-shadow: 0 20px 40px rgba(0, 40, 70, 0.15);
+            overflow: hidden;
+            border: 1px solid #c9e4f0;
+        }
+
+        /* En-tête */
+        .header {
+            background: linear-gradient(135deg, #006d8f, #003f5c);
+            color: white;
+            padding: 2rem 2.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .header h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            opacity: 0.9;
+            display: block;
+            margin-top: 6px;
+        }
+
+        .header .sub {
+            font-size: 1.3rem;
+            font-weight: 300;
+            background: rgba(255,255,255,0.15);
+            display: inline-block;
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            margin-top: 0.5rem;
+        }
+
+        .banner-icon {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .banner-icon span {
+            background: #ffd966;
+            color: #1e3b4c;
+            font-weight: 600;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
+        /* Sections */
+        section {
+            padding: 2rem 2.5rem;
+            border-bottom: 1px solid #d4e8f2;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #003f5c;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2:before {
+            content: '🩺';
+            font-size: 2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.8rem;
+            color: #00668c;
+            font-weight: 600;
+            border-left: 6px solid #47b8e0;
+            padding-left: 1rem;
+        }
+
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: #f4fafd;
+            border-radius: 24px;
+            padding: 1.5rem;
+            flex: 1 1 250px;
+            border: 1px solid #cde5f0;
+            box-shadow: 0 6px 12px rgba(0,60,90,0.05);
+        }
+
+        .card strong {
+            color: #003f5c;
+            display: block;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px dotted #9ac9df;
+            padding-bottom: 0.4rem;
+        }
+
+        ul, .list {
+            list-style: none;
+        }
+
+        ul li, .list li {
+            margin-bottom: 0.6rem;
+            padding-left: 1.8rem;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="%23006d8f"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>') left center no-repeat;
+            background-size: 1.2rem;
+        }
+
+        .dialogue {
+            background: #e5f3fb;
+            border-radius: 30px;
+            padding: 2rem;
+            font-size: 1.1rem;
+            border-left: 8px solid #003f5c;
+        }
+
+        .dialogue p {
+            margin-bottom: 1.2rem;
+        }
+
+        .dialogue .patient {
+            font-weight: 600;
+            color: #004b6e;
+        }
+
+        .dialogue .patient:before {
+            content: '👨‍⚕️ ';
+            margin-right: 6px;
+            font-weight: normal;
+        }
+
+        .dialogue .secretaire {
+            font-weight: 600;
+            color: #0077a3;
+        }
+
+        .dialogue .secretaire:before {
+            content: '👩‍⚕️ ';
+            margin-right: 6px;
+        }
+
+        .badge {
+            background: #ffd966;
+            color: #1e3b4c;
+            font-weight: 600;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .exemple-block {
+            background: #f9feff;
+            border: 2px dashed #47b8e0;
+            border-radius: 28px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .exo {
+            background: #ffffff;
+            border-radius: 30px;
+            padding: 1.5rem;
+            margin: 1.2rem 0;
+            border: 1px solid #cde5f0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .exo:hover {
+            background: #fafdff;
+            border-color: #47b8e0;
+        }
+
+        .exo p {
+            background: #eff7fa;
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            margin-bottom: 1rem;
+        }
+
+        .exo ul {
+            margin-left: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .exo ul li {
+            background: none;
+            padding-left: 0;
+            margin-bottom: 0.3rem;
+        }
+
+        .reponse {
+            background: #dff0f7;
+            border-radius: 24px;
+            padding: 1rem 1.5rem;
+            margin-top: 1rem;
+            border-left: 6px solid #0083b0;
+            display: none;
+        }
+
+        .reponse.visible {
+            display: block;
+        }
+
+        .astuce {
+            background: #fff6d9;
+            border-radius: 30px;
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            text-align: center;
+            border: 2px solid #f4c542;
+        }
+
+        .footer-note {
+            background: #003f5c;
+            color: white;
+            padding: 1.5rem 2.5rem;
+            text-align: center;
+            font-size: 1rem;
+        }
+
+        hr {
+            border: 2px solid #bee0ed;
+            margin: 1.5rem 0;
+        }
+
+        .vocab-table {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+            gap: 1rem;
+        }
+
+        .vocab-item {
+            background: #e8f3f9;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            font-size: 1rem;
+            border: 1px solid #b0d3e5;
+        }
+
+        .instruction-clic {
+            font-size: 0.9rem;
+            color: #00668c;
+            margin-bottom: 0.5rem;
+            font-style: italic;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <h1>🏥 TEF · TCF Canada<br><small>Interaction orale – Consultation médicale (A2+/B1)</small></h1>
+        <div class="sub">🎯 Simulation patient / secrétaire médicale · Médecin généraliste</div>
+        <div class="banner-icon">
+            <span>⚕️ 25€ consultation · Carte Vitale acceptée</span>
+            <span>🕒 Nouveaux patients bienvenus</span>
+        </div>
+    </div>
+
+    <!-- INFOS CABINET -->
+    <section>
+        <h2>🏥 À propos du cabinet</h2>
+        <div class="card-grid">
+            <div class="card">
+                <strong>Docteur Martin</strong>
+                <ul>
+                    <li>📅 Lun-Ven : 9h-12h / 14h-18h</li>
+                    <li>📅 Sam : 9h-12h (urgences seulement)</li>
+                    <li>📍 Centre-ville, près mairie</li>
+                    <li>🚪 Accès PMR (personnes à mobilité réduite)</li>
+                    <li>🅿️ Parking gratuit 30 min pour patients</li>
+                </ul>
+            </div>
+            <div class="card">
+                <strong>Conditions de consultation</strong>
+                <ul>
+                    <li>✔️ Consultation 25€ (70% remboursé SS)</li>
+                    <li>✔️ Paiement CB, espèces, chèque</li>
+                    <li>✔️ Téléconsultation possible (patients suivis)</li>
+                    <li>✔️ Annulation possible 24h à l'avance</li>
+                    <li>✔️ Sans RDV uniquement samedi matin (urgence)</li>
+                </ul>
+            </div>
+        </div>
+        <h3>📌 Documents à apporter</h3>
+        <ul class="list">
+            <li>Carte Vitale (ou attestation de sécurité sociale)</li>
+            <li>Carte de mutuelle (si vous en avez une)</li>
+            <li>Pièce d'identité</li>
+            <li>Ordonnances et examens récents (renouvellement / suivi)</li>
+        </ul>
+    </section>
+
+    <!-- APPEL TÉLÉPHONIQUE – PRISE DE RENDEZ-VOUS -->
+    <section>
+        <h2>📞 Appel téléphonique – Prise de rendez-vous</h2>
+        <div class="dialogue">
+            <p><span class="patient">Thomas (patient)</span> : Bonjour, je vous appelle pour prendre rendez-vous avec le Docteur Martin, s'il vous plaît.</p>
+            <p><span class="secretaire">Secrétaire médicale</span> : Bonjour, je vous écoute. Est-ce que vous êtes déjà suivi(e) par le Docteur Martin ?</p>
+            <p><span class="patient">Thomas</span> : Non, c'est la première fois que je consulte dans ce cabinet. Je viens de m'installer dans la région. J'aimerais savoir s'il prend de nouveaux patients.</p>
+            <p><span class="secretaire">Secrétaire</span> : Oui, tout à fait. Le Docteur Martin accepte actuellement de nouveaux patients. Quel est le motif de la consultation ?</p>
+            <p><span class="patient">Thomas</span> : J'ai besoin d'un renouvellement d'ordonnance pour un traitement que je prends habituellement, mais j'aimerais aussi discuter de douleurs au dos qui durent depuis quelques semaines.</p>
+            <p><span class="secretaire">Secrétaire</span> : Très bien. Dans ce cas, je vous conseille de prendre un créneau un peu plus long, pour que le médecin ait le temps d'examiner votre dos. Je peux vous proposer vendredi 14 à 15h30, cela vous convient ?</p>
+            <p><span class="patient">Thomas</span> : <strong>Si je comprends bien</strong>, ce sera une consultation complète avec examen, donc plus longue qu'un simple renouvellement d'ordonnance ?</p>
+            <p><span class="secretaire">Secrétaire</span> : Exactement. Compter environ 30 minutes au lieu de 15 minutes habituellement.</p>
+            <p><span class="patient">Thomas</span> : Vendredi à 15h30, c'est parfait. Et quels documents dois-je apporter pour cette première consultation ?</p>
+            <p><span class="secretaire">Secrétaire</span> : Il vous faudra votre carte Vitale, votre mutuelle si vous en avez une, une pièce d'identité, et si possible vos dernières ordonnances.</p>
+            <p><span class="patient">Thomas</span> : D'accord. Et concernant le paiement, est-ce que je règle directement ou est-ce que c'est pris en charge par la Sécurité sociale ?</p>
+            <p><span class="secretaire">Secrétaire</span> : Vous réglez directement à la fin de la consultation : 25€ pour une consultation classique. La Sécurité sociale vous rembourse ensuite 70% sous 5 jours. Si vous avez une mutuelle, elle complète le remboursement.</p>
+            <p><span class="patient">Thomas</span> : <strong>Donc, concrètement</strong>, j'avance les frais et je suis remboursé ensuite ?</p>
+            <p><span class="secretaire">Secrétaire</span> : Tout à fait.</p>
+            <p><span class="patient">Thomas</span> : Une dernière question : est-ce qu'il y a un parking à proximité ? Je viendrai en voiture.</p>
+            <p><span class="secretaire">Secrétaire</span> : Oui, il y a un petit parking réservé aux patients juste derrière le cabinet. Vous pouvez vous garer gratuitement pendant 30 minutes.</p>
+            <p><span class="patient">Thomas</span> : Parfait, je vous remercie. Donc rendez-vous vendredi à 15h30 pour le Docteur Martin. Je confirme mon nom : Thomas Dubois. Au revoir et à vendredi !</p>
+        </div>
+    </section>
+
+    <!-- QUESTIONS ESSENTIELLES + REFORMULATIONS -->
+    <section>
+        <h2>❓ Questions essentielles à poser</h2>
+        <ul class="list" style="columns: 2 200px; column-gap: 2rem;">
+            <li>1. Le médecin prend-il de nouveaux patients ?</li>
+            <li>2. Quels sont les horaires de consultation ?</li>
+            <li>3. Quel est le délai pour obtenir un RDV ?</li>
+            <li>4. Combien coûte une consultation ?</li>
+            <li>5. Comment se passe le paiement ?</li>
+            <li>6. Quels documents apporter ?</li>
+            <li>7. Y a-t-il un parking / transports ?</li>
+            <li>8. Puis-je consulter pour deux problèmes ?</li>
+            <li>9. Téléconsultation possible ?</li>
+            <li>10. Urgences hors horaires ?</li>
+        </ul>
+
+        <div class="exemple-block">
+            <p style="font-weight:bold; margin-bottom:1rem;">💡 Astuce : « J'aimerais savoir… », « Pouvez-vous m'indiquer… », « Quelle est la procédure pour… ? »</p>
+        </div>
+
+        <h3>🔄 Reformulations utiles</h3>
+        <div style="display:flex; flex-wrap:wrap; gap:1rem;">
+            <span class="badge">Si je comprends bien, je dois apporter ma carte Vitale ?</span>
+            <span class="badge">Vous voulez dire que je peux venir sans RDV le samedi ?</span>
+            <span class="badge">Donc, concrètement, je paie 25€ aujourd'hui ?</span>
+            <span class="badge">En d'autres termes, le remboursement est automatique ?</span>
+            <span class="badge">Si je résume, une première consultation dure 30 min ?</span>
+            <span class="badge">Ce que vous voulez dire : je dois prévenir 24h à l'avance ?</span>
+        </div>
+
+        <p style="margin-top:2rem;"><span class="badge">✨ Exemple concret :</span> Secrétaire : « Les consultations sont sans RDV le samedi matin uniquement pour les urgences. »<br>👉 <strong>Reformulation :</strong> « Si je comprends bien, le samedi matin, on peut venir sans rendez-vous si c'est urgent ? »</p>
+    </section>
+
+    <!-- VOCABULAIRE -->
+    <section>
+        <h2>📚 Vocabulaire à maîtriser</h2>
+        <div class="vocab-table">
+            <span class="vocab-item">un cabinet médical</span>
+            <span class="vocab-item">un médecin généraliste</span>
+            <span class="vocab-item">la carte Vitale</span>
+            <span class="vocab-item">la mutuelle</span>
+            <span class="vocab-item">une consultation</span>
+            <span class="vocab-item">un rendez-vous</span>
+            <span class="vocab-item">un renouvellement d'ordonnance</span>
+            <span class="vocab-item">les urgences</span>
+            <span class="vocab-item">être remboursé(e)</span>
+            <span class="vocab-item">un arrêt maladie</span>
+            <span class="vocab-item">téléconsulter</span>
+            <span class="vocab-item">l'ordonnance</span>
+        </div>
+    </section>
+
+    <!-- EXERCICES PROGRESSIFS TCF - NOUVEAUX QCM INTERACTIFS -->
+    <section>
+        <h2>🧪 TCF – 6 exercices interactifs (QCM)</h2>
+        <p class="instruction-clic">👆 Cliquez sur chaque exercice pour voir la réponse</p>
+
+        <!-- Exercice 1 -->
+        <div class="exo" onclick="toggleReponse(this)">
+            <p><strong>📘 Exercice 1 – Choisis la bonne question</strong><br>🧑‍⚕️ La secrétaire : « Le Docteur Martin peut vous proposer un rendez-vous dans trois semaines pour une consultation classique. »</p>
+            <p>🤔 Vous avez mal au dos depuis une semaine et vous voulez être consulté plus tôt. Quelle question poser ?</p>
+            <ul>
+                <li>A. « Pourquoi si tard ? »</li>
+                <li>B. « Est-ce qu'il y a une liste d'attente ou des annulations de dernière minute ? »</li>
+                <li>C. « Il est compétent pour le dos ? »</li>
+            </ul>
+            <div class="reponse">✅ <strong>Bonne réponse : B</strong> – La question B montre que vous cherchez une solution plus rapide (liste d'attente ou désistement) sans être agressif. La A est impolie, la C n'est pas pertinente pour avancer le rendez-vous.</div>
+        </div>
+
+        <!-- Exercice 2 -->
+        <div class="exo" onclick="toggleReponse(this)">
+            <p><strong>📘 Exercice 2 – Choisis la bonne question</strong><br>🧑‍⚕️ La secrétaire : « Pour une téléconsultation, vous aurez besoin d'un ordinateur avec caméra et d'une connexion internet. »</p>
+            <p>🤔 Vous n'êtes pas très à l'aise avec la technologie. Que demandez-vous ?</p>
+            <ul>
+                <li>A. « C'est compliqué à installer ? »</li>
+                <li>B. « Est-ce que je peux faire la téléconsultation avec mon téléphone ? »</li>
+                <li>C. « Pourquoi pas en présentiel ? »</li>
+            </ul>
+            <div class="reponse">✅ <strong>Bonne réponse : B</strong> – C'est une question précise et pratique : beaucoup de personnes utilisent leur smartphone, c'est plus simple. La A est vague, la C est une autre question (refus de la téléconsultation).</div>
+        </div>
+
+        <!-- Exercice 3 -->
+        <div class="exo" onclick="toggleReponse(this)">
+            <p><strong>📘 Exercice 3 – Choisis la bonne question</strong><br>🧑‍⚕️ La secrétaire : « Les consultations coûtent 25€, sauf pour les bénéficiaires de la CMU qui sont dispensés d'avance de frais. »</p>
+            <p>🤔 Vous avez une mutuelle mais vous ne connaissez pas le terme "CMU". Quelle est la meilleure question ?</p>
+            <ul>
+                <li>A. « C'est quoi la CMU ? »</li>
+                <li>B. « Est-ce que ma mutuelle prend en charge quelque chose ? »</li>
+                <li>C. « Je dois payer combien aujourd'hui si j'ai une mutuelle ? »</li>
+            </ul>
+            <div class="reponse">✅ <strong>Bonne réponse : C</strong> – La question C est la plus pratique : elle vous dit exactement ce que vous aurez à débourser. La A est trop basique, la B est bonne mais moins directe que C.</div>
+        </div>
+
+        <!-- Exercice 4 -->
+        <div class="exo" onclick="toggleReponse(this)">
+            <p><strong>📘 Exercice 4 – Choisis la bonne question</strong><br>🧑‍⚕️ La secrétaire : « Pour un renouvellement d'ordonnance sans nouvelle consultation, vous pouvez envoyer un message via le dossier médical en ligne. »</p>
+            <p>🤔 Vous n'avez pas de dossier en ligne. Que demandez-vous ?</p>
+            <ul>
+                <li>A. « Je fais comment si je n'ai pas de dossier en ligne ? »</li>
+                <li>B. « C'est obligatoire le dossier en ligne ? »</li>
+                <li>C. « Est-ce que je peux venir déposer une ordonnance papier au cabinet ? »</li>
+            </ul>
+            <div class="reponse">✅ <strong>Bonne réponse : C</strong> – La question C propose une alternative concrète et polie. La A est trop générale et peut sembler un peu brusque, la B est défensive.</div>
+        </div>
+
+        <!-- Exercice 5 -->
+        <div class="exo" onclick="toggleReponse(this)">
+            <p><strong>📘 Exercice 5 – Choisis la bonne question</strong><br>🧑‍⚕️ La secrétaire : « Le docteur peut vous prescrire des séances de kiné, mais il faut d'abord une ordonnance. »</p>
+            <p>🤔 Vous voulez savoir combien de séances vous pourrez avoir. Quelle question poser ?</p>
+            <ul>
+                <li>A. « C'est cher le kiné ? »</li>
+                <li>B. « Combien de séances le médecin prescrit généralement pour un mal de dos ? »</li>
+                <li>C. « Vous avez un bon kiné à recommander ? »</li>
+            </ul>
+            <div class="reponse">✅ <strong>Bonne réponse : B</strong> – La question B est directement liée à la prescription et au nombre de séances. La A parle d'argent (pas le sujet), la C est une demande de recommandation (utile mais pas prioritaire ici).</div>
+        </div>
+
+        <!-- Exercice 6 -->
+        <div class="exo" onclick="toggleReponse(this)">
+            <p><strong>📘 Exercice 6 – Choisis la bonne question</strong><br>🧑‍⚕️ La secrétaire : « Le cabinet est fermé le dimanche. En cas d'urgence, appelez le 15. »</p>
+            <p>🤔 Vous avez une forte fièvre un dimanche matin. Quelle est la bonne attitude ?</p>
+            <ul>
+                <li>A. « Vous pouvez quand même me donner un rendez-vous ? »</li>
+                <li>B. « Je dois appeler le 15 ou aller aux urgences ? »</li>
+                <li>C. « Pourquoi vous êtes fermé le dimanche ? »</li>
+            </ul>
+            <div class="reponse">✅ <strong>Bonne réponse : B</strong> – La question B montre que vous avez compris le message et cherchez à savoir quelle procédure suivre. La A ignore la consigne, la C est inutile en situation d'urgence.</div>
+        </div>
+
+        <!-- Exercice 7 – reformulation (bonus) -->
+        <div class="exo" onclick="toggleReponse(this)" style="background: #fffae0;">
+            <p><strong>🔄 Exercice 7 – Reformulation (entraînement)</strong><br>🧑‍⚕️ La secrétaire : « Les résultats de la prise de sang sont généralement disponibles sous 48 heures. Vous pouvez les consulter en ligne ou repasser les chercher. »</p>
+            <p>🤔 Reformulez avec <strong>« Si je comprends bien… »</strong> ou <strong>« Donc, concrètement… »</strong></p>
+            <div class="reponse">
+                💬 <strong>Exemples :</strong><br>
+                • « Si je comprends bien, je peux soit attendre 48h et les voir en ligne, soit revenir au cabinet dans deux jours ? »<br>
+                • « Donc, concrètement, je n'ai pas besoin de rappeler, je regarde directement sur internet après 48h ? »
+            </div>
+        </div>
+    </section>
+
+    <!-- JEU DE RÔLE – SIMULATION TEF -->
+    <section style="background:#e0f0f7; border-radius:0;">
+        <h2 style="color: #003153;">🎭 MERCREDI – JEU DE RÔLE TEF</h2>
+        <p style="font-size:1.3rem; font-weight:600;">👨 Thomas = patient | 👩 Secrétaire/médecin = examinateur</p>
+        <ul style="margin:1rem 0 1.5rem 2rem;">
+            <li>✅ Utilisez les <strong>12 questions essentielles</strong></li>
+            <li>✅ Reformulez <strong>au moins 3 réponses</strong> (🔄)</li>
+            <li>✅ Vocabulaire : <em>rendez-vous, consultation, carte Vitale, ordonnance, remboursement, cabinet</em></li>
+            <li>⏱️ Durée : <strong>3 à 5 minutes d’interaction</strong></li>
+        </ul>
+        <div class="astuce">
+            <p style="font-size:1.2rem;">💡 Scénario possible :<br>Vous avez mal au dos depuis plusieurs semaines et vous devez aussi renouveler votre traitement habituel. Vous appelez un nouveau cabinet médical près de chez vous pour la première fois.</p>
+        </div>
+        <div style="margin-top:2rem; background:white; border-radius:40px; padding:1.5rem;">
+            <p style="font-weight:bold;">🔄 Exemples de reformulations à utiliser :</p>
+            <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                <span class="badge">« Si je comprends bien, je peux consulter pour les deux problèmes ? »</span>
+                <span class="badge">« Donc, concrètement, je règle 25€ aujourd'hui ? »</span>
+                <span class="badge">« Vous voulez dire que je dois apporter mes anciennes ordonnances ? »</span>
+                <span class="badge">« En d'autres termes, le remboursement se fait automatiquement ? »</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <div class="footer-note">
+        ⚕️ Bon entraînement ! N'hésitez pas à répéter ce dialogue à voix haute pour gagner en aisance. 😊<br>
+        ⋆⋅☆⋅⋆ – Prêt pour l'examen – ⋆⋅☆⋅⋆
+    </div>
+</div>
+
+<script>
+    function toggleReponse(element) {
+        const reponse = element.querySelector('.reponse');
+        if (reponse) {
+            reponse.classList.toggle('visible');
+        }
+    }
+</script>
+</body>
+</html>
