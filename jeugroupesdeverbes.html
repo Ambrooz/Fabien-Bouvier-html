@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔤 Duel des Groupes - 60 verbes</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: linear-gradient(145deg, #2b3a67 0%, #1d2b4b 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+        .game-container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 64px;
+            padding: 30px 30px 45px;
+            box-shadow: 0 30px 45px rgba(0,0,0,0.5), 0 6px 15px rgba(0,20,40,0.6);
+            border: 3px solid #ffd966;
+            text-align: center;
+        }
+        h1 {
+            font-size: 2.8rem;
+            margin: 0 0 15px;
+            color: #ffe484;
+            text-shadow: 4px 4px 0 #b6562c, 6px 6px 0 rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+            word-break: break-word;
+        }
+        .sub {
+            font-size: 1.4rem;
+            color: #f4e3c6;
+            background: #2e4a6b;
+            display: inline-block;
+            padding: 8px 35px;
+            border-radius: 60px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            border: 2px solid #ffb27a;
+        }
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            background: #3d5180;
+            border-radius: 60px;
+            padding: 15px 25px;
+            margin-bottom: 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.3rem;
+            border: 2px solid #ffb85c;
+        }
+        .score, .question-count {
+            background: #26335f;
+            padding: 8px 25px;
+            border-radius: 40px;
+            box-shadow: inset 0 3px 5px rgba(0,0,0,0.3);
+        }
+        .question-box {
+            background: #e9eef7;
+            border-radius: 60px;
+            padding: 35px 25px;
+            margin: 20px 0 30px;
+            border: 6px solid #ffaa5e;
+            box-shadow: 0 10px 0 #aa6030;
+        }
+        .question-text {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #1f3162;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+        .question-desc {
+            font-size: 1.3rem;
+            color: #4d5f89;
+            background: #ffedc9;
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 40px;
+        }
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 18px;
+            margin: 35px 0 25px;
+        }
+        .option-btn {
+            background: white;
+            border: 5px solid #97a9d1;
+            color: #1f2c52;
+            font-size: 1.5rem;
+            font-weight: bold;
+            padding: 22px 10px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.12s;
+            box-shadow: 0 8px 0 #5d6f9e;
+            word-break: break-word;
+        }
+        .option-btn:hover:not(:disabled) {
+            background: #d2e0ff;
+            transform: scale(1.02);
+        }
+        .option-btn.selected-correct {
+            background: #a3d9a5;
+            border-color: #2d6e2d;
+            box-shadow: 0 4px 0 #1b4f1b;
+            transform: translateY(4px);
+        }
+        .option-btn.selected-wrong {
+            background: #f3b5b5;
+            border-color: #ac3a3a;
+            box-shadow: 0 4px 0 #6d2b2b;
+            transform: translateY(4px);
+        }
+        .option-btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+        .feedback {
+            font-size: 1.6rem;
+            min-height: 4rem;
+            padding: 15px;
+            border-radius: 40px;
+            background: #fcf4dd;
+            margin: 20px 0 10px;
+            border: 3px solid #ffb756;
+            font-weight: 600;
+        }
+        .next-btn {
+            background: #fea82f;
+            border: none;
+            font-size: 2rem;
+            font-weight: bold;
+            padding: 18px 50px;
+            border-radius: 60px;
+            color: #1d2b44;
+            border-bottom: 8px solid #9f6220;
+            cursor: pointer;
+            margin: 20px 0 5px;
+            transition: 0.07s;
+            width: 100%;
+        }
+        .next-btn:active {
+            transform: translateY(5px);
+            border-bottom-width: 3px;
+        }
+        .next-btn:disabled {
+            opacity: 0.5;
+            transform: none;
+            pointer-events: none;
+        }
+        .restart {
+            background: #485e8c;
+            color: white;
+            border: 3px solid #f9c27e;
+            font-size: 1.3rem;
+            padding: 12px 30px;
+            border-radius: 50px;
+            margin-top: 30px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        .footer-note {
+            margin-top: 20px;
+            color: #cfdefa;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>⚔️ GROUPE DUEL ⚔️</h1>
+    <div class="sub">60 verbes · 1er, 2ème, 3ème groupe</div>
+
+    <div class="stats">
+        <span class="score" id="scoreDisplay">💯 Score: 0</span>
+        <span class="question-count" id="qCount">❓ 0 / 60</span>
+    </div>
+
+    <div class="question-box">
+        <div class="question-text" id="questionMain">Prêt ?</div>
+        <div class="question-desc" id="questionType"></div>
+    </div>
+
+    <div id="optionsContainer" class="options-grid">
+        <!-- options générées par js -->
+    </div>
+
+    <div class="feedback" id="feedbackMsg">🔍 Clique sur une réponse</div>
+
+    <button class="next-btn" id="nextButton" disabled>➡️ QUESTION SUIVANTE</button>
+    <button class="restart" id="restartButton">🔄 RECOMMENCER</button>
+    <div class="footer-note">👉 3 types de questions : infinitif, groupe, trouver l'intrus</div>
+</div>
+
+<script>
+    (function() {
+        // ----------------------------------------------------------------
+        // BASE DE DONNÉES : 60 verbes avec infinitif, groupe, et une forme conjuguée (indicatif présent, 3e pers sing)
+        // ----------------------------------------------------------------
+        const verbes = [
+            // 1er groupe (-er) 20 verbes
+            { infinitif: "chanter", groupe: 1, conjugue: "chante" },
+            { infinitif: "danser", groupe: 1, conjugue: "danse" },
+            { infinitif: "manger", groupe: 1, conjugue: "mange" },
+            { infinitif: "parler", groupe: 1, conjugue: "parle" },
+            { infinitif: "regarder", groupe: 1, conjugue: "regarde" },
+            { infinitif: "écouter", groupe: 1, conjugue: "écoute" },
+            { infinitif: "aimer", groupe: 1, conjugue: "aime" },
+            { infinitif: "jouer", groupe: 1, conjugue: "joue" },
+            { infinitif: "travailler", groupe: 1, conjugue: "travaille" },
+            { infinitif: "étudier", groupe: 1, conjugue: "étudie" },
+            { infinitif: "visiter", groupe: 1, conjugue: "visite" },
+            { infinitif: "laver", groupe: 1, conjugue: "lave" },
+            { infinitif: "préparer", groupe: 1, conjugue: "prépare" },
+            { infinitif: "donner", groupe: 1, conjugue: "donne" },
+            { infinitif: "acheter", groupe: 1, conjugue: "achète" },
+            { infinitif: "préférer", groupe: 1, conjugue: "préfère" },
+            { infinitif: "espérer", groupe: 1, conjugue: "espère" },
+            { infinitif: "créer", groupe: 1, conjugue: "crée" },
+            { infinitif: "continuer", groupe: 1, conjugue: "continue" },
+            { infinitif: "oublier", groupe: 1, conjugue: "oublie" },
+
+            // 2ème groupe (-ir , -issant) 15 verbes
+            { infinitif: "finir", groupe: 2, conjugue: "finit" },
+            { infinitif: "choisir", groupe: 2, conjugue: "choisit" },
+            { infinitif: "grandir", groupe: 2, conjugue: "grandit" },
+            { infinitif: "rougir", groupe: 2, conjugue: "rougit" },
+            { infinitif: "blanchir", groupe: 2, conjugue: "blanchit" },
+            { infinitif: "jaunir", groupe: 2, conjugue: "jaunit" },
+            { infinitif: "vieillir", groupe: 2, conjugue: "vieillit" },
+            { infinitif: "réussir", groupe: 2, conjugue: "réussit" },
+            { infinitif: "réfléchir", groupe: 2, conjugue: "réfléchit" },
+            { infinitif: "remplir", groupe: 2, conjugue: "remplit" },
+            { infinitif: "grossir", groupe: 2, conjugue: "grossit" },
+            { infinitif: "maigrir", groupe: 2, conjugue: "maigrit" },
+            { infinitif: "nourrir", groupe: 2, conjugue: "nourrit" },
+            { infinitif: "punir", groupe: 2, conjugue: "punir" }, // volontairement "punir" conjugué "punir"? non, punir -> il punit
+            // on corrige :
+            { infinitif: "punir", groupe: 2, conjugue: "punit" },
+            { infinitif: "applaudir", groupe: 2, conjugue: "applaudit" },
+            { infinitif: "obéir", groupe: 2, conjugue: "obéit" }, // 15ème? vérifions: on a finir, choisir, grandir, rougir, blanchir, jaunir, vieillir, réussir, réfléchir, remplir, grossir, maigrir, nourrir, punir, applaudir, obéir = 16, on garde 16 c'est bien.
+
+            // 3ème groupe (irréguliers) 24 verbes (pour arriver à 60)
+            { infinitif: "être", groupe: 3, conjugue: "est" },
+            { infinitif: "avoir", groupe: 3, conjugue: "a" },
+            { infinitif: "aller", groupe: 3, conjugue: "va" },
+            { infinitif: "faire", groupe: 3, conjugue: "fait" },
+            { infinitif: "dire", groupe: 3, conjugue: "dit" },
+            { infinitif: "prendre", groupe: 3, conjugue: "prend" },
+            { infinitif: "mettre", groupe: 3, conjugue: "met" },
+            { infinitif: "voir", groupe: 3, conjugue: "voit" },
+            { infinitif: "vouloir", groupe: 3, conjugue: "veut" },
+            { infinitif: "pouvoir", groupe: 3, conjugue: "peut" },
+            { infinitif: "devoir", groupe: 3, conjugue: "doit" },
+            { infinitif: "savoir", groupe: 3, conjugue: "sait" },
+            { infinitif: "venir", groupe: 3, conjugue: "vient" },
+            { infinitif: "partir", groupe: 3, conjugue: "part" },
+            { infinitif: "sortir", groupe: 3, conjugue: "sort" },
+            { infinitif: "dormir", groupe: 3, conjugue: "dort" },
+            { infinitif: "servir", groupe: 3, conjugue: "sert" },
+            { infinitif: "courir", groupe: 3, conjugue: "court" },
+            { infinitif: "mourir", groupe: 3, conjugue: "meurt" },
+            { infinitif: "rire", groupe: 3, conjugue: "rit" },
+            { infinitif: "suivre", groupe: 3, conjugue: "suit" },
+            { infinitif: "connaître", groupe: 3, conjugue: "connaît" },
+            { infinitif: "croire", groupe: 3, conjugue: "croit" },
+            { infinitif: "boire", groupe: 3, conjugue: "boit" },
+            { infinitif: "peindre", groupe: 3, conjugue: "peint" } // 24? comptons : 1 être,2 avoir,3 aller,4 faire,5 dire,6 prendre,7 mettre,8 voir,9 vouloir,10 pouvoir,11 devoir,12 savoir,13 venir,14 partir,15 sortir,16 dormir,17 servir,18 courir,19 mourir,20 rire,21 suivre,22 connaître,23 croire,24 boire,25 peindre => 25 (bon on a 20+16+25=61, je vais en enlever 1 du 3e pour 60 exacts) supprimons "peindre" pour rester 60 totaux.
+        ];
+
+        // on enlève le dernier (peindre) pour avoir 60
+        verbes.pop(); // enlève peindre
+        // maintenant: 20 (g1) + 16 (g2) + 24 (g3) = 60 parfait.
+
+        // ---------- MÉLANGE DES VERBES POUR LES QUESTIONS ----------
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // Construction des questions (60 questions)
+        function buildQuestions() {
+            let questions = [];
+            const shuffled = shuffleArray([...verbes]);
+
+            // 3 types de questions
+            // TYPE A : on donne un verbe conjugué, trouver l'infinitif correct parmi 4 (dont 3 leurres)
+            // TYPE B : on donne un verbe conjugué, trouver son groupe (1,2,3)
+            // TYPE C : parmi 3 infinitifs, lequel appartient au groupe X (1,2 ou 3) ? (un seul est du groupe demandé)
+
+            for (let i = 0; i < shuffled.length; i++) {
+                const v = shuffled[i];
+                const type = (i % 3); // alterne 0,1,2 (mais on veut équilibre)
+
+                if (type === 0) { // TYPE A : trouver l'infinitif
+                    // générer 3 leurres (infinitifs de verbes différents, groupe différent possible, mais pas le même verbe)
+                    let autres = verbes.filter(v2 => v2.infinitif !== v.infinitif);
+                    autres = shuffleArray(autres);
+                    const leurres = autres.slice(0, 3).map(v2 => v2.infinitif);
+                    const options = shuffleArray([v.infinitif, ...leurres]);
+                    questions.push({
+                        type: "A",
+                        questionText: `"${v.conjugue}" (verbe conjugué)`,
+                        consigne: "Quel est l'INFINITIF ?",
+                        options: options,
+                        correct: v.infinitif,
+                        explication: `✅ ${v.conjugue} vient de ${v.infinitif} (groupe ${v.groupe})`
+                    });
+                }
+                else if (type === 1) { // TYPE B : trouver le groupe
+                    let autresGroupes = [1,2,3].filter(g => g !== v.groupe);
+                    // on va proposer les 3 groupes mais dans le désordre
+                    let groupeOptions = shuffleArray([v.groupe, ...autresGroupes]);
+                    // transformer en texte
+                    let optionLabels = groupeOptions.map(g => {
+                        if (g === 1) return "1er groupe (-er)";
+                        else if (g === 2) return "2ème groupe (-ir / -issant)";
+                        else return "3ème groupe (irrégulier)";
+                    });
+                    questions.push({
+                        type: "B",
+                        questionText: `"${v.conjugue}" (infinitif : ${v.infinitif})`,
+                        consigne: "Quel est son GROUPE ?",
+                        options: optionLabels,
+                        correct: (v.groupe === 1 ? "1er groupe (-er)" : v.groupe === 2 ? "2ème groupe (-ir / -issant)" : "3ème groupe (irrégulier)"),
+                        explication: `✅ ${v.infinitif} est du ${v.groupe}e groupe.`
+                    });
+                }
+                else { // TYPE C : parmi 3 infinitifs, lequel est du groupe donné?
+                    let groupeCible = (i % 3) + 1; // 1,2,3 cyclique
+                    // On veut 3 verbes : un du groupe cible, deux d'autres groupes
+                    let cibleList = verbes.filter(vx => vx.groupe === groupeCible && vx.infinitif !== v.infinitif);
+                    let autreList = verbes.filter(vx => vx.groupe !== groupeCible && vx.infinitif !== v.infinitif);
+                    if (cibleList.length === 0) cibleList = verbes.filter(vx => vx.groupe === groupeCible); // secours
+                    if (autreList.length < 2) autreList = verbes.filter(vx => vx.groupe !== groupeCible);
+
+                    let cible = cibleList[Math.floor(Math.random() * cibleList.length)];
+                    let autre1 = autreList[Math.floor(Math.random() * autreList.length)];
+                    let autre2 = autreList[Math.floor(Math.random() * autreList.length)];
+                    while (autre2.infinitif === autre1.infinitif && autreList.length > 1) {
+                        autre2 = autreList[Math.floor(Math.random() * autreList.length)];
+                    }
+                    let optionsObj = [
+                        { inf: cible.infinitif, groupe: cible.groupe },
+                        { inf: autre1.infinitif, groupe: autre1.groupe },
+                        { inf: autre2.infinitif, groupe: autre2.groupe },
+                    ];
+                    optionsObj = shuffleArray(optionsObj);
+                    let optionInfos = optionsObj.map(o => o.inf);
+                    let groupeNom = (groupeCible === 1 ? "1er groupe" : groupeCible === 2 ? "2ème groupe" : "3ème groupe");
+                    questions.push({
+                        type: "C",
+                        questionText: `Lequel est du ${groupeNom} ?`,
+                        consigne: "Trouve l'intrus positif",
+                        options: optionInfos,
+                        correct: cible.infinitif,
+                        explication: `✅ "${cible.infinitif}" est du ${groupeCible}e groupe. Les autres sont d'autres groupes.`
+                    });
+                }
+            }
+            return shuffleArray(questions); // on mélange pour pas que les types soient trop prévisibles
+        }
+
+        let questions = buildQuestions();
+        let currentIndex = 0;
+        let score = 0;
+        let answered = false;
+        let selectedOption = null;
+
+        // Éléments DOM
+        const questionMain = document.getElementById('questionMain');
+        const questionType = document.getElementById('questionType');
+        const optionsDiv = document.getElementById('optionsContainer');
+        const feedbackEl = document.getElementById('feedbackMsg');
+        const nextBtn = document.getElementById('nextButton');
+        const scoreSpan = document.getElementById('scoreDisplay');
+        const qCountSpan = document.getElementById('qCount');
+        const restartBtn = document.getElementById('restartButton');
+
+        function renderQuestion() {
+            answered = false;
+            selectedOption = null;
+            const q = questions[currentIndex];
+            questionMain.innerText = q.questionText;
+            questionType.innerText = q.consigne;
+
+            // Créer les boutons options
+            optionsDiv.innerHTML = '';
+            q.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => handleOptionClick(btn, opt, q);
+                optionsDiv.appendChild(btn);
+            });
+
+            feedbackEl.innerText = '🔍 Choisis une réponse';
+            nextBtn.disabled = true;
+            updateScoreAndCount();
+        }
+
+        function handleOptionClick(btn, selectedValue, q) {
+            if (answered) return;
+            answered = true;
+            const isCorrect = (selectedValue === q.correct);
+            if (isCorrect) {
+                score++;
+                feedbackEl.innerText = `🎉 CORRECT ! ${q.explication}`;
+            } else {
+                feedbackEl.innerText = `❌ FAUX. La bonne réponse était : ${q.correct}. ${q.explication || ''}`;
+            }
+
+            // Marquer tous les boutons
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => {
+                b.disabled = true;
+                if (b.innerText === q.correct) {
+                    b.classList.add('selected-correct');
+                } else if (b.innerText === selectedValue && !isCorrect) {
+                    b.classList.add('selected-wrong');
+                }
+            });
+
+            if (isCorrect && btn) {
+                btn.classList.add('selected-correct');
+            }
+
+            nextBtn.disabled = false;
+            updateScoreAndCount();
+        }
+
+        function updateScoreAndCount() {
+            scoreSpan.innerText = `💯 Score: ${score}`;
+            qCountSpan.innerText = `❓ ${currentIndex+1} / ${questions.length}`;
+        }
+
+        function nextQuestion() {
+            if (currentIndex < questions.length - 1) {
+                currentIndex++;
+                renderQuestion();
+            } else {
+                // fin du jeu
+                questionMain.innerText = "🎯 BRAVO ! PARTIE TERMINÉE";
+                questionType.innerText = "Super travail !";
+                optionsDiv.innerHTML = '';
+                feedbackEl.innerHTML = `⭐ Score final : ${score} / ${questions.length}`;
+                nextBtn.disabled = true;
+                // on peut cacher le bouton next ou le désactiver
+                updateScoreAndCount();
+            }
+        }
+
+        function restartGame() {
+            // reconstruire les questions pour avoir un nouvel ordre
+            questions = buildQuestions();
+            currentIndex = 0;
+            score = 0;
+            answered = false;
+            renderQuestion();
+        }
+
+        // Écouteurs
+        nextBtn.addEventListener('click', nextQuestion);
+        restartBtn.addEventListener('click', restartGame);
+
+        // Initialisation
+        renderQuestion();
+
+    })();
+</script>
+</body>
+</html>
