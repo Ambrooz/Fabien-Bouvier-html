@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>🎮 Mission : Masculin ou Féminin ? - 80 mots</title>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Comic Sans MS', 'Arial Rounded', sans-serif;
+      background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      border: 4px solid #f1c40f;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+    
+    h1 {
+      margin-bottom: 15px;
+      font-size: 2.8em;
+      color: #f1c40f;
+      text-shadow: 3px 3px 0 #8e44ad;
+      letter-spacing: 2px;
+    }
+    
+    .subtitle {
+      font-size: 1.2em;
+      color: #ecf0f1;
+      margin-bottom: 30px;
+    }
+    
+    .section {
+      display: none;
+      padding: 30px;
+      margin: 25px 0;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .active {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    input, button {
+      padding: 18px 25px;
+      margin: 15px;
+      border-radius: 20px;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s;
+      font-family: 'Comic Sans MS', sans-serif;
+    }
+    
+    input {
+      width: 280px;
+      text-align: center;
+      background: white;
+      color: #8e44ad;
+      border: 3px solid #f1c40f;
+    }
+    
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
+    }
+    
+    button {
+      background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+      color: white;
+      cursor: pointer;
+      min-width: 250px;
+      border: 3px solid #f1c40f;
+      box-shadow: 0 5px 15px rgba(241, 196, 15, 0.3);
+    }
+    
+    button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 10px 25px rgba(241, 196, 15, 0.5);
+    }
+    
+    .word-display {
+      font-size: 64px;
+      margin: 40px 0;
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 40px;
+      border-radius: 40px;
+      border: 5px solid #f1c40f;
+      color: #f1c40f;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .word-article {
+      font-size: 36px;
+      color: #ecf0f1;
+      margin-bottom: 20px;
+    }
+    
+    .word {
+      font-size: 80px;
+      line-height: 1.3;
+    }
+    
+    .gender-hint {
+      font-size: 24px;
+      color: #bdc3c7;
+      margin-top: 20px;
+    }
+    
+    .choice-btn {
+      background: white;
+      color: #8e44ad;
+      margin: 15px;
+      padding: 30px 40px;
+      border-radius: 30px;
+      cursor: pointer;
+      border: 5px solid #3498db;
+      font-size: 36px;
+      font-weight: bold;
+      min-width: 280px;
+      transition: all 0.3s;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+      font-family: 'Comic Sans MS', sans-serif;
+    }
+    
+    .choice-btn:hover {
+      transform: translateY(-5px) scale(1.05);
+      border-color: #f1c40f;
+    }
+    
+    .masculin {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+      color: white;
+      border-color: #3498db;
+    }
+    
+    .feminin {
+      background: linear-gradient(135deg, #e84393 0%, #c2185b 100%);
+      color: white;
+      border-color: #e84393;
+    }
+    
+    .correct {
+      background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%) !important;
+      color: white !important;
+      border-color: #2ecc71 !important;
+      animation: correctAnim 0.6s;
+    }
+    
+    .wrong {
+      background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%) !important;
+      color: white !important;
+      border-color: #e74c3c !important;
+      animation: wrongAnim 0.6s;
+    }
+    
+    @keyframes correctAnim {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    @keyframes wrongAnim {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    .scores {
+      display: flex;
+      justify-content: space-around;
+      margin: 50px 0;
+      gap: 30px;
+    }
+    
+    .player {
+      padding: 35px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      min-width: 280px;
+      border: 4px solid;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    }
+    
+    .player1 {
+      border-color: #3498db;
+      background: linear-gradient(135deg, rgba(52, 152, 219, 0.15), rgba(52, 152, 219, 0.05));
+    }
+    
+    .player2 {
+      border-color: #e84393;
+      background: linear-gradient(135deg, rgba(232, 67, 147, 0.15), rgba(232, 67, 147, 0.05));
+    }
+    
+    .player-name {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .player-score {
+      font-size: 60px;
+      color: #f1c40f;
+      font-weight: bold;
+      text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+    }
+    
+    .timer {
+      font-size: 70px;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #f1c40f;
+      text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.3);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.9; }
+    }
+    
+    .share-link {
+      background: white;
+      color: #8e44ad;
+      padding: 25px;
+      border-radius: 20px;
+      margin: 30px 0;
+      word-break: break-all;
+      text-align: center;
+      font-size: 18px;
+      border: 3px solid #f1c40f;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .copy-btn {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+    }
+    
+    .message {
+      padding: 25px;
+      border-radius: 20px;
+      margin: 25px 0;
+      background: rgba(255, 255, 255, 0.15);
+      font-size: 20px;
+      border: 2px solid #f1c40f;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 15px;
+      margin: 40px 0;
+      overflow: hidden;
+      border: 2px solid #f1c40f;
+    }
+    
+    .progress {
+      height: 100%;
+      background: linear-gradient(90deg, #3498db, #e84393, #f1c40f);
+      width: 0%;
+      transition: width 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .progress-text {
+      font-size: 24px;
+      color: #f1c40f;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    
+    .explication {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 25px;
+      border-radius: 20px;
+      margin: 30px 0;
+      border-left: 6px solid #f1c40f;
+      text-align: left;
+      font-size: 22px;
+    }
+    
+    .explication strong {
+      color: #f1c40f;
+    }
+    
+    .category-badge {
+      display: inline-block;
+      padding: 10px 30px;
+      border-radius: 40px;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
+      background: #f1c40f;
+      color: #8e44ad;
+    }
+    
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+      
+      .scores {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      
+      .choice-btn {
+        min-width: 100%;
+        margin: 10px 0;
+        font-size: 28px;
+        padding: 20px;
+      }
+      
+      .word-display {
+        font-size: 48px;
+        padding: 25px;
+      }
+      
+      .word {
+        font-size: 60px;
+      }
+      
+      .timer {
+        font-size: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Mission : Masculin ou Féminin ?</h1>
+    <p class="subtitle">80 mots courants • A1-A2 • Le ou La ?</p>
+    
+    <!-- Écran d'accueil -->
+    <div id="home-screen" class="section active">
+      <div style="font-size: 80px; margin: 30px 0;">🔵⚪🔴</div>
+      <h2>Choisis le bon genre !</h2>
+      <p>80 mots - Trouve si c'est masculin (le) ou féminin (la)</p>
+      <button onclick="createGame()">🎮 CAPITAINE (Créer la mission)</button>
+      <br>
+      <button onclick="joinGame()">🔗 COÉQUIPIER (Rejoindre la mission)</button>
+    </div>
+    
+    <!-- Écran Capitaine -->
+    <div id="player1-screen" class="section">
+      <h2>🔵 Tu es le Capitaine</h2>
+      <p>Choisis ton nom :</p>
+      <input id="player1-name" placeholder="Ton nom">
+      <br>
+      <button onclick="startAsPlayer1()">🚀 Lancer la mission</button>
+      
+      <div id="share-box" class="hidden">
+        <h3>📡 Lien d'invitation</h3>
+        <p>Envoie ce lien à ton coéquipier :</p>
+        <div class="share-link" id="game-link">Génération du lien...</div>
+        <button class="copy-btn" onclick="copyLink()">📋 Copier le lien</button>
+        <p class="message">⏳ En attente du coéquipier...</p>
+      </div>
+    </div>
+    
+    <!-- Écran Coéquipier -->
+    <div id="player2-screen" class="section">
+      <h2>🔴 Tu es le Coéquipier</h2>
+      <p>Choisis ton nom :</p>
+      <input id="player2-name" placeholder="Ton nom">
+      <br>
+      <button onclick="joinAsPlayer2()">🤝 Rejoindre la mission</button>
+      <p class="message" id="player2-message">Entre ton nom et rejoins le capitaine !</p>
+    </div>
+    
+    <!-- Écran de jeu -->
+    <div id="game-screen" class="section">
+      <div class="timer" id="timer">45</div>
+      
+      <div class="progress-container">
+        <div class="progress" id="progress"></div>
+      </div>
+      <div class="progress-text" id="progress-text">Mot 1/80</div>
+      
+      <div class="word-display" id="word-display">
+        <div class="word-article" id="article">???</div>
+        <div class="word" id="word">chaise</div>
+        <div class="gender-hint" id="hint">C'est un nom ?</div>
+      </div>
+      
+      <div id="category-display" class="category-badge" style="display: none;"></div>
+      
+      <div style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin: 30px 0;">
+        <button class="choice-btn masculin" id="masculin-btn" onclick="checkGender('masculin')">LE</button>
+        <button class="choice-btn feminin" id="feminin-btn" onclick="checkGender('feminin')">LA</button>
+      </div>
+      
+      <div id="explication" class="explication hidden">
+        <strong>💡 Explication :</strong> <span id="explication-text"></span>
+      </div>
+      
+      <div class="scores">
+        <div class="player player1">
+          <div class="player-name" id="player1-display-name">Capitaine</div>
+          <div class="player-score" id="player1-score">0</div>
+        </div>
+        <div class="player player2">
+          <div class="player-name" id="player2-display-name">Coéquipier</div>
+          <div class="player-score" id="player2-score">0</div>
+        </div>
+      </div>
+      
+      <p id="game-message" style="font-size: 20px; color: #ecf0f1;">
+        ⏱️ 45 secondes - Clique sur LE ou LA !
+      </p>
+    </div>
+    
+    <!-- Écran de fin -->
+    <div id="end-screen" class="section">
+      <div style="font-size: 100px; margin: 30px 0;" id="trophy">🏆</div>
+      <h2>🎉 Mission Terminée !</h2>
+      <div id="winner-message" style="font-size: 28px; margin: 30px 0;"></div>
+      
+      <div class="scores">
+        <div class="player player1">
+          <div class="player-name" id="final-player1-name">Capitaine</div>
+          <div class="player-score" id="final-player1-score">0</div>
+        </div>
+        <div class="player player2">
+          <div class="player-name" id="final-player2-name">Coéquipier</div>
+          <div class="player-score" id="final-player2-score">0</div>
+        </div>
+      </div>
+      
+      <div id="stats" style="margin: 30px 0; font-size: 20px; background: rgba(255,255,255,0.1); padding: 25px; border-radius: 20px;"></div>
+      
+      <button onclick="restartGame()">🔄 Nouvelle mission</button>
+      <button onclick="goHome()">🏠 Retour à l'accueil</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔥 CONFIGURATION FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+      authDomain: "fabien-bouvier.firebaseapp.com",
+      databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "fabien-bouvier",
+      storageBucket: "fabien-bouvier.firebasestorage.app",
+      messagingSenderId: "863046756799",
+      appId: "1:863046756799:web:36a48325658a4286d6190a"
+    };
+    
+    // Initialiser Firebase
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+    
+    // ===== 80 MOTS AVEC LEUR GENRE (A1-A2) =====
+    const words = [
+      // Noms de personnes (10)
+      { word: "homme", gender: "masculin", category: "personne", hint: "On dit 'un homme' - masculin" },
+      { word: "femme", gender: "feminin", category: "personne", hint: "On dit 'une femme' - féminin" },
+      { word: "garçon", gender: "masculin", category: "personne", hint: "Un garçon - masculin" },
+      { word: "fille", gender: "feminin", category: "personne", hint: "Une fille - féminin" },
+      { word: "père", gender: "masculin", category: "famille", hint: "Mon père - masculin" },
+      { word: "mère", gender: "feminin", category: "famille", hint: "Ma mère - féminin" },
+      { word: "frère", gender: "masculin", category: "famille", hint: "Un frère - masculin" },
+      { word: "sœur", gender: "feminin", category: "famille", hint: "Une sœur - féminin" },
+      { word: "professeur", gender: "masculin", category: "profession", hint: "Un professeur - masculin (même pour une femme)" },
+      { word: "élève", gender: "masculin", category: "personne", hint: "Un élève - masculin (mais on peut dire 'une élève')" },
+      
+      // Nourriture (15)
+      { word: "pain", gender: "masculin", category: "nourriture", hint: "Du pain - masculin" },
+      { word: "fromage", gender: "masculin", category: "nourriture", hint: "Le fromage - masculin" },
+      { word: "gâteau", gender: "masculin", category: "nourriture", hint: "Un gâteau - masculin" },
+      { word: "chocolat", gender: "masculin", category: "nourriture", hint: "Le chocolat - masculin" },
+      { word: "lait", gender: "masculin", category: "nourriture", hint: "Le lait - masculin" },
+      { word: "beurre", gender: "masculin", category: "nourriture", hint: "Le beurre - masculin" },
+      { word: "sucre", gender: "masculin", category: "nourriture", hint: "Le sucre - masculin" },
+      { word: "sel", gender: "masculin", category: "nourriture", hint: "Le sel - masculin" },
+      { word: "riz", gender: "masculin", category: "nourriture", hint: "Le riz - masculin" },
+      { word: "poisson", gender: "masculin", category: "nourriture", hint: "Le poisson - masculin" },
+      { word: "viande", gender: "feminin", category: "nourriture", hint: "La viande - féminin" },
+      { word: "pomme", gender: "feminin", category: "fruit", hint: "Une pomme - féminin" },
+      { word: "banane", gender: "feminin", category: "fruit", hint: "Une banane - féminin" },
+      { word: "orange", gender: "feminin", category: "fruit", hint: "Une orange - féminin" },
+      { word: "fraise", gender: "feminin", category: "fruit", hint: "Une fraise - féminin" },
+      
+      // Maison (15)
+      { word: "maison", gender: "feminin", category: "maison", hint: "La maison - féminin" },
+      { word: "chambre", gender: "feminin", category: "maison", hint: "Une chambre - féminin" },
+      { word: "cuisine", gender: "feminin", category: "maison", hint: "La cuisine - féminin" },
+      { word: "salle", gender: "feminin", category: "maison", hint: "La salle - féminin" },
+      { word: "fenêtre", gender: "feminin", category: "maison", hint: "Une fenêtre - féminin" },
+      { word: "porte", gender: "feminin", category: "maison", hint: "La porte - féminin" },
+      { word: "table", gender: "feminin", category: "meuble", hint: "La table - féminin" },
+      { word: "chaise", gender: "feminin", category: "meuble", hint: "Une chaise - féminin" },
+      { word: "lampe", gender: "feminin", category: "meuble", hint: "La lampe - féminin" },
+      { word: "télévision", gender: "feminin", category: "appareil", hint: "La télévision - féminin" },
+      { word: "ordinateur", gender: "masculin", category: "appareil", hint: "L'ordinateur - masculin" },
+      { word: "téléphone", gender: "masculin", category: "appareil", hint: "Le téléphone - masculin" },
+      { word: "lit", gender: "masculin", category: "meuble", hint: "Le lit - masculin" },
+      { word: "canapé", gender: "masculin", category: "meuble", hint: "Un canapé - masculin" },
+      { word: "réfrigérateur", gender: "masculin", category: "appareil", hint: "Le réfrigérateur - masculin" },
+      
+      // École (10)
+      { word: "école", gender: "feminin", category: "école", hint: "L'école - féminin" },
+      { word: "classe", gender: "feminin", category: "école", hint: "La classe - féminin" },
+      { word: "tableau", gender: "masculin", category: "école", hint: "Le tableau - masculin" },
+      { word: "crayon", gender: "masculin", category: "école", hint: "Un crayon - masculin" },
+      { word: "stylo", gender: "masculin", category: "école", hint: "Le stylo - masculin" },
+      { word: "cahier", gender: "masculin", category: "école", hint: "Un cahier - masculin" },
+      { word: "livre", gender: "masculin", category: "école", hint: "Le livre - masculin" },
+      { word: "gomme", gender: "feminin", category: "école", hint: "La gomme - féminin" },
+      { word: "règle", gender: "feminin", category: "école", hint: "La règle - féminin" },
+      { word: "trousse", gender: "feminin", category: "école", hint: "Une trousse - féminin" },
+      
+      // Vêtements (10)
+      { word: "vêtement", gender: "masculin", category: "vêtement", hint: "Un vêtement - masculin" },
+      { word: "pantalon", gender: "masculin", category: "vêtement", hint: "Le pantalon - masculin" },
+      { word: "short", gender: "masculin", category: "vêtement", hint: "Un short - masculin" },
+      { word: "manteau", gender: "masculin", category: "vêtement", hint: "Le manteau - masculin" },
+      { word: "pull", gender: "masculin", category: "vêtement", hint: "Un pull - masculin" },
+      { word: "jean", gender: "masculin", category: "vêtement", hint: "Le jean - masculin" },
+      { word: "chemise", gender: "feminin", category: "vêtement", hint: "La chemise - féminin" },
+      { word: "jupe", gender: "feminin", category: "vêtement", hint: "Une jupe - féminin" },
+      { word: "robe", gender: "feminin", category: "vêtement", hint: "La robe - féminin" },
+      { word: "chaussure", gender: "feminin", category: "vêtement", hint: "Une chaussure - féminin" },
+      
+      // Transports (10)
+      { word: "voiture", gender: "feminin", category: "transport", hint: "La voiture - féminin" },
+      { word: "moto", gender: "feminin", category: "transport", hint: "La moto - féminin" },
+      { word: "bicyclette", gender: "feminin", category: "transport", hint: "Une bicyclette - féminin" },
+      { word: "bus", gender: "masculin", category: "transport", hint: "Le bus - masculin" },
+      { word: "train", gender: "masculin", category: "transport", hint: "Le train - masculin" },
+      { word: "avion", gender: "masculin", category: "transport", hint: "L'avion - masculin" },
+      { word: "bateau", gender: "masculin", category: "transport", hint: "Le bateau - masculin" },
+      { word: "camion", gender: "masculin", category: "transport", hint: "Un camion - masculin" },
+      { word: "taxi", gender: "masculin", category: "transport", hint: "Le taxi - masculin" },
+      { word: "métro", gender: "masculin", category: "transport", hint: "Le métro - masculin" },
+      
+      // Nature (10)
+      { word: "soleil", gender: "masculin", category: "nature", hint: "Le soleil - masculin" },
+      { word: "lune", gender: "feminin", category: "nature", hint: "La lune - féminin" },
+      { word: "ciel", gender: "masculin", category: "nature", hint: "Le ciel - masculin" },
+      { word: "montagne", gender: "feminin", category: "nature", hint: "La montagne - féminin" },
+      { word: "rivière", gender: "feminin", category: "nature", hint: "Une rivière - féminin" },
+      { word: "forêt", gender: "feminin", category: "nature", hint: "La forêt - féminin" },
+      { word: "fleur", gender: "feminin", category: "nature", hint: "Une fleur - féminin" },
+      { word: "arbre", gender: "masculin", category: "nature", hint: "Un arbre - masculin" },
+      { word: "animal", gender: "masculin", category: "nature", hint: "Un animal - masculin" },
+      { word: "oiseau", gender: "masculin", category: "nature", hint: "L'oiseau - masculin" }
+    ];
+    
+    // Variables globales
+    let playerName = "";
+    let playerNumber = 0;
+    let gameId = "";
+    let gameRef = null;
+    let currentWordIndex = 0;
+    let timer = 45; // 45 secondes pour répondre
+    let timerInterval = null;
+    let lastGameData = null;
+    let correctAnswersCount = 0;
+    
+    // === FONCTIONS PRINCIPALES ===
+    
+    // Changer d'écran
+    function showScreen(screenId) {
+      document.querySelectorAll('.section').forEach(screen => {
+        screen.classList.remove('active');
+      });
+      document.getElementById(screenId).classList.add('active');
+    }
+    
+    // Capitaine : Créer une mission
+    function createGame() {
+      showScreen('player1-screen');
+    }
+    
+    function startAsPlayer1() {
+      const name = document.getElementById('player1-name').value.trim();
+      if (!name) {
+        alert("Entre ton nom pour commencer la mission !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 1;
+      
+      // Générer un ID de partie unique
+      gameId = 'gender_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      gameRef = database.ref('genderGames/' + gameId);
+      
+      // Créer la partie dans Firebase
+      const gameData = {
+        player1: { name: name, score: 0, ready: true, correct: 0 },
+        player2: { name: "", score: 0, ready: false, correct: 0 },
+        currentWord: 0,
+        gameStarted: false,
+        gameFinished: false,
+        createdAt: Date.now()
+      };
+      
+      gameRef.set(gameData);
+      
+      // Afficher le lien de partage
+      const gameLink = window.location.href.split('?')[0] + '?game=' + gameId;
+      document.getElementById('game-link').textContent = gameLink;
+      document.getElementById('share-box').classList.remove('hidden');
+      
+      // Écouter les mises à jour
+      listenToGame();
+    }
+    
+    // Copier le lien
+    function copyLink() {
+      const link = document.getElementById('game-link').textContent;
+      navigator.clipboard.writeText(link).then(() => {
+        alert("Lien copié ! Envoie-le à ton coéquipier !");
+      });
+    }
+    
+    // Coéquipier : Rejoindre une mission
+    function joinGame() {
+      showScreen('player2-screen');
+    }
+    
+    function joinAsPlayer2() {
+      const name = document.getElementById('player2-name').value.trim();
+      if (!name) {
+        alert("Entre ton nom pour rejoindre la mission !");
+        return;
+      }
+      
+      playerName = name;
+      playerNumber = 2;
+      
+      // Vérifier si un ID de jeu est dans l'URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        gameId = gameIdFromUrl;
+      } else {
+        // Sinon, demander l'ID
+        gameId = prompt("Entre le code de la mission (demande au capitaine) :");
+        if (!gameId) return;
+      }
+      
+      gameRef = database.ref('genderGames/' + gameId);
+      
+      // Vérifier si la partie existe
+      gameRef.once('value').then(snapshot => {
+        if (!snapshot.exists()) {
+          alert("Mission non trouvée ! Vérifie le code.");
+          return;
+        }
+        
+        const gameData = snapshot.val();
+        lastGameData = gameData;
+        
+        // Rejoindre la partie
+        gameRef.update({
+          'player2': { name: name, score: 0, ready: true, correct: 0 }
+        });
+        
+        document.getElementById('player2-message').textContent = "Connecté ! En attente du capitaine...";
+        
+        // Écouter les mises à jour
+        listenToGame();
+        
+      }).catch(error => {
+        alert("Erreur : " + error.message);
+      });
+    }
+    
+    // Écouter les changements du jeu
+    function listenToGame() {
+      if (!gameRef) return;
+      
+      gameRef.on('value', snapshot => {
+        const gameData = snapshot.val();
+        if (!gameData) return;
+        
+        lastGameData = gameData;
+        
+        // Mettre à jour les noms et scores
+        updatePlayerDisplays(gameData);
+        
+        // Si les deux joueurs sont prêts, démarrer
+        if (gameData.player1.ready && gameData.player2.ready && !gameData.gameStarted) {
+          gameRef.update({ gameStarted: true });
+        }
+        
+        // Si le jeu a démarré
+        if (gameData.gameStarted) {
+          showScreen('game-screen');
+          currentWordIndex = gameData.currentWord || 0;
+          
+          // Mettre à jour la barre de progression
+          const progress = ((currentWordIndex + 1) / words.length) * 100;
+          document.getElementById('progress').style.width = progress + '%';
+          document.getElementById('progress-text').textContent = 
+            `Mot ${currentWordIndex + 1}/${words.length}`;
+          
+          // Afficher le mot courant
+          showCurrentWord();
+          
+          // Démarrer le timer si ce n'est pas fait
+          if (!timerInterval) {
+            startTimer();
+          }
+        }
+        
+        // Si le jeu est terminé
+        if (gameData.gameFinished) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          showEndScreen(gameData);
+        }
+      });
+    }
+    
+    // Mettre à jour l'affichage des joueurs
+    function updatePlayerDisplays(gameData) {
+      document.getElementById('player1-display-name').textContent = gameData.player1.name || "Capitaine";
+      document.getElementById('player1-score').textContent = gameData.player1.score || 0;
+      
+      document.getElementById('player2-display-name').textContent = gameData.player2.name || "Coéquipier";
+      document.getElementById('player2-score').textContent = gameData.player2.score || 0;
+      
+      document.getElementById('final-player1-name').textContent = gameData.player1.name || "Capitaine";
+      document.getElementById('final-player1-score').textContent = gameData.player1.score || 0;
+      
+      document.getElementById('final-player2-name').textContent = gameData.player2.name || "Coéquipier";
+      document.getElementById('final-player2-score').textContent = gameData.player2.score || 0;
+    }
+    
+    // Afficher le mot courant
+    function showCurrentWord() {
+      if (currentWordIndex >= words.length) {
+        gameRef.update({ gameFinished: true });
+        return;
+      }
+      
+      const word = words[currentWordIndex];
+      
+      // Afficher le mot
+      document.getElementById('word').textContent = word.word;
+      document.getElementById('article').textContent = "???";
+      document.getElementById('hint').textContent = word.hint;
+      
+      // Réinitialiser les couleurs des boutons
+      document.getElementById('masculin-btn').classList.remove('correct', 'wrong');
+      document.getElementById('feminin-btn').classList.remove('correct', 'wrong');
+      
+      // Activer les boutons
+      document.getElementById('masculin-btn').onclick = () => checkGender('masculin');
+      document.getElementById('feminin-btn').onclick = () => checkGender('feminin');
+      
+      document.getElementById('explication').classList.add('hidden');
+    }
+    
+    // Vérifier le genre choisi
+    function checkGender(choice) {
+      const currentWord = words[currentWordIndex];
+      const isCorrect = choice === currentWord.gender;
+      
+      // Désactiver les boutons
+      document.getElementById('masculin-btn').onclick = null;
+      document.getElementById('feminin-btn').onclick = null;
+      
+      // Colorer les boutons
+      if (isCorrect) {
+        if (choice === 'masculin') {
+          document.getElementById('masculin-btn').classList.add('correct');
+        } else {
+          document.getElementById('feminin-btn').classList.add('correct');
+        }
+        document.getElementById('article').textContent = currentWord.gender === 'masculin' ? "LE" : "LA";
+      } else {
+        // Mettre en rouge le mauvais choix
+        if (choice === 'masculin') {
+          document.getElementById('masculin-btn').classList.add('wrong');
+          document.getElementById('feminin-btn').classList.add('correct');
+        } else {
+          document.getElementById('feminin-btn').classList.add('wrong');
+          document.getElementById('masculin-btn').classList.add('correct');
+        }
+        document.getElementById('article').textContent = currentWord.gender === 'masculin' ? "LE ✓" : "LA ✓";
+        
+        // Afficher l'explication
+        document.getElementById('explication-text').textContent = 
+          `Le mot "${currentWord.word}" est ${currentWord.gender === 'masculin' ? 'MASCULIN' : 'FÉMININ'}. ${currentWord.hint}`;
+        document.getElementById('explication').classList.remove('hidden');
+      }
+      
+      // Mettre à jour le score
+      if (isCorrect) {
+        const playerKey = 'player' + playerNumber;
+        gameRef.child(playerKey + '/score').transaction(score => (score || 0) + 10);
+        gameRef.child(playerKey + '/correct').transaction(correct => (correct || 0) + 1);
+        correctAnswersCount++;
+      }
+      
+      // Attendre 2 secondes puis passer au mot suivant
+      setTimeout(() => {
+        const nextWordIndex = currentWordIndex + 1;
+        if (gameRef) {
+          gameRef.update({ currentWord: nextWordIndex });
+        }
+      }, 2000);
+    }
+    
+    // Démarrer le timer
+    function startTimer() {
+      timer = 45; // 45 secondes pour répondre
+      document.getElementById('timer').textContent = timer;
+      document.getElementById('timer').style.color = '#f1c40f';
+      
+      timerInterval = setInterval(() => {
+        timer--;
+        document.getElementById('timer').textContent = timer;
+        
+        // Changer la couleur quand il reste peu de temps
+        if (timer <= 10) {
+          document.getElementById('timer').style.color = '#e74c3c';
+          document.getElementById('timer').style.animation = 'pulse 1s infinite';
+        }
+        
+        if (timer <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          // Temps écoulé, passer au mot suivant
+          const nextWordIndex = currentWordIndex + 1;
+          if (gameRef) {
+            gameRef.update({ currentWord: nextWordIndex });
+          }
+        }
+      }, 1000);
+    }
+    
+    // Afficher l'écran de fin
+    function showEndScreen(gameData) {
+      if (!gameData) return;
+      
+      let winnerMessage = "";
+      let trophy = "🏆";
+      
+      if (gameData.player1.score > gameData.player2.score) {
+        winnerMessage = `👑 ${gameData.player1.name} remporte la mission !`;
+        trophy = "👑";
+      } else if (gameData.player2.score > gameData.player1.score) {
+        winnerMessage = `⭐ ${gameData.player2.name} remporte la mission !`;
+        trophy = "⭐";
+      } else {
+        winnerMessage = "🤝 Égalité parfaite ! Vous êtes des champions !";
+        trophy = "🏆";
+      }
+      
+      document.getElementById('trophy').textContent = trophy;
+      
+      const p1Correct = gameData.player1.correct || 0;
+      const p2Correct = gameData.player2.correct || 0;
+      const p1Percentage = Math.round((p1Correct / 80) * 100);
+      const p2Percentage = Math.round((p2Correct / 80) * 100);
+      
+      document.getElementById('winner-message').innerHTML = `
+        <h3>${winnerMessage}</h3>
+        <p style="font-size: 24px; color: #f1c40f;">${gameData.player1.score} - ${gameData.player2.score}</p>
+      `;
+      
+      // Compter par catégorie (simplifié)
+      const p1CorrectCount = gameData.player1.correct || 0;
+      const p2CorrectCount = gameData.player2.correct || 0;
+      
+      document.getElementById('stats').innerHTML = `
+        <p style="font-size: 22px; margin-bottom: 15px;"><strong>Résultats détaillés</strong></p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+          <div style="background: rgba(52,152,219,0.2); padding: 20px; border-radius: 15px;">
+            <p style="font-size: 20px;"><strong>${gameData.player1.name}</strong></p>
+            <p style="font-size: 18px;">✅ ${p1Correct}/80 mots</p>
+            <p style="font-size: 18px;">📊 ${p1Percentage}% de réussite</p>
+          </div>
+          <div style="background: rgba(232,67,147,0.2); padding: 20px; border-radius: 15px;">
+            <p style="font-size: 20px;"><strong>${gameData.player2.name}</strong></p>
+            <p style="font-size: 18px;">✅ ${p2Correct}/80 mots</p>
+            <p style="font-size: 18px;">📊 ${p2Percentage}% de réussite</p>
+          </div>
+        </div>
+        <p style="margin-top: 25px; color: #f1c40f; font-size: 18px;">
+          🔵 40 mots masculins • 🔴 40 mots féminins<br>
+          🏠 Maison • 🍎 Nourriture • 👕 Vêtements • 🚗 Transports
+        </p>
+      `;
+      
+      showScreen('end-screen');
+    }
+    
+    // NOUVELLE PARTIE
+    function restartGame() {
+      if (!gameRef || !lastGameData) {
+        alert("Impossible de redémarrer. Retour à l'accueil !");
+        goHome();
+        return;
+      }
+      
+      // Arrêter l'ancien timer
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      
+      // Réinitialiser la partie dans Firebase
+      gameRef.update({
+        player1: { 
+          name: lastGameData.player1.name, 
+          score: 0, 
+          ready: true,
+          correct: 0
+        },
+        player2: { 
+          name: lastGameData.player2.name, 
+          score: 0, 
+          ready: true,
+          correct: 0
+        },
+        currentWord: 0,
+        gameStarted: true,
+        gameFinished: false
+      });
+      
+      // Réinitialiser les variables locales
+      currentWordIndex = 0;
+      timer = 45;
+      correctAnswersCount = 0;
+      document.getElementById('timer').style.color = '#f1c40f';
+      
+      // Retourner à l'écran de jeu
+      showScreen('game-screen');
+      
+      // Redémarrer l'écoute
+      listenToGame();
+    }
+    
+    // Retour à l'accueil
+    function goHome() {
+      playerName = "";
+      playerNumber = 0;
+      gameId = "";
+      gameRef = null;
+      currentWordIndex = 0;
+      lastGameData = null;
+      correctAnswersCount = 0;
+      
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      
+      showScreen('home-screen');
+      
+      // Nettoyer l'URL
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+    
+    // Au chargement, vérifier si on rejoint une partie via l'URL
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const gameIdFromUrl = urlParams.get('game');
+      
+      if (gameIdFromUrl) {
+        // C'est le Coéquipier qui arrive via le lien
+        showScreen('player2-screen');
+        document.getElementById('player2-message').textContent = 
+          "Mission trouvée ! Entre ton nom pour rejoindre !";
+      }
+    });
+  </script>
+</body>
+</html>
