@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Révision - Le jeu des puissances depuis 1945</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
+            background: #f4f7fc;
+            color: #1e2f4a;
+            line-height: 1.5;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* en-tête */
+        .header-title {
+            margin-bottom: 35px;
+        }
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #0b2f5c, #1f4b8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            border-left: 8px solid #256bb0;
+            padding-left: 25px;
+        }
+        .subhead {
+            font-size: 1.25rem;
+            color: #2b4570;
+            margin: 15px 0 10px 30px;
+            background: #e2ebf6;
+            padding: 10px 30px;
+            border-radius: 40px;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        /* Grille fiches */
+        .grid-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 32px;
+            padding: 25px 25px 30px 25px;
+            box-shadow: 0 20px 35px -10px rgba(0, 35, 70, 0.15);
+            transition: all 0.25s ease;
+            border: 1px solid rgba(67, 126, 204, 0.15);
+            display: flex;
+            flex-direction: column;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 30px 45px -12px #1d4c8c55;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px dashed #bdd3f0;
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+        .card-header h2 {
+            font-size: 1.9rem;
+            font-weight: 650;
+            color: #10345e;
+        }
+        .emoji {
+            font-size: 2.5rem;
+        }
+
+        .card-content {
+            flex: 1;
+        }
+        .card-content p {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin: 10px 0 10px 0;
+            color: #163a60;
+        }
+        .card-content ul, .fact-list {
+            list-style: none;
+        }
+        .card-content li {
+            margin-bottom: 14px;
+            padding-left: 28px;
+            position: relative;
+            font-size: 1.0rem;
+            color: #1f3b5c;
+        }
+        .card-content li::before {
+            content: "▹";
+            color: #1f6eb0;
+            font-weight: bold;
+            font-size: 1.4rem;
+            position: absolute;
+            left: 2px;
+            top: -5px;
+        }
+        .badge-date {
+            background: #10345e;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin: 15px 0 12px 0;
+            letter-spacing: 0.3px;
+        }
+        .tag {
+            background: #e1ecfe;
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #0f3d77;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        .highlight-number {
+            background: #0b2f5c;
+            color: white;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-weight: 700;
+        }
+        /* Zone QCM */
+        .qcm-section {
+            background: #0b2b4f;
+            background: linear-gradient(135deg, #0b2b4f, #1d4780);
+            border-radius: 50px 50px 30px 30px;
+            padding: 40px 35px;
+            color: white;
+            margin: 50px 0 30px 0;
+            box-shadow: 0 30px 40px -15px #091f38;
+        }
+        .qcm-section h3 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .qcm-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .qcm-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(6px);
+            border-radius: 35px;
+            padding: 25px 22px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .question {
+            font-weight: 600;
+            font-size: 1.25rem;
+            margin-bottom: 20px;
+            border-left: 5px solid #f9c74f;
+            padding-left: 18px;
+        }
+        .btn-rep {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            width: fit-content;
+            margin: 15px 0 5px;
+        }
+        .btn-rep:hover {
+            background: #ffb347;
+            border-color: white;
+            color: #0b2b4f;
+        }
+        .answer {
+            display: none;
+            background: #f4f7fc;
+            color: #10345e;
+            padding: 15px 20px;
+            border-radius: 24px;
+            margin-top: 15px;
+            font-weight: 500;
+            border-left: 6px solid #f9c74f;
+        }
+        .answer.show {
+            display: block;
+        }
+        hr {
+            border: 1px solid #aac3dd;
+            margin: 20px 0;
+        }
+        .citation {
+            font-style: italic;
+            background: #ebf3ff;
+            padding: 15px 25px;
+            border-radius: 60px;
+            color: #1b3d6b;
+            font-weight: 450;
+        }
+        .row-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .stat-bloc {
+            background: #d6e6ff;
+            border-radius: 30px;
+            padding: 15px 20px;
+            flex: 1;
+            min-width: 140px;
+            font-weight: 600;
+            color: #022549;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Titre principal -->
+    <div class="header-title">
+        <h1>⚡ Le jeu des puissances <br> dans les relations internationales depuis 1945</h1>
+        <div class="subhead">✅ Fiches complètes – Synthèse du dossier PDF + QCM interactif</div>
+    </div>
+
+    <!-- Grille de cartes = révision systématique du PDF -->
+    <div class="grid-cards">
+
+        <!-- Carte 1 : La rupture 1947 -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">⚡</span>
+                <h2>1947 : La rupture</h2>
+            </div>
+            <div class="card-content">
+                <p>Doctrines fondatrices</p>
+                <ul>
+                    <li><strong>Doctrine Truman (mars 1947)</strong> : containment (endiguement) – aider financièrement/militairement les pays pour bloquer le communisme.</li>
+                    <li><strong>Doctrine Jdanov (sept. 1947)</strong> : monde divisé en deux camps (« impérialiste » USA vs « anti-impérialiste » URSS). Création du Kominform.</li>
+                </ul>
+                <div class="badge-date">1947 – Naissance de la Guerre froide</div>
+            </div>
+        </div>
+
+        <!-- Carte 2 : Organisation des blocs -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">🏛️</span>
+                <h2>Blocs économique & militaire</h2>
+            </div>
+            <div class="card-content">
+                <p><strong>Bloc de l'Ouest</strong> : Plan Marshall (1947) · OTAN (1949)</p>
+                <p><strong>Bloc de l'Est</strong> : CAEM (1949) · Pacte de Varsovie (1955)</p>
+                <ul>
+                    <li><strong>Membres Ouest</strong> : USA, Europe Ouest, Japon, Canada, Australie…</li>
+                    <li><strong>Membres Est</strong> : URSS, démocraties populaires, Chine (alliée)</li>
+                </ul>
+                <div class="tag">rideau de fer</div>
+                <div class="tag">Europe divisée</div>
+            </div>
+        </div>
+
+        <!-- Carte 3 : Berlin épicentre -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">🧱</span>
+                <h2>Berlin, cœur du conflit</h2>
+            </div>
+            <div class="card-content">
+                <p><strong>Blocus de Berlin (1948-1949)</strong> : Staline bloque les accès → pont aérien américain. Échec soviétique → création RFA/RDA (1949).</p>
+                <p><strong>Mur de Berlin (1961)</strong> : « mur de la honte » – 155 km, 3,6 m de haut, pour stopper la fuite vers l'Ouest. 28 ans de séparation.</p>
+                <span class="badge-date">1961-1989</span>
+            </div>
+        </div>
+
+        <!-- Carte 4 : Équilibre de la terreur -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">💥</span>
+                <h2>Dissuasion & crises</h2>
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li><strong>Conflits périphériques</strong> : guerres par procuration (Corée, Vietnam, Afghanistan).</li>
+                    <li><strong>Crise des missiles de Cuba (1962)</strong> : 13 jours au bord du nucléaire. Conséquence : téléphone rouge, traités (1963, 1968 TNP).</li>
+                    <li><strong>Dissuasion nucléaire</strong> : destruction mutuelle assurée.</li>
+                </ul>
+                <div class="citation">« Aucune bombe nucléaire soviétique ne tombera sur les USA si aucune agression… » – position soviétique 1962</div>
+            </div>
+        </div>
+
+        <!-- Carte 5 : Guerre de Corée -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">🇰🇵🇰🇷</span>
+                <h2>Guerre de Corée 1950-53</h2>
+            </div>
+            <div class="card-content">
+                <p>Division au 38<sup>e</sup> parallèle (1945). 25 juin 1950 : Nord envahit le Sud.</p>
+                <ul>
+                    <li>Résolution 83 ONU (juin 1950) : intervention Ouest menée par USA.</li>
+                    <li>Intervention chinoise (1951) → stabilisation.</li>
+                    <li>Armistice à Panmunjom (juillet 1953).</li>
+                </ul>
+                <div class="row-stats">
+                    <div class="stat-bloc">Sud + ONU: ~178K morts militaires</div>
+                    <div class="stat-bloc">Nord + Chine: ~636K morts milit.</div>
+                    <div class="stat-bloc">Civils: > 2,5M</div>
+                </div>
+                <span class="badge-date">conflit le plus meurtrier 2de moitié XXe</span>
+            </div>
+        </div>
+
+        <!-- Carte 6 : Propagande -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">📺</span>
+                <h2>Guerre d'images</h2>
+            </div>
+            <div class="card-content">
+                <p><strong>Ouest</strong> : « Captain America écraseur de communistes » (1954) – communisme = menace.</p>
+                <p><strong>Est</strong> : « Si c’est la liberté, alors qu’est-ce que la prison ? » (1968) – dénonce l’hypocrisie américaine.</p>
+                <ul><li>Cinéma, médias, sport, musique comme armes du soft power.</li></ul>
+            </div>
+        </div>
+
+        <!-- Carte 7 : Chute du bloc Est -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">📉</span>
+                <h2>1989-1991 effondrement</h2>
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li>Gorbatchev : Glasnost (transparence) et Perestroïka (restructuration) à partir de 1985.</li>
+                    <li><strong>9 nov. 1989</strong> : chute du mur de Berlin.</li>
+                    <li>1990 : réunification allemande (3 octobre).</li>
+                    <li><strong>25 déc. 1991</strong> : dislocation de l'URSS → 15 républiques indépendantes. Fin Guerre froide.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Carte 8 : Après 1991 – hyperpuissance -->
+        <div class="card">
+            <div class="card-header">
+                <span class="emoji">🦅</span>
+                <h2>Monde unipolaire</h2>
+            </div>
+            <div class="card-content">
+                <p>États-Unis seule superpuissance : <strong>40% du PIB mondial</strong> (années 1990), 1ère puissance militaire, environ <strong>750 bases</strong> à l'étranger.</p>
+                <p>Concept d’<strong>hyperpuissance</strong> (moment unipolaire).</p>
+                <span class="tag">hégémonie</span> <span class="tag">soft power</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Récapitulatif dates & notions clés (issu du PDF) -->
+    <div style="background: #ffffff; border-radius: 40px; padding: 30px; margin: 25px 0;">
+        <div style="display: flex; flex-wrap: wrap; gap: 30px;">
+            <div style="flex:2; min-width: 250px;">
+                <h3 style="color: #10355e; font-size: 1.9rem;">📅 Dates clés</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 15px; margin-top: 20px;">
+                    <span class="tag" style="background:#10355e; color:white;">1947 doctrines</span>
+                    <span class="tag" style="background:#10355e; color:white;">1948-49 blocus Berlin</span>
+                    <span class="tag" style="background:#10355e; color:white;">1949 OTAN / RFA/RDA</span>
+                    <span class="tag" style="background:#10355e; color:white;">1950-53 Corée</span>
+                    <span class="tag" style="background:#10355e; color:white;">1961 mur Berlin</span>
+                    <span class="tag" style="background:#10355e; color:white;">1962 Cuba</span>
+                    <span class="tag" style="background:#10355e; color:white;">1989 chute mur</span>
+                    <span class="tag" style="background:#10355e; color:white;">1991 fin URSS</span>
+                </div>
+            </div>
+            <div style="flex:3">
+                <h3 style="color: #10355e; font-size: 1.9rem;">🧠 Notions fondamentales</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px;">
+                    <span class="tag" style="background:#cfdefa;">bipolarisation</span>
+                    <span class="tag" style="background:#cfdefa;">containment</span>
+                    <span class="tag" style="background:#cfdefa;">dissuasion nucléaire</span>
+                    <span class="tag" style="background:#cfdefa;">rideau de fer</span>
+                    <span class="tag" style="background:#cfdefa;">détente</span>
+                    <span class="tag" style="background:#cfdefa;">équilibre de la terreur</span>
+                    <span class="tag" style="background:#cfdefa;">glasnost/perestroïka</span>
+                    <span class="tag" style="background:#cfdefa;">hyperpuissance</span>
+                    <span class="tag" style="background:#cfdefa;">monde unipolaire</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION QCM INTERACTIF (réponses cachées) -->
+    <div class="qcm-section">
+        <h3>📝 Testez vos connaissances (QCM interactif)</h3>
+        <p style="opacity:0.9; margin-bottom:20px;">Cliquez sur "Voir la réponse" pour chaque question.</p>
+
+        <div class="qcm-grid">
+            <!-- Question 1 -->
+            <div class="qcm-item">
+                <div class="question">1. En quelle année la doctrine Truman est-elle énoncée ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(1)">Voir la réponse</span></div>
+                <div id="answer1" class="answer">1947 (mars 1947 – containment).</div>
+            </div>
+            <!-- Question 2 -->
+            <div class="qcm-item">
+                <div class="question">2. Quelle organisation militaire est créée par le bloc de l'Est en 1955 ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(2)">Voir la réponse</span></div>
+                <div id="answer2" class="answer">Le Pacte de Varsovie.</div>
+            </div>
+            <!-- Question 3 -->
+            <div class="qcm-item">
+                <div class="question">3. Combien de temps dure le blocus de Berlin ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(3)">Voir la réponse</span></div>
+                <div id="answer3" class="answer">11 mois (juin 1948 – mai 1949). Pont aérien américain.</div>
+            </div>
+            <!-- Question 4 -->
+            <div class="qcm-item">
+                <div class="question">4. Que signifie le "containment" ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(4)">Voir la réponse</span></div>
+                <div id="answer4" class="answer">Stratégie américaine d'endiguement du communisme (doctrine Truman).</div>
+            </div>
+            <!-- Question 5 -->
+            <div class="qcm-item">
+                <div class="question">5. Quel est l'événement déclencheur de la guerre de Corée ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(5)">Voir la réponse</span></div>
+                <div id="answer5" class="answer">25 juin 1950 : l'armée nord-coréenne franchit le 38e parallèle.</div>
+            </div>
+            <!-- Question 6 -->
+            <div class="qcm-item">
+                <div class="question">6. En quelle année le mur de Berlin tombe-t-il ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(6)">Voir la réponse</span></div>
+                <div id="answer6" class="answer">9 novembre 1989.</div>
+            </div>
+            <!-- Question 7 -->
+            <div class="qcm-item">
+                <div class="question">7. Quelle conséquence majeure de la crise de Cuba ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(7)">Voir la réponse</span></div>
+                <div id="answer7" class="answer">Installation du "téléphone rouge" et traités de limitation nucléaire (1963, 1968).</div>
+            </div>
+            <!-- Question 8 -->
+            <div class="qcm-item">
+                <div class="question">8. Quel pourcentage du PIB mondial les USA représentaient-ils dans les années 1990 ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(8)">Voir la réponse</span></div>
+                <div id="answer8" class="answer">Environ 40% (hyperpuissance).</div>
+            </div>
+            <!-- Question 9 -->
+            <div class="qcm-item">
+                <div class="question">9. Quels sont les deux États allemands créés en 1949 ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(9)">Voir la réponse</span></div>
+                <div id="answer9" class="answer">RFA (Ouest) et RDA (Est).</div>
+            </div>
+            <!-- Question 10 -->
+            <div class="qcm-item">
+                <div class="question">10. Quel traité de non-prolifération nucléaire est signé en 1968 ?</div>
+                <div><span class="btn-rep" onclick="toggleAnswer(10)">Voir la réponse</span></div>
+                <div id="answer10" class="answer">Traité de non-prolifération nucléaire (TNP).</div>
+            </div>
+        </div>
+        <p style="text-align: right; margin-top: 20px; font-style: italic;">📌 Source : Le jeu des puissances depuis 1945 (PDF)</p>
+    </div>
+
+    <!-- petit script pour réponses -->
+    <script>
+        function toggleAnswer(id) {
+            let ans = document.getElementById('answer' + id);
+            ans.classList.toggle('show');
+        }
+    </script>
+
+    <!-- pied de page -->
+    <div style="margin-top: 30px; text-align: center; color: #4a5f7d;">
+        ⭐ Fiche de révision interactive – Tous les points du PDF sont synthétisés.
+    </div>
+
+</div>
+</body>
+</html>
