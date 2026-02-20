@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entraînement TCF - Compréhension Orale & Écrite</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* En-tête */
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 20px 20px 0 0;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Conseils */
+        .conseils-section {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .conseils-title {
+            color: #2a5298;
+            font-size: 1.8em;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .conseils-title:before {
+            content: "💡";
+            font-size: 1.5em;
+        }
+
+        .conseils-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .conseil-card {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+            transition: transform 0.3s ease;
+        }
+
+        .conseil-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .conseil-card h3 {
+            color: #2a5298;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .conseil-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Exercices */
+        .exercice-section {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            animation: fadeIn 0.8s ease;
+        }
+
+        .section-title {
+            color: #2a5298;
+            font-size: 2em;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #667eea;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title.oral:before {
+            content: "🎧";
+            font-size: 1.2em;
+        }
+
+        .section-title.ecrit:before {
+            content: "📖";
+            font-size: 1.2em;
+        }
+
+        .exercice-card {
+            background: #f8f9ff;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid #e0e5ff;
+            transition: all 0.3s ease;
+        }
+
+        .exercice-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.15);
+        }
+
+        .exercice-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .exercice-niveau {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        .exercice-consigne {
+            background: #e8ecff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-style: italic;
+            color: #333;
+            border-left: 4px solid #667eea;
+        }
+
+        .document {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px dashed #667eea;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .question {
+            font-weight: 600;
+            color: #2a5298;
+            margin: 15px 0;
+            font-size: 1.1em;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .option {
+            background: white;
+            border: 2px solid #e0e5ff;
+            border-radius: 10px;
+            padding: 12px 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .option:hover {
+            background: #e8ecff;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .option.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: transparent;
+        }
+
+        .option input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-reponse {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-reponse:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-reset {
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 10px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reset:hover {
+            background: #e0e0e0;
+        }
+
+        .reponse-cachee {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+            animation: slideDown 0.4s ease;
+        }
+
+        .reponse-cachee.show {
+            display: block;
+        }
+
+        .bonne-reponse {
+            color: #28a745;
+            font-weight: 700;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .explication {
+            color: #333;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Progress bar */
+        .progress-container {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            color: #666;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            color: rgba(255,255,255,0.8);
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .options {
+                grid-template-columns: 1fr;
+            }
+            
+            .conseils-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- En-tête -->
+        <div class="header">
+            <h1>🎯 TCF Entraînement</h1>
+            <p>Compréhension Orale & Écrite - Préparez-vous efficacement avec des exercices interactifs et des conseils personnalisés</p>
+        </div>
+
+        <!-- Section Conseils -->
+        <div class="conseils-section">
+            <h2 class="conseils-title">Conseils pour réussir</h2>
+            <div class="conseils-grid">
+                <div class="conseil-card">
+                    <h3>🎧 Compréhension Orale</h3>
+                    <p>• Lisez les réponses avant l'écoute<br>• Ne bloquez pas sur un mot inconnu<br>• Concentrez-vous sur le ton et le contexte</p>
+                </div>
+                <div class="conseil-card">
+                    <h3>📖 Compréhension Écrite</h3>
+                    <p>• Lisez la question avant le texte<br>• Repérez les mots-clés<br>• Méfiez-vous des pièges et distracteurs</p>
+                </div>
+                <div class="conseil-card">
+                    <h3>⏱️ Gestion du temps</h3>
+                    <p>• 1 minute max par question<br>• Ne restez pas bloqué<br>• Répondez à toutes les questions</p>
+                </div>
+                <div class="conseil-card">
+                    <h3>✅ Stratégie</h3>
+                    <p>• Éliminez les réponses impossibles<br>• Cherchez le sens, pas les mots<br>• Fiez-vous à votre première intuition</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Barre de progression -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="stats">
+                <span id="exercicesCompletes">0</span>/<span id="totalExercices">10</span> exercices complétés
+            </div>
+        </div>
+
+        <!-- Exercices de Compréhension Orale -->
+        <div class="exercice-section">
+            <h2 class="section-title oral">Compréhension Orale</h2>
+            
+            <!-- Exercice 1 -->
+            <div class="exercice-card" id="ex1">
+                <div class="exercice-header">
+                    <span class="exercice-niveau">Niveau A1</span>
+                </div>
+                <div class="exercice-consigne">
+                    🎧 Vous écoutez un message sur un répondeur.
+                </div>
+                <div class="document">
+                    "Allô Sophie, c'est Marc. J'ai un problème, je vais avoir 20 minutes de retard pour le déjeuner. Est-ce que tu peux m'attendre devant le restaurant ? On se retrouve à 13h au lieu de 12h45. Bisous."
+                </div>
+                <div class="question">Quel est le nouveau rendez-vous ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q1" value="A"> A) 12h45
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="B"> B) 13h00
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="C"> C) 13h20
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="D"> D) 12h00
+                    </label>
+                </div>
+                <div class="actions">
+                    <button class="btn-reponse" onclick="revelerReponse('ex1', 'B', 'Marc annonce 20 minutes de retard. Le rendez-vous initial était à 12h45, il est donc décalé à 13h00.')">
+                        🔍 Voir la réponse
+                    </button>
+                </div>
+                <div class="reponse-cachee" id="reponse-ex1"></div>
+            </div>
+
+            <!-- Exercice 2 -->
+            <div class="exercice-card" id="ex2">
+                <div class="exercice-header">
+                    <span class="exercice-niveau">Niveau A2</span>
+                </div>
+                <div class="exercice-consigne">
+                    🎧 Vous êtes dans un magasin et vous entendez cette annonce.
+                </div>
+                <div class="document">
+                    "Mesdames, Messieurs, bonjour. Nous vous informons que notre magasin fermera exceptionnellement à 18h00 ce soir au lieu de 20h00 en raison d'un inventaire. Nous vous remercions de votre compréhension."
+                </div>
+                <div class="question">Pourquoi le magasin ferme-t-il plus tôt ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q2" value="A"> A) Parce qu'il est 18h00
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="B"> B) À cause d'une panne
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="C"> C) Pour faire un inventaire
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="D"> D) Parce que c'est un jour férié
+                    </label>
+                </div>
+                <div class="actions">
+                    <button class="btn-reponse" onclick="revelerReponse('ex2', 'C', 'L\'annonce mentionne explicitement "en raison d\'un inventaire". C\'est la raison de la fermeture anticipée.')">
+                        🔍 Voir la réponse
+                    </button>
+                </div>
+                <div class="reponse-cachee" id="reponse-ex2"></div>
+            </div>
+
+            <!-- Exercice 3 -->
+            <div class="exercice-card" id="ex3">
+                <div class="exercice-header">
+                    <span class="exercice-niveau">Niveau B1</span>
+                </div>
+                <div class="exercice-consigne">
+                    🎧 Deux collègues discutent.
+                </div>
+                <div class="document">
+                    "Paul : Tu as vu les nouveaux horaires ? On va devoir commencer à 8h maintenant !<br>
+                    Marie : Oui, mais on finira à 16h au lieu de 18h. Moi, ça m'arrange, j'aurai plus de temps pour aller chercher les enfants à l'école.<br>
+                    Paul : C'est vrai que pour toi c'est mieux. Mais moi, je dois déposer ma femme au travail à 8h30, ça va être compliqué..."
+                </div>
+                <div class="question">Quel est le problème de Paul ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q3" value="A"> A) Il n'aime pas les nouveaux horaires
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="B"> B) Il a un problème de transport pour sa femme
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="C"> C) Il veut finir plus tard
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="D"> D) Il ne veut pas chercher les enfants
+                    </label>
+                </div>
+                <div class="actions">
+                    <button class="btn-reponse" onclick="revelerReponse('ex3', 'B', 'Paul explique : "je dois déposer ma femme au travail à 8h30". Comme il doit commencer à 8h, cela devient compliqué pour lui.')">
+                        🔍 Voir la réponse
+                    </button>
+                </div>
+                <div class="reponse-cachee" id="reponse-ex3"></div>
+            </div>
+        </div>
+
+        <!-- Exercices de Compréhension Écrite -->
+        <div class="exercice-section">
+            <h2 class="section-title ecrit">Compréhension Écrite</h2>
+            
+            <!-- Exercice 4 -->
+            <div class="exercice-card" id="ex4">
+                <div class="exercice-header">
+                    <span class="exercice-niveau">Niveau A1</span>
+                </div>
+                <div class="exercice-consigne">
+                    📖 Vous voyez ce panneau dans un parc.
+                </div>
+                <div class="document">
+                    PARC MUNICIPAL<br>
+                    Horaires d'ouverture<br>
+                    Lundi - Vendredi : 8h - 20h<br>
+                    Samedi - Dimanche : 9h - 19h<br>
+                    Fermé le 1er mai
+                </div>
+                <div class="question">À quelle heure le parc ouvre-t-il le dimanche ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q4" value="A"> A) 8h
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="B"> B) 9h
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="C"> C) 10h
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="D"> D) 19h
+                    </label>
+                </div>
+                <div class="actions">
+                    <button class="btn-reponse" onclick="revelerReponse('ex4', 'B', 'Le panneau indique clairement "Samedi - Dimanche : 9h - 19h". Le parc ouvre donc à 9h le dimanche.')">
+                        🔍 Voir la réponse
+                    </button>
+                </div>
+                <div class="reponse-cachee" id="reponse-ex4"></div>
+            </div>
+
+            <!-- Exercice 5 -->
+            <div class="exercice-card" id="ex5">
+                <div class="exercice-header">
+                    <span class="exercice-niveau">Niveau A2</span>
+                </div>
+                <div class="exercice-consigne">
+                    📖 Vous trouvez ce mot sur votre bureau.
+                </div>
+                <div class="document">
+                    "Chère collègue,<br>
+                    Je suis passée te voir mais tu étais en réunion. Je te laisse les documents pour la réunion de demain 14h. J'ai ajouté les chiffres du dernier trimestre. Peux-tu vérifier les pages 5 à 8 avant demain ?<br>
+                    Merci, Sophie"
+                </div>
+                <div class="question">Que demande Sophie ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q5" value="A"> A) De préparer une réunion
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="B"> B) De vérifier des pages d'un document
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="C"> C) D'ajouter des chiffres
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="D"> D) De passer la voir demain
+                    </label>
+                </div>
+                <div class="actions">
+                    <button class="btn-reponse" onclick="revelerReponse('ex5', 'B', 'Sophie écrit explicitement : "Peux-tu vérifier les pages 5 à 8 avant demain ?"')">
+                        🔍 Voir la réponse
+                    </button>
+                </div>
+                <div class="reponse-cachee" id="reponse-ex5"></div>
+            </div>
+
+            <!-- Exercice 6 -->
+            <div class="exercice-card" id="ex6">
+                <div class="exercice-header">
+                    <span class="exercice-niveau">Niveau B1</span>
+                </div>
+                <div class="exercice-consigne">
+                    📖 Lisez cet extrait d'article.
+                </div>
+                <div class="document">
+                    "La ville de Lyon a décidé d'expérimenter une nouvelle formule pour ses transports en commun. Pendant six mois, les bus seront gratuits tous les premiers dimanches du mois. Cette initiative vise à encourager les familles à utiliser davantage les transports publics plutôt que la voiture en ville. Si l'expérience est concluante, elle pourrait être étendue à d'autres jours."
+                </div>
+                <div class="question">Quel est le but de cette expérimentation ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q6" value="A"> A) Rendre les bus gratuits tous les jours
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="B"> B) Augmenter le nombre de conducteurs
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="C"> C) Encourager l'utilisation des transports en commun
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q6" value="D"> D) Faire des économies
+                    </label>
+                </div>
+                <div class="actions">
+                    <button class="btn-reponse" onclick="revelerReponse('ex6', 'C', 'Le texte dit : "cette initiative vise à encourager les familles à utiliser davantage les transports publics"')">
+                        🔍 Voir la réponse
+                    </button>
+                </div>
+                <div class="reponse-cachee" id="reponse-ex6"></div>
+            </div>
+
+            <!-- Exercice 7 - Mini-simulation -->
+            <div class="exercice-card" id="ex7">
+                <div class="exercice-header">
+                    <span class="exercice-niveau">Niveaux A2-B1 (Série de 3 questions)</span>
+                </div>
+                <div class="exercice-consigne">
+                    📖 Lisez le document et répondez aux trois questions.
+                </div>
+                <div class="document">
+                    "Le festival de jazz de Montréal fête cette année son 40e anniversaire. Au programme : 300 concerts dont 200 gratuits en extérieur. Les artistes invités viennent de 15 pays différents. Le point d'orgue du festival sera le concert d'ouverture sur la place des Arts avec la célèbre chanteuse Diana Krall. Les organisateurs s'attendent à plus de 2 millions de visiteurs sur les 10 jours de festival."
+                </div>
+                
+                <div class="question">Question 1 : Combien de concerts sont payants ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q7a" value="A"> A) 300
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7a" value="B"> B) 200
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7a" value="C"> C) 100
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7a" value="D"> D) 15
+                    </label>
+                </div>
+
+                <div class="question">Question 2 : Où aura lieu le concert d'ouverture ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q7b" value="A"> A) Dans un parc
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7b" value="B"> B) Sur la place des Arts
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7b" value="C"> C) Dans une salle de concert
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7b" value="D"> D) Dans la rue
+                    </label>
+                </div>
+
+                <div class="question">Question 3 : Depuis combien de temps le festival existe-t-il ?</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="q7c" value="A"> A) 10 ans
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7c" value="B"> B) 20 ans
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7c" value="C"> C) 40 ans
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q7c" value="D"> D) 50 ans
+                    </label>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-reponse" onclick="revelerReponse('ex7', 'C, B, C', 'Question 1 : 300 total - 200 gratuits = 100 concerts payants (C)<br>Question 2 : Mention explicite "sur la place des Arts" (B)<br>Question 3 : "40e anniversaire" = 40 ans (C)')">
+                        🔍 Voir les réponses
+                    </button>
+                </div>
+                <div class="reponse-cachee" id="reponse-ex7"></div>
+            </div>
+        </div>
+
+        <!-- Pied de page -->
+        <div class="footer">
+            <p>Entraînez-vous régulièrement pour réussir votre TCF !</p>
+        </div>
+    </div>
+
+    <script>
+        let exercicesCompletes = 0;
+        const totalExercices = 7;
+
+        function revelerReponse(exerciceId, bonneReponse, explication) {
+            const reponseDiv = document.getElementById('reponse-' + exerciceId);
+            
+            // Vérifier si la réponse est déjà affichée
+            if (reponseDiv.classList.contains('show')) {
+                return;
+            }
+
+            // Créer le contenu de la réponse
+            reponseDiv.innerHTML = `
+                <div class="bonne-reponse">✅ Bonne réponse : ${bonneReponse}</div>
+                <div class="explication">${explication}</div>
+            `;
+            
+            reponseDiv.classList.add('show');
+
+            // Mettre à jour la progression
+            exercicesCompletes++;
+            document.getElementById('exercicesCompletes').textContent = exercicesCompletes;
+            const progression = (exercicesCompletes / totalExercices) * 100;
+            document.getElementById('progressFill').style.width = progression + '%';
+
+            // Désactiver tous les boutons "Voir la réponse" de cet exercice
+            const exercice = document.getElementById(exerciceId);
+            const boutons = exercice.querySelectorAll('.btn-reponse');
+            boutons.forEach(btn => {
+                btn.disabled = true;
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'default';
+            });
+        }
+
+        // Initialiser le compteur
+        document.getElementById('totalExercices').textContent = totalExercices;
+
+        // Ajouter l'effet de sélection sur les options
+        document.querySelectorAll('.option').forEach(option => {
+            option.addEventListener('click', function() {
+                const radio = this.querySelector('input[type="radio"]');
+                if (radio) {
+                    radio.checked = true;
+                    
+                    // Retirer la classe selected de tous les options du même groupe
+                    const name = radio.name;
+                    document.querySelectorAll(`input[name="${name}"]`).forEach(r => {
+                        r.closest('.option').classList.remove('selected');
+                    });
+                    
+                    // Ajouter la classe selected à l'option cliquée
+                    this.classList.add('selected');
+                }
+            });
+        });
+
+        // Animation au scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeIn 0.8s ease';
+                }
+            });
+        });
+
+        document.querySelectorAll('.exercice-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
