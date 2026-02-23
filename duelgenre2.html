@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 DuelGenre - Mission Spéciale</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: linear-gradient(145deg, #1a2a4f 0%, #0f1a2f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            padding: 32px 24px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 60px;
+            padding: 12px 24px;
+            margin: 20px 0 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #ffd966;
+            color: #1f2a44;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .players-setup {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .player-card {
+            flex: 1 1 250px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 32px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid;
+            transition: 0.2s;
+        }
+
+        .player-card.blue {
+            border-color: #3b82f6;
+            box-shadow: 0 8px 0 #1e3a8a;
+        }
+        .player-card.red {
+            border-color: #ef4444;
+            box-shadow: 0 8px 0 #991b1b;
+        }
+
+        .player-card input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 60px;
+            border: none;
+            background: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 15px 0 5px 0;
+            border: 3px solid transparent;
+        }
+        .player-card.blue input:focus { border-color: #3b82f6; outline: none; }
+        .player-card.red input:focus { border-color: #ef4444; outline: none; }
+
+        .btn-join {
+            background: #2dd4bf;
+            border: none;
+            color: #0b1e33;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 14px 30px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 0 #0f766e;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .btn-join:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #0f766e; background: #2abfaa; }
+
+        .game-area {
+            display: none; /* caché tant que pas démarré */
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .game-area.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 120px;
+            padding: 12px 30px;
+            margin: 20px 0 30px 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            border: 1px solid #ffffff30;
+            backdrop-filter: blur(4px);
+        }
+
+        .score {
+            background: white;
+            color: #0d1b2e;
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-size: 2rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .question-panel {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 48px;
+            padding: 40px 20px;
+            text-align: center;
+            border: 3px dashed #fbbf24;
+            margin-bottom: 30px;
+        }
+
+        .mot-a-deviner {
+            font-size: 5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 0 8px 0 #0f172a;
+            margin: 15px 0 5px 0;
+            word-break: break-word;
+        }
+
+        .type-consigne {
+            font-size: 1.6rem;
+            background: #2d3b5a;
+            display: inline-block;
+            padding: 8px 35px;
+            border-radius: 60px;
+            color: #fde047;
+            border: 2px solid #fde047;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .boutons-reponse {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn-reponse {
+            flex: 1 1 200px;
+            padding: 24px 15px;
+            font-size: 2.3rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 80px;
+            background: white;
+            color: #0f172a;
+            cursor: pointer;
+            transition: 0.1s ease;
+            box-shadow: 0 10px 0 #64748b, 0 4px 12px black;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        .btn-reponse:active { transform: translateY(6px); box-shadow: 0 4px 0 #334155; }
+        .btn-reponse:disabled { opacity: 0.4; transform: none; pointer-events: none; }
+
+        .timer-bar {
+            background: #0b1b33;
+            height: 24px;
+            border-radius: 100px;
+            margin: 30px 0 10px 0;
+            border: 2px solid #2563eb;
+            overflow: hidden;
+        }
+        .timer-fill {
+            height: 100%;
+            width: 100%;
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            transition: width 1s linear;
+        }
+
+        .feedback-message {
+            min-height: 50px;
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #fde047;
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #b0c4de;
+            margin-top: 20px;
+            font-size: 1.2rem;
+        }
+
+        .restart-btn {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 20px;
+        }
+        .restart-btn:hover { background: white; color: #0f172a; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+<div class="game-container" id="gameContainer">
+    <h1>
+        <span>🎯</span> Mission Spéciale <span>⚔️</span>
+    </h1>
+    <div class="sub-header">
+        <span class="badge">80 mots</span>
+        <span class="badge">Niveau A1-A2</span>
+        <span class="badge">🎲 Le/La • Ce/Cet/Cette</span>
+    </div>
+
+    <!-- Écran de saisie des joueurs -->
+    <div id="setupScreen">
+        <div class="players-setup">
+            <div class="player-card blue">
+                <div style="font-size: 3rem;">🔵</div>
+                <h2>Capitaine</h2>
+                <input type="text" id="capName" placeholder="Nom du Capitaine" value="Alex">
+                <button class="btn-join" id="joinCapBtn">👉 Je suis le capitaine</button>
+            </div>
+            <div class="player-card red">
+                <div style="font-size: 3rem;">🔴</div>
+                <h2>Coéquipier</h2>
+                <input type="text" id="coeqName" placeholder="Nom du Coéquipier" value="Sam">
+                <button class="btn-join" id="joinCoeqBtn">👈 Je suis le coéquipier</button>
+            </div>
+        </div>
+        <div style="text-align:center; font-size:1.5rem; margin: 10px 0 20px 0;">👥 Entrez vos noms pour commencer !</div>
+    </div>
+
+    <!-- Écran de jeu principal -->
+    <div id="gameScreen" class="game-area">
+        <div class="scoreboard">
+            <span id="capNameDisplay">🔵 Capitaine</span>
+            <span class="score" id="scoreCap">0</span>
+            <span style="font-size:2rem;">⚔️</span>
+            <span class="score" id="scoreCoeq">0</span>
+            <span id="coeqNameDisplay">🔴 Coéquipier</span>
+        </div>
+
+        <div class="question-panel">
+            <div class="type-consigne" id="typeQuestion">Trouve le bon article</div>
+            <div class="mot-a-deviner" id="motActuel">???</div>
+            <div class="boutons-reponse" id="boutonsReponse"></div>
+            <div class="timer-bar">
+                <div class="timer-fill" id="timerFill" style="width: 100%;"></div>
+            </div>
+            <div class="feedback-message" id="feedbackMessage">À vous de jouer !</div>
+        </div>
+
+        <div class="footer-stats">
+            <span id="compteurMots">Mot 1/80</span>
+            <span>⏱️ <span id="timerDisplay">10</span>s</span>
+        </div>
+        <button class="restart-btn" id="restartBtn">🔄 Nouvelle mission</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- LISTE DES MOTS (nom, genre) ----------
+        const motsListe = [
+            { nom: "chaise", genre: "f" }, { nom: "tableau", genre: "m" }, { nom: "ordinateur", genre: "m" },
+            { nom: "souris", genre: "f" }, { nom: "livre", genre: "m" }, { nom: "école", genre: "f" },
+            { nom: "cahier", genre: "m" }, { nom: "stylo", genre: "m" }, { nom: "règle", genre: "f" },
+            { nom: "gomme", genre: "f" }, { nom: "sac", genre: "m" }, { nom: "porte", genre: "f" },
+            { nom: "fenêtre", genre: "f" }, { nom: "mur", genre: "m" }, { nom: "plafond", genre: "m" },
+            { nom: "lampe", genre: "f" }, { nom: "lit", genre: "m" }, { nom: "couverture", genre: "f" },
+            { nom: "oreiller", genre: "m" }, { nom: "chemise", genre: "f" }, { nom: "pantalon", genre: "m" },
+            { nom: "chaussure", genre: "f" }, { nom: "chaussette", genre: "f" }, { nom: "pull", genre: "m" },
+            { nom: "veste", genre: "f" }, { nom: "montre", genre: "f" }, { nom: "bague", genre: "f" },
+            { nom: "collier", genre: "m" }, { nom: "bracelet", genre: "m" }, { nom: "voiture", genre: "f" },
+            { nom: "camion", genre: "m" }, { nom: "vélo", genre: "m" }, { nom: "moto", genre: "f" },
+            { nom: "train", genre: "m" }, { nom: "avion", genre: "m" }, { nom: "bateau", genre: "m" },
+            { nom: "soleil", genre: "m" }, { nom: "lune", genre: "f" }, { nom: "étoile", genre: "f" },
+            { nom: "ciel", genre: "m" }, { nom: "nuage", genre: "m" }, { nom: "pluie", genre: "f" },
+            { nom: "neige", genre: "f" }, { nom: "vent", genre: "m" }, { nom: "mer", genre: "f" },
+            { nom: "montagne", genre: "f" }, { nom: "rivière", genre: "f" }, { nom: "forêt", genre: "f" },
+            { nom: "chien", genre: "m" }, { nom: "chat", genre: "m" }, { nom: "oiseau", genre: "m" },
+            { nom: "poisson", genre: "m" }, { nom: "vache", genre: "f" }, { nom: "cheval", genre: "m" },
+            { nom: "pomme", genre: "f" }, { nom: "banane", genre: "f" }, { nom: "pain", genre: "m" },
+            { nom: "fromage", genre: "m" }, { nom: "eau", genre: "f" }, { nom: "jus", genre: "m" },
+            { nom: "gâteau", genre: "m" }, { nom: "téléphone", genre: "m" }, { nom: "télévision", genre: "f" },
+            { nom: "musique", genre: "f" }, { nom: "film", genre: "m" }, { nom: "livre", genre: "m" },
+            { nom: "journal", genre: "m" }, { nom: "crayon", genre: "m" }, { nom: "feuille", genre: "f" },
+            { nom: "bureau", genre: "m" }, { nom: "stylo", genre: "m" }, { nom: "ciseaux", genre: "m" },
+            { nom: "colle", genre: "f" }, { nom: "peinture", genre: "f" }, { nom: "dessin", genre: "m" },
+            { nom: "photo", genre: "f" }, { nom: "carte", genre: "f" }, { nom: "pays", genre: "m" },
+            { nom: "ville", genre: "f" }, { nom: "rue", genre: "f" }, { nom: "place", genre: "f" }
+        ];
+
+        // ---------- ÉTAT DU JEU ----------
+        let currentIndex = 0;
+        let scoreCap = 0, scoreCoeq = 0;
+        let capName = "Capitaine", coeqName = "Coéquipier";
+        let currentPlayer = "capitaine"; // "capitaine" ou "coequipier"
+        let gameActive = false;
+        let timerInterval = null;
+        let timeLeft = 10; // secondes (minimum 10)
+        let canAnswer = true;
+        let questionType = "lela"; // "lela" ou "cedemo"
+
+        // Éléments DOM
+        const setupScreen = document.getElementById('setupScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const capNameInput = document.getElementById('capName');
+        const coeqNameInput = document.getElementById('coeqName');
+        const capNameDisplay = document.getElementById('capNameDisplay');
+        const coeqNameDisplay = document.getElementById('coeqNameDisplay');
+        const scoreCapSpan = document.getElementById('scoreCap');
+        const scoreCoeqSpan = document.getElementById('scoreCoeq');
+        const motActuelSpan = document.getElementById('motActuel');
+        const typeQuestionDiv = document.getElementById('typeQuestion');
+        const boutonsReponseDiv = document.getElementById('boutonsReponse');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const compteurMotsSpan = document.getElementById('compteurMots');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerFill = document.getElementById('timerFill');
+        const restartBtn = document.getElementById('restartBtn');
+        const joinCapBtn = document.getElementById('joinCapBtn');
+        const joinCoeqBtn = document.getElementById('joinCoeqBtn');
+
+        // Initialisation : afficher setup
+        setupScreen.style.display = 'block';
+        gameScreen.classList.remove('visible');
+
+        // Gestion joindre comme capitaine
+        joinCapBtn.addEventListener('click', () => {
+            capName = capNameInput.value.trim() || "Capitaine";
+            startGameAs('capitaine');
+        });
+
+        joinCoeqBtn.addEventListener('click', () => {
+            coeqName = coeqNameInput.value.trim() || "Coéquipier";
+            startGameAs('coequipier');
+        });
+
+        function startGameAs(playerRole) {
+            currentPlayer = playerRole;
+            capName = capNameInput.value.trim() || "Capitaine";
+            coeqName = coeqNameInput.value.trim() || "Coéquipier";
+            capNameDisplay.innerHTML = `🔵 ${capName}`;
+            coeqNameDisplay.innerHTML = `🔴 ${coeqName}`;
+
+            // Initialiser scores et index
+            currentIndex = 0;
+            scoreCap = 0;
+            scoreCoeq = 0;
+            updateScores();
+
+            // Mélanger les mots pour plus de fun
+            shuffleArray(motsListe);
+
+            // Afficher jeu
+            setupScreen.style.display = 'none';
+            gameScreen.classList.add('visible');
+            gameActive = true;
+
+            // Démarrer premier tour
+            nextWord();
+        }
+
+        // Mélange (Fisher-Yates)
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        // Met à jour l'affichage des scores
+        function updateScores() {
+            scoreCapSpan.textContent = scoreCap;
+            scoreCoeqSpan.textContent = scoreCoeq;
+        }
+
+        // Alterne le type de question : "le/la" ou "ce/cet/cette"
+        function getNextQuestionType() {
+            // alterne simple
+            return questionType === "lela" ? "cedemo" : "lela";
+        }
+
+        // Génère les boutons en fonction du type
+        function renderButtonsForType(type) {
+            boutonsReponseDiv.innerHTML = ''; // vide
+            if (type === 'lela') {
+                // boutons LE et LA
+                createButton('LE', 'm');
+                createButton('LA', 'f');
+            } else {
+                // ce / cet / cette 
+                createButton('CE', 'm');     // pour masculin commençant par consonne
+                createButton('CET', 'm_special'); // pour masculin commençant par voyelle ou h muet (on gère via logique)
+                createButton('CETTE', 'f');
+            }
+        }
+
+        function createButton(text, expectedGender) {
+            const btn = document.createElement('button');
+            btn.className = 'btn-reponse';
+            btn.textContent = text;
+            btn.setAttribute('data-gender', expectedGender);
+            btn.addEventListener('click', () => handleAnswer(expectedGender, text));
+            boutonsReponseDiv.appendChild(btn);
+        }
+
+        // Gestion de la réponse
+        function handleAnswer(expectedGender, boutonTexte) {
+            if (!canAnswer || !gameActive) return;
+
+            const motCourant = motsListe[currentIndex];
+            if (!motCourant) return;
+
+            let correct = false;
+            const motGenre = motCourant.genre; // 'm' ou 'f'
+            const motNom = motCourant.nom;
+
+            // Déterminer si la réponse est correcte selon le type de question et les subtilités
+            if (questionType === 'lela') {
+                // LE ou LA
+                if ((expectedGender === 'm' && motGenre === 'm') || (expectedGender === 'f' && motGenre === 'f')) {
+                    correct = true;
+                }
+            } else { // 'cedemo'
+                // Gestion CE / CET / CETTE
+                if (expectedGender === 'f') {
+                    // CETTE ne va qu'avec féminin
+                    if (motGenre === 'f') correct = true;
+                } else if (expectedGender === 'm') {
+                    // CE (masculin + consonne) -> mais ici on accepte pour masculin début consonne ?
+                    // On simplifie: Pour le jeu, "CE" sera accepté pour masculin si le mot commence par une consonne (ou pas trop dur)
+                    // On considère que "CE" est correct pour masculin sauf si mot commence par voyelle ou h muet (là ce serait CET)
+                    // On va implémenter une règle simple: si expectedGender === 'm' et motGenre === 'm' et première lettre pas voyelle => OK pour CE
+                    // Si expectedGender === 'm_special' (CET) et motGenre === 'm' et première lettre voyelle/h muet => OK
+                    // Comme on a simplifié, on vérifie via le texte du bouton
+                    if (boutonTexte === 'CE' && motGenre === 'm' && !commenceParVoyelle(motNom)) correct = true;
+                    if (boutonTexte === 'CET' && motGenre === 'm' && commenceParVoyelle(motNom)) correct = true;
+                } else if (expectedGender === 'm_special' && boutonTexte === 'CET') {
+                    if (motGenre === 'm' && commenceParVoyelle(motNom)) correct = true;
+                }
+            }
+
+            // Désactiver les boutons après réponse
+            disableAnswerButtons(true);
+
+            // Attribution du point
+            if (correct) {
+                feedbackMessage.textContent = "✅ Bravo ! Bonne réponse !";
+                if (currentPlayer === 'capitaine') {
+                    scoreCap++;
+                } else {
+                    scoreCoeq++;
+                }
+            } else {
+                feedbackMessage.textContent = `❌ Oups... Ce n'était pas le bon article.`;
+            }
+
+            updateScores();
+
+            // Passer au mot suivant ou terminer
+            setTimeout(() => {
+                if (currentIndex < motsListe.length - 1) {
+                    currentIndex++;
+                    nextWord();
+                } else {
+                    // Fin du jeu
+                    gameActive = false;
+                    feedbackMessage.textContent = "🏆 Mission Terminée ! Super travail !";
+                    disableAnswerButtons(true);
+                    if (timerInterval) clearInterval(timerInterval);
+                }
+            }, 1500); // petit délai pour voir le feedback
+        }
+
+        // Vérifie si un mot commence par une voyelle (pour règle ce/cet)
+        function commenceParVoyelle(mot) {
+            if (!mot || mot.length === 0) return false;
+            const premiere = mot[0].toLowerCase();
+            return 'aeiouyàâäéèêëïîôöùûü'.includes(premiere);
+        }
+
+        // Désactive/active les boutons
+        function disableAnswerButtons(disabled) {
+            document.querySelectorAll('.btn-reponse').forEach(btn => btn.disabled = disabled);
+        }
+
+        // Lance le timer de X secondes
+        function startTimer(seconds) {
+            if (timerInterval) clearInterval(timerInterval);
+            timeLeft = seconds;
+            timerDisplay.textContent = timeLeft;
+            timerFill.style.width = '100%';
+            canAnswer = true;
+
+            timerInterval = setInterval(() => {
+                if (!gameActive) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+                timeLeft--;
+                timerDisplay.textContent = timeLeft >= 0 ? timeLeft : 0;
+                timerFill.style.width = `${(timeLeft / seconds) * 100}%`;
+
+                if (timeLeft <= 0) {
+                    // Temps écoulé
+                    clearInterval(timerInterval);
+                    if (canAnswer) {
+                        canAnswer = false;
+                        feedbackMessage.textContent = "⏰ Temps écoulé !";
+                        disableAnswerButtons(true);
+                        // Passer au mot suivant après un délai
+                        setTimeout(() => {
+                            if (currentIndex < motsListe.length - 1) {
+                                currentIndex++;
+                                nextWord();
+                            } else {
+                                gameActive = false;
+                                feedbackMessage.textContent = "🏆 Mission Terminée !";
+                            }
+                        }, 1500);
+                    }
+                }
+            }, 1000);
+        }
+
+        // Charge le mot suivant
+        function nextWord() {
+            if (!gameActive) return;
+
+            const mot = motsListe[currentIndex];
+            motActuelSpan.textContent = mot.nom;
+
+            // Alterne le type de question
+            questionType = getNextQuestionType();
+            // Stocker le type pour utilisation
+            if (questionType === 'lela') {
+                typeQuestionDiv.textContent = "🔹 Choisis LE ou LA 🔹";
+            } else {
+                typeQuestionDiv.textContent = "🔸 Choisis CE, CET ou CETTE 🔸";
+            }
+
+            // Crée les boutons appropriés
+            renderButtonsForType(questionType);
+
+            // Met à jour compteur
+            compteurMotsSpan.textContent = `Mot ${currentIndex+1}/${motsListe.length}`;
+
+            // Alterne le joueur dont c'est le tour (optionnel)
+            currentPlayer = (currentPlayer === 'capitaine' ? 'coequipier' : 'capitaine');
+            // Petit indicateur
+            feedbackMessage.textContent = `🤔 À ${currentPlayer === 'capitaine' ? capName : coeqName} de jouer !`;
+
+            // Réactive les boutons et lance le timer (10 secondes minimum)
+            disableAnswerButtons(false);
+            startTimer(10); // 10 secondes comme demandé
+        }
+
+        // Recommencer
+        restartBtn.addEventListener('click', () => {
+            if (timerInterval) clearInterval(timerInterval);
+            gameActive = false;
+            setupScreen.style.display = 'block';
+            gameScreen.classList.remove('visible');
+            currentIndex = 0;
+            scoreCap = 0; scoreCoeq = 0;
+            updateScores();
+            // Remettre les noms par défaut
+            capNameInput.value = 'Alex';
+            coeqNameInput.value = 'Sam';
+            feedbackMessage.textContent = 'À vous de jouer !';
+        });
+
+    })();
+</script>
+</body>
+</html>
