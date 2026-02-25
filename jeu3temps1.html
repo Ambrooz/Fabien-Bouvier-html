@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ ChronoDuel – Quel Temps ?</title>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=Nunito:wght@400;600;800&display=swap');
+
+    :root {
+      --bleu:    #0c2461;
+      --bleu2:   #1e3799;
+      --orange:  #ff9f1a;
+      --orange2: #ff7f00;
+      --vert:    #2ed573;
+      --rouge:   #ff6b6b;
+      --ciel:    #74b9ff;
+      --violet:  #a29bfe;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu2) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      background: rgba(255,255,255,.08);
+      padding: 32px;
+      border-radius: 28px;
+      backdrop-filter: blur(12px);
+      border: 4px solid var(--orange);
+      box-shadow: 0 20px 50px rgba(0,0,0,.45);
+    }
+
+    h1 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2.6em; font-weight: 900;
+      color: var(--orange);
+      text-shadow: 3px 3px 0 var(--bleu);
+      margin-bottom: 8px;
+    }
+    .subtitle { font-size: 1.05em; color: #a4b0be; margin-bottom: 24px; }
+
+    .section {
+      display: none; padding: 28px; margin: 20px 0;
+      border-radius: 20px; background: rgba(255,255,255,.1);
+      border: 2px solid rgba(255,255,255,.15);
+    }
+    .active { display: block; animation: fadeUp .4s ease; }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    input {
+      padding: 15px 20px; border-radius: 13px; border: 3px solid var(--orange);
+      font-size: 17px; font-weight: 700; color: var(--bleu); background: #fff;
+      width: 280px; text-align: center; margin: 12px;
+    }
+    input:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,159,26,.35); }
+
+    button {
+      padding: 16px 26px; border-radius: 13px; border: 3px solid var(--orange);
+      font-size: 16px; font-weight: 800; font-family: 'Nunito', sans-serif;
+      cursor: pointer; margin: 10px; min-width: 230px; transition: all .22s;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange2) 100%);
+      color: #fff; box-shadow: 0 5px 15px rgba(255,159,26,.3);
+    }
+    button:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 10px 28px rgba(255,159,26,.5); }
+    .copy-btn   { background: linear-gradient(135deg,#3742fa,#2f3542) !important; border-color: #3742fa !important; }
+    .danger-btn { background: linear-gradient(135deg,var(--rouge),#c0392b) !important; border-color: var(--rouge) !important; }
+
+    /* ── Phrase (mots séparés) ── */
+    .phrase-box {
+      display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+      gap: 10px;
+      padding: 36px 24px; margin: 28px 0;
+      border-radius: 22px; border: 4px solid var(--orange);
+      background: rgba(255,255,255,.13);
+      min-height: 130px;
+    }
+
+    .word {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.9em; font-weight: 700;
+      color: #fff;
+      text-shadow: 1px 1px 0 rgba(0,0,0,.4);
+    }
+    .word.highlight {
+      color: var(--orange);
+      border-bottom: 3px solid var(--orange);
+      padding-bottom: 2px;
+    }
+
+    /* ── Choix ── */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 700px;
+      margin: 22px auto;
+    }
+
+    .choice-btn {
+      background: #fff; color: var(--bleu);
+      border: 3px solid #3742fa; border-radius: 15px;
+      padding: 22px 8px; font-size: 1em; font-weight: 800;
+      min-width: unset; width: 100%; margin: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,.1);
+      transition: all .22s;
+    }
+    .choice-btn:hover { background: #f1f2f6; transform: translateY(-3px); border-color: var(--orange); }
+    .choice-btn.correct { background: linear-gradient(135deg,var(--vert),#1dd1a1) !important;
+                          color:#fff !important; border-color:var(--vert) !important; animation: pop .5s; }
+    .choice-btn.wrong   { background: linear-gradient(135deg,var(--rouge),#ee5a24) !important;
+                          color:#fff !important; border-color:var(--rouge) !important; animation: shake .45s; }
+
+    @keyframes pop   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+    /* ── Timer ── */
+    .timer {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 62px; font-weight: 900; color: var(--orange);
+      margin: 16px 0; text-shadow: 3px 3px 0 rgba(0,0,0,.3); transition: color .3s;
+    }
+    .timer.urgent { color: var(--rouge); animation: pulse .6s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+
+    /* ── Progress ── */
+    .progress-wrap {
+      width:100%; height:20px; background:rgba(255,255,255,.15);
+      border-radius:10px; margin:20px 0; overflow:hidden; border:2px solid var(--orange);
+    }
+    .progress-bar {
+      height:100%;
+      background: linear-gradient(90deg, var(--rouge), var(--orange), var(--ciel));
+      width:0%; transition: width .6s cubic-bezier(.34,1.56,.64,1);
+    }
+    .progress-text { font-size:19px; color:var(--orange); font-weight:800; margin-top:8px; }
+
+    /* ── Scores ── */
+    .scores { display:flex; justify-content:space-around; gap:22px; margin:28px 0; }
+    .player { padding:24px; border-radius:18px; min-width:200px; border:3px solid; box-shadow:0 8px 24px rgba(0,0,0,.2); }
+    .player1 { border-color:var(--rouge); background:linear-gradient(135deg,rgba(255,107,107,.15),rgba(255,107,107,.04)); }
+    .player2 { border-color:var(--ciel);  background:linear-gradient(135deg,rgba(116,185,255,.15),rgba(116,185,255,.04)); }
+    .player-name  { font-size:22px; font-weight:800; margin-bottom:8px; }
+    .player-score { font-size:50px; color:var(--orange); font-weight:900; text-shadow:2px 2px 0 rgba(0,0,0,.3); }
+
+    /* ── Explication ── */
+    .explication {
+      background:rgba(255,255,255,.12); padding:16px 20px; border-radius:13px;
+      margin:16px 0; border-left:5px solid var(--orange); text-align:left; font-size:16px;
+    }
+    .explication strong { color:var(--orange); }
+
+    /* ── Share ── */
+    .share-link {
+      background:#fff; color:var(--bleu); padding:18px; border-radius:13px;
+      margin:20px 0; word-break:break-all; font-size:16px; border:3px solid var(--orange);
+    }
+    .message {
+      padding:18px; border-radius:13px; margin:16px 0;
+      background:rgba(255,255,255,.13); font-size:17px; border:2px solid var(--orange);
+    }
+    .hidden { display:none !important; }
+
+    /* ── Badges temps ── */
+    .tense-badge {
+      display:inline-block; padding:5px 16px; border-radius:20px;
+      font-size:14px; font-weight:800; margin:6px 4px;
+    }
+    .badge-present { background:var(--vert);  color:#fff; }
+    .badge-passe   { background:#3742fa;       color:#fff; }
+    .badge-futur   { background:var(--violet); color:#fff; }
+
+    @media(max-width:680px){
+      .scores { flex-direction:column; align-items:center; }
+      .choices-grid { grid-template-columns:1fr; }
+      .word { font-size:1.4em; }
+      .timer { font-size:48px; }
+      h1 { font-size:1.9em; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ ChronoDuel – Quel Temps ?</h1>
+  <p class="subtitle">60 phrases · Présent • Passé Composé • Futur Proche · 30 sec / question · temps alternés</p>
+
+  <!-- Accueil -->
+  <div id="home-screen" class="section active">
+    <div style="font-size:76px;margin:24px 0;">🕐⚡</div>
+    <h2>Identifie le temps !</h2>
+    <p style="margin:12px 0 26px;font-size:1.05em;color:#dfe6e9;">
+      Présent, Passé Composé ou Futur Proche ?<br>
+      Le verbe est en <span style="color:var(--orange);font-weight:800;">orange</span> — sois le plus rapide !
+    </p>
+    <button onclick="createGame()">🎮 CAPITAINE (Créer la partie)</button><br>
+    <button onclick="joinGame()">🔗 COÉQUIPIER (Rejoindre la partie)</button>
+  </div>
+
+  <!-- Capitaine -->
+  <div id="player1-screen" class="section">
+    <h2>⭐ Tu es le Capitaine</h2>
+    <p>Choisis ton nom :</p>
+    <input id="player1-name" placeholder="Ton nom"><br>
+    <button onclick="startAsPlayer1()">🚀 Lancer la partie</button>
+    <div id="share-box" class="hidden">
+      <h3>📡 Lien d'invitation</h3>
+      <p>Envoie ce lien à ton coéquipier :</p>
+      <div class="share-link" id="game-link">Génération…</div>
+      <button class="copy-btn" onclick="copyLink()">📋 Copier le lien</button>
+      <p class="message">⏳ En attente du coéquipier…</p>
+    </div>
+  </div>
+
+  <!-- Coéquipier -->
+  <div id="player2-screen" class="section">
+    <h2>👥 Tu es le Coéquipier</h2>
+    <p>Choisis ton nom :</p>
+    <input id="player2-name" placeholder="Ton nom"><br>
+    <button onclick="joinAsPlayer2()">🤝 Rejoindre la partie</button>
+    <p class="message" id="player2-message">Entre ton nom et rejoins le Capitaine !</p>
+  </div>
+
+  <!-- Jeu -->
+  <div id="game-screen" class="section">
+    <div class="timer" id="timer">30</div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+    <div class="progress-text" id="progress-text">Phrase 1/60</div>
+
+    <div class="phrase-box" id="phrase-display"></div>
+    <div id="tense-badge-display" style="margin:8px 0;"></div>
+
+    <div class="choices-grid" id="choices"></div>
+
+    <div id="explication" class="explication hidden">
+      <strong>💡 Rappel :</strong> <span id="explication-text"></span>
+    </div>
+
+    <div class="scores">
+      <div class="player player1">
+        <div class="player-name" id="player1-display-name">Capitaine</div>
+        <div class="player-score" id="player1-score">0</div>
+      </div>
+      <div class="player player2">
+        <div class="player-name" id="player2-display-name">Coéquipier</div>
+        <div class="player-score" id="player2-score">0</div>
+      </div>
+    </div>
+    <p id="game-message" style="font-size:16px;color:#a4b0be;">Quel est le temps du verbe en orange ?</p>
+  </div>
+
+  <!-- Fin -->
+  <div id="end-screen" class="section">
+    <div style="font-size:96px;margin:24px 0;" id="trophy">🏆</div>
+    <h2>🎉 Partie Terminée !</h2>
+    <div id="winner-message" style="font-size:24px;margin:24px 0;"></div>
+    <div class="scores">
+      <div class="player player1">
+        <div class="player-name" id="final-player1-name">Capitaine</div>
+        <div class="player-score" id="final-player1-score">0</div>
+      </div>
+      <div class="player player2">
+        <div class="player-name" id="final-player2-name">Coéquipier</div>
+        <div class="player-score" id="final-player2-score">0</div>
+      </div>
+    </div>
+    <div id="stats" style="margin:24px 0;font-size:16px;"></div>
+    <button onclick="restartGame()">🔄 Nouvelle partie</button>
+    <button class="danger-btn" onclick="goHome()">🏠 Retour à l'accueil</button>
+  </div>
+</div>
+
+<script>
+// ── Firebase ──────────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+  authDomain: "fabien-bouvier.firebaseapp.com",
+  databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "fabien-bouvier",
+  storageBucket: "fabien-bouvier.firebasestorage.app",
+  messagingSenderId: "863046756799",
+  appId: "1:863046756799:web:36a48325658a4286d6190a"
+};
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// ── 60 phrases alternées PR / PC / FP (x20 chacun) ────────────────────────
+// words = tableau de mots séparés
+// verb  = indices des mots qui constituent le verbe conjugué (mis en orange)
+const phrases = [
+  // 1 – Présent
+  { words:["Je","mange","une","pomme","rouge","."], verb:[1], tense:"Présent",
+    explication:"« mange » = manger au présent, 1re pers. sing." },
+  // 2 – Passé Composé
+  { words:["Elle","a","fini","ses","devoirs","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« a fini » = avoir (a) + participe passé (fini)." },
+  // 3 – Futur Proche
+  { words:["Il","va","partir","demain","matin","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« va partir » = aller au présent (va) + infinitif (partir)." },
+  // 4 – Présent
+  { words:["Tu","joues","au","football","avec","nous","."], verb:[1], tense:"Présent",
+    explication:"« joues » = jouer au présent, 2e pers. sing." },
+  // 5 – Passé Composé
+  { words:["Nous","sommes","allés","au","parc","hier","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« sommes allés » = être (sommes) + participe passé (allés). Verbe de mouvement → auxiliaire être." },
+  // 6 – Futur Proche
+  { words:["Vous","allez","regarder","un","film","ce","soir","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« allez regarder » = aller au présent (allez) + infinitif (regarder)." },
+  // 7 – Présent
+  { words:["Elle","lit","un","roman","dans","sa","chambre","."], verb:[1], tense:"Présent",
+    explication:"« lit » = lire au présent, 3e pers. sing." },
+  // 8 – Passé Composé
+  { words:["Tu","as","mangé","toute","la","tarte","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« as mangé » = avoir (as) + participe passé (mangé)." },
+  // 9 – Futur Proche
+  { words:["Je","vais","apprendre","une","nouvelle","langue","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vais apprendre » = aller au présent (vais) + infinitif (apprendre)." },
+  // 10 – Présent
+  { words:["Ils","courent","très","vite","dans","le","couloir","."], verb:[1], tense:"Présent",
+    explication:"« courent » = courir au présent, 3e pers. plur." },
+  // 11 – Passé Composé
+  { words:["Il","a","pris","le","bus","ce","matin","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« a pris » = avoir (a) + participe passé irrégulier (pris)." },
+  // 12 – Futur Proche
+  { words:["Elle","va","choisir","sa","tenue","pour","la","fête","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« va choisir » = aller au présent (va) + infinitif (choisir)." },
+  // 13 – Présent
+  { words:["Vous","parlez","trop","fort","en","classe","."], verb:[1], tense:"Présent",
+    explication:"« parlez » = parler au présent, 2e pers. plur." },
+  // 14 – Passé Composé
+  { words:["Elles","sont","arrivées","en","retard","à","l'école","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« sont arrivées » = être (sont) + participe passé (arrivées). Accord féminin pluriel." },
+  // 15 – Futur Proche
+  { words:["Nous","allons","finir","ce","travail","ensemble","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« allons finir » = aller au présent (allons) + infinitif (finir)." },
+  // 16 – Présent
+  { words:["Je","sais","la","bonne","réponse","."], verb:[1], tense:"Présent",
+    explication:"« sais » = savoir au présent, 1re pers. sing." },
+  // 17 – Passé Composé
+  { words:["Nous","avons","chanté","toute","la","nuit","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« avons chanté » = avoir (avons) + participe passé (chanté)." },
+  // 18 – Futur Proche
+  { words:["Tu","vas","boire","un","grand","verre","d'eau","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vas boire » = aller au présent (vas) + infinitif (boire)." },
+  // 19 – Présent
+  { words:["Il","ouvre","la","fenêtre","chaque","matin","."], verb:[1], tense:"Présent",
+    explication:"« ouvre » = ouvrir au présent, 3e pers. sing." },
+  // 20 – Passé Composé
+  { words:["Je","suis","resté","à","la","maison","hier","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« suis resté » = être (suis) + participe passé (resté). Verbe d'état → être." },
+  // 21 – Futur Proche
+  { words:["Ils","vont","courir","dans","le","parc","demain","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vont courir » = aller au présent (vont) + infinitif (courir)." },
+  // 22 – Présent
+  { words:["Nous","recevons","beaucoup","de","lettres","."], verb:[1], tense:"Présent",
+    explication:"« recevons » = recevoir au présent, 1re pers. plur." },
+  // 23 – Passé Composé
+  { words:["Tu","as","grandi","très","vite","cette","année","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« as grandi » = avoir (as) + participe passé (grandi)." },
+  // 24 – Futur Proche
+  { words:["Elle","va","écrire","une","longue","lettre","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« va écrire » = aller au présent (va) + infinitif (écrire)." },
+  // 25 – Présent
+  { words:["Vous","devez","rendre","votre","travail","demain","."], verb:[1], tense:"Présent",
+    explication:"« devez » = devoir au présent, 2e pers. plur." },
+  // 26 – Passé Composé
+  { words:["Il","a","ouvert","la","porte","doucement","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« a ouvert » = avoir (a) + participe passé (ouvert)." },
+  // 27 – Futur Proche
+  { words:["Je","vais","prendre","le","train","de","8h","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vais prendre » = aller au présent (vais) + infinitif (prendre)." },
+  // 28 – Présent
+  { words:["Elle","choisit","toujours","le","meilleur","gâteau","."], verb:[1], tense:"Présent",
+    explication:"« choisit » = choisir au présent, 3e pers. sing." },
+  // 29 – Passé Composé
+  { words:["Nous","avons","reçu","un","beau","cadeau","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« avons reçu » = avoir (avons) + participe passé (reçu)." },
+  // 30 – Futur Proche
+  { words:["Tu","vas","répondre","à","toutes","les","questions","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vas répondre » = aller au présent (vas) + infinitif (répondre)." },
+  // 31 – Présent
+  { words:["Je","connais","bien","cette","rue","."], verb:[1], tense:"Présent",
+    explication:"« connais » = connaître au présent, 1re pers. sing." },
+  // 32 – Passé Composé
+  { words:["Vous","avez","dû","recommencer","depuis","le","début","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« avez dû » = avoir (avez) + participe passé (dû)." },
+  // 33 – Futur Proche
+  { words:["Nous","allons","voir","un","spectacle","ce","week-end","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« allons voir » = aller au présent (allons) + infinitif (voir)." },
+  // 34 – Présent
+  { words:["Tu","bois","beaucoup","d'eau","chaque","jour","."], verb:[1], tense:"Présent",
+    explication:"« bois » = boire au présent, 2e pers. sing." },
+  // 35 – Passé Composé
+  { words:["Il","a","su","la","réponse","tout","de","suite","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« a su » = avoir (a) + participe passé (su)." },
+  // 36 – Futur Proche
+  { words:["Elle","va","dormir","très","tôt","ce","soir","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« va dormir » = aller au présent (va) + infinitif (dormir)." },
+  // 37 – Présent
+  { words:["Ils","vendent","des","légumes","au","marché","."], verb:[1], tense:"Présent",
+    explication:"« vendent » = vendre au présent, 3e pers. plur." },
+  // 38 – Passé Composé
+  { words:["Je","suis","parti","en","vacances","la","semaine","dernière","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« suis parti » = être (suis) + participe passé (parti). Verbe de mouvement → être." },
+  // 39 – Futur Proche
+  { words:["Vous","allez","devoir","travailler","plus","dur","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« allez devoir » = aller au présent (allez) + infinitif (devoir)." },
+  // 40 – Présent
+  { words:["Elle","finit","toujours","son","assiette","."], verb:[1], tense:"Présent",
+    explication:"« finit » = finir au présent, 3e pers. sing." },
+  // 41 – Passé Composé
+  { words:["Tu","as","lu","ce","livre","en","une","nuit","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« as lu » = avoir (as) + participe passé (lu)." },
+  // 42 – Futur Proche
+  { words:["Je","vais","grandir","encore","beaucoup","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vais grandir » = aller au présent (vais) + infinitif (grandir)." },
+  // 43 – Présent
+  { words:["Nous","sommes","très","contents","aujourd'hui","."], verb:[1], tense:"Présent",
+    explication:"« sommes » = être au présent, 1re pers. plur." },
+  // 44 – Passé Composé
+  { words:["Ils","ont","couru","pendant","une","heure","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« ont couru » = avoir (ont) + participe passé (couru)." },
+  // 45 – Futur Proche
+  { words:["Tu","vas","vendre","ta","vieille","bicyclette","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vas vendre » = aller au présent (vas) + infinitif (vendre)." },
+  // 46 – Présent
+  { words:["Il","répond","toujours","poliment","aux","questions","."], verb:[1], tense:"Présent",
+    explication:"« répond » = répondre au présent, 3e pers. sing." },
+  // 47 – Passé Composé
+  { words:["Elle","a","choisi","une","belle","robe","bleue","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« a choisi » = avoir (a) + participe passé (choisi)." },
+  // 48 – Futur Proche
+  { words:["Il","va","connaître","bientôt","la","vérité","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« va connaître » = aller au présent (va) + infinitif (connaître)." },
+  // 49 – Présent
+  { words:["Je","veux","un","gros","morceau","de","tarte","."], verb:[1], tense:"Présent",
+    explication:"« veux » = vouloir au présent, 1re pers. sing." },
+  // 50 – Passé Composé
+  { words:["Nous","avons","été","très","surpris","par","la","nouvelle","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« avons été » = avoir (avons) + participe passé (été)." },
+  // 51 – Futur Proche
+  { words:["Elles","vont","chanter","devant","toute","la","classe","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vont chanter » = aller au présent (vont) + infinitif (chanter)." },
+  // 52 – Présent
+  { words:["Tu","grandis","de","jour","en","jour","."], verb:[1], tense:"Présent",
+    explication:"« grandis » = grandir au présent, 2e pers. sing." },
+  // 53 – Passé Composé
+  { words:["Il","a","bu","tout","le","jus","d'orange","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« a bu » = avoir (a) + participe passé (bu)." },
+  // 54 – Futur Proche
+  { words:["Je","vais","savoir","la","réponse","demain","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« vais savoir » = aller au présent (vais) + infinitif (savoir)." },
+  // 55 – Présent
+  { words:["Elles","chantent","une","belle","chanson","ensemble","."], verb:[1], tense:"Présent",
+    explication:"« chantent » = chanter au présent, 3e pers. plur." },
+  // 56 – Passé Composé
+  { words:["Vous","avez","joué","au","foot","hier","soir","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« avez joué » = avoir (avez) + participe passé (joué)." },
+  // 57 – Futur Proche
+  { words:["Nous","allons","recevoir","les","résultats","lundi","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« allons recevoir » = aller au présent (allons) + infinitif (recevoir)." },
+  // 58 – Présent
+  { words:["Il","attend","son","ami","devant","l'école","."], verb:[1], tense:"Présent",
+    explication:"« attend » = attendre au présent, 3e pers. sing." },
+  // 59 – Passé Composé
+  { words:["Tu","as","parlé","trop","vite","pendant","l'exposé","."], verb:[1,2], tense:"Passé Composé",
+    explication:"« as parlé » = avoir (as) + participe passé (parlé)." },
+  // 60 – Futur Proche
+  { words:["Elle","va","ouvrir","son","propre","magasin","bientôt","."], verb:[1,2], tense:"Futur Proche",
+    explication:"« va ouvrir » = aller au présent (va) + infinitif (ouvrir)." }
+];
+
+const TENSES = ["Présent", "Passé Composé", "Futur Proche"];
+const BADGE_CLASS = { "Présent":"badge-present", "Passé Composé":"badge-passe", "Futur Proche":"badge-futur" };
+const POINTS    = 10;
+const TIMER_MAX = 30;
+
+let playerName = "", playerNumber = 0, gameId = "", gameRef = null;
+let currentPhraseIndex = 0, timerVal = TIMER_MAX, timerInterval = null;
+let lastGameData = null, correctAnswersCount = 0, answered = false;
+
+// ── Utilitaires ───────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function updatePlayerDisplays(d) {
+  const n1 = d.player1.name || "Capitaine",  n2 = d.player2.name || "Coéquipier";
+  const s1 = d.player1.score || 0,           s2 = d.player2.score || 0;
+  ['player1-display-name','final-player1-name'].forEach(id => document.getElementById(id).textContent = n1);
+  ['player2-display-name','final-player2-name'].forEach(id => document.getElementById(id).textContent = n2);
+  ['player1-score','final-player1-score'].forEach(id => document.getElementById(id).textContent = s1);
+  ['player2-score','final-player2-score'].forEach(id => document.getElementById(id).textContent = s2);
+}
+
+// ── Accueil ───────────────────────────────────────────────────────────────
+function createGame() { showScreen('player1-screen'); }
+function joinGame()   { showScreen('player2-screen'); }
+
+function startAsPlayer1() {
+  const name = document.getElementById('player1-name').value.trim();
+  if (!name) { alert("Entre ton nom !"); return; }
+  playerName = name; playerNumber = 1;
+  gameId  = 'tempsJeu_' + Date.now() + '_' + Math.floor(Math.random()*9999);
+  gameRef = database.ref('tempsDuels2/' + gameId);
+  gameRef.set({
+    player1: { name, score:0, ready:true, correct:0 },
+    player2: { name:"", score:0, ready:false, correct:0 },
+    currentPhrase: 0, gameStarted: false, gameFinished: false, createdAt: Date.now()
+  });
+  const link = window.location.href.split('?')[0] + '?game=' + gameId;
+  document.getElementById('game-link').textContent = link;
+  document.getElementById('share-box').classList.remove('hidden');
+  listenToGame();
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(document.getElementById('game-link').textContent)
+    .then(() => alert("Lien copié !"));
+}
+
+function joinAsPlayer2() {
+  const name = document.getElementById('player2-name').value.trim();
+  if (!name) { alert("Entre ton nom !"); return; }
+  playerName = name; playerNumber = 2;
+  const urlParams = new URLSearchParams(window.location.search);
+  gameId = urlParams.get('game') || prompt("Entre le code de la partie :");
+  if (!gameId) return;
+  gameRef = database.ref('tempsDuels2/' + gameId);
+  gameRef.once('value').then(snap => {
+    if (!snap.exists()) { alert("Partie non trouvée !"); return; }
+    lastGameData = snap.val();
+    gameRef.update({ player2: { name, score:0, ready:true, correct:0 } });
+    document.getElementById('player2-message').textContent = "Connecté ! En attente du capitaine…";
+    listenToGame();
+  });
+}
+
+// ── Écoute Firebase ───────────────────────────────────────────────────────
+function listenToGame() {
+  if (!gameRef) return;
+  gameRef.on('value', snap => {
+    const d = snap.val();
+    if (!d) return;
+    lastGameData = d;
+    updatePlayerDisplays(d);
+
+    if (d.player1.ready && d.player2.ready && !d.gameStarted)
+      gameRef.update({ gameStarted: true });
+
+    if (d.gameStarted && !d.gameFinished) {
+      showScreen('game-screen');
+      const idx = d.currentPhrase || 0;
+      if (idx !== currentPhraseIndex || !timerInterval) {
+        currentPhraseIndex = idx;
+        renderPhrase(idx);
+        resetTimer();
+      }
+      const pct = Math.min((idx / phrases.length) * 100, 100);
+      document.getElementById('progress').style.width = pct + '%';
+      document.getElementById('progress-text').textContent =
+        `Phrase ${Math.min(idx+1, phrases.length)}/${phrases.length}`;
+    }
+
+    if (d.gameFinished) { clearTimer(); showEndScreen(d); }
+  });
+}
+
+// ── Afficher une phrase (mots séparés) ───────────────────────────────────
+function renderPhrase(idx) {
+  if (idx >= phrases.length) { gameRef.update({ gameFinished: true }); return; }
+  answered = false;
+
+  const p = phrases[idx];
+  const container = document.getElementById('phrase-display');
+  container.innerHTML = '';
+
+  p.words.forEach((w, i) => {
+    const span = document.createElement('span');
+    span.className = 'word' + (p.verb.includes(i) ? ' highlight' : '');
+    span.textContent = w;
+    container.appendChild(span);
+  });
+
+  document.getElementById('explication').classList.add('hidden');
+  document.getElementById('tense-badge-display').innerHTML = '';
+
+  const choicesEl = document.getElementById('choices');
+  choicesEl.innerHTML = '';
+  TENSES.forEach(t => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.textContent = t;
+    btn.onclick = () => checkAnswer(t, p.tense, p.explication);
+    choicesEl.appendChild(btn);
+  });
+}
+
+// ── Vérifier la réponse ───────────────────────────────────────────────────
+function checkAnswer(chosen, correct, explication) {
+  if (answered) return;
+  answered = true;
+  clearTimer();
+
+  document.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.onclick = null;
+    if (btn.textContent === correct)                          btn.classList.add('correct');
+    else if (btn.textContent === chosen && chosen !== correct) btn.classList.add('wrong');
+  });
+
+  document.getElementById('tense-badge-display').innerHTML =
+    `<span class="tense-badge ${BADGE_CLASS[correct]}">${correct}</span>`;
+
+  if (chosen === correct) {
+    const key = 'player' + playerNumber;
+    gameRef.child(key + '/score').transaction(s => (s||0) + POINTS);
+    gameRef.child(key + '/correct').transaction(c => (c||0) + 1);
+    correctAnswersCount++;
+    document.getElementById('game-message').textContent = '✅ Bravo ! +10 points !';
+  } else {
+    document.getElementById('explication-text').textContent = explication;
+    document.getElementById('explication').classList.remove('hidden');
+    document.getElementById('game-message').textContent = '❌ Pas tout à fait…';
+  }
+
+  setTimeout(() => {
+    document.getElementById('game-message').textContent = 'Quel est le temps du verbe en orange ?';
+    gameRef.update({ currentPhrase: currentPhraseIndex + 1 });
+  }, 3000);
+}
+
+// ── Timer ─────────────────────────────────────────────────────────────────
+function resetTimer() {
+  clearTimer();
+  timerVal = TIMER_MAX;
+  const el = document.getElementById('timer');
+  el.textContent = timerVal;
+  el.classList.remove('urgent');
+
+  timerInterval = setInterval(() => {
+    timerVal--;
+    el.textContent = timerVal;
+    if (timerVal <= 10) el.classList.add('urgent');
+    if (timerVal <= 0) {
+      clearTimer();
+      if (!answered) {
+        answered = true;
+        const correct = phrases[currentPhraseIndex]?.tense;
+        document.querySelectorAll('.choice-btn').forEach(btn => {
+          btn.onclick = null;
+          if (btn.textContent === correct) btn.classList.add('correct');
+        });
+        document.getElementById('game-message').textContent = '⏰ Temps écoulé !';
+        setTimeout(() => {
+          document.getElementById('game-message').textContent = 'Quel est le temps du verbe en orange ?';
+          gameRef.update({ currentPhrase: currentPhraseIndex + 1 });
+        }, 2500);
+      }
+    }
+  }, 1000);
+}
+
+function clearTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  document.getElementById('timer').classList.remove('urgent');
+}
+
+// ── Fin de partie ──────────────────────────────────────────────────────────
+function showEndScreen(d) {
+  if (!d) return;
+  let trophy = "🏆", msg = "";
+  if      (d.player1.score > d.player2.score) { trophy="👑"; msg=`👑 ${d.player1.name} remporte le duel !`; }
+  else if (d.player2.score > d.player1.score) { trophy="⭐"; msg=`⭐ ${d.player2.name} remporte le duel !`; }
+  else                                          { trophy="🤝"; msg="🤝 Égalité parfaite ! Champions tous les deux !"; }
+
+  document.getElementById('trophy').textContent = trophy;
+  const c1 = d.player1.correct||0, c2 = d.player2.correct||0;
+  document.getElementById('winner-message').innerHTML =
+    `<h3>${msg}</h3><p>Score final : ${d.player1.score} – ${d.player2.score} pts</p>`;
+  document.getElementById('stats').innerHTML = `
+    <div style="background:rgba(255,255,255,.1);padding:18px;border-radius:13px;">
+      <p><strong>${d.player1.name}</strong> : ${c1}/60 bonnes réponses (${Math.round(c1/60*100)}%)</p>
+      <p><strong>${d.player2.name}</strong> : ${c2}/60 bonnes réponses (${Math.round(c2/60*100)}%)</p>
+      <p style="margin-top:12px;color:var(--orange);">
+        <span class="tense-badge badge-present">Présent</span>
+        <span class="tense-badge badge-passe">Passé Composé</span>
+        <span class="tense-badge badge-futur">Futur Proche</span>
+        <br><br>20 phrases par temps · alternance PR/PC/FP · 30 sec / question
+      </p>
+    </div>`;
+  showScreen('end-screen');
+}
+
+// ── Relancer / Accueil ────────────────────────────────────────────────────
+function restartGame() {
+  if (!gameRef || !lastGameData) { goHome(); return; }
+  clearTimer();
+  gameRef.update({
+    player1: { name:lastGameData.player1.name, score:0, ready:true, correct:0 },
+    player2: { name:lastGameData.player2.name, score:0, ready:true, correct:0 },
+    currentPhrase: 0, gameStarted: true, gameFinished: false
+  });
+  currentPhraseIndex = 0; timerVal = TIMER_MAX; correctAnswersCount = 0;
+  document.getElementById('timer').style.color = '';
+  showScreen('game-screen');
+}
+
+function goHome() {
+  clearTimer();
+  playerName = ""; playerNumber = 0; gameId = "";
+  gameRef = null; lastGameData = null; currentPhraseIndex = 0; correctAnswersCount = 0;
+  showScreen('home-screen');
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+// ── Auto-join depuis URL ──────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  const gid = new URLSearchParams(window.location.search).get('game');
+  if (gid) {
+    showScreen('player2-screen');
+    document.getElementById('player2-message').textContent =
+      "Partie trouvée ! Entre ton nom pour rejoindre !";
+  }
+});
+</script>
+</body>
+</html>
