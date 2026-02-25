@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Chronoduel Multijoueur - Présent / PC / Futur ⚡</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #1a2a4f 0%, #0f1a2f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .game-container {
+            max-width: 1000px;
+            width: 100%;
+            background: rgba(20, 35, 60, 0.95);
+            backdrop-filter: blur(12px);
+            border-radius: 56px;
+            border: 2px solid #5f8aff;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+            padding: 32px 24px;
+            color: white;
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-align: center;
+            background: linear-gradient(135deg, #ffd966, #ffb347);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #1e3b6a;
+            border-radius: 60px;
+            padding: 12px 28px;
+            margin: 10px 0 25px 0;
+            border: 1px solid #ffb85b;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #ffe49e;
+        }
+
+        .badge {
+            background: #2d4b7e;
+            color: #ffd966;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            border: 1px solid #ffa726;
+        }
+
+        .setup-screen {
+            background: #1a2f55;
+            border-radius: 48px;
+            padding: 30px;
+            border: 2px solid #5f8aff;
+        }
+
+        .create-game, .join-game {
+            background: #122b50;
+            border-radius: 40px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 1px solid #7aa6ff;
+        }
+
+        .input-group {
+            margin: 20px 0;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+            color: #ffd966;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.3rem;
+            border-radius: 60px;
+            border: 3px solid #5f8aff;
+            background: #f0f4fa;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: #5f8aff;
+            border: none;
+            color: white;
+            font-weight: bold;
+            font-size: 1.4rem;
+            padding: 18px 30px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 0 #1e4a8b;
+            width: 100%;
+            margin: 10px 0;
+        }
+        .btn-primary:hover { transform: translateY(-2px); background: #7a9fff; }
+
+        .btn-secondary {
+            background: #ffb347;
+            border: none;
+            color: #1a2f55;
+            font-weight: bold;
+            font-size: 1.4rem;
+            padding: 18px 30px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 0 #b46f1a;
+            width: 100%;
+        }
+        .btn-secondary:hover { transform: translateY(-2px); background: #ffc46b; }
+
+        .game-link {
+            background: #0f2648;
+            padding: 20px;
+            border-radius: 40px;
+            margin: 20px 0;
+            word-break: break-all;
+            border: 2px dashed #ffb85b;
+            font-size: 1.2rem;
+        }
+
+        .waiting-message {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #ffd966;
+            padding: 30px;
+            background: #122b50;
+            border-radius: 40px;
+            margin: 20px 0;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        .game-screen {
+            display: none;
+        }
+
+        .game-screen.visible {
+            display: block;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0f2648;
+            border-radius: 120px;
+            padding: 15px 30px;
+            margin: 20px 0 30px 0;
+            border: 2px solid #5f8aff;
+            font-size: 1.8rem;
+        }
+
+        .score {
+            background: white;
+            color: #0d1b2e;
+            padding: 10px 30px;
+            border-radius: 60px;
+            font-size: 2.2rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .question-panel {
+            background: #1a315a;
+            border-radius: 60px;
+            padding: 40px 20px;
+            text-align: center;
+            border: 3px solid #ffb85b;
+        }
+
+        .consigne {
+            font-size: 1.8rem;
+            background: #2d4b8a;
+            display: inline-block;
+            padding: 10px 40px;
+            border-radius: 60px;
+            color: #fde047;
+            border: 2px solid #fde047;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .phrase-a-deviner {
+            font-size: 4rem;
+            font-weight: 800;
+            text-shadow: 0 8px 0 #0f172a;
+            margin: 15px 0 25px 0;
+            word-break: break-word;
+        }
+
+        .boutons-reponse {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .btn-reponse {
+            flex: 1 1 200px;
+            padding: 25px 15px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 80px;
+            background: white;
+            color: #0f172a;
+            cursor: pointer;
+            transition: 0.1s ease;
+            box-shadow: 0 10px 0 #4a6b8a, 0 4px 12px black;
+        }
+        .btn-reponse.present { background: #d9f0e1; }
+        .btn-reponse.passe { background: #f8d7da; }
+        .btn-reponse.futur { background: #fff3cd; }
+        .btn-reponse:active { transform: translateY(6px); box-shadow: 0 4px 0 #2a4a6a; }
+        .btn-reponse:disabled { opacity: 0.4; transform: none; pointer-events: none; }
+
+        .timer-info {
+            font-size: 2rem;
+            background: #1e3a6a;
+            display: inline-block;
+            padding: 12px 50px;
+            border-radius: 60px;
+            color: #ffd966;
+            border: 2px solid #ffd966;
+            margin: 20px auto;
+        }
+
+        .feedback-message {
+            min-height: 70px;
+            font-size: 1.8rem;
+            color: #fde047;
+            margin: 15px 0;
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #b0c4de;
+            margin-top: 20px;
+            font-size: 1.3rem;
+        }
+
+        .restart-btn {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 12px 40px;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .restart-btn:hover { background: white; color: #0f1a2f; }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .player-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>
+        <span>⚡</span> CHRONODUEL MULTI <span>⏳</span>
+    </h1>
+    <div class="sub-header">
+        <span class="badge">60 phrases</span>
+        <span class="badge">Présent</span>
+        <span class="badge">Passé composé</span>
+        <span class="badge">Futur proche</span>
+        <span class="badge">🌐 Multijoueur</span>
+    </div>
+
+    <!-- ÉCRAN D'ACCUEIL MULTIJOUEUR -->
+    <div id="setupScreen" class="setup-screen">
+        <h2 style="text-align:center; margin-bottom:20px;">🎮 Mode Multijoueur</h2>
+        
+        <div class="create-game">
+            <h3 style="color:#ffd966; font-size:1.8rem; margin-bottom:15px;">🎌 Créer une partie</h3>
+            <div class="input-group">
+                <label>🔵 Ton nom (Capitaine)</label>
+                <input type="text" id="creatorName" placeholder="Entre ton nom" value="Alex">
+            </div>
+            <button class="btn-primary" id="createGameBtn">🚀 Créer la partie</button>
+        </div>
+
+        <div class="join-game">
+            <h3 style="color:#ffd966; font-size:1.8rem; margin-bottom:15px;">🔗 Rejoindre une partie</h3>
+            <div class="input-group">
+                <label>🔴 Ton nom (Coéquipier)</label>
+                <input type="text" id="joinerName" placeholder="Entre ton nom" value="Sam">
+            </div>
+            <div class="input-group">
+                <label>📋 Lien de la partie</label>
+                <input type="text" id="gameLinkInput" placeholder="Colle le lien ici">
+            </div>
+            <button class="btn-secondary" id="joinGameBtn">🔑 Rejoindre</button>
+        </div>
+    </div>
+
+    <!-- ÉCRAN D'ATTENTE (créateur) -->
+    <div id="waitingScreen" class="setup-screen hidden">
+        <div class="waiting-message">
+            ⏳ En attente du coéquipier...
+        </div>
+        <div class="game-link" id="gameLinkDisplay">
+            Lien de la partie : 
+        </div>
+        <div style="text-align:center; font-size:1.3rem; color:#ffd966;">
+            🔵 En tant que Capitaine, tu joueras en premier
+        </div>
+        <button class="btn-secondary" id="cancelGameBtn" style="margin-top:20px;">❌ Annuler</button>
+    </div>
+
+    <!-- ÉCRAN DE JEU PRINCIPAL -->
+    <div id="gameScreen" class="game-screen">
+        <div class="scoreboard">
+            <div class="player-badge">
+                <span style="font-size:2rem;">🔵</span>
+                <span id="capNameDisplay">Capitaine</span>
+            </div>
+            <span class="score" id="scoreCap">0</span>
+            <span style="font-size:2rem;">⚔️</span>
+            <span class="score" id="scoreCoeq">0</span>
+            <div class="player-badge">
+                <span style="font-size:2rem;">🔴</span>
+                <span id="coeqNameDisplay">Coéquipier</span>
+            </div>
+        </div>
+
+        <div class="question-panel">
+            <div class="consigne" id="tourIndicator">À toi de jouer !</div>
+            <div class="phrase-a-deviner" id="phraseActuelle">Je mange une pomme</div>
+
+            <div class="boutons-reponse" id="boutonsReponse">
+                <!-- Boutons générés dynamiquement -->
+            </div>
+
+            <div class="timer-info" id="timerDisplay">⏱️ 25s</div>
+            <div class="feedback-message" id="feedbackMessage">Choisis le temps du verbe !</div>
+        </div>
+
+        <div class="footer-stats">
+            <span id="compteurPhrases">Défi 1/60</span>
+            <span>🎯 <span id="currentPlayerIndicator">Capitaine</span></span>
+        </div>
+        <button class="restart-btn" id="restartBtn">🔄 Nouvelle partie</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- LISTE DE PHRASES AVEC TEMPS ----------
+        const phrasesListe = [
+            { phrase: "Je mange une pomme", temps: "present" },
+            { phrase: "Tu as fini ton travail", temps: "passe" },
+            { phrase: "Nous allons visiter Paris", temps: "futur" },
+            { phrase: "Il chante très bien", temps: "present" },
+            { phrase: "Elle est partie en vacances", temps: "passe" },
+            { phrase: "Ils vont regarder un film", temps: "futur" },
+            { phrase: "Nous dansons chaque soir", temps: "present" },
+            { phrase: "J'ai acheté du pain", temps: "passe" },
+            { phrase: "Tu vas rencontrer ta sœur", temps: "futur" },
+            { phrase: "Vous prenez le café", temps: "present" },
+            { phrase: "Elles sont arrivées tôt", temps: "passe" },
+            { phrase: "On va préparer le dîner", temps: "futur" },
+            { phrase: "Je fais du sport", temps: "present" },
+            { phrase: "Nous avons vu un spectacle", temps: "passe" },
+            { phrase: "Elle va apprendre l'italien", temps: "futur" },
+            { phrase: "Tu écris une lettre", temps: "present" },
+            { phrase: "Ils sont descendus par l'escalier", temps: "passe" },
+            { phrase: "Vous allez voyager au Japon", temps: "futur" },
+            { phrase: "On parle français", temps: "present" },
+            { phrase: "J'ai perdu mes clés", temps: "passe" },
+            { phrase: "Nous allons déménager", temps: "futur" },
+            { phrase: "Elle lit un magazine", temps: "present" },
+            { phrase: "Tu as pris le train", temps: "passe" },
+            { phrase: "Ils vont acheter une voiture", temps: "futur" },
+            { phrase: "Nous réfléchissons ensemble", temps: "present" },
+            { phrase: "Je suis tombé dans la rue", temps: "passe" },
+            { phrase: "Vous allez adorer ce livre", temps: "futur" },
+            { phrase: "Il pleut beaucoup", temps: "present" },
+            { phrase: "Elles se sont levées tôt", temps: "passe" },
+            { phrase: "Tu vas réussir ton examen", temps: "futur" },
+            { phrase: "Nous voulons un gâteau", temps: "present" },
+            { phrase: "J'ai écrit un poème", temps: "passe" },
+            { phrase: "Il va faire beau demain", temps: "futur" },
+            { phrase: "Vous partez en vacances", temps: "present" },
+            { phrase: "Elle est venue à pied", temps: "passe" },
+            { phrase: "Nous allons fêter ton anniversaire", temps: "futur" },
+            { phrase: "Tu dessines un paysage", temps: "present" },
+            { phrase: "Ils ont joué au football", temps: "passe" },
+            { phrase: "Je vais me promener", temps: "futur" },
+            { phrase: "On ouvre la fenêtre", temps: "present" },
+            { phrase: "Vous êtes restés longtemps", temps: "passe" },
+            { phrase: "Elle va acheter des fleurs", temps: "futur" },
+            { phrase: "Je prends le métro", temps: "present" },
+            { phrase: "Tu as bien dormi ?", temps: "passe" },
+            { phrase: "Nous allons skier en montagne", temps: "futur" },
+            { phrase: "Ils écoutent de la musique", temps: "present" },
+            { phrase: "Elle a fini son dessert", temps: "passe" },
+            { phrase: "Vous allez gagner !", temps: "futur" },
+            { phrase: "Je cours tous les jours", temps: "present" },
+            { phrase: "Nous sommes restés chez nous", temps: "passe" },
+            { phrase: "Tu vas devenir célèbre", temps: "futur" },
+            { phrase: "Il neige en montagne", temps: "present" },
+            { phrase: "J'ai oublié mon téléphone", temps: "passe" },
+            { phrase: "Elles vont chanter à la fête", temps: "futur" },
+            { phrase: "Nous dormons profondément", temps: "present" },
+            { phrase: "Vous avez réussi !", temps: "passe" },
+            { phrase: "Il va pleuvoir ce soir", temps: "futur" },
+            { phrase: "Tu viens avec nous ?", temps: "present" },
+            { phrase: "Je me suis lavé les mains", temps: "passe" },
+            { phrase: "On va manger au restaurant", temps: "futur" }
+        ];
+
+        // ---------- ÉTAT DU JEU ----------
+        let gameState = {
+            currentIndex: 0,
+            scoreCap: 0,
+            scoreCoeq: 0,
+            capName: "",
+            coeqName: "",
+            currentPlayer: "capitaine",
+            gameActive: false,
+            phrasesListe: []
+        };
+
+        let timerInterval = null;
+        let timeLeft = 25;
+        let canAnswer = true;
+        let gameId = null;
+        let isCreator = false;
+        let playerRole = null; // "capitaine" ou "coequipier"
+
+        // Éléments DOM
+        const setupScreen = document.getElementById('setupScreen');
+        const waitingScreen = document.getElementById('waitingScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const creatorNameInput = document.getElementById('creatorName');
+        const joinerNameInput = document.getElementById('joinerName');
+        const gameLinkInput = document.getElementById('gameLinkInput');
+        const gameLinkDisplay = document.getElementById('gameLinkDisplay');
+        const createGameBtn = document.getElementById('createGameBtn');
+        const joinGameBtn = document.getElementById('joinGameBtn');
+        const cancelGameBtn = document.getElementById('cancelGameBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        
+        const capNameDisplay = document.getElementById('capNameDisplay');
+        const coeqNameDisplay = document.getElementById('coeqNameDisplay');
+        const scoreCapSpan = document.getElementById('scoreCap');
+        const scoreCoeqSpan = document.getElementById('scoreCoeq');
+        const phraseActuelleSpan = document.getElementById('phraseActuelle');
+        const tourIndicator = document.getElementById('tourIndicator');
+        const boutonsReponseDiv = document.getElementById('boutonsReponse');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const compteurPhrasesSpan = document.getElementById('compteurPhrases');
+        const timerDisplaySpan = document.getElementById('timerDisplay');
+        const currentPlayerIndicator = document.getElementById('currentPlayerIndicator');
+
+        // ---------- FONCTIONS STOCKAGE LOCAL (simulation serveur) ----------
+        function saveGameState() {
+            if (!gameId) return;
+            const stateToSave = {
+                ...gameState,
+                lastUpdate: Date.now()
+            };
+            localStorage.setItem(`game_${gameId}`, JSON.stringify(stateToSave));
+        }
+
+        function loadGameState() {
+            if (!gameId) return null;
+            const saved = localStorage.getItem(`game_${gameId}`);
+            return saved ? JSON.parse(saved) : null;
+        }
+
+        function generateGameId() {
+            return 'game_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+        }
+
+        // Nettoyage des vieilles parties (plus de 1 heure)
+        function cleanOldGames() {
+            const now = Date.now();
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key && key.startsWith('game_')) {
+                    try {
+                        const game = JSON.parse(localStorage.getItem(key));
+                        if (now - game.lastUpdate > 3600000) {
+                            localStorage.removeItem(key);
+                        }
+                    } catch (e) {}
+                }
+            }
+        }
+
+        // ---------- POLLING (vérifie les mises à jour toutes les 2 secondes) ----------
+        let pollingInterval = null;
+
+        function startPolling() {
+            if (pollingInterval) clearInterval(pollingInterval);
+            pollingInterval = setInterval(() => {
+                if (!gameId || !gameState.gameActive) return;
+                
+                const remoteState = loadGameState();
+                if (remoteState) {
+                    let needsUpdate = false;
+                    if (remoteState.scoreCap !== gameState.scoreCap) {
+                        gameState.scoreCap = remoteState.scoreCap;
+                        needsUpdate = true;
+                    }
+                    if (remoteState.scoreCoeq !== gameState.scoreCoeq) {
+                        gameState.scoreCoeq = remoteState.scoreCoeq;
+                        needsUpdate = true;
+                    }
+                    if (remoteState.currentIndex !== gameState.currentIndex) {
+                        gameState.currentIndex = remoteState.currentIndex;
+                        gameState.currentPlayer = remoteState.currentPlayer;
+                        needsUpdate = true;
+                    }
+                    
+                    if (needsUpdate) {
+                        updateUI();
+                        if (gameState.currentPlayer !== playerRole) {
+                            disableButtons(true);
+                            feedbackMessage.textContent = `🔵🔴 C'est à l'autre joueur...`;
+                        } else {
+                            if (gameState.gameActive) {
+                                prepareForTurn();
+                            }
+                        }
+                    }
+                }
+            }, 2000);
+        }
+
+        // ---------- FONCTIONS JEU ----------
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        function updateUI() {
+            scoreCapSpan.textContent = gameState.scoreCap;
+            scoreCoeqSpan.textContent = gameState.scoreCoeq;
+            
+            if (gameState.phrasesListe && gameState.phrasesListe[gameState.currentIndex]) {
+                phraseActuelleSpan.textContent = gameState.phrasesListe[gameState.currentIndex].phrase;
+            }
+            
+            compteurPhrasesSpan.textContent = `Défi ${gameState.currentIndex + 1}/${gameState.phrasesListe.length}`;
+            
+            const joueurActuel = gameState.currentPlayer === 'capitaine' ? gameState.capName : gameState.coeqName;
+            currentPlayerIndicator.textContent = joueurActuel;
+            tourIndicator.textContent = `🎤 À ${joueurActuel} de jouer !`;
+        }
+
+        function renderButtons() {
+            boutonsReponseDiv.innerHTML = '';
+            createButton("Présent", "present", "present");
+            createButton("Passé composé", "passe", "passe");
+            createButton("Futur proche", "futur", "futur");
+        }
+
+        function createButton(text, tempsKey, cssClass) {
+            const btn = document.createElement('button');
+            btn.className = `btn-reponse ${cssClass}`;
+            btn.textContent = text;
+            btn.setAttribute('data-temps', tempsKey);
+            btn.addEventListener('click', () => handleAnswer(tempsKey));
+            boutonsReponseDiv.appendChild(btn);
+        }
+
+        function handleAnswer(tempsChoisi) {
+            if (!canAnswer || !gameState.gameActive || gameState.currentPlayer !== playerRole) return;
+
+            const phraseCourante = gameState.phrasesListe[gameState.currentIndex];
+            const tempsCorrect = phraseCourante.temps;
+            const correct = (tempsChoisi === tempsCorrect);
+
+            disableButtons(true);
+            canAnswer = false;
+            if (timerInterval) clearInterval(timerInterval);
+
+            if (correct) {
+                feedbackMessage.textContent = `✅ Bonne réponse ! +1 point pour ${playerRole === 'capitaine' ? gameState.capName : gameState.coeqName}`;
+                if (playerRole === 'capitaine') {
+                    gameState.scoreCap++;
+                } else {
+                    gameState.scoreCoeq++;
+                }
+            } else {
+                feedbackMessage.textContent = `❌ Oups... C'était du ${traduireTemps(tempsCorrect)}. Pas de point.`;
+            }
+
+            updateUI();
+            saveGameState();
+
+            setTimeout(() => {
+                if (gameState.currentIndex < gameState.phrasesListe.length - 1) {
+                    gameState.currentIndex++;
+                    gameState.currentPlayer = gameState.currentPlayer === 'capitaine' ? 'coequipier' : 'capitaine';
+                    
+                    saveGameState();
+                    
+                    if (gameState.currentPlayer === playerRole) {
+                        prepareForTurn();
+                    } else {
+                        disableButtons(true);
+                        feedbackMessage.textContent = `🔵🔴 C'est à l'autre joueur...`;
+                        updateUI();
+                    }
+                } else {
+                    gameState.gameActive = false;
+                    feedbackMessage.textContent = "🏆 Duel terminé !";
+                    disableButtons(true);
+                    saveGameState();
+                }
+            }, 2000);
+        }
+
+        function traduireTemps(t) {
+            if (t === 'present') return 'présent';
+            if (t === 'passe') return 'passé composé';
+            return 'futur proche';
+        }
+
+        function disableButtons(disabled) {
+            document.querySelectorAll('.btn-reponse').forEach(btn => btn.disabled = disabled);
+        }
+
+        function startTimer(seconds) {
+            if (timerInterval) clearInterval(timerInterval);
+            timeLeft = seconds;
+            timerDisplaySpan.textContent = `⏱️ ${timeLeft}s`;
+            canAnswer = true;
+
+            timerInterval = setInterval(() => {
+                if (!gameState.gameActive) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+                timeLeft--;
+                timerDisplaySpan.textContent = `⏱️ ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (canAnswer && gameState.currentPlayer === playerRole) {
+                        canAnswer = false;
+                        const phraseCourante = gameState.phrasesListe[gameState.currentIndex];
+                        feedbackMessage.textContent = `⏰ Temps écoulé ! (C'était du ${traduireTemps(phraseCourante.temps)})`;
+                        disableButtons(true);
+                        
+                        setTimeout(() => {
+                            if (gameState.currentIndex < gameState.phrasesListe.length - 1) {
+                                gameState.currentIndex++;
+                                gameState.currentPlayer = gameState.currentPlayer === 'capitaine' ? 'coequipier' : 'capitaine';
+                                saveGameState();
+                                
+                                if (gameState.currentPlayer === playerRole) {
+                                    prepareForTurn();
+                                } else {
+                                    updateUI();
+                                }
+                            } else {
+                                gameState.gameActive = false;
+                                feedbackMessage.textContent = "🏆 Duel terminé !";
+                                disableButtons(true);
+                                saveGameState();
+                            }
+                        }, 2000);
+                    }
+                }
+            }, 1000);
+        }
+
+        function prepareForTurn() {
+            if (!gameState.gameActive) return;
+            
+            updateUI();
+            renderButtons();
+            disableButtons(false);
+            startTimer(25);
+            feedbackMessage.textContent = `À toi de jouer, ${playerRole === 'capitaine' ? gameState.capName : gameState.coeqName} !`;
+        }
+
+        // ---------- GESTION CRÉATION/REJOINTE ----------
+        createGameBtn.addEventListener('click', () => {
+            const name = creatorNameInput.value.trim() || "Capitaine";
+            
+            cleanOldGames();
+            
+            gameId = generateGameId();
+            isCreator = true;
+            playerRole = "capitaine";
+            
+            // Copier et mélanger les phrases
+            const shuffledPhrases = [...phrasesListe];
+            shuffleArray(shuffledPhrases);
+            
+            gameState = {
+                currentIndex: 0,
+                scoreCap: 0,
+                scoreCoeq: 0,
+                capName: name,
+                coeqName: "En attente...",
+                currentPlayer: "capitaine",
+                gameActive: false,
+                phrasesListe: shuffledPhrases
+            };
+            
+            saveGameState();
+            
+            setupScreen.classList.add('hidden');
+            waitingScreen.classList.remove('hidden');
+            
+            const baseUrl = window.location.href.split('?')[0];
+            const fullLink = `${baseUrl}?game=${gameId}`;
+            gameLinkDisplay.innerHTML = `📋 Lien à partager :<br><strong>${fullLink}</strong>`;
+            
+            startPolling();
+            
+            const checkJoiner = setInterval(() => {
+                const state = loadGameState();
+                if (state && state.coeqName !== "En attente..." && !gameState.gameActive) {
+                    gameState = state;
+                    gameState.gameActive = true;
+                    saveGameState();
+                    
+                    waitingScreen.classList.add('hidden');
+                    gameScreen.classList.add('visible');
+                    
+                    capNameDisplay.textContent = `🔵 ${gameState.capName}`;
+                    coeqNameDisplay.textContent = `🔴 ${gameState.coeqName}`;
+                    updateUI();
+                    
+                    if (playerRole === 'capitaine') {
+                        prepareForTurn();
+                    } else {
+                        disableButtons(true);
+                        feedbackMessage.textContent = `🔵🔴 C'est à l'autre joueur...`;
+                    }
+                    
+                    clearInterval(checkJoiner);
+                }
+            }, 2000);
+        });
+
+        joinGameBtn.addEventListener('click', () => {
+            const name = joinerNameInput.value.trim() || "Coéquipier";
+            const link = gameLinkInput.value.trim();
+            
+            let extractedId = null;
+            if (link.includes('game=')) {
+                extractedId = link.split('game=')[1].split('&')[0].split('#')[0];
+            }
+            
+            if (!extractedId) {
+                alert("Lien invalide !");
+                return;
+            }
+            
+            gameId = extractedId;
+            playerRole = "coequipier";
+            
+            const existingState = loadGameState();
+            if (!existingState) {
+                alert("Partie introuvable !");
+                return;
+            }
+            
+            gameState = existingState;
+            gameState.coeqName = name;
+            gameState.gameActive = true;
+            saveGameState();
+            
+            setupScreen.classList.add('hidden');
+            gameScreen.classList.add('visible');
+            
+            capNameDisplay.textContent = `🔵 ${gameState.capName}`;
+            coeqNameDisplay.textContent = `🔴 ${gameState.coeqName}`;
+            updateUI();
+            
+            startPolling();
+            
+            if (gameState.currentPlayer === playerRole) {
+                prepareForTurn();
+            } else {
+                disableButtons(true);
+                feedbackMessage.textContent = `🔵🔴 C'est à l'autre joueur...`;
+            }
+        });
+
+        cancelGameBtn.addEventListener('click', () => {
+            if (gameId) {
+                localStorage.removeItem(`game_${gameId}`);
+            }
+            if (pollingInterval) clearInterval(pollingInterval);
+            waitingScreen.classList.add('hidden');
+            setupScreen.classList.remove('hidden');
+        });
+
+        restartBtn.addEventListener('click', () => {
+            if (pollingInterval) clearInterval(pollingInterval);
+            if (timerInterval) clearInterval(timerInterval);
+            
+            gameScreen.classList.remove('visible');
+            setupScreen.classList.remove('hidden');
+            
+            gameId = null;
+            playerRole = null;
+        });
+
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameParam = urlParams.get('game');
+            
+            if (gameParam) {
+                gameId = gameParam;
+                gameLinkInput.value = window.location.href;
+            }
+        });
+
+    })();
+</script>
+</body>
+</html>
