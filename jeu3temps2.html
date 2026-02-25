@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>⚡ ChronoDuel – Quel Temps ?</title>
+
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700;900&family=Nunito:wght@400;600;800&display=swap');
+
+    :root {
+      --bleu:    #0c2461;
+      --bleu2:   #1e3799;
+      --orange:  #ff9f1a;
+      --orange2: #ff7f00;
+      --vert:    #2ed573;
+      --rouge:   #ff6b6b;
+      --ciel:    #74b9ff;
+      --violet:  #a29bfe;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: linear-gradient(135deg, var(--bleu) 0%, var(--bleu2) 100%);
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255,255,255,.08);
+      padding: 32px;
+      border-radius: 28px;
+      backdrop-filter: blur(12px);
+      border: 4px solid var(--orange);
+      box-shadow: 0 20px 50px rgba(0,0,0,.45);
+    }
+
+    h1 {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2.5em; font-weight: 900;
+      color: var(--orange);
+      text-shadow: 3px 3px 0 var(--bleu);
+      margin-bottom: 8px;
+    }
+    .subtitle { font-size: 1.05em; color: #a4b0be; margin-bottom: 24px; }
+
+    .section {
+      display: none; padding: 28px; margin: 20px 0;
+      border-radius: 20px; background: rgba(255,255,255,.1);
+      border: 2px solid rgba(255,255,255,.15);
+    }
+    .active { display: block; animation: fadeUp .4s ease; }
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(16px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    input {
+      padding: 15px 20px; border-radius: 13px; border: 3px solid var(--orange);
+      font-size: 17px; font-weight: 700; color: var(--bleu); background: #fff;
+      width: 280px; text-align: center; margin: 12px;
+    }
+    input:focus { outline: none; box-shadow: 0 0 0 3px rgba(255,159,26,.35); }
+
+    button {
+      padding: 16px 26px; border-radius: 13px; border: 3px solid var(--orange);
+      font-size: 16px; font-weight: 800; font-family: 'Nunito', sans-serif;
+      cursor: pointer; margin: 10px; min-width: 230px; transition: all .22s;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange2) 100%);
+      color: #fff; box-shadow: 0 5px 15px rgba(255,159,26,.3);
+    }
+    button:hover { transform: translateY(-4px) scale(1.04); box-shadow: 0 10px 28px rgba(255,159,26,.5); }
+    .copy-btn   { background: linear-gradient(135deg,#3742fa,#2f3542) !important; border-color: #3742fa !important; }
+    .danger-btn { background: linear-gradient(135deg,var(--rouge),#c0392b) !important; border-color: var(--rouge) !important; }
+
+    /* ── Question box ── */
+    .question-box {
+      padding: 28px 24px; margin: 20px 0;
+      border-radius: 22px; border: 4px solid var(--orange);
+      background: rgba(255,255,255,.13);
+      min-height: 100px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    }
+
+    .question-label {
+      font-size: 1.15em; font-weight: 700; color: #dfe6e9;
+      letter-spacing: .5px;
+    }
+
+    .tense-asked {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 2em; font-weight: 900;
+      padding: 10px 32px;
+      border-radius: 50px;
+      display: inline-block;
+    }
+    .tense-present { background: var(--vert);   color: #fff; }
+    .tense-passe   { background: #3742fa;        color: #fff; }
+    .tense-futur   { background: var(--violet);  color: #fff; }
+
+    .subject-label {
+      font-size: 1.3em; font-weight: 800; color: var(--ciel);
+    }
+
+    /* ── Choix (formes verbales, mots séparés) ── */
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+      max-width: 780px;
+      margin: 18px auto;
+    }
+
+    .choice-btn {
+      background: rgba(255,255,255,.12);
+      color: #fff;
+      border: 3px solid rgba(255,255,255,.3);
+      border-radius: 16px;
+      padding: 20px 12px;
+      font-family: 'Exo 2', sans-serif;
+      font-size: 1.25em; font-weight: 700;
+      min-width: unset; width: 100%; margin: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      transition: all .22s;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 7px;
+      align-items: center;
+    }
+    .choice-btn:hover { background: rgba(255,255,255,.22); transform: translateY(-3px); border-color: var(--orange); }
+    .choice-btn.correct { background: linear-gradient(135deg,var(--vert),#1dd1a1) !important;
+                          border-color:var(--vert) !important; animation: pop .5s; }
+    .choice-btn.wrong   { background: linear-gradient(135deg,var(--rouge),#ee5a24) !important;
+                          border-color:var(--rouge) !important; animation: shake .45s; }
+
+    .choice-btn .w       { display: inline-block; }
+    .choice-btn .w.verb  { color: var(--orange); border-bottom: 2px solid var(--orange); padding-bottom: 1px; }
+    .choice-btn.correct .w.verb { color: #fff; border-bottom-color: rgba(255,255,255,.6); }
+    .choice-btn.wrong   .w.verb { color: #fff; border-bottom-color: rgba(255,255,255,.6); }
+
+    @keyframes pop   { 0%,100%{transform:scale(1)} 50%{transform:scale(1.07)} }
+    @keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-8px)} 75%{transform:translateX(8px)} }
+
+    /* ── Timer ── */
+    .timer {
+      font-family: 'Exo 2', sans-serif;
+      font-size: 60px; font-weight: 900; color: var(--orange);
+      margin: 14px 0; text-shadow: 3px 3px 0 rgba(0,0,0,.3); transition: color .3s;
+    }
+    .timer.urgent { color: var(--rouge); animation: pulse .6s infinite; }
+    @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+
+    /* ── Progress ── */
+    .progress-wrap {
+      width:100%; height:20px; background:rgba(255,255,255,.15);
+      border-radius:10px; margin:18px 0; overflow:hidden; border:2px solid var(--orange);
+    }
+    .progress-bar {
+      height:100%;
+      background: linear-gradient(90deg, var(--rouge), var(--orange), var(--ciel));
+      width:0%; transition: width .6s cubic-bezier(.34,1.56,.64,1);
+    }
+    .progress-text { font-size:18px; color:var(--orange); font-weight:800; margin-top:6px; }
+
+    /* ── Scores ── */
+    .scores { display:flex; justify-content:space-around; gap:20px; margin:24px 0; }
+    .player { padding:22px; border-radius:18px; min-width:195px; border:3px solid; box-shadow:0 8px 24px rgba(0,0,0,.2); }
+    .player1 { border-color:var(--rouge); background:linear-gradient(135deg,rgba(255,107,107,.15),rgba(255,107,107,.04)); }
+    .player2 { border-color:var(--ciel);  background:linear-gradient(135deg,rgba(116,185,255,.15),rgba(116,185,255,.04)); }
+    .player-name  { font-size:21px; font-weight:800; margin-bottom:8px; }
+    .player-score { font-size:48px; color:var(--orange); font-weight:900; text-shadow:2px 2px 0 rgba(0,0,0,.3); }
+
+    /* ── Explication ── */
+    .explication {
+      background:rgba(255,255,255,.12); padding:14px 18px; border-radius:13px;
+      margin:14px 0; border-left:5px solid var(--orange); text-align:left; font-size:15px;
+    }
+    .explication strong { color:var(--orange); }
+
+    /* ── Share / Message ── */
+    .share-link {
+      background:#fff; color:var(--bleu); padding:16px; border-radius:13px;
+      margin:18px 0; word-break:break-all; font-size:15px; border:3px solid var(--orange);
+    }
+    .message {
+      padding:16px; border-radius:13px; margin:14px 0;
+      background:rgba(255,255,255,.13); font-size:16px; border:2px solid var(--orange);
+    }
+    .hidden { display:none !important; }
+
+    .tense-badge {
+      display:inline-block; padding:4px 14px; border-radius:20px;
+      font-size:13px; font-weight:800; margin:4px;
+    }
+    .badge-present { background:var(--vert);  color:#fff; }
+    .badge-passe   { background:#3742fa;       color:#fff; }
+    .badge-futur   { background:var(--violet); color:#fff; }
+
+    @media(max-width:680px){
+      .scores { flex-direction:column; align-items:center; }
+      .choices-grid { grid-template-columns:1fr; }
+      .tense-asked { font-size:1.5em; }
+      .choice-btn { font-size:1.1em; }
+      .timer { font-size:48px; }
+      h1 { font-size:1.9em; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>⚡ ChronoDuel – Quel Temps ?</h1>
+  <p class="subtitle">60 questions · Présent • Passé Composé • Futur Proche · 30 sec · ordre aléatoire</p>
+
+  <!-- Accueil -->
+  <div id="home-screen" class="section active">
+    <div style="font-size:76px;margin:22px 0;">🕐⚡</div>
+    <h2>Choisis la bonne forme !</h2>
+    <p style="margin:10px 0 24px;font-size:1.05em;color:#dfe6e9;">
+      On te donne le temps demandé 👉 trouve le verbe qui correspond !
+    </p>
+    <button onclick="createGame()">🎮 CAPITAINE (Créer la partie)</button><br>
+    <button onclick="joinGame()">🔗 COÉQUIPIER (Rejoindre la partie)</button>
+  </div>
+
+  <!-- Capitaine -->
+  <div id="player1-screen" class="section">
+    <h2>⭐ Tu es le Capitaine</h2>
+    <p>Choisis ton nom :</p>
+    <input id="player1-name" placeholder="Ton nom"><br>
+    <button onclick="startAsPlayer1()">🚀 Lancer la partie</button>
+    <div id="share-box" class="hidden">
+      <h3>📡 Lien d'invitation</h3>
+      <p>Envoie ce lien à ton coéquipier :</p>
+      <div class="share-link" id="game-link">Génération…</div>
+      <button class="copy-btn" onclick="copyLink()">📋 Copier le lien</button>
+      <p class="message">⏳ En attente du coéquipier…</p>
+    </div>
+  </div>
+
+  <!-- Coéquipier -->
+  <div id="player2-screen" class="section">
+    <h2>👥 Tu es le Coéquipier</h2>
+    <p>Choisis ton nom :</p>
+    <input id="player2-name" placeholder="Ton nom"><br>
+    <button onclick="joinAsPlayer2()">🤝 Rejoindre la partie</button>
+    <p class="message" id="player2-message">Entre ton nom et rejoins le Capitaine !</p>
+  </div>
+
+  <!-- Jeu -->
+  <div id="game-screen" class="section">
+    <div class="timer" id="timer">30</div>
+    <div class="progress-wrap"><div class="progress-bar" id="progress"></div></div>
+    <div class="progress-text" id="progress-text">Question 1/60</div>
+
+    <!-- Question : quel verbe est au [TEMPS] avec le sujet [SUJET] ? -->
+    <div class="question-box">
+      <div class="question-label">Quel verbe est au…</div>
+      <div class="tense-asked" id="tense-asked-display">Présent</div>
+      <div class="subject-label">avec le sujet : <span id="subject-asked"></span></div>
+    </div>
+
+    <div class="choices-grid" id="choices"></div>
+
+    <div id="explication" class="explication hidden">
+      <strong>💡 Rappel :</strong> <span id="explication-text"></span>
+    </div>
+
+    <div class="scores">
+      <div class="player player1">
+        <div class="player-name" id="player1-display-name">Capitaine</div>
+        <div class="player-score" id="player1-score">0</div>
+      </div>
+      <div class="player player2">
+        <div class="player-name" id="player2-display-name">Coéquipier</div>
+        <div class="player-score" id="player2-score">0</div>
+      </div>
+    </div>
+    <p id="game-message" style="font-size:15px;color:#a4b0be;">Clique sur la bonne forme verbale !</p>
+  </div>
+
+  <!-- Fin -->
+  <div id="end-screen" class="section">
+    <div style="font-size:96px;margin:22px 0;" id="trophy">🏆</div>
+    <h2>🎉 Partie Terminée !</h2>
+    <div id="winner-message" style="font-size:22px;margin:22px 0;"></div>
+    <div class="scores">
+      <div class="player player1">
+        <div class="player-name" id="final-player1-name">Capitaine</div>
+        <div class="player-score" id="final-player1-score">0</div>
+      </div>
+      <div class="player player2">
+        <div class="player-name" id="final-player2-name">Coéquipier</div>
+        <div class="player-score" id="final-player2-score">0</div>
+      </div>
+    </div>
+    <div id="stats" style="margin:22px 0;font-size:15px;"></div>
+    <button onclick="restartGame()">🔄 Nouvelle partie</button>
+    <button class="danger-btn" onclick="goHome()">🏠 Retour à l'accueil</button>
+  </div>
+</div>
+
+<script>
+// ── Firebase ──────────────────────────────────────────────────────────────
+const firebaseConfig = {
+  apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+  authDomain: "fabien-bouvier.firebaseapp.com",
+  databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "fabien-bouvier",
+  storageBucket: "fabien-bouvier.firebasestorage.app",
+  messagingSenderId: "863046756799",
+  appId: "1:863046756799:web:36a48325658a4286d6190a"
+};
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
+
+// ═══════════════════════════════════════════════════════════════════════════
+// BASE DE DONNÉES : 20 verbes × 3 temps = 60 entrées
+// Chaque entrée : sujet, infinitif, tense, phrase (mots[]), verbIdx[]
+// + 2 distracteurs (formes d'autres temps ou personnes du même verbe)
+// ═══════════════════════════════════════════════════════════════════════════
+const ALL_QUESTIONS = [
+
+  // ──────────── MANGER ────────────
+  {
+    sujet:"elle", infinitif:"manger", tense:"Présent",
+    phrase:["Elle","mange","une","pomme","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Elle","a","mangé","une","pomme","."],     verbIdx:[1,2] },
+      { phrase:["Elle","va","manger","une","pomme","."],   verbIdx:[1,2] }
+    ],
+    explication:"Au présent : elle mange (verbe du 1er groupe, terminaison -e)."
+  },
+  {
+    sujet:"elle", infinitif:"manger", tense:"Passé Composé",
+    phrase:["Elle","a","mangé","une","pomme","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elle","mange","une","pomme","."],         verbIdx:[1] },
+      { phrase:["Elle","va","manger","une","pomme","."],   verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + mangé (participe passé du 1er groupe)."
+  },
+  {
+    sujet:"elle", infinitif:"manger", tense:"Futur Proche",
+    phrase:["Elle","va","manger","une","pomme","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elle","mange","une","pomme","."],         verbIdx:[1] },
+      { phrase:["Elle","a","mangé","une","pomme","."],     verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : aller au présent (va) + infinitif (manger)."
+  },
+
+  // ──────────── FINIR ────────────
+  {
+    sujet:"tu", infinitif:"finir", tense:"Présent",
+    phrase:["Tu","finis","ton","exercice","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Tu","as","fini","ton","exercice","."],     verbIdx:[1,2] },
+      { phrase:["Tu","vas","finir","ton","exercice","."],   verbIdx:[1,2] }
+    ],
+    explication:"Au présent : tu finis (2e groupe, terminaison -is)."
+  },
+  {
+    sujet:"tu", infinitif:"finir", tense:"Passé Composé",
+    phrase:["Tu","as","fini","ton","exercice","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Tu","finis","ton","exercice","."],         verbIdx:[1] },
+      { phrase:["Tu","vas","finir","ton","exercice","."],   verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + fini (participe passé du 2e groupe)."
+  },
+  {
+    sujet:"tu", infinitif:"finir", tense:"Futur Proche",
+    phrase:["Tu","vas","finir","ton","exercice","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Tu","finis","ton","exercice","."],         verbIdx:[1] },
+      { phrase:["Tu","as","fini","ton","exercice","."],     verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : aller au présent (vas) + infinitif (finir)."
+  },
+
+  // ──────────── ALLER ────────────
+  {
+    sujet:"ils", infinitif:"aller", tense:"Présent",
+    phrase:["Ils","vont","à","l'école","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Ils","sont","allés","à","l'école","."],     verbIdx:[1,2] },
+      { phrase:["Ils","vont","aller","à","l'école","."],     verbIdx:[1,2] }
+    ],
+    explication:"Au présent : ils vont (verbe aller très irrégulier)."
+  },
+  {
+    sujet:"ils", infinitif:"aller", tense:"Passé Composé",
+    phrase:["Ils","sont","allés","à","l'école","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Ils","vont","à","l'école","."],             verbIdx:[1] },
+      { phrase:["Ils","vont","aller","à","l'école","."],     verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : être (sont) + allés. Aller se conjugue avec être."
+  },
+  {
+    sujet:"ils", infinitif:"aller", tense:"Futur Proche",
+    phrase:["Ils","vont","aller","à","l'école","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Ils","vont","à","l'école","."],             verbIdx:[1] },
+      { phrase:["Ils","sont","allés","à","l'école","."],     verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vont + aller (infinitif)."
+  },
+
+  // ──────────── PARTIR ────────────
+  {
+    sujet:"je", infinitif:"partir", tense:"Présent",
+    phrase:["Je","pars","en","vacances","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Je","suis","parti","en","vacances","."],   verbIdx:[1,2] },
+      { phrase:["Je","vais","partir","en","vacances","."],  verbIdx:[1,2] }
+    ],
+    explication:"Au présent : je pars (3e groupe, terminaison -s)."
+  },
+  {
+    sujet:"je", infinitif:"partir", tense:"Passé Composé",
+    phrase:["Je","suis","parti","en","vacances","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Je","pars","en","vacances","."],            verbIdx:[1] },
+      { phrase:["Je","vais","partir","en","vacances","."],   verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : être (suis) + parti. Partir se conjugue avec être."
+  },
+  {
+    sujet:"je", infinitif:"partir", tense:"Futur Proche",
+    phrase:["Je","vais","partir","en","vacances","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Je","pars","en","vacances","."],            verbIdx:[1] },
+      { phrase:["Je","suis","parti","en","vacances","."],    verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vais + partir (infinitif)."
+  },
+
+  // ──────────── PRENDRE ────────────
+  {
+    sujet:"nous", infinitif:"prendre", tense:"Présent",
+    phrase:["Nous","prenons","le","bus","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Nous","avons","pris","le","bus","."],       verbIdx:[1,2] },
+      { phrase:["Nous","allons","prendre","le","bus","."],   verbIdx:[1,2] }
+    ],
+    explication:"Au présent : nous prenons (3e groupe)."
+  },
+  {
+    sujet:"nous", infinitif:"prendre", tense:"Passé Composé",
+    phrase:["Nous","avons","pris","le","bus","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Nous","prenons","le","bus","."],             verbIdx:[1] },
+      { phrase:["Nous","allons","prendre","le","bus","."],    verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + pris (participe passé irrégulier de prendre)."
+  },
+  {
+    sujet:"nous", infinitif:"prendre", tense:"Futur Proche",
+    phrase:["Nous","allons","prendre","le","bus","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Nous","prenons","le","bus","."],             verbIdx:[1] },
+      { phrase:["Nous","avons","pris","le","bus","."],        verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : allons + prendre (infinitif)."
+  },
+
+  // ──────────── FAIRE ────────────
+  {
+    sujet:"vous", infinitif:"faire", tense:"Présent",
+    phrase:["Vous","faites","vos","devoirs","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Vous","avez","fait","vos","devoirs","."],    verbIdx:[1,2] },
+      { phrase:["Vous","allez","faire","vos","devoirs","."],  verbIdx:[1,2] }
+    ],
+    explication:"Au présent : vous faites (irrégulier ! pas vous faisez)."
+  },
+  {
+    sujet:"vous", infinitif:"faire", tense:"Passé Composé",
+    phrase:["Vous","avez","fait","vos","devoirs","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Vous","faites","vos","devoirs","."],         verbIdx:[1] },
+      { phrase:["Vous","allez","faire","vos","devoirs","."],  verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + fait (participe passé irrégulier de faire)."
+  },
+  {
+    sujet:"vous", infinitif:"faire", tense:"Futur Proche",
+    phrase:["Vous","allez","faire","vos","devoirs","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Vous","faites","vos","devoirs","."],         verbIdx:[1] },
+      { phrase:["Vous","avez","fait","vos","devoirs","."],    verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : allez + faire (infinitif)."
+  },
+
+  // ──────────── VOIR ────────────
+  {
+    sujet:"il", infinitif:"voir", tense:"Présent",
+    phrase:["Il","voit","ses","amis","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Il","a","vu","ses","amis","."],             verbIdx:[1,2] },
+      { phrase:["Il","va","voir","ses","amis","."],          verbIdx:[1,2] }
+    ],
+    explication:"Au présent : il voit (3e groupe)."
+  },
+  {
+    sujet:"il", infinitif:"voir", tense:"Passé Composé",
+    phrase:["Il","a","vu","ses","amis","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Il","voit","ses","amis","."],               verbIdx:[1] },
+      { phrase:["Il","va","voir","ses","amis","."],          verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + vu (participe passé irrégulier de voir)."
+  },
+  {
+    sujet:"il", infinitif:"voir", tense:"Futur Proche",
+    phrase:["Il","va","voir","ses","amis","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Il","voit","ses","amis","."],               verbIdx:[1] },
+      { phrase:["Il","a","vu","ses","amis","."],             verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : va + voir (infinitif)."
+  },
+
+  // ──────────── VENIR ────────────
+  {
+    sujet:"elles", infinitif:"venir", tense:"Présent",
+    phrase:["Elles","viennent","au","stade","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Elles","sont","venues","au","stade","."],   verbIdx:[1,2] },
+      { phrase:["Elles","vont","venir","au","stade","."],    verbIdx:[1,2] }
+    ],
+    explication:"Au présent : elles viennent (3e groupe, irrégulier)."
+  },
+  {
+    sujet:"elles", infinitif:"venir", tense:"Passé Composé",
+    phrase:["Elles","sont","venues","au","stade","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elles","viennent","au","stade","."],        verbIdx:[1] },
+      { phrase:["Elles","vont","venir","au","stade","."],    verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : être (sont) + venues. Venir se conjugue avec être."
+  },
+  {
+    sujet:"elles", infinitif:"venir", tense:"Futur Proche",
+    phrase:["Elles","vont","venir","au","stade","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elles","viennent","au","stade","."],        verbIdx:[1] },
+      { phrase:["Elles","sont","venues","au","stade","."],   verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vont + venir (infinitif)."
+  },
+
+  // ──────────── LIRE ────────────
+  {
+    sujet:"tu", infinitif:"lire", tense:"Présent",
+    phrase:["Tu","lis","un","roman","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Tu","as","lu","un","roman","."],            verbIdx:[1,2] },
+      { phrase:["Tu","vas","lire","un","roman","."],         verbIdx:[1,2] }
+    ],
+    explication:"Au présent : tu lis (3e groupe, terminaison -s)."
+  },
+  {
+    sujet:"tu", infinitif:"lire", tense:"Passé Composé",
+    phrase:["Tu","as","lu","un","roman","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Tu","lis","un","roman","."],                verbIdx:[1] },
+      { phrase:["Tu","vas","lire","un","roman","."],         verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + lu (participe passé irrégulier de lire)."
+  },
+  {
+    sujet:"tu", infinitif:"lire", tense:"Futur Proche",
+    phrase:["Tu","vas","lire","un","roman","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Tu","lis","un","roman","."],                verbIdx:[1] },
+      { phrase:["Tu","as","lu","un","roman","."],            verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vas + lire (infinitif)."
+  },
+
+  // ──────────── CHOISIR ────────────
+  {
+    sujet:"elle", infinitif:"choisir", tense:"Présent",
+    phrase:["Elle","choisit","une","robe","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Elle","a","choisi","une","robe","."],       verbIdx:[1,2] },
+      { phrase:["Elle","va","choisir","une","robe","."],     verbIdx:[1,2] }
+    ],
+    explication:"Au présent : elle choisit (2e groupe, terminaison -it)."
+  },
+  {
+    sujet:"elle", infinitif:"choisir", tense:"Passé Composé",
+    phrase:["Elle","a","choisi","une","robe","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elle","choisit","une","robe","."],          verbIdx:[1] },
+      { phrase:["Elle","va","choisir","une","robe","."],     verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + choisi (participe passé du 2e groupe)."
+  },
+  {
+    sujet:"elle", infinitif:"choisir", tense:"Futur Proche",
+    phrase:["Elle","va","choisir","une","robe","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elle","choisit","une","robe","."],          verbIdx:[1] },
+      { phrase:["Elle","a","choisi","une","robe","."],       verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : va + choisir (infinitif)."
+  },
+
+  // ──────────── COURIR ────────────
+  {
+    sujet:"ils", infinitif:"courir", tense:"Présent",
+    phrase:["Ils","courent","dans","le","parc","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Ils","ont","couru","dans","le","parc","."], verbIdx:[1,2] },
+      { phrase:["Ils","vont","courir","dans","le","parc","."], verbIdx:[1,2] }
+    ],
+    explication:"Au présent : ils courent (3e groupe)."
+  },
+  {
+    sujet:"ils", infinitif:"courir", tense:"Passé Composé",
+    phrase:["Ils","ont","couru","dans","le","parc","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Ils","courent","dans","le","parc","."],     verbIdx:[1] },
+      { phrase:["Ils","vont","courir","dans","le","parc","."], verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + couru (participe passé de courir)."
+  },
+  {
+    sujet:"ils", infinitif:"courir", tense:"Futur Proche",
+    phrase:["Ils","vont","courir","dans","le","parc","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Ils","courent","dans","le","parc","."],     verbIdx:[1] },
+      { phrase:["Ils","ont","couru","dans","le","parc","."], verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vont + courir (infinitif)."
+  },
+
+  // ──────────── PARLER ────────────
+  {
+    sujet:"nous", infinitif:"parler", tense:"Présent",
+    phrase:["Nous","parlons","ensemble","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Nous","avons","parlé","ensemble","."],      verbIdx:[1,2] },
+      { phrase:["Nous","allons","parler","ensemble","."],    verbIdx:[1,2] }
+    ],
+    explication:"Au présent : nous parlons (1er groupe, terminaison -ons)."
+  },
+  {
+    sujet:"nous", infinitif:"parler", tense:"Passé Composé",
+    phrase:["Nous","avons","parlé","ensemble","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Nous","parlons","ensemble","."],            verbIdx:[1] },
+      { phrase:["Nous","allons","parler","ensemble","."],    verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + parlé (participe passé du 1er groupe)."
+  },
+  {
+    sujet:"nous", infinitif:"parler", tense:"Futur Proche",
+    phrase:["Nous","allons","parler","ensemble","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Nous","parlons","ensemble","."],            verbIdx:[1] },
+      { phrase:["Nous","avons","parlé","ensemble","."],      verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : allons + parler (infinitif)."
+  },
+
+  // ──────────── BOIRE ────────────
+  {
+    sujet:"je", infinitif:"boire", tense:"Présent",
+    phrase:["Je","bois","du","lait","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["J'","ai","bu","du","lait","."],             verbIdx:[1,2] },
+      { phrase:["Je","vais","boire","du","lait","."],        verbIdx:[1,2] }
+    ],
+    explication:"Au présent : je bois (3e groupe)."
+  },
+  {
+    sujet:"je", infinitif:"boire", tense:"Passé Composé",
+    phrase:["J'","ai","bu","du","lait","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Je","bois","du","lait","."],                verbIdx:[1] },
+      { phrase:["Je","vais","boire","du","lait","."],        verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + bu (participe passé irrégulier de boire)."
+  },
+  {
+    sujet:"je", infinitif:"boire", tense:"Futur Proche",
+    phrase:["Je","vais","boire","du","lait","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Je","bois","du","lait","."],                verbIdx:[1] },
+      { phrase:["J'","ai","bu","du","lait","."],             verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vais + boire (infinitif)."
+  },
+
+  // ──────────── ÉCRIRE ────────────
+  {
+    sujet:"tu", infinitif:"écrire", tense:"Présent",
+    phrase:["Tu","écris","une","lettre","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Tu","as","écrit","une","lettre","."],       verbIdx:[1,2] },
+      { phrase:["Tu","vas","écrire","une","lettre","."],     verbIdx:[1,2] }
+    ],
+    explication:"Au présent : tu écris (3e groupe, terminaison -s)."
+  },
+  {
+    sujet:"tu", infinitif:"écrire", tense:"Passé Composé",
+    phrase:["Tu","as","écrit","une","lettre","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Tu","écris","une","lettre","."],            verbIdx:[1] },
+      { phrase:["Tu","vas","écrire","une","lettre","."],     verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + écrit (participe passé irrégulier de écrire)."
+  },
+  {
+    sujet:"tu", infinitif:"écrire", tense:"Futur Proche",
+    phrase:["Tu","vas","écrire","une","lettre","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Tu","écris","une","lettre","."],            verbIdx:[1] },
+      { phrase:["Tu","as","écrit","une","lettre","."],       verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vas + écrire (infinitif)."
+  },
+
+  // ──────────── RÉPONDRE ────────────
+  {
+    sujet:"il", infinitif:"répondre", tense:"Présent",
+    phrase:["Il","répond","à","la","question","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Il","a","répondu","à","la","question","."], verbIdx:[1,2] },
+      { phrase:["Il","va","répondre","à","la","question","."], verbIdx:[1,2] }
+    ],
+    explication:"Au présent : il répond (3e groupe en -dre, pas de -t)."
+  },
+  {
+    sujet:"il", infinitif:"répondre", tense:"Passé Composé",
+    phrase:["Il","a","répondu","à","la","question","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Il","répond","à","la","question","."],      verbIdx:[1] },
+      { phrase:["Il","va","répondre","à","la","question","."], verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + répondu (participe passé de répondre)."
+  },
+  {
+    sujet:"il", infinitif:"répondre", tense:"Futur Proche",
+    phrase:["Il","va","répondre","à","la","question","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Il","répond","à","la","question","."],      verbIdx:[1] },
+      { phrase:["Il","a","répondu","à","la","question","."], verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : va + répondre (infinitif)."
+  },
+
+  // ──────────── ARRIVER ────────────
+  {
+    sujet:"je", infinitif:"arriver", tense:"Présent",
+    phrase:["J'","arrive","en","retard","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Je","suis","arrivé","en","retard","."],     verbIdx:[1,2] },
+      { phrase:["Je","vais","arriver","en","retard","."],    verbIdx:[1,2] }
+    ],
+    explication:"Au présent : j'arrive (1er groupe, terminaison -e)."
+  },
+  {
+    sujet:"je", infinitif:"arriver", tense:"Passé Composé",
+    phrase:["Je","suis","arrivé","en","retard","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["J'","arrive","en","retard","."],            verbIdx:[1] },
+      { phrase:["Je","vais","arriver","en","retard","."],    verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : être (suis) + arrivé. Arriver se conjugue avec être."
+  },
+  {
+    sujet:"je", infinitif:"arriver", tense:"Futur Proche",
+    phrase:["Je","vais","arriver","en","retard","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["J'","arrive","en","retard","."],            verbIdx:[1] },
+      { phrase:["Je","suis","arrivé","en","retard","."],     verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vais + arriver (infinitif)."
+  },
+
+  // ──────────── DORMIR ────────────
+  {
+    sujet:"elle", infinitif:"dormir", tense:"Présent",
+    phrase:["Elle","dort","dans","sa","chambre","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Elle","a","dormi","dans","sa","chambre","."],   verbIdx:[1,2] },
+      { phrase:["Elle","va","dormir","dans","sa","chambre","."], verbIdx:[1,2] }
+    ],
+    explication:"Au présent : elle dort (3e groupe, terminaison -t)."
+  },
+  {
+    sujet:"elle", infinitif:"dormir", tense:"Passé Composé",
+    phrase:["Elle","a","dormi","dans","sa","chambre","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elle","dort","dans","sa","chambre","."],        verbIdx:[1] },
+      { phrase:["Elle","va","dormir","dans","sa","chambre","."], verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + dormi (participe passé de dormir)."
+  },
+  {
+    sujet:"elle", infinitif:"dormir", tense:"Futur Proche",
+    phrase:["Elle","va","dormir","dans","sa","chambre","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elle","dort","dans","sa","chambre","."],        verbIdx:[1] },
+      { phrase:["Elle","a","dormi","dans","sa","chambre","."],   verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : va + dormir (infinitif)."
+  },
+
+  // ──────────── CHANTER ────────────
+  {
+    sujet:"elles", infinitif:"chanter", tense:"Présent",
+    phrase:["Elles","chantent","sur","scène","."], verbIdx:[1],
+    distracteurs:[
+      { phrase:["Elles","ont","chanté","sur","scène","."],   verbIdx:[1,2] },
+      { phrase:["Elles","vont","chanter","sur","scène","."], verbIdx:[1,2] }
+    ],
+    explication:"Au présent : elles chantent (1er groupe, terminaison -ent)."
+  },
+  {
+    sujet:"elles", infinitif:"chanter", tense:"Passé Composé",
+    phrase:["Elles","ont","chanté","sur","scène","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elles","chantent","sur","scène","."],       verbIdx:[1] },
+      { phrase:["Elles","vont","chanter","sur","scène","."], verbIdx:[1,2] }
+    ],
+    explication:"Passé composé : avoir + chanté (participe passé du 1er groupe)."
+  },
+  {
+    sujet:"elles", infinitif:"chanter", tense:"Futur Proche",
+    phrase:["Elles","vont","chanter","sur","scène","."], verbIdx:[1,2],
+    distracteurs:[
+      { phrase:["Elles","chantent","sur","scène","."],       verbIdx:[1] },
+      { phrase:["Elles","ont","chanté","sur","scène","."],   verbIdx:[1,2] }
+    ],
+    explication:"Futur proche : vont + chanter (infinitif)."
+  }
+
+];
+
+// ── Constantes ────────────────────────────────────────────────────────────
+const TENSE_CLASS = { "Présent":"tense-present", "Passé Composé":"tense-passe", "Futur Proche":"tense-futur" };
+const BADGE_CLASS  = { "Présent":"badge-present", "Passé Composé":"badge-passe", "Futur Proche":"badge-futur" };
+const POINTS    = 10;
+const TIMER_MAX = 30;
+const TOTAL     = ALL_QUESTIONS.length; // 60
+
+// ── Variables globales ────────────────────────────────────────────────────
+let playerName = "", playerNumber = 0, gameId = "", gameRef = null;
+let currentIndex = 0, timerVal = TIMER_MAX, timerInterval = null;
+let lastGameData = null, correctAnswersCount = 0, answered = false;
+let shuffledOrder = []; // ordre aléatoire partagé via Firebase
+
+// ── Mélange Fisher-Yates (seed déterministe partagé) ─────────────────────
+function shuffleWithSeed(arr, seed) {
+  const a = [...arr];
+  let s = seed;
+  function rand() { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0xffffffff; }
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(rand() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+// ── Utilitaires ───────────────────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function updatePlayerDisplays(d) {
+  const n1 = d.player1.name||"Capitaine", n2 = d.player2.name||"Coéquipier";
+  const s1 = d.player1.score||0,          s2 = d.player2.score||0;
+  ['player1-display-name','final-player1-name'].forEach(id => document.getElementById(id).textContent = n1);
+  ['player2-display-name','final-player2-name'].forEach(id => document.getElementById(id).textContent = n2);
+  ['player1-score','final-player1-score'].forEach(id => document.getElementById(id).textContent = s1);
+  ['player2-score','final-player2-score'].forEach(id => document.getElementById(id).textContent = s2);
+}
+
+// ── Accueil ───────────────────────────────────────────────────────────────
+function createGame() { showScreen('player1-screen'); }
+function joinGame()   { showScreen('player2-screen'); }
+
+function startAsPlayer1() {
+  const name = document.getElementById('player1-name').value.trim();
+  if (!name) { alert("Entre ton nom !"); return; }
+  playerName = name; playerNumber = 1;
+  gameId  = 'tqt3_' + Date.now() + '_' + Math.floor(Math.random()*9999);
+  gameRef = database.ref('tempsDuels3/' + gameId);
+  const seed = Math.floor(Math.random() * 999999) + 1;
+  gameRef.set({
+    player1: { name, score:0, ready:true, correct:0 },
+    player2: { name:"", score:0, ready:false, correct:0 },
+    currentIndex: 0, gameStarted: false, gameFinished: false,
+    seed, createdAt: Date.now()
+  });
+  const link = window.location.href.split('?')[0] + '?game=' + gameId;
+  document.getElementById('game-link').textContent = link;
+  document.getElementById('share-box').classList.remove('hidden');
+  listenToGame();
+}
+
+function copyLink() {
+  navigator.clipboard.writeText(document.getElementById('game-link').textContent)
+    .then(() => alert("Lien copié !"));
+}
+
+function joinAsPlayer2() {
+  const name = document.getElementById('player2-name').value.trim();
+  if (!name) { alert("Entre ton nom !"); return; }
+  playerName = name; playerNumber = 2;
+  const urlParams = new URLSearchParams(window.location.search);
+  gameId = urlParams.get('game') || prompt("Entre le code de la partie :");
+  if (!gameId) return;
+  gameRef = database.ref('tempsDuels3/' + gameId);
+  gameRef.once('value').then(snap => {
+    if (!snap.exists()) { alert("Partie non trouvée !"); return; }
+    lastGameData = snap.val();
+    gameRef.update({ player2: { name, score:0, ready:true, correct:0 } });
+    document.getElementById('player2-message').textContent = "Connecté ! En attente du capitaine…";
+    listenToGame();
+  });
+}
+
+// ── Écoute Firebase ───────────────────────────────────────────────────────
+function listenToGame() {
+  if (!gameRef) return;
+  gameRef.on('value', snap => {
+    const d = snap.val();
+    if (!d) return;
+    lastGameData = d;
+    updatePlayerDisplays(d);
+
+    if (d.player1.ready && d.player2.ready && !d.gameStarted)
+      gameRef.update({ gameStarted: true });
+
+    if (d.gameStarted && !d.gameFinished) {
+      showScreen('game-screen');
+      // Initialiser l'ordre aléatoire avec le seed partagé
+      if (shuffledOrder.length === 0 && d.seed) {
+        shuffledOrder = shuffleWithSeed([...Array(TOTAL).keys()], d.seed);
+      }
+      const idx = d.currentIndex || 0;
+      if (idx !== currentIndex || !timerInterval) {
+        currentIndex = idx;
+        renderQuestion(idx);
+        resetTimer();
+      }
+      const pct = Math.min((idx / TOTAL) * 100, 100);
+      document.getElementById('progress').style.width = pct + '%';
+      document.getElementById('progress-text').textContent =
+        `Question ${Math.min(idx+1, TOTAL)}/${TOTAL}`;
+    }
+
+    if (d.gameFinished) { clearTimer(); showEndScreen(d); }
+  });
+}
+
+// ── Construire les mots d'une phrase en spans ─────────────────────────────
+function buildPhraseSpans(words, verbIdx) {
+  const frag = document.createDocumentFragment();
+  words.forEach((w, i) => {
+    const span = document.createElement('span');
+    span.className = 'w' + (verbIdx.includes(i) ? ' verb' : '');
+    span.textContent = w;
+    frag.appendChild(span);
+    if (i < words.length - 1) frag.appendChild(document.createTextNode(' '));
+  });
+  return frag;
+}
+
+// ── Afficher la question ───────────────────────────────────────────────────
+function renderQuestion(idx) {
+  if (idx >= TOTAL || shuffledOrder.length === 0) {
+    gameRef.update({ gameFinished: true }); return;
+  }
+  answered = false;
+
+  const q = ALL_QUESTIONS[shuffledOrder[idx]];
+
+  // Afficher le temps demandé et le sujet
+  const tenseEl = document.getElementById('tense-asked-display');
+  tenseEl.textContent = q.tense;
+  tenseEl.className = 'tense-asked ' + TENSE_CLASS[q.tense];
+  document.getElementById('subject-asked').textContent = q.sujet;
+
+  document.getElementById('explication').classList.add('hidden');
+
+  // Construire les 4 choix : [bonne réponse, distract1, distract2, + 1 extra]
+  // On prend les 2 distracteurs + 1 distracteur d'une autre question aléatoire
+  const extraIdx = (shuffledOrder[idx] + 7) % TOTAL;
+  const extraQ   = ALL_QUESTIONS[extraIdx];
+  const extraDist = extraQ.tense !== q.tense
+    ? { phrase: extraQ.phrase, verbIdx: extraQ.verbIdx }
+    : { phrase: extraQ.distracteurs[0].phrase, verbIdx: extraQ.distracteurs[0].verbIdx };
+
+  let choices = [
+    { phrase: q.phrase,               verbIdx: q.verbIdx,               correct: true },
+    { phrase: q.distracteurs[0].phrase, verbIdx: q.distracteurs[0].verbIdx, correct: false },
+    { phrase: q.distracteurs[1].phrase, verbIdx: q.distracteurs[1].verbIdx, correct: false },
+    { phrase: extraDist.phrase,        verbIdx: extraDist.verbIdx,        correct: false }
+  ];
+
+  // Mélanger les choix (pseudo-aléatoire côté client, même pour les deux joueurs)
+  const cseed = idx * 137 + (lastGameData?.seed || 1);
+  choices = shuffleWithSeed(choices, cseed);
+
+  const container = document.getElementById('choices');
+  container.innerHTML = '';
+  choices.forEach(ch => {
+    const btn = document.createElement('button');
+    btn.className = 'choice-btn';
+    btn.appendChild(buildPhraseSpans(ch.phrase, ch.verbIdx));
+    btn.onclick = () => checkAnswer(ch.correct, q.explication, btn, choices);
+    container.appendChild(btn);
+  });
+}
+
+// ── Vérifier la réponse ───────────────────────────────────────────────────
+function checkAnswer(isCorrect, explication, clickedBtn, choices) {
+  if (answered) return;
+  answered = true;
+  clearTimer();
+
+  const allBtns = document.querySelectorAll('.choice-btn');
+  allBtns.forEach((btn, i) => {
+    btn.onclick = null;
+    if (choices[i].correct) btn.classList.add('correct');
+    else if (btn === clickedBtn && !isCorrect) btn.classList.add('wrong');
+  });
+
+  if (isCorrect) {
+    const key = 'player' + playerNumber;
+    gameRef.child(key + '/score').transaction(s => (s||0) + POINTS);
+    gameRef.child(key + '/correct').transaction(c => (c||0) + 1);
+    correctAnswersCount++;
+    document.getElementById('game-message').textContent = '✅ Bravo ! +10 points !';
+  } else {
+    document.getElementById('explication-text').textContent = explication;
+    document.getElementById('explication').classList.remove('hidden');
+    document.getElementById('game-message').textContent = '❌ Pas tout à fait…';
+  }
+
+  setTimeout(() => {
+    document.getElementById('game-message').textContent = 'Clique sur la bonne forme verbale !';
+    gameRef.update({ currentIndex: currentIndex + 1 });
+  }, 3000);
+}
+
+// ── Timer ─────────────────────────────────────────────────────────────────
+function resetTimer() {
+  clearTimer();
+  timerVal = TIMER_MAX;
+  const el = document.getElementById('timer');
+  el.textContent = timerVal;
+  el.classList.remove('urgent');
+
+  timerInterval = setInterval(() => {
+    timerVal--;
+    el.textContent = timerVal;
+    if (timerVal <= 10) el.classList.add('urgent');
+    if (timerVal <= 0) {
+      clearTimer();
+      if (!answered) {
+        answered = true;
+        document.querySelectorAll('.choice-btn').forEach((btn, i) => {
+          btn.onclick = null;
+          // On récupère la question en cours pour trouver la bonne réponse
+        });
+        // Révéler la bonne réponse
+        const allBtns = document.querySelectorAll('.choice-btn');
+        // On doit retrouver laquelle est correcte – on la relit depuis choices
+        // Astuce : on re-génère les choices pour marquer la correcte
+        const q = ALL_QUESTIONS[shuffledOrder[currentIndex]];
+        allBtns.forEach(btn => {
+          btn.onclick = null;
+          // le bouton correct est celui dont le textContent contient la forme du verbe correct
+          const verbText = q.phrase.filter((_, i) => q.verbIdx.includes(i)).join(' ');
+          if (btn.textContent.replace(/\s+/g,' ').trim().includes(verbText)) {
+            btn.classList.add('correct');
+          }
+        });
+        document.getElementById('game-message').textContent = '⏰ Temps écoulé !';
+        setTimeout(() => {
+          document.getElementById('game-message').textContent = 'Clique sur la bonne forme verbale !';
+          gameRef.update({ currentIndex: currentIndex + 1 });
+        }, 2500);
+      }
+    }
+  }, 1000);
+}
+
+function clearTimer() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  document.getElementById('timer').classList.remove('urgent');
+}
+
+// ── Fin de partie ──────────────────────────────────────────────────────────
+function showEndScreen(d) {
+  if (!d) return;
+  let trophy = "🏆", msg = "";
+  if      (d.player1.score > d.player2.score) { trophy="👑"; msg=`👑 ${d.player1.name} remporte le duel !`; }
+  else if (d.player2.score > d.player1.score) { trophy="⭐"; msg=`⭐ ${d.player2.name} remporte le duel !`; }
+  else                                          { trophy="🤝"; msg="🤝 Égalité parfaite ! Champions tous les deux !"; }
+
+  document.getElementById('trophy').textContent = trophy;
+  const c1 = d.player1.correct||0, c2 = d.player2.correct||0;
+  document.getElementById('winner-message').innerHTML =
+    `<h3>${msg}</h3><p>Score final : ${d.player1.score} – ${d.player2.score} pts</p>`;
+  document.getElementById('stats').innerHTML = `
+    <div style="background:rgba(255,255,255,.1);padding:18px;border-radius:13px;">
+      <p><strong>${d.player1.name}</strong> : ${c1}/${TOTAL} bonnes réponses (${Math.round(c1/TOTAL*100)}%)</p>
+      <p><strong>${d.player2.name}</strong> : ${c2}/${TOTAL} bonnes réponses (${Math.round(c2/TOTAL*100)}%)</p>
+      <p style="margin-top:12px;color:var(--orange);">
+        <span class="tense-badge badge-present">Présent</span>
+        <span class="tense-badge badge-passe">Passé Composé</span>
+        <span class="tense-badge badge-futur">Futur Proche</span>
+        <br><br>${TOTAL} questions · ordre aléatoire · 30 sec / question
+      </p>
+    </div>`;
+  showScreen('end-screen');
+}
+
+// ── Relancer / Accueil ────────────────────────────────────────────────────
+function restartGame() {
+  if (!gameRef || !lastGameData) { goHome(); return; }
+  clearTimer();
+  shuffledOrder = [];
+  const seed = Math.floor(Math.random() * 999999) + 1;
+  gameRef.update({
+    player1: { name:lastGameData.player1.name, score:0, ready:true, correct:0 },
+    player2: { name:lastGameData.player2.name, score:0, ready:true, correct:0 },
+    currentIndex: 0, gameStarted: true, gameFinished: false, seed
+  });
+  currentIndex = 0; timerVal = TIMER_MAX; correctAnswersCount = 0;
+  document.getElementById('timer').style.color = '';
+  showScreen('game-screen');
+}
+
+function goHome() {
+  clearTimer();
+  playerName = ""; playerNumber = 0; gameId = "";
+  gameRef = null; lastGameData = null; currentIndex = 0;
+  correctAnswersCount = 0; shuffledOrder = [];
+  showScreen('home-screen');
+  window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+// ── Auto-join depuis URL ──────────────────────────────────────────────────
+window.addEventListener('load', () => {
+  const gid = new URLSearchParams(window.location.search).get('game');
+  if (gid) {
+    showScreen('player2-screen');
+    document.getElementById('player2-message').textContent =
+      "Partie trouvée ! Entre ton nom pour rejoindre !";
+  }
+});
+</script>
+</body>
+</html>
