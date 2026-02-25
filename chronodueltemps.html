@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Chronoduel - Présent / PC / Futur ⚡</title>
+    <style>
+        /* ===== STYLE IDENTIQUE À DUELGENRE2 ===== */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #1a2a4f 0%, #0f1a2f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .game-container {
+            max-width: 900px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 48px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), inset 0 2px 4px rgba(255, 255, 255, 0.1);
+            padding: 32px 24px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            text-align: center;
+            letter-spacing: -0.5px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .sub-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 60px;
+            padding: 12px 24px;
+            margin: 20px 0 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .badge {
+            background: #ffd966;
+            color: #1f2a44;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .players-setup {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 40px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .player-card {
+            flex: 1 1 250px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 32px;
+            padding: 20px;
+            text-align: center;
+            border: 2px solid;
+            transition: 0.2s;
+        }
+
+        .player-card.blue {
+            border-color: #3b82f6;
+            box-shadow: 0 8px 0 #1e3a8a;
+        }
+        .player-card.red {
+            border-color: #ef4444;
+            box-shadow: 0 8px 0 #991b1b;
+        }
+
+        .player-card input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 60px;
+            border: none;
+            background: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin: 15px 0 5px 0;
+            border: 3px solid transparent;
+        }
+        .player-card.blue input:focus { border-color: #3b82f6; outline: none; }
+        .player-card.red input:focus { border-color: #ef4444; outline: none; }
+
+        .btn-join {
+            background: #2dd4bf;
+            border: none;
+            color: #0b1e33;
+            font-weight: bold;
+            font-size: 1.2rem;
+            padding: 14px 30px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 0 #0f766e;
+            margin-top: 10px;
+            width: 100%;
+        }
+        .btn-join:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #0f766e; background: #2abfaa; }
+
+        .game-area {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s;
+        }
+
+        .game-area.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .scoreboard {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 120px;
+            padding: 12px 30px;
+            margin: 20px 0 30px 0;
+            font-size: 1.8rem;
+            font-weight: 700;
+            border: 1px solid #ffffff30;
+            backdrop-filter: blur(4px);
+        }
+
+        .score {
+            background: white;
+            color: #0d1b2e;
+            padding: 8px 28px;
+            border-radius: 60px;
+            font-size: 2rem;
+            min-width: 100px;
+            text-align: center;
+        }
+
+        .question-panel {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 48px;
+            padding: 40px 20px;
+            text-align: center;
+            border: 3px dashed #fbbf24;
+            margin-bottom: 30px;
+        }
+
+        .consigne {
+            font-size: 1.6rem;
+            background: #2d3b5a;
+            display: inline-block;
+            padding: 8px 35px;
+            border-radius: 60px;
+            color: #fde047;
+            border: 2px solid #fde047;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .phrase-a-deviner {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.2;
+            text-shadow: 0 8px 0 #0f172a;
+            margin: 15px 0 25px 0;
+            word-break: break-word;
+        }
+
+        .boutons-reponse {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin: 30px 0 20px;
+        }
+
+        .btn-reponse {
+            flex: 1 1 180px;
+            padding: 24px 15px;
+            font-size: 2rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 80px;
+            background: white;
+            color: #0f172a;
+            cursor: pointer;
+            transition: 0.1s ease;
+            box-shadow: 0 10px 0 #64748b, 0 4px 12px black;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+        .btn-reponse.present { background: #d9f0e1; }
+        .btn-reponse.passe { background: #f8d7da; }
+        .btn-reponse.futur { background: #fff3cd; }
+        .btn-reponse:active { transform: translateY(6px); box-shadow: 0 4px 0 #334155; }
+        .btn-reponse:disabled { opacity: 0.4; transform: none; pointer-events: none; }
+
+        .timer-info {
+            font-size: 1.8rem;
+            background: #1e2a47;
+            display: inline-block;
+            padding: 12px 40px;
+            border-radius: 60px;
+            color: #ffd966;
+            border: 2px solid #ffd966;
+            margin: 15px auto 5px;
+            font-weight: 600;
+        }
+
+        .feedback-message {
+            min-height: 60px;
+            font-size: 1.8rem;
+            font-weight: 500;
+            color: #fde047;
+            margin: 10px 0;
+        }
+
+        .footer-stats {
+            display: flex;
+            justify-content: space-between;
+            color: #b0c4de;
+            margin-top: 20px;
+            font-size: 1.3rem;
+        }
+
+        .restart-btn {
+            background: none;
+            border: 2px solid white;
+            color: white;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 20px;
+        }
+        .restart-btn:hover { background: white; color: #0f172a; }
+
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+<div class="game-container">
+    <h1>
+        <span>⚡</span> CHRONODUEL <span>⏳</span>
+    </h1>
+    <div class="sub-header">
+        <span class="badge">60 phrases</span>
+        <span class="badge">Présent</span>
+        <span class="badge">Passé composé</span>
+        <span class="badge">Futur proche</span>
+    </div>
+
+    <!-- Écran de saisie des joueurs -->
+    <div id="setupScreen">
+        <div class="players-setup">
+            <div class="player-card blue">
+                <div style="font-size: 3rem;">🔵</div>
+                <h2>Capitaine</h2>
+                <input type="text" id="capName" placeholder="Nom du Capitaine" value="Alex">
+                <button class="btn-join" id="joinCapBtn">👉 Je suis le capitaine</button>
+            </div>
+            <div class="player-card red">
+                <div style="font-size: 3rem;">🔴</div>
+                <h2>Coéquipier</h2>
+                <input type="text" id="coeqName" placeholder="Nom du Coéquipier" value="Sam">
+                <button class="btn-join" id="joinCoeqBtn">👈 Je suis le coéquipier</button>
+            </div>
+        </div>
+        <div style="text-align:center; font-size:1.5rem; margin: 10px 0 20px 0;">👥 Entrez vos noms pour commencer !</div>
+    </div>
+
+    <!-- Écran de jeu principal -->
+    <div id="gameScreen" class="game-area">
+        <div class="scoreboard">
+            <span id="capNameDisplay">🔵 Capitaine</span>
+            <span class="score" id="scoreCap">0</span>
+            <span style="font-size:2rem;">⚔️</span>
+            <span class="score" id="scoreCoeq">0</span>
+            <span id="coeqNameDisplay">🔴 Coéquipier</span>
+        </div>
+
+        <div class="question-panel">
+            <div class="consigne" id="tourIndicator">À toi de jouer !</div>
+            <div class="phrase-a-deviner" id="phraseActuelle">Je mange une pomme</div>
+
+            <div class="boutons-reponse" id="boutonsReponse">
+                <!-- Les 3 boutons seront générés ici -->
+            </div>
+
+            <div class="timer-info" id="timerDisplay">⏱️ 25s</div>
+            <div class="feedback-message" id="feedbackMessage">Choisis le temps du verbe !</div>
+        </div>
+
+        <div class="footer-stats">
+            <span id="compteurPhrases">Défi 1/60</span>
+            <span>🎯 Cap: <span id="capScore">0</span> | Coeq: <span id="coeqScore">0</span></span>
+        </div>
+        <button class="restart-btn" id="restartBtn">🔄 Nouveau duel</button>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ---------- LISTE DE PHRASES AVEC TEMPS ----------
+        const phrasesListe = [
+            { phrase: "Je mange une pomme", temps: "present" },
+            { phrase: "Tu as fini ton travail", temps: "passe" },
+            { phrase: "Nous allons visiter Paris", temps: "futur" },
+            { phrase: "Il chante très bien", temps: "present" },
+            { phrase: "Elle est partie en vacances", temps: "passe" },
+            { phrase: "Ils vont regarder un film", temps: "futur" },
+            { phrase: "Nous dansons chaque soir", temps: "present" },
+            { phrase: "J'ai acheté du pain", temps: "passe" },
+            { phrase: "Tu vas rencontrer ta sœur", temps: "futur" },
+            { phrase: "Vous prenez le café", temps: "present" },
+            { phrase: "Elles sont arrivées tôt", temps: "passe" },
+            { phrase: "On va préparer le dîner", temps: "futur" },
+            { phrase: "Je fais du sport", temps: "present" },
+            { phrase: "Nous avons vu un spectacle", temps: "passe" },
+            { phrase: "Elle va apprendre l'italien", temps: "futur" },
+            { phrase: "Tu écris une lettre", temps: "present" },
+            { phrase: "Ils sont descendus par l'escalier", temps: "passe" },
+            { phrase: "Vous allez voyager au Japon", temps: "futur" },
+            { phrase: "On parle français", temps: "present" },
+            { phrase: "J'ai perdu mes clés", temps: "passe" },
+            { phrase: "Nous allons déménager", temps: "futur" },
+            { phrase: "Elle lit un magazine", temps: "present" },
+            { phrase: "Tu as pris le train", temps: "passe" },
+            { phrase: "Ils vont acheter une voiture", temps: "futur" },
+            { phrase: "Nous réfléchissons ensemble", temps: "present" },
+            { phrase: "Je suis tombé dans la rue", temps: "passe" },
+            { phrase: "Vous allez adorer ce livre", temps: "futur" },
+            { phrase: "Il pleut beaucoup", temps: "present" },
+            { phrase: "Elles se sont levées tôt", temps: "passe" },
+            { phrase: "Tu vas réussir ton examen", temps: "futur" },
+            { phrase: "Nous voulons un gâteau", temps: "present" },
+            { phrase: "J'ai écrit un poème", temps: "passe" },
+            { phrase: "Il va faire beau demain", temps: "futur" },
+            { phrase: "Vous partez en vacances", temps: "present" },
+            { phrase: "Elle est venue à pied", temps: "passe" },
+            { phrase: "Nous allons fêter ton anniversaire", temps: "futur" },
+            { phrase: "Tu dessines un paysage", temps: "present" },
+            { phrase: "Ils ont joué au football", temps: "passe" },
+            { phrase: "Je vais me promener", temps: "futur" },
+            { phrase: "On ouvre la fenêtre", temps: "present" },
+            { phrase: "Vous êtes restés longtemps", temps: "passe" },
+            { phrase: "Elle va acheter des fleurs", temps: "futur" },
+            { phrase: "Je prends le métro", temps: "present" },
+            { phrase: "Tu as bien dormi ?", temps: "passe" },
+            { phrase: "Nous allons skier en montagne", temps: "futur" },
+            { phrase: "Ils écoutent de la musique", temps: "present" },
+            { phrase: "Elle a fini son dessert", temps: "passe" },
+            { phrase: "Vous allez gagner !", temps: "futur" },
+            { phrase: "Je cours tous les jours", temps: "present" },
+            { phrase: "Nous sommes restés chez nous", temps: "passe" },
+            { phrase: "Tu vas devenir célèbre", temps: "futur" },
+            { phrase: "Il neige en montagne", temps: "present" },
+            { phrase: "J'ai oublié mon téléphone", temps: "passe" },
+            { phrase: "Elles vont chanter à la fête", temps: "futur" },
+            { phrase: "Nous dormons profondément", temps: "present" },
+            { phrase: "Vous avez réussi !", temps: "passe" },
+            { phrase: "Il va pleuvoir ce soir", temps: "futur" },
+            { phrase: "Tu viens avec nous ?", temps: "present" },
+            { phrase: "Je me suis lavé les mains", temps: "passe" },
+            { phrase: "On va manger au restaurant", temps: "futur" }
+        ];
+
+        // ---------- ÉTAT DU JEU ----------
+        let currentIndex = 0;
+        let scoreCap = 0, scoreCoeq = 0;
+        let capName = "Capitaine", coeqName = "Coéquipier";
+        let currentPlayer = "capitaine"; // "capitaine" ou "coequipier"
+        let gameActive = false;
+        let timerInterval = null;
+        let timeLeft = 25; // 25 secondes
+        let canAnswer = true;
+
+        // Éléments DOM
+        const setupScreen = document.getElementById('setupScreen');
+        const gameScreen = document.getElementById('gameScreen');
+        const capNameInput = document.getElementById('capName');
+        const coeqNameInput = document.getElementById('coeqName');
+        const capNameDisplay = document.getElementById('capNameDisplay');
+        const coeqNameDisplay = document.getElementById('coeqNameDisplay');
+        const scoreCapSpan = document.getElementById('scoreCap');
+        const scoreCoeqSpan = document.getElementById('scoreCoeq');
+        const phraseActuelleSpan = document.getElementById('phraseActuelle');
+        const tourIndicator = document.getElementById('tourIndicator');
+        const boutonsReponseDiv = document.getElementById('boutonsReponse');
+        const feedbackMessage = document.getElementById('feedbackMessage');
+        const compteurPhrasesSpan = document.getElementById('compteurPhrases');
+        const timerDisplaySpan = document.getElementById('timerDisplay');
+        const restartBtn = document.getElementById('restartBtn');
+        const joinCapBtn = document.getElementById('joinCapBtn');
+        const joinCoeqBtn = document.getElementById('joinCoeqBtn');
+        const capScoreSpan = document.getElementById('capScore');
+        const coeqScoreSpan = document.getElementById('coeqScore');
+
+        // Initialisation
+        setupScreen.style.display = 'block';
+        gameScreen.classList.remove('visible');
+
+        // Fonction pour démarrer la partie
+        function startGameAs(role) {
+            capName = capNameInput.value.trim() || "Capitaine";
+            coeqName = coeqNameInput.value.trim() || "Coéquipier";
+            capNameDisplay.innerHTML = `🔵 ${capName}`;
+            coeqNameDisplay.innerHTML = `🔴 ${coeqName}`;
+
+            // Réinitialiser
+            currentIndex = 0;
+            scoreCap = 0;
+            scoreCoeq = 0;
+            updateScores();
+
+            // Mélanger les phrases
+            shuffleArray(phrasesListe);
+
+            // Le joueur qui a cliqué commence
+            currentPlayer = role;
+
+            // Afficher jeu
+            setupScreen.style.display = 'none';
+            gameScreen.classList.add('visible');
+            gameActive = true;
+
+            // Lancer le premier défi
+            nextPhrase();
+        }
+
+        // Mélange aléatoire
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+        }
+
+        // Mise à jour des scores
+        function updateScores() {
+            scoreCapSpan.textContent = scoreCap;
+            scoreCoeqSpan.textContent = scoreCoeq;
+            capScoreSpan.textContent = scoreCap;
+            coeqScoreSpan.textContent = scoreCoeq;
+        }
+
+        // Crée les 3 boutons
+        function renderButtons() {
+            boutonsReponseDiv.innerHTML = '';
+            createButton("Présent", "present", "present");
+            createButton("Passé composé", "passe", "passe");
+            createButton("Futur proche", "futur", "futur");
+        }
+
+        function createButton(text, tempsKey, cssClass) {
+            const btn = document.createElement('button');
+            btn.className = `btn-reponse ${cssClass}`;
+            btn.textContent = text;
+            btn.setAttribute('data-temps', tempsKey);
+            btn.addEventListener('click', () => handleAnswer(tempsKey));
+            boutonsReponseDiv.appendChild(btn);
+        }
+
+        // Gestion de la réponse
+        function handleAnswer(tempsChoisi) {
+            if (!canAnswer || !gameActive) return;
+
+            const phraseCourante = phrasesListe[currentIndex];
+            if (!phraseCourante) return;
+
+            const tempsCorrect = phraseCourante.temps; // 'present', 'passe', 'futur'
+            const correct = (tempsChoisi === tempsCorrect);
+
+            // Désactiver les boutons après réponse
+            disableButtons(true);
+            canAnswer = false;
+            if (timerInterval) clearInterval(timerInterval);
+
+            // Attribution du point
+            if (correct) {
+                feedbackMessage.textContent = `✅ Bonne réponse ! +1 point pour ${currentPlayer === 'capitaine' ? capName : coeqName}`;
+                if (currentPlayer === 'capitaine') {
+                    scoreCap++;
+                } else {
+                    scoreCoeq++;
+                }
+            } else {
+                feedbackMessage.textContent = `❌ Oups... C'était du ${traduireTemps(tempsCorrect)}. Pas de point.`;
+            }
+
+            updateScores();
+
+            // Passer à la phrase suivante ou terminer
+            setTimeout(() => {
+                if (currentIndex < phrasesListe.length - 1) {
+                    currentIndex++;
+                    // Alterner le joueur
+                    currentPlayer = (currentPlayer === 'capitaine') ? 'coequipier' : 'capitaine';
+                    nextPhrase();
+                } else {
+                    // Fin du jeu
+                    gameActive = false;
+                    feedbackMessage.textContent = "🏆 Duel terminé ! Bravo aux deux joueurs !";
+                    disableButtons(true);
+                }
+            }, 2000);
+        }
+
+        // Traduire temps pour affichage
+        function traduireTemps(t) {
+            if (t === 'present') return 'présent';
+            if (t === 'passe') return 'passé composé';
+            return 'futur proche';
+        }
+
+        // Activer/désactiver boutons
+        function disableButtons(disabled) {
+            document.querySelectorAll('.btn-reponse').forEach(btn => btn.disabled = disabled);
+        }
+
+        // Timer de 25 secondes (simple affichage, pas de barre)
+        function startTimer(seconds) {
+            if (timerInterval) clearInterval(timerInterval);
+            timeLeft = seconds;
+            timerDisplaySpan.textContent = `⏱️ ${timeLeft}s`;
+            canAnswer = true;
+
+            timerInterval = setInterval(() => {
+                if (!gameActive) {
+                    clearInterval(timerInterval);
+                    return;
+                }
+                timeLeft--;
+                timerDisplaySpan.textContent = `⏱️ ${timeLeft}s`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    if (canAnswer) {
+                        canAnswer = false;
+                        const phraseCourante = phrasesListe[currentIndex];
+                        feedbackMessage.textContent = `⏰ Temps écoulé ! (C'était du ${traduireTemps(phraseCourante.temps)})`;
+                        disableButtons(true);
+                        setTimeout(() => {
+                            if (currentIndex < phrasesListe.length - 1) {
+                                currentIndex++;
+                                currentPlayer = (currentPlayer === 'capitaine') ? 'coequipier' : 'capitaine';
+                                nextPhrase();
+                            } else {
+                                gameActive = false;
+                                feedbackMessage.textContent = "🏆 Duel terminé !";
+                            }
+                        }, 2000);
+                    }
+                }
+            }, 1000);
+        }
+
+        // Charge la phrase suivante
+        function nextPhrase() {
+            if (!gameActive) return;
+
+            const phrase = phrasesListe[currentIndex];
+            phraseActuelleSpan.textContent = phrase.phrase;
+
+            // Met à jour le compteur
+            compteurPhrasesSpan.textContent = `Défi ${currentIndex+1}/${phrasesListe.length}`;
+
+            // Indiquer le tour
+            const joueurActuel = (currentPlayer === 'capitaine') ? capName : coeqName;
+            tourIndicator.textContent = `🎤 À ${joueurActuel} de jouer !`;
+            feedbackMessage.textContent = "Choisis le temps du verbe !";
+
+            // Génère les boutons
+            renderButtons();
+
+            // Réactive et lance le timer
+            disableButtons(false);
+            startTimer(25); // 25 secondes
+        }
+
+        // Recommencer
+        restartBtn.addEventListener('click', () => {
+            if (timerInterval) clearInterval(timerInterval);
+            gameActive = false;
+            setupScreen.style.display = 'block';
+            gameScreen.classList.remove('visible');
+            currentIndex = 0;
+            scoreCap = 0; scoreCoeq = 0;
+            updateScores();
+            capNameInput.value = 'Alex';
+            coeqNameInput.value = 'Sam';
+            feedbackMessage.textContent = 'Prêt ? C\'est parti !';
+            timerDisplaySpan.textContent = '⏱️ 25s';
+        });
+
+        // Écouteurs
+        joinCapBtn.addEventListener('click', () => startGameAs('capitaine'));
+        joinCoeqBtn.addEventListener('click', () => startGameAs('coequipier'));
+
+    })();
+</script>
+</body>
+</html>
