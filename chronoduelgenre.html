@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 DUELGENRE MULTI - Version qui fonctionne</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        h1 span {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        .sections {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .section {
+            flex: 1;
+            min-width: 250px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        .section.blue h2 { color: #2196F3; }
+        .section.red h2 { color: #f44336; }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button.secondary {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+        }
+        .game-area {
+            display: none;
+        }
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .player-score {
+            text-align: center;
+            flex: 1;
+        }
+        .player-score.blue { color: #2196F3; }
+        .player-score.red { color: #f44336; }
+        .player-score h3 {
+            margin-bottom: 5px;
+        }
+        .player-score .score {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        .game-content {
+            text-align: center;
+        }
+        .word-display {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
+        .word-display h2 {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+        .articles {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        .article-btn {
+            width: 100px;
+            padding: 15px;
+            font-size: 1.5em;
+            background: white;
+            color: #333;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .article-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+        .article-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .timer {
+            font-size: 3em;
+            font-weight: bold;
+            color: #f5576c;
+            margin: 20px 0;
+        }
+        .waiting-message {
+            text-align: center;
+            padding: 40px;
+            background: #fff3cd;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+        .room-code {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            font-size: 1.2em;
+            margin: 15px 0;
+            word-break: break-all;
+        }
+        .copy-btn {
+            width: auto;
+            padding: 8px 20px;
+            margin-top: 10px;
+            background: #4CAF50;
+        }
+        .pronoun-info {
+            color: #f093fb;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 <span>DUELGENRE MULTI</span> ⚔️</h1>
+        <div class="subtitle">80 mots • Le/La • Ce/Cet/Cette • 🌐 Multijoueur en temps réel</div>
+
+        <!-- Configuration Firebase (à remplacer par vos identifiants) -->
+        <script>
+            // Configuration Firebase - REMPLACEZ CES VALEURS PAR LES VÔTRES !
+            const firebaseConfig = {
+                apiKey: "AIzaSyBxLJkTOzqIzGqYlYqWqWqWqWqWqWqWqWq", // À remplacer
+                authDomain: "votre-projet.firebaseapp.com", // À remplacer
+                databaseURL: "https://votre-projet-default-rtdb.firebaseio.com", // À remplacer
+                projectId: "votre-projet", // À remplacer
+                storageBucket: "votre-projet.appspot.com", // À remplacer
+                messagingSenderId: "123456789", // À remplacer
+                appId: "1:123456789:web:abc123" // À remplacer
+            };
+
+            // Initialiser Firebase
+            firebase.initializeApp(firebaseConfig);
+            const database = firebase.database();
+        </script>
+
+        <!-- Section Connexion (Menu principal) -->
+        <div id="menuPrincipal">
+            <div class="sections">
+                <!-- Section Capitaine -->
+                <div class="section blue">
+                    <h2>⭐ Capitaine</h2>
+                    <div class="input-group">
+                        <label>Choisis ton nom :</label>
+                        <input type="text" id="nomCapitaine" placeholder="Nom du capitaine">
+                    </div>
+                    <button onclick="creerPartie()">🎌 Créer une partie</button>
+                </div>
+
+                <!-- Section Coéquipier -->
+                <div class="section red">
+                    <h2>👥 Coéquipier</h2>
+                    <div class="input-group">
+                        <label>Nom du capitaine :</label>
+                        <input type="text" id="nomCapitaineRejoindre" placeholder="Capitaine à rejoindre">
+                    </div>
+                    <div class="input-group">
+                        <label>Ton nom :</label>
+                        <input type="text" id="nomCoéquipier" placeholder="Ton nom">
+                    </div>
+                    <button onclick="rejoindrePartie()" class="secondary">🔗 Rejoindre la partie</button>
+                </div>
+            </div>
+
+            <!-- Liste des parties en cours (optionnel) -->
+            <div style="margin-top: 20px; padding: 15px; background: #f0f0f0; border-radius: 10px;">
+                <h3 style="margin-bottom: 10px;">📋 Parties en attente :</h3>
+                <div id="listeParties" style="max-height: 150px; overflow-y: auto;">
+                    <p style="color: #666; text-align: center;">Chargement...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zone de Jeu (cachée au départ) -->
+        <div id="zoneJeu" class="game-area">
+            <div class="game-header">
+                <div class="player-score blue" id="scoreCapitaineBox">
+                    <h3>🔵 Capitaine</h3>
+                    <div class="score" id="scoreCapitaine">0</div>
+                    <div id="nomCapitaineDisplay"></div>
+                </div>
+                <div class="player-score red" id="scoreCoéquipierBox">
+                    <h3>🔴 Coéquipier</h3>
+                    <div class="score" id="scoreCoéquipier">0</div>
+                    <div id="nomCoéquipierDisplay"></div>
+                </div>
+            </div>
+
+            <!-- Message d'attente -->
+            <div id="messageAttente" class="waiting-message">
+                <h3>⏳ En attente du coéquipier...</h3>
+                <p>Partage ce code avec ton coéquipier :</p>
+                <div id="roomCode" class="room-code"></div>
+                <button onclick="copierCode()" class="copy-btn">📋 Copier le code</button>
+            </div>
+
+            <!-- Jeu actif -->
+            <div id="jeuActif" style="display: none;">
+                <div class="game-content">
+                    <div class="word-display">
+                        <h2 id="motActuel">chaise</h2>
+                        <div id="infinitifMot" class="pronoun-info"></div>
+                    </div>
+                    
+                    <div class="articles">
+                        <button class="article-btn" onclick="choisirArticle('Le')">Le</button>
+                        <button class="article-btn" onclick="choisirArticle('La')">La</button>
+                        <button class="article-btn" onclick="choisirArticle('Ce')">Ce</button>
+                        <button class="article-btn" onclick="choisirArticle('Cet')">Cet</button>
+                        <button class="article-btn" onclick="choisirArticle('Cette')">Cette</button>
+                    </div>
+
+                    <div class="timer" id="timer">25</div>
+                    <p>⏱️ secondes restantes</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========== VARIABLES GLOBALES ==========
+        const mots = [
+            { mot: 'chaise', article: 'La', infinitif: 'chaise (f)' },
+            { mot: 'table', article: 'La', infinitif: 'table (f)' },
+            { mot: 'ordinateur', article: 'Le', infinitif: 'ordinateur (m)' },
+            { mot: 'livre', article: 'Le', infinitif: 'livre (m)' },
+            { mot: 'stylo', article: 'Le', infinitif: 'stylo (m)' },
+            { mot: 'maison', article: 'La', infinitif: 'maison (f)' },
+            { mot: 'voiture', article: 'La', infinitif: 'voiture (f)' },
+            { mot: 'ami', article: 'Le', infinitif: 'ami (m)' },
+            { mot: 'école', article: 'La', infinitif: 'école (f)' },
+            { mot: 'jardin', article: 'Le', infinitif: 'jardin (m)' },
+            { mot: 'fleur', article: 'La', infinitif: 'fleur (f)' },
+            { mot: 'chien', article: 'Le', infinitif: 'chien (m)' },
+            { mot: 'chat', article: 'Le', infinitif: 'chat (m)' },
+            { mot: 'eau', article: 'La', infinitif: 'eau (f)' },
+            { mot: 'feu', article: 'Le', infinitif: 'feu (m)' },
+            { mot: 'soleil', article: 'Le', infinitif: 'soleil (m)' },
+            { mot: 'lune', article: 'La', infinitif: 'lune (f)' },
+            { mot: 'arbre', article: 'Le', infinitif: 'arbre (m)' },
+            { mot: 'montagne', article: 'La', infinitif: 'montagne (f)' },
+            { mot: 'rivière', article: 'La', infinitif: 'rivière (f)' }
+        ];
+
+        let maReferencePartie = null;
+        let monRole = null;
+        let monNom = null;
+        let nomCapitaine = null;
+        let timerInterval = null;
+        let tempsRestant = 25;
+
+        // ========== FONCTIONS PRINCIPALES ==========
+
+        // Afficher la liste des parties en attente
+        function chargerListeParties() {
+            const partiesRef = database.ref('parties');
+            partiesRef.on('value', (snapshot) => {
+                const parties = snapshot.val();
+                const listeDiv = document.getElementById('listeParties');
+                
+                if (!parties) {
+                    listeDiv.innerHTML = '<p style="color: #666; text-align: center;">Aucune partie en attente</p>';
+                    return;
+                }
+
+                let html = '';
+                for (let [id, partie] of Object.entries(parties)) {
+                    if (partie.status === 'attente_coequipier') {
+                        html += `<div style="padding: 8px; margin: 5px; background: white; border-radius: 5px; display: flex; justify-content: space-between; align-items: center;">
+                            <span><strong>${partie.capitaine.nom}</strong> (capitaine)</span>
+                            <button onclick="rejoindreDirect('${id}', '${partie.capitaine.nom}')" style="width: auto; padding: 5px 15px;">Rejoindre</button>
+                        </div>`;
+                    }
+                }
+                
+                if (html === '') {
+                    listeDiv.innerHTML = '<p style="color: #666; text-align: center;">Aucune partie en attente</p>';
+                } else {
+                    listeDiv.innerHTML = html;
+                }
+            });
+        }
+
+        // Rejoindre directement depuis la liste
+        function rejoindreDirect(idPartie, nomCapitainePartie) {
+            document.getElementById('nomCapitaineRejoindre').value = nomCapitainePartie;
+            document.getElementById('nomCoéquipier').focus();
+        }
+
+        // Créer une nouvelle partie (Capitaine)
+        function creerPartie() {
+            const nom = document.getElementById('nomCapitaine').value.trim();
+            if (!nom) {
+                alert('Choisis un nom de capitaine !');
+                return;
+            }
+
+            monNom = nom;
+            nomCapitaine = nom;
+            const idPartie = nom + '_' + Date.now(); // ID unique
+            maReferencePartie = database.ref('parties/' + idPartie);
+
+            // Initialiser la partie
+            const motInitial = mots[Math.floor(Math.random() * mots.length)];
+            
+            maReferencePartie.set({
+                capitaine: { nom: nom, score: 0, pret: true },
+                coequipier: { nom: '', score: 0, pret: false },
+                motActuel: motInitial.mot,
+                articleCorrect: motInitial.article,
+                infinitif: motInitial.infinitif,
+                status: 'attente_coequipier',
+                tour: 'capitaine', // Qui doit jouer
+                tempsRestant: 25,
+                creeLe: Date.now()
+            }).then(() => {
+                monRole = 'capitaine';
+                entrerEnJeu();
+            });
+        }
+
+        // Rejoindre une partie (Coéquipier)
+        function rejoindrePartie() {
+            const nomCapitaineRejoindre = document.getElementById('nomCapitaineRejoindre').value.trim();
+            const nomCoéquipier = document.getElementById('nomCoéquipier').value.trim();
+
+            if (!nomCapitaineRejoindre || !nomCoéquipier) {
+                alert('Remplis tous les champs !');
+                return;
+            }
+
+            // Chercher la partie par le nom du capitaine (approche simple)
+            // Dans un vrai jeu, il faudrait un système plus robuste
+            const partiesRef = database.ref('parties');
+            partiesRef.once('value', (snapshot) => {
+                const parties = snapshot.val();
+                let partieTrouvee = null;
+                let idTrouve = null;
+
+                for (let [id, partie] of Object.entries(parties)) {
+                    if (partie.capitaine.nom === nomCapitaineRejoindre && partie.status === 'attente_coequipier') {
+                        partieTrouvee = partie;
+                        idTrouve = id;
+                        break;
+                    }
+                }
+
+                if (partieTrouvee) {
+                    maReferencePartie = database.ref('parties/' + idTrouve);
+                    maReferencePartie.update({
+                        'coequipier/nom': nomCoéquipier,
+                        'coequipier/pret': true,
+                        'coequipier/score': 0,
+                        'status': 'en_cours'
+                    }).then(() => {
+                        monRole = 'coequipier';
+                        monNom = nomCoéquipier;
+                        nomCapitaine = partieTrouvee.capitaine.nom;
+                        entrerEnJeu();
+                    });
+                } else {
+                    alert('Aucune partie en attente trouvée avec ce capitaine.');
+                }
+            });
+        }
+
+        // Entrer dans la zone de jeu
+        function entrerEnJeu() {
+            document.getElementById('menuPrincipal').style.display = 'none';
+            document.getElementById('zoneJeu').style.display = 'block';
+
+            // Afficher les noms
+            document.getElementById('nomCapitaineDisplay').textContent = monRole === 'capitaine' ? monNom : nomCapitaine;
+            
+            if (monRole === 'capitaine') {
+                document.getElementById('roomCode').textContent = nomCapitaine; // Code simple à partager
+            }
+
+            // Écouter les changements de la partie
+            ecouterPartie();
+        }
+
+        // Écouter les changements en temps réel
+        function ecouterPartie() {
+            if (!maReferencePartie) return;
+
+            maReferencePartie.on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (!data) return;
+
+                // Mettre à jour les scores
+                document.getElementById('scoreCapitaine').textContent = data.capitaine.score || 0;
+                document.getElementById('scoreCoéquipier').textContent = data.coequipier.score || 0;
+                
+                if (data.coequipier.nom) {
+                    document.getElementById('nomCoéquipierDisplay').textContent = data.coequipier.nom;
+                }
+
+                // Gérer l'affichage selon le statut
+                if (data.status === 'attente_coequipier') {
+                    document.getElementById('messageAttente').style.display = 'block';
+                    document.getElementById('jeuActif').style.display = 'none';
+                } else if (data.status === 'en_cours') {
+                    document.getElementById('messageAttente').style.display = 'none';
+                    document.getElementById('jeuActif').style.display = 'block';
+                    
+                    // Mettre à jour le mot
+                    document.getElementById('motActuel').textContent = data.motActuel;
+                    document.getElementById('infinitifMot').textContent = data.infinitif || '';
+                    
+                    // Gérer le timer
+                    if (data.tempsRestant !== undefined) {
+                        document.getElementById('timer').textContent = data.tempsRestant;
+                    }
+
+                    // Activer/désactiver les boutons selon le tour
+                    const boutons = document.querySelectorAll('.article-btn');
+                    const monTour = (monRole === data.tour);
+                    boutons.forEach(btn => {
+                        btn.disabled = !monTour;
+                    });
+                }
+            });
+        }
+
+        // Choisir un article
+        function choisirArticle(article) {
+            if (!maReferencePartie) return;
+
+            maReferencePartie.once('value', (snapshot) => {
+                const data = snapshot.val();
+                
+                // Vérifier si c'est le bon tour
+                if (monRole !== data.tour) {
+                    alert("Ce n'est pas ton tour !");
+                    return;
+                }
+
+                // Vérifier la réponse
+                const estCorrect = (article === data.articleCorrect);
+                
+                if (estCorrect) {
+                    // Incrémenter le score du joueur
+                    const cheminScore = monRole === 'capitaine' ? 'capitaine/score' : 'coequipier/score';
+                    maReferencePartie.child(cheminScore).transaction((score) => (score || 0) + 1);
+                    
+                    // Changer de tour
+                    const prochainTour = monRole === 'capitaine' ? 'coequipier' : 'capitaine';
+                    
+                    // Prendre un nouveau mot
+                    const nouveauMot = mots[Math.floor(Math.random() * mots.length)];
+                    
+                    // Mettre à jour la partie
+                    maReferencePartie.update({
+                        motActuel: nouveauMot.mot,
+                        articleCorrect: nouveauMot.article,
+                        infinitif: nouveauMot.infinitif,
+                        tour: prochainTour,
+                        tempsRestant: 25
+                    });
+                } else {
+                    alert(`Mauvaise réponse ! L'article correct était : ${data.articleCorrect}`);
+                    // Passer le tour quand même
+                    const prochainTour = monRole === 'capitaine' ? 'coequipier' : 'capitaine';
+                    maReferencePartie.update({
+                        tour: prochainTour,
+                        tempsRestant: 25
+                    });
+                }
+            });
+        }
+
+        // Copier le code de partie
+        function copierCode() {
+            const code = document.getElementById('roomCode').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                alert('Code copié ! Donne-le à ton coéquipier.');
+            });
+        }
+
+        // Timer (à appeler toutes les secondes)
+        function demarrerTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                if (maReferencePartie) {
+                    maReferencePartie.once('value', (snapshot) => {
+                        const data = snapshot.val();
+                        if (data && data.status === 'en_cours') {
+                            const nouveauTemps = (data.tempsRestant || 25) - 1;
+                            
+                            if (nouveauTemps <= 0) {
+                                // Temps écoulé, changer de tour
+                                const prochainTour = data.tour === 'capitaine' ? 'coequipier' : 'capitaine';
+                                maReferencePartie.update({
+                                    tour: prochainTour,
+                                    tempsRestant: 25
+                                });
+                            } else {
+                                maReferencePartie.update({ tempsRestant: nouveauTemps });
+                            }
+                        }
+                    });
+                }
+            }, 1000);
+        }
+
+        // Initialisation au chargement
+        window.onload = function() {
+            chargerListeParties();
+            demarrerTimer();
+        };
+    </script>
+</body>
+</html>
