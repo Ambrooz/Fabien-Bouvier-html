@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entraînement TCF · Structure de la langue</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+        body {
+            background: #f5f7fb;
+            margin: 0;
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 950px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 15px 35px rgba(0,20,50,0.15);
+            padding: 30px 35px;
+        }
+        h1 {
+            font-size: 2rem;
+            color: #0b2b4a;
+            margin: 0 0 5px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 3px solid #ffb347;
+            padding-bottom: 18px;
+        }
+        h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            background: #e9ecf3;
+            color: #1e3a6b;
+            padding: 6px 14px;
+            border-radius: 40px;
+            margin-left: auto;
+        }
+        .chrono-note {
+            background: #fef5e7;
+            padding: 12px 20px;
+            border-radius: 24px;
+            margin: 20px 0 25px 0;
+            border-left: 6px solid #f39c12;
+            font-weight: 500;
+            color: #4a3b1c;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .timer-badge {
+            background: #2c3e50;
+            color: white;
+            padding: 6px 18px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        .partie {
+            margin-top: 40px;
+        }
+        .partie h2 {
+            background: linear-gradient(145deg, #eef2f9, #ffffff);
+            padding: 10px 20px;
+            border-radius: 60px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1e3a6b;
+            border: 1px solid #d6deec;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+        .exercise-block {
+            background: #f9fbfe;
+            border-radius: 28px;
+            padding: 10px 20px 20px 20px;
+            margin-bottom: 40px;
+            border: 1px solid #dbe1ed;
+        }
+        .exercise-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 15px 0 10px 0;
+            color: #2b4a7a;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .exercise-title span {
+            background: #2b4a7a;
+            color: white;
+            font-size: 1rem;
+            padding: 5px 15px;
+            border-radius: 30px;
+        }
+        .question {
+            background: white;
+            border-radius: 20px;
+            padding: 18px 22px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            border: 1px solid #e3e8f2;
+        }
+        .q-text {
+            font-weight: 550;
+            color: #1a2e4f;
+            margin-bottom: 12px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 40px;
+            margin: 10px 0 10px 10px;
+        }
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #f39c12;
+        }
+        .transform-item {
+            background: #f2f5fa;
+            padding: 18px;
+            border-radius: 18px;
+            margin: 15px 0;
+            border-left: 6px solid #ffb347;
+        }
+        .gap {
+            background: #fff8e7;
+            padding: 12px 18px;
+            border-radius: 40px;
+            margin: 15px 0;
+        }
+        .btn-reveal {
+            background: none;
+            border: 2px solid #1e3a6b;
+            color: #1e3a6b;
+            padding: 12px 28px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 15px;
+            margin-bottom: 5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-reveal:hover {
+            background: #1e3a6b;
+            color: white;
+            border-color: #1e3a6b;
+        }
+        .correction-box {
+            background: #eef9eb;
+            border-left: 8px solid #2e9b5c;
+            border-radius: 20px;
+            padding: 15px 25px;
+            margin: 20px 0 10px 0;
+            font-size: 1.1rem;
+            color: #1d4e33;
+            display: none;
+            white-space: pre-wrap;
+            line-height: 1.7;
+        }
+        .correction-box.show {
+            display: block;
+        }
+        .hr-light {
+            margin: 30px 0 20px 0;
+            border: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #ffffff, #ccd7e6, #ffffff);
+        }
+        .simu-title {
+            background: #ffeed9;
+            padding: 16px 28px;
+            border-radius: 48px;
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #b45f06;
+            margin: 30px 0 20px 0;
+        }
+        footer {
+            margin-top: 30px;
+            font-style: italic;
+            color: #6b7a92;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>
+        🧠 TCF – Structure de la langue
+        <small>25–30 min</small>
+    </h1>
+    <!-- Infos chrono -->
+    <div class="chrono-note">
+        <span>⏱️ Exercices 1 à 6 : <strong>20 minutes</strong> &nbsp; | &nbsp; ⏱️ Série finale : <strong>10 minutes</strong></span>
+        <span class="timer-badge">✍️ 90 questions type</span>
+    </div>
+
+    <!-- PARTIE 1 – Pronoms -->
+    <div class="partie">
+        <h2>🟢 PARTIE 1 – Pronoms COD / COI / Y / EN</h2>
+
+        <!-- Exercice 1 QCM -->
+        <div class="exercise-block">
+            <div class="exercise-title">🔹 Exercice 1 <span>QCM à choix unique</span></div>
+            <!-- Q1 -->
+            <div class="question">
+                <div class="q-text">1. Je téléphone à Marie → Je ___ téléphone.</div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="ex1q1"> A) la</label>
+                    <label class="option-item"><input type="radio" name="ex1q1"> B) lui</label>
+                    <label class="option-item"><input type="radio" name="ex1q1"> C) les</label>
+                </div>
+            </div>
+            <div class="question">
+                <div class="q-text">2. Tu prends du café ? Oui, j’___ prends.</div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="ex1q2"> A) le</label>
+                    <label class="option-item"><input type="radio" name="ex1q2"> B) en</label>
+                    <label class="option-item"><input type="radio" name="ex1q2"> C) y</label>
+                </div>
+            </div>
+            <div class="question">
+                <div class="q-text">3. Il va à la banque → Il ___ va.</div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="ex1q3"> A) en</label>
+                    <label class="option-item"><input type="radio" name="ex1q3"> B) y</label>
+                    <label class="option-item"><input type="radio" name="ex1q3"> C) la</label>
+                </div>
+            </div>
+            <div class="question">
+                <div class="q-text">4. Nous avons vu Paul → Nous ___ avons vu.</div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="ex1q4"> A) le</label>
+                    <label class="option-item"><input type="radio" name="ex1q4"> B) lui</label>
+                    <label class="option-item"><input type="radio" name="ex1q4"> C) en</label>
+                </div>
+            </div>
+            <div class="question">
+                <div class="q-text">5. Elle parle à ses parents → Elle ___ parle.</div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="ex1q5"> A) les</label>
+                    <label class="option-item"><input type="radio" name="ex1q5"> B) leur</label>
+                    <label class="option-item"><input type="radio" name="ex1q5"> C) y</label>
+                </div>
+            </div>
+            <div class="question">
+                <div class="q-text">6. Vous avez des frères ? Oui, j’___ ai deux.</div>
+                <div class="options">
+                    <label class="option-item"><input type="radio" name="ex1q6"> A) les</label>
+                    <label class="option-item"><input type="radio" name="ex1q6"> B) en</label>
+                    <label class="option-item"><input type="radio" name="ex1q6"> C) y</label>
+                </div>
+            </div>
+            <button class="btn-reveal" onclick="toggleCorrection('corr1')">📋 Afficher les réponses (ex1)</button>
+            <div id="corr1" class="correction-box">✔️ 1-B (lui), 2-B (en), 3-B (y), 4-A (le), 5-B (leur), 6-B (en)</div>
+        </div>
+
+        <!-- Exercice 2 : compléter (transfo) -->
+        <div class="exercise-block">
+            <div class="exercise-title">🔹 Exercice 2 <span>Compléter avec le, la, les, lui, leur, y, en</span></div>
+            <div class="transform-item">1. Je pense à mon examen → J’___ pense. (réponse : y)</div>
+            <div class="transform-item">2. Il offre un cadeau à sa sœur → Il ___ offre un cadeau. (lui)</div>
+            <div class="transform-item">3. Nous regardons le film → Nous ___ regardons. (le)</div>
+            <div class="transform-item">4. Elle a beaucoup d’amis → Elle ___ a beaucoup. (en)</div>
+            <div class="transform-item">5. Tu parles à tes collègues → Tu ___ parles. (leur)</div>
+            <button class="btn-reveal" onclick="toggleCorrection('corr2')">🔍 Voir correction ex2</button>
+            <div id="corr2" class="correction-box">✅ 1. y | 2. lui | 3. le | 4. en | 5. leur</div>
+        </div>
+    </div>
+
+    <!-- PARTIE 2 – Subjonctif -->
+    <div class="partie">
+        <h2>🟢 PARTIE 2 – Subjonctif</h2>
+        <div class="exercise-block">
+            <div class="exercise-title">🔹 Exercice 3 <span>Choisissez la bonne forme</span></div>
+            <div class="question">1. Il faut que tu ___ plus tôt. A) viens  B) viennes  C) viens</div>
+            <div class="question">2. Bien que ce ___ difficile, je continue. A) est  B) soit  C) sera</div>
+            <div class="question">3. Pour que nous ___ prêts, il faut partir. A) sommes  B) serons  C) soyons</div>
+            <div class="question">4. Je veux que vous ___ attention. A) faites  B) fassiez  C) faites</div>
+            <div class="question">5. Il est important qu’elle ___ à l’heure. A) arrive  B) arrive  C) arrivait</div>
+            <button class="btn-reveal" onclick="toggleCorrection('corr3')">📌 Réponses ex3</button>
+            <div id="corr3" class="correction-box">🎯 1-B viennes, 2-B soit, 3-C soyons, 4-B fassiez, 5-A arrive</div>
+        </div>
+        <div class="exercise-block">
+            <div class="exercise-title">🔹 Exercice 4 <span>Transformation (subjonctif)</span></div>
+            <div class="transform-item">1. Je dois travailler. → Il faut que <strong>je travaille</strong>.</div>
+            <div class="transform-item">2. Nous devons partir tôt. → Il faut que <strong>nous partions</strong> tôt.</div>
+            <div class="transform-item">3. Tu dois faire attention. → Il faut que <strong>tu fasses</strong> attention.</div>
+            <div class="transform-item">4. Nous devons pouvoir entrer. → Il faut que nous <strong>puissions</strong> entrer.</div>
+            <button class="btn-reveal" onclick="toggleCorrection('corr4')">✅ Correction ex4</button>
+            <div id="corr4" class="correction-box">📘 1. je travaille | 2. nous partions | 3. tu fasses | 4. puissions</div>
+        </div>
+    </div>
+
+    <!-- PARTIE 3 – PC / Imparfait + accord -->
+    <div class="partie">
+        <h2>🟢 PARTIE 3 – Passé composé / Imparfait</h2>
+        <div class="exercise-block">
+            <div class="exercise-title">🔹 Exercice 5 <span>Imparfait ou PC</span></div>
+            <div class="question">1. Hier, il ___ très froid. A) faisait  B) a fait</div>
+            <div class="question">2. Quand j’étais petite, je ___ dans un village. A) ai habité  B) habitais</div>
+            <div class="question">3. Nous ___ un film quand il a téléphoné. A) regardions  B) avons regardé</div>
+            <div class="question">4. Soudain, il ___. A) tombait  B) est tombé</div>
+            <div class="question">5. Tous les étés, nous ___ à la mer. A) sommes allés  B) allions</div>
+            <button class="btn-reveal" onclick="toggleCorrection('corr5')">📖 Réponses ex5</button>
+            <div id="corr5" class="correction-box">🌡️ 1-A faisait, 2-B habitais, 3-A regardions, 4-B est tombé, 5-B allions</div>
+        </div>
+        <div class="exercise-block">
+            <div class="exercise-title">🔹 Exercice 6 <span>Accord avec “se”</span></div>
+            <div class="question">1. Nous nous sommes ___. A) amusé  B) amusés  C) amusées</div>
+            <div class="question">2. Elle s’est ___. A) levé  B) levée  C) lever</div>
+            <div class="question">3. Ils se sont ___ rapidement. A) habillés  B) habillé  C) habiller</div>
+            <div class="question">4. Elles se sont ___. A) parlé  B) parlées</div>
+            <button class="btn-reveal" onclick="toggleCorrection('corr6')">🔓 Correction ex6</button>
+            <div id="corr6" class="correction-box">📌 1-B amusés (masculin pluriel / mixte), 2-B levée, 3-A habillés, 4-A parlé (invariable car COI)</div>
+        </div>
+    </div>
+
+    <!-- PARTIE 4 – Série type examen -->
+    <hr class="hr-light">
+    <div class="simu-title">🔴 PARTIE 4 – Série type examen TCF (10 min chrono)</div>
+    <div class="exercise-block" style="background: #fff5e6;">
+        <div class="exercise-title">Série finale <span>10 questions – cochez mentalement</span></div>
+        <div class="question">1. Elle ne comprend pas pourquoi je ___ parlé. A) lui ai  B) la ai  C) les ai</div>
+        <div class="question">2. Il faut que nous ___ prêts avant 18h. A) sommes  B) soyons  C) serons</div>
+        <div class="question">3. J’ai acheté des pommes. J’___ ai acheté trois. A) les  B) en  C) y</div>
+        <div class="question">4. Quand il était jeune, il ___ beaucoup de sport. A) faisait  B) a fait</div>
+        <div class="question">5. Ils se sont ___ dans le parc. A) promené  B) promenés  C) promener</div>
+        <div class="question">6. Je vais à Paris → J’___ vais demain. A) en  B) y  C) le</div>
+        <div class="question">7. Bien qu’il ___ malade, il travaille. A) est  B) soit  C) sera</div>
+        <div class="question">8. Elle parle à ses amis → Elle ___ parle souvent. A) les  B) leur  C) y</div>
+        <div class="question">9. Nous ___ un bon moment hier soir. A) passions  B) avons passé</div>
+        <div class="question">10. Il a besoin d’argent → Il ___ a besoin. A) en  B) y  C) le</div>
+        <button class="btn-reveal" onclick="toggleCorrection('corrFinal')">✅ Révéler les réponses (série finale)</button>
+        <div id="corrFinal" class="correction-box">
+            🧪 1-A lui ai &nbsp; 2-B soyons &nbsp; 3-B en &nbsp; 4-A faisait &nbsp; 5-B promenés &nbsp; 6-B y &nbsp; 7-B soit &nbsp; 8-B leur &nbsp; 9-B avons passé &nbsp; 10-A en
+        </div>
+    </div>
+
+    <!-- petite note simulateur -->
+    <footer>
+        ⏱️ simulation réelle : ex.1–6 : 20 min · série finale : 10 min. <br> 
+        ★ réponses cachées – cliquez sur les boutons pour vérifier.
+    </footer>
+</div>
+
+<script>
+    function toggleCorrection(id) {
+        const box = document.getElementById(id);
+        box.classList.toggle('show');
+    }
+</script>
+<!-- petits styles supplémentaires pour rendre les boutons visibles partout -->
+<style>
+    .btn-reveal { margin-right: 10px; }
+    .transform-item strong { background: #fdebb3; padding: 2px 10px; border-radius: 30px; }
+    .exercise-block .question { transition: 0.1s; }
+    .exercise-block .btn-reveal { margin-left: 10px; }
+</style>
+</body>
+</html>
