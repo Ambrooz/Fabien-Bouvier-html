@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relations Internationales — Révision Bac</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue:#4f8ef7; --purple:#a855f7; --pink:#f472b6;
+    --orange:#fb923c; --yellow:#fbbf24; --green:#34d399;
+    --teal:#22d3ee; --red:#f87171;
+    --bg:#f0f4ff; --white:#ffffff; --text:#1e293b; --muted:#64748b; --border:#e2e8f0;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Nunito',sans-serif; font-weight:600; min-height:100vh; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 45%, #ec4899 100%);
+    color:#fff; padding:50px 24px 40px; text-align:center; position:relative; overflow:hidden;
+  }
+  .hero::before { content:'🌍'; position:absolute; font-size:200px; opacity:.07; top:-10px; right:-10px; }
+  .hero-badge { display:inline-block; background:rgba(255,255,255,.25); border-radius:20px; padding:5px 16px; font-size:13px; letter-spacing:1px; margin-bottom:16px; }
+  .hero h1 { font-size:clamp(1.6rem,5vw,2.8rem); font-weight:900; line-height:1.15; margin-bottom:12px; }
+  .hero p { font-size:15px; opacity:.85; max-width:500px; margin:0 auto; }
+
+  /* TABS */
+  .tabs { display:flex; justify-content:center; gap:10px; padding:20px 20px 0; flex-wrap:wrap; }
+  .tab {
+    padding:10px 22px; border-radius:30px; border:2.5px solid transparent;
+    background:var(--white); color:var(--muted); font-family:'Nunito',sans-serif;
+    font-size:14px; font-weight:800; cursor:pointer; transition:all .2s;
+    box-shadow:0 2px 8px rgba(0,0,0,.07);
+  }
+  .tab:hover { transform:translateY(-2px); box-shadow:0 6px 16px rgba(0,0,0,.1); }
+  .tab.active { background:#6366f1; color:#fff; border-color:#6366f1; }
+
+  /* SECTIONS */
+  .section { display:none; max-width:860px; margin:0 auto; padding:28px 20px 60px; animation:popIn .3s ease; }
+  .section.active { display:block; }
+  @keyframes popIn { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:none} }
+
+  .section-title {
+    font-size:1.3rem; font-weight:900; color:var(--text); margin-bottom:20px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .section-title::after { content:''; flex:1; height:3px; border-radius:3px; background:linear-gradient(90deg,#6366f1,transparent); }
+
+  /* PERIOD CARDS */
+  .period-card {
+    background:var(--white); border-radius:16px; padding:20px 22px; margin-bottom:16px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07); border-left:5px solid var(--blue);
+    transition:transform .2s, box-shadow .2s;
+  }
+  .period-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px rgba(0,0,0,.1); }
+  .period-card:nth-child(2){border-color:#a855f7}
+  .period-card:nth-child(3){border-color:#fb923c}
+  .period-card:nth-child(4){border-color:#34d399}
+  .period-card:nth-child(5){border-color:#22d3ee}
+  .period-card:nth-child(6){border-color:#f87171}
+  .period-card h2 { font-size:1.05rem; font-weight:900; margin-bottom:8px; }
+  .period-card p { color:var(--muted); font-size:14px; line-height:1.6; margin-bottom:12px; }
+  .tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .tag { padding:3px 12px; border-radius:20px; font-size:12px; font-weight:800; }
+  .tag-blue   { background:#eff6ff; color:#2563eb; }
+  .tag-purple { background:#faf5ff; color:#7c3aed; }
+  .tag-orange { background:#fff7ed; color:#c2410c; }
+  .tag-green  { background:#f0fdf4; color:#15803d; }
+  .tag-red    { background:#fef2f2; color:#dc2626; }
+  .tag-teal   { background:#f0fdfa; color:#0f766e; }
+
+  /* NOTION GRID */
+  .notion-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:8px; }
+  @media(max-width:580px){.notion-grid{grid-template-columns:1fr}}
+  .notion-card { border-radius:14px; padding:16px; font-size:13px; font-weight:600; }
+  .notion-card h3 { font-size:13px; font-weight:900; margin-bottom:5px; text-transform:uppercase; letter-spacing:.5px; }
+  .nc-1{background:#eff6ff} .nc-1 h3{color:#2563eb}
+  .nc-2{background:#faf5ff} .nc-2 h3{color:#7c3aed}
+  .nc-3{background:#fff7ed} .nc-3 h3{color:#c2410c}
+  .nc-4{background:#fef2f2} .nc-4 h3{color:#dc2626}
+  .nc-5{background:#f0fdf4} .nc-5 h3{color:#15803d}
+  .nc-6{background:#f0fdfa} .nc-6 h3{color:#0f766e}
+  .notion-card p { color:var(--muted); line-height:1.5; }
+
+  /* DATES TABLE */
+  .dates-table {
+    width:100%; border-collapse:collapse; font-size:14px;
+    background:var(--white); border-radius:14px; overflow:hidden;
+    box-shadow:0 3px 12px rgba(0,0,0,.07);
+  }
+  .dates-table thead tr { background:linear-gradient(90deg,#6366f1,#8b5cf6); color:#fff; }
+  .dates-table th { padding:12px 16px; text-align:left; font-size:12px; letter-spacing:1.5px; text-transform:uppercase; }
+  .dates-table td { padding:11px 16px; border-bottom:1px solid var(--border); vertical-align:top; }
+  .dates-table tr:last-child td { border-bottom:none; }
+  .dates-table tr:hover td { background:#f8f7ff; }
+  .date-cell { font-weight:900; color:#6366f1; white-space:nowrap; }
+
+  /* QCM */
+  .qcm-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+  .score-badge { background:var(--white); border:2.5px solid #6366f1; border-radius:30px; padding:7px 20px; font-size:14px; font-weight:800; color:#6366f1; }
+
+  .question-block {
+    background:var(--white); border-radius:16px; padding:22px; margin-bottom:14px;
+    box-shadow:0 3px 12px rgba(0,0,0,.07); border:2.5px solid transparent; transition:border-color .2s;
+  }
+  .question-block.correct { border-color:#34d399; }
+  .question-block.wrong   { border-color:#f87171; }
+
+  .q-num { font-size:11px; font-weight:900; color:#a855f7; letter-spacing:2px; text-transform:uppercase; margin-bottom:8px; }
+  .q-text { font-size:15px; font-weight:800; margin-bottom:14px; line-height:1.5; }
+  .options { display:flex; flex-direction:column; gap:8px; }
+
+  .option {
+    display:flex; align-items:center; gap:12px; padding:11px 16px;
+    border-radius:10px; border:2px solid var(--border); background:#fafbff;
+    cursor:pointer; font-family:'Nunito',sans-serif; font-size:14px; font-weight:700;
+    color:var(--text); text-align:left; transition:all .15s;
+  }
+  .option:hover:not([disabled]) { border-color:#6366f1; background:#f0f0ff; transform:translateX(4px); }
+  .option .opt-letter {
+    min-width:28px; height:28px; border-radius:8px; background:var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; font-weight:900; color:var(--muted); flex-shrink:0; transition:all .15s;
+  }
+  .option:hover:not([disabled]) .opt-letter { background:#6366f1; color:#fff; }
+  .option.selected-correct { background:#f0fdf4; border-color:#34d399; }
+  .option.selected-correct .opt-letter { background:#34d399; color:#fff; }
+  .option.selected-wrong { background:#fef2f2; border-color:#f87171; }
+  .option.selected-wrong .opt-letter { background:#f87171; color:#fff; }
+  .option.reveal-correct { background:#f0fdf4; border-color:#34d399; }
+  .option[disabled] { cursor:default; }
+
+  .explanation { margin-top:12px; padding:12px 16px; border-radius:10px; font-size:13px; font-weight:700; line-height:1.5; display:none; }
+  .explanation.correct { background:#f0fdf4; color:#15803d; border:1.5px solid #bbf7d0; }
+  .explanation.wrong   { background:#fef2f2; color:#dc2626; border:1.5px solid #fecaca; }
+
+  .result-bar { display:none; margin-top:24px; padding:22px 24px; background:var(--white); border-radius:16px; box-shadow:0 3px 12px rgba(0,0,0,.07); border:2.5px solid #6366f1; }
+  .result-bar.show { display:block; }
+  .result-bar h3 { font-size:1.15rem; font-weight:900; margin-bottom:10px; }
+  .progress-track { height:10px; background:var(--border); border-radius:10px; margin:10px 0 8px; overflow:hidden; }
+  .progress-fill { height:100%; border-radius:10px; background:linear-gradient(90deg,#6366f1,#ec4899); transition:width .7s ease; width:0%; }
+  .result-note { font-size:14px; color:var(--muted); font-weight:700; }
+
+  .btn-reset {
+    margin-top:20px; padding:12px 28px;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6); color:#fff;
+    border:none; border-radius:30px; font-family:'Nunito',sans-serif;
+    font-size:14px; font-weight:900; cursor:pointer;
+    box-shadow:0 4px 12px rgba(99,102,241,.35); transition:all .2s;
+  }
+  .btn-reset:hover { transform:translateY(-2px); box-shadow:0 8px 20px rgba(99,102,241,.4); }
+
+  @media(max-width:480px){
+    .hero{padding:36px 16px 28px;}
+    .section{padding:20px 14px 50px;}
+    .period-card,.question-block{padding:16px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">✨ Terminale Histoire — Prépa Bac</div>
+  <h1>Le jeu des puissances<br>dans les relations internationales<br>depuis 1945 🌍</h1>
+  <p>Fiche de révision + QCM interactif pour cartonner au Bac !</p>
+</div>
+
+<div class="tabs">
+  <button class="tab active" onclick="showSection('fiche',this)">📋 Fiche de révision</button>
+  <button class="tab" onclick="showSection('dates',this)">📅 Chronologie</button>
+  <button class="tab" onclick="showSection('qcm',this)">✏️ QCM interactif</button>
+</div>
+
+<!-- FICHE -->
+<div id="fiche" class="section active">
+  <div class="section-title">🗂️ Les grandes périodes</div>
+
+  <div class="period-card">
+    <h2>🏛️ 1991 — La fin de la bipolarité</h2>
+    <p>La dissolution de l'URSS met fin à 50 ans d'affrontement Est-Ouest. Les ex-républiques soviétiques deviennent indépendantes ; les pays d'Europe de l'Est rejoignent l'orbite occidentale.</p>
+    <div class="tags">
+      <span class="tag tag-blue">Dissolution de l'URSS</span>
+      <span class="tag tag-blue">Fin de l'affrontement Est-Ouest</span>
+      <span class="tag tag-blue">Nouvelles indépendances</span>
+      <span class="tag tag-blue">Recomposition des alliances</span>
+    </div>
+  </div>
+
+  <div class="period-card">
+    <h2>🦅 Années 1990 — L'hyperpuissance américaine</h2>
+    <p>Les États-Unis deviennent l'<strong>unique superpuissance</strong> : 1ère armée mondiale, plus gros PNB, domination culturelle (Hollywood, Internet). La Guerre du Golfe (1990-91) illustre un "nouvel ordre mondial" sous leadership américain avec mandat ONU.</p>
+    <div class="tags">
+      <span class="tag tag-purple">Hyperpuissance</span>
+      <span class="tag tag-purple">Guerre du Golfe 1990-91</span>
+      <span class="tag tag-purple">Nouvel ordre mondial</span>
+      <span class="tag tag-purple">Coalition ONU</span>
+    </div>
+  </div>
+
+  <div class="period-card">
+    <h2>💥 11 Septembre 2001 — Un choc mondial</h2>
+    <p>Les attentats d'Al-Qaïda (~3 000 morts) redéfinissent toute la géopolitique mondiale. Les États-Unis lancent une "guerre contre le terrorisme" : Afghanistan (oct. 2001) puis Irak (2003). Ces guerres révèlent les limites de la puissance militaire face aux conflits asymétriques.</p>
+    <div class="tags">
+      <span class="tag tag-orange">Terrorisme international</span>
+      <span class="tag tag-orange">Afghanistan 2001</span>
+      <span class="tag tag-orange">Irak 2003</span>
+      <span class="tag tag-orange">Conflits asymétriques</span>
+    </div>
+  </div>
+
+  <div class="period-card">
+    <h2>🌐 Années 2000 — Vers un monde multipolaire</h2>
+    <p>L'hégémonie américaine est contestée. La <strong>Chine</strong> explose économiquement (dépenses militaires : 10 Md$ en 1989 → 210 Md$ en 2016). La <strong>Russie</strong> se réaffirme sous Poutine. Les <strong>BRICS</strong> (Brésil, Russie, Inde, Chine, Afrique du Sud) représentent 40% de la population et 25% du PIB mondial.</p>
+    <div class="tags">
+      <span class="tag tag-green">Multipolarité</span>
+      <span class="tag tag-green">BRICS</span>
+      <span class="tag tag-green">Montée de la Chine</span>
+      <span class="tag tag-green">Réaffirmation russe</span>
+    </div>
+  </div>
+
+  <div class="period-card">
+    <h2>🇪🇺 Construction européenne &amp; défis</h2>
+    <p>De la CECA (1951) au Traité de Maastricht (1992), l'UE s'approfondit. L'euro est mis en circulation en 2002 (340 millions d'utilisateurs). Mais les crises s'enchaînent : crise de la dette (2008-12), crise migratoire (2015), Brexit (2016-2020), invasion de l'Ukraine (2022).</p>
+    <div class="tags">
+      <span class="tag tag-teal">CECA → UE</span>
+      <span class="tag tag-teal">Euro 2002</span>
+      <span class="tag tag-red">Brexit 2020</span>
+      <span class="tag tag-red">Montée des populismes</span>
+    </div>
+  </div>
+
+  <div class="period-card">
+    <h2>☢️ Prolifération nucléaire &amp; instabilité</h2>
+    <p>La <strong>Corée du Nord</strong> multiplie les essais nucléaires depuis 2006 malgré les sanctions. L'<strong>Iran</strong> signe un accord international en 2015. Les guerres régionales post-Guerre froide (ex-Yougoslavie, Syrie, Ukraine) montrent un monde durablement instable.</p>
+    <div class="tags">
+      <span class="tag tag-red">Corée du Nord</span>
+      <span class="tag tag-red">Iran — accord 2015</span>
+      <span class="tag tag-red">Ex-Yougoslavie 1991-2001</span>
+      <span class="tag tag-red">Ukraine 2014 / 2022</span>
+    </div>
+  </div>
+
+  <div class="section-title" style="margin-top:32px;">💡 Notions clés</div>
+  <div class="notion-grid">
+    <div class="notion-card nc-1"><h3>Multipolarité</h3><p>Plusieurs pôles de puissance coexistent : États-Unis, Chine, Russie, UE, BRICS.</p></div>
+    <div class="notion-card nc-2"><h3>Hyperpuissance</h3><p>Domination totale des États-Unis dans les années 1990 : militaire, économique et culturelle.</p></div>
+    <div class="notion-card nc-3"><h3>Terrorisme international</h3><p>Menace transnationale post-11/09 portée par des acteurs non-étatiques (Al-Qaïda, Daesh).</p></div>
+    <div class="notion-card nc-4"><h3>Prolifération nucléaire</h3><p>Diffusion des armes atomiques à de nouveaux États (Corée du Nord, Iran).</p></div>
+    <div class="notion-card nc-5"><h3>OTAN</h3><p>Alliance militaire occidentale élargie à l'Est après 1991, perçue comme une menace par la Russie.</p></div>
+    <div class="notion-card nc-6"><h3>Construction européenne</h3><p>CECA (1951) → CEE (1957) → UE / Maastricht (1992) → Euro (2002).</p></div>
+  </div>
+</div>
+
+<!-- DATES -->
+<div id="dates" class="section">
+  <div class="section-title">📅 Chronologie complète</div>
+  <table class="dates-table">
+    <thead><tr><th>📌 Date</th><th>Événement</th></tr></thead>
+    <tbody>
+      <tr><td class="date-cell">1945</td><td>Création de l'ONU (51 membres fondateurs, siège à New York)</td></tr>
+      <tr><td class="date-cell">1948</td><td>Déclaration universelle des droits de l'homme</td></tr>
+      <tr><td class="date-cell">1951</td><td>Création de la CECA — embryon de la construction européenne</td></tr>
+      <tr><td class="date-cell">1957</td><td>Traité de Rome — naissance de la CEE</td></tr>
+      <tr><td class="date-cell">1989</td><td>Chute du mur de Berlin</td></tr>
+      <tr><td class="date-cell">1990–91</td><td>Guerre du Golfe — coalition internationale mandatée par l'ONU</td></tr>
+      <tr><td class="date-cell">1991</td><td>Dissolution de l'URSS — fin de la bipolarité</td></tr>
+      <tr><td class="date-cell">1991–2001</td><td>Guerres en ex-Yougoslavie (violences ethniques, crimes de guerre)</td></tr>
+      <tr><td class="date-cell">1992</td><td>Traité de Maastricht — création de l'Union Européenne</td></tr>
+      <tr><td class="date-cell">1999</td><td>1ère vague OTAN : Pologne, Hongrie, République tchèque</td></tr>
+      <tr><td class="date-cell">2001</td><td>⚡ Attentats du 11 septembre — "guerre contre le terrorisme"</td></tr>
+      <tr><td class="date-cell">oct. 2001</td><td>Intervention en Afghanistan (renverser le régime taliban)</td></tr>
+      <tr><td class="date-cell">2001</td><td>Création de l'Organisation de coopération de Shanghai (OCS)</td></tr>
+      <tr><td class="date-cell">2002</td><td>💶 Mise en circulation de l'euro (340 M d'utilisateurs)</td></tr>
+      <tr><td class="date-cell">2003</td><td>Invasion de l'Irak (sans lien prouvé avec le 11/09)</td></tr>
+      <tr><td class="date-cell">2004</td><td>2ème vague OTAN — Pays baltes et Europe centrale</td></tr>
+      <tr><td class="date-cell">2006</td><td>Premier essai nucléaire nord-coréen</td></tr>
+      <tr><td class="date-cell">2008–2012</td><td>Crise financière mondiale + crise de la dette en zone euro</td></tr>
+      <tr><td class="date-cell">2009–2020</td><td>3ème vague OTAN — intégration progressive des Balkans</td></tr>
+      <tr><td class="date-cell">2011</td><td>Printemps arabes — début de la guerre en Syrie</td></tr>
+      <tr><td class="date-cell">2014</td><td>Crise ukrainienne — annexion de la Crimée par la Russie</td></tr>
+      <tr><td class="date-cell">2015</td><td>Accord sur le nucléaire iranien / Crise migratoire en Europe</td></tr>
+      <tr><td class="date-cell">2016–2020</td><td>🇬🇧 Brexit — le Royaume-Uni quitte l'UE</td></tr>
+      <tr><td class="date-cell">2022</td><td>🔴 Invasion russe de l'Ukraine à grande échelle</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- QCM -->
+<div id="qcm" class="section">
+  <div class="qcm-header">
+    <div class="section-title" style="margin-bottom:0;border:none;">✏️ QCM interactif</div>
+    <div class="score-badge">Score : <span id="scoreDisplay">0</span> / <span id="totalDisplay">0</span></div>
+  </div>
+  <div id="qcmContainer"></div>
+  <div class="result-bar" id="resultBar">
+    <h3 id="resultTitle"></h3>
+    <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+    <p class="result-note" id="resultNote"></p>
+  </div>
+  <button class="btn-reset" onclick="resetQCM()">🔄 Recommencer le QCM</button>
+</div>
+
+<script>
+const questions = [
+  { q:"En quelle année l'URSS est-elle officiellement dissoute ?", opts:["1989","1991","1993","1995"], ans:1, expl:"La dissolution de l'URSS a lieu en décembre 1991, mettant fin à 50 ans d'affrontement bipolaire Est-Ouest." },
+  { q:"Que désigne le terme « hyperpuissance » dans les années 1990 ?", opts:["La puissance nucléaire soviétique","La domination totale des États-Unis dans tous les domaines","L'hégémonie économique de l'UE","La montée en puissance de la Chine"], ans:1, expl:"L'hyperpuissance désigne la domination sans précédent des États-Unis : militaire, économique, technologique et culturelle." },
+  { q:"Quel événement George Bush père associe-t-il à l'émergence d'un « nouvel ordre mondial » ?", opts:["La chute du mur de Berlin","La dissolution de l'URSS","La Guerre du Golfe contre l'Irak","Les attentats du 11 septembre"], ans:2, expl:"En septembre 1990, lors de la crise du Golfe, Bush évoque un nouvel ordre mondial avec une coalition internationale approuvée par l'ONU." },
+  { q:"Quelle organisation est créée en 2001 par la Chine et la Russie pour contrebalancer l'influence occidentale ?", opts:["Les BRICS","L'Organisation de coopération de Shanghai (OCS)","Le Pacte de Varsovie","L'ASEAN"], ans:1, expl:"L'OCS est fondée en 2001 pour la sécurité régionale en Asie centrale et pour promouvoir un multilatéralisme non occidental face à l'OTAN." },
+  { q:"Quel est le sigle du groupe composé du Brésil, Russie, Inde, Chine et Afrique du Sud ?", opts:["OTAN","OCS","BRICS","G20"], ans:2, expl:"Les BRICS représentent plus de 40% de la population mondiale et 25% du PIB mondial, revendiquant un rôle accru dans la gouvernance internationale." },
+  { q:"En quelle année les billets et pièces en euros sont-ils mis en circulation ?", opts:["1999","2000","2002","2004"], ans:2, expl:"Depuis le 1er janvier 2002, l'euro est la monnaie quotidienne de 340 millions d'Européens, symbole de l'intégration économique européenne." },
+  { q:"Quelle est la principale conséquence des attentats du 11 septembre 2001 ?", opts:["La création de l'ONU","Le lancement d'une guerre contre le terrorisme (Afghanistan 2001, Irak 2003)","La dissolution de l'OTAN","L'élargissement de l'UE vers l'Est"], ans:1, expl:"Les attentats d'Al-Qaïda lancent les États-Unis dans une guerre contre le terrorisme : Afghanistan (octobre 2001) puis Irak (2003)." },
+  { q:"Pourquoi la Russie perçoit-elle l'élargissement de l'OTAN vers l'Est comme une menace ?", opts:["Elle craint une invasion économique européenne","Elle y voit un encerclement stratégique de son territoire","Elle veut rejoindre l'OTAN mais est refusée","Elle redoute la concurrence nucléaire américaine"], ans:1, expl:"La Russie perçoit l'intégration d'anciens membres du Pacte de Varsovie dans l'OTAN comme un encerclement stratégique, alimentant les tensions en Ukraine." },
+  { q:"Quelle crise remet en question l'irréversibilité de l'intégration européenne ?", opts:["La crise financière de 2008","Le Brexit (2016-2020)","La crise migratoire de 2015","L'invasion de l'Ukraine en 2022"], ans:1, expl:"Le Brexit est un choc majeur car c'est la première fois qu'un État membre quitte le projet européen." },
+  { q:"Quel traité signé en 1992 transforme la CEE en Union européenne ?", opts:["Traité de Rome","Traité de Lisbonne","Traité de Maastricht","Traité d'Amsterdam"], ans:2, expl:"Le Traité de Maastricht (1992) crée officiellement l'Union européenne et pose les bases de la monnaie unique." },
+  { q:"Qu'est-ce qui caractérise les « conflits asymétriques » révélés en Afghanistan et en Irak ?", opts:["Des affrontements entre armées de taille équivalente","Des guerres nucléaires entre superpuissances","Une grande puissance militaire face à des adversaires non conventionnels","Des batailles navales en haute mer"], ans:2, expl:"Ces guerres ont révélé les limites de la puissance militaire américaine face aux guérillas, attentats et à l'instabilité régionale." },
+  { q:"Quelle affirmation sur les BRICS est FAUSSE ?", opts:["Ils représentent plus de 40% de la population mondiale","Leur PIB combiné atteint 25% du PIB mondial","Ils sont tous membres permanents du Conseil de sécurité de l'ONU","Ils sont présents sur cinq continents habités"], ans:2, expl:"Seuls la Russie et la Chine parmi les BRICS sont membres permanents du Conseil de sécurité. Le groupe BRICS en tant que tel n'a pas ce statut." },
+  { q:"En quelle année la Russie annexe-t-elle la Crimée ?", opts:["2008","2011","2014","2022"], ans:2, expl:"En 2014, l'annexion de la Crimée marque un retour des tensions Est-Ouest, annonçant l'invasion à grande échelle de 2022." },
+  { q:"Quel est le rôle du droit de veto au Conseil de sécurité de l'ONU ?", opts:["Permettre à l'Assemblée générale de voter des résolutions contraignantes","Permettre aux cinq membres permanents de bloquer toute résolution","Accorder aux pays en conflit un délai de réponse","Octroyer des pouvoirs supplémentaires au Secrétaire général"], ans:1, expl:"Les cinq membres permanents (États-Unis, Russie, Chine, France, Royaume-Uni) disposent d'un droit de veto pouvant paralyser l'action de l'ONU." },
+  { q:"Quelle est la première vague d'élargissement de l'OTAN en 1999 ?", opts:["Les pays baltes (Estonie, Lettonie, Lituanie)","La Pologne, la Hongrie et la République tchèque","La Roumanie, la Bulgarie et la Slovaquie","Les pays des Balkans occidentaux"], ans:1, expl:"En 1999, la Pologne, la Hongrie et la République tchèque — anciens membres du Pacte de Varsovie — rejoignent l'OTAN." }
+];
+
+let answered=0, correct=0;
+
+function buildQCM(){
+  const c=document.getElementById('qcmContainer');
+  c.innerHTML=''; answered=0; correct=0; updateScore();
+  document.getElementById('resultBar').classList.remove('show');
+  document.getElementById('progressFill').style.width='0%';
+  const L=['A','B','C','D'];
+  questions.forEach((q,i)=>{
+    const b=document.createElement('div');
+    b.className='question-block'; b.id='q'+i;
+    b.innerHTML=`<div class="q-num">Question ${i+1} sur ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${q.opts.map((o,j)=>`<button class="option" onclick="answer(${i},${j})" id="opt_${i}_${j}"><span class="opt-letter">${L[j]}</span>${o}</button>`).join('')}</div>
+      <div class="explanation" id="expl_${i}"></div>`;
+    c.appendChild(b);
+  });
+}
+
+function answer(qi,oi){
+  const q=questions[qi];
+  const block=document.getElementById('q'+qi);
+  block.querySelectorAll('.option').forEach(o=>o.setAttribute('disabled',true));
+  const ok=oi===q.ans;
+  const chosen=document.getElementById(`opt_${qi}_${oi}`);
+  const expl=document.getElementById(`expl_${qi}`);
+  if(ok){
+    chosen.classList.add('selected-correct'); block.classList.add('correct');
+    expl.className='explanation correct'; expl.textContent='✅ Bonne réponse ! '+q.expl; correct++;
+  } else {
+    chosen.classList.add('selected-wrong'); block.classList.add('wrong');
+    expl.className='explanation wrong'; expl.textContent='❌ Incorrect. '+q.expl;
+    document.getElementById(`opt_${qi}_${q.ans}`).classList.add('reveal-correct');
+  }
+  expl.style.display='block'; answered++; updateScore();
+  if(answered===questions.length) showResult();
+}
+
+function updateScore(){
+  document.getElementById('scoreDisplay').textContent=correct;
+  document.getElementById('totalDisplay').textContent=answered;
+}
+
+function showResult(){
+  const bar=document.getElementById('resultBar');
+  bar.classList.add('show');
+  const pct=Math.round((correct/questions.length)*100);
+  setTimeout(()=>{ document.getElementById('progressFill').style.width=pct+'%'; },100);
+  let title,note;
+  if(pct>=80){ title=`🎉 Excellent ! ${correct}/${questions.length} — ${pct}%`; note="Super boulot ! Tu maîtrises le cours, tu es prêt(e) pour le Bac !"; }
+  else if(pct>=60){ title=`👍 Bien ! ${correct}/${questions.length} — ${pct}%`; note="Bonne base ! Revois les points mal maîtrisés dans la fiche de révision."; }
+  else { title=`💪 À retravailler : ${correct}/${questions.length} — ${pct}%`; note="Pas de panique ! Reprends la fiche et la chronologie, puis retente le QCM."; }
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultNote').textContent=note;
+  bar.scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+function resetQCM(){ buildQCM(); document.getElementById('qcm').scrollIntoView({behavior:'smooth',block:'start'}); }
+function showSection(id,btn){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active'); btn.classList.add('active');
+}
+buildQCM();
+</script>
+</body>
+</html>
