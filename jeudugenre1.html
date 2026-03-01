@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>🎯 Mission : Le Genre des Noms</title>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      border: 4px solid #f1c40f;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+    
+    h1 {
+      margin-bottom: 10px;
+      font-size: 3em;
+      color: #f1c40f;
+      text-shadow: 3px 3px 0 #8e44ad;
+      letter-spacing: 1px;
+    }
+    
+    .subtitle {
+      font-size: 1.2em;
+      color: #d2dae2;
+      margin-bottom: 30px;
+    }
+    
+    .section {
+      display: none;
+      padding: 30px;
+      margin: 25px 0;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .active {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    input, button {
+      padding: 18px 25px;
+      margin: 12px;
+      border-radius: 50px;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    
+    input {
+      width: 280px;
+      text-align: center;
+      background: white;
+      color: #8e44ad;
+      border: 3px solid #f1c40f;
+    }
+    
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(241, 196, 15, 0.3);
+    }
+    
+    button {
+      background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+      color: white;
+      cursor: pointer;
+      min-width: 250px;
+      border: 3px solid #f1c40f;
+      box-shadow: 0 6px 0 #b77814;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #b77814;
+    }
+    
+    button:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #b77814;
+    }
+    
+    .copy-btn {
+      background: linear-gradient(135deg, #3498db 0%, #2980b9 100%) !important;
+      box-shadow: 0 6px 0 #1e4b8f !important;
+    }
+    
+    .timer {
+      font-size: 70px;
+      font-weight: 900;
+      margin: 20px 0;
+      color: #f1c40f;
+      text-shadow: 4px 4px 0 #8e44ad;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .timer.warning {
+      color: #e74c3c;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin: 25px 0;
+      overflow: hidden;
+      border: 2px solid #f1c40f;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #f1c40f, #3498db, #e84393);
+      width: 0%;
+      transition: width 0.5s;
+    }
+    
+    .progress-text {
+      font-size: 20px;
+      color: #f1c40f;
+      margin: 10px 0 20px;
+    }
+    
+    .word-box {
+      background: #6c5ce7;
+      padding: 30px;
+      border-radius: 40px;
+      margin: 30px 0;
+      border: 3px solid #f1c40f;
+    }
+    
+    .french-word {
+      font-size: 64px;
+      font-weight: bold;
+      color: #f1c40f;
+      margin: 10px 0;
+      text-transform: lowercase;
+    }
+    
+    .translations {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      margin: 20px 0;
+      font-size: 24px;
+    }
+    
+    .translation-item {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 10px 25px;
+      border-radius: 40px;
+      border: 1px solid #f1c40f;
+    }
+    
+    .lang {
+      font-size: 16px;
+      color: #d2dae2;
+      margin-bottom: 5px;
+    }
+    
+    .word-gender {
+      font-size: 20px;
+      padding: 8px 20px;
+      border-radius: 40px;
+      display: inline-block;
+      margin: 15px 0;
+    }
+    
+    .gender-m {
+      background: #3498db;
+      color: white;
+    }
+    
+    .gender-f {
+      background: #e84393;
+      color: white;
+    }
+    
+    .question-prompt {
+      font-size: 28px;
+      color: #f1c40f;
+      margin: 25px 0 15px;
+    }
+    
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 30px 0;
+    }
+    
+    .choice-btn {
+      background: white;
+      color: #8e44ad;
+      padding: 25px 15px;
+      border-radius: 30px;
+      font-size: 32px;
+      font-weight: bold;
+      border: 4px solid #3498db;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 8px 0 #2c3e50;
+    }
+    
+    .choice-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 11px 0 #2c3e50;
+      border-color: #f1c40f;
+    }
+    
+    .choice-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #2c3e50;
+    }
+    
+    .choice-btn.correct {
+      background: #00b894 !important;
+      border-color: #00b894 !important;
+      color: white !important;
+      animation: correctPulse 0.5s;
+    }
+    
+    .choice-btn.wrong {
+      background: #d63031 !important;
+      border-color: #d63031 !important;
+      color: white !important;
+      animation: shake 0.3s;
+    }
+    
+    @keyframes correctPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    .players-row {
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+      margin: 40px 0;
+    }
+    
+    .player-card {
+      flex: 1;
+      padding: 25px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 3px solid;
+      min-width: 250px;
+    }
+    
+    .player-card.capitaine {
+      border-color: #3498db;
+    }
+    
+    .player-card.coequipier {
+      border-color: #e84393;
+    }
+    
+    .player-role {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .player-name {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    
+    .player-score {
+      font-size: 48px;
+      color: #f1c40f;
+      font-weight: 900;
+      margin: 15px 0;
+    }
+    
+    .player-status {
+      font-size: 18px;
+      padding: 10px;
+      border-radius: 40px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .status-answered {
+      color: #00b894;
+      font-weight: bold;
+    }
+    
+    .status-waiting {
+      color: #f1c40f;
+    }
+    
+    .vs-badge {
+      font-size: 24px;
+      background: #f1c40f;
+      color: #8e44ad;
+      padding: 10px 30px;
+      border-radius: 60px;
+      font-weight: bold;
+      margin: 20px auto;
+      display: inline-block;
+    }
+    
+    .share-link {
+      background: white;
+      color: #8e44ad;
+      padding: 20px;
+      border-radius: 40px;
+      margin: 25px 0;
+      word-break: break-all;
+      font-size: 16px;
+      border: 3px solid #f1c40f;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .feedback {
+      font-size: 22px;
+      margin: 25px 0;
+      padding: 20px;
+      border-radius: 40px;
+      background: rgba(0, 0, 0, 0.2);
+      min-height: 80px;
+    }
+    
+    @media (max-width: 768px) {
+      .choices-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .players-row {
+        flex-direction: column;
+      }
+      
+      .french-word {
+        font-size: 48px;
+      }
+      
+      .translations {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🎯 Mission : Le Genre des Noms</h1>
+    <p class="subtitle">60 mots • Le/La/L' • Ce/Cet/Cette • <strong style="color:#f1c40f;">45 secondes</strong> • Traductions EN/CN</p>
+    
+    <!-- Écran d'accueil -->
+    <div id="home-screen" class="section active">
+      <div style="font-size: 80px; margin: 30px 0;">🔵🔴⚪</div>
+      <h2>Trouve le bon article !</h2>
+      <p>Affronte un ami en temps réel - 60 mots avec traductions</p>
+      <button onclick="showCreate()">🎮 CAPITAINE (Créer la partie)</button>
+      <br>
+      <button onclick="showJoin()">🔗 COÉQUIPIER (Rejoindre)</button>
+    </div>
+    
+    <!-- Écran Création (Capitaine) -->
+    <div id="create-screen" class="section">
+      <h2 style="color:#3498db;">🔵 CAPITAINE</h2>
+      <input id="capitaine-name" placeholder="Ton pseudo">
+      <br>
+      <button onclick="creerPartie()">⚔️ CRÉER LA PARTIE</button>
+      
+      <div id="share-box" class="hidden">
+        <p style="color:#d2dae2; margin-top:30px;">Partage ce lien avec ton coéquipier :</p>
+        <div class="share-link" id="game-link">Génération du lien...</div>
+        <button class="copy-btn" onclick="copyLink()">📋 COPIER</button>
+        <p class="status-waiting" style="margin-top:30px;">⏳ En attente du coéquipier...</p>
+      </div>
+    </div>
+    
+    <!-- Écran Rejoindre (Coéquipier) -->
+    <div id="join-screen" class="section">
+      <h2 style="color:#e84393;">🔴 COÉQUIPIER</h2>
+      <input id="coequipier-name" placeholder="Ton pseudo">
+      <input id="room-code" placeholder="Code de la partie">
+      <br>
+      <button onclick="rejoindrePartie()">🤝 REJOINDRE</button>
+      <p id="join-message" class="status-waiting" style="margin-top:20px;"></p>
+    </div>
+    
+    <!-- Écran de Jeu -->
+    <div id="game-screen" class="section">
+      <!-- Timer -->
+      <div class="timer" id="timer">45</div>
+      
+      <!-- Progression -->
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="progress-text" id="progress-text">Mot 1/60</div>
+      
+      <!-- Mot et traductions -->
+      <div class="word-box">
+        <div class="french-word" id="french-word">chaise</div>
+        
+        <div class="translations">
+          <div class="translation-item">
+            <div class="lang">🇬🇧 ENGLISH</div>
+            <div id="english-translation">chair</div>
+          </div>
+          <div class="translation-item">
+            <div class="lang">🇨🇳 中文</div>
+            <div id="chinese-translation">椅子</div>
+          </div>
+        </div>
+        
+        <div id="gender-display" class="word-gender gender-m">🔵 MASCULIN</div>
+      </div>
+      
+      <!-- Type de question -->
+      <div class="question-prompt" id="question-prompt">Quel article défini ? (le/la/l')</div>
+      
+      <!-- Choix de réponses -->
+      <div class="choices-grid" id="choices-grid"></div>
+      
+      <!-- Feedback -->
+      <div id="feedback" class="feedback"></div>
+      
+      <!-- Statuts des joueurs -->
+      <div class="vs-badge">🔵 VS 🔴</div>
+      
+      <div class="players-row">
+        <!-- Capitaine -->
+        <div class="player-card capitaine" id="capitaine-card">
+          <div class="player-role">🔵 CAPITAINE</div>
+          <div class="player-name" id="capitaine-name-display">-</div>
+          <div class="player-score" id="capitaine-score">0</div>
+          <div class="player-status" id="capitaine-status">⏳ En attente</div>
+        </div>
+        
+        <!-- Coéquipier -->
+        <div class="player-card coequipier" id="coequipier-card">
+          <div class="player-role">🔴 COÉQUIPIER</div>
+          <div class="player-name" id="coequipier-name-display">-</div>
+          <div class="player-score" id="coequipier-score">0</div>
+          <div class="player-status" id="coequipier-status">⏳ En attente</div>
+        </div>
+      </div>
+      
+      <p style="color:#d2dae2; margin-top:20px;">⏱️ 45 secondes pour répondre - Les deux joueurs répondent en même temps !</p>
+    </div>
+    
+    <!-- Écran de Fin -->
+    <div id="end-screen" class="section">
+      <div style="font-size: 100px; margin: 30px 0;" id="trophy">🏆</div>
+      <h2 id="winner-title" style="font-size: 48px; color:#f1c40f;">🎉 Mission Accomplie !</h2>
+      
+      <div class="players-row" style="margin-top:50px;">
+        <div class="player-card capitaine">
+          <div class="player-role">🔵 CAPITAINE</div>
+          <div class="player-name" id="final-capitaine-name">-</div>
+          <div class="player-score" id="final-capitaine-score">0</div>
+        </div>
+        <div class="player-card coequipier">
+          <div class="player-role">🔴 COÉQUIPIER</div>
+          <div class="player-name" id="final-coequipier-name">-</div>
+          <div class="player-score" id="final-coequipier-score">0</div>
+        </div>
+      </div>
+      
+      <div id="final-stats" style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 30px; margin: 40px 0;">
+        <p style="font-size: 20px;" id="stats-text">Chargement des statistiques...</p>
+      </div>
+      
+      <button onclick="restartGame()">🔄 NOUVELLE PARTIE</button>
+      <button onclick="goHome()" style="margin-left:20px; background:#3498db;">🏠 ACCUEIL</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔥 CONFIGURATION FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+      authDomain: "fabien-bouvier.firebaseapp.com",
+      databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "fabien-bouvier",
+      storageBucket: "fabien-bouvier.firebasestorage.app",
+      messagingSenderId: "863046756799",
+      appId: "1:863046756799:web:36a48325658a4286d6190a"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // ========== BASE DE DONNÉES (60 mots avec traductions) ==========
+    const words = [
+      // Personnes (8)
+      { word: "homme", gender: "masculin", article: "le", english: "man", chinese: "男人", category: "personne", hint: "un homme" },
+      { word: "femme", gender: "feminin", article: "la", english: "woman", chinese: "女人", category: "personne", hint: "une femme" },
+      { word: "garçon", gender: "masculin", article: "le", english: "boy", chinese: "男孩", category: "personne", hint: "un garçon" },
+      { word: "fille", gender: "feminin", article: "la", english: "girl", chinese: "女孩", category: "personne", hint: "une fille" },
+      { word: "père", gender: "masculin", article: "le", english: "father", chinese: "父亲", category: "famille", hint: "mon père" },
+      { word: "mère", gender: "feminin", article: "la", english: "mother", chinese: "母亲", category: "famille", hint: "ma mère" },
+      { word: "frère", gender: "masculin", article: "le", english: "brother", chinese: "兄弟", category: "famille", hint: "un frère" },
+      { word: "sœur", gender: "feminin", article: "la", english: "sister", chinese: "姐妹", category: "famille", hint: "une sœur" },
+      
+      // Nourriture (12)
+      { word: "pain", gender: "masculin", article: "le", english: "bread", chinese: "面包", category: "nourriture", hint: "du pain" },
+      { word: "fromage", gender: "masculin", article: "le", english: "cheese", chinese: "奶酪", category: "nourriture", hint: "le fromage" },
+      { word: "gâteau", gender: "masculin", article: "le", english: "cake", chinese: "蛋糕", category: "nourriture", hint: "un gâteau" },
+      { word: "chocolat", gender: "masculin", article: "le", english: "chocolate", chinese: "巧克力", category: "nourriture", hint: "le chocolat" },
+      { word: "lait", gender: "masculin", article: "le", english: "milk", chinese: "牛奶", category: "nourriture", hint: "le lait" },
+      { word: "beurre", gender: "masculin", article: "le", english: "butter", chinese: "黄油", category: "nourriture", hint: "le beurre" },
+      { word: "sucre", gender: "masculin", article: "le", english: "sugar", chinese: "糖", category: "nourriture", hint: "le sucre" },
+      { word: "sel", gender: "masculin", article: "le", english: "salt", chinese: "盐", category: "nourriture", hint: "le sel" },
+      { word: "riz", gender: "masculin", article: "le", english: "rice", chinese: "米饭", category: "nourriture", hint: "le riz" },
+      { word: "poisson", gender: "masculin", article: "le", english: "fish", chinese: "鱼", category: "nourriture", hint: "le poisson" },
+      { word: "viande", gender: "feminin", article: "la", english: "meat", chinese: "肉", category: "nourriture", hint: "la viande" },
+      { word: "pomme", gender: "feminin", article: "la", english: "apple", chinese: "苹果", category: "fruit", hint: "une pomme" },
+      
+      // Maison (10)
+      { word: "maison", gender: "feminin", article: "la", english: "house", chinese: "房子", category: "maison", hint: "la maison" },
+      { word: "chambre", gender: "feminin", article: "la", english: "bedroom", chinese: "卧室", category: "maison", hint: "une chambre" },
+      { word: "cuisine", gender: "feminin", article: "la", english: "kitchen", chinese: "厨房", category: "maison", hint: "la cuisine" },
+      { word: "salle", gender: "feminin", article: "la", english: "room", chinese: "房间", category: "maison", hint: "la salle" },
+      { word: "fenêtre", gender: "feminin", article: "la", english: "window", chinese: "窗户", category: "maison", hint: "une fenêtre" },
+      { word: "porte", gender: "feminin", article: "la", english: "door", chinese: "门", category: "maison", hint: "la porte" },
+      { word: "table", gender: "feminin", article: "la", english: "table", chinese: "桌子", category: "meuble", hint: "la table" },
+      { word: "chaise", gender: "feminin", article: "la", english: "chair", chinese: "椅子", category: "meuble", hint: "une chaise" },
+      { word: "lampe", gender: "feminin", article: "la", english: "lamp", chinese: "灯", category: "meuble", hint: "la lampe" },
+      { word: "lit", gender: "masculin", article: "le", english: "bed", chinese: "床", category: "meuble", hint: "le lit" },
+      
+      // École (8)
+      { word: "école", gender: "feminin", article: "la", english: "school", chinese: "学校", category: "école", hint: "l'école (f)" },
+      { word: "classe", gender: "feminin", article: "la", english: "classroom", chinese: "教室", category: "école", hint: "la classe" },
+      { word: "livre", gender: "masculin", article: "le", english: "book", chinese: "书", category: "école", hint: "le livre" },
+      { word: "cahier", gender: "masculin", article: "le", english: "notebook", chinese: "笔记本", category: "école", hint: "un cahier" },
+      { word: "stylo", gender: "masculin", article: "le", english: "pen", chinese: "钢笔", category: "école", hint: "le stylo" },
+      { word: "crayon", gender: "masculin", article: "le", english: "pencil", chinese: "铅笔", category: "école", hint: "un crayon" },
+      { word: "gomme", gender: "feminin", article: "la", english: "eraser", chinese: "橡皮", category: "école", hint: "la gomme" },
+      { word: "trousse", gender: "feminin", article: "la", english: "pencil case", chinese: "铅笔盒", category: "école", hint: "une trousse" },
+      
+      // Vêtements (8)
+      { word: "pantalon", gender: "masculin", article: "le", english: "trousers", chinese: "裤子", category: "vêtement", hint: "le pantalon" },
+      { word: "manteau", gender: "masculin", article: "le", english: "coat", chinese: "外套", category: "vêtement", hint: "le manteau" },
+      { word: "pull", gender: "masculin", article: "le", english: "sweater", chinese: "毛衣", category: "vêtement", hint: "un pull" },
+      { word: "jean", gender: "masculin", article: "le", english: "jeans", chinese: "牛仔裤", category: "vêtement", hint: "le jean" },
+      { word: "chemise", gender: "feminin", article: "la", english: "shirt", chinese: "衬衫", category: "vêtement", hint: "la chemise" },
+      { word: "jupe", gender: "feminin", article: "la", english: "skirt", chinese: "裙子", category: "vêtement", hint: "une jupe" },
+      { word: "robe", gender: "feminin", article: "la", english: "dress", chinese: "连衣裙", category: "vêtement", hint: "la robe" },
+      { word: "chaussure", gender: "feminin", article: "la", english: "shoe", chinese: "鞋子", category: "vêtement", hint: "une chaussure" },
+      
+      // Transports (8)
+      { word: "voiture", gender: "feminin", article: "la", english: "car", chinese: "汽车", category: "transport", hint: "la voiture" },
+      { word: "moto", gender: "feminin", article: "la", english: "motorcycle", chinese: "摩托车", category: "transport", hint: "la moto" },
+      { word: "bicyclette", gender: "feminin", article: "la", english: "bicycle", chinese: "自行车", category: "transport", hint: "une bicyclette" },
+      { word: "bus", gender: "masculin", article: "le", english: "bus", chinese: "公交车", category: "transport", hint: "le bus" },
+      { word: "train", gender: "masculin", article: "le", english: "train", chinese: "火车", category: "transport", hint: "le train" },
+      { word: "avion", gender: "masculin", article: "le", english: "plane", chinese: "飞机", category: "transport", hint: "l'avion (m)" },
+      { word: "bateau", gender: "masculin", article: "le", english: "boat", chinese: "船", category: "transport", hint: "le bateau" },
+      { word: "camion", gender: "masculin", article: "le", english: "truck", chinese: "卡车", category: "transport", hint: "un camion" },
+      
+      // Nature (6)
+      { word: "soleil", gender: "masculin", article: "le", english: "sun", chinese: "太阳", category: "nature", hint: "le soleil" },
+      { word: "lune", gender: "feminin", article: "la", english: "moon", chinese: "月亮", category: "nature", hint: "la lune" },
+      { word: "montagne", gender: "feminin", article: "la", english: "mountain", chinese: "山", category: "nature", hint: "la montagne" },
+      { word: "rivière", gender: "feminin", article: "la", english: "river", chinese: "河", category: "nature", hint: "une rivière" },
+      { word: "forêt", gender: "feminin", article: "la", english: "forest", chinese: "森林", category: "nature", hint: "la forêt" },
+      { word: "arbre", gender: "masculin", article: "le", english: "tree", chinese: "树", category: "nature", hint: "un arbre" }
+    ];
+
+    // Variables globales
+    let playerName = "";
+    let playerNumber = 0; // 1 = capitaine, 2 = coéquipier
+    let gameId = "";
+    let gameRef = null;
+    let currentIndex = 0;
+    let timerInterval = null;
+    let timeLeft = 45; // 45 secondes
+    let lastGameData = null;
+    let hasAnswered = false;
+    let currentQuestionType = "article"; // "article" ou "demonstratif"
+
+    // ========== FONCTIONS D'INTERFACE ==========
+    function showScreen(screenId) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+
+    window.showCreate = () => showScreen('create-screen');
+    window.showJoin = () => showScreen('join-screen');
+
+    // ========== CRÉATION PARTIE ==========
+    window.creerPartie = function() {
+      const name = document.getElementById('capitaine-name').value.trim();
+      if (!name) { alert("Entre ton nom !"); return; }
+      
+      playerName = name;
+      playerNumber = 1;
+      gameId = 'genre_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+      gameRef = db.ref('genreDuels/' + gameId);
+
+      const gameData = {
+        player1: { name: name, score: 0, answered: false, correct: 0 },
+        player2: { name: "", score: 0, answered: false, correct: 0 },
+        currentIndex: 0,
+        gameStarted: false,
+        gameFinished: false,
+        answers: { p1: null, p2: null }
+      };
+
+      gameRef.set(gameData).then(() => {
+        document.getElementById('share-box').classList.remove('hidden');
+        const link = window.location.href.split('?')[0] + '?room=' + gameId;
+        document.getElementById('game-link').innerText = link;
+        listenToGame();
+      });
+    };
+
+    // ========== REJOINDRE PARTIE ==========
+    window.rejoindrePartie = function() {
+      const name = document.getElementById('coequipier-name').value.trim();
+      let code = document.getElementById('room-code').value.trim();
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!code) code = urlParams.get('room');
+      
+      if (!name || !code) { alert("Nom et code requis !"); return; }
+
+      playerName = name;
+      playerNumber = 2;
+      gameId = code;
+      gameRef = db.ref('genreDuels/' + gameId);
+
+      gameRef.once('value').then(snap => {
+        if (!snap.exists()) { alert("Partie introuvable !"); return; }
+        gameRef.update({ 'player2': { name, score: 0, answered: false, correct: 0 } });
+        listenToGame();
+      });
+    };
+
+    window.copyLink = () => {
+      const link = document.getElementById('game-link').innerText;
+      navigator.clipboard.writeText(link).then(() => alert("Lien copié !"));
+    };
+
+    // ========== ÉCOUTEUR FIREBASE ==========
+    function listenToGame() {
+      gameRef.on('value', (snap) => {
+        const data = snap.val();
+        if (!data) return;
+
+        lastGameData = data;
+        updateUI(data);
+
+        // Démarrer quand les 2 sont prêts
+        if (data.player1?.name && data.player2?.name && !data.gameStarted) {
+          gameRef.update({ gameStarted: true, currentIndex: 0 });
+        }
+
+        if (data.gameStarted && !data.gameFinished) {
+          showScreen('game-screen');
+          currentIndex = data.currentIndex || 0;
+          updateProgress(currentIndex);
+          
+          if (currentIndex < words.length) {
+            displayWord(currentIndex);
+          } else {
+            gameRef.update({ gameFinished: true });
+          }
+
+          if (!timerInterval) startTimer();
+
+          // Vérifier si les 2 ont répondu
+          if (data.answers.p1 && data.answers.p2) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            setTimeout(() => {
+              const next = currentIndex + 1;
+              if (next < words.length) {
+                gameRef.update({ 
+                  currentIndex: next,
+                  answers: { p1: null, p2: null },
+                  'player1/answered': false,
+                  'player2/answered': false
+                });
+              } else {
+                gameRef.update({ gameFinished: true });
+              }
+            }, 2000);
+          }
+        }
+
+        if (data.gameFinished) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          showEndScreen(data);
+        }
+      });
+    }
+
+    function updateUI(data) {
+      // Noms et scores
+      document.getElementById('capitaine-name-display').innerText = data.player1?.name || "Capitaine";
+      document.getElementById('capitaine-score').innerText = data.player1?.score || 0;
+      document.getElementById('coequipier-name-display').innerText = data.player2?.name || "Coéquipier";
+      document.getElementById('coequipier-score').innerText = data.player2?.score || 0;
+
+      // Statuts
+      const p1Answered = data.player1?.answered;
+      const p2Answered = data.player2?.answered;
+
+      document.getElementById('capitaine-status').innerHTML = p1Answered 
+        ? '<span class="status-answered">✓ A répondu</span>' 
+        : '<span class="status-waiting">⏳ En attente</span>';
+      
+      document.getElementById('coequipier-status').innerHTML = p2Answered 
+        ? '<span class="status-answered">✓ A répondu</span>' 
+        : '<span class="status-waiting">⏳ En attente</span>';
+    }
+
+    function updateProgress(index) {
+      const progress = ((index + 1) / words.length) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+      document.getElementById('progress-text').innerText = `Mot ${index + 1}/${words.length}`;
+    }
+
+    // ========== AFFICHAGE MOT ==========
+    function displayWord(index) {
+      const word = words[index];
+      
+      // Afficher le mot et les traductions
+      document.getElementById('french-word').innerText = word.word;
+      document.getElementById('english-translation').innerText = word.english;
+      document.getElementById('chinese-translation').innerText = word.chinese;
+      
+      // Afficher le genre
+      const genderDisplay = document.getElementById('gender-display');
+      if (word.gender === "masculin") {
+        genderDisplay.innerText = "🔵 MASCULIN";
+        genderDisplay.className = "word-gender gender-m";
+      } else {
+        genderDisplay.innerText = "🔴 FÉMININ";
+        genderDisplay.className = "word-gender gender-f";
+      }
+      
+      // Choisir aléatoirement le type de question (50% article, 50% démonstratif)
+      currentQuestionType = Math.random() < 0.5 ? "article" : "demonstratif";
+      
+      let correctAnswer = "";
+      let choices = [];
+      
+      if (currentQuestionType === "article") {
+        document.getElementById('question-prompt').innerText = "Quel article défini ? (le/la/l')";
+        
+        // Déterminer la bonne réponse pour l'article
+        const firstLetter = word.word[0].toLowerCase();
+        const voyelles = ['a', 'e', 'i', 'o', 'u', 'y'];
+        
+        if (voyelles.includes(firstLetter)) {
+          correctAnswer = "l'";
+        } else {
+          correctAnswer = word.article;
+        }
+        
+        choices = ["le", "la", "l'"];
+        
+      } else {
+        document.getElementById('question-prompt').innerText = "Quel adjectif démonstratif ? (ce/cet/cette)";
+        
+        // Déterminer la bonne réponse pour le démonstratif
+        const firstLetter = word.word[0].toLowerCase();
+        const voyelles = ['a', 'e', 'i', 'o', 'u', 'y'];
+        const commenceParVoyelle = voyelles.includes(firstLetter);
+        
+        if (word.gender === "masculin") {
+          correctAnswer = commenceParVoyelle ? "cet" : "ce";
+        } else {
+          correctAnswer = "cette";
+        }
+        
+        choices = ["ce", "cet", "cette"];
+      }
+      
+      // Mélanger les choix
+      choices = choices.sort(() => Math.random() - 0.5);
+      
+      // Créer les boutons
+      const grid = document.getElementById('choices-grid');
+      grid.innerHTML = '';
+      choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.innerText = choice;
+        btn.onclick = () => checkAnswer(choice, correctAnswer, word);
+        grid.appendChild(btn);
+      });
+
+      hasAnswered = false;
+    }
+
+    // ========== VÉRIFICATION RÉPONSE ==========
+    function checkAnswer(choice, correct, word) {
+      if (hasAnswered) return;
+
+      const buttons = document.querySelectorAll('.choice-btn');
+      const playerKey = 'player' + playerNumber;
+      
+      hasAnswered = true;
+      
+      buttons.forEach(btn => {
+        btn.onclick = null;
+        if (btn.innerText === correct) btn.classList.add('correct');
+        else if (btn.innerText === choice && choice !== correct) btn.classList.add('wrong');
+      });
+
+      const isCorrect = choice === correct;
+      
+      if (isCorrect) {
+        gameRef.child(playerKey + '/score').transaction(s => (s || 0) + 10);
+        gameRef.child(playerKey + '/correct').transaction(c => (c || 0) + 1);
+        
+        let feedbackText = `✅ +10 points !<br>`;
+        if (currentQuestionType === "article") {
+          feedbackText += `"${correct} ${word.word}" est correct.`;
+        } else {
+          feedbackText += `"${correct} ${word.word}" est correct.`;
+        }
+        document.getElementById('feedback').innerHTML = feedbackText;
+        
+      } else {
+        let feedbackText = `❌ La bonne réponse était : "${correct} ${word.word}"<br>`;
+        
+        if (currentQuestionType === "article") {
+          if (word.gender === "masculin") {
+            feedbackText += `"${word.word}" est masculin → article "le".`;
+          } else {
+            feedbackText += `"${word.word}" est féminin → article "la".`;
+          }
+          
+          const firstLetter = word.word[0].toLowerCase();
+          const voyelles = ['a', 'e', 'i', 'o', 'u', 'y'];
+          if (voyelles.includes(firstLetter)) {
+            feedbackText += ` Comme il commence par une voyelle, on utilise "l'".`;
+          }
+          
+        } else {
+          if (word.gender === "masculin") {
+            const firstLetter = word.word[0].toLowerCase();
+            const voyelles = ['a', 'e', 'i', 'o', 'u', 'y'];
+            if (voyelles.includes(firstLetter)) {
+              feedbackText += `"${word.word}" est masculin et commence par une voyelle → "cet".`;
+            } else {
+              feedbackText += `"${word.word}" est masculin → "ce".`;
+            }
+          } else {
+            feedbackText += `"${word.word}" est féminin → "cette".`;
+          }
+        }
+        
+        document.getElementById('feedback').innerHTML = feedbackText;
+      }
+
+      gameRef.update({ 
+        [`answers/p${playerNumber}`]: choice,
+        [`${playerKey}/answered`]: true 
+      });
+    }
+
+    // ========== TIMER 45 SECONDES ==========
+    function startTimer() {
+      timeLeft = 45;
+      document.getElementById('timer').innerText = timeLeft;
+      document.getElementById('timer').classList.remove('warning');
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerText = timeLeft;
+        
+        if (timeLeft <= 10) document.getElementById('timer').classList.add('warning');
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          
+          gameRef.once('value').then(snap => {
+            const data = snap.val();
+            if (!data.player1.answered || !data.player2.answered) {
+              const next = currentIndex + 1;
+              if (next < words.length) {
+                gameRef.update({ 
+                  currentIndex: next,
+                  answers: { p1: null, p2: null },
+                  'player1/answered': false,
+                  'player2/answered': false
+                });
+              } else {
+                gameRef.update({ gameFinished: true });
+              }
+            }
+          });
+        }
+      }, 1000);
+    }
+
+    // ========== FIN DE PARTIE ==========
+    function showEndScreen(data) {
+      const p1Score = data.player1.score;
+      const p2Score = data.player2.score;
+      const p1Correct = data.player1.correct || 0;
+      const p2Correct = data.player2.correct || 0;
+
+      document.getElementById('final-capitaine-name').innerText = data.player1.name;
+      document.getElementById('final-capitaine-score').innerText = p1Score;
+      document.getElementById('final-coequipier-name').innerText = data.player2.name;
+      document.getElementById('final-coequipier-score').innerText = p2Score;
+
+      let winner = "";
+      let trophy = "🏆";
+      if (p1Score > p2Score) {
+        winner = `👑 ${data.player1.name} remporte la mission !`;
+        trophy = "👑";
+      } else if (p2Score > p1Score) {
+        winner = `⭐ ${data.player2.name} remporte la mission !`;
+        trophy = "⭐";
+      } else {
+        winner = "🤝 Égalité parfaite !";
+        trophy = "🏆";
+      }
+
+      document.getElementById('trophy').innerText = trophy;
+      document.getElementById('winner-title').innerHTML = `🎉 ${winner}`;
+
+      document.getElementById('stats-text').innerHTML = `
+        <strong>${data.player1.name}</strong> : ${p1Correct}/60 mots corrects (${Math.round(p1Correct/60*100)}%)<br>
+        <strong>${data.player2.name}</strong> : ${p2Correct}/60 mots corrects (${Math.round(p2Correct/60*100)}%)<br>
+        <span style="color:#f1c40f;">✅ 60 mots avec traductions EN/CN • Articles et démonstratifs</span>
+      `;
+
+      showScreen('end-screen');
+    }
+
+    // ========== REJOUER / ACCUEIL ==========
+    window.restartGame = function() {
+      if (!gameRef || !lastGameData) { goHome(); return; }
+
+      clearInterval(timerInterval);
+      timerInterval = null;
+
+      gameRef.update({
+        player1: { ...lastGameData.player1, score: 0, answered: false, correct: 0 },
+        player2: { ...lastGameData.player2, score: 0, answered: false, correct: 0 },
+        currentIndex: 0,
+        gameStarted: true,
+        gameFinished: false,
+        answers: { p1: null, p2: null }
+      });
+
+      currentIndex = 0;
+      timeLeft = 45;
+      document.getElementById('timer').classList.remove('warning');
+      showScreen('game-screen');
+    };
+
+    window.goHome = function() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      playerName = ""; playerNumber = 0; gameId = ""; gameRef = null;
+      showScreen('home-screen');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    };
+
+    // ========== INIT ==========
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('room')) {
+        showScreen('join-screen');
+        document.getElementById('join-message').innerText = "Partie trouvée ! Entre ton nom pour rejoindre.";
+      }
+    });
+  </script>
+</body>
+</html>
