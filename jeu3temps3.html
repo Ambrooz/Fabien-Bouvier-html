@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>⚡ ChronoDuel – Quel Temps ? (45s)</title>
+  
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+  
+  <style>
+    body {
+      font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #0a3d62 0%, #3c6382 100%);
+      color: white;
+      text-align: center;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 30px;
+      border-radius: 30px;
+      backdrop-filter: blur(10px);
+      border: 4px solid #f6b93b;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+    }
+    
+    h1 {
+      margin-bottom: 10px;
+      font-size: 3em;
+      color: #f6b93b;
+      text-shadow: 3px 3px 0 #0a3d62;
+      letter-spacing: 1px;
+    }
+    
+    .subtitle {
+      font-size: 1.2em;
+      color: #dcdde1;
+      margin-bottom: 30px;
+    }
+    
+    .section {
+      display: none;
+      padding: 30px;
+      margin: 25px 0;
+      border-radius: 25px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .active {
+      display: block;
+      animation: fadeIn 0.5s;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    input, button {
+      padding: 18px 25px;
+      margin: 12px;
+      border-radius: 50px;
+      border: none;
+      font-size: 18px;
+      font-weight: bold;
+      transition: all 0.3s;
+    }
+    
+    input {
+      width: 280px;
+      text-align: center;
+      background: white;
+      color: #0a3d62;
+      border: 3px solid #f6b93b;
+    }
+    
+    input:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(246, 185, 59, 0.3);
+    }
+    
+    button {
+      background: linear-gradient(135deg, #f6b93b 0%, #e58e26 100%);
+      color: white;
+      cursor: pointer;
+      min-width: 250px;
+      border: 3px solid #f6b93b;
+      box-shadow: 0 6px 0 #b77814;
+    }
+    
+    button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 9px 0 #b77814;
+    }
+    
+    button:active {
+      transform: translateY(3px);
+      box-shadow: 0 3px 0 #b77814;
+    }
+    
+    .copy-btn {
+      background: linear-gradient(135deg, #60a3bc 0%, #3c6382 100%) !important;
+      box-shadow: 0 6px 0 #2c3e50 !important;
+    }
+    
+    .timer {
+      font-size: 70px;
+      font-weight: 900;
+      margin: 20px 0;
+      color: #f6b93b;
+      text-shadow: 4px 4px 0 #0a3d62;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    .timer.warning {
+      color: #e74c3c;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin: 25px 0;
+      overflow: hidden;
+      border: 2px solid #f6b93b;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, #f6b93b, #60a3bc, #e84393);
+      width: 0%;
+      transition: width 0.5s;
+    }
+    
+    .progress-text {
+      font-size: 20px;
+      color: #f6b93b;
+      margin: 10px 0 20px;
+    }
+    
+    .question-box {
+      background: #1e3799;
+      padding: 30px;
+      border-radius: 40px;
+      margin: 30px 0;
+      border: 3px solid #f6b93b;
+    }
+    
+    .question-prompt {
+      font-size: 28px;
+      color: #dcdde1;
+      margin-bottom: 15px;
+    }
+    
+    .question-time {
+      font-size: 36px;
+      color: #f6b93b;
+      font-weight: bold;
+      margin-bottom: 25px;
+    }
+    
+    .question-subject {
+      font-size: 42px;
+      color: white;
+      background: #0a3d62;
+      display: inline-block;
+      padding: 15px 40px;
+      border-radius: 60px;
+      margin: 20px 0;
+      border: 2px solid #f6b93b;
+    }
+    
+    .choices-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin: 40px 0;
+    }
+    
+    .choice-btn {
+      background: white;
+      color: #0a3d62;
+      padding: 25px 15px;
+      border-radius: 30px;
+      font-size: 28px;
+      font-weight: bold;
+      border: 4px solid #60a3bc;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 8px 0 #2c3e50;
+    }
+    
+    .choice-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 11px 0 #2c3e50;
+      border-color: #f6b93b;
+    }
+    
+    .choice-btn:active {
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 #2c3e50;
+    }
+    
+    .choice-btn.correct {
+      background: #78e08f !important;
+      border-color: #78e08f !important;
+      color: white !important;
+      animation: correctPulse 0.5s;
+    }
+    
+    .choice-btn.wrong {
+      background: #e74c3c !important;
+      border-color: #e74c3c !important;
+      color: white !important;
+      animation: shake 0.3s;
+    }
+    
+    @keyframes correctPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-10px); }
+      75% { transform: translateX(10px); }
+    }
+    
+    .players-row {
+      display: flex;
+      justify-content: space-around;
+      gap: 20px;
+      margin: 40px 0;
+    }
+    
+    .player-card {
+      flex: 1;
+      padding: 25px;
+      border-radius: 30px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 3px solid;
+      min-width: 250px;
+    }
+    
+    .player-card.capitaine {
+      border-color: #60a3bc;
+    }
+    
+    .player-card.coequipier {
+      border-color: #e84393;
+    }
+    
+    .player-role {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .player-name {
+      font-size: 32px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+    
+    .player-score {
+      font-size: 48px;
+      color: #f6b93b;
+      font-weight: 900;
+      margin: 15px 0;
+    }
+    
+    .player-status {
+      font-size: 18px;
+      padding: 10px;
+      border-radius: 40px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .status-answered {
+      color: #78e08f;
+      font-weight: bold;
+    }
+    
+    .status-waiting {
+      color: #f6b93b;
+    }
+    
+    .vs-badge {
+      font-size: 24px;
+      background: #f6b93b;
+      color: #0a3d62;
+      padding: 10px 30px;
+      border-radius: 60px;
+      font-weight: bold;
+      margin: 20px auto;
+      display: inline-block;
+    }
+    
+    .share-link {
+      background: white;
+      color: #0a3d62;
+      padding: 20px;
+      border-radius: 40px;
+      margin: 25px 0;
+      word-break: break-all;
+      font-size: 16px;
+      border: 3px solid #f6b93b;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .feedback {
+      font-size: 24px;
+      margin: 20px 0;
+      min-height: 50px;
+    }
+    
+    @media (max-width: 768px) {
+      .choices-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .players-row {
+        flex-direction: column;
+      }
+      
+      .timer {
+        font-size: 56px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>⚡ ChronoDuel – Quel Temps ?</h1>
+    <p class="subtitle">60 questions • Présent • Passé Composé • Futur Proche • <strong style="color:#f6b93b;">45 secondes</strong> • Duel simultané</p>
+    
+    <!-- Écran d'accueil -->
+    <div id="home-screen" class="section active">
+      <div style="font-size: 80px; margin: 30px 0;">⚡⚔️</div>
+      <h2>Prêt pour le duel ?</h2>
+      <p>Deux joueurs répondent en même temps !</p>
+      <button onclick="showCreate()">🎮 CAPITAINE (Créer la partie)</button>
+      <br>
+      <button onclick="showJoin()">🔗 COÉQUIPIER (Rejoindre)</button>
+    </div>
+    
+    <!-- Écran Création (Capitaine) -->
+    <div id="create-screen" class="section">
+      <h2 style="color:#60a3bc;">🔵 CAPITAINE</h2>
+      <input id="capitaine-name" placeholder="Ton pseudo">
+      <br>
+      <button onclick="creerPartie()">⚔️ CRÉER LA PARTIE</button>
+      
+      <div id="share-box" class="hidden">
+        <p style="color:#dcdde1; margin-top:30px;">Partage ce lien avec ton coéquipier :</p>
+        <div class="share-link" id="game-link">Génération du lien...</div>
+        <button class="copy-btn" onclick="copyLink()">📋 COPIER</button>
+        <p class="status-waiting" style="margin-top:30px;">⏳ En attente du coéquipier...</p>
+      </div>
+    </div>
+    
+    <!-- Écran Rejoindre (Coéquipier) -->
+    <div id="join-screen" class="section">
+      <h2 style="color:#e84393;">🔴 COÉQUIPIER</h2>
+      <input id="coequipier-name" placeholder="Ton pseudo">
+      <input id="room-code" placeholder="Code de la partie">
+      <br>
+      <button onclick="rejoindrePartie()">🤝 REJOINDRE</button>
+      <p id="join-message" class="status-waiting" style="margin-top:20px;"></p>
+    </div>
+    
+    <!-- Écran de Jeu -->
+    <div id="game-screen" class="section">
+      <!-- Timer -->
+      <div class="timer" id="timer">45</div>
+      
+      <!-- Progression -->
+      <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+      </div>
+      <div class="progress-text" id="progress-text">Question 1/60</div>
+      
+      <!-- Question -->
+      <div class="question-box">
+        <div class="question-prompt" id="question-prompt">Quel verbe est au...</div>
+        <div class="question-time" id="question-time">Présent</div>
+        <div class="question-subject" id="question-subject">je (parler)</div>
+      </div>
+      
+      <!-- Choix de réponses -->
+      <div class="choices-grid" id="choices-grid"></div>
+      
+      <!-- Feedback -->
+      <div id="feedback" class="feedback"></div>
+      
+      <!-- Statuts des joueurs -->
+      <div class="vs-badge">🔵 VS 🔴</div>
+      
+      <div class="players-row">
+        <!-- Capitaine -->
+        <div class="player-card capitaine" id="capitaine-card">
+          <div class="player-role">🔵 CAPITAINE</div>
+          <div class="player-name" id="capitaine-name-display">-</div>
+          <div class="player-score" id="capitaine-score">0</div>
+          <div class="player-status" id="capitaine-status">⏳ En attente</div>
+        </div>
+        
+        <!-- Coéquipier -->
+        <div class="player-card coequipier" id="coequipier-card">
+          <div class="player-role">🔴 COÉQUIPIER</div>
+          <div class="player-name" id="coequipier-name-display">-</div>
+          <div class="player-score" id="coequipier-score">0</div>
+          <div class="player-status" id="coequipier-status">⏳ En attente</div>
+        </div>
+      </div>
+      
+      <p style="color:#dcdde1; margin-top:20px;">⏱️ 45 secondes pour répondre - Les deux joueurs répondent en même temps !</p>
+    </div>
+    
+    <!-- Écran de Fin -->
+    <div id="end-screen" class="section">
+      <div style="font-size: 100px; margin: 30px 0;" id="trophy">🏆</div>
+      <h2 id="winner-title" style="font-size: 48px; color:#f6b93b;">🎉 Partie Terminée !</h2>
+      
+      <div class="players-row" style="margin-top:50px;">
+        <div class="player-card capitaine">
+          <div class="player-role">🔵 CAPITAINE</div>
+          <div class="player-name" id="final-capitaine-name">-</div>
+          <div class="player-score" id="final-capitaine-score">0</div>
+        </div>
+        <div class="player-card coequipier">
+          <div class="player-role">🔴 COÉQUIPIER</div>
+          <div class="player-name" id="final-coequipier-name">-</div>
+          <div class="player-score" id="final-coequipier-score">0</div>
+        </div>
+      </div>
+      
+      <div id="final-stats" style="background: rgba(0,0,0,0.2); padding: 25px; border-radius: 30px; margin: 40px 0;">
+        <p style="font-size: 20px;" id="stats-text">Chargement des statistiques...</p>
+      </div>
+      
+      <button onclick="restartGame()">🔄 NOUVELLE PARTIE</button>
+      <button onclick="goHome()" style="margin-left:20px; background:#60a3bc;">🏠 ACCUEIL</button>
+    </div>
+  </div>
+
+  <script>
+    // 🔥 CONFIGURATION FIREBASE
+    const firebaseConfig = {
+      apiKey: "AIzaSyCOqkSQzlO0kZOoLA4dNp0rwplKOYX3J3Q",
+      authDomain: "fabien-bouvier.firebaseapp.com",
+      databaseURL: "https://fabien-bouvier-default-rtdb.europe-west1.firebasedatabase.app",
+      projectId: "fabien-bouvier",
+      storageBucket: "fabien-bouvier.firebasestorage.app",
+      messagingSenderId: "863046756799",
+      appId: "1:863046756799:web:36a48325658a4286d6190a"
+    };
+    
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // ========== BASE DE DONNÉES ==========
+    const questions = [
+      // Format: { sujet, infinitif, present, passe, futur }
+      // 1er groupe (20)
+      { sujet: "je", infinitif: "parler", present: "parle", passe: "ai parlé", futur: "vais parler" },
+      { sujet: "tu", infinitif: "chanter", present: "chantes", passe: "as chanté", futur: "vas chanter" },
+      { sujet: "il", infinitif: "manger", present: "mange", passe: "a mangé", futur: "va manger" },
+      { sujet: "nous", infinitif: "danser", present: "dansons", passe: "avons dansé", futur: "allons danser" },
+      { sujet: "vous", infinitif: "jouer", present: "jouez", passe: "avez joué", futur: "allez jouer" },
+      { sujet: "elles", infinitif: "travailler", present: "travaillent", passe: "ont travaillé", futur: "vont travailler" },
+      { sujet: "je", infinitif: "regarder", present: "regarde", passe: "ai regardé", futur: "vais regarder" },
+      { sujet: "tu", infinitif: "écouter", present: "écoutes", passe: "as écouté", futur: "vas écouter" },
+      { sujet: "il", infinitif: "aimer", present: "aime", passe: "a aimé", futur: "va aimer" },
+      { sujet: "nous", infinitif: "habiter", present: "habitons", passe: "avons habité", futur: "allons habiter" },
+      { sujet: "vous", infinitif: "voyager", present: "voyagez", passe: "avez voyagé", futur: "allez voyager" },
+      { sujet: "ils", infinitif: "commencer", present: "commencent", passe: "ont commencé", futur: "vont commencer" },
+      { sujet: "je", infinitif: "étudier", present: "étudie", passe: "ai étudié", futur: "vais étudier" },
+      { sujet: "tu", infinitif: "skier", present: "skies", passe: "as skié", futur: "vas skier" },
+      { sujet: "elle", infinitif: "crier", present: "crie", passe: "a crié", futur: "va crier" },
+      { sujet: "nous", infinitif: "copier", present: "copions", passe: "avons copié", futur: "allons copier" },
+      { sujet: "vous", infinitif: "remercier", present: "remerciez", passe: "avez remercié", futur: "allez remercier" },
+      { sujet: "ils", infinitif: "oublier", present: "oublient", passe: "ont oublié", futur: "vont oublier" },
+      { sujet: "je", infinitif: "préparer", present: "prépare", passe: "ai préparé", futur: "vais préparer" },
+      { sujet: "tu", infinitif: "laver", present: "laves", passe: "as lavé", futur: "vas laver" },
+      
+      // 2ème groupe (10)
+      { sujet: "je", infinitif: "finir", present: "finis", passe: "ai fini", futur: "vais finir" },
+      { sujet: "tu", infinitif: "choisir", present: "choisis", passe: "as choisi", futur: "vas choisir" },
+      { sujet: "il", infinitif: "réussir", present: "réussit", passe: "a réussi", futur: "va réussir" },
+      { sujet: "nous", infinitif: "grandir", present: "grandissons", passe: "avons grandi", futur: "allons grandir" },
+      { sujet: "vous", infinitif: "rougir", present: "rougissez", passe: "avez rougi", futur: "allez rougir" },
+      { sujet: "elles", infinitif: "agir", present: "agissent", passe: "ont agi", futur: "vont agir" },
+      { sujet: "je", infinitif: "bâtir", present: "bâtis", passe: "ai bâti", futur: "vais bâtir" },
+      { sujet: "tu", infinitif: "réfléchir", present: "réfléchis", passe: "as réfléchi", futur: "vas réfléchir" },
+      { sujet: "il", infinitif: "obéir", present: "obéit", passe: "a obéi", futur: "va obéir" },
+      { sujet: "nous", infinitif: "nourrir", present: "nourrissons", passe: "avons nourri", futur: "allons nourrir" },
+      
+      // 3ème groupe (30)
+      { sujet: "je", infinitif: "aller", present: "vais", passe: "suis allé", futur: "vais aller" },
+      { sujet: "tu", infinitif: "faire", present: "fais", passe: "as fait", futur: "vas faire" },
+      { sujet: "il", infinitif: "avoir", present: "a", passe: "a eu", futur: "va avoir" },
+      { sujet: "nous", infinitif: "être", present: "sommes", passe: "avons été", futur: "allons être" },
+      { sujet: "vous", infinitif: "venir", present: "venez", passe: "êtes venus", futur: "allez venir" },
+      { sujet: "elles", infinitif: "prendre", present: "prennent", passe: "ont pris", futur: "vont prendre" },
+      { sujet: "je", infinitif: "voir", present: "vois", passe: "ai vu", futur: "vais voir" },
+      { sujet: "tu", infinitif: "pouvoir", present: "peux", passe: "as pu", futur: "vas pouvoir" },
+      { sujet: "il", infinitif: "vouloir", present: "veut", passe: "a voulu", futur: "va vouloir" },
+      { sujet: "nous", infinitif: "devoir", present: "devons", passe: "avons dû", futur: "allons devoir" },
+      { sujet: "vous", infinitif: "savoir", present: "savez", passe: "avez su", futur: "allez savoir" },
+      { sujet: "ils", infinitif: "dire", present: "disent", passe: "ont dit", futur: "vont dire" },
+      { sujet: "je", infinitif: "lire", present: "lis", passe: "ai lu", futur: "vais lire" },
+      { sujet: "tu", infinitif: "écrire", present: "écris", passe: "as écrit", futur: "vas écrire" },
+      { sujet: "elle", infinitif: "partir", present: "part", passe: "est partie", futur: "va partir" },
+      { sujet: "nous", infinitif: "sortir", present: "sortons", passe: "sommes sortis", futur: "allons sortir" },
+      { sujet: "vous", infinitif: "dormir", present: "dormez", passe: "avez dormi", futur: "allez dormir" },
+      { sujet: "ils", infinitif: "courir", present: "courent", passe: "ont couru", futur: "vont courir" },
+      { sujet: "je", infinitif: "mourir", present: "meurs", passe: "suis mort", futur: "vais mourir" },
+      { sujet: "tu", infinitif: "boire", present: "bois", passe: "as bu", futur: "vas boire" },
+      { sujet: "il", infinitif: "connaître", present: "connaît", passe: "a connu", futur: "va connaître" },
+      { sujet: "nous", infinitif: "croire", present: "croyons", passe: "avons cru", futur: "allons croire" },
+      { sujet: "vous", infinitif: "recevoir", present: "recevez", passe: "avez reçu", futur: "allez recevoir" },
+      { sujet: "elles", infinitif: "apprendre", present: "apprennent", passe: "ont appris", futur: "vont apprendre" },
+      { sujet: "je", infinitif: "comprendre", present: "comprends", passe: "ai compris", futur: "vais comprendre" },
+      { sujet: "tu", infinitif: "attendre", present: "attends", passe: "as attendu", futur: "vas attendre" },
+      { sujet: "il", infinitif: "répondre", present: "répond", passe: "a répondu", futur: "va répondre" },
+      { sujet: "nous", infinitif: "vendre", present: "vendons", passe: "avons vendu", futur: "allons vendre" },
+      { sujet: "vous", infinitif: "ouvrir", present: "ouvrez", passe: "avez ouvert", futur: "allez ouvrir" },
+      { sujet: "ils", infinitif: "couvrir", present: "couvrent", passe: "ont couvert", futur: "vont couvrir" }
+    ];
+
+    // Variables globales
+    let playerName = "";
+    let playerNumber = 0; // 1 = capitaine, 2 = coéquipier
+    let gameId = "";
+    let gameRef = null;
+    let currentIndex = 0;
+    let timerInterval = null;
+    let timeLeft = 45;
+    let lastGameData = null;
+    let hasAnswered = false;
+
+    // ========== FONCTIONS D'INTERFACE ==========
+    function showScreen(screenId) {
+      document.querySelectorAll('.section').forEach(el => el.classList.remove('active'));
+      document.getElementById(screenId).classList.add('active');
+    }
+
+    window.showCreate = () => showScreen('create-screen');
+    window.showJoin = () => showScreen('join-screen');
+
+    // ========== CRÉATION PARTIE ==========
+    window.creerPartie = function() {
+      const name = document.getElementById('capitaine-name').value.trim();
+      if (!name) { alert("Entre ton nom !"); return; }
+      
+      playerName = name;
+      playerNumber = 1;
+      gameId = 'chrono_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+      gameRef = db.ref('chronoDuels/' + gameId);
+
+      const gameData = {
+        player1: { name: name, score: 0, answered: false, correct: 0 },
+        player2: { name: "", score: 0, answered: false, correct: 0 },
+        currentIndex: 0,
+        gameStarted: false,
+        gameFinished: false,
+        answers: { p1: null, p2: null }
+      };
+
+      gameRef.set(gameData).then(() => {
+        document.getElementById('share-box').classList.remove('hidden');
+        const link = window.location.href.split('?')[0] + '?room=' + gameId;
+        document.getElementById('game-link').innerText = link;
+        listenToGame();
+      });
+    };
+
+    // ========== REJOINDRE PARTIE ==========
+    window.rejoindrePartie = function() {
+      const name = document.getElementById('coequipier-name').value.trim();
+      let code = document.getElementById('room-code').value.trim();
+      const urlParams = new URLSearchParams(window.location.search);
+      if (!code) code = urlParams.get('room');
+      
+      if (!name || !code) { alert("Nom et code requis !"); return; }
+
+      playerName = name;
+      playerNumber = 2;
+      gameId = code;
+      gameRef = db.ref('chronoDuels/' + gameId);
+
+      gameRef.once('value').then(snap => {
+        if (!snap.exists()) { alert("Partie introuvable !"); return; }
+        gameRef.update({ 'player2': { name, score: 0, answered: false, correct: 0 } });
+        listenToGame();
+      });
+    };
+
+    window.copyLink = () => {
+      const link = document.getElementById('game-link').innerText;
+      navigator.clipboard.writeText(link).then(() => alert("Lien copié !"));
+    };
+
+    // ========== ÉCOUTEUR FIREBASE ==========
+    function listenToGame() {
+      gameRef.on('value', (snap) => {
+        const data = snap.val();
+        if (!data) return;
+
+        lastGameData = data;
+        updateUI(data);
+
+        // Démarrer quand les 2 sont prêts
+        if (data.player1?.name && data.player2?.name && !data.gameStarted) {
+          gameRef.update({ gameStarted: true, currentIndex: 0 });
+        }
+
+        if (data.gameStarted && !data.gameFinished) {
+          showScreen('game-screen');
+          currentIndex = data.currentIndex || 0;
+          updateProgress(currentIndex);
+          
+          if (currentIndex < questions.length) {
+            displayQuestion(currentIndex);
+          } else {
+            gameRef.update({ gameFinished: true });
+          }
+
+          if (!timerInterval) startTimer();
+
+          // Vérifier si les 2 ont répondu
+          if (data.answers.p1 && data.answers.p2) {
+            clearInterval(timerInterval);
+            timerInterval = null;
+            setTimeout(() => {
+              const next = currentIndex + 1;
+              if (next < questions.length) {
+                gameRef.update({ 
+                  currentIndex: next,
+                  answers: { p1: null, p2: null },
+                  'player1/answered': false,
+                  'player2/answered': false
+                });
+              } else {
+                gameRef.update({ gameFinished: true });
+              }
+            }, 2000);
+          }
+        }
+
+        if (data.gameFinished) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          showEndScreen(data);
+        }
+      });
+    }
+
+    function updateUI(data) {
+      // Noms et scores
+      document.getElementById('capitaine-name-display').innerText = data.player1?.name || "Capitaine";
+      document.getElementById('capitaine-score').innerText = data.player1?.score || 0;
+      document.getElementById('coequipier-name-display').innerText = data.player2?.name || "Coéquipier";
+      document.getElementById('coequipier-score').innerText = data.player2?.score || 0;
+
+      // Statuts
+      const p1Answered = data.player1?.answered;
+      const p2Answered = data.player2?.answered;
+
+      document.getElementById('capitaine-status').innerHTML = p1Answered 
+        ? '<span class="status-answered">✓ A répondu</span>' 
+        : '<span class="status-waiting">⏳ En attente</span>';
+      
+      document.getElementById('coequipier-status').innerHTML = p2Answered 
+        ? '<span class="status-answered">✓ A répondu</span>' 
+        : '<span class="status-waiting">⏳ En attente</span>';
+    }
+
+    function updateProgress(index) {
+      const progress = ((index + 1) / questions.length) * 100;
+      document.getElementById('progress-bar').style.width = progress + '%';
+      document.getElementById('progress-text').innerText = `Question ${index + 1}/${questions.length}`;
+    }
+
+    // ========== AFFICHAGE QUESTION ==========
+    function displayQuestion(index) {
+      const q = questions[index];
+      const tempsPossibles = ['present', 'passe', 'futur'];
+      const tempsChoisi = tempsPossibles[Math.floor(Math.random() * tempsPossibles.length)];
+      
+      let tempsTexte = "";
+      if (tempsChoisi === 'present') tempsTexte = "Présent";
+      else if (tempsChoisi === 'passe') tempsTexte = "Passé Composé";
+      else tempsTexte = "Futur Proche";
+
+      document.getElementById('question-prompt').innerText = "Quel verbe est au…";
+      document.getElementById('question-time').innerText = tempsTexte;
+      document.getElementById('question-subject').innerHTML = `${q.sujet} <span style="color:#f6b93b;">(${q.infinitif})</span>`;
+
+      const bonneReponse = q[tempsChoisi];
+      
+      // Générer 2 mauvaises réponses
+      const mauvaises = [];
+      while (mauvaises.length < 2) {
+        const autreIndex = Math.floor(Math.random() * questions.length);
+        const autreQ = questions[autreIndex];
+        const autreTemps = tempsPossibles[Math.floor(Math.random() * tempsPossibles.length)];
+        const autreRep = autreQ[autreTemps];
+        if (autreRep !== bonneReponse && !mauvaises.includes(autreRep)) {
+          mauvaises.push(autreRep);
+        }
+      }
+
+      const choix = [bonneReponse, ...mauvaises].sort(() => Math.random() - 0.5);
+      
+      const grid = document.getElementById('choices-grid');
+      grid.innerHTML = '';
+      choix.forEach(rep => {
+        const btn = document.createElement('button');
+        btn.className = 'choice-btn';
+        btn.innerText = rep;
+        btn.onclick = () => checkAnswer(rep, bonneReponse, q, tempsChoisi);
+        grid.appendChild(btn);
+      });
+
+      hasAnswered = false;
+    }
+
+    // ========== VÉRIFICATION RÉPONSE ==========
+    function checkAnswer(choice, correct, question, tempsChoisi) {
+      if (hasAnswered) return;
+
+      const buttons = document.querySelectorAll('.choice-btn');
+      const playerKey = 'player' + playerNumber;
+      
+      hasAnswered = true;
+      
+      buttons.forEach(btn => {
+        btn.onclick = null;
+        if (btn.innerText === correct) btn.classList.add('correct');
+        else if (btn.innerText === choice && choice !== correct) btn.classList.add('wrong');
+      });
+
+      const isCorrect = choice === correct;
+      
+      if (isCorrect) {
+        gameRef.child(playerKey + '/score').transaction(s => (s || 0) + 10);
+        gameRef.child(playerKey + '/correct').transaction(c => (c || 0) + 1);
+        document.getElementById('feedback').innerHTML = '✅ +10 points !';
+      } else {
+        let explication = `❌ La bonne réponse était : "${correct}"<br>`;
+        if (tempsChoisi === 'present') explication += `Le présent de ${question.infinitif} avec "${question.sujet}" est "${correct}".`;
+        else if (tempsChoisi === 'passe') explication += `Le passé composé de ${question.infinitif} avec "${question.sujet}" est "${correct}".`;
+        else explication += `Le futur proche de ${question.infinitif} avec "${question.sujet}" est "${correct}".`;
+        
+        document.getElementById('feedback').innerHTML = explication;
+      }
+
+      gameRef.update({ 
+        [`answers/p${playerNumber}`]: choice,
+        [`${playerKey}/answered`]: true 
+      });
+    }
+
+    // ========== TIMER 45 SECONDES ==========
+    function startTimer() {
+      timeLeft = 45;
+      document.getElementById('timer').innerText = timeLeft;
+      document.getElementById('timer').classList.remove('warning');
+      
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        document.getElementById('timer').innerText = timeLeft;
+        
+        if (timeLeft <= 10) document.getElementById('timer').classList.add('warning');
+        
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          
+          gameRef.once('value').then(snap => {
+            const data = snap.val();
+            if (!data.player1.answered || !data.player2.answered) {
+              const next = currentIndex + 1;
+              if (next < questions.length) {
+                gameRef.update({ 
+                  currentIndex: next,
+                  answers: { p1: null, p2: null },
+                  'player1/answered': false,
+                  'player2/answered': false
+                });
+              } else {
+                gameRef.update({ gameFinished: true });
+              }
+            }
+          });
+        }
+      }, 1000);
+    }
+
+    // ========== FIN DE PARTIE ==========
+    function showEndScreen(data) {
+      const p1Score = data.player1.score;
+      const p2Score = data.player2.score;
+      const p1Correct = data.player1.correct || 0;
+      const p2Correct = data.player2.correct || 0;
+
+      document.getElementById('final-capitaine-name').innerText = data.player1.name;
+      document.getElementById('final-capitaine-score').innerText = p1Score;
+      document.getElementById('final-coequipier-name').innerText = data.player2.name;
+      document.getElementById('final-coequipier-score').innerText = p2Score;
+
+      let winner = "";
+      let trophy = "🏆";
+      if (p1Score > p2Score) {
+        winner = `👑 ${data.player1.name} remporte le duel !`;
+        trophy = "👑";
+      } else if (p2Score > p1Score) {
+        winner = `⭐ ${data.player2.name} remporte le duel !`;
+        trophy = "⭐";
+      } else {
+        winner = "🤝 Égalité parfaite !";
+        trophy = "🏆";
+      }
+
+      document.getElementById('trophy').innerText = trophy;
+      document.getElementById('winner-title').innerHTML = `🎉 ${winner}`;
+
+      document.getElementById('stats-text').innerHTML = `
+        <strong>${data.player1.name}</strong> : ${p1Correct}/60 correct (${Math.round(p1Correct/60*100)}%)<br>
+        <strong>${data.player2.name}</strong> : ${p2Correct}/60 correct (${Math.round(p2Correct/60*100)}%)<br>
+        <span style="color:#f6b93b;">✅ 20 verbes 1er groupe • 10 verbes 2ème groupe • 30 verbes 3ème groupe</span>
+      `;
+
+      showScreen('end-screen');
+    }
+
+    // ========== REJOUER / ACCUEIL ==========
+    window.restartGame = function() {
+      if (!gameRef || !lastGameData) { goHome(); return; }
+
+      clearInterval(timerInterval);
+      timerInterval = null;
+
+      gameRef.update({
+        player1: { ...lastGameData.player1, score: 0, answered: false, correct: 0 },
+        player2: { ...lastGameData.player2, score: 0, answered: false, correct: 0 },
+        currentIndex: 0,
+        gameStarted: true,
+        gameFinished: false,
+        answers: { p1: null, p2: null }
+      });
+
+      currentIndex = 0;
+      timeLeft = 45;
+      document.getElementById('timer').classList.remove('warning');
+      showScreen('game-screen');
+    };
+
+    window.goHome = function() {
+      clearInterval(timerInterval);
+      timerInterval = null;
+      playerName = ""; playerNumber = 0; gameId = ""; gameRef = null;
+      showScreen('home-screen');
+      window.history.replaceState({}, document.title, window.location.pathname);
+    };
+
+    // ========== INIT ==========
+    window.addEventListener('load', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.get('room')) {
+        showScreen('join-screen');
+        document.getElementById('join-message').innerText = "Partie trouvée ! Entre ton nom pour rejoindre.";
+      }
+    });
+  </script>
+</body>
+</html>
