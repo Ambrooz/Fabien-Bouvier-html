@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌿 Leçon C1 · Vu de Hongrie · registres & couleurs claires</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f2f0e6;  /* fond clair général */
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+            color: #2e3b3b;
+        }
+
+        .boite {
+            max-width: 1200px;
+            width: 100%;
+            background: #fffef7;  /* blanc cassé chaud */
+            border-radius: 48px;
+            border: 1px solid #d4d8a6;
+            box-shadow: 0 30px 40px -20px #b0b094;
+            overflow: hidden;
+        }
+
+        .barre {
+            background: #e7eac2;  /* vert très pâle */
+            padding: 1.2rem 2.2rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 2px solid #cbd18f;
+        }
+
+        .rond {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #f5b342;  /* jaune/orange */
+            box-shadow: 0 0 6px #f5b342;
+        }
+        .rond:nth-child(2) { background: #b3bf4d; box-shadow: 0 0 6px #b3bf4d; } /* vert jaune */
+        .rond:nth-child(3) { background: #7ba23f; box-shadow: 0 0 6px #7ba23f; } /* vert plus soutenu */
+
+        .badge {
+            margin-left: auto;
+            background: #f2f0d7;
+            padding: 0.3rem 1.8rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid #b8c27a;
+            color: #4d6336;
+            letter-spacing: 1px;
+        }
+
+        .contenu {
+            padding: 2.5rem 2.2rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4b6b3b, #aca73e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.1;
+            margin-bottom: 0.3rem;
+        }
+
+        .chapeau {
+            font-size: 1.3rem;
+            color: #5b7342;
+            border-left: 6px solid #b9bf6f;
+            padding-left: 1.2rem;
+            margin: 1rem 0 2rem 0;
+        }
+
+        /* ARTICLE COMPLET */
+        .article {
+            background: #faf9ea;  /* crème léger */
+            border-radius: 38px;
+            padding: 2.5rem;
+            border: 1px solid #d9ddaf;
+            margin-bottom: 3rem;
+            color: #3b4635;
+        }
+
+        .titre-article {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #7c8747;
+            line-height: 1.3;
+        }
+
+        .sous-titre-article {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #879b5b;
+            margin: 1rem 0 1.5rem 0;
+        }
+
+        .credit {
+            font-size: 0.95rem;
+            color: #88995c;
+            border-bottom: 1px solid #cfd99c;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .article p {
+            margin: 1.4rem 0;
+            line-height: 1.8;
+            font-size: 1.08rem;
+        }
+
+        .intertitre {
+            font-weight: 700;
+            color: #afb761;
+            font-size: 1.3rem;
+            margin: 2rem 0 0.8rem 0;
+        }
+
+        hr {
+            border: 1px solid #d4ddab;
+            margin: 2rem 0;
+        }
+
+        .section-tag {
+            display: inline-block;
+            background: #ecf0cf;
+            border-radius: 40px;
+            padding: 0.4rem 2rem;
+            font-weight: 600;
+            font-size: 1.1rem;
+            border: 1px solid #b7c57a;
+            color: #4a6336;
+            margin: 2rem 0 1.5rem 0;
+        }
+
+        .grille-exos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .carte-exo {
+            background: #f7f6e4;  /* jaune très pâle */
+            border-radius: 32px;
+            padding: 1.8rem 1.8rem 2.2rem;
+            border: 1px solid #cfd99d;
+            transition: border 0.2s;
+        }
+
+        .carte-exo:hover {
+            border-color: #b5bf6b;
+        }
+
+        .num-exo {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(145deg, #d7e0a8, #c2cd86);
+            display: inline-block;
+            padding: 0.1rem 1.3rem;
+            border-radius: 60px;
+            border: 1px solid #a1ad58;
+            margin-bottom: 1rem;
+            color: #3f542d;
+        }
+
+        .titre-exo {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: #556b37;
+        }
+
+        .desc-exo {
+            color: #4f6240;
+            margin-bottom: 1.4rem;
+            line-height: 1.6;
+            font-size: 0.98rem;
+        }
+
+        .btn-reponse {
+            background: #e3eac1;
+            border: none;
+            color: #3b542b;
+            font-weight: 600;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #bac46a;
+            border: 1px solid #b1bb6b;
+            margin-top: 0.8rem;
+            transition: 0.05s linear;
+        }
+
+        .btn-reponse:active {
+            transform: translateY(4px);
+            box-shadow: 0 1px 0 #bac46a;
+        }
+
+        .corrige {
+            background: #edf2d5;  /* fond très clair */
+            margin-top: 1.3rem;
+            padding: 1.5rem;
+            border-radius: 24px;
+            border-left: 8px solid #cbd674;
+            display: none;
+            font-size: 0.98rem;
+            line-height: 1.7;
+            color: #3f5630;
+        }
+
+        .legume {
+            background: #e2eabd;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 0.5rem 0;
+            color: #4f6b35;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            opacity: 0.8;
+            color: #728550;
+        }
+    </style>
+</head>
+<body>
+<div class="boite">
+    <div class="barre">
+        <span class="rond"></span><span class="rond"></span><span class="rond"></span>
+        <span class="badge">C1 · registres · tons clairs</span>
+    </div>
+    <div class="contenu">
+        <h1>🇭🇺🌿 JE L'ADMETS, J'AURAIS VOULU NAÎTRE FRANÇAIS</h1>
+        <div class="chapeau">Un auteur hongrois de Transylvanie déclare sa flamme à la France – article intégral + défis registres</div>
+
+        <!-- ARTICLE COMPLET -->
+        <div class="article">
+            <div class="titre-article">Vu de Hongrie. Je l’admets, j’aurais voulu naître français</div>
+            <div class="sous-titre-article">Originaire de l’actuelle Transylvanie roumaine, cet auteur hongrois déclare, dans les pages du quotidien “Nepszava”, son amour au pays de Balzac et de Platini, auquel son père vouait pourtant une profonde haine. Une admiration sans bornes pour la France qui s’explique par la richesse culturelle du pays.</div>
+            <div class="credit">Nepszava · Traduit du hongrois · Publié le 23 février 2026 · Réveil Courrier</div>
+
+            <p>S’il m’était permis de renaître comme humain (pardon aux coccinelles et aux libellules, l’existence d’insecte ne m’intéresse pas), alors je resterais sur le continent. L’Europe est ma seule patrie. Ce que j’ai vu des autres continents reste au mieux exotique, comme des objets précieux mais plus inanimés brillant derrière les vitres d’un musée. L’Europe de l’Est ? Je n’en reveux pas. Le Nord ? Hors de question, trop froid. Le Sud ? Trop chaud. Bref, je voudrais ressusciter français.</p>
+
+            <p>Rien que la langue me captive. J’aime tous ses sifflements, ses r absorbés, ses s presque érotiques, et la légèreté qu’elle suggère. Comme si elle ne voulait pas saisir le monde mais le caresser. À l’école, on nous bassinait avec le russe, qui sonnait comme de la chapelure sèche. Certes, l’anglais s’est invité après un certain temps. Mais dans une dictature, une langue mondiale a le même effet que les vagues de la mer sur les murs d’une cellule de prison.</p>
+
+            <p>En revanche, j’ai été surpris que mon père déclare discrètement, avant le Mondial de football 1982, qu’il n’encouragerait pas la France. Je n’ai pas compris, car jusqu’alors, ma mère était la chargée de la haine à la maison. Je ne m’attendais pas à une attitude semblable de mon père. Pourtant, leur hostilité provient de la même source, réalisai-je plus tard lorsque j’ai enfin pu lire librement sur le Trianon [traité parisien qui amputa deux tiers du territoire hongrois le 4 juin 1920, dont l’actuelle Transylvanie roumaine, la région d’origine de l’auteur] et Clemenceau.</p>
+
+            <p>D’après la légende populaire, ce dernier aurait été soudoyé par les Roumains, qui auraient usé sur lui des charmes de professionnelles la nuit précédant le jour qui décida tout. Heureusement, bien plus tard, Balazs Ablonczy [historien hongrois spécialiste de la période] consacra deux excellents livres à réfuter des mythes similaires.</p>
+
+            <p>Néanmoins, fait plus intéressant que l’aversion antifrançaise de mon père, ma mère adorait la littérature française. Elle m’a mis dans les mains Dumas, Balzac et Zola, mais adorait également Hugo et Stendhal. Évidemment, à la lumière de tous ces éléments, la haine n’était pas une option. Elle a donc fermé les yeux sur les victoires françaises.</p>
+
+            <div class="intertitre">L’immense richesse de Paris</div>
+
+            <p>Je pense que mon père était lui aussi subjugué par le jeu de Platini, de Tigana et de Giresse, comme beaucoup d’autres, et que je n’étais pas le seul à regretter que deux pénaltys manqués [aux tirs au but] face aux coriaces Allemands leur aient coûté la qualification en finale. Mon père et moi n’en avons jamais reparlé. Ni à l’époque, ni plus tard. Il m’a peut-être pardonné sur ses vieux jours, mais a-t-il été convaincu par une Europe réconciliée et unie ou par le jeu écrasant de Zidane et de ses compagnons lorsqu’ils sont arrivés au sommet en 1998 ? Je ne le saurai jamais.</p>
+
+            <p>J’ai peut-être été immunisé contre ce ressentiment, car il y avait Paris. Toute nation possédant une telle ville peut être absoute de ses péchés, imaginaires ou réels. J’ai retenu mon souffle devant le dialogue digne d’un duel d’escrime entre le général von Choltitz et le diplomate Raoul Nordling dans Diplomatie [2014], le célèbre film de [Volker] Schlöndorff. La discussion allait décider si la ville minée serait anéantie comme Hitler l’avait ordonné, ou si des centaines de milliers d’individus et le joyau irremplaçable de la culture européenne seraient sauvés.</p>
+
+            <p>J’ai ressenti l’enthousiasme supraterrestre de l’écrivain américain Gil Pender, dans le film Minuit à Paris de Woody Allen, lorsqu’il retrouve le Paris artistique vibrant des années 1920 en effectuant un voyage dans le temps. Un environnement qui faisait ressortir le meilleur même des moins talentueux. Je ressentais aussi cette amertume presque palpable dans le roman Les Étrangers, de Sandor Marai, à travers un amour raté pendant la même époque. Il vaut la peine de regarder ou de lire les deux ensemble : l’imagination débordante de Woody Allen et la désillusion silencieuse de la génération perdue de l’écrivain hongrois [1900-1989].</p>
+
+            <p>Mais c’est Paris : cette immense richesse dont je n’ai peut-être même pas effleuré la surface. Qui ne voudrait pas voir le monde en naissant ici, une ville qui pour nous, étrangers, est toujours restée un peu un désir insatiable et inaccessible ? Même pour les Américains, notoirement suffisants, elle signifiait le salut et la possibilité de liberté qu’elle incarne encore. Un endroit à visiter absolument, du moins si nous voulons préserver un semblant de culture. Cependant, pour d’autres, c’est une abomination. Car tout ce qu’ils voient, ce sont les ghettos, les conflits et l’injustice qui éclatent encore et encore, l’histoire de Paris rédigée avec beaucoup de sang.</p>
+
+            <p>J’ignore ce que je serais en tant que français, né du côté plus heureux du Trianon. Arrogant ou bienveillant ? Intellectuel ou permissif ? Vaniteux ou ouvert d’esprit ? Donnerais-je raison à mon père ou plongerais-je dans l’abondance indulgente et trop subtile de la littérature ? Tout ce dont je suis sûr, c’est que ce jeu me rapproche d’une compréhension qui guérit les blessures.</p>
+        </div>
+
+        <!-- DÉFIS C1 (beaucoup de registres) -->
+        <span class="section-tag">🌱 12 DÉFIS · REGISTRES DE LANGUE · COULEURS CLAIRES</span>
+
+        <div class="grille-exos">
+            <!-- 1 · Compréhension fine (implicite) -->
+            <div class="carte-exo">
+                <div class="num-exo">01</div>
+                <div class="titre-exo">🧠 Implicite</div>
+                <div class="desc-exo">a) Pourquoi le russe = "chapelure sèche" ?<br>b) Que symbolise Paris ?<br>c) Rôle du traité de Trianon ?</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr1')">🌼 Corrigé</button>
+                <div id="corr1" class="corrige">a) Le russe imposé, rigide, sans saveur, s'oppose au français sensuel. b) Paris = liberté, culture, réconciliation. c) Source de la haine paternelle (amputation de la Hongrie).</div>
+            </div>
+
+            <!-- 2 · Reformulation registre courant → soutenu -->
+            <div class="carte-exo">
+                <div class="num-exo">02</div>
+                <div class="titre-exo">📖 Courant → soutenu</div>
+                <div class="desc-exo">"J’aime trop la langue française, elle est trop belle." (registre courant) → Réécris en style soutenu.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr2')">🌻 Corrigé</button>
+                <div id="corr2" class="corrige">"J’éprouve une profonde admiration pour la langue française, dont la beauté me semble inégalée."</div>
+            </div>
+
+            <!-- 3 · Soutenu → courant (inverse) -->
+            <div class="carte-exo">
+                <div class="num-exo">03</div>
+                <div class="titre-exo">🗣️ Soutenu → courant</div>
+                <div class="desc-exo">"Il éprouvait une aversion tenace à l'égard de ce pays." → dis-le comme dans une conversation entre potes.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr3')">🌞 Corrigé</button>
+                <div id="corr3" class="corrige">"Il détestait grave ce pays, il pouvait pas le blairer."</div>
+            </div>
+
+            <!-- 4 · Familier → neutre (register) -->
+            <div class="carte-exo">
+                <div class="num-exo">04</div>
+                <div class="titre-exo">💬 Familier → neutre</div>
+                <div class="desc-exo">"Le prof, il nous a bassinés avec sa littérature." → passe en registre neutre/standard.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr4')">🌾 Corrigé</button>
+                <div id="corr4" class="corrige">"Le professeur nous a longuement parlés de littérature, de façon un peu excessive."</div>
+            </div>
+
+            <!-- 5 · Mot interdit (vocabulaire) -->
+            <div class="carte-exo">
+                <div class="num-exo">05</div>
+                <div class="titre-exo">🚫 Mot interdit</div>
+                <div class="desc-exo">Définis "France" sans utiliser les mots : pays, Paris, européen.<br>Définis "langue" sans : parler, mot, français.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr5')">🍀 Corrigé</button>
+                <div id="corr5" class="corrige">France → nation au rayonnement culturel et historique majeur, patrie des Lumières.<br>Langue → système vivant de signes vocaux qui façonne la pensée.</div>
+            </div>
+        </div>
+
+        <!-- deuxième grille (6-10) -->
+        <div class="grille-exos">
+            <!-- 6 · SMS → soutenu -->
+            <div class="carte-exo">
+                <div class="num-exo">06</div>
+                <div class="titre-exo">📱 SMS → soutenu</div>
+                <div class="desc-exo">"G trop kiffé l’article, il déchire sa mère" → transposition en français soigné.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr6')">🌿 Corrigé</button>
+                <div id="corr6" class="corrige">"J’ai été extrêmement séduit par cet article, dont la qualité me paraît exceptionnelle."</div>
+            </div>
+
+            <!-- 7 · Registre juridique/administratif -->
+            <div class="carte-exo">
+                <div class="num-exo">07</div>
+                <div class="titre-exo">⚖️ Style administratif</div>
+                <div class="desc-exo">"Je veux devenir français." → réécris comme une demande officielle à l'administration.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr7')">🍂 Corrigé</button>
+                <div id="corr7" class="corrige">"Je soussigné déclare solliciter l'acquisition de la nationalité française."</div>
+            </div>
+
+            <!-- 8 · Changement de point de vue (registre ironique) -->
+            <div class="carte-exo">
+                <div class="num-exo">08</div>
+                <div class="titre-exo">🎭 Ironie / second degré</div>
+                <div class="desc-exo">"Bien sûr, mon père adorait la France." (ironique) → formule-le de manière ironique.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr8')">🍁 Corrigé</button>
+                <div id="corr8" class="corrige">"Mon père vouait à la France une affection… très discrète, disons."</div>
+            </div>
+
+            <!-- 9 · Nuances de registre (classement) -->
+            <div class="carte-exo">
+                <div class="num-exo">09</div>
+                <div class="titre-exo">🌈 Nuances de mots</div>
+                <div class="desc-exo">Classe du plus familier au plus soutenu : crever – décéder – passer l’arme à gauche – mourir.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr9')">🌸 Corrigé + couleurs</button>
+                <div id="corr9" class="corrige">
+                    <span style="background:#faeeaf; padding:0.2rem 0.8rem; border-radius:20px;">🟡 passer l’arme à gauche (fam.)</span> → 
+                    <span style="background:#f0e48c; padding:0.2rem 0.8rem; border-radius:20px;">🟠 crever (vulgaire)</span> → 
+                    <span style="background:#cfda8a; padding:0.2rem 0.8rem; border-radius:20px;">🟢 mourir (neutre)</span> → 
+                    <span style="background:#b8c77d; padding:0.2rem 0.8rem; border-radius:20px;">🔵 décéder (soutenu)</span>
+                </div>
+            </div>
+
+            <!-- 10 · Trouver le registre dans l'article -->
+            <div class="carte-exo">
+                <div class="num-exo">10</div>
+                <div class="titre-exo">🔍 Détection</div>
+                <div class="desc-exo">Relève une phrase très soutenue et une phrase plus orale dans l'article. Justifie.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr10')">🌱 Corrigé</button>
+                <div id="corr10" class="corrige">Soutenu : "L’Europe est ma seule patrie." (solennel) / Oral : "L’Europe de l’Est ? Je n’en reveux pas." (tour familier, phrase nominale)</div>
+            </div>
+        </div>
+
+        <!-- troisième grille (exos 11-12) -->
+        <div class="grille-exos">
+            <!-- 11 · Traduire le verlan/slang en français standard -->
+            <div class="carte-exo">
+                <div class="num-exo">11</div>
+                <div class="titre-exo">🔁 Verlan → standard</div>
+                <div class="desc-exo">"Ce pote il est chelou, il parle à l’envers." → remets en français correct.</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr11')">🌼 Corrigé</button>
+                <div id="corr11" class="corrige">"Cette personne me paraît étrange, elle tient des propos incohérents."</div>
+            </div>
+
+            <!-- 12 · Créer un pastiche (changement de registre) -->
+            <div class="carte-exo">
+                <div class="num-exo">12</div>
+                <div class="titre-exo">✍️ Pastiche</div>
+                <div class="desc-exo">Raconte la même phrase en trois registres : "Je veux aller à Paris." (familier / neutre / soutenu)</div>
+                <button class="btn-reponse" onclick="toggleCorrige('corr12')">🍄 Corrigé</button>
+                <div id="corr12" class="corrige">
+                    Familier : "J’veux aller à Paname."<br>
+                    Neutre : "Je souhaite me rendre à Paris."<br>
+                    Soutenu : "J’aspire à découvrir la capitale française."
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <div style="background:#f4f6e0; border-radius:30px; padding:2rem; margin:1.5rem 0; border:1px solid #d2da9c;">
+            <span class="section-tag">🌿 BILAN REGISTRES</span>
+            <p>Chaque exercice travaille un niveau de langue différent. Écris ta réponse avant de dévoiler le corrigé.</p>
+        </div>
+
+        <footer>
+            C1 · registres de langue · couleurs claires · vu de Hongrie
+        </footer>
+    </div>
+</div>
+
+<script>
+    function toggleCorrige(id) {
+        const el = document.getElementById(id);
+        if (el.style.display === 'none' || el.style.display === '') {
+            el.style.display = 'block';
+        } else {
+            el.style.display = 'none';
+        }
+    }
+</script>
+</body>
+</html>
