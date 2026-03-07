@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Le Voyage – Futur Simple – FLE A2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --rose:    #D95F7F;
+  --rose-lt: #F2B5C5;
+  --coral:   #E8734A;
+  --sand:    #F8F0E8;
+  --sage:    #5A9E78;
+  --sage-lt: #C4DDD0;
+  --navy:    #1F3361;
+  --gold:    #C9943A;
+  --gold-lt: #F5DFA8;
+  --cream:   #FDFAF6;
+  --text:    #2E2520;
+  --purple:  #7B5EA7;
+  --purple-lt:#DDD0F0;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);line-height:1.7;}
+
+/* HEADER */
+header{background:var(--navy);color:white;padding:52px 32px 44px;text-align:center;position:relative;overflow:hidden;}
+header::before{content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 70%,rgba(217,95,127,.4) 0%,transparent 55%),
+             radial-gradient(ellipse at 85% 15%,rgba(201,148,58,.3) 0%,transparent 55%),
+             radial-gradient(ellipse at 60% 90%,rgba(90,158,120,.2) 0%,transparent 50%);}
+header .badge{display:inline-block;background:var(--rose);color:white;font-size:.72rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 16px;border-radius:20px;margin-bottom:14px;position:relative;}
+header h1{font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3.2rem);line-height:1.1;position:relative;}
+header h1 em{color:var(--gold-lt);font-style:italic;}
+header .sub{margin-top:10px;font-size:.9rem;opacity:.65;position:relative;}
+header .icons{font-size:2rem;margin-bottom:14px;display:block;position:relative;}
+
+.page{max-width:900px;margin:0 auto;padding:44px 24px 90px;}
+.rainbow-bar{height:5px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--gold),var(--sage),var(--purple));border-radius:3px;margin-bottom:40px;}
+
+/* SECTION TITLES */
+.section-title{font-family:'Playfair Display',serif;font-size:1.45rem;color:var(--navy);margin-bottom:22px;display:flex;align-items:center;gap:10px;margin-top:10px;}
+.section-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,var(--rose-lt),transparent);margin-left:8px;}
+
+/* CARDS */
+.card{background:white;border-radius:18px;padding:28px 32px;margin-bottom:30px;box-shadow:0 4px 24px rgba(31,51,97,.08);border-left:5px solid var(--rose);}
+.card.sage{border-left-color:var(--sage);}
+.card.gold{border-left-color:var(--gold);}
+.card.coral{border-left-color:var(--coral);}
+.card.purple{border-left-color:var(--purple);}
+.card.navy{border-left-color:var(--navy);background:var(--navy);color:white;}
+
+/* VOCAB TABLE */
+.vocab-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:12px;overflow:hidden;border:1.5px solid #EAE0D5;}
+.vocab-grid .vhead{background:var(--navy);color:white;font-size:.82rem;font-weight:600;letter-spacing:.09em;text-transform:uppercase;padding:10px 16px;}
+.vocab-grid .vc{padding:9px 16px;font-size:.88rem;border-bottom:1px solid #F0E8E0;}
+.vocab-grid .vrow:nth-child(odd) .vc{background:white;}
+.vocab-grid .vrow:nth-child(even) .vc{background:var(--sand);}
+.vocab-grid .vc.fr{color:var(--navy);font-weight:500;}
+.vocab-grid .vc.en{color:#8A7260;font-style:italic;}
+
+/* TEXT */
+.texte p{font-size:.95rem;line-height:1.9;margin-bottom:.9em;}
+.hl{background:linear-gradient(120deg,var(--rose-lt) 0%,var(--rose-lt) 100%);background-size:100% 38%;background-repeat:no-repeat;background-position:0 88%;padding:0 2px;}
+.hl.g{background-image:linear-gradient(120deg,var(--sage-lt) 0%,var(--sage-lt) 100%);}
+.hl.o{background-image:linear-gradient(120deg,var(--gold-lt) 0%,var(--gold-lt) 100%);}
+
+/* LESSON BOXES */
+.lesson-block{border-radius:14px;padding:22px 26px;margin-bottom:16px;}
+.lesson-block.dark{background:var(--navy);color:white;}
+.lesson-block.light{background:var(--sand);border:1.5px solid #E0D4C4;}
+.lesson-block h3{font-family:'Playfair Display',serif;font-size:1.1rem;margin-bottom:12px;}
+.lesson-block.dark h3{color:var(--gold-lt);}
+.lesson-block.light h3{color:var(--navy);}
+.rule-row{background:rgba(255,255,255,.1);border-radius:8px;padding:11px 15px;margin-bottom:9px;font-size:.9rem;line-height:1.65;}
+.rule-row:last-child{margin-bottom:0;}
+.lesson-block.light .rule-row{background:white;box-shadow:0 1px 6px rgba(0,0,0,.06);}
+strong.accent{color:var(--gold);}
+strong.rose{color:var(--rose-lt);}
+strong.green{color:var(--sage-lt);}
+
+/* CONJUGATION TABLE */
+.conj-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:.88rem;}
+.conj-table th{background:rgba(255,255,255,.15);padding:8px 12px;text-align:left;font-weight:600;border-bottom:1px solid rgba(255,255,255,.2);}
+.conj-table td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.1);}
+.conj-table tr:last-child td{border-bottom:none;}
+.conj-table .pron{opacity:.7;}
+.conj-table .form{color:var(--gold-lt);font-weight:500;}
+.conj-table .irr{color:#F9C8A0;font-weight:500;}
+
+/* light table */
+.conj-table.light-tbl th{background:var(--navy);color:white;}
+.conj-table.light-tbl td{border-bottom:1px solid #E8DFD4;}
+.conj-table.light-tbl tr:nth-child(even) td{background:var(--sand);}
+.conj-table.light-tbl tr:nth-child(odd) td{background:white;}
+.conj-table.light-tbl .form{color:var(--rose);font-weight:600;}
+.conj-table.light-tbl .irr{color:var(--purple);font-weight:600;}
+
+/* EXERCISES */
+.ex-header{display:flex;align-items:center;gap:10px;margin-bottom:18px;flex-wrap:wrap;}
+.ex-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;background:var(--rose);color:white;border-radius:50%;font-weight:700;font-size:.85rem;flex-shrink:0;}
+.ex-title{font-weight:600;font-size:1rem;color:var(--navy);}
+.card.navy .ex-title{color:white;}
+.score-pill{display:none;padding:4px 14px;border-radius:20px;font-size:.82rem;font-weight:600;background:var(--gold);color:white;margin-left:4px;}
+
+.fill-item{margin-bottom:13px;font-size:.91rem;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;}
+.fill-item .n{color:var(--rose);font-weight:700;min-width:22px;}
+.card.navy .fill-item .n{color:var(--rose-lt);}
+
+input[type="text"]{border:none;border-bottom:2.5px solid var(--rose-lt);outline:none;padding:3px 8px;font-family:'DM Sans',sans-serif;font-size:.9rem;background:transparent;color:var(--navy);transition:border-color .2s;}
+input[type="text"]:focus{border-color:var(--rose);}
+input[type="text"].ok{border-color:var(--sage);background:#EBF6EF;border-radius:4px 4px 0 0;}
+input[type="text"].ko{border-color:var(--coral);background:#FEF0EA;border-radius:4px 4px 0 0;}
+.card.navy input[type="text"]{color:white;border-color:rgba(255,255,255,.4);}
+.card.navy input[type="text"]:focus{border-color:var(--gold-lt);}
+
+.btn{display:inline-block;padding:9px 20px;border-radius:28px;border:none;font-family:'DM Sans',sans-serif;font-size:.86rem;font-weight:500;cursor:pointer;transition:transform .15s,box-shadow .15s;}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.btn-check{background:var(--navy);color:white;}
+.btn-reset{background:var(--sand);color:var(--navy);border:1.5px solid var(--rose-lt);}
+.btn-show{background:var(--rose);color:white;}
+.btn-hide2{background:#C8C0B8;color:#555;}
+.btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+
+.answers-box{display:none;margin-top:16px;background:var(--sage-lt);border-radius:12px;padding:16px 20px;font-size:.88rem;line-height:1.85;border-left:4px solid var(--sage);}
+.answers-box.on{display:block;}
+.a-row{margin-bottom:3px;}
+.ac{color:#2A7A50;font-weight:600;}
+.card.navy .answers-box{background:rgba(90,158,120,.2);border-left-color:var(--sage-lt);}
+.card.navy .ac{color:var(--sage-lt);}
+
+/* QCM */
+.qcm-item{margin-bottom:20px;}
+.qcm-item p{font-size:.91rem;margin-bottom:9px;font-weight:500;color:var(--navy);}
+.qcm-opts{display:flex;flex-wrap:wrap;gap:8px;}
+.opt{padding:7px 18px;border-radius:22px;border:2px solid var(--rose-lt);background:white;font-family:'DM Sans',sans-serif;font-size:.87rem;cursor:pointer;transition:all .15s;color:var(--text);}
+.opt:hover{background:var(--sand);}
+.opt.sel{background:var(--navy);color:white;border-color:var(--navy);}
+.opt.ok2{background:var(--sage);color:white;border-color:var(--sage);}
+.opt.ko2{background:var(--coral);color:white;border-color:var(--coral);}
+
+/* TIP */
+.tip{background:linear-gradient(135deg,#FFF8EC,#FFF0DC);border:1.5px dashed var(--gold);border-radius:10px;padding:13px 18px;font-size:.86rem;color:#7A5520;margin-top:14px;}
+.tip strong{color:var(--coral);}
+
+/* Match */
+.match-zone{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;}
+.match-left,.match-right{display:flex;flex-direction:column;gap:8px;}
+.match-item{padding:9px 16px;border-radius:10px;font-size:.88rem;cursor:pointer;transition:all .15s;user-select:none;}
+.match-item.left-item{background:var(--sand);border:2px solid var(--rose-lt);color:var(--navy);font-weight:500;}
+.match-item.right-item{background:white;border:2px solid #DDD4C8;color:var(--text);}
+.match-item.selected{border-color:var(--rose);background:var(--rose-lt);}
+.match-item.matched-ok{border-color:var(--sage);background:var(--sage-lt);cursor:default;}
+.match-item.matched-ko{border-color:var(--coral);background:#FDEAE2;cursor:default;}
+
+/* reorder */
+.word-bank{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;min-height:36px;}
+.word-chip{padding:6px 14px;background:var(--gold-lt);border:1.5px solid var(--gold);border-radius:20px;font-size:.88rem;cursor:pointer;transition:all .15s;color:var(--navy);}
+.word-chip:hover{background:var(--gold);color:white;}
+.word-chip.used{opacity:.35;cursor:not-allowed;pointer-events:none;}
+.answer-line{min-height:38px;border-bottom:2.5px solid var(--rose-lt);padding:4px 8px;font-size:.92rem;color:var(--navy);display:flex;align-items:center;flex-wrap:wrap;gap:6px;cursor:pointer;border-radius:4px 4px 0 0;}
+.answer-line:hover{background:rgba(217,95,127,.05);}
+.placed-chip{padding:4px 12px;background:var(--rose-lt);border:1.5px solid var(--rose);border-radius:14px;font-size:.85rem;cursor:pointer;}
+.placed-chip:hover{background:var(--rose);color:white;}
+
+@media(max-width:600px){
+  .match-zone{grid-template-columns:1fr;}
+  .card{padding:18px 16px;}
+  input[type="text"]{width:110px;}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="badge">FLE · A2 · Le Voyage</div>
+  <span class="icons">✈️ 🧳 🗺️</span>
+  <h1>Le <em>Futur Simple</em><br>& le Voyage</h1>
+  <p class="sub">French lesson for English-speaking adult women &nbsp;·&nbsp; Grammar: Le futur simple</p>
+</header>
+
+<div class="page">
+<div class="rainbow-bar"></div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 1 — VOCABULAIRE
+════════════════════════════════════════════ -->
+<h2 class="section-title"><span>💬</span> Vocabulary / Vocabulaire</h2>
+<div class="card">
+  <div class="vocab-grid">
+    <div class="vhead">🇫🇷 Français</div><div class="vhead">🇬🇧 English</div>
+    <div class="vrow"><div class="vc fr">un voyage</div><div class="vc en">a trip / a journey</div></div>
+    <div class="vrow"><div class="vc fr">une valise</div><div class="vc en">a suitcase</div></div>
+    <div class="vrow"><div class="vc fr">un passeport</div><div class="vc en">a passport</div></div>
+    <div class="vrow"><div class="vc fr">un billet (d'avion / de train)</div><div class="vc en">a (plane / train) ticket</div></div>
+    <div class="vrow"><div class="vc fr">l'aéroport (m.)</div><div class="vc en">the airport</div></div>
+    <div class="vrow"><div class="vc fr">la gare</div><div class="vc en">the train station</div></div>
+    <div class="vrow"><div class="vc fr">réserver</div><div class="vc en">to book</div></div>
+    <div class="vrow"><div class="vc fr">partir (en vacances)</div><div class="vc en">to leave / to go on holiday</div></div>
+    <div class="vrow"><div class="vc fr">arriver</div><div class="vc en">to arrive</div></div>
+    <div class="vrow"><div class="vc fr">visiter</div><div class="vc en">to visit (a place)</div></div>
+    <div class="vrow"><div class="vc fr">la plage</div><div class="vc en">the beach</div></div>
+    <div class="vrow"><div class="vc fr">la montagne</div><div class="vc en">the mountains</div></div>
+    <div class="vrow"><div class="vc fr">un hôtel</div><div class="vc en">a hotel</div></div>
+    <div class="vrow"><div class="vc fr">un souvenir</div><div class="vc en">a souvenir / a memory</div></div>
+    <div class="vrow"><div class="vc fr">bronzer / se reposer</div><div class="vc en">to tan / to relax</div></div>
+    <div class="vrow"><div class="vc fr">prendre l'avion / le train</div><div class="vc en">to take the plane / train</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 2 — TEXTE
+════════════════════════════════════════════ -->
+<h2 class="section-title"><span>📖</span> Reading Text / Texte</h2>
+<div class="card sage">
+  <div class="texte">
+    <p>L'été prochain, Sophie et Clara <span class="hl">partiront</span> en vacances en Provence. Elles <span class="hl">prendront</span> le train à Paris vendredi matin. Le voyage <span class="hl">durera</span> trois heures.</p>
+    <p>À Marseille, elles <span class="hl">visiteront</span> le Vieux-Port et elles <span class="hl">mangeront</span> une délicieuse bouillabaisse. L'après-midi, elles <span class="hl g">iront</span> à la plage et elles <span class="hl">se reposeront</span> au soleil.</p>
+    <p>Sophie <span class="hl">réservera</span> un petit hôtel près de la mer. L'hôtel <span class="hl">aura</span> une belle terrasse avec vue sur la mer. Clara <span class="hl">apportera</span> son appareil photo pour prendre des photos.</p>
+    <p>Le week-end, les deux amies <span class="hl">loueront</span> une voiture et <span class="hl">découvriront</span> les villages de Provence. Elles <span class="hl g">verront</span> les champs de lavande et <span class="hl o">achèteront</span> des souvenirs pour leurs familles.</p>
+    <p>Sophie dit : « Ce voyage <span class="hl g">sera</span> magnifique ! Nous <span class="hl">rentrerons</span> à Paris dimanche soir, mais nous <span class="hl">reviendrons</span> l'année prochaine, c'est certain ! »</p>
+  </div>
+  <div class="tip">💡 <strong>Notice:</strong> All highlighted verbs are in the <em>futur simple</em> — the tense you are going to learn in this lesson!</div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     SECTION 3 — LEÇON
+════════════════════════════════════════════ -->
+<h2 class="section-title"><span>⚡</span> Lesson / Leçon — Le Futur Simple</h2>
+
+<div class="card gold">
+  <div class="lesson-block dark">
+    <h3>📌 When do we use the futur simple?</h3>
+    <div class="rule-row">🔹 To talk about <strong class="accent">future plans or events</strong>: <em>Nous partirons en vacances.</em> (We will go on holiday.)</div>
+    <div class="rule-row">🔹 To make <strong class="accent">predictions</strong>: <em>Il fera beau.</em> (The weather will be nice.)</div>
+    <div class="rule-row">🔹 With time expressions: <strong class="accent">demain, la semaine prochaine, l'été prochain, dans deux jours, bientôt…</strong></div>
+    <div class="rule-row">🔹 Difference from English: in French you CANNOT say <em>"quand je partirai…"</em> with the present — you must use the futur! <br>→ <strong class="accent">Quand elle arrivera</strong>, nous mangerons. (When she arrives, we will eat.)</div>
+  </div>
+
+  <div class="lesson-block light" style="margin-top:16px">
+    <h3>📐 Formation — Regular verbs</h3>
+    <div class="rule-row"><strong style="color:var(--navy)">Formula:</strong> <strong style="color:var(--rose)">INFINITIF</strong> + endings: <strong style="color:var(--rose)">-ai, -as, -a, -ons, -ez, -ont</strong><br>
+    ⚠️ For <strong style="color:var(--navy)">-RE verbs</strong>, drop the final <strong style="color:var(--coral)">-e</strong> first: <em>prendre → prendr-</em></div>
+    <table class="conj-table light-tbl" style="margin-top:14px">
+      <tr><th>Pronom</th><th>Ending</th><th>PARLER (to speak)</th><th>FINIR (to finish)</th><th>PRENDRE (to take)</th></tr>
+      <tr><td class="pron">Je</td><td>-ai</td><td class="form">parlerai</td><td class="form">finirai</td><td class="form">prendrai</td></tr>
+      <tr><td class="pron">Tu</td><td>-as</td><td class="form">parleras</td><td class="form">finiras</td><td class="form">prendras</td></tr>
+      <tr><td class="pron">Il / Elle / On</td><td>-a</td><td class="form">parlera</td><td class="form">finira</td><td class="form">prendra</td></tr>
+      <tr><td class="pron">Nous</td><td>-ons</td><td class="form">parlerons</td><td class="form">finirons</td><td class="form">prendrons</td></tr>
+      <tr><td class="pron">Vous</td><td>-ez</td><td class="form">parlerez</td><td class="form">finirez</td><td class="form">prendrez</td></tr>
+      <tr><td class="pron">Ils / Elles</td><td>-ont</td><td class="form">parleront</td><td class="form">finiront</td><td class="form">prendront</td></tr>
+    </table>
+  </div>
+
+  <div class="lesson-block dark" style="margin-top:16px">
+    <h3>⚠️ Irregular verbs — stems to memorise</h3>
+    <table class="conj-table">
+      <tr><th>Infinitif</th><th>Stem (radical)</th><th>Example — il/elle…</th></tr>
+      <tr><td>être</td><td class="irr">ser-</td><td>elle <strong class="accent">sera</strong></td></tr>
+      <tr><td>avoir</td><td class="irr">aur-</td><td>il <strong class="accent">aura</strong></td></tr>
+      <tr><td>aller</td><td class="irr">ir-</td><td>elle <strong class="accent">ira</strong></td></tr>
+      <tr><td>faire</td><td class="irr">fer-</td><td>il <strong class="accent">fera</strong></td></tr>
+      <tr><td>venir</td><td class="irr">viendr-</td><td>elle <strong class="accent">viendra</strong></td></tr>
+      <tr><td>voir</td><td class="irr">verr-</td><td>il <strong class="accent">verra</strong></td></tr>
+      <tr><td>pouvoir</td><td class="irr">pourr-</td><td>elle <strong class="accent">pourra</strong></td></tr>
+      <tr><td>vouloir</td><td class="irr">voudr-</td><td>il <strong class="accent">voudra</strong></td></tr>
+      <tr><td>savoir</td><td class="irr">saur-</td><td>elle <strong class="accent">saura</strong></td></tr>
+      <tr><td>devoir</td><td class="irr">devr-</td><td>il <strong class="accent">devra</strong></td></tr>
+    </table>
+  </div>
+
+  <div class="tip" style="margin-top:16px">
+    💡 <strong>Memory trick:</strong> The endings are the same as the present tense of <em>avoir</em>: j'ai → -ai, tu as → -as, il a → -a… Easy!
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     EXERCICES
+════════════════════════════════════════════ -->
+<h2 class="section-title"><span>✏️</span> Exercises / Exercices</h2>
+
+<!-- EX 1 — Conjugate regular verbs -->
+<div class="card coral">
+  <div class="ex-header">
+    <span class="ex-num" style="background:var(--coral)">1</span>
+    <span class="ex-title">Conjugate at the futur simple. / Conjuguez au futur simple.</span>
+    <span class="score-pill" id="s1"></span>
+  </div>
+  <div id="e1">
+    <div class="fill-item"><span class="n">1.</span> Sophie <input type="text" data-answer="visitera" placeholder="…" size="10"> la Provence. <em style="opacity:.6">(visiter)</em></div>
+    <div class="fill-item"><span class="n">2.</span> Nous <input type="text" data-answer="prendrons" placeholder="…" size="10"> le train. <em style="opacity:.6">(prendre)</em></div>
+    <div class="fill-item"><span class="n">3.</span> Je <input type="text" data-answer="réserverai" placeholder="…" size="12"> un hôtel. <em style="opacity:.6">(réserver)</em></div>
+    <div class="fill-item"><span class="n">4.</span> Elles <input type="text" data-answer="mangeront" placeholder="…" size="10"> au restaurant. <em style="opacity:.6">(manger)</em></div>
+    <div class="fill-item"><span class="n">5.</span> Tu <input type="text" data-answer="partiras" placeholder="…" size="10"> demain. <em style="opacity:.6">(partir)</em></div>
+    <div class="fill-item"><span class="n">6.</span> Vous <input type="text" data-answer="arriverez" placeholder="…" size="10"> à midi. <em style="opacity:.6">(arriver)</em></div>
+    <div class="fill-item"><span class="n">7.</span> Clara <input type="text" data-answer="apportera" placeholder="…" size="10"> son appareil photo. <em style="opacity:.6">(apporter)</em></div>
+    <div class="fill-item"><span class="n">8.</span> Ils <input type="text" data-answer="loueront" placeholder="…" size="10"> une voiture. <em style="opacity:.6">(louer)</em></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-check" onclick="checkFill('e1','s1')">✓ Check</button>
+    <button class="btn btn-reset" onclick="resetFill('e1','s1')">↺ Reset</button>
+    <button class="btn btn-show" onclick="toggleAns('a1')">👁 Show answers</button>
+    <button class="btn btn-hide2" id="h-a1" style="display:none" onclick="toggleAns('a1')">Hide</button>
+  </div>
+  <div class="answers-box" id="a1">
+    <div class="a-row">1. <span class="ac">visitera</span></div><div class="a-row">2. <span class="ac">prendrons</span></div>
+    <div class="a-row">3. <span class="ac">réserverai</span></div><div class="a-row">4. <span class="ac">mangeront</span></div>
+    <div class="a-row">5. <span class="ac">partiras</span></div><div class="a-row">6. <span class="ac">arriverez</span></div>
+    <div class="a-row">7. <span class="ac">apportera</span></div><div class="a-row">8. <span class="ac">loueront</span></div>
+  </div>
+</div>
+
+<!-- EX 2 — Irregular verbs -->
+<div class="card purple">
+  <div class="ex-header">
+    <span class="ex-num" style="background:var(--purple)">2</span>
+    <span class="ex-title">Irregular verbs. / Verbes irréguliers.</span>
+    <span class="score-pill" id="s2"></span>
+  </div>
+  <div id="e2">
+    <div class="fill-item"><span class="n">1.</span> Le voyage <input type="text" data-answer="sera" placeholder="…" size="8"> magnifique. <em style="opacity:.6">(être)</em></div>
+    <div class="fill-item"><span class="n">2.</span> Nous <input type="text" data-answer="irons" placeholder="…" size="8"> à la plage. <em style="opacity:.6">(aller)</em></div>
+    <div class="fill-item"><span class="n">3.</span> Il <input type="text" data-answer="fera" placeholder="…" size="8"> beau demain. <em style="opacity:.6">(faire)</em></div>
+    <div class="fill-item"><span class="n">4.</span> L'hôtel <input type="text" data-answer="aura" placeholder="…" size="8"> une terrasse. <em style="opacity:.6">(avoir)</em></div>
+    <div class="fill-item"><span class="n">5.</span> Tu <input type="text" data-answer="verras" placeholder="…" size="8"> les champs de lavande. <em style="opacity:.6">(voir)</em></div>
+    <div class="fill-item"><span class="n">6.</span> Clara <input type="text" data-answer="viendra" placeholder="…" size="10"> avec moi. <em style="opacity:.6">(venir)</em></div>
+    <div class="fill-item"><span class="n">7.</span> Vous <input type="text" data-answer="pourrez" placeholder="…" size="10"> vous reposer. <em style="opacity:.6">(pouvoir)</em></div>
+    <div class="fill-item"><span class="n">8.</span> Je <input type="text" data-answer="devrai" placeholder="…" size="8"> faire ma valise. <em style="opacity:.6">(devoir)</em></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-check" onclick="checkFill('e2','s2')">✓ Check</button>
+    <button class="btn btn-reset" onclick="resetFill('e2','s2')">↺ Reset</button>
+    <button class="btn btn-show" onclick="toggleAns('a2')">👁 Show answers</button>
+    <button class="btn btn-hide2" id="h-a2" style="display:none" onclick="toggleAns('a2')">Hide</button>
+  </div>
+  <div class="answers-box" id="a2">
+    <div class="a-row">1. <span class="ac">sera</span></div><div class="a-row">2. <span class="ac">irons</span></div>
+    <div class="a-row">3. <span class="ac">fera</span></div><div class="a-row">4. <span class="ac">aura</span></div>
+    <div class="a-row">5. <span class="ac">verras</span></div><div class="a-row">6. <span class="ac">viendra</span></div>
+    <div class="a-row">7. <span class="ac">pourrez</span></div><div class="a-row">8. <span class="ac">devrai</span></div>
+  </div>
+</div>
+
+<!-- EX 3 — QCM -->
+<div class="card">
+  <div class="ex-header">
+    <span class="ex-num">3</span>
+    <span class="ex-title">Choose the correct form. / Choisissez la bonne forme.</span>
+  </div>
+  <div id="qcm">
+    <div class="qcm-item" id="q1">
+      <p>1. Sophie _____ à Paris l'année prochaine. (habiter)</p>
+      <div class="qcm-opts">
+        <button class="opt" onclick="qcm(this,'q1',false)">habitera pas</button>
+        <button class="opt" onclick="qcm(this,'q1',true)">habitera</button>
+        <button class="opt" onclick="qcm(this,'q1',false)">habiteront</button>
+      </div>
+    </div>
+    <div class="qcm-item" id="q2">
+      <p>2. Nous _____ nos billets ce soir. (acheter)</p>
+      <div class="qcm-opts">
+        <button class="opt" onclick="qcm(this,'q2',false)">achèterons pas</button>
+        <button class="opt" onclick="qcm(this,'q2',false)">achèterai</button>
+        <button class="opt" onclick="qcm(this,'q2',true)">achèterons</button>
+      </div>
+    </div>
+    <div class="qcm-item" id="q3">
+      <p>3. Tu _____ beau demain. Il _____ soleil. (faire / avoir)</p>
+      <div class="qcm-opts">
+        <button class="opt" onclick="qcm(this,'q3',true)">feras / aura</button>
+        <button class="opt" onclick="qcm(this,'q3',false)">ferai / avait</button>
+        <button class="opt" onclick="qcm(this,'q3',false)">fera / aura</button>
+      </div>
+    </div>
+    <div class="qcm-item" id="q4">
+      <p>4. Les amies _____ la Provence ensemble. (découvrir)</p>
+      <div class="qcm-opts">
+        <button class="opt" onclick="qcm(this,'q4',false)">découvrira</button>
+        <button class="opt" onclick="qcm(this,'q4',true)">découvriront</button>
+        <button class="opt" onclick="qcm(this,'q4',false)">découvreront</button>
+      </div>
+    </div>
+    <div class="qcm-item" id="q5">
+      <p>5. Je _____ en France l'été prochain. (aller)</p>
+      <div class="qcm-opts">
+        <button class="opt" onclick="qcm(this,'q5',false)">allerai</button>
+        <button class="opt" onclick="qcm(this,'q5',false)">allera</button>
+        <button class="opt" onclick="qcm(this,'q5',true)">irai</button>
+      </div>
+    </div>
+    <div class="qcm-item" id="q6">
+      <p>6. Quand Sophie _____ à Marseille, elle visitera le Vieux-Port. (arriver)</p>
+      <div class="qcm-opts">
+        <button class="opt" onclick="qcm(this,'q6',false)">arrive</button>
+        <button class="opt" onclick="qcm(this,'q6',true)">arrivera</button>
+        <button class="opt" onclick="qcm(this,'q6',false)">est arrivée</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EX 4 — COMPLETE THE DIALOGUE -->
+<div class="card navy">
+  <div class="ex-header">
+    <span class="ex-num" style="background:var(--rose)">4</span>
+    <span class="ex-title">Complete the dialogue. / Complétez le dialogue.</span>
+    <span class="score-pill" id="s4"></span>
+  </div>
+  <div id="e4">
+    <div class="fill-item"><span class="n">Clara :</span> Où <input type="text" data-answer="iras-tu" placeholder="…" size="10"> cet été ?</div>
+    <div class="fill-item"><span class="n">Sophie :</span> Je <input type="text" data-answer="partirai" placeholder="…" size="10"> en Provence avec toi !</div>
+    <div class="fill-item"><span class="n">Clara :</span> Super ! On <input type="text" data-answer="prendra" placeholder="…" size="10"> le train ou l'avion ?</div>
+    <div class="fill-item"><span class="n">Sophie :</span> On <input type="text" data-answer="prendra" placeholder="…" size="10"> le train. Ce <input type="text" data-answer="sera" placeholder="…" size="8"> plus simple.</div>
+    <div class="fill-item"><span class="n">Clara :</span> Tu <input type="text" data-answer="réserveras" placeholder="…" size="12"> l'hôtel ?</div>
+    <div class="fill-item"><span class="n">Sophie :</span> Oui, je le <input type="text" data-answer="réserverai" placeholder="…" size="12"> ce soir sur Internet.</div>
+    <div class="fill-item"><span class="n">Clara :</span> Nous <input type="text" data-answer="aurons" placeholder="…" size="10"> une belle chambre avec vue sur la mer ?</div>
+    <div class="fill-item"><span class="n">Sophie :</span> J'espère ! Et nous <input type="text" data-answer="bronzerons" placeholder="…" size="12"> sur la plage tous les jours !</div>
+    <div class="fill-item"><span class="n">Clara :</span> Ce <input type="text" data-answer="sera" placeholder="…" size="8"> un voyage magnifique !</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-check" style="background:var(--rose)" onclick="checkFill('e4','s4')">✓ Check</button>
+    <button class="btn btn-reset" style="background:rgba(255,255,255,.15);color:white;border-color:rgba(255,255,255,.3)" onclick="resetFill('e4','s4')">↺ Reset</button>
+    <button class="btn btn-show" onclick="toggleAns('a4')">👁 Show answers</button>
+    <button class="btn btn-hide2" id="h-a4" style="display:none" onclick="toggleAns('a4')">Hide</button>
+  </div>
+  <div class="answers-box" id="a4">
+    <div class="a-row">1. <span class="ac">iras-tu</span></div><div class="a-row">2. <span class="ac">partirai</span></div>
+    <div class="a-row">3. <span class="ac">prendra</span></div><div class="a-row">4. <span class="ac">prendra / sera</span></div>
+    <div class="a-row">5. <span class="ac">réserveras</span></div><div class="a-row">6. <span class="ac">réserverai</span></div>
+    <div class="a-row">7. <span class="ac">aurons</span></div><div class="a-row">8. <span class="ac">bronzerons</span></div>
+    <div class="a-row">9. <span class="ac">sera</span></div>
+  </div>
+</div>
+
+<!-- EX 5 — TRANSFORM to futur simple -->
+<div class="card sage">
+  <div class="ex-header">
+    <span class="ex-num" style="background:var(--sage)">5</span>
+    <span class="ex-title">Rewrite in the futur simple. / Réécrivez au futur simple.</span>
+    <span class="score-pill" id="s5"></span>
+  </div>
+  <p style="font-size:.88rem;color:#5A6A5A;margin-bottom:14px">Change each sentence from the present to the futur simple.</p>
+  <div id="e5">
+    <div class="fill-item"><span class="n">1.</span> Je <strong>voyage</strong> en Italie. → Je <input type="text" data-answer="voyagerai" placeholder="…" size="12"> en Italie.</div>
+    <div class="fill-item"><span class="n">2.</span> Elle <strong>prend</strong> l'avion. → Elle <input type="text" data-answer="prendra" placeholder="…" size="10"> l'avion.</div>
+    <div class="fill-item"><span class="n">3.</span> Nous <strong>sommes</strong> à la plage. → Nous <input type="text" data-answer="serons" placeholder="…" size="10"> à la plage.</div>
+    <div class="fill-item"><span class="n">4.</span> Tu <strong>fais</strong> ta valise. → Tu <input type="text" data-answer="feras" placeholder="…" size="10"> ta valise.</div>
+    <div class="fill-item"><span class="n">5.</span> Elles <strong>voient</strong> la mer. → Elles <input type="text" data-answer="verront" placeholder="…" size="10"> la mer.</div>
+    <div class="fill-item"><span class="n">6.</span> Il <strong>vient</strong> avec nous. → Il <input type="text" data-answer="viendra" placeholder="…" size="10"> avec nous.</div>
+    <div class="fill-item"><span class="n">7.</span> Vous <strong>pouvez</strong> vous reposer. → Vous <input type="text" data-answer="pourrez" placeholder="…" size="10"> vous reposer.</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-check" style="background:var(--sage)" onclick="checkFill('e5','s5')">✓ Check</button>
+    <button class="btn btn-reset" onclick="resetFill('e5','s5')">↺ Reset</button>
+    <button class="btn btn-show" onclick="toggleAns('a5')">👁 Show answers</button>
+    <button class="btn btn-hide2" id="h-a5" style="display:none" onclick="toggleAns('a5')">Hide</button>
+  </div>
+  <div class="answers-box" id="a5">
+    <div class="a-row">1. <span class="ac">voyagerai</span></div><div class="a-row">2. <span class="ac">prendra</span></div>
+    <div class="a-row">3. <span class="ac">serons</span></div><div class="a-row">4. <span class="ac">feras</span></div>
+    <div class="a-row">5. <span class="ac">verront</span></div><div class="a-row">6. <span class="ac">viendra</span></div>
+    <div class="a-row">7. <span class="ac">pourrez</span></div>
+  </div>
+</div>
+
+<!-- EX 6 — NEGATIVE -->
+<div class="card">
+  <div class="ex-header">
+    <span class="ex-num">6</span>
+    <span class="ex-title">Make the sentence negative. / Mettez à la forme négative.</span>
+    <span class="score-pill" id="s6"></span>
+  </div>
+  <p style="font-size:.88rem;color:#8A7060;margin-bottom:14px">Use <strong>ne … pas</strong> at the futur simple.</p>
+  <div id="e6">
+    <div class="fill-item"><span class="n">1.</span> Sophie prendra l'avion. → Sophie <input type="text" data-answer="ne prendra pas" placeholder="…" size="18"> l'avion.</div>
+    <div class="fill-item"><span class="n">2.</span> Nous irons à la montagne. → Nous <input type="text" data-answer="n'irons pas" placeholder="…" size="16"> à la montagne.</div>
+    <div class="fill-item"><span class="n">3.</span> Tu oublieras ton passeport. → Tu <input type="text" data-answer="n'oublieras pas" placeholder="…" size="18"> ton passeport.</div>
+    <div class="fill-item"><span class="n">4.</span> Il réservera un grand hôtel. → Il <input type="text" data-answer="ne réservera pas" placeholder="…" size="20"> un grand hôtel.</div>
+    <div class="fill-item"><span class="n">5.</span> Elles seront fatiguées. → Elles <input type="text" data-answer="ne seront pas" placeholder="…" size="18"> fatiguées.</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-check" onclick="checkFill('e6','s6')">✓ Check</button>
+    <button class="btn btn-reset" onclick="resetFill('e6','s6')">↺ Reset</button>
+    <button class="btn btn-show" onclick="toggleAns('a6')">👁 Show answers</button>
+    <button class="btn btn-hide2" id="h-a6" style="display:none" onclick="toggleAns('a6')">Hide</button>
+  </div>
+  <div class="answers-box" id="a6">
+    <div class="a-row">1. <span class="ac">ne prendra pas</span></div><div class="a-row">2. <span class="ac">n'irons pas</span></div>
+    <div class="a-row">3. <span class="ac">n'oublieras pas</span></div><div class="a-row">4. <span class="ac">ne réservera pas</span></div>
+    <div class="a-row">5. <span class="ac">ne seront pas</span></div>
+  </div>
+</div>
+
+<!-- EX 7 — TRANSLATION -->
+<div class="card coral">
+  <div class="ex-header">
+    <span class="ex-num" style="background:var(--coral)">7</span>
+    <span class="ex-title">Translate into French. / Traduisez en français.</span>
+    <span class="score-pill" id="s7"></span>
+  </div>
+  <div id="e7">
+    <div class="fill-item"><span class="n">1.</span> I will book a hotel. → <input type="text" data-answer="je réserverai un hôtel" placeholder="…" size="26"></div>
+    <div class="fill-item"><span class="n">2.</span> She will go to the beach. → <input type="text" data-answer="elle ira à la plage" placeholder="…" size="26"></div>
+    <div class="fill-item"><span class="n">3.</span> The weather will be nice. → <input type="text" data-answer="il fera beau" placeholder="…" size="22"></div>
+    <div class="fill-item"><span class="n">4.</span> We will take the train. → <input type="text" data-answer="nous prendrons le train" placeholder="…" size="26"></div>
+    <div class="fill-item"><span class="n">5.</span> They (f.) will see the sea. → <input type="text" data-answer="elles verront la mer" placeholder="…" size="26"></div>
+    <div class="fill-item"><span class="n">6.</span> Will you visit Marseille? → <input type="text" data-answer="visiteras-tu marseille" placeholder="…" size="26"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-check" onclick="checkFill('e7','s7')">✓ Check</button>
+    <button class="btn btn-reset" onclick="resetFill('e7','s7')">↺ Reset</button>
+    <button class="btn btn-show" onclick="toggleAns('a7')">👁 Show answers</button>
+    <button class="btn btn-hide2" id="h-a7" style="display:none" onclick="toggleAns('a7')">Hide</button>
+  </div>
+  <div class="answers-box" id="a7">
+    <div class="a-row">1. <span class="ac">Je réserverai un hôtel.</span></div>
+    <div class="a-row">2. <span class="ac">Elle ira à la plage.</span></div>
+    <div class="a-row">3. <span class="ac">Il fera beau.</span></div>
+    <div class="a-row">4. <span class="ac">Nous prendrons le train.</span></div>
+    <div class="a-row">5. <span class="ac">Elles verront la mer.</span></div>
+    <div class="a-row">6. <span class="ac">Visiteras-tu Marseille ?</span></div>
+    <div class="tip">💡 <strong>Note:</strong> Answers may vary slightly — what matters is the correct futur simple form!</div>
+  </div>
+</div>
+
+<!-- EX 8 — QUAND + futur -->
+<div class="card gold">
+  <div class="ex-header">
+    <span class="ex-num" style="background:var(--gold)">8</span>
+    <span class="ex-title">QUAND + futur simple — Complete both verbs.</span>
+    <span class="score-pill" id="s8"></span>
+  </div>
+  <p style="font-size:.88rem;color:#7A5520;margin-bottom:14px">⚠️ In French, after <strong>quand</strong>, the verb must ALSO be in the futur simple.</p>
+  <div id="e8">
+    <div class="fill-item"><span class="n">1.</span> Quand Sophie <input type="text" data-answer="arrivera" placeholder="…" size="10"> (arriver), elle <input type="text" data-answer="visitera" placeholder="…" size="10"> (visiter) le Vieux-Port.</div>
+    <div class="fill-item"><span class="n">2.</span> Quand il <input type="text" data-answer="fera" placeholder="…" size="8"> (faire) beau, nous <input type="text" data-answer="irons" placeholder="…" size="8"> (aller) à la plage.</div>
+    <div class="fill-item"><span class="n">3.</span> Quand tu <input type="text" data-answer="auras" placeholder="…" size="8"> (avoir) le temps, tu <input type="text" data-answer="réserveras" placeholder="…" size="12"> (réserver) l'hôtel.</div>
+    <div class="fill-item"><span class="n">4.</span> Quand elles <input type="text" data-answer="seront" placeholder="…" size="8"> (être) à Paris, elles <input type="text" data-answer="verront" placeholder="…" size="8"> (voir) la Tour Eiffel.</div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-check" onclick="checkFill('e8','s8')">✓ Check</button>
+    <button class="btn btn-reset" onclick="resetFill('e8','s8')">↺ Reset</button>
+    <button class="btn btn-show" onclick="toggleAns('a8')">👁 Show answers</button>
+    <button class="btn btn-hide2" id="h-a8" style="display:none" onclick="toggleAns('a8')">Hide</button>
+  </div>
+  <div class="answers-box" id="a8">
+    <div class="a-row">1. <span class="ac">arrivera / visitera</span></div>
+    <div class="a-row">2. <span class="ac">fera / irons</span></div>
+    <div class="a-row">3. <span class="ac">auras / réserveras</span></div>
+    <div class="a-row">4. <span class="ac">seront / verront</span></div>
+  </div>
+</div>
+
+<!-- EX 9 — FREE WRITING -->
+<div class="card purple">
+  <div class="ex-header">
+    <span class="ex-num" style="background:var(--purple)">9</span>
+    <span class="ex-title">Write 4 sentences about your dream holiday. / Écrivez 4 phrases sur vos vacances de rêve.</span>
+  </div>
+  <p style="font-size:.88rem;color:#5A4080;margin-bottom:16px">Use the futur simple. Start with: <em>L'été prochain, je…</em></p>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div><span style="color:var(--purple);font-weight:700">1.</span> <input type="text" placeholder="L'été prochain, je…" style="width:100%;border-bottom:2px solid var(--purple-lt);font-size:.9rem;"></div>
+    <div><span style="color:var(--purple);font-weight:700">2.</span> <input type="text" placeholder="Je…" style="width:100%;border-bottom:2px solid var(--purple-lt);font-size:.9rem;"></div>
+    <div><span style="color:var(--purple);font-weight:700">3.</span> <input type="text" placeholder="Nous / On…" style="width:100%;border-bottom:2px solid var(--purple-lt);font-size:.9rem;"></div>
+    <div><span style="color:var(--purple);font-weight:700">4.</span> <input type="text" placeholder="Ce sera…" style="width:100%;border-bottom:2px solid var(--purple-lt);font-size:.9rem;"></div>
+  </div>
+  <div class="tip" style="margin-top:16px">
+    💡 <strong>Ideas:</strong> aller en Espagne / visiter Rome / prendre l'avion / rester dans un hôtel / manger des spécialités locales / bronzer sur la plage / voir des monuments…
+  </div>
+</div>
+
+<div style="text-align:center;margin-top:44px;opacity:.45;font-size:.8rem;font-style:italic">
+  Bonne chance ! 🌸 &nbsp;·&nbsp; FLE A2 — Le Voyage & Le Futur Simple
+</div>
+</div><!-- /page -->
+
+<script>
+function norm(s){ return s.trim().toLowerCase().replace(/['']/g,"'").replace(/\s+/g,' '); }
+
+function checkFill(sid, pid){
+  const sec = document.getElementById(sid);
+  const inputs = sec.querySelectorAll('input[type="text"]');
+  let ok=0;
+  inputs.forEach(inp=>{
+    const ans = norm(inp.dataset.answer||'');
+    const val = norm(inp.value);
+    inp.classList.remove('ok','ko');
+    if(!val) return;
+    if(val===ans){inp.classList.add('ok');ok++;}
+    else inp.classList.add('ko');
+  });
+  const filled=[...inputs].filter(i=>i.value.trim()!=='').length;
+  if(filled>0){
+    const pill=document.getElementById(pid);
+    if(pill){pill.style.display='inline-block';pill.textContent=ok+' / '+inputs.length+' ✓';
+    pill.style.background=ok===inputs.length?'var(--sage)':'var(--gold)';}
+  }
+}
+
+function resetFill(sid,pid){
+  document.getElementById(sid).querySelectorAll('input[type="text"]').forEach(i=>{i.value='';i.classList.remove('ok','ko');});
+  const p=document.getElementById(pid);
+  if(p)p.style.display='none';
+}
+
+function toggleAns(id){
+  const box=document.getElementById(id);
+  const num=id.replace('a','');
+  const show=document.querySelector(`[onclick="toggleAns('${id}')"].btn-show`);
+  const hide=document.getElementById('h-'+id);
+  if(box.classList.contains('on')){
+    box.classList.remove('on');
+    if(show)show.style.display='inline-block';
+    if(hide)hide.style.display='none';
+  }else{
+    box.classList.add('on');
+    if(show)show.style.display='none';
+    if(hide)hide.style.display='inline-block';
+  }
+}
+
+function qcm(btn,qid,correct){
+  const q=document.getElementById(qid);
+  q.querySelectorAll('.opt').forEach(b=>{b.classList.remove('sel','ok2','ko2');b.disabled=false;});
+  btn.classList.add('sel');
+  setTimeout(()=>{
+    if(correct){btn.classList.add('ok2');}
+    else{
+      btn.classList.add('ko2');
+      q.querySelectorAll('.opt').forEach(b=>{
+        if(b.getAttribute('onclick')&&b.getAttribute('onclick').includes(',true)'))b.classList.add('ok2');
+      });
+    }
+    q.querySelectorAll('.opt').forEach(b=>b.disabled=true);
+  },300);
+}
+</script>
+</body>
+</html>
