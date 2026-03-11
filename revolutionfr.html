@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>La Révolution française — 1789–1799</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --noir:    #0E0C09;
+  --encre:   #1A1510;
+  --rouge:   #9B2020;
+  --rouge-vif: #C0392B;
+  --or:      #C9943A;
+  --or-pale: #E8C97A;
+  --parchemin: #F2EBD9;
+  --creme:   #FAF6EE;
+  --gris:    #8C8070;
+  --blanc:   #FDFAF4;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--creme);
+  color: var(--encre);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.88;
+}
+body::before {
+  content:''; position:fixed; inset:0; z-index:1000; pointer-events:none;
+  opacity:0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:128px;
+}
+
+/* HEADER */
+header {
+  background:var(--noir);
+  color:var(--blanc);
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center;
+  padding:4rem 2rem;
+  position:relative; overflow:hidden;
+}
+.hbg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 40%, rgba(155,32,32,0.2) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 35% at 15% 85%, rgba(201,148,58,0.07) 0%, transparent 60%);
+}
+.tri { position:absolute; top:0; left:0; right:0; height:5px; display:flex; }
+.tri span { flex:1; }
+.tri span:nth-child(1){background:#002395;}
+.tri span:nth-child(2){background:#fff;}
+.tri span:nth-child(3){background:#ED2939;}
+
+.hinner { position:relative; max-width:740px; }
+.eyebrow {
+  font-size:0.78rem; font-weight:300;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--or-pale); margin-bottom:2.2rem;
+}
+header h1 {
+  font-family:'IM Fell English',serif;
+  font-size:clamp(3rem,9vw,6.5rem);
+  font-weight:400; line-height:1.05;
+  color:var(--blanc);
+  text-shadow:0 2px 50px rgba(155,32,32,0.5);
+  margin-bottom:0.3rem;
+}
+header h1 em { font-style:italic; color:var(--or-pale); }
+.hdates {
+  font-family:'IM Fell English',serif;
+  font-size:1.5rem; color:var(--or);
+  letter-spacing:0.22em; margin-bottom:2rem;
+}
+.hrule {
+  width:100px; height:1px;
+  background:linear-gradient(90deg,transparent,var(--or),transparent);
+  margin:0 auto 1.8rem;
+}
+header p.sub {
+  font-size:1.05rem; font-weight:300; font-style:italic;
+  color:rgba(255,255,255,0.55);
+  max-width:480px; margin:0 auto 3rem;
+}
+.scroll {
+  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+  color:rgba(255,255,255,0.28); font-size:0.7rem; letter-spacing:0.22em; text-transform:uppercase;
+  animation:bob 2.8s ease-in-out infinite;
+}
+.scroll::after {
+  content:''; width:1px; height:34px;
+  background:linear-gradient(to bottom, rgba(255,255,255,0.28), transparent);
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
+/* NAV */
+nav {
+  background:var(--encre); position:sticky; top:0; z-index:200;
+  display:flex; flex-wrap:wrap; justify-content:center;
+  border-bottom:2px solid var(--or);
+}
+nav a {
+  color:rgba(255,255,255,0.62); text-decoration:none;
+  font-family:'Crimson Pro',serif;
+  font-size:0.79rem; letter-spacing:0.09em; text-transform:uppercase;
+  padding:0.82rem 1.2rem;
+  border-right:1px solid rgba(255,255,255,0.06);
+  transition:all 0.2s;
+}
+nav a:hover, nav a.on { color:var(--or-pale); background:rgba(255,255,255,0.04); }
+nav a .n { color:var(--or); font-family:'IM Fell English',serif; font-size:1.05rem; margin-right:0.3rem; }
+
+/* LAYOUT */
+.sep { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(155,32,32,0.18),transparent); }
+section.ch {
+  padding:5rem 0 3rem; position:relative;
+  opacity:0; transform:translateY(28px);
+  transition:opacity 0.75s ease, transform 0.75s ease;
+}
+section.ch.vis { opacity:1; transform:none; }
+.bign {
+  position:absolute; top:2.5rem; right:0;
+  font-family:'IM Fell English',serif;
+  font-size:16rem; line-height:1;
+  color:rgba(155,32,32,0.04);
+  pointer-events:none; user-select:none; z-index:0;
+}
+.wrap { max-width:820px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
+
+/* CHAPITRE HEADER */
+.clabel { display:flex; align-items:center; gap:0.7rem; margin-bottom:0.9rem; }
+.cnum {
+  font-family:'IM Fell English',serif; font-size:1rem;
+  background:var(--rouge); color:white;
+  width:2rem; height:2rem; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.cperiod {
+  font-size:0.7rem; font-weight:300; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--gris);
+  border:1px solid var(--gris); padding:0.15rem 0.6rem; border-radius:20px;
+}
+h2.ctitle {
+  font-family:'IM Fell English',serif;
+  font-size:clamp(1.9rem,4.5vw,3rem);
+  font-weight:400; color:var(--encre); line-height:1.15; margin-bottom:0.5rem;
+}
+h2.ctitle em { color:var(--rouge); font-style:italic; }
+.crule {
+  height:1px; margin:1.1rem 0 2rem;
+  background:linear-gradient(90deg,var(--rouge) 0%,var(--or) 28%,transparent 78%);
+}
+.prob {
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:1.12rem; color:var(--rouge);
+  border-left:3px solid var(--rouge); padding:0.7rem 1.2rem;
+  background:rgba(155,32,32,0.04); border-radius:0 6px 6px 0;
+  margin-bottom:2.2rem; line-height:1.5;
+}
+
+/* RECIT */
+.recit p { margin-bottom:1.4rem; text-align:justify; hyphens:auto; font-weight:300; }
+.recit p:first-of-type::first-letter {
+  font-family:'IM Fell English',serif; font-size:4.2rem; font-weight:400;
+  float:left; line-height:0.7; margin:0.12rem 0.28rem 0 0; color:var(--rouge);
+}
+.recit strong { font-weight:600; color:var(--encre); }
+
+/* TIMELINE */
+.tl {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  margin:2.5rem 0; position:relative;
+}
+.tl::before {
+  content:''; position:absolute;
+  top:1.5rem; left:1rem; right:1rem; height:1px;
+  background:linear-gradient(90deg,var(--rouge),var(--or),var(--rouge));
+}
+.ti { padding:0 0.4rem; padding-top:3rem; position:relative; text-align:center; }
+.tdot {
+  position:absolute; top:0.8rem; left:50%; transform:translateX(-50%);
+  width:1.35rem; height:1.35rem; border-radius:50%;
+  background:var(--creme); border:2px solid var(--rouge);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IM Fell English',serif; font-size:0.62rem; color:var(--rouge); z-index:1;
+}
+.tdate { font-size:0.68rem; font-weight:600; color:var(--rouge); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:0.25rem; }
+.tdesc { font-size:0.79rem; color:var(--gris); line-height:1.38; }
+
+/* ENCADRÉ */
+.enc {
+  background:var(--parchemin); border:1px solid rgba(201,148,58,0.28);
+  border-left:4px solid var(--or); border-radius:0 8px 8px 0;
+  padding:1.3rem 1.6rem; margin:2rem 0; font-size:0.97rem;
+}
+.enc-titre {
+  font-family:'IM Fell English',serif; font-size:0.85rem;
+  color:var(--or); text-transform:uppercase; letter-spacing:0.14em;
+  margin-bottom:0.6rem;
+}
+
+/* CITATION */
+.cit {
+  background:var(--encre); color:var(--blanc);
+  border-radius:8px; padding:2rem 2rem 1.5rem 3rem;
+  margin:2.5rem 0; position:relative;
+}
+.cit::before {
+  content:'\201C'; font-family:'IM Fell English',serif; font-size:5.5rem;
+  color:var(--or); position:absolute; top:0.1rem; left:0.8rem;
+  line-height:1; opacity:0.55;
+}
+.cit p { font-family:'IM Fell English',serif; font-style:italic; font-size:1.12rem; line-height:1.6; margin-bottom:0.6rem; }
+.cit .src { font-size:0.76rem; color:var(--or-pale); letter-spacing:0.11em; text-transform:uppercase; }
+
+/* STATS */
+.stats { display:flex; gap:1rem; margin:2rem 0; flex-wrap:wrap; }
+.stat { flex:1; min-width:120px; background:var(--encre); border-radius:8px; padding:1.2rem; text-align:center; border-top:3px solid var(--rouge); }
+.stat .nb { font-family:'IM Fell English',serif; font-size:2.2rem; color:var(--or-pale); display:block; }
+.stat .lb { font-size:0.76rem; color:rgba(255,255,255,0.6); line-height:1.35; }
+
+/* THEMES */
+.themes { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:1.8rem 0; }
+.th {
+  background:white; border-radius:6px; padding:1rem 1.1rem;
+  border:1px solid rgba(0,0,0,0.07); font-size:0.9rem; line-height:1.5; color:var(--encre);
+}
+.th strong { display:block; margin-bottom:0.3rem; font-family:'IM Fell English',serif; font-size:0.97rem; color:var(--rouge); }
+.th:last-child:nth-child(odd) { grid-column:span 2; }
+
+/* ARTICLES DDHC */
+.arts { display:grid; grid-template-columns:1fr 1fr; gap:0.65rem; margin-top:1.1rem; }
+.art { background:white; border-radius:5px; padding:0.8rem 1rem; border-left:3px solid var(--rouge); font-size:0.86rem; line-height:1.48; }
+.art:nth-child(2n) { border-left-color:#1a3a6b; }
+.art:nth-child(3n) { border-left-color:var(--or); }
+.art strong { display:block; color:var(--encre); margin-bottom:0.2rem; font-size:0.79rem; }
+
+/* TABLEAU */
+.tab { width:100%; border-collapse:collapse; margin:1.5rem 0; font-size:0.89rem; }
+.tab th { background:var(--encre); color:var(--or-pale); padding:0.7rem 1rem; text-align:left; font-family:'IM Fell English',serif; font-weight:400; font-size:0.94rem; }
+.tab td { padding:0.62rem 1rem; border-bottom:1px solid #E8E0D0; }
+.tab tr:nth-child(even) td { background:rgba(242,235,217,0.5); }
+
+/* QCM */
+.qcm {
+  background:white; border-radius:12px; border-top:5px solid var(--rouge);
+  padding:2.2rem 2rem 1.8rem; margin-top:3rem;
+  box-shadow:0 3px 28px rgba(0,0,0,0.06);
+}
+.qhead {
+  font-family:'IM Fell English',serif; font-size:1.2rem;
+  color:var(--rouge); margin-bottom:1.8rem;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.qhead::before { content:'✦'; color:var(--or); font-size:0.85rem; }
+.qb { margin-bottom:2rem; }
+.qt { font-weight:600; margin-bottom:0.8rem; font-size:1rem; color:var(--encre); line-height:1.5; }
+.qn {
+  display:inline-block; background:var(--rouge); color:white;
+  font-size:0.7rem; font-weight:700; padding:0.1rem 0.5rem;
+  border-radius:20px; margin-right:0.3rem; font-family:'Crimson Pro',serif; vertical-align:middle;
+}
+.opts { display:flex; flex-direction:column; gap:0.4rem; }
+.opt {
+  display:flex; align-items:flex-start; gap:0.7rem;
+  padding:0.65rem 1rem; border:1.5px solid #E8E0D0;
+  border-radius:7px; cursor:pointer; transition:all 0.18s;
+  font-size:0.94rem; line-height:1.45; background:var(--creme);
+}
+.opt:hover { border-color:var(--rouge); background:#fff; }
+.opt input { accent-color:var(--rouge); margin-top:0.2rem; flex-shrink:0; }
+.opt.ok { background:#edf7ee; border-color:#3a9e47; color:#1a5020; }
+.opt.ko { background:#fdecea; border-color:var(--rouge); color:#8c1c1c; }
+.fb { margin-top:0.5rem; font-size:0.86rem; padding:0.5rem 0.9rem; border-radius:6px; display:none; }
+.fb.show { display:block; }
+.fb.ok2 { background:#edf7ee; color:#2a6630; }
+.fb.ko2 { background:#fdecea; color:#8c1c1c; }
+.btnv {
+  margin-top:0.9rem; background:var(--rouge); color:white;
+  border:none; padding:0.5rem 1.4rem; border-radius:6px;
+  font-family:'Crimson Pro',serif; font-size:0.95rem; cursor:pointer;
+  transition:background 0.2s;
+}
+.btnv:hover { background:#7a1818; }
+.btnv:disabled { opacity:0.5; cursor:default; }
+
+/* SCORE */
+#scoreS {
+  text-align:center; margin:4rem 2rem 2rem;
+  background:var(--encre); color:var(--blanc);
+  border-radius:12px; padding:3rem 2rem;
+  border:1px solid rgba(201,148,58,0.3);
+}
+#scoreS h2 { font-family:'IM Fell English',serif; font-size:1.6rem; margin-bottom:1rem; }
+#scoreN { font-family:'IM Fell English',serif; font-size:4.5rem; color:var(--or-pale); display:block; }
+#scoreM { color:rgba(255,255,255,0.7); margin-top:0.6rem; font-size:1.05rem; }
+.btnR {
+  margin-top:1.4rem; background:var(--or); color:var(--encre);
+  border:none; padding:0.6rem 2rem; border-radius:6px;
+  font-family:'Crimson Pro',serif; font-size:1rem; cursor:pointer;
+  font-weight:600; transition:transform 0.15s;
+}
+.btnR:hover { transform:scale(1.04); }
+
+/* FOOTER */
+footer {
+  text-align:center; padding:2rem;
+  font-size:0.8rem; color:var(--gris);
+  border-top:1px solid #E8E0D0; margin-top:2rem;
+}
+.ff { display:flex; justify-content:center; gap:6px; margin-bottom:0.6rem; }
+.ff span { width:14px; height:14px; border-radius:2px; }
+
+@media(max-width:640px){
+  .tl { grid-template-columns:1fr 1fr; }
+  .tl::before { display:none; }
+  .themes,.arts { grid-template-columns:1fr; }
+  .th:last-child:nth-child(odd){ grid-column:span 1; }
+  nav a { padding:0.6rem 0.7rem; font-size:0.72rem; }
+  .bign { font-size:7rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tri"><span></span><span></span><span></span></div>
+  <div class="hbg"></div>
+  <div class="hinner">
+    <div class="eyebrow">Programme d'Histoire &middot; Classe de 4ème</div>
+    <h1>La Révolution<br><em>française</em></h1>
+    <div class="hdates">1789 &mdash; 1799</div>
+    <div class="hrule"></div>
+    <p class="sub">De la crise de l'Ancien Régime à l'avènement du Consulat, dix ans qui ont bouleversé la France et le monde.</p>
+  </div>
+  <div class="scroll">Défiler</div>
+</header>
+
+<nav id="nav">
+  <a href="#c1"><span class="n">I</span>L'Ancien Régime</a>
+  <a href="#c2"><span class="n">II</span>La Monarchie</a>
+  <a href="#c3"><span class="n">III</span>La Terreur</a>
+  <a href="#c4"><span class="n">IV</span>La Iᵉʳᵉ République</a>
+  <a href="#c5"><span class="n">V</span>Napoléon</a>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- I — L'ANCIEN RÉGIME -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c1"></div>
+<section class="ch">
+  <div class="bign">I</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">I</span>
+      <span class="cperiod">Avant 1789</span>
+    </div>
+    <h2 class="ctitle">L'Ancien <em>Régime</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Pourquoi la société française d'avant 1789 est-elle à bout de souffle ?</div>
+
+    <div class="recit">
+      <p>Depuis des siècles, la France est gouvernée par un roi dont le pouvoir est absolu et de droit divin. Louis XVI règne sur un royaume structuré en une <strong>société des trois ordres</strong> héritée du Moyen Âge. Le Clergé et la Noblesse — soit à peine 3 % de la population — jouissent de vastes privilèges : exemptions fiscales, accès aux charges et aux honneurs. Le <strong>Tiers-État</strong>, qui regroupe les 97 % restants — bourgeois, artisans, paysans —, supporte l'essentiel des impôts sans avoir voix au chapitre. Cette inégalité structurelle, héritée du Moyen Âge, est de plus en plus insupportable.</p>
+      <p>À cette injustice s'ajoute une <strong>crise financière profonde</strong>. Les guerres menées par la monarchie — notamment le coûteux soutien à l'indépendance américaine — ont vidé les caisses de l'État. La monarchie est au bord de la banqueroute. En 1788, de catastrophiques mauvaises récoltes provoquent une disette généralisée : le prix du pain flambe, la faim gagne les campagnes et les faubourgs de Paris. Le peuple gronde.</p>
+      <p>Dans ce contexte inflammable, les <strong>idées des Lumières</strong> circulent et ébranlent les consciences. Montesquieu plaide pour la séparation des pouvoirs ; Voltaire dénonce l'arbitraire ; Rousseau proclame la souveraineté du peuple. Ces idées ont convaincu une partie de l'élite éclairée que l'Ancien Régime ne peut pas durer. Louis XVI, acculé, convoque les États généraux en mai 1789. Il ne sait pas qu'il vient d'allumer la mèche de la Révolution.</p>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">Société</span><div class="tdesc">3 ordres : Clergé, Noblesse, Tiers-État (97 %)</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">Finances</span><div class="tdesc">La France au bord de la banqueroute après les guerres</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">1788</span><div class="tdesc">Mauvaises récoltes — disette et hausse du pain</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">Idées</span><div class="tdesc">Les Lumières : Voltaire, Rousseau, Montesquieu</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">Mai 1789</span><div class="tdesc">Convocation des États généraux par Louis XVI</div></div>
+    </div>
+
+    <div class="themes">
+      <div class="th"><strong>⚖️ Société inégalitaire</strong>Des privilèges pour 3 %, des charges pour 97 %. Mobilité sociale quasi inexistante.</div>
+      <div class="th"><strong>💸 Monarchie en faillite</strong>Dettes de guerre, dépenses de Versailles, système fiscal injuste.</div>
+      <div class="th"><strong>💡 Les Lumières</strong>Rousseau, Voltaire, Montesquieu remettent en cause l'absolutisme et préparent les esprits.</div>
+      <div class="th"><strong>🌾 Misère populaire</strong>La disette de 1788 et la hausse du pain transforment le mécontentement en explosion sociale.</div>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — L'Ancien Régime</div>
+
+      <div class="qb" id="q1">
+        <div class="qt"><span class="qn">1</span>Quelle part de la population le Tiers-État représentait-il sous l'Ancien Régime ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a">Environ 50 % de la population</label>
+          <label class="opt"><input type="radio" name="q1" value="b">Environ 75 % de la population</label>
+          <label class="opt"><input type="radio" name="q1" value="c">Environ 97 % de la population</label>
+          <label class="opt"><input type="radio" name="q1" value="d">Environ 30 % de la population</label>
+        </div>
+        <button class="btnv" onclick="V('q1','c','Le Tiers-État regroupait environ 97 % des Français — bourgeois, artisans, paysans — mais était largement exclu des privilèges réservés au Clergé et à la Noblesse.')">Valider</button>
+        <div class="fb" id="fb-q1"></div>
+      </div>
+
+      <div class="qb" id="q2">
+        <div class="qt"><span class="qn">2</span>Quel philosophe des Lumières est connu pour sa théorie de la « volonté générale » ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a">Voltaire</label>
+          <label class="opt"><input type="radio" name="q2" value="b">Diderot</label>
+          <label class="opt"><input type="radio" name="q2" value="c">Montesquieu</label>
+          <label class="opt"><input type="radio" name="q2" value="d">Rousseau</label>
+        </div>
+        <button class="btnv" onclick="V('q2','d','Jean-Jacques Rousseau, dans Du Contrat social (1762), théorise la souveraineté du peuple et la volonté générale. Ses idées ont profondément influencé la pensée révolutionnaire.')">Valider</button>
+        <div class="fb" id="fb-q2"></div>
+      </div>
+
+      <div class="qb" id="q3">
+        <div class="qt"><span class="qn">3</span>Pourquoi Louis XVI convoque-t-il les États généraux en mai 1789 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a">Pour déclarer la guerre à l'Angleterre</label>
+          <label class="opt"><input type="radio" name="q3" value="b">Pour résoudre la crise financière de la monarchie</label>
+          <label class="opt"><input type="radio" name="q3" value="c">Pour abolir les privilèges de la noblesse</label>
+          <label class="opt"><input type="radio" name="q3" value="d">Pour préparer une nouvelle Constitution</label>
+        </div>
+        <button class="btnv" onclick="V('q3','b','Louis XVI convoque les États généraux pour trouver des solutions à la crise financière, notamment lever de nouveaux impôts. Il ignorait que cette réunion allait déclencher la Révolution.')">Valider</button>
+        <div class="fb" id="fb-q3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- II — LA MONARCHIE CONSTITUTIONNELLE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c2"></div>
+<section class="ch">
+  <div class="bign">II</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">II</span>
+      <span class="cperiod">1789–1792</span>
+    </div>
+    <h2 class="ctitle">La <em>Monarchie</em> constitutionnelle</h2>
+    <div class="crule"></div>
+    <div class="prob">Peut-on concilier monarchie et souveraineté nationale ? La France tente l'impossible équilibre.</div>
+
+    <div class="recit">
+      <p>L'été 1789 est un moment de rupture totale avec l'Ancien Régime. Le <strong>17 juin</strong>, les représentants du Tiers-État se proclament Assemblée nationale. Le <strong>20 juin</strong>, ils prêtent le Serment du Jeu de Paume — jurant de ne pas se séparer avant d'avoir donné une Constitution à la France. Et le <strong>14 juillet</strong>, le peuple de Paris prend d'assaut la Bastille, symbole du despotisme royal. Dans les campagnes, la Grande Peur embrase les châteaux. La nuit du <strong>4 août</strong>, l'Assemblée abolit les privilèges féodaux. Le 26 août, elle adopte la <strong>Déclaration des Droits de l'Homme et du Citoyen</strong>.</p>
+      <p>La France entre alors dans l'ère de la <strong>monarchie constitutionnelle</strong>. La Constitution du 3 septembre 1791 encadre le pouvoir royal et instaure la séparation des pouvoirs. Louis XVI l'accepte formellement. Mais en juin 1791, il avait tenté de fuir secrètement vers les armées étrangères — arrêté à <strong>Varennes</strong>, il est ramené à Paris comme un prisonnier. La confiance est brisée. En avril 1792, la France déclare la guerre à l'Autriche. Le <strong>10 août 1792</strong>, les sans-culottes prennent d'assaut le palais des Tuileries : Louis XVI est suspendu. La monarchie constitutionnelle a vécu.</p>
+    </div>
+
+    <div class="enc">
+      <div class="enc-titre">📜 La Déclaration des Droits de l'Homme — 26 août 1789</div>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:1.1rem;margin-bottom:1rem;color:var(--encre);">« Les hommes naissent et demeurent libres et égaux en droits. » — Art. 1er</p>
+      <div class="arts">
+        <div class="art"><strong>Art. 1 — Liberté &amp; égalité</strong>Tous les hommes naissent libres et égaux en droits.</div>
+        <div class="art"><strong>Art. 2 — Droits naturels</strong>Liberté, propriété, sûreté, résistance à l'oppression.</div>
+        <div class="art"><strong>Art. 3 — Souveraineté</strong>Le principe de toute souveraineté réside dans la nation.</div>
+        <div class="art"><strong>Art. 6 — La loi</strong>La loi est l'expression de la volonté générale.</div>
+        <div class="art"><strong>Art. 11 — Expression</strong>Libre communication des pensées et des opinions.</div>
+        <div class="art"><strong>Art. 16 — Séparation</strong>Toute société sans séparation des pouvoirs n'a pas de Constitution.</div>
+      </div>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">20 juin 1789</span><div class="tdesc">Serment du Jeu de Paume — Constitution promise</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">14 juil. 1789</span><div class="tdesc">Prise de la Bastille — la Révolution populaire éclate</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">26 août 1789</span><div class="tdesc">Déclaration des Droits de l'Homme adoptée</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">Juin 1791</span><div class="tdesc">Fuite à Varennes — la confiance est brisée</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">10 août 1792</span><div class="tdesc">Prise des Tuileries — chute de la monarchie</div></div>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — La Monarchie constitutionnelle</div>
+
+      <div class="qb" id="q4">
+        <div class="qt"><span class="qn">4</span>Que proclame l'Article 1er de la Déclaration des Droits de l'Homme de 1789 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a">Que le roi est le seul souverain légitime de la France</label>
+          <label class="opt"><input type="radio" name="q4" value="b">Que les hommes naissent et demeurent libres et égaux en droits</label>
+          <label class="opt"><input type="radio" name="q4" value="c">Que la propriété privée est le fondement de toute société</label>
+          <label class="opt"><input type="radio" name="q4" value="d">Que la France est une République une et indivisible</label>
+        </div>
+        <button class="btnv" onclick="V('q4','b','L\'Article 1er proclame que tous les hommes naissent et demeurent libres et égaux en droits. Ce texte fondateur a inspiré les déclarations de droits du monde entier.')">Valider</button>
+        <div class="fb" id="fb-q4"></div>
+      </div>
+
+      <div class="qb" id="q5">
+        <div class="qt"><span class="qn">5</span>Qu'est-ce que la fuite à Varennes (juin 1791) révèle sur Louis XVI ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q5" value="a">Qu'il soutenait sincèrement la Révolution mais fuyait un complot</label>
+          <label class="opt"><input type="radio" name="q5" value="b">Qu'il cherchait à rejoindre les armées étrangères pour écraser la Révolution</label>
+          <label class="opt"><input type="radio" name="q5" value="c">Qu'il voulait abdiquer en faveur de son fils</label>
+          <label class="opt"><input type="radio" name="q5" value="d">Qu'il partait négocier la paix avec la Prusse</label>
+        </div>
+        <button class="btnv" onclick="V('q5','b','La fuite à Varennes révèle que Louis XVI cherchait à rejoindre les armées coalisées pour écraser la Révolution. Son arrestation brise définitivement la confiance des Français envers le roi.')">Valider</button>
+        <div class="fb" id="fb-q5"></div>
+      </div>
+
+      <div class="qb" id="q6">
+        <div class="qt"><span class="qn">6</span>Quel serment les députés du Tiers-État ont-ils prêté le 20 juin 1789 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q6" value="a">De renverser Louis XVI et de proclamer la République</label>
+          <label class="opt"><input type="radio" name="q6" value="b">D'abolir tous les privilèges féodaux avant la fin du mois</label>
+          <label class="opt"><input type="radio" name="q6" value="c">De ne pas se séparer avant d'avoir donné une Constitution à la France</label>
+          <label class="opt"><input type="radio" name="q6" value="d">De refuser tout impôt jusqu'à l'obtention du suffrage universel</label>
+        </div>
+        <button class="btnv" onclick="V('q6','c','Le Serment du Jeu de Paume engage les députés à ne pas se séparer avant d\'avoir donné une Constitution à la France. C\'est un acte révolutionnaire majeur, un défi direct à l\'autorité royale.')">Valider</button>
+        <div class="fb" id="fb-q6"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- III — LA TERREUR -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c3"></div>
+<section class="ch">
+  <div class="bign">III</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">III</span>
+      <span class="cperiod">1793–1794</span>
+    </div>
+    <h2 class="ctitle">La <em>Terreur</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment la République révolutionnaire bascule-t-elle dans la violence de masse ?</div>
+
+    <div class="recit">
+      <p>En 1793, la jeune République est attaquée de partout. À l'extérieur, une <strong>coalition européenne</strong> — Angleterre, Prusse, Autriche, Espagne — marche contre elle. À l'intérieur, la <strong>guerre de Vendée</strong> embrase l'Ouest : des paysans royalistes se soulèvent contre la conscription. En avril 1793, le <strong>Comité de salut public</strong> est créé et tombe sous la domination de Robespierre. Le 23 août, la <strong>levée en masse</strong> mobilise toute la nation pour la guerre — hommes, femmes, enfants au service de la patrie.</p>
+      <p>La Convention décrète alors que « la Terreur est à l'ordre du jour ». La reine <strong>Marie-Antoinette</strong> est guillotinée en octobre. Les tribunaux jugent à la hâte. Les noyades de Nantes font des milliers de victimes. Robespierre, l'Incorruptible, élimine ses rivaux : <strong>Danton</strong> (les Indulgents) et <strong>Hébert</strong> (les Enragés) sont guillotinés au printemps 1794. La loi de Prairial de juin 1794 supprime les dernières garanties de défense.</p>
+      <p>Mais la peur gagne les rangs de la Convention. Le <strong>9 Thermidor an II</strong> (27 juillet 1794), Robespierre est arrêté en pleine séance et guillotiné le lendemain. La Terreur prend fin. Une réaction s'engage : clubs jacobins fermés, prisonniers libérés, et une nouvelle page s'ouvre pour la République.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="nb">~17 000</span><span class="lb">exécutions officielles pendant la Terreur</span></div>
+      <div class="stat"><span class="nb">~40 000</span><span class="lb">morts en détention ou sans jugement</span></div>
+      <div class="stat"><span class="nb">300 000</span><span class="lb">arrestations entre 1793 et 1794</span></div>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">Fév. 1793</span><div class="tdesc">Coalition européenne — la France encerclée</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">23 août 1793</span><div class="tdesc">Levée en masse — toute la nation mobilisée</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">Automne 1793</span><div class="tdesc">La Terreur à l'ordre du jour — Marie-Antoinette guillotinée</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">Printemps 1794</span><div class="tdesc">Robespierre fait guillotiner Danton et Hébert</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">9 Thermidor</span><div class="tdesc">Chute de Robespierre — fin de la Terreur</div></div>
+    </div>
+
+    <div class="cit">
+      <p>La femme a le droit de monter à l'échafaud ; elle doit avoir également le droit de monter à la tribune.</p>
+      <span class="src">— Olympe de Gouges &middot; Déclaration des droits de la femme &middot; 1791 &middot; guillotinée en novembre 1793</span>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — La Terreur</div>
+
+      <div class="qb" id="q7">
+        <div class="qt"><span class="qn">7</span>Qu'est-ce que la levée en masse décrétée le 23 août 1793 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q7" value="a">Une insurrection populaire contre le gouvernement révolutionnaire</label>
+          <label class="opt"><input type="radio" name="q7" value="b">Un décret mobilisant toute la nation pour la défense de la patrie</label>
+          <label class="opt"><input type="radio" name="q7" value="c">Une loi interdisant aux citoyens de quitter le territoire</label>
+          <label class="opt"><input type="radio" name="q7" value="d">Une taxe de guerre imposée aux nobles restés en France</label>
+        </div>
+        <button class="btnv" onclick="V('q7','b','La levée en masse mobilisait toute la nation : les jeunes hommes combattaient, les femmes cousaient et soignaient, les enfants filaient. C\'est l\'invention de la guerre totale et de l\'armée nationale de masse.')">Valider</button>
+        <div class="fb" id="fb-q7"></div>
+      </div>
+
+      <div class="qb" id="q8">
+        <div class="qt"><span class="qn">8</span>Qu'est-ce que le 9 Thermidor an II (27 juillet 1794) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q8" value="a">Le jour où Robespierre promulgue la loi de Prairial</label>
+          <label class="opt"><input type="radio" name="q8" value="b">La victoire française à la bataille de Fleurus</label>
+          <label class="opt"><input type="radio" name="q8" value="c">Le renversement de Robespierre, mettant fin à la Terreur</label>
+          <label class="opt"><input type="radio" name="q8" value="d">La proclamation du Directoire</label>
+        </div>
+        <button class="btnv" onclick="V('q8','c','Le 9 Thermidor, des conventionnels qui craignaient pour leur vie firent arrêter Robespierre en pleine séance. Il fut guillotiné le lendemain avec Saint-Just, mettant fin à la période de la Terreur.')">Valider</button>
+        <div class="fb" id="fb-q8"></div>
+      </div>
+
+      <div class="qb" id="q9">
+        <div class="qt"><span class="qn">9</span>Qui Robespierre fait-il exécuter au printemps 1794 pour consolider son pouvoir ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q9" value="a">Marie-Antoinette et les nobles réfractaires</label>
+          <label class="opt"><input type="radio" name="q9" value="b">Les généraux ayant perdu des batailles aux frontières</label>
+          <label class="opt"><input type="radio" name="q9" value="c">Danton (les Indulgents) et Hébert (les Enragés), ses rivaux</label>
+          <label class="opt"><input type="radio" name="q9" value="d">Les représentants girondins proscrits depuis 1793</label>
+        </div>
+        <button class="btnv" onclick="V('q9','c','Robespierre fit guillotiner Danton (chef des Indulgents qui voulaient stopper la Terreur) et Hébert (chef des Enragés). En éliminant ses deux principaux rivaux, il s\'isola politiquement et précipita sa propre chute.')">Valider</button>
+        <div class="fb" id="fb-q9"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- IV — LA PREMIÈRE RÉPUBLIQUE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c4"></div>
+<section class="ch">
+  <div class="bign">IV</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">IV</span>
+      <span class="cperiod">1792–1799</span>
+    </div>
+    <h2 class="ctitle">La Iᵉʳᵉ <em>République</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment la République, après la violence de la Terreur, tente-t-elle de se stabiliser ?</div>
+
+    <div class="recit">
+      <p>La Iᵉʳᵉ République est proclamée le <strong>21 septembre 1792</strong> par la Convention nationale, qui abolit simultanément la royauté. Son acte fondateur est le procès et l'exécution de <strong>Louis XVI</strong>, guillotiné le 21 janvier 1793 place de la Révolution — premier roi dans l'histoire moderne à être exécuté par ses propres sujets. La condamnation est votée à une courte majorité (387 contre 334), révélant les profondes divisions du pays. Cette exécution provoque la formation d'une vaste coalition européenne contre la France.</p>
+      <p>Après la chute de Robespierre, la <strong>réaction thermidorienne</strong> s'installe. Mais l'hiver 1794-1795 est terrible : froid extrême, disette, inflation galopante. Les dernières insurrections populaires sont écrasées. En août 1795, la <strong>Constitution de l'an III</strong> instaure le <strong>Directoire</strong> : cinq directeurs, suffrage censitaire réservé aux propriétaires. Ce régime, pris entre royalistes et jacobins, survit en annulant les élections défavorables. La corruption le gangrène. Une figure monte pourtant : le général <strong>Bonaparte</strong>, héros de la campagne d'Italie, dont les victoires au traité de Campo-Formio lui valent une popularité nationale écrasante.</p>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">21 sept. 1792</span><div class="tdesc">Proclamation de la Iᵉʳᵉ République</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">21 jan. 1793</span><div class="tdesc">Exécution de Louis XVI — 387 contre 334</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">1794–1795</span><div class="tdesc">Réaction thermidorienne — misère populaire</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">Août 1795</span><div class="tdesc">Constitution de l'an III — le Directoire</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">1796–1799</span><div class="tdesc">Campagnes de Bonaparte — ascension du général</div></div>
+    </div>
+
+    <div class="enc">
+      <div class="enc-titre">⚖️ Le procès et l'exécution de Louis XVI — janvier 1793</div>
+      La Convention juge Louis XVI pour trahison et crimes contre la nation. Sa culpabilité est votée à l'unanimité le 15 janvier. La peine de mort est adoptée à une courte majorité de <strong>387 voix contre 334</strong>. Louis XVI est guillotiné le 21 janvier 1793 place de la Révolution, devant une foule immense. L'exécution du roi provoque la formation d'une vaste coalition européenne hostile à la France révolutionnaire.
+    </div>
+
+    <div class="themes">
+      <div class="th"><strong>🗳️ Le Directoire (1795–1799)</strong>Cinq directeurs gouvernent. Régime instable et corrompu, tiraillé entre royalistes et jacobins.</div>
+      <div class="th"><strong>🏛️ La Constitution de l'an III</strong>Suffrage censitaire réservé aux propriétaires — les classes populaires écartées du pouvoir.</div>
+      <div class="th"><strong>⚔️ Les guerres révolutionnaires</strong>La France combat toute l'Europe depuis 1792. La levée en masse a inventé la guerre totale moderne.</div>
+      <div class="th"><strong>📅 Le calendrier républicain</strong>12 mois de 30 jours, semaine de 10 jours. An I = 1792. Rupture totale avec l'Ancien Régime.</div>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — La Iᵉʳᵉ République</div>
+
+      <div class="qb" id="q10">
+        <div class="qt"><span class="qn">10</span>À quelle date la Iᵉʳᵉ République française est-elle proclamée ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q10" value="a">14 juillet 1789</label>
+          <label class="opt"><input type="radio" name="q10" value="b">10 août 1792</label>
+          <label class="opt"><input type="radio" name="q10" value="c">21 septembre 1792</label>
+          <label class="opt"><input type="radio" name="q10" value="d">21 janvier 1793</label>
+        </div>
+        <button class="btnv" onclick="V('q10','c','Le 21 septembre 1792, la Convention nationale abolit la royauté et proclame la Iᵉʳᵉ République française. C\'est la première fois que la France choisit le régime républicain.')">Valider</button>
+        <div class="fb" id="fb-q10"></div>
+      </div>
+
+      <div class="qb" id="q11">
+        <div class="qt"><span class="qn">11</span>Par quel score Louis XVI est-il condamné à mort par la Convention ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q11" value="a">À l'unanimité absolue</label>
+          <label class="opt"><input type="radio" name="q11" value="b">387 voix pour la mort contre 334 contre</label>
+          <label class="opt"><input type="radio" name="q11" value="c">500 voix pour contre 221 contre</label>
+          <label class="opt"><input type="radio" name="q11" value="d">290 voix pour contre 431 contre</label>
+        </div>
+        <button class="btnv" onclick="V('q11','b','La condamnation à mort de Louis XVI fut adoptée à une courte majorité : 387 voix pour contre 334 contre. Ce vote serré révèle les profondes divisions de la Convention.')">Valider</button>
+        <div class="fb" id="fb-q11"></div>
+      </div>
+
+      <div class="qb" id="q12">
+        <div class="qt"><span class="qn">12</span>Quel régime la Constitution de l'an III (1795) instaure-t-elle ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q12" value="a">Un Comité de salut public élargi</label>
+          <label class="opt"><input type="radio" name="q12" value="b">Une monarchie constitutionnelle avec suffrage universel</label>
+          <label class="opt"><input type="radio" name="q12" value="c">Le Directoire : cinq directeurs, suffrage censitaire</label>
+          <label class="opt"><input type="radio" name="q12" value="d">Le Consulat avec Bonaparte Premier consul</label>
+        </div>
+        <button class="btnv" onclick="V('q12','c','La Constitution de l\'an III instaure le Directoire, gouverné par cinq directeurs. Le suffrage est censitaire, réservé aux propriétaires, excluant délibérément les classes populaires du pouvoir.')">Valider</button>
+        <div class="fb" id="fb-q12"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- V — L'ARRIVÉE DE NAPOLÉON -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c5"></div>
+<section class="ch">
+  <div class="bign">V</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">V</span>
+      <span class="cperiod">9 novembre 1799</span>
+    </div>
+    <h2 class="ctitle">L'arrivée de <em>Napoléon</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment Bonaparte met-il fin à la République révolutionnaire et concentre-t-il le pouvoir entre ses mains ?</div>
+
+    <div class="recit">
+      <p>En octobre 1799, le général <strong>Napoléon Bonaparte</strong> rentre d'Égypte en triomphateur. Derrière lui, l'expédition a mal tourné militairement — la flotte française a été détruite à Aboukir par Nelson —, mais Bonaparte a su cultiver son image de héros. Il rentre au moment où le Directoire s'effondre, miné par la corruption et les défaites. Une conjuration se forme autour de lui, réunissant le directeur Sieyès et son frère <strong>Lucien Bonaparte</strong>.</p>
+      <p>Le <strong>9 novembre 1799</strong> — 18 Brumaire an VIII —, Bonaparte et ses alliés tentent de dissoudre les Conseils législatifs à Saint-Cloud. La résistance est vive : au Conseil des Cinq-Cents, les députés crient « Hors la loi ! » et se précipitent vers Bonaparte. Son frère Lucien, président de l'assemblée, le sauve in extremis en faisant entrer les grenadiers pour disperser les récalcitrants. Dans la nuit, trois consuls provisoires sont nommés : Bonaparte, Sieyès, Ducos.</p>
+      <p>La <strong>Constitution de l'an VIII</strong> concentre le pouvoir exécutif entre les mains du <strong>Premier consul</strong> : Bonaparte. Il gouverne par décret, nomme les ministres, contrôle l'armée. Les deux autres consuls n'ont qu'un rôle consultatif. La Révolution est officiellement terminée. En dix ans, la France est passée de la monarchie absolue à la dictature républicaine — avec cinq régimes différents en chemin.</p>
+    </div>
+
+    <div class="cit">
+      <p>La Révolution est fixée aux principes qui l'ont commencée. Elle est finie.</p>
+      <span class="src">— Napoléon Bonaparte &middot; Proclamation après le 18 Brumaire &middot; novembre 1799</span>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">Oct. 1799</span><div class="tdesc">Retour d'Égypte — le Directoire s'effondre</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">9 nov. 1799</span><div class="tdesc">18 Brumaire — coup d'État, dissolution des Conseils</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">10 nov. 1799</span><div class="tdesc">Résistance des Cinq-Cents — Lucien sauve Bonaparte</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">Nuit du 10</span><div class="tdesc">Consulat provisoire — Bonaparte, Sieyès, Ducos</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">Const. an VIII</span><div class="tdesc">Bonaparte Premier consul — la Révolution est terminée</div></div>
+    </div>
+
+    <div class="enc">
+      <div class="enc-titre">🔑 L'héritage de la Révolution française</div>
+      En dix ans, la France a posé les fondements de la démocratie moderne : <strong>souveraineté nationale</strong>, <strong>Déclaration des Droits de l'Homme</strong>, <strong>citoyenneté républicaine</strong>, <strong>école publique</strong>, <strong>laïcité</strong>. La Révolution française inspire encore aujourd'hui les mouvements démocratiques du monde entier.
+    </div>
+
+    <h3 style="font-family:'IM Fell English',serif;font-size:1.3rem;margin:2.5rem 0 1rem;color:var(--encre);">Dix ans en un coup d'œil</h3>
+    <table class="tab">
+      <thead><tr><th>Période</th><th>Phase</th><th>Régime</th><th>Événement clé</th></tr></thead>
+      <tbody>
+        <tr><td>1789</td><td>Crise &amp; rupture</td><td>Monarchie absolue</td><td>Bastille &middot; DDHC</td></tr>
+        <tr><td>1789–1792</td><td>Monarchie constitutionnelle</td><td>Monarchie constitutionnelle</td><td>Constitution de 1791</td></tr>
+        <tr><td>1792–1793</td><td>Iᵉʳᵉ République</td><td>Convention nationale</td><td>Proclamation de la République</td></tr>
+        <tr><td>1793–1794</td><td>La Terreur</td><td>République jacobine</td><td>Exécution du roi &middot; Robespierre</td></tr>
+        <tr><td>1794–1795</td><td>Thermidor</td><td>République thermidorienne</td><td>Chute de Robespierre</td></tr>
+        <tr><td>1795–1799</td><td>Directoire</td><td>Directoire</td><td>Constitution de l'an III</td></tr>
+        <tr><td>1799</td><td>Fin de la Révolution</td><td>Consulat</td><td>18 Brumaire</td></tr>
+      </tbody>
+    </table>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — L'arrivée de Napoléon</div>
+
+      <div class="qb" id="q13">
+        <div class="qt"><span class="qn">13</span>Qu'est-ce que le coup d'État du 18 Brumaire (9 novembre 1799) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q13" value="a">Une insurrection populaire parisienne contre le Directoire</label>
+          <label class="opt"><input type="radio" name="q13" value="b">Le coup de force de Bonaparte qui dissout les assemblées et prend le pouvoir</label>
+          <label class="opt"><input type="radio" name="q13" value="c">La proclamation par Bonaparte de l'Empire français</label>
+          <label class="opt"><input type="radio" name="q13" value="d">La victoire décisive de Bonaparte sur les armées de la coalition</label>
+        </div>
+        <button class="btnv" onclick="V('q13','b','Le 18 Brumaire est le coup d\'État par lequel Bonaparte, avec l\'aide de l\'armée et de complices au sein du gouvernement, dissout les Conseils législatifs et s\'empare du pouvoir exécutif.')">Valider</button>
+        <div class="fb" id="fb-q13"></div>
+      </div>
+
+      <div class="qb" id="q14">
+        <div class="qt"><span class="qn">14</span>Quel rôle joue Lucien Bonaparte lors du coup du 18 Brumaire ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q14" value="a">Il commande les grenadiers qui investissent les Tuileries</label>
+          <label class="opt"><input type="radio" name="q14" value="b">En tant que président des Cinq-Cents, il fait entrer l'armée pour disperser les députés récalcitrants</label>
+          <label class="opt"><input type="radio" name="q14" value="c">Il négocie avec les directeurs pour qu'ils abandonnent le pouvoir</label>
+          <label class="opt"><input type="radio" name="q14" value="d">Il rédige seul la Constitution de l'an VIII</label>
+        </div>
+        <button class="btnv" onclick="V('q14','b','Lucien Bonaparte, président du Conseil des Cinq-Cents, sauva son frère Napoléon en faisant appel aux grenadiers pour expulser les députés qui s\'opposaient violemment au coup d\'État.')">Valider</button>
+        <div class="fb" id="fb-q14"></div>
+      </div>
+
+      <div class="qb" id="q15">
+        <div class="qt"><span class="qn">15</span>Quelle fonction Bonaparte obtient-il avec la Constitution de l'an VIII ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q15" value="a">Président de la République avec des pouvoirs limités</label>
+          <label class="opt"><input type="radio" name="q15" value="b">Directeur unique remplaçant les cinq directeurs</label>
+          <label class="opt"><input type="radio" name="q15" value="c">Premier consul — concentrant l'essentiel du pouvoir exécutif</label>
+          <label class="opt"><input type="radio" name="q15" value="d">Général en chef des armées avec autorité sur le Parlement</label>
+        </div>
+        <button class="btnv" onclick="V('q15','c','La Constitution de l\'an VIII fait de Bonaparte le Premier consul. Il concentre le pouvoir exécutif : gouverne par décret, nomme les ministres, contrôle l\'armée. Les deux autres consuls ne jouent qu\'un rôle consultatif.')">Valider</button>
+        <div class="fb" id="fb-q15"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORE -->
+<div id="scoreS" style="display:none;">
+  <h2>Résultat final</h2>
+  <span id="scoreN">—</span>
+  <p id="scoreM"></p>
+  <button class="btnR" onclick="resetAll()">↺ Recommencer depuis le début</button>
+</div>
+
+<footer>
+  <div class="ff">
+    <span style="background:#002395"></span>
+    <span style="background:#fff;border:1px solid #ddd"></span>
+    <span style="background:#ED2939"></span>
+  </div>
+  La Révolution française (1789–1799) &middot; Programme d'Histoire 4ème &middot; Page éducative interactive
+</footer>
+
+<script>
+// SCROLL ANIMATIONS
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold:0.06 });
+document.querySelectorAll('section.ch').forEach(el => io.observe(el));
+
+// ACTIVE NAV
+const sids = ['c1','c2','c3','c4','c5'];
+const nls  = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sids.forEach(id => {
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 130) cur = id;
+  });
+  nls.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#'+cur));
+});
+
+// QCM
+const rep = {}, done = {};
+const TOT = 15;
+
+function V(id, bonne, expl) {
+  if(done[id]) return;
+  const sel = document.querySelector(`input[name="${id}"]:checked`);
+  if(!sel){ alert('Veuillez sélectionner une réponse.'); return; }
+  const val = sel.value;
+  const fb = document.getElementById('fb-'+id);
+  const btn = document.querySelector('#'+id+' .btnv');
+
+  document.querySelectorAll(`input[name="${id}"]`).forEach(r => r.disabled=true);
+  btn.disabled = true;
+
+  document.querySelectorAll('#'+id+' .opt').forEach(l => {
+    const r = l.querySelector('input');
+    if(r.value===bonne) l.classList.add('ok');
+    else if(r.value===val && val!==bonne) l.classList.add('ko');
+  });
+
+  const ok = val===bonne;
+  rep[id]=ok; done[id]=true;
+  fb.textContent = ok ? '✔ Bonne réponse ! '+expl : '✘ Mauvaise réponse. '+expl;
+  fb.className = 'fb show '+(ok ? 'ok2' : 'ko2');
+
+  if(Object.keys(done).length===TOT) showScore();
+}
+
+function showScore(){
+  const s = Object.values(rep).filter(Boolean).length;
+  document.getElementById('scoreN').textContent = s+' / '+TOT;
+  let m = '';
+  if(s===TOT)  m='🎉 Parfait ! Vous maîtrisez la Révolution française.';
+  else if(s>=12) m='👏 Excellent ! Quelques détails à approfondir.';
+  else if(s>=8)  m='🙂 Bien. Relisez les chapitres pour consolider.';
+  else           m='📖 Courage ! Revoyez le cours et réessayez.';
+  document.getElementById('scoreM').textContent = m;
+  const el = document.getElementById('scoreS');
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth'});
+}
+
+function resetAll(){
+  document.querySelectorAll('input[type="radio"]').forEach(r=>{r.checked=false;r.disabled=false;});
+  document.querySelectorAll('.opt').forEach(l=>l.classList.remove('ok','ko'));
+  document.querySelectorAll('.fb').forEach(f=>{f.className='fb';f.textContent='';});
+  document.querySelectorAll('.btnv').forEach(b=>b.disabled=false);
+  Object.keys(rep).forEach(k=>delete rep[k]);
+  Object.keys(done).forEach(k=>delete done[k]);
+  document.getElementById('scoreS').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
