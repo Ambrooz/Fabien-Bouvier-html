@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Santé Publique — Cours C1</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --rose:    #E8294A;
+  --orange:  #F4721B;
+  --jaune:   #F5A623;
+  --vert:    #00A878;
+  --bleu:    #1578C2;
+  --violet:  #7B2FBE;
+  --fond:    #F5F3EE;
+  --blanc:   #FFFFFF;
+  --texte:   #1A1A2E;
+  --gris:    #6B6B80;
+  --gris-cl: #E8E4DC;
+}
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--fond);
+  color: var(--texte);
+  line-height: 1.7;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(135deg, #FFF0F3 0%, #FFF8F0 40%, #F0F8FF 100%);
+  padding: 56px 32px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 2px solid var(--gris-cl);
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 50% 60% at 15% 50%, rgba(232,41,74,0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 55% at 85% 30%, rgba(21,120,194,0.08) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 50% at 55% 90%, rgba(0,168,120,0.07) 0%, transparent 65%);
+}
+.hero-pill {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--rose), var(--orange));
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  padding: 5px 18px;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(32px, 6vw, 64px);
+  font-weight: 800;
+  line-height: 1.05;
+  position: relative;
+  margin-bottom: 12px;
+  color: var(--texte);
+}
+.hero h1 .accent { color: var(--rose); }
+.hero-sub {
+  color: var(--gris);
+  font-size: 15px;
+  max-width: 500px;
+  margin: 0 auto 28px;
+  position: relative;
+}
+.hero-tags {
+  display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; position: relative;
+}
+.tag {
+  padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 700; border: 2px solid;
+}
+.tag-rose   { color: var(--rose);   border-color: var(--rose);   background: rgba(232,41,74,0.07); }
+.tag-bleu   { color: var(--bleu);   border-color: var(--bleu);   background: rgba(21,120,194,0.07); }
+.tag-vert   { color: var(--vert);   border-color: var(--vert);   background: rgba(0,168,120,0.07); }
+.tag-jaune  { color: var(--jaune);  border-color: var(--jaune);  background: rgba(245,166,35,0.09); }
+
+/* ─── NAV ─── */
+.nav {
+  display: flex; overflow-x: auto; scrollbar-width: none;
+  gap: 4px; padding: 10px 20px;
+  background: var(--blanc);
+  border-bottom: 2px solid var(--gris-cl);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+.nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex-shrink: 0; padding: 9px 20px; border-radius: 20px; border: 2px solid transparent;
+  background: transparent; color: var(--gris);
+  font-family: 'Nunito', sans-serif; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.nav-btn:hover { background: var(--fond); color: var(--texte); }
+.nav-btn.active { color: white; border-color: transparent; }
+.nav-btn[data-tab="transcription"].active { background: var(--rose); }
+.nav-btn[data-tab="vocabulaire"].active   { background: var(--orange); }
+.nav-btn[data-tab="grammaire"].active     { background: var(--vert); }
+.nav-btn[data-tab="exercices"].active     { background: var(--bleu); }
+.nav-btn[data-tab="debat"].active         { background: var(--violet); }
+
+/* ─── SECTIONS ─── */
+.section { display: none; padding: 40px 20px; max-width: 900px; margin: 0 auto; }
+.section.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+
+/* ─── SECTION HEADERS ─── */
+.sec-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+.sec-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.sec-title { font-family:'Syne',sans-serif; font-size: 26px; font-weight: 800; color: var(--texte); }
+
+/* ─── CARDS ─── */
+.card { border-radius: 16px; padding: 24px; margin-bottom: 20px; border: 2px solid; }
+.card-rose   { background: #FFF0F3; border-color: #FFBFCC; }
+.card-orange { background: #FFF5EE; border-color: #FFCFA3; }
+.card-jaune  { background: #FFFBEE; border-color: #FFE5A0; }
+.card-vert   { background: #EDFAF6; border-color: #A3E8D5; }
+.card-bleu   { background: #EEF6FF; border-color: #A8D0F5; }
+.card-violet { background: #F6EEFF; border-color: #CBAAF5; }
+.card-light  { background: var(--blanc); border-color: var(--gris-cl); }
+.card h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 14px; color: var(--texte); }
+
+/* ─── STATS BAND ─── */
+.stats-band { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 32px; }
+@media (max-width:600px) { .stats-band { grid-template-columns:1fr 1fr; } }
+.stat-item { border-radius: 14px; padding: 18px 16px; text-align: center; border: 2px solid; }
+.stat-num { font-family:'Syne',sans-serif; font-size: 32px; font-weight: 800; line-height: 1; margin-bottom: 6px; }
+.stat-label { font-size: 11px; color: var(--gris); line-height: 1.4; }
+
+/* ─── TRANSCRIPTION ─── */
+.speech { border-radius: 14px; padding: 18px 20px; margin-bottom: 16px; border-left: 5px solid; }
+.speech.pelloux { background: #FFF0F3; border-color: var(--rose); }
+.speech.pichot  { background: #EEF6FF; border-color: var(--bleu); }
+.speech.anim    { background: var(--fond); border-color: var(--gris-cl); }
+.speech-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.speaker-badge { font-size: 11px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; }
+.pelloux .speaker-badge { background: var(--rose); color: white; }
+.pichot  .speaker-badge { background: var(--bleu); color: white; }
+.anim    .speaker-badge { background: var(--gris-cl); color: var(--gris); }
+.timecode { font-size: 11px; color: var(--gris); background: var(--gris-cl); padding: 2px 8px; border-radius: 8px; }
+.speech p { font-size: 14px; color: #2A2A40; line-height: 1.85; }
+.kw {
+  background: #FFF3CC; color: #9A6200;
+  border-bottom: 2px dashed var(--jaune);
+  padding: 0 3px; border-radius: 3px;
+  cursor: help; font-weight: 700;
+}
+
+/* ─── VOCAB ─── */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 14px; margin-bottom: 28px; }
+.vocab-item { border-radius: 14px; padding: 18px; border: 2px solid; background: white; transition: transform 0.2s, box-shadow 0.2s; }
+.vocab-item:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+.vocab-cat { font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+.vocab-term { font-family:'Syne',sans-serif; font-size:17px; font-weight:800; margin-bottom:6px; }
+.vocab-def { font-size:13px; color:var(--gris); line-height:1.6; }
+
+/* ─── METAPHORES ─── */
+.meta-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px,1fr)); gap: 12px; }
+.meta-item { border-radius: 12px; padding: 16px; border: 2px solid; background: white; }
+.meta-original { font-style:italic; font-size:15px; margin-bottom:6px; font-weight:700; }
+.meta-sens { font-size:11px; font-weight:700; letter-spacing:1px; text-transform:uppercase; opacity:0.6; margin-bottom:6px; }
+.meta-def { font-size:13px; color:var(--gris); line-height:1.6; }
+
+/* ─── GRAMMAIRE ─── */
+.gram-example { background: var(--fond); border-left: 4px solid; padding: 10px 16px; border-radius: 0 8px 8px 0; font-style: italic; font-size: 14px; margin: 8px 0; color: var(--texte); }
+.gram-label { font-size: 11px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; opacity: 0.55; margin: 16px 0 6px; }
+
+/* ─── COMPARE ─── */
+.compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+@media (max-width:600px) { .compare-grid { grid-template-columns:1fr; } }
+.compare-card { border-radius: 16px; padding: 22px; border: 2px solid; background: white; }
+.compare-row { display:flex; gap:10px; margin-bottom:8px; font-size:13px; }
+.compare-key { min-width:80px; font-weight:800; font-size:11px; letter-spacing:1px; text-transform:uppercase; opacity:0.5; padding-top:2px; }
+.compare-val { color: var(--texte); }
+.cite-box { border-radius: 8px; padding: 10px 14px; font-style: italic; font-size: 13px; margin-top: 14px; border: 1px solid; }
+
+/* ─── EXERCICES ─── */
+.ex-block { border-radius: 16px; padding: 24px; margin-bottom: 20px; border: 2px solid; background: white; }
+.ex-consigne { font-size: 13px; color: var(--gris); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 2px solid var(--gris-cl); }
+.ex-item { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+.ex-num { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:800; flex-shrink:0; margin-top:2px; color:white; }
+.ex-q { font-size:14px; margin-bottom:8px; line-height:1.7; color:var(--texte); }
+.ex-input {
+  width:100%; background:var(--fond); border: 2px solid var(--gris-cl);
+  border-radius:10px; padding:10px 14px; color:var(--texte);
+  font-family:'Nunito',sans-serif; font-size:13px; outline:none;
+  transition:border-color 0.2s; resize:vertical; min-height:42px;
+}
+.ex-input:focus { border-color: var(--bleu); }
+.btn-corrige {
+  display:inline-flex; align-items:center; gap:8px;
+  margin-top:16px; padding:9px 22px; border-radius:20px;
+  border: none; font-family:'Nunito',sans-serif; font-size:13px; font-weight:800;
+  cursor:pointer; transition:all 0.2s; color:white;
+}
+.corrige { display:none; margin-top:14px; border-radius:12px; padding:16px 20px; }
+.corrige.show { display:block; }
+.corrige-title { font-size:10px; font-weight:800; letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; color:var(--vert); }
+.corrige-line { font-size:13px; margin-bottom:7px; display:flex; gap:8px; color:var(--texte); }
+.corrige-line::before { content:"✓"; color:var(--vert); font-weight:800; flex-shrink:0; }
+
+/* ─── DÉBAT ─── */
+.debat-q { border-radius:16px; padding:28px; margin-bottom:24px; position:relative; overflow:hidden; border: 2px solid #CBAAF5; background: linear-gradient(135deg, #F6EEFF, #EEF6FF); }
+.debat-q::after { content:"?"; position:absolute; right:16px; bottom:-16px; font-size:100px; font-family:'Syne',sans-serif; font-weight:800; opacity:0.08; color:var(--violet); }
+.debat-q h3 { font-family:'Syne',sans-serif; font-size:18px; font-weight:800; margin-bottom:8px; font-style:italic; color:var(--texte); }
+.debat-q p { font-size:13px; color:var(--gris); }
+.args-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:24px; }
+@media (max-width:560px) { .args-grid { grid-template-columns:1fr; } }
+.args-card { border-radius:14px; padding:20px; border:2px solid; }
+.args-card h4 { font-family:'Syne',sans-serif; font-size:13px; font-weight:800; letter-spacing:1px; text-transform:uppercase; margin-bottom:14px; }
+.args-card ul { list-style:none; }
+.args-card ul li { font-size:13px; padding:7px 0; border-bottom:1px solid rgba(0,0,0,0.06); display:flex; gap:8px; align-items:flex-start; line-height:1.5; }
+.args-card ul li:last-child { border-bottom:none; }
+.pour { background:#EDFAF6; border-color:#A3E8D5; }
+.pour h4 { color:var(--vert); }
+.pour li::before { content:"+"; color:var(--vert); font-weight:800; flex-shrink:0; }
+.contre { background:#FFF0F3; border-color:#FFBFCC; }
+.contre h4 { color:var(--rose); }
+.contre li::before { content:"−"; color:var(--rose); font-weight:800; flex-shrink:0; }
+.disc-q { display:flex; gap:12px; padding:13px 0; border-bottom:2px solid var(--gris-cl); align-items:flex-start; }
+.disc-q:last-child { border-bottom:none; }
+.disc-num { font-family:'Syne',sans-serif; font-size:13px; font-weight:800; color:var(--violet); flex-shrink:0; margin-top:2px; }
+.disc-q p { font-size:13px; color:var(--texte); line-height:1.6; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-pill">Cours de Français · C1</div>
+  <h1>Santé Publique :<br><span class="accent">État d'Urgence</span></h1>
+  <p class="hero-sub">Interview TV5Monde — Dr Patrick Pelloux &amp; Julie Pichot sur la crise hospitalière française</p>
+  <div class="hero-tags">
+    <span class="tag tag-rose">Urgences hospitalières</span>
+    <span class="tag tag-bleu">Loi Bachelot 2009</span>
+    <span class="tag tag-vert">Grève inédite</span>
+    <span class="tag tag-jaune">Registres de langue</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="nav">
+  <button class="nav-btn active" data-tab="transcription" onclick="show('transcription',this)">📼 Transcription</button>
+  <button class="nav-btn" data-tab="vocabulaire"   onclick="show('vocabulaire',this)">📖 Vocabulaire</button>
+  <button class="nav-btn" data-tab="grammaire"     onclick="show('grammaire',this)">🔗 Grammaire & Style</button>
+  <button class="nav-btn" data-tab="exercices"     onclick="show('exercices',this)">✏️ Exercices</button>
+  <button class="nav-btn" data-tab="debat"         onclick="show('debat',this)">💬 Débat</button>
+</nav>
+
+<!-- ══ TRANSCRIPTION ══ -->
+<section id="transcription" class="section active">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#FFCFD8">📼</div>
+    <div>
+      <div class="sec-title">Transcription <span style="color:var(--rose)">annotée</span></div>
+      <div style="font-size:13px;color:var(--gris)">Les mots <span class="kw" style="cursor:default">surlignés</span> sont des termes clés — survolez pour la définition.</div>
+    </div>
+  </div>
+
+  <div class="stats-band">
+    <div class="stat-item" style="background:#FFF0F3;border-color:#FFBFCC">
+      <div class="stat-num" style="color:var(--rose)">90%</div>
+      <div class="stat-label">Part de la T2A dans les recettes</div>
+    </div>
+    <div class="stat-item" style="background:#FFF5EE;border-color:#FFCFA3">
+      <div class="stat-num" style="color:var(--orange)">1 800</div>
+      <div class="stat-label">Lits fermés en une année</div>
+    </div>
+    <div class="stat-item" style="background:#EDFAF6;border-color:#A3E8D5">
+      <div class="stat-num" style="color:var(--vert)">×2</div>
+      <div class="stat-label">Fréquentation urgences en 20 ans</div>
+    </div>
+    <div class="stat-item" style="background:#EEF6FF;border-color:#A8D0F5">
+      <div class="stat-num" style="color:var(--bleu)">28e</div>
+      <div class="stat-label">Rang salaire infirmier (OCDE)</div>
+    </div>
+  </div>
+
+  <div class="speech pelloux">
+    <div class="speech-head"><span class="speaker-badge">Dr Pelloux</span><span class="timecode">0:00</span></div>
+    <p>…l'hôpital géré comme une entreprise avec des objectifs de rentabilité — c'est ça le gros problème. La fameuse <span class="kw" title="Financement basé sur le nombre et le type d'actes médicaux réalisés">tarification à l'acte</span>, qui représentait 70% des recettes, puis c'est passé à 90%. On met la pression aux personnels pour être de plus en plus rentables, faire de plus en plus d'actes. C'est dramatique — ça ne devrait pas être le cas pour un service public.</p>
+  </div>
+
+  <div class="speech anim">
+    <div class="speech-head"><span class="speaker-badge">Animateur</span><span class="timecode">0:27</span></div>
+    <p>Julie, dans votre reportage, il y a une longue séquence consacrée à l'hôpital des enfants de Toulouse, où tous les médecins ont démissionné de leurs fonctions administratives. C'est un signal très fort ?</p>
+  </div>
+
+  <div class="speech pichot">
+    <div class="speech-head"><span class="speaker-badge">J. Pichot</span><span class="timecode">0:36</span></div>
+    <p>C'est un signal très fort. Tous les médecins ont démissionné en écrivant une lettre au directeur, en affirmant qu'ils n'avaient plus les moyens de soigner. Cet hôpital de Toulouse est un hôpital de pointe — on pourrait imaginer que ça va bien là. Mais même là, les médecins manquent de moyens. La question à se poser : est-ce qu'on peut bien soigner quand on a fait une garde de 24 heures ?</p>
+  </div>
+
+  <div class="speech anim">
+    <div class="speech-head"><span class="speaker-badge">Animateur</span><span class="timecode">1:20</span></div>
+    <p>Le gouvernement a annoncé un budget de 1,5 milliard d'euros, la reprise partielle de la dette des hôpitaux à hauteur de 10 milliards sur trois ans, une enveloppe pour le matériel, et des primes pour les personnels en région parisienne. Patrick Pelloux, ce plan est-il à la hauteur de la situation ?</p>
+  </div>
+
+  <div class="speech pelloux">
+    <div class="speech-head"><span class="speaker-badge">Dr Pelloux</span><span class="timecode">1:49</span></div>
+    <p>Pas du tout ! Pas du tout. C'est un plan fait pour la <span class="kw" title="Ensemble des cadres dirigeants et administratifs d'un hôpital">technostructure</span>. Elle a résolu son propre problème — le <span class="kw" title="Situation où les dépenses dépassent les recettes">déficit</span> — sans répondre aux demandes des professionnels : une augmentation de 300 € nets par mois. Là, qu'est-ce qu'ils font ? Ils <span class="kw" title="Familier : distribuer sans réflexion, de façon désinvolte">balancent des primes</span>. Les primes pleuvent — pour le logement, pour les infirmières spécialisées… Au lieu de calmer la grogne, ils ont <span class="kw" title="Métaphore : aggraver considérablement une situation conflictuelle">mis du kérosène dans la cheminée</span>. L'année dernière : 1 800 lits fermés ! À l'AP-HP, 900 lits fermés par manque de personnel. Le salaire d'une infirmière est au 28e rang de l'OCDE. Tout le monde est très déçu. Ces 10 milliards, il faut bien qu'ils viennent de quelque part.</p>
+  </div>
+
+  <div class="speech pichot">
+    <div class="speech-head"><span class="speaker-badge">J. Pichot</span><span class="timecode">4:00</span></div>
+    <p>Ces annonces ne sont pas suffisantes. Moi, je n'ai pas à les juger — je suis journaliste. Mais je vous rejoins sur la fermeture des lits. À l'hôpital de Creil, je voyais des urgentistes s'occuper de patients là depuis quatre jours, qui avaient besoin de cardiologie mais ne pouvaient pas y aller — plus de lits disponibles. À Creil, ils construisent un bâtiment flambant neuf de quatre étages pour une nouvelle maternité, et au printemps dernier ils décident de la fermer ! Une maternité avec de la réanimation, qui faisait un travail social énorme. Le gouvernement leur a dit : "Vous allez à 30 kilomètres." En France, il y a une <span class="kw" title="Mouvement social sans précédent dans l'histoire française">grève inédite</span> de plusieurs services depuis huit mois.</p>
+  </div>
+
+  <div class="speech anim">
+    <div class="speech-head"><span class="speaker-badge">Animateur</span><span class="timecode">5:26</span></div>
+    <p>Qu'est-ce que vous préconisez ? Revoir complètement la loi Bachelot de 2009 ?</p>
+  </div>
+
+  <div class="speech pelloux">
+    <div class="speech-head"><span class="speaker-badge">Dr Pelloux</span><span class="timecode">5:31</span></div>
+    <p>Il faut l'<span class="kw" title="Annuler officiellement une loi par voie législative">abroger</span>. Il y a un <span class="kw" title="Collision, contradiction entre plusieurs textes de loi">télescopage</span> de lois : la Bachelot introduisait le libéralisme à l'hôpital, la loi Touraine dit de travailler ensemble — deux lois contradictoires. Et maintenant arrive « Ma Santé 2022 ». Les lois se télescopent, on n'y comprend plus rien.</p>
+  </div>
+
+  <div class="speech pichot">
+    <div class="speech-head"><span class="speaker-badge">J. Pichot</span><span class="timecode">5:59</span></div>
+    <p>L'hôpital concentre tous les maux de la société — vieillissement de la population, médicaments en hausse, pathologies complexes, psychiatrie inaccessible. On est passé de 10 à 21 millions de passages aux urgences en 15-20 ans. L'hôpital est devenu la <span class="kw" title="Mécanisme qui compense tous les dysfonctionnements extérieurs au système">variable d'ajustement</span> de tous les dysfonctionnements. Avant : que de la santé. Maintenant : santé, social et psychologique.</p>
+  </div>
+
+  <div class="speech pelloux">
+    <div class="speech-head"><span class="speaker-badge">Dr Pelloux</span><span class="timecode">7:18</span></div>
+    <p>On a laissé coexister deux mondes : le monde libéral (cliniques privées) et l'hôpital public. Les cliniques choisissent leurs patients — l'hôpital, lui, doit tous les prendre. Toute la grande pauvreté arrive à l'hôpital. Et le vieillissement crée une épidémie d'insuffisances cardiaques. Ce patient, on le soigne — formidable. Mais il rentre chez lui au 5e étage sans ascenseur, il ne peut pas monter. Qu'est-ce qu'on fait ? Il reste à l'hôpital. On ne résout pas les problèmes.</p>
+  </div>
+</section>
+
+<!-- ══ VOCABULAIRE ══ -->
+<section id="vocabulaire" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#FFE0C5">📖</div>
+    <div>
+      <div class="sec-title">Vocabulaire <span style="color:var(--orange)">spécialisé</span></div>
+      <div style="font-size:13px;color:var(--gris)">Termes techniques et expressions de l'interview</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--orange);margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;">🏥 Système hospitalier</h3>
+  <div class="vocab-grid">
+    <div class="vocab-item" style="border-color:#FFCFA3">
+      <div class="vocab-cat" style="color:var(--orange)">Financement</div>
+      <div class="vocab-term" style="color:var(--orange)">T2A</div>
+      <div class="vocab-def">Tarification à l'Activité — financement basé sur les actes réalisés. 90% des recettes. Pousse à la productivité au détriment des soins.</div>
+    </div>
+    <div class="vocab-item" style="border-color:#FFBFCC">
+      <div class="vocab-cat" style="color:var(--rose)">Organisation</div>
+      <div class="vocab-term" style="color:var(--rose)">Technostructure</div>
+      <div class="vocab-def">Cadres dirigeants et administratifs. Accusée de gérer l'hôpital comme une entreprise en privilégiant ses propres intérêts financiers.</div>
+    </div>
+    <div class="vocab-item" style="border-color:#A8D0F5">
+      <div class="vocab-cat" style="color:var(--bleu)">Finances</div>
+      <div class="vocab-term" style="color:var(--bleu)">Déficit hospitalier</div>
+      <div class="vocab-def">Dépenses supérieures aux recettes. Soumis aux règles européennes. C'est le problème que la technostructure cherche à résoudre en priorité.</div>
+    </div>
+    <div class="vocab-item" style="border-color:#A3E8D5">
+      <div class="vocab-cat" style="color:var(--vert)">Droit social</div>
+      <div class="vocab-term" style="color:var(--vert)">Grève inédite</div>
+      <div class="vocab-def">Mouvement sans précédent historique. Plusieurs services simultanément en grève depuis 8 mois — jamais vu dans l'histoire sociale française.</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--violet);margin-bottom:14px;letter-spacing:2px;text-transform:uppercase;margin-top:8px;">⚖️ Termes juridiques</h3>
+  <div class="vocab-grid">
+    <div class="vocab-item" style="border-color:#CBAAF5">
+      <div class="vocab-cat" style="color:var(--violet)">Droit</div>
+      <div class="vocab-term" style="color:var(--violet)">Abroger</div>
+      <div class="vocab-def">Annuler officiellement une loi par voie législative. Pelloux exige l'abrogation de la loi Bachelot (2009) qui a introduit la logique libérale.</div>
+    </div>
+    <div class="vocab-item" style="border-color:#FFE5A0">
+      <div class="vocab-cat" style="color:var(--jaune)">Conflit</div>
+      <div class="vocab-term" style="color:#B8830A">Se télescoper</div>
+      <div class="vocab-def">Se contredire, entrer en collision. Trois lois contradictoires coexistent : Bachelot, Touraine, Ma Santé 2022.</div>
+    </div>
+    <div class="vocab-item" style="border-color:#FFCFA3">
+      <div class="vocab-cat" style="color:var(--orange)">Attribution</div>
+      <div class="vocab-term" style="color:var(--orange)">Imputable à</div>
+      <div class="vocab-def">Qui peut être attribué à. <em>Ces fermetures sont imputables au manque de personnel qualifié.</em></div>
+    </div>
+    <div class="vocab-item" style="border-color:#FFBFCC">
+      <div class="vocab-cat" style="color:var(--rose)">Critique</div>
+      <div class="vocab-term" style="color:var(--rose)">Gabegie</div>
+      <div class="vocab-def">Gaspillage, mauvaise gestion des fonds publics. Administration désordonnée et coûteuse.</div>
+    </div>
+  </div>
+
+  <div class="card card-light">
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:20px">🔥 Expressions imagées</h3>
+    <div class="meta-grid">
+      <div class="meta-item" style="border-color:#FFBFCC">
+        <div class="meta-original" style="color:var(--rose)">« Mettre du kérosène dans la cheminée »</div>
+        <div class="meta-sens">Métaphore du feu</div>
+        <div class="meta-def">Aggraver une situation conflictuelle. Les primes ont enflammé la grève au lieu de la calmer.</div>
+      </div>
+      <div class="meta-item" style="border-color:#FFCFA3">
+        <div class="meta-original" style="color:var(--orange)">« Ils balancent des primes »</div>
+        <div class="meta-sens">Registre familier / critique</div>
+        <div class="meta-def">"Balancer" = distribuer sans réflexion. Traduit l'indignation de Pelloux face à des mesures superficielles.</div>
+      </div>
+      <div class="meta-item" style="border-color:#A3E8D5">
+        <div class="meta-original" style="color:var(--vert)">« Variable d'ajustement »</div>
+        <div class="meta-sens">Métaphore économique</div>
+        <div class="meta-def">L'hôpital compense tous les dysfonctionnements de la société. Terme économique détourné.</div>
+      </div>
+      <div class="meta-item" style="border-color:#A8D0F5">
+        <div class="meta-original" style="color:var(--bleu)">« Ils rament un petit peu »</div>
+        <div class="meta-sens">Registre familier</div>
+        <div class="meta-def">Ils peinent, ils avancent avec difficulté. Métaphore de l'effort physique de la rame.</div>
+      </div>
+      <div class="meta-item" style="border-color:#CBAAF5">
+        <div class="meta-original" style="color:var(--violet)">« Ça s'écroule, ça craque »</div>
+        <div class="meta-sens">Métaphore structurelle</div>
+        <div class="meta-def">Le système est au bord de l'effondrement. Image d'un bâtiment qui cède sous la pression.</div>
+      </div>
+      <div class="meta-item" style="border-color:#FFE5A0">
+        <div class="meta-original" style="color:#B8830A">« Calmer la grogne »</div>
+        <div class="meta-sens">Expression idiomatique</div>
+        <div class="meta-def">Apaiser le mécontentement collectif. "La grogne" = murmure de mécontentement sourd et diffus.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ GRAMMAIRE & STYLE ══ -->
+<section id="grammaire" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#B8F0E0">🔗</div>
+    <div>
+      <div class="sec-title">Grammaire & <span style="color:var(--vert)">Style</span></div>
+      <div style="font-size:13px;color:var(--gris)">Structures C1 et analyse comparative des deux intervenants</div>
+    </div>
+  </div>
+
+  <div class="card card-vert">
+    <h3 style="color:var(--vert)">🔗 Cause et conséquence</h3>
+    <div class="gram-label">Causalité complexe</div>
+    <div class="gram-example" style="border-color:var(--vert)">Du fait de la loi Bachelot, l'hôpital a adopté une logique de rentabilité.</div>
+    <div class="gram-example" style="border-color:var(--vert)">Faute de personnel qualifié, 900 lits restent fermés à l'AP-HP.</div>
+    <div class="gram-example" style="border-color:var(--vert)">Ces fermetures sont imputables au manque de moyens alloués.</div>
+    <div class="gram-label">Conséquences nuancées</div>
+    <div class="gram-example" style="border-color:var(--vert)">Le personnel est épuisé, <strong>si bien que</strong> les démissions se multiplient.</div>
+    <div class="gram-example" style="border-color:var(--vert)">La situation se dégrade <strong>au point que</strong> les services ferment les uns après les autres.</div>
+  </div>
+
+  <div class="card card-bleu">
+    <h3 style="color:var(--bleu)">⚖️ Opposition et concession</h3>
+    <div class="gram-label">Opposition</div>
+    <div class="gram-example" style="border-color:var(--bleu)">Alors que le gouvernement annonce 10 milliards, les services continuent de fermer.</div>
+    <div class="gram-example" style="border-color:var(--bleu)">Le bâtiment flambant neuf a été construit, tandis que la maternité était fermée.</div>
+    <div class="gram-label">Concession</div>
+    <div class="gram-example" style="border-color:var(--bleu)">Bien qu'il y ait des annonces budgétaires, rien ne répond aux attentes des soignants.</div>
+    <div class="gram-example" style="border-color:var(--bleu)">Ces mesures ont beau représenter 1,5 milliard, elles restent insuffisantes.</div>
+  </div>
+
+  <h3 style="font-family:'Syne',sans-serif;font-size:20px;font-weight:800;margin-bottom:18px;color:var(--texte)">🎭 Analyse comparative</h3>
+  <div class="compare-grid">
+    <div class="compare-card" style="border-color:#A8D0F5;border-top:5px solid var(--bleu)">
+      <div style="font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--bleu);margin-bottom:4px">Julie Pichot</div>
+      <div style="font-size:12px;color:var(--gris);margin-bottom:16px;font-style:italic">Journaliste d'investigation</div>
+      <div class="compare-row"><span class="compare-key">Niveau</span><span class="compare-val">Standard, objectif</span></div>
+      <div class="compare-row"><span class="compare-key">Lexique</span><span class="compare-val">Dénotatif, factuel</span></div>
+      <div class="compare-row"><span class="compare-key">Ton</span><span class="compare-val">Assertif, professionnel</span></div>
+      <div class="compare-row"><span class="compare-key">Objectif</span><span class="compare-val">Informer par les faits</span></div>
+      <div class="cite-box" style="background:#EEF6FF;border-color:#A8D0F5;color:var(--bleu)">«&thinsp;Ces annonces ne sont pas suffisantes.&thinsp;» / «&thinsp;Une grève inédite.&thinsp;»</div>
+    </div>
+    <div class="compare-card" style="border-color:#FFBFCC;border-top:5px solid var(--rose)">
+      <div style="font-family:'Syne',sans-serif;font-size:19px;font-weight:800;color:var(--rose);margin-bottom:4px">Dr Patrick Pelloux</div>
+      <div style="font-size:12px;color:var(--gris);margin-bottom:16px;font-style:italic">Médecin urgentiste militant</div>
+      <div class="compare-row"><span class="compare-key">Niveau</span><span class="compare-val">Standard ↔ Familier</span></div>
+      <div class="compare-row"><span class="compare-key">Lexique</span><span class="compare-val">Métaphores, images fortes</span></div>
+      <div class="compare-row"><span class="compare-key">Ton</span><span class="compare-val">Critique, engagé, indigné</span></div>
+      <div class="compare-row"><span class="compare-key">Objectif</span><span class="compare-val">Convaincre, émouvoir</span></div>
+      <div class="cite-box" style="background:#FFF0F3;border-color:#FFBFCC;color:var(--rose)">«&thinsp;Ils balancent des primes.&thinsp;» / «&thinsp;Du kérosène dans la cheminée.&thinsp;»</div>
+    </div>
+  </div>
+
+  <div class="card card-violet">
+    <h3 style="color:var(--violet)">💡 Techniques rhétoriques clés</h3>
+    <div class="gram-label" style="color:var(--violet)">Appel à l'émotion (Pelloux)</div>
+    <div class="gram-example" style="border-color:var(--violet)">Les métaphores du feu (kérosène, incendie) créent une urgence émotionnelle et rendent concret ce qui est abstrait.</div>
+    <div class="gram-label" style="color:var(--violet)">Inclusion du public (Pelloux)</div>
+    <div class="gram-example" style="border-color:var(--violet)">«&thinsp;Moi je suis contribuable comme vous&thinsp;» → identification qui réduit la distance expert / téléspectateur.</div>
+    <div class="gram-label" style="color:var(--violet)">Autorité des faits (Pichot)</div>
+    <div class="gram-example" style="border-color:var(--violet)">Exemples précis et vécus (Creil, Toulouse) → crédibilité de terrain, ancrage dans la réalité.</div>
+  </div>
+</section>
+
+<!-- ══ EXERCICES ══ -->
+<section id="exercices" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#C5DFFE">✏️</div>
+    <div>
+      <div class="sec-title">Exercices <span style="color:var(--bleu)">d'application</span></div>
+      <div style="font-size:13px;color:var(--gris)">Mettez en pratique le vocabulaire et la grammaire du cours</div>
+    </div>
+  </div>
+
+  <div class="ex-block" style="border-color:#FFCFA3">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="background:var(--orange);color:white;border-radius:8px;padding:4px 14px;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;">EXERCICE 1</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800">Vocabulaire spécialisé</div>
+    </div>
+    <div class="ex-consigne">Complétez avec : <em style="color:var(--orange)">technostructure · imputables · tarification à l'activité · abroger · déficit</em></div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--orange)">1</div>
+      <div style="flex:1">
+        <div class="ex-q">Le gouvernement a résolu le _______ des hôpitaux en reprenant une partie de leur dette.</div>
+        <input class="ex-input" type="text" placeholder="Votre réponse…">
+      </div>
+    </div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--orange)">2</div>
+      <div style="flex:1">
+        <div class="ex-q">Les fermetures de lits sont _______ au manque de personnel soignant qualifié.</div>
+        <input class="ex-input" type="text" placeholder="Votre réponse…">
+      </div>
+    </div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--orange)">3</div>
+      <div style="flex:1">
+        <div class="ex-q">La _______ représente désormais 90% des recettes de l'hôpital public.</div>
+        <input class="ex-input" type="text" placeholder="Votre réponse…">
+      </div>
+    </div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--orange)">4</div>
+      <div style="flex:1">
+        <div class="ex-q">Pelloux pense qu'il faut _______ la loi Bachelot pour réformer le système.</div>
+        <input class="ex-input" type="text" placeholder="Votre réponse…">
+      </div>
+    </div>
+    <button class="btn-corrige" style="background:var(--orange)" onclick="toggleC('c1',this)">Voir le corrigé →</button>
+    <div id="c1" class="corrige" style="background:#EDFAF6;border:2px solid #A3E8D5">
+      <div class="corrige-title">✦ Corrigé</div>
+      <div class="corrige-line">1. <strong>déficit</strong></div>
+      <div class="corrige-line">2. <strong>imputables</strong></div>
+      <div class="corrige-line">3. <strong>tarification à l'activité</strong> (T2A)</div>
+      <div class="corrige-line">4. <strong>abroger</strong></div>
+    </div>
+  </div>
+
+  <div class="ex-block" style="border-color:#FFBFCC">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="background:var(--rose);color:white;border-radius:8px;padding:4px 14px;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;">EXERCICE 2</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800">Registres de langue</div>
+    </div>
+    <div class="ex-consigne">Reformulez en registre standard formel :</div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--rose)">1</div>
+      <div style="flex:1">
+        <div class="ex-q">«&thinsp;Ils balancent des primes&thinsp;» →</div>
+        <input class="ex-input" type="text" placeholder="Reformulation soutenue…">
+      </div>
+    </div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--rose)">2</div>
+      <div style="flex:1">
+        <div class="ex-q">«&thinsp;Ils rament un petit peu&thinsp;» →</div>
+        <input class="ex-input" type="text" placeholder="Reformulation soutenue…">
+      </div>
+    </div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--rose)">3</div>
+      <div style="flex:1">
+        <div class="ex-q">«&thinsp;Ils ont mis du kérosène dans la cheminée&thinsp;» →</div>
+        <input class="ex-input" type="text" placeholder="Reformulation soutenue…">
+      </div>
+    </div>
+    <button class="btn-corrige" style="background:var(--rose)" onclick="toggleC('c2',this)">Voir le corrigé →</button>
+    <div id="c2" class="corrige" style="background:#EDFAF6;border:2px solid #A3E8D5">
+      <div class="corrige-title">✦ Corrigé</div>
+      <div class="corrige-line">1. <em>Le gouvernement a distribué des primes de manière précipitée et peu réfléchie.</em></div>
+      <div class="corrige-line">2. <em>Ils éprouvent des difficultés à avancer / ils peinent à trouver une solution.</em></div>
+      <div class="corrige-line">3. <em>Ces mesures ont considérablement aggravé une situation déjà très conflictuelle.</em></div>
+    </div>
+  </div>
+
+  <div class="ex-block" style="border-color:#A3E8D5">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="background:var(--vert);color:white;border-radius:8px;padding:4px 14px;font-family:'Syne',sans-serif;font-size:11px;font-weight:800;letter-spacing:1px;">EXERCICE 3</div>
+      <div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:800">Connecteurs causaux</div>
+    </div>
+    <div class="ex-consigne">Rédigez une phrase complète avec les connecteurs indiqués :</div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--vert)">1</div>
+      <div style="flex:1">
+        <div class="ex-q">Manque de personnel → fermeture de lits <em style="color:var(--vert)">(utilisez « faute de »)</em></div>
+        <textarea class="ex-input" placeholder="Rédigez une phrase complète…"></textarea>
+      </div>
+    </div>
+    <div class="ex-item">
+      <div class="ex-num" style="background:var(--vert)">2</div>
+      <div style="flex:1">
+        <div class="ex-q">Épuisement → démissions <em style="color:var(--vert)">(utilisez « si bien que »)</em></div>
+        <textarea class="ex-input" placeholder="Rédigez une phrase complète…"></textarea>
+      </div>
+    </div>
+    <button class="btn-corrige" style="background:var(--vert)" onclick="toggleC('c3',this)">Voir le corrigé →</button>
+    <div id="c3" class="corrige" style="background:#EDFAF6;border:2px solid #A3E8D5">
+      <div class="corrige-title">✦ Corrigé</div>
+      <div class="corrige-line">1. <em>Faute de personnel qualifié, de nombreux lits ont dû être fermés dans les hôpitaux publics.</em></div>
+      <div class="corrige-line">2. <em>Le personnel soignant est épuisé, si bien que les démissions se multiplient à un rythme alarmant.</em></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ DÉBAT ══ -->
+<section id="debat" class="section">
+  <div class="sec-header">
+    <div class="sec-icon" style="background:#E4D0FF">💬</div>
+    <div>
+      <div class="sec-title">Débat & <span style="color:var(--violet)">prolongements</span></div>
+      <div style="font-size:13px;color:var(--gris)">Entraînez-vous à argumenter en français</div>
+    </div>
+  </div>
+
+  <div class="debat-q">
+    <h3>« Les réformes du Ségur de la santé (2020) répondent-elles aux véritables enjeux de la crise hospitalière française ? »</h3>
+    <p>Préparez vos arguments — pour ou contre — avant le débat en classe.</p>
+  </div>
+
+  <div class="args-grid">
+    <div class="args-card pour">
+      <h4>✅ Arguments POUR</h4>
+      <ul>
+        <li>Augmentation des salaires soignants (+183€ nets/mois)</li>
+        <li>Création de 15 000 nouveaux postes annoncée</li>
+        <li>6 milliards investis dans les équipements</li>
+        <li>Amorce de réduction de la T2A</li>
+        <li>Reprise de 13 milliards de dette hospitalière</li>
+      </ul>
+    </div>
+    <div class="args-card contre">
+      <h4>❌ Arguments CONTRE</h4>
+      <ul>
+        <li>Maintien de la logique économique de rentabilité</li>
+        <li>Insuffisant face à l'ampleur du sous-financement</li>
+        <li>Pas de remise en cause structurelle</li>
+        <li>Loi Bachelot toujours en vigueur</li>
+        <li>Primes ≠ revalorisation structurelle des salaires</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card card-light">
+    <h3 style="font-family:'Syne',sans-serif;font-size:18px;font-weight:800;margin-bottom:18px">🌍 Questions de discussion</h3>
+    <div class="disc-q">
+      <span class="disc-num">Q1</span>
+      <p>Comment votre pays a-t-il géré la crise COVID-19 ? Quelles leçons en a-t-on tirées pour l'hôpital public ?</p>
+    </div>
+    <div class="disc-q">
+      <span class="disc-num">Q2</span>
+      <p>Le système de santé de votre pays fait-il face à des défis similaires à ceux décrits dans cette interview ?</p>
+    </div>
+    <div class="disc-q">
+      <span class="disc-num">Q3</span>
+      <p>La frontière entre secteur libéral (cliniques privées) et secteur public doit-elle être maintenue ? Argumentez.</p>
+    </div>
+    <div class="disc-q">
+      <span class="disc-num">Q4</span>
+      <p>Dans quelle mesure le vieillissement de la population représente-t-il un défi spécifique pour les systèmes de santé publics ?</p>
+    </div>
+  </div>
+
+  <div class="card card-jaune" style="margin-top:20px">
+    <h3 style="color:#9A6200">✍️ Production écrite — C1</h3>
+    <div style="font-size:13px;color:var(--gris);margin-bottom:14px">Rédigez un texte argumenté de 250-300 mots :</div>
+    <div style="background:white;border:2px solid #FFE5A0;border-radius:10px;padding:14px;font-size:15px;font-style:italic;color:var(--texte);margin-bottom:14px;">
+      « L'hôpital public peut-il concilier exigences économiques et mission de service public ? »
+    </div>
+    <div style="font-size:12px;color:var(--gris)"><strong style="color:#9A6200">Critères C1 :</strong> cohésion discursive · nuance argumentative · lexique spécialisé · modalisation · connecteurs variés · exemples du document</div>
+  </div>
+</section>
+
+<script>
+function show(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+function toggleC(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? 'Masquer ↑' : 'Voir le corrigé →';
+}
+</script>
+</body>
+</html>
