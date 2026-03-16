@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Oscars 2026 — Étude de texte C1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1209;
+    --paper: #f5f0e8;
+    --aged: #e8e0cc;
+    --gold: #c8a84b;
+    --red: #8b1a1a;
+    --muted: #6b5c3e;
+    --highlight: #fff3c4;
+    --correct: #1a5c2e;
+    --wrong: #8b1a1a;
+    --section-bg: #ede8dc;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.8;
+  }
+
+  /* ── Header ── */
+  header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2rem 1.5rem 1.5rem;
+    text-align: center;
+    border-bottom: 4px solid var(--gold);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 10px,
+      rgba(200,168,75,0.04) 10px,
+      rgba(200,168,75,0.04) 20px
+    );
+  }
+  .kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .5rem;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: .4rem;
+  }
+  header h1 em { color: var(--gold); font-style: italic; }
+  .byline {
+    font-family: 'Space Mono', monospace;
+    font-size: .68rem;
+    color: #aaa;
+    letter-spacing: .1em;
+    margin-top: .6rem;
+  }
+
+  /* ── Sticky TOC nav ── */
+  nav {
+    display: flex;
+    justify-content: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+    background: var(--ink);
+    padding: .6rem 1rem;
+    border-bottom: 2px solid var(--gold);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  nav a {
+    background: transparent;
+    border: 1px solid rgba(200,168,75,.4);
+    color: var(--paper);
+    font-family: 'Space Mono', monospace;
+    font-size: .68rem;
+    letter-spacing: .1em;
+    padding: .35rem .85rem;
+    text-transform: uppercase;
+    transition: all .2s;
+    border-radius: 2px;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  nav a:hover {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  /* ── Main layout ── */
+  main { max-width: 900px; margin: 0 auto; padding: 2rem 1.2rem 4rem; }
+
+  section.tab-section { display: block; }
+
+  /* Section dividers */
+  section.tab-section + section.tab-section {
+    border-top: 3px double var(--gold);
+    padding-top: 2rem;
+    margin-top: 3rem;
+  }
+
+  /* ── Section titles ── */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--red);
+    border-bottom: 2px solid var(--gold);
+    padding-bottom: .4rem;
+    margin: 2rem 0 1.2rem;
+  }
+  .section-title:first-child { margin-top: 0; }
+
+  /* ── Article text ── */
+  .article-body { column-count: 1; }
+  .article-body p {
+    margin-bottom: 1.1rem;
+    text-align: justify;
+    hyphens: auto;
+  }
+  .article-body .lead {
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--muted);
+    border-left: 3px solid var(--gold);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .article-body blockquote {
+    background: var(--section-bg);
+    border-left: 4px solid var(--red);
+    padding: .8rem 1.2rem;
+    margin: 1.2rem 0;
+    font-style: italic;
+    color: var(--red);
+    font-size: 1rem;
+  }
+  .article-body h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin: 1.5rem 0 .5rem;
+    font-style: italic;
+  }
+
+  /* ── Vocab & Expressions ── */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: .8rem;
+    margin-bottom: 1.5rem;
+  }
+  .vocab-card {
+    background: white;
+    border: 1px solid var(--aged);
+    border-top: 3px solid var(--gold);
+    padding: .8rem 1rem;
+    border-radius: 2px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,.06);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .vocab-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 3px 4px 12px rgba(0,0,0,.1);
+  }
+  .vocab-fr {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: .95rem;
+    color: var(--ink);
+    margin-bottom: .2rem;
+  }
+  .vocab-pos {
+    font-family: 'Space Mono', monospace;
+    font-size: .62rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    margin-bottom: .3rem;
+  }
+  .vocab-en {
+    font-size: .88rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .vocab-context {
+    font-size: .78rem;
+    color: #888;
+    margin-top: .3rem;
+    border-top: 1px solid var(--aged);
+    padding-top: .3rem;
+  }
+
+  .expr-list { list-style: none; margin-bottom: 1.5rem; }
+  .expr-list li {
+    background: var(--section-bg);
+    border-left: 4px solid var(--red);
+    margin-bottom: .7rem;
+    padding: .7rem 1rem;
+    border-radius: 0 2px 2px 0;
+  }
+  .expr-fr {
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    color: var(--red);
+    font-size: .95rem;
+    display: block;
+    margin-bottom: .2rem;
+  }
+  .expr-en {
+    font-style: italic;
+    color: var(--muted);
+    font-size: .88rem;
+    display: block;
+    margin-bottom: .2rem;
+  }
+  .expr-note {
+    font-size: .78rem;
+    color: #777;
+  }
+
+  /* ── QCM Exercises ── */
+  .exercise {
+    background: white;
+    border: 1px solid var(--aged);
+    border-radius: 3px;
+    padding: 1.2rem 1.4rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 2px 2px 8px rgba(0,0,0,.05);
+  }
+  .ex-number {
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    color: var(--gold);
+    text-transform: uppercase;
+    letter-spacing: .15em;
+    margin-bottom: .4rem;
+  }
+  .ex-question {
+    font-size: .97rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: .9rem;
+    line-height: 1.5;
+  }
+  .ex-question em {
+    background: var(--highlight);
+    font-style: normal;
+    padding: 0 .15em;
+    border-radius: 2px;
+  }
+  .options { list-style: none; display: flex; flex-direction: column; gap: .45rem; }
+  .options li button {
+    width: 100%;
+    text-align: left;
+    background: var(--section-bg);
+    border: 1.5px solid var(--aged);
+    color: var(--ink);
+    font-family: 'Libre Baskerville', serif;
+    font-size: .87rem;
+    padding: .55rem .9rem;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all .2s;
+    display: flex; align-items: flex-start; gap: .5rem;
+  }
+  .options li button:hover:not(:disabled) {
+    background: var(--highlight);
+    border-color: var(--gold);
+  }
+  .options li button .opt-label {
+    font-family: 'Space Mono', monospace;
+    font-size: .72rem;
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 1.2rem;
+    margin-top: .05rem;
+  }
+  .options li button.correct {
+    background: #d4edda;
+    border-color: var(--correct);
+    color: var(--correct);
+  }
+  .options li button.wrong {
+    background: #f8d7da;
+    border-color: var(--wrong);
+    color: var(--wrong);
+  }
+  .options li button.correct .opt-label,
+  .options li button.wrong .opt-label { color: inherit; }
+
+  .feedback {
+    margin-top: .8rem;
+    font-size: .85rem;
+    padding: .6rem .9rem;
+    border-radius: 3px;
+    display: none;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: #d4edda; color: var(--correct); border-left: 3px solid var(--correct); }
+  .feedback.wrong-fb { background: #f8d7da; color: var(--wrong); border-left: 3px solid var(--wrong); }
+
+  .ex-category {
+    font-family: 'Space Mono', monospace;
+    font-size: .62rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+    padding: .2rem .5rem;
+    border-radius: 2px;
+    margin-bottom: .5rem;
+    display: inline-block;
+    color: white;
+  }
+  .cat-comprehension { background: #4a7c59; }
+  .cat-vocab { background: #8b4a1a; }
+  .cat-grammar { background: #2a4a7c; }
+  .cat-register { background: #6a2a6a; }
+  .cat-inferences { background: #5a4a1a; }
+
+  /* ── Score ── */
+  .score-box {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 1.5rem;
+    text-align: center;
+    border-radius: 3px;
+    margin-top: 2rem;
+    display: none;
+    font-family: 'Space Mono', monospace;
+  }
+  .score-box.show { display: block; }
+  .score-num {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--gold);
+    font-family: 'Playfair Display', serif;
+  }
+  .score-label { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: #aaa; margin-top: .3rem; }
+  .score-msg { font-size: .9rem; margin-top: .8rem; color: var(--paper); }
+
+  .check-btn {
+    display: block;
+    margin: 1.5rem auto 0;
+    background: var(--red);
+    color: white;
+    border: none;
+    font-family: 'Space Mono', monospace;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    padding: .75rem 2rem;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background .2s;
+  }
+  .check-btn:hover { background: var(--gold); color: var(--ink); }
+
+  /* ── Badge chip ── */
+  .diff-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: .6rem;
+    padding: .15rem .4rem;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: .4rem;
+    letter-spacing: .08em;
+    background: var(--aged);
+    color: var(--muted);
+  }
+  .diff-hard { background: #8b1a1a22; color: var(--red); }
+
+  footer {
+    text-align: center;
+    font-family: 'Space Mono', monospace;
+    font-size: .65rem;
+    color: #999;
+    padding: 2rem 1rem;
+    border-top: 1px solid var(--aged);
+    letter-spacing: .1em;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="kicker">Fiche de lecture · Niveau C1 · Presse française</p>
+  <h1>Oscars 2026 : <em>Sinners</em> vs <em>Une bataille après l'autre</em></h1>
+  <p style="color:#ccc;font-size:.9rem;margin-top:.5rem;font-style:italic;">Un duel très politique — Hugo Florent · Courrier International · 15 mars 2026</p>
+  <p class="byline">Vocabulaire · Expressions · Exercices QCM</p>
+</header>
+
+<nav>
+  <a href="#article">📰 Article</a>
+  <a href="#vocab">📖 Vocabulaire</a>
+  <a href="#expressions">💬 Expressions</a>
+  <a href="#exercices">✏️ Exercices QCM</a>
+</nav>
+
+<main>
+
+<!-- ═══════════════════════════════════════════ ARTICLE ═══════ -->
+<section id="article" class="tab-section">
+  <h2 class="section-title">Texte intégral</h2>
+  <div class="article-body">
+    <p class="lead">La 98e cérémonie des Oscars se tient dans la nuit du dimanche 15 mars à Los Angeles. Rarement deux films auront été autant au coude-à-coude dans les pronostics que <em>Sinners</em> et <em>Une bataille après l'autre</em>, remarque la presse anglo-saxonne. Tous deux portent une forte charge politique, quoique dans des styles différents.</p>
+
+    <p>Vampires contre suprémacistes blancs. Ce match surprenant d'antagonistes sera au cœur de la 98e cérémonie des Oscars, le 15 mars à Los Angeles. <em>Sinners</em> et <em>Une bataille après l'autre</em> sont en effet les deux films avec le plus de nominations (respectivement 16 et 13). Comme le rappelle <em>Decider</em>, l'académie chargée des récompenses les plus prestigieuses du cinéma américain ne dévoile que les noms des vainqueurs et non le détail des votes pour chaque catégorie. Autrement dit, impossible de savoir après coup si les résultats étaient serrés – ou de les comparer aux sondages, à la manière d'une élection. "Cela étant, la compétition, cette année, ressemble fort à un duel, inhabituellement serré qui plus est", concède le site spécialisé américain.</p>
+
+    <p><em>Une bataille après l'autre</em>, thriller opposant une cellule fictive de révolutionnaires n'hésitant pas à user de violence contre un État américain fasciste, "a quasiment fait l'unanimité auprès des critiques en septembre, sans même avoir bénéficié d'un quelconque effet festival". Le long-métrage de Paul Thomas Anderson a également accumulé de nombreux trophées dans de précédentes cérémonies, par exemple les Golden Globes. Mais celui de Ryan Coogler – un film de genre mettant en scène un groupe de musiciens de blues africains-américains aux prises avec des vampires dans les années 1930 – est loin d'avoir dit son dernier mot, poursuit <em>Collider</em>. "Devenu un véritable phénomène culturel, <em>Sinners</em>, le plus gros succès en salle enregistré par Hollywood depuis des années, hors franchises, a établi un nouveau record de nomination aux Oscars, avec 16 catégories."</p>
+
+    <h3>Renoncer aux pronostics</h3>
+    <p><em>Variety</em> confirme cette impression, en particulier dans la catégorie "meilleur film", qualifiée de "duel en bonne et due forme entre deux concurrents au coude-à-coude". Le magazine de référence à Hollywood a, comme chaque année, discuté avec quelques-uns des plus de 10 000 votants de l'Académie. Sous le sceau de l'anonymat, certains acceptent de révéler leur choix. "Le plus passionnant, dans tout ça, est incontestablement le raisonnement des jurés conquis par les deux films. Au moins six d'entre eux nous ont plus ou moins laissés entendre qu'ils voyaient <em>Une bataille après l'autre</em> gagnant, mais qu'eux-mêmes avaient voté pour <em>Sinners</em>." <em>Variety</em> cite quelques-uns de ces témoignages.</p>
+
+    <p>Ces deux rivaux portent une forte charge politique, quoique chacun dans un style différent. "Bien que tourné juste avant le retour de Donald Trump à la Maison-Blanche, <em>Une bataille après l'autre</em> avait brillamment anticipé la trajectoire prise depuis par les États-Unis", analyse <em>The Independent</em>. "Le film nous livre une mise en garde, en rappelant que l'extrémisme politique fait des ravages dans les deux camps. Ce qui ne l'empêche pas de nous faire comprendre clairement qui sont les véritables méchants selon lui." C'est-à-dire du côté des pouvoirs publics noyautés par les suprémacistes blancs, qui mènent une politique inhumaine à l'égard des migrants.</p>
+
+    <p>De son côté <em>Sinners</em> prend le delta du Mississippi comme décor, alors en pleine ségrégation. Et raconte l'histoire de gangsters jumeaux (incarnés par Michael B. Jordan) aussi charismatiques qu'élégants. "Mais c'est aussi une critique métaphorique de l'appropriation culturelle, et de la façon dont l'Amérique blanche a vampirisé la culture noire, même en affichant les meilleures intentions du monde." Difficile pour les amateurs de films d'horreur de ne pas mentionner en écho la filmographie de Jordan Peele, en particulier <em>Get Out</em>. En effet, <em>Sinners</em> est tout autant "un joyau du film de genre, doublé d'un discours profond et subtil sur les relations interethniques aux États-Unis".</p>
+
+    <h3>Des films plus politiques que leurs stars</h3>
+    <p>D'autres œuvres en lice dessinent une sélection engagée. <em>L'Agent secret</em> (4 nominations, dont celle dans la catégorie "meilleur film"), qui se déroule sous la dictature brésilienne en 1977, et <em>Un simple accident</em> (2 nominations, dont celle dans la catégorie "meilleur film international"), implacable et très actuel thriller sur la répression du régime iranien. Et pourtant, déplore <em>l'Independent</em>, "malgré la sélection sans doute la plus politique de ces dernières décennies, bourrée de chefs-d'œuvre quasi révolutionnaires, la campagne [de promotion auprès de l'Académie] reste terriblement fade".</p>
+
+    <p>Le journaliste britannique est particulièrement peu tendre avec Leonardo DiCaprio, rôle principal d'<em>Une bataille après l'autre</em>, qu'il ferait presque passer dans ses interviews pour une "comédie gentillette sur les relations père-fille". D'où l'exaspération du média :</p>
+
+    <blockquote>"Tandis que les films dénoncent, les stars, elles, restent muettes."</blockquote>
+
+    <p>C'est dire si les traditionnels discours à la réception de chaque oscar seront scrutés.</p>
+
+    <h3>Les derniers Oscars avec une touche de subversion ?</h3>
+    <p><em>Collider</em> le constate : les deux films qui font la course en tête "font incroyablement écho à leur époque, sans jamais mentionner de véritables événements historiques ni l'actualité". Mais le site relève un dernier point commun : tous deux ont été produits par la Warner. Le site craint que ces Oscars ne constituent un chant du cygne pour le studio, racheté par le groupe Paramount.</p>
+
+    <p>Dans un climat hollywoodien de plus en plus frileux, qui laissera les coudées franches à Ryan Coogler, Paul Thomas Anderson ou tout cinéaste avec au moins un soupçon d'audace ? "La véritable bataille viendra après, quand il deviendra plus difficile de monter ce genre de projets avec de grands studios, malgré le succès commercial et critique." Le journaliste conclut toutefois avec l'espoir que la moisson de statuettes réparties entre <em>Sinners</em> et <em>Une bataille après l'autre</em> invite "au moins quelques studios à se démener pour produire de grands films".</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════ VOCAB ═══════ -->
+<section id="vocab" class="tab-section">
+  <h2 class="section-title">Vocabulaire — Traductions en anglais</h2>
+  <p style="color:var(--muted);font-size:.88rem;margin-bottom:1.5rem;font-style:italic;">Mots et locutions tirés du texte, classés par thème.</p>
+
+  <h3 class="section-title" style="font-size:1.1rem;color:var(--muted);">🎬 Cinéma &amp; récompenses</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card"><div class="vocab-fr">la cérémonie des Oscars</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">the Oscars ceremony / the Academy Awards</div></div>
+    <div class="vocab-card"><div class="vocab-fr">une nomination</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">a nomination</div><div class="vocab-context">→ "les deux films avec le plus de nominations"</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un long-métrage</div><div class="vocab-pos">nom masculin</div><div class="vocab-en">a feature film</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un film de genre</div><div class="vocab-pos">nom masculin</div><div class="vocab-en">a genre film</div><div class="vocab-context">→ horror, sci-fi, thriller, etc.</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un succès en salle</div><div class="vocab-pos">locution nominale</div><div class="vocab-en">a box-office hit / box-office success</div></div>
+    <div class="vocab-card"><div class="vocab-fr">hors franchises</div><div class="vocab-pos">locution adverbiale</div><div class="vocab-en">excluding franchises</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un trophée</div><div class="vocab-pos">nom masculin</div><div class="vocab-en">a trophy / an award</div></div>
+    <div class="vocab-card"><div class="vocab-fr">la moisson de statuettes</div><div class="vocab-pos">locution nominale</div><div class="vocab-en">the haul of statuettes / Oscar wins</div><div class="vocab-context">→ "moisson" = harvest (figurative)</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un effet festival</div><div class="vocab-pos">locution nominale</div><div class="vocab-en">a festival buzz / festival effect</div></div>
+    <div class="vocab-card"><div class="vocab-fr">la filmographie</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">filmography / body of work</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un joyau du film de genre</div><div class="vocab-pos">locution nominale</div><div class="vocab-en">a gem of genre filmmaking</div></div>
+    <div class="vocab-card"><div class="vocab-fr">faire la course en tête</div><div class="vocab-pos">locution verbale</div><div class="vocab-en">to be in the lead / to be frontrunners</div></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:1.1rem;color:var(--muted);">📰 Presse &amp; discours journalistique</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card"><div class="vocab-fr">les pronostics</div><div class="vocab-pos">nom masculin pluriel</div><div class="vocab-en">predictions / forecasts / odds</div></div>
+    <div class="vocab-card"><div class="vocab-fr">au coude-à-coude</div><div class="vocab-pos">locution adverbiale</div><div class="vocab-en">neck and neck / in a close race</div></div>
+    <div class="vocab-card"><div class="vocab-fr">concéder</div><div class="vocab-pos">verbe</div><div class="vocab-en">to concede / to acknowledge / to admit</div></div>
+    <div class="vocab-card"><div class="vocab-fr">sous le sceau de l'anonymat</div><div class="vocab-pos">locution prépositionnelle</div><div class="vocab-en">under the seal of anonymity / on condition of anonymity</div></div>
+    <div class="vocab-card"><div class="vocab-fr">scruter</div><div class="vocab-pos">verbe</div><div class="vocab-en">to scrutinize / to watch closely</div></div>
+    <div class="vocab-card"><div class="vocab-fr">déplorer</div><div class="vocab-pos">verbe</div><div class="vocab-en">to deplore / to lament / to bemoan</div></div>
+    <div class="vocab-card"><div class="vocab-fr">incontestablement</div><div class="vocab-pos">adverbe</div><div class="vocab-en">unquestionably / indisputably</div></div>
+    <div class="vocab-card"><div class="vocab-fr">quasiment</div><div class="vocab-pos">adverbe (registre courant)</div><div class="vocab-en">almost / virtually / nearly</div></div>
+    <div class="vocab-card"><div class="vocab-fr">après coup</div><div class="vocab-pos">locution adverbiale</div><div class="vocab-en">after the fact / in hindsight</div></div>
+    <div class="vocab-card"><div class="vocab-fr">relever</div><div class="vocab-pos">verbe</div><div class="vocab-en">to note / to point out / to highlight</div></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:1.1rem;color:var(--muted);">⚖️ Politique &amp; société</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card"><div class="vocab-fr">les suprémacistes blancs</div><div class="vocab-pos">nom masculin pluriel</div><div class="vocab-en">white supremacists</div></div>
+    <div class="vocab-card"><div class="vocab-fr">l'appropriation culturelle</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">cultural appropriation</div></div>
+    <div class="vocab-card"><div class="vocab-fr">la ségrégation</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">racial segregation</div></div>
+    <div class="vocab-card"><div class="vocab-fr">noyauté</div><div class="vocab-pos">adjectif</div><div class="vocab-en">infiltrated / subverted (from within)</div><div class="vocab-context">→ "pouvoirs publics noyautés"</div></div>
+    <div class="vocab-card"><div class="vocab-fr">faire des ravages</div><div class="vocab-pos">locution verbale</div><div class="vocab-en">to wreak havoc / to cause devastation</div></div>
+    <div class="vocab-card"><div class="vocab-fr">une mise en garde</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">a warning / a cautionary message</div></div>
+    <div class="vocab-card"><div class="vocab-fr">l'extrémisme politique</div><div class="vocab-pos">nom masculin</div><div class="vocab-en">political extremism</div></div>
+    <div class="vocab-card"><div class="vocab-fr">implacable</div><div class="vocab-pos">adjectif</div><div class="vocab-en">relentless / uncompromising / unflinching</div></div>
+    <div class="vocab-card"><div class="vocab-fr">engagé</div><div class="vocab-pos">adjectif</div><div class="vocab-en">politically committed / socially engaged</div></div>
+    <div class="vocab-card"><div class="vocab-fr">la répression</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">repression / crackdown</div></div>
+  </div>
+
+  <h3 class="section-title" style="font-size:1.1rem;color:var(--muted);">🏭 Industrie du cinéma</h3>
+  <div class="vocab-grid">
+    <div class="vocab-card"><div class="vocab-fr">un studio</div><div class="vocab-pos">nom masculin</div><div class="vocab-en">a (film) studio</div></div>
+    <div class="vocab-card"><div class="vocab-fr">racheter</div><div class="vocab-pos">verbe</div><div class="vocab-en">to buy out / to acquire / to take over</div></div>
+    <div class="vocab-card"><div class="vocab-fr">frileux</div><div class="vocab-pos">adjectif</div><div class="vocab-en">risk-averse / cautious / wary</div><div class="vocab-context">→ figurative: reluctant to take creative risks</div></div>
+    <div class="vocab-card"><div class="vocab-fr">monter un projet</div><div class="vocab-pos">locution verbale</div><div class="vocab-en">to put together / to set up a project</div></div>
+    <div class="vocab-card"><div class="vocab-fr">se démener</div><div class="vocab-pos">verbe pronominal</div><div class="vocab-en">to go out of one's way / to make great efforts</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un phénomène culturel</div><div class="vocab-pos">nom masculin</div><div class="vocab-en">a cultural phenomenon</div></div>
+    <div class="vocab-card"><div class="vocab-fr">un chant du cygne</div><div class="vocab-pos">locution nominale</div><div class="vocab-en">a swan song</div><div class="vocab-context">→ final masterpiece before the end</div></div>
+    <div class="vocab-card"><div class="vocab-fr">la subversion</div><div class="vocab-pos">nom féminin</div><div class="vocab-en">subversion</div></div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════════════ EXPRESSIONS ═══════ -->
+<section id="expressions" class="tab-section">
+  <h2 class="section-title">Expressions idiomatiques &amp; registres</h2>
+  <p style="color:var(--muted);font-size:.88rem;margin-bottom:1.5rem;font-style:italic;">Locutions, figures de style et tournures caractéristiques du français journalistique.</p>
+
+  <h3 class="section-title" style="font-size:1.1rem;color:var(--muted);">🗣️ Expressions idiomatiques</h3>
+  <ul class="expr-list">
+    <li>
+      <span class="expr-fr">être au coude-à-coude</span>
+      <span class="expr-en">"to be neck and neck" — to be in an extremely close competition</span>
+      <span class="expr-note">Context: "Rarement deux films auront été autant au coude-à-coude dans les pronostics"</span>
+    </li>
+    <li>
+      <span class="expr-fr">ne pas avoir dit son dernier mot</span>
+      <span class="expr-en">"to not have said one's last word" → not to be finished yet / to still be in the running</span>
+      <span class="expr-note">Context: "<em>Sinners</em> est loin d'avoir dit son dernier mot"</span>
+    </li>
+    <li>
+      <span class="expr-fr">un chant du cygne</span>
+      <span class="expr-en">"a swan song" — a final, great achievement before the end</span>
+      <span class="expr-note">Context: "ces Oscars ne constituent un chant du cygne pour le studio"</span>
+    </li>
+    <li>
+      <span class="expr-fr">avoir les coudées franches</span>
+      <span class="expr-en">"to have free rein / elbow room" — to have freedom of action</span>
+      <span class="expr-note">Context: "qui laissera les coudées franches à Ryan Coogler..."</span>
+    </li>
+    <li>
+      <span class="expr-fr">faire écho à</span>
+      <span class="expr-en">"to echo / to resonate with" — to reflect or mirror something</span>
+      <span class="expr-note">Context: "font incroyablement écho à leur époque"</span>
+    </li>
+    <li>
+      <span class="expr-fr">faire l'unanimité</span>
+      <span class="expr-en">"to achieve unanimous approval" — to win everyone over</span>
+      <span class="expr-note">Context: "a quasiment fait l'unanimité auprès des critiques"</span>
+    </li>
+    <li>
+      <span class="expr-fr">noyauté par</span>
+      <span class="expr-en">"infiltrated / subverted from within by" — hollowed out and controlled by insiders</span>
+      <span class="expr-note">Context: "pouvoirs publics noyautés par les suprémacistes blancs"</span>
+    </li>
+  </ul>
+
+  <h3 class="section-title" style="font-size:1.1rem;color:var(--muted);">✍️ Tournures journalistiques</h3>
+  <ul class="expr-list">
+    <li>
+      <span class="expr-fr">sous le sceau de l'anonymat</span>
+      <span class="expr-en">"on condition of anonymity / under the seal of anonymity"</span>
+      <span class="expr-note">Formal journalistic phrase indicating a source asked not to be named.</span>
+    </li>
+    <li>
+      <span class="expr-fr">en bonne et due forme</span>
+      <span class="expr-en">"in good and proper form" → a proper / full-fledged / genuine [duel]</span>
+      <span class="expr-note">Legal/administrative origin, now used to mean something fully legitimate and complete.</span>
+    </li>
+    <li>
+      <span class="expr-fr">cela étant</span>
+      <span class="expr-en">"that said / be that as it may" — acknowledging something while moving forward</span>
+      <span class="expr-note">Formal connective used in press and academic writing.</span>
+    </li>
+    <li>
+      <span class="expr-fr">qui plus est</span>
+      <span class="expr-en">"what is more / moreover / furthermore" — adding emphasis</span>
+      <span class="expr-note">"inhabituellement serré qui plus est" → unusually close, what is more</span>
+    </li>
+    <li>
+      <span class="expr-fr">autrement dit</span>
+      <span class="expr-en">"in other words" — reformulating or clarifying a preceding statement</span>
+      <span class="expr-note">Very common in French journalism and academic writing.</span>
+    </li>
+    <li>
+      <span class="expr-fr">d'où + nom/infinitif</span>
+      <span class="expr-en">"hence / which explains / that is why..." — indicating a logical consequence</span>
+      <span class="expr-note">"D'où l'exaspération du média" → Hence the outlet's frustration.</span>
+    </li>
+    <li>
+      <span class="expr-fr">c'est dire si...</span>
+      <span class="expr-en">"that tells you something about... / you can imagine how..." — intensifying a point</span>
+      <span class="expr-note">"C'est dire si les discours seront scrutés" → That tells you how closely the speeches will be watched.</span>
+    </li>
+    <li>
+      <span class="expr-fr">peu tendre avec</span>
+      <span class="expr-en">"not easy on / harsh towards / unkind about"</span>
+      <span class="expr-note">"est particulièrement peu tendre avec Leonardo DiCaprio" → particularly harsh about DiCaprio</span>
+    </li>
+  </ul>
+
+  <h3 class="section-title" style="font-size:1.1rem;color:var(--muted);">🎭 Figures de style notables</h3>
+  <ul class="expr-list">
+    <li>
+      <span class="expr-fr">Vampires contre suprémacistes blancs</span>
+      <span class="expr-en">Metaphorical antithesis / in medias res opening</span>
+      <span class="expr-note">The article opens abruptly with a jarring juxtaposition to grab attention — a classic journalistic hook (accroche).</span>
+    </li>
+    <li>
+      <span class="expr-fr">l'Amérique blanche a vampirisé la culture noire</span>
+      <span class="expr-en">Extended metaphor: "vampirised" — sucked the life out of, exploited</span>
+      <span class="expr-note">The vampire film becomes a meta-metaphor for cultural appropriation.</span>
+    </li>
+    <li>
+      <span class="expr-fr">Tandis que les films dénoncent, les stars, elles, restent muettes</span>
+      <span class="expr-en">Contrast / antithesis (chiasmus-like structure)</span>
+      <span class="expr-note">The parallel structure highlights the contradiction between political films and apolitical stars. Note the emphatic "elles" (mises en relief).</span>
+    </li>
+    <li>
+      <span class="expr-fr">bourrée de chefs-d'œuvre quasi révolutionnaires</span>
+      <span class="expr-en">Hyperbole for rhetorical effect; "bourrée" (stuffed/crammed) is informal/colloquial register</span>
+      <span class="expr-note">Mixing elevated vocabulary (chefs-d'œuvre) with colloquial verbs (bourrée) is typical of modern French journalism.</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ═════════════════════════════════════ EXERCICES ═══════ -->
+<section id="exercices" class="tab-section">
+  <h2 class="section-title">Exercices QCM — Niveau C1</h2>
+  <p style="color:var(--muted);font-size:.88rem;margin-bottom:1.8rem;font-style:italic;">20 questions couvrant la compréhension, le vocabulaire, la grammaire et les registres. Cliquez sur votre réponse pour obtenir un retour immédiat.</p>
+
+  <!-- 1 -->
+  <div class="exercise" id="q1">
+    <div class="ex-number">Question 1 / 20</div>
+    <span class="ex-category cat-comprehension">Compréhension</span>
+    <div class="ex-question">Pourquoi est-il impossible, selon l'article, de comparer les résultats des Oscars à des sondages comme lors d'une élection ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q1',false)"><span class="opt-label">A</span>L'Académie n'organise pas de votes secrets.</button></li>
+      <li><button onclick="answer(this,'q1',false)"><span class="opt-label">B</span>Les résultats sont publiés avant la cérémonie.</button></li>
+      <li><button onclick="answer(this,'q1',true)"><span class="opt-label">C</span>L'Académie ne divulgue que les noms des gagnants, pas le détail des votes par catégorie.</button></li>
+      <li><button onclick="answer(this,'q1',false)"><span class="opt-label">D</span>Il y a trop peu de votants pour que les données soient significatives.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q1"></div>
+  </div>
+
+  <!-- 2 -->
+  <div class="exercise" id="q2">
+    <div class="ex-number">Question 2 / 20</div>
+    <span class="ex-category cat-comprehension">Compréhension</span>
+    <div class="ex-question">Que révèle le témoignage des votants interrogés par <em>Variety</em> sur leurs intentions de vote ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q2',false)"><span class="opt-label">A</span>Ils ont tous voté pour <em>Sinners</em> car c'est le film le plus populaire.</button></li>
+      <li><button onclick="answer(this,'q2',true)"><span class="opt-label">B</span>Certains pensaient qu'<em>Une bataille après l'autre</em> allait gagner mais ont néanmoins voté pour <em>Sinners</em>.</button></li>
+      <li><button onclick="answer(this,'q2',false)"><span class="opt-label">C</span>La majorité a voté pour <em>Une bataille après l'autre</em> après hésitation.</button></li>
+      <li><button onclick="answer(this,'q2',false)"><span class="opt-label">D</span>Les votants refusaient de révéler leur choix même anonymement.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q2"></div>
+  </div>
+
+  <!-- 3 -->
+  <div class="exercise" id="q3">
+    <div class="ex-number">Question 3 / 20</div>
+    <span class="ex-category cat-vocab">Vocabulaire</span>
+    <div class="ex-question">Dans le contexte de l'article, que signifie l'expression <em>"au coude-à-coude"</em> ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q3',false)"><span class="opt-label">A</span>En grande collaboration artistique</button></li>
+      <li><button onclick="answer(this,'q3',true)"><span class="opt-label">B</span>Dans une compétition très serrée, presque à égalité</button></li>
+      <li><button onclick="answer(this,'q3',false)"><span class="opt-label">C</span>Physiquement proches lors des cérémonies</button></li>
+      <li><button onclick="answer(this,'q3',false)"><span class="opt-label">D</span>Produits par le même studio</button></li>
+    </ul>
+    <div class="feedback" id="fb-q3"></div>
+  </div>
+
+  <!-- 4 -->
+  <div class="exercise" id="q4">
+    <div class="ex-number">Question 4 / 20</div>
+    <span class="ex-category cat-vocab">Vocabulaire</span>
+    <div class="ex-question">Le mot <em>"frileux"</em> est utilisé pour décrire le climat hollywoodien. Quelle est la signification figurée de cet adjectif dans ce contexte ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q4',false)"><span class="opt-label">A</span>Ayant froid physiquement ; concerné par les températures</button></li>
+      <li><button onclick="answer(this,'q4',true)"><span class="opt-label">B</span>Prudent à l'excès, réticent à prendre des risques créatifs</button></li>
+      <li><button onclick="answer(this,'q4',false)"><span class="opt-label">C</span>Enthousiasmé mais hésitant à s'exprimer</button></li>
+      <li><button onclick="answer(this,'q4',false)"><span class="opt-label">D</span>Hostile aux réalisateurs étrangers</button></li>
+    </ul>
+    <div class="feedback" id="fb-q4"></div>
+  </div>
+
+  <!-- 5 -->
+  <div class="exercise" id="q5">
+    <div class="ex-number">Question 5 / 20</div>
+    <span class="ex-category cat-vocab">Vocabulaire</span>
+    <div class="ex-question">Que veut dire <em>"noyauté"</em> dans la phrase : "pouvoirs publics noyautés par les suprémacistes blancs" ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q5',false)"><span class="opt-label">A</span>Fondés par</button></li>
+      <li><button onclick="answer(this,'q5',false)"><span class="opt-label">B</span>Menacés depuis l'extérieur par</button></li>
+      <li><button onclick="answer(this,'q5',true)"><span class="opt-label">C</span>Infiltrés et contrôlés de l'intérieur par</button></li>
+      <li><button onclick="answer(this,'q5',false)"><span class="opt-label">D</span>Légalement dirigés par</button></li>
+    </ul>
+    <div class="feedback" id="fb-q5"></div>
+  </div>
+
+  <!-- 6 -->
+  <div class="exercise" id="q6">
+    <div class="ex-number">Question 6 / 20</div>
+    <span class="ex-category cat-vocab">Vocabulaire</span>
+    <div class="ex-question">L'expression <em>"un chant du cygne"</em> est employée pour désigner la situation de la Warner. Que signifie-t-elle précisément ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q6',false)"><span class="opt-label">A</span>Un grand succès commercial inattendu</button></li>
+      <li><button onclick="answer(this,'q6',false)"><span class="opt-label">B</span>Une célébration musicale lors d'une cérémonie</button></li>
+      <li><button onclick="answer(this,'q6',true)"><span class="opt-label">C</span>Une dernière grande réalisation avant la fin ou le déclin</button></li>
+      <li><button onclick="answer(this,'q6',false)"><span class="opt-label">D</span>Un retour en grâce après une longue absence</button></li>
+    </ul>
+    <div class="feedback" id="fb-q6"></div>
+  </div>
+
+  <!-- 7 -->
+  <div class="exercise" id="q7">
+    <div class="ex-number">Question 7 / 20</div>
+    <span class="ex-category cat-grammar">Grammaire</span>
+    <div class="ex-question">Analysez la valeur du futur antérieur dans la phrase : <em>"Rarement deux films auront été autant au coude-à-coude dans les pronostics."</em> Quelle est sa fonction ici ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q7',false)"><span class="opt-label">A</span>Exprimer une action future certaine, antérieure à une autre action future</button></li>
+      <li><button onclick="answer(this,'q7',true)"><span class="opt-label">B</span>Exprimer un bilan ou constat portant sur l'ensemble de l'histoire du cinéma (valeur de bilan)</button></li>
+      <li><button onclick="answer(this,'q7',false)"><span class="opt-label">C</span>Indiquer une hypothèse sur le passé (futur conditionnel)</button></li>
+      <li><button onclick="answer(this,'q7',false)"><span class="opt-label">D</span>Nuancer l'assertion en l'attribuant à une source tierce</button></li>
+    </ul>
+    <div class="feedback" id="fb-q7"></div>
+  </div>
+
+  <!-- 8 -->
+  <div class="exercise" id="q8">
+    <div class="ex-number">Question 8 / 20</div>
+    <span class="ex-category cat-grammar">Grammaire</span>
+    <div class="ex-question">Dans la phrase <em>"Bien que tourné juste avant le retour de Donald Trump..."</em>, quelle est la nature grammaticale de "tourné" et pourquoi est-il au participe passé et non au participe présent ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q8',false)"><span class="opt-label">A</span>C'est un adjectif qualificatif épithète modifiant "retour".</button></li>
+      <li><button onclick="answer(this,'q8',true)"><span class="opt-label">B</span>C'est un participe passé dans une proposition participiale absolue ; il exprime une action antérieure et passive (le film a été réalisé avant).</button></li>
+      <li><button onclick="answer(this,'q8',false)"><span class="opt-label">C</span>C'est un gérondif qui exprime la simultanéité avec l'action principale.</button></li>
+      <li><button onclick="answer(this,'q8',false)"><span class="opt-label">D</span>C'est un verbe conjugué à la voix passive à un temps composé.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q8"></div>
+  </div>
+
+  <!-- 9 -->
+  <div class="exercise" id="q9">
+    <div class="ex-number">Question 9 / 20</div>
+    <span class="ex-category cat-grammar">Grammaire</span>
+    <div class="ex-question">Quel est le rôle syntaxique du connecteur <em>"quoique"</em> dans la phrase : "Tous deux portent une forte charge politique, <em>quoique</em> dans des styles différents" ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q9',false)"><span class="opt-label">A</span>Conjonction de coordination exprimant la cause</button></li>
+      <li><button onclick="answer(this,'q9',true)"><span class="opt-label">B</span>Conjonction de subordination concessive exprimant une restriction (= bien que)</button></li>
+      <li><button onclick="answer(this,'q9',false)"><span class="opt-label">C</span>Adverbe de comparaison introduisant une comparaison d'inégalité</button></li>
+      <li><button onclick="answer(this,'q9',false)"><span class="opt-label">D</span>Locution conjonctive d'opposition marquant une contradiction totale</button></li>
+    </ul>
+    <div class="feedback" id="fb-q9"></div>
+  </div>
+
+  <!-- 10 -->
+  <div class="exercise" id="q10">
+    <div class="ex-number">Question 10 / 20</div>
+    <span class="ex-category cat-register">Registre &amp; style</span>
+    <div class="ex-question">L'article emploie le verbe <em>"vampiriser"</em> ("l'Amérique blanche a vampirisé la culture noire"). Quelle est la figure de style utilisée et quel est son effet ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q10',false)"><span class="opt-label">A</span>Une allégorie qui personnifie l'Amérique blanche en un personnage littéraire</button></li>
+      <li><button onclick="answer(this,'q10',false)"><span class="opt-label">B</span>Une métonymie désignant les studios hollywoodiens par une figure culturelle</button></li>
+      <li><button onclick="answer(this,'q10',true)"><span class="opt-label">C</span>Une métaphore filée qui étend le thème des vampires du film à une critique de l'appropriation culturelle</button></li>
+      <li><button onclick="answer(this,'q10',false)"><span class="opt-label">D</span>Une hyperbole destinée à ridiculiser les critiques du film</button></li>
+    </ul>
+    <div class="feedback" id="fb-q10"></div>
+  </div>
+
+  <!-- 11 -->
+  <div class="exercise" id="q11">
+    <div class="ex-number">Question 11 / 20</div>
+    <span class="ex-category cat-register">Registre &amp; style</span>
+    <div class="ex-question">La phrase <em>"Tandis que les films dénoncent, les stars, elles, restent muettes"</em> illustre quel procédé rhétorique ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q11',false)"><span class="opt-label">A</span>L'anaphore — répétition d'un même mot en début de proposition</button></li>
+      <li><button onclick="answer(this,'q11',true)"><span class="opt-label">B</span>L'antithèse — opposition structurée entre deux réalités contraires, renforcée par la mise en relief ("elles")</button></li>
+      <li><button onclick="answer(this,'q11',false)"><span class="opt-label">C</span>La litote — atténuation d'une idée forte pour en renforcer l'impact</button></li>
+      <li><button onclick="answer(this,'q11',false)"><span class="opt-label">D</span>L'euphémisme — substitution d'un terme fort par un terme atténué</button></li>
+    </ul>
+    <div class="feedback" id="fb-q11"></div>
+  </div>
+
+  <!-- 12 -->
+  <div class="exercise" id="q12">
+    <div class="ex-number">Question 12 / 20</div>
+    <span class="ex-category cat-register">Registre &amp; style</span>
+    <div class="ex-question">Quel est le registre dominant de l'article dans son ensemble ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q12',false)"><span class="opt-label">A</span>Scientifique et technique</button></li>
+      <li><button onclick="answer(this,'q12',false)"><span class="opt-label">B</span>Familier et satirique</button></li>
+      <li><button onclick="answer(this,'q12',true)"><span class="opt-label">C</span>Journalistique soutenu, mêlant analyse et citation de sources, avec quelques touches d'ironie</button></li>
+      <li><button onclick="answer(this,'q12',false)"><span class="opt-label">D</span>Académique et neutre, sans prise de position</button></li>
+    </ul>
+    <div class="feedback" id="fb-q12"></div>
+  </div>
+
+  <!-- 13 -->
+  <div class="exercise" id="q13">
+    <div class="ex-number">Question 13 / 20</div>
+    <span class="ex-category cat-comprehension">Compréhension</span>
+    <div class="ex-question">Selon l'article, quelle est la thèse politique implicite d'<em>Une bataille après l'autre</em> malgré sa mise en garde contre "l'extrémisme des deux camps" ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q13',false)"><span class="opt-label">A</span>Le film est rigoureusement équilibré et ne prend pas parti.</button></li>
+      <li><button onclick="answer(this,'q13',false)"><span class="opt-label">B</span>Le film critique avant tout la violence révolutionnaire.</button></li>
+      <li><button onclick="answer(this,'q13',true)"><span class="opt-label">C</span>Le film désigne clairement les pouvoirs publics noyautés par les suprémacistes blancs comme les principaux antagonistes.</button></li>
+      <li><button onclick="answer(this,'q13',false)"><span class="opt-label">D</span>Le film critique uniquement la politique étrangère américaine.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q13"></div>
+  </div>
+
+  <!-- 14 -->
+  <div class="exercise" id="q14">
+    <div class="ex-number">Question 14 / 20</div>
+    <span class="ex-category cat-comprehension">Compréhension</span>
+    <div class="ex-question">Quelle critique l'auteur de l'article formule-t-il à l'égard de Leonardo DiCaprio ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q14',false)"><span class="opt-label">A</span>Sa performance d'acteur est décevante dans le rôle.</button></li>
+      <li><button onclick="answer(this,'q14',true)"><span class="opt-label">B</span>Dans ses interviews, il présente le film comme une œuvre légère plutôt que comme le film politique engagé qu'il est.</button></li>
+      <li><button onclick="answer(this,'q14',false)"><span class="opt-label">C</span>Il refuse de parler du film en public.</button></li>
+      <li><button onclick="answer(this,'q14',false)"><span class="opt-label">D</span>Il n'est pas à la hauteur des attentes générées par les nominations.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q14"></div>
+  </div>
+
+  <!-- 15 -->
+  <div class="exercise" id="q15">
+    <div class="ex-number">Question 15 / 20</div>
+    <span class="ex-category cat-vocab">Vocabulaire</span>
+    <div class="ex-question">Dans <em>"la campagne reste terriblement fade"</em>, quel est le sens précis de l'adjectif <em>"fade"</em> dans ce contexte journalistique ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q15',false)"><span class="opt-label">A</span>Qui manque de couleurs dans les visuels promotionnels</button></li>
+      <li><button onclick="answer(this,'q15',false)"><span class="opt-label">B</span>Qui manque de financement</button></li>
+      <li><button onclick="answer(this,'q15',true)"><span class="opt-label">C</span>Qui manque d'engagement, de punch, de relief — insipide, sans relief politique</button></li>
+      <li><button onclick="answer(this,'q15',false)"><span class="opt-label">D</span>Qui est mal organisée sur le plan logistique</button></li>
+    </ul>
+    <div class="feedback" id="fb-q15"></div>
+  </div>
+
+  <!-- 16 -->
+  <div class="exercise" id="q16">
+    <div class="ex-number">Question 16 / 20</div>
+    <span class="ex-category cat-inferences">Inférences</span>
+    <div class="ex-question">Que sous-entend le titre de section <em>"Des films plus politiques que leurs stars"</em> ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q16',false)"><span class="opt-label">A</span>Les acteurs sont impliqués en politique personnellement.</button></li>
+      <li><button onclick="answer(this,'q16',true)"><span class="opt-label">B</span>Les films ont un contenu politique courageux que les acteurs n'assument pas dans leurs prises de parole publiques.</button></li>
+      <li><button onclick="answer(this,'q16',false)"><span class="opt-label">C</span>Les réalisateurs sont plus célèbres que leurs acteurs.</button></li>
+      <li><button onclick="answer(this,'q16',false)"><span class="opt-label">D</span>Les films traitent de politique de façon plus directe que les discours des stars.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q16"></div>
+  </div>
+
+  <!-- 17 -->
+  <div class="exercise" id="q17">
+    <div class="ex-number">Question 17 / 20</div>
+    <span class="ex-category cat-grammar">Grammaire</span>
+    <div class="ex-question">Dans <em>"Le site craint que ces Oscars ne constituent un chant du cygne"</em>, quel est le rôle du <em>"ne"</em> dit "explétif" ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q17',false)"><span class="opt-label">A</span>Il exprime une négation réelle : le site nie que ce soit le cas.</button></li>
+      <li><button onclick="answer(this,'q17',true)"><span class="opt-label">B</span>Il est purement stylistique (explétif), sans valeur négative — il accompagne un verbe de crainte au subjonctif.</button></li>
+      <li><button onclick="answer(this,'q17',false)"><span class="opt-label">C</span>Il renforce la négation "pas" sous-entendue dans la phrase.</button></li>
+      <li><button onclick="answer(this,'q17',false)"><span class="opt-label">D</span>Il indique une hypothèse irréelle.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q17"></div>
+  </div>
+
+  <!-- 18 -->
+  <div class="exercise" id="q18">
+    <div class="ex-number">Question 18 / 20</div>
+    <span class="ex-category cat-inferences">Inférences</span>
+    <div class="ex-question">La préoccupation finale de l'auteur (Collider) peut se résumer ainsi : quel est le vrai risque après ces Oscars selon le journaliste ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q18',false)"><span class="opt-label">A</span>Que <em>Sinners</em> et <em>Une bataille après l'autre</em> ne remportent aucun Oscar.</button></li>
+      <li><button onclick="answer(this,'q18',false)"><span class="opt-label">B</span>Que Warner continue à produire des films peu ambitieux.</button></li>
+      <li><button onclick="answer(this,'q18',true)"><span class="opt-label">C</span>Que le rachat de Warner par Paramount marque la fin d'une ère de cinéma audacieux, rendant ce type de films plus difficile à financer à l'avenir.</button></li>
+      <li><button onclick="answer(this,'q18',false)"><span class="opt-label">D</span>Que les réalisateurs quittent Hollywood pour des plateformes de streaming.</button></li>
+    </ul>
+    <div class="feedback" id="fb-q18"></div>
+  </div>
+
+  <!-- 19 -->
+  <div class="exercise" id="q19">
+    <div class="ex-number">Question 19 / 20</div>
+    <span class="ex-category cat-vocab">Vocabulaire</span>
+    <div class="ex-question">L'expression <em>"avoir les coudées franches"</em> (ex : "qui laissera les coudées franches à Ryan Coogler") signifie :</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q19',false)"><span class="opt-label">A</span>Avoir le droit légal de tourner un film</button></li>
+      <li><button onclick="answer(this,'q19',true)"><span class="opt-label">B</span>Avoir toute liberté d'agir, sans contraintes ni entraves</button></li>
+      <li><button onclick="answer(this,'q19',false)"><span class="opt-label">C</span>Bénéficier d'un grand budget de production</button></li>
+      <li><button onclick="answer(this,'q19',false)"><span class="opt-label">D</span>Être soutenu publiquement par ses collègues</button></li>
+    </ul>
+    <div class="feedback" id="fb-q19"></div>
+  </div>
+
+  <!-- 20 -->
+  <div class="exercise" id="q20">
+    <div class="ex-number">Question 20 / 20</div>
+    <span class="ex-category cat-inferences">Inférences</span>
+    <div class="ex-question">L'article mentionne que les deux films "font écho à leur époque sans jamais mentionner de véritables événements historiques ni l'actualité". Quelle technique narrative cela décrit-il ?</div>
+    <ul class="options">
+      <li><button onclick="answer(this,'q20',false)"><span class="opt-label">A</span>Le cinéma documentaire à thèse</button></li>
+      <li><button onclick="answer(this,'q20',false)"><span class="opt-label">B</span>Le réalisme magique combiné à la satire politique directe</button></li>
+      <li><button onclick="answer(this,'q20',true)"><span class="opt-label">C</span>L'allégorie ou la métaphore politique : traiter le présent à travers un cadre fictif ou historique décalé</button></li>
+      <li><button onclick="answer(this,'q20',false)"><span class="opt-label">D</span>Le cinéma d'auteur qui évite délibérément tout message politique</button></li>
+    </ul>
+    <div class="feedback" id="fb-q20"></div>
+  </div>
+
+  <button class="check-btn" onclick="showScore()">Voir mon score final →</button>
+  <div class="score-box" id="score-box">
+    <div class="score-num" id="score-num">—</div>
+    <div class="score-label">Score / 20 questions</div>
+    <div class="score-msg" id="score-msg"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>Fiche pédagogique · Texte © Courrier International / Hugo Florent · Exercices créés à des fins éducatives</footer>
+
+<script>
+const answers = {};
+const correct = {};
+let answered = 0;
+
+function answer(btn, qid, isCorrect) {
+  if (answers[qid] !== undefined) return;
+  answers[qid] = isCorrect;
+  if (isCorrect) correct[qid] = true;
+  answered++;
+
+  const exercise = document.getElementById(qid);
+  const allBtns = exercise.querySelectorAll('.options button');
+  allBtns.forEach(b => { b.disabled = true; });
+
+  const fb = document.getElementById('fb-' + qid);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.className = 'feedback show correct-fb';
+    fb.textContent = '✓ Correct ! ' + getFeedback(qid, true);
+  } else {
+    btn.classList.add('wrong');
+    fb.className = 'feedback show wrong-fb';
+    fb.textContent = '✗ Incorrect. ' + getFeedback(qid, false);
+    // highlight correct
+    allBtns.forEach(b => {
+      if (b.onclick && b.onclick.toString().includes('true')) b.classList.add('correct');
+    });
+  }
+}
+
+function getFeedback(qid, isCorrect) {
+  const fb = {
+    q1: { t: "L'Académie ne publie que les noms des lauréats, sans détail des scores, rendant toute comparaison avec des données électorales impossible.", f: "Relisez le deuxième paragraphe : c'est le manque de transparence sur le détail des votes qui est en cause." },
+    q2: { t: "Ce paradoxe révèle la tension entre le jugement artistique et d'autres considérations (impact culturel, représentation) dans le vote.", f: "Variety rapporte que des votants voyaient UBALA gagnant mais ont voté Sinners — un paradoxe révélateur." },
+    q3: { t: "'Au coude-à-coude' vient des courses hippiques : deux chevaux si proches que leurs coudes se touchent. En anglais : 'neck and neck'.", f: "Il s'agit d'une métaphore sportive signifiant une concurrence très serrée, pas une proximité physique ou artistique." },
+    q4: { t: "Au sens figuré, 'frileux' qualifie une attitude de prudence excessive, de peur de prendre des risques — ici des risques créatifs ou commerciaux.", f: "Le sens propre (avoir froid) n'est pas pertinent ici. C'est le sens figuré de 'timide / craintif' qui s'applique." },
+    q5: { t: "'Noyauter' vient du vocabulaire politique : infiltrer une organisation pour la contrôler de l'intérieur, comme un noyau au centre d'un fruit.", f: "Ce n'est pas une simple influence externe mais une infiltration interne visant à prendre le contrôle." },
+    q6: { t: "Expression héritée du mythe selon lequel le cygne, silencieux toute sa vie, chante magnifiquement avant de mourir. Ici, la Warner brillerait une dernière fois avant sa transformation.", f: "Le 'chant du cygne' implique toujours une fin imminente, pas un renouveau ni un succès commercial ordinaire." },
+    q7: { t: "Le futur antérieur peut exprimer un bilan sur une période longue ('De tous les films qui ont jamais existé...'). C'est sa valeur de récapitulation.", f: "La phrase est une généralisation sur l'histoire du cinéma, pas une action future antérieure à une autre action future." },
+    q8: { t: "La proposition participe avec un participe passé exprime une antériorité et une passivité (le film fut tourné par quelqu'un, avant les événements politiques).", f: "Ce n'est pas un gérondif (qui exprimerait la simultanéité avec 'en tournant') ni un simple adjectif." },
+    q9: { t: "'Quoique' + adjectif/nom est une construction concessive elliptique (= bien que ce soit dans des styles différents). Il introduit une restriction.", f: "C'est une conjonction de subordination concessive, pas de coordination, et elle restreint sans nier totalement." },
+    q10: { t: "La métaphore filée étend l'image des vampires du film à la réalité culturelle américaine — le film commente sa propre métaphore.", f: "C'est bien une métaphore (transfert de sens) et elle est 'filée' car elle prolonge un fil thématique établi dès le début." },
+    q11: { t: "L'antithèse oppose films (actifs, dénonçant) et stars (passives, muettes). Le 'elles' de mise en relief accentue le contraste.", f: "L'anaphore répète un mot en tête de phrase. La litote atténue. L'euphémisme adoucit. Ici c'est bien une opposition structurée." },
+    q12: { t: "Le journaliste cite des sources, analyse, mais n'hésite pas à prendre parti (ex: critique de DiCaprio) — typique du journalisme d'opinion soutenu.", f: "Il y a bien des prises de position et une ironie légère, donc ni purement neutre ni familier." },
+    q13: { t: "Bien que le film mette en garde 'contre les deux camps', il identifie clairement les pouvoirs suprémacistes comme les 'véritables méchants'.", f: "L'article est explicite : le film 'nous fait comprendre clairement qui sont les véritables méchants' — côté État suprémaciste." },
+    q14: { t: "Cette attitude de DiCaprio est critiquée car elle dépolitise un film profondément engagé, trahissant son message.", f: "La critique porte sur ses interviews : il minimise la portée politique du film, le présentant comme une comédie familiale." },
+    q15: { t: "'Fade' signifie littéralement 'sans saveur' (insipid). Au figuré : sans caractère, sans engagement, sans prise de position — le comble pour une campagne de films politiques.", f: "'Fade' n'a rien à voir avec les visuels ou le financement. C'est l'absence de relief, de substance, d'engagement." },
+    q16: { t: "Le paradoxe est là : des films engagés portés par des stars qui refusent d'assumer publiquement cet engagement.", f: "C'est plus subtil que la réponse D : il ne s'agit pas d'une différence de degré mais d'un aveu public manquant." },
+    q17: { t: "Après 'craindre que', 'redouter que', 'avoir peur que', le 'ne' explétif est une survivance du latin et du français classique. Il n'est pas négatif.", f: "Ce 'ne' n'annule pas le sens. Supprimer 'ne' ici ne changerait pas le sens : 'craint que ces Oscars constituent...' = même sens." },
+    q18: { t: "Le rachat de Warner par Paramount symbolise la fin d'une époque où un studio pouvait financer des films à la fois ambitieux et rentables.", f: "La vraie inquiétude n'est pas sur ces Oscars eux-mêmes mais sur ce qui se passera dans l'industrie après." },
+    q19: { t: "Origine : au Moyen Âge, les tisserands avaient besoin d'espace pour leurs coudes. Au figuré : espace de liberté pour agir.", f: "Ce n'est pas une question de budget ni de droits légaux, mais de liberté d'action sans entraves." },
+    q20: { t: "Les films parlent de la ségrégation des années 1930, de l'Amérique fasciste fictive — mais commentent implicitement le présent. C'est l'essence de l'allégorie politique.", f: "Ce n'est pas du cinéma documentaire. Et s'ils évitaient le message politique, l'auteur ne les qualifierait pas de 'quasi révolutionnaires'." }
+  };
+  return isCorrect ? fb[qid].t : fb[qid].f;
+}
+
+function showScore() {
+  const total = Object.keys(answers).length;
+  const score = Object.keys(correct).length;
+  const box = document.getElementById('score-box');
+  document.getElementById('score-num').textContent = score + ' / ' + total;
+  let msg = '';
+  const pct = score / 20;
+  if (pct >= 0.9) msg = "🏆 Excellent ! Votre maîtrise du français C1 est remarquable.";
+  else if (pct >= 0.75) msg = "👍 Très bien ! Quelques points à revoir, mais le niveau C1 est maîtrisé.";
+  else if (pct >= 0.6) msg = "📚 Bien. Relisez les sections vocabulaire et grammaire pour consolider.";
+  else msg = "📖 En progrès. Recommencez après avoir étudié les fiches vocabulaire et expressions.";
+  document.getElementById('score-msg').textContent = msg;
+  box.classList.add('show');
+  box.scrollIntoView({ behavior: 'smooth' });
+}
+
+
+</script>
+</body>
+</html>
