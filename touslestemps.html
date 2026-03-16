@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Révision des Temps · Fabien</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --cream: #faf8f3;
+    --warm: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --terracotta: #c0614a;
+    --sage: #5a7a5e;
+    --muted: #7a7060;
+    --border: #ddd5c0;
+    --shadow: rgba(26,26,46,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: var(--ink);
+    color: var(--cream);
+    padding: 3rem 2rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 50%, rgba(201,168,76,.18) 0%, transparent 60%),
+                radial-gradient(ellipse at 70% 30%, rgba(90,122,94,.12) 0%, transparent 55%);
+  }
+  .hero-label {
+    font-size: .75rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: .8rem;
+    position: relative;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.15;
+    position: relative;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    margin-top: .9rem;
+    font-size: .9rem;
+    color: rgba(250,248,243,.6);
+    position: relative;
+  }
+
+  /* ── TENSE NAV ── */
+  .tense-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    justify-content: center;
+    padding: 1.4rem 1.5rem;
+    background: var(--warm);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .tense-pill {
+    padding: .35rem .9rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--border);
+    background: white;
+    font-size: .78rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all .2s;
+    text-decoration: none;
+    color: var(--ink);
+  }
+  .tense-pill:hover, .tense-pill.active {
+    background: var(--ink);
+    color: var(--cream);
+    border-color: var(--ink);
+  }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem 4rem;
+  }
+
+  /* ── SECTION ── */
+  .tense-section {
+    margin-bottom: 3rem;
+    scroll-margin-top: 80px;
+  }
+  .section-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: .9rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-icon {
+    font-size: 1.6rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+  .section-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+  }
+  .section-header .tense-tag {
+    font-size: .7rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-top: .15rem;
+  }
+
+  /* ── CONJUGATION BOX ── */
+  .conjugation-box {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
+  }
+  .conj-title {
+    background: var(--warm);
+    border-bottom: 1px solid var(--border);
+    padding: .55rem 1rem;
+    font-size: .72rem;
+    font-weight: 500;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .conj-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 0;
+  }
+  .conj-row {
+    display: flex;
+    align-items: center;
+    padding: .45rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: .88rem;
+  }
+  .conj-row:last-child { border-bottom: none; }
+  .conj-row:nth-child(even) { background: #fafaf7; }
+  .conj-pro {
+    color: var(--muted);
+    min-width: 2.5rem;
+    font-weight: 500;
+  }
+  .conj-form { color: var(--ink); }
+  .conj-form strong { color: var(--terracotta); }
+
+  /* ── RULE BOX ── */
+  .rule-box {
+    background: linear-gradient(135deg, #fffdf5 0%, #f5f0e8 100%);
+    border: 1px solid var(--gold-light);
+    border-left: 4px solid var(--gold);
+    border-radius: 8px;
+    padding: .9rem 1.1rem;
+    margin-bottom: 1rem;
+    font-size: .87rem;
+    line-height: 1.65;
+  }
+  .rule-box strong { color: var(--terracotta); }
+  .rule-box .rule-title {
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: .35rem;
+    font-size: .78rem;
+    text-transform: uppercase;
+    letter-spacing: .1em;
+  }
+
+  /* ── USAGE CHIPS ── */
+  .usage-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .45rem;
+    margin-bottom: 1rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .3rem .75rem;
+    border-radius: 999px;
+    font-size: .78rem;
+    font-weight: 500;
+  }
+  .chip-sage { background: #e8f0e9; color: var(--sage); }
+  .chip-terra { background: #f5e8e5; color: var(--terracotta); }
+  .chip-gold  { background: #faf0d8; color: #8a6a20; }
+  .chip-blue  { background: #e5eaf5; color: #3a4a80; }
+
+  /* ── EXERCISE ── */
+  .exercise {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px var(--shadow);
+    margin-top: 1rem;
+  }
+  .exercise-header {
+    background: var(--ink);
+    color: var(--cream);
+    padding: .65rem 1.1rem;
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    font-size: .82rem;
+    font-weight: 500;
+    letter-spacing: .05em;
+  }
+  .exercise-header .ex-icon { font-size: 1rem; }
+  .exercise-body { padding: 1.1rem; }
+
+  .ex-item {
+    display: flex;
+    align-items: baseline;
+    gap: .5rem;
+    padding: .6rem 0;
+    border-bottom: 1px dashed var(--border);
+    font-size: .9rem;
+    line-height: 1.6;
+    flex-wrap: wrap;
+  }
+  .ex-item:last-of-type { border-bottom: none; }
+  .ex-num {
+    font-weight: 700;
+    color: var(--gold);
+    min-width: 1.4rem;
+    flex-shrink: 0;
+  }
+  .blank {
+    display: inline-block;
+    min-width: 130px;
+    border-bottom: 1.5px solid var(--ink);
+    margin: 0 .2rem;
+    padding: 0 .15rem .1rem;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .9rem;
+    background: transparent;
+    transition: border-color .2s;
+  }
+  .blank:focus { border-color: var(--gold); }
+  .blank.correct { border-color: var(--sage); color: var(--sage); }
+  .blank.wrong   { border-color: var(--terracotta); color: var(--terracotta); }
+
+  .btn-check {
+    margin-top: 1rem;
+    padding: .55rem 1.3rem;
+    background: var(--ink);
+    color: var(--cream);
+    border: none;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: .05em;
+    transition: background .2s;
+  }
+  .btn-check:hover { background: var(--terracotta); }
+
+  .btn-correction {
+    margin-top: .6rem;
+    margin-left: .6rem;
+    padding: .55rem 1.3rem;
+    background: transparent;
+    color: var(--muted);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .82rem;
+    cursor: pointer;
+    transition: all .2s;
+  }
+  .btn-correction:hover { border-color: var(--ink); color: var(--ink); }
+
+  .correction {
+    display: none;
+    margin-top: .8rem;
+    padding: .75rem 1rem;
+    background: #f5f0e8;
+    border-radius: 8px;
+    font-size: .85rem;
+    line-height: 1.8;
+    border: 1px solid var(--border);
+  }
+  .correction.visible { display: block; }
+  .correction ol { padding-left: 1.3rem; }
+  .correction li { margin-bottom: .2rem; }
+  .correction strong { color: var(--sage); }
+
+  /* ── EXAMPLES ── */
+  .examples {
+    display: grid;
+    gap: .5rem;
+    margin-bottom: 1rem;
+  }
+  .example-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: .7rem 1rem;
+    display: flex;
+    gap: .8rem;
+    align-items: baseline;
+    font-size: .88rem;
+    line-height: 1.5;
+  }
+  .ex-bullet {
+    color: var(--gold);
+    font-size: 1rem;
+    flex-shrink: 0;
+    line-height: 1.4;
+  }
+  .ex-fr { font-style: italic; color: var(--ink); }
+  .ex-note { color: var(--muted); font-size: .8rem; margin-top: .1rem; }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--border), transparent);
+    margin: 2rem 0;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 1.5rem;
+    font-size: .78rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <p class="hero-label">Révision A2 · B1</p>
+  <h1>Les <em>temps</em> du français</h1>
+  <p class="hero-sub">présent · participe présent · futur proche · futur simple · imparfait · passé composé · conditionnel</p>
+</header>
+
+<nav class="tense-nav">
+  <a href="#present" class="tense-pill">Présent</a>
+  <a href="#part-present" class="tense-pill">Part. présent</a>
+  <a href="#futur-proche" class="tense-pill">Futur proche</a>
+  <a href="#futur-simple" class="tense-pill">Futur simple</a>
+  <a href="#imparfait" class="tense-pill">Imparfait</a>
+  <a href="#passe-compose" class="tense-pill">Passé composé</a>
+  <a href="#conditionnel" class="tense-pill">Conditionnel</a>
+</nav>
+
+<main>
+
+<!-- ════════════════════════ 1. PRÉSENT ════════════════════════ -->
+<section class="tense-section" id="present">
+  <div class="section-header">
+    <div class="section-icon">🌀</div>
+    <div>
+      <h2>Présent de l'indicatif</h2>
+      <span class="tense-tag">Ce qui est vrai maintenant, en ce moment ou en général</span>
+    </div>
+  </div>
+
+  <div class="usage-chips">
+    <span class="chip chip-sage">✦ Action en cours</span>
+    <span class="chip chip-sage">✦ Vérité générale</span>
+    <span class="chip chip-gold">✦ Habitude</span>
+    <span class="chip chip-blue">✦ Maintenant</span>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">Formation</div>
+    <strong>-er :</strong> je parl<strong>e</strong>, tu parl<strong>es</strong>, il parl<strong>e</strong>, nous parl<strong>ons</strong>, vous parl<strong>ez</strong>, ils parl<strong>ent</strong><br>
+    <strong>-ir :</strong> je fin<strong>is</strong>, tu fin<strong>is</strong>, il fin<strong>it</strong>, nous fin<strong>issons</strong>, vous fin<strong>issez</strong>, ils fin<strong>issent</strong><br>
+    <strong>-re :</strong> je prend<strong>s</strong>, tu prend<strong>s</strong>, il prend<strong> —</strong>, nous pren<strong>ons</strong>, vous pren<strong>ez</strong>, ils prenn<strong>ent</strong><br>
+    ⚠️ Irréguliers importants : <strong>être, avoir, aller, faire, pouvoir, vouloir, venir, savoir</strong>
+  </div>
+
+  <div class="conjugation-box">
+    <div class="conj-title">Verbes modèles</div>
+    <div class="conj-grid">
+      <div class="conj-row"><span class="conj-pro">je</span><span class="conj-form">parl<strong>e</strong> / fin<strong>is</strong> / prend<strong>s</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">tu</span><span class="conj-form">parl<strong>es</strong> / fin<strong>is</strong> / prend<strong>s</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">il/elle</span><span class="conj-form">parl<strong>e</strong> / fin<strong>it</strong> / prend<strong> —</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">nous</span><span class="conj-form">parl<strong>ons</strong> / fin<strong>issons</strong> / pren<strong>ons</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">vous</span><span class="conj-form">parl<strong>ez</strong> / fin<strong>issez</strong> / pren<strong>ez</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">ils/elles</span><span class="conj-form">parl<strong>ent</strong> / fin<strong>issent</strong> / prenn<strong>ent</strong></span></div>
+    </div>
+  </div>
+
+  <div class="examples">
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Elle <strong>travaille</strong> au centre-ville.</div><div class="ex-note">habitude</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Nous <strong>apprenons</strong> le français.</div><div class="ex-note">en cours</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Le soleil <strong>se lève</strong> à l'est.</div><div class="ex-note">vérité générale</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">✏️</span> Exercice – Conjugue au présent</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Chaque matin, tu (boire) <input class="blank" data-answer="bois"> un café.</div>
+      <div class="ex-item"><span class="ex-num">2.</span> Nous (choisir) <input class="blank" data-answer="choisissons"> toujours ce restaurant.</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Ils (être) <input class="blank" data-answer="sont"> très contents.</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Elle (faire) <input class="blank" data-answer="fait"> du yoga le lundi.</div>
+      <div class="ex-item"><span class="ex-num">5.</span> Vous (vouloir) <input class="blank" data-answer="voulez"> du thé ou du café ?</div>
+      <div class="ex-item"><span class="ex-num">6.</span> Je (venir) <input class="blank" data-answer="viens"> de Lyon.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>bois</strong></li>
+          <li><strong>choisissons</strong></li>
+          <li><strong>sont</strong></li>
+          <li><strong>fait</strong></li>
+          <li><strong>voulez</strong></li>
+          <li><strong>viens</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════ 2. PARTICIPE PRÉSENT ════════════════════════ -->
+<section class="tense-section" id="part-present">
+  <div class="section-header">
+    <div class="section-icon">🌿</div>
+    <div>
+      <h2>Participe présent</h2>
+      <span class="tense-tag">-ant · Deux actions simultanées ou cause</span>
+    </div>
+  </div>
+
+  <div class="usage-chips">
+    <span class="chip chip-sage">✦ En + part. présent (gérondif)</span>
+    <span class="chip chip-blue">✦ Simultanéité</span>
+    <span class="chip chip-gold">✦ Cause / Manière</span>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">Formation</div>
+    Radical de <strong>nous</strong> au présent → on retire <strong>-ons</strong> → on ajoute <strong>-ant</strong><br>
+    parl<strong>ons</strong> → parl<strong>ant</strong> · finiss<strong>ons</strong> → finiss<strong>ant</strong> · pren<strong>ons</strong> → pren<strong>ant</strong><br><br>
+    ⚠️ Irréguliers : <strong>être → étant</strong> · <strong>avoir → ayant</strong> · <strong>savoir → sachant</strong><br><br>
+    <strong>Gérondif :</strong> <em>en</em> + participe présent → en parlant, en finissant
+  </div>
+
+  <div class="examples">
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr"><strong>En travaillant</strong> beaucoup, il a réussi.</div><div class="ex-note">cause</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Elle écoute la radio <strong>en conduisant</strong>.</div><div class="ex-note">simultanéité</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">C'est <strong>en pratiquant</strong> qu'on apprend.</div><div class="ex-note">moyen</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">✏️</span> Exercice – Forme le participe présent ou le gérondif</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Il a rencontré sa femme (voyager) → <input class="blank" data-answer="en voyageant"> .</div>
+      <div class="ex-item"><span class="ex-num">2.</span> (Savoir) <input class="blank" data-answer="Sachant"> qu'il pleuvait, elle a pris un parapluie.</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Elle mange (regarder) <input class="blank" data-answer="en regardant"> la télé.</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Le participe de <em>finir</em> est : <input class="blank" data-answer="finissant"> .</div>
+      <div class="ex-item"><span class="ex-num">5.</span> (Être) <input class="blank" data-answer="Étant"> malade, il n'est pas venu.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>en voyageant</strong></li>
+          <li><strong>Sachant</strong></li>
+          <li><strong>en regardant</strong></li>
+          <li><strong>finissant</strong></li>
+          <li><strong>Étant</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════ 3. FUTUR PROCHE ════════════════════════ -->
+<section class="tense-section" id="futur-proche">
+  <div class="section-header">
+    <div class="section-icon">🚀</div>
+    <div>
+      <h2>Futur proche</h2>
+      <span class="tense-tag">aller + infinitif · Projet certain, proche ou planifié</span>
+    </div>
+  </div>
+
+  <div class="usage-chips">
+    <span class="chip chip-sage">✦ Projet imminent</span>
+    <span class="chip chip-terra">✦ Intention certaine</span>
+    <span class="chip chip-gold">✦ Futur proche</span>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">Formation</div>
+    <strong>aller</strong> (présent) + <strong>infinitif</strong><br>
+    je <strong>vais</strong> partir · tu <strong>vas</strong> manger · il/elle <strong>va</strong> venir<br>
+    nous <strong>allons</strong> finir · vous <strong>allez</strong> voir · ils/elles <strong>vont</strong> arriver<br><br>
+    <strong>À la forme négative :</strong> ne + aller + pas + infinitif → <em>Je ne vais <strong>pas</strong> sortir.</em>
+  </div>
+
+  <div class="examples">
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Je <strong>vais appeler</strong> ma mère ce soir.</div><div class="ex-note">intention</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Attention, tu <strong>vas tomber</strong> !</div><div class="ex-note">imminence</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Nous <strong>allons partir</strong> en vacances la semaine prochaine.</div><div class="ex-note">projet planifié</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">✏️</span> Exercice – Conjugue au futur proche</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Elle (acheter) <input class="blank" data-answer="va acheter"> une nouvelle voiture.</div>
+      <div class="ex-item"><span class="ex-num">2.</span> Nous (se marier) <input class="blank" data-answer="allons nous marier"> en juin.</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Tu (ne pas venir) <input class="blank" data-answer="ne vas pas venir"> ? Dommage !</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Ils (déménager) <input class="blank" data-answer="vont déménager"> à Paris.</div>
+      <div class="ex-item"><span class="ex-num">5.</span> Je (faire) <input class="blank" data-answer="vais faire"> les courses tout à l'heure.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>va acheter</strong></li>
+          <li><strong>allons nous marier</strong></li>
+          <li><strong>ne vas pas venir</strong></li>
+          <li><strong>vont déménager</strong></li>
+          <li><strong>vais faire</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════ 4. FUTUR SIMPLE ════════════════════════ -->
+<section class="tense-section" id="futur-simple">
+  <div class="section-header">
+    <div class="section-icon">🔭</div>
+    <div>
+      <h2>Futur simple</h2>
+      <span class="tense-tag">Infinitif + -ai, -as, -a, -ons, -ez, -ont · Futur lointain, promesse, hypothèse</span>
+    </div>
+  </div>
+
+  <div class="usage-chips">
+    <span class="chip chip-sage">✦ Futur lointain ou incertain</span>
+    <span class="chip chip-blue">✦ Promesse / engagement</span>
+    <span class="chip chip-terra">✦ Hypothèse (si + présent)</span>
+    <span class="chip chip-gold">✦ Prédiction</span>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">Formation</div>
+    <strong>Infinitif</strong> (verbes en -re → on retire le <em>e</em>) + terminaisons :<br>
+    <strong>-ai · -as · -a · -ons · -ez · -ont</strong><br><br>
+    parler<strong>ai</strong> · finir<strong>as</strong> · prendra<strong> —</strong> + <strong>a</strong><br><br>
+    ⚠️ Radicaux irréguliers importants :<br>
+    <strong>être → ser-</strong> · <strong>avoir → aur-</strong> · <strong>aller → ir-</strong> · <strong>faire → fer-</strong><br>
+    <strong>pouvoir → pourr-</strong> · <strong>vouloir → voudr-</strong> · <strong>venir → viendr-</strong>
+  </div>
+
+  <div class="conjugation-box">
+    <div class="conj-title">Parler au futur simple</div>
+    <div class="conj-grid">
+      <div class="conj-row"><span class="conj-pro">je</span><span class="conj-form">parler<strong>ai</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">tu</span><span class="conj-form">parler<strong>as</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">il/elle</span><span class="conj-form">parler<strong>a</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">nous</span><span class="conj-form">parler<strong>ons</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">vous</span><span class="conj-form">parler<strong>ez</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">ils/elles</span><span class="conj-form">parler<strong>ont</strong></span></div>
+    </div>
+  </div>
+
+  <div class="examples">
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Dans 10 ans, je <strong>serai</strong> médecin.</div><div class="ex-note">futur lointain</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">S'il fait beau, nous <strong>sortirons</strong>.</div><div class="ex-note">hypothèse (si + présent → futur)</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Je te <strong>rappellerai</strong> demain, promis.</div><div class="ex-note">promesse</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">✏️</span> Exercice – Conjugue au futur simple</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Si tu travailles, tu (réussir) <input class="blank" data-answer="réussiras"> .</div>
+      <div class="ex-item"><span class="ex-num">2.</span> Dans vingt ans, les gens (vivre) <input class="blank" data-answer="vivront"> différemment.</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Nous (aller) <input class="blank" data-answer="irons"> au Japon l'année prochaine.</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Est-ce qu'elle (pouvoir) <input class="blank" data-answer="pourra"> venir à la fête ?</div>
+      <div class="ex-item"><span class="ex-num">5.</span> Vous (faire) <input class="blank" data-answer="ferez"> quoi ce week-end ?</div>
+      <div class="ex-item"><span class="ex-num">6.</span> Je (être) <input class="blank" data-answer="serai"> de retour à 18h.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>réussiras</strong></li>
+          <li><strong>vivront</strong></li>
+          <li><strong>irons</strong></li>
+          <li><strong>pourra</strong></li>
+          <li><strong>ferez</strong></li>
+          <li><strong>serai</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════ 5. IMPARFAIT ════════════════════════ -->
+<section class="tense-section" id="imparfait">
+  <div class="section-header">
+    <div class="section-icon">🌫️</div>
+    <div>
+      <h2>Imparfait</h2>
+      <span class="tense-tag">Habitude passée, description, arrière-plan d'un récit</span>
+    </div>
+  </div>
+
+  <div class="usage-chips">
+    <span class="chip chip-sage">✦ Habitude dans le passé</span>
+    <span class="chip chip-blue">✦ Description / état passé</span>
+    <span class="chip chip-terra">✦ Arrière-plan du récit</span>
+    <span class="chip chip-gold">✦ Action en cours interrompue</span>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">Formation</div>
+    Radical de <strong>nous</strong> au présent + terminaisons :<br>
+    <strong>-ais · -ais · -ait · -ions · -iez · -aient</strong><br><br>
+    nous parlo<strong>ns</strong> → parl<strong>ais</strong> · nous finisso<strong>ns</strong> → finiss<strong>ais</strong><br><br>
+    ⚠️ Seul irrégulier : <strong>être → ét-</strong> (j'étais, tu étais, il était…)<br>
+    ⚠️ Verbes en -cer/-ger : mangeais, commençais (sauf -ions/-iez : mangions)
+  </div>
+
+  <div class="conjugation-box">
+    <div class="conj-title">Avoir &amp; Être à l'imparfait</div>
+    <div class="conj-grid">
+      <div class="conj-row"><span class="conj-pro">j'</span><span class="conj-form">av<strong>ais</strong> / ét<strong>ais</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">tu</span><span class="conj-form">av<strong>ais</strong> / ét<strong>ais</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">il/elle</span><span class="conj-form">av<strong>ait</strong> / ét<strong>ait</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">nous</span><span class="conj-form">av<strong>ions</strong> / ét<strong>ions</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">vous</span><span class="conj-form">av<strong>iez</strong> / ét<strong>iez</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">ils/elles</span><span class="conj-form">av<strong>aient</strong> / ét<strong>aient</strong></span></div>
+    </div>
+  </div>
+
+  <div class="examples">
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Quand j'<strong>étais</strong> petit, j'<strong>habitais</strong> à la campagne.</div><div class="ex-note">habitude / état passé</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Il <strong>faisait</strong> beau et les oiseaux <strong>chantaient</strong>.</div><div class="ex-note">description</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Je <strong>lisais</strong> quand le téléphone a sonné.</div><div class="ex-note">action en cours interrompue</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">✏️</span> Exercice – Conjugue à l'imparfait</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Quand nous (être) <input class="blank" data-answer="étions"> jeunes, nous (jouer) <input class="blank" data-answer="jouions"> dehors.</div>
+      <div class="ex-item"><span class="ex-num">2.</span> Il (pleuvoir) <input class="blank" data-answer="pleuvait"> et je (ne pas vouloir) <input class="blank" data-answer="ne voulais pas"> sortir.</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Vous (prendre) <input class="blank" data-answer="preniez"> le bus tous les jours ?</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Elle (avoir) <input class="blank" data-answer="avait"> les yeux bleus et (sourire) <input class="blank" data-answer="souriait"> toujours.</div>
+      <div class="ex-item"><span class="ex-num">5.</span> Ils (finir) <input class="blank" data-answer="finissaient"> le dîner quand je suis arrivé.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>étions</strong> / <strong>jouions</strong></li>
+          <li><strong>pleuvait</strong> / <strong>ne voulais pas</strong></li>
+          <li><strong>preniez</strong></li>
+          <li><strong>avait</strong> / <strong>souriait</strong></li>
+          <li><strong>finissaient</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════ 6. PASSÉ COMPOSÉ ════════════════════════ -->
+<section class="tense-section" id="passe-compose">
+  <div class="section-header">
+    <div class="section-icon">⚓</div>
+    <div>
+      <h2>Passé composé</h2>
+      <span class="tense-tag">Auxiliaire avoir/être + participe passé · Action achevée, événement ponctuel</span>
+    </div>
+  </div>
+
+  <div class="usage-chips">
+    <span class="chip chip-sage">✦ Action terminée</span>
+    <span class="chip chip-terra">✦ Événement précis</span>
+    <span class="chip chip-blue">✦ Résultat visible aujourd'hui</span>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">Auxiliaire AVOIR ou ÊTRE ?</div>
+    <strong>AVOIR</strong> → la grande majorité des verbes (manger, finir, prendre, voir…)<br>
+    <strong>ÊTRE</strong> → 14 verbes de mouvement + <strong>tous les pronominaux</strong> :<br>
+    <em>aller · venir · partir · arriver · naître · mourir · tomber · rester · monter · descendre · sortir · entrer · retourner · rentrer</em> + <em>devenir · revenir</em><br><br>
+    👆 <strong>Accord avec ÊTRE</strong> : le participe s'accorde avec le sujet :<br>
+    elle est allé<strong>e</strong> · ils sont parti<strong>s</strong> · elles se sont promené<strong>es</strong>
+  </div>
+
+  <div class="examples">
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Hier, j'<strong>ai mangé</strong> une pizza.</div><div class="ex-note">avoir – pas d'accord</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Elle <strong>est arrivée</strong> à 9h.</div><div class="ex-note">être – accord fém. sing.</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Ils <strong>se sont levés</strong> tôt.</div><div class="ex-note">pronominal – accord masc. plur.</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Il <strong>a descendu</strong> les valises.</div><div class="ex-note">avoir car COD « les valises »</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">✏️</span> Exercice – Passé composé (auxiliaire + accord)</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Hier, nous (aller) <input class="blank" data-answer="sommes allés"> à la librairie.</div>
+      <div class="ex-item"><span class="ex-num">2.</span> Ma collègue (se reposer) <input class="blank" data-answer="s'est reposée"> après le déjeuner.</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Vous (acheter) <input class="blank" data-answer="avez acheté"> ce joli sac ?</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Elles (partir) <input class="blank" data-answer="sont parties"> très tôt.</div>
+      <div class="ex-item"><span class="ex-num">5.</span> Il (descendre) <input class="blank" data-answer="a descendu"> les valises du grenier.</div>
+      <div class="ex-item"><span class="ex-num">6.</span> Les filles (venir) <input class="blank" data-answer="sont venues"> me voir.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>sommes allés</strong> (être + accord masc./fém.)</li>
+          <li><strong>s'est reposée</strong> (pronominal, être, accord fém. sing.)</li>
+          <li><strong>avez acheté</strong> (avoir, pas d'accord)</li>
+          <li><strong>sont parties</strong> (être, accord fém. plur.)</li>
+          <li><strong>a descendu</strong> (avoir car COD « les valises »)</li>
+          <li><strong>sont venues</strong> (être, accord fém. plur.)</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════════════════════════ 7. CONDITIONNEL ════════════════════════ -->
+<section class="tense-section" id="conditionnel">
+  <div class="section-header">
+    <div class="section-icon">💭</div>
+    <div>
+      <h2>Conditionnel présent</h2>
+      <span class="tense-tag">Radical du futur + terminaisons de l'imparfait · Politesse, hypothèse, souhait</span>
+    </div>
+  </div>
+
+  <div class="usage-chips">
+    <span class="chip chip-sage">✦ Politesse</span>
+    <span class="chip chip-blue">✦ Souhait / Désir</span>
+    <span class="chip chip-terra">✦ Conseil</span>
+    <span class="chip chip-gold">✦ Hypothèse (si + imparfait)</span>
+  </div>
+
+  <div class="rule-box">
+    <div class="rule-title">Formation</div>
+    <strong>Radical du futur</strong> + terminaisons de l'imparfait :<br>
+    <strong>-ais · -ais · -ait · -ions · -iez · -aient</strong><br><br>
+    je parler<strong>ais</strong> · tu finir<strong>ais</strong> · il pouvoir → il pourr<strong>ait</strong><br><br>
+    ⚠️ Mêmes radicaux irréguliers qu'au futur :<br>
+    être → <strong>ser</strong>ais · avoir → <strong>aur</strong>ais · aller → <strong>ir</strong>ais · faire → <strong>fer</strong>ais<br><br>
+    <strong>Si + imparfait → conditionnel :</strong> Si j'<em>avais</em> le temps, j'<em>irais</em> au cinéma.
+  </div>
+
+  <div class="conjugation-box">
+    <div class="conj-title">Vouloir &amp; Pouvoir au conditionnel</div>
+    <div class="conj-grid">
+      <div class="conj-row"><span class="conj-pro">je</span><span class="conj-form">voudr<strong>ais</strong> / pourr<strong>ais</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">tu</span><span class="conj-form">voudr<strong>ais</strong> / pourr<strong>ais</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">il/elle</span><span class="conj-form">voudr<strong>ait</strong> / pourr<strong>ait</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">nous</span><span class="conj-form">voudr<strong>ions</strong> / pourr<strong>ions</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">vous</span><span class="conj-form">voudr<strong>iez</strong> / pourr<strong>iez</strong></span></div>
+      <div class="conj-row"><span class="conj-pro">ils/elles</span><span class="conj-form">voudr<strong>aient</strong> / pourr<strong>aient</strong></span></div>
+    </div>
+  </div>
+
+  <div class="examples">
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Je <strong>voudrais</strong> un café, s'il vous plaît.</div><div class="ex-note">politesse</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Tu es fatiguée ? Tu <strong>devrais</strong> te reposer.</div><div class="ex-note">conseil</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">Si j'avais de l'argent, je <strong>voyagerais</strong> partout.</div><div class="ex-note">hypothèse irréelle</div></div></div>
+    <div class="example-card"><span class="ex-bullet">→</span><div><div class="ex-fr">J'<strong>aimerais</strong> vivre à la mer.</div><div class="ex-note">souhait</div></div></div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">✏️</span> Exercice – Conditionnel (politesse, conseil, hypothèse)</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Si tu avais faim, tu (manger) <input class="blank" data-answer="mangerais"> quelque chose.</div>
+      <div class="ex-item"><span class="ex-num">2.</span> (Pouvoir)-vous <input class="blank" data-answer="Pourriez"> m'aider, s'il vous plaît ?</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Nous (vouloir) <input class="blank" data-answer="voudrions"> réserver une table pour ce soir.</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Il (devoir) <input class="blank" data-answer="devrait"> arrêter de fumer.</div>
+      <div class="ex-item"><span class="ex-num">5.</span> Si elle travaillait plus, elle (réussir) <input class="blank" data-answer="réussirait"> .</div>
+      <div class="ex-item"><span class="ex-num">6.</span> J'(aimer) <input class="blank" data-answer="aimerais"> visiter le Japon un jour.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>mangerais</strong></li>
+          <li><strong>Pourriez</strong></li>
+          <li><strong>voudrions</strong></li>
+          <li><strong>devrait</strong></li>
+          <li><strong>réussirait</strong></li>
+          <li><strong>aimerais</strong></li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ════ SYNTHESIS EXERCISE ════ -->
+<section class="tense-section" id="synthese">
+  <div class="section-header">
+    <div class="section-icon">🎯</div>
+    <div>
+      <h2>Exercice de synthèse</h2>
+      <span class="tense-tag">Tous les temps mélangés — lis bien le contexte !</span>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <div class="exercise-header"><span class="ex-icon">🌟</span> Choisis le bon temps et conjugue</div>
+    <div class="exercise-body">
+      <div class="ex-item"><span class="ex-num">1.</span> Quand j'(être, imparfait) <input class="blank" data-answer="étais"> enfant, je (vouloir, imparfait) <input class="blank" data-answer="voulais"> devenir pilote.</div>
+      <div class="ex-item"><span class="ex-num">2.</span> Hier soir, elle (rentrer, passé composé) <input class="blank" data-answer="est rentrée"> tard et (s'endormir, passé composé) <input class="blank" data-answer="s'est endormie"> tout de suite.</div>
+      <div class="ex-item"><span class="ex-num">3.</span> Demain, nous (aller, futur simple) <input class="blank" data-answer="irons"> à la plage si le temps (être, futur simple) <input class="blank" data-answer="est"> beau.</div>
+      <div class="ex-item"><span class="ex-num">4.</span> Il (lire, imparfait) <input class="blank" data-answer="lisait"> le journal quand le téléphone (sonner, passé composé) <input class="blank" data-answer="a sonné"> .</div>
+      <div class="ex-item"><span class="ex-num">5.</span> (Pouvoir, conditionnel)-vous <input class="blank" data-answer="Pourriez-vous"> ouvrir la fenêtre ?</div>
+      <div class="ex-item"><span class="ex-num">6.</span> Ce soir, je (aller, futur proche) <input class="blank" data-answer="vais aller"> au cinéma avec des amis.</div>
+      <div class="ex-item"><span class="ex-num">7.</span> Tous les matins, elle (se lever, présent) <input class="blank" data-answer="se lève"> à 7h et (faire, présent) <input class="blank" data-answer="fait"> du sport.</div>
+      <div class="ex-item"><span class="ex-num">8.</span> Si j'(avoir, imparfait) <input class="blank" data-answer="avais"> plus de temps, je (voyager, conditionnel) <input class="blank" data-answer="voyagerais"> plus souvent.</div>
+      <div class="ex-item"><span class="ex-num">9.</span> (Savoir, participe présent) <input class="blank" data-answer="Sachant"> qu'il allait pleuvoir, ils (prendre, passé composé) <input class="blank" data-answer="ont pris"> leurs parapluies.</div>
+      <button class="btn-check" onclick="checkExercise(this)">Vérifier</button>
+      <button class="btn-correction" onclick="toggleCorrection(this)">Voir la correction</button>
+      <div class="correction">
+        <ol>
+          <li><strong>étais</strong> / <strong>voulais</strong> (imparfait – état, habitude passée)</li>
+          <li><strong>est rentrée</strong> / <strong>s'est endormie</strong> (passé composé – être, accord fém.)</li>
+          <li><strong>irons</strong> / <strong>est</strong> (futur simple – si + présent → futur)</li>
+          <li><strong>lisait</strong> / <strong>a sonné</strong> (imparfait en cours + PC ponctuel)</li>
+          <li><strong>Pourriez-vous</strong> (conditionnel – politesse)</li>
+          <li><strong>vais aller</strong> (futur proche – projet du soir)</li>
+          <li><strong>se lève</strong> / <strong>fait</strong> (présent – habitude)</li>
+          <li><strong>avais</strong> / <strong>voyagerais</strong> (si + imparfait → conditionnel)</li>
+          <li><strong>Sachant</strong> / <strong>ont pris</strong> (participe présent irrégulier + PC)</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  ✨ Fabien · leçon sur mesure · mars 2026 ✨
+</footer>
+
+<script>
+  function checkExercise(btn) {
+    const body = btn.closest('.exercise-body');
+    const blanks = body.querySelectorAll('.blank');
+    blanks.forEach(blank => {
+      const userVal = blank.value.trim().toLowerCase().replace(/'/g, "'");
+      const correct = blank.dataset.answer.toLowerCase().replace(/'/g, "'");
+      blank.classList.remove('correct', 'wrong');
+      if (userVal === correct) {
+        blank.classList.add('correct');
+      } else if (userVal !== '') {
+        blank.classList.add('wrong');
+      }
+    });
+  }
+
+  function toggleCorrection(btn) {
+    const correction = btn.closest('.exercise-body').querySelector('.correction');
+    correction.classList.toggle('visible');
+    btn.textContent = correction.classList.contains('visible') ? 'Cacher la correction' : 'Voir la correction';
+  }
+
+  // Active pill in nav on scroll
+  const sections = document.querySelectorAll('.tense-section');
+  const pills = document.querySelectorAll('.tense-pill');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        pills.forEach(p => p.classList.remove('active'));
+        const active = document.querySelector(`.tense-pill[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
