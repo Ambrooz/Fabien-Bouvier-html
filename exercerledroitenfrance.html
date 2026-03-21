@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exercer le Droit en France</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #faf7f2;
+    --bg2:       #f2ede4;
+    --bg3:       #ece5d8;
+    --teal:      #2a6b6b;
+    --teal-lt:   #d6ecec;
+    --teal-mid:  #3d8f8f;
+    --terra:     #c0522b;
+    --terra-lt:  #faeae3;
+    --gold:      #b5873a;
+    --gold-lt:   #fdf3e0;
+    --navy:      #1d2d44;
+    --text:      #2a2118;
+    --text-mid:  #5c4d3a;
+    --muted:     #9a8e7e;
+    --border:    #d8cfc2;
+    --white:     #ffffff;
+    --correct:   #2a6b4a;
+    --wrong:     #8b2020;
+    --shadow:    0 2px 16px rgba(42,24,18,0.08);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* ===== HEADER ===== */
+  header {
+    background: var(--teal);
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem 3.5rem;
+    text-align: center;
+  }
+  .hbg-dots {
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .hbg-glow {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 55% 80% at 15% 50%, rgba(181,135,58,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 55% 80% at 85% 50%, rgba(192,82,43,0.18) 0%, transparent 65%);
+  }
+  .triband {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(to right, #1d3a6b 33.3%, #fff 33.3%, #fff 66.6%, #c0392b 66.6%);
+  }
+  .header-eyebrow {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    color: rgba(255,255,255,0.65);
+    font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-bottom: 1.3rem;
+  }
+  .header-eyebrow::before, .header-eyebrow::after {
+    content:''; height:1px; width:32px;
+    background: rgba(255,255,255,0.35);
+  }
+  header h1 {
+    position: relative;
+    font-family: 'Libre Baskerville', serif;
+    font-size: clamp(2rem, 5vw, 3.3rem);
+    font-weight: 400;
+    color: #fff;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+  header h1 em {
+    font-style: italic;
+    color: #f5d58a;
+  }
+  header .sub {
+    position: relative;
+    margin-top: 1rem;
+    color: rgba(255,255,255,0.55);
+    font-size: 0.83rem; letter-spacing: 0.07em;
+  }
+
+  /* ===== PROGRESS ===== */
+  .progress-strip {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 0.6rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    font-size: 0.72rem; letter-spacing: 0.07em;
+    color: var(--muted); text-transform: uppercase;
+  }
+  .prog-bar { flex:1; height:3px; background: var(--border); border-radius:2px; overflow:hidden; }
+  .prog-fill { height:100%; background: var(--teal); border-radius:2px; transition: width 0.4s ease; }
+
+  /* ===== NAV ===== */
+  nav.tabs {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--white);
+    border-bottom: 2px solid var(--border);
+    display: flex; flex-wrap: wrap; justify-content: center;
+    gap: 0; padding: 0;
+    box-shadow: 0 2px 8px rgba(42,24,18,0.06);
+  }
+  .tab-btn {
+    background: none; border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem; font-weight: 400;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.9rem 1.2rem;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .tab-btn:hover { color: var(--teal); }
+  .tab-btn.active { color: var(--teal); border-bottom-color: var(--teal); font-weight: 500; }
+
+  /* ===== CHAPTERS ===== */
+  section.chapter { display: none; max-width: 860px; margin: 0 auto; padding: 3.5rem 1.5rem 4rem; }
+  section.chapter.visible { display: block; animation: fadeUp 0.35s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
+
+  .ch-header {
+    display: flex; align-items: flex-start; gap: 1.5rem;
+    padding-bottom: 1.8rem;
+    margin-bottom: 2.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .ch-num {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 4rem; line-height: 1;
+    color: var(--teal); opacity: 0.18;
+    font-weight: 700; flex-shrink: 0;
+  }
+  .ch-meta .eyebrow {
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--terra); margin-bottom: 0.35rem;
+  }
+  .ch-meta h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1.9rem; font-weight: 400;
+    color: var(--navy); line-height: 1.2;
+  }
+
+  /* ===== READING TEXT ===== */
+  .prose p {
+    font-size: 1rem; line-height: 1.95;
+    color: var(--text-mid); margin-bottom: 1.1em;
+  }
+  .prose p:last-child { margin-bottom: 0; }
+  .prose strong { color: var(--navy); font-weight: 500; }
+
+  /* ===== INFO BOXES ===== */
+  .box {
+    padding: 1.1rem 1.4rem;
+    border-radius: 6px;
+    margin: 1.8rem 0;
+    font-size: 0.93rem; line-height: 1.8;
+  }
+  .box-teal { background: var(--teal-lt); border-left: 4px solid var(--teal); }
+  .box-teal strong { color: var(--teal); }
+  .box-terra { background: var(--terra-lt); border-left: 4px solid var(--terra); }
+  .box-terra strong { color: var(--terra); }
+  .box-gold { background: var(--gold-lt); border-left: 4px solid var(--gold); }
+  .box-gold strong { color: var(--gold); }
+
+  /* ===== COMPARE TABLE ===== */
+  .cmp-wrap { overflow-x: auto; margin: 1.5rem 0; }
+  .cmp-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 0.9rem; box-shadow: var(--shadow); border-radius: 6px; overflow: hidden;
+  }
+  .cmp-table th {
+    padding: 0.75rem 1.1rem;
+    font-weight: 500; font-size: 0.78rem; letter-spacing: 0.07em; text-transform: uppercase;
+  }
+  .cmp-table th:first-child { background: #1d3a6b; color: #a8c4e8; }
+  .cmp-table th:last-child  { background: #8b2020; color: #f0b0b0; }
+  .cmp-table td {
+    padding: 0.7rem 1.1rem; border-bottom: 1px solid var(--bg3);
+    vertical-align: top; line-height: 1.6;
+  }
+  .cmp-table td:first-child { color: #1d3a6b; border-right: 1px solid var(--bg3); background: #f5f8fd; }
+  .cmp-table td:last-child  { color: #8b2020; background: #fff8f8; }
+  .cmp-table tr:last-child td { border-bottom: none; }
+
+  /* ===== VOCAB ===== */
+  .vocab-title {
+    font-family: 'Libre Baskerville', serif;
+    font-size: 1rem; font-style: italic;
+    color: var(--teal);
+    margin: 2.2rem 0 0.9rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px dashed var(--border);
+  }
+  .vocab-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--border); border-radius: 6px;
+    overflow: hidden; box-shadow: var(--shadow);
+    margin-bottom: 1.5rem;
+  }
+  .vh {
+    background: var(--teal); color: rgba(255,255,255,0.85);
+    font-size: 0.68rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.6rem 1rem; font-weight: 500;
+  }
+  .vr { display: contents; }
+  .vf, .ve {
+    padding: 0.6rem 1rem; font-size: 0.93rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+  }
+  .vr:last-child .vf, .vr:last-child .ve { border-bottom: none; }
+  .vf { border-right: 1px solid var(--border); color: var(--navy); }
+  .vf strong { font-weight: 500; color: var(--teal); }
+  .ve { color: var(--muted); font-style: italic; font-size: 0.88rem; }
+  .vr:nth-child(even) .vf,
+  .vr:nth-child(even) .ve { background: var(--bg); }
+
+  /* ===== STEPS ===== */
+  .steps { list-style: none; padding: 0; margin: 1.5rem 0; }
+  .steps li {
+    display: flex; gap: 1.1rem;
+    padding: 1rem 0; border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .steps li:last-child { border-bottom: none; }
+  .snum {
+    width: 2rem; height: 2rem; border-radius: 50%; flex-shrink: 0;
+    background: var(--teal); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Libre Baskerville', serif; font-size: 0.9rem;
+    margin-top: 0.1rem; box-shadow: 0 2px 8px rgba(42,107,107,0.3);
+  }
+  .sc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; }
+  .sc strong { color: var(--navy); font-weight: 500; display: block; margin-bottom: 0.2rem; }
+
+  /* ===== GLOSSARY ===== */
+  .gloss-wrap {
+    border: 1px solid var(--border); border-radius: 6px;
+    overflow: hidden; box-shadow: var(--shadow); margin: 1.2rem 0;
+  }
+  .gloss-item { border-bottom: 1px solid var(--border); }
+  .gloss-item:last-child { border-bottom: none; }
+  .gloss-q {
+    width: 100%; background: var(--white); border: none;
+    color: var(--navy); font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 400;
+    padding: 1rem 1.2rem;
+    text-align: left; cursor: pointer;
+    display: flex; justify-content: space-between; align-items: center;
+    transition: background 0.2s;
+  }
+  .gloss-q:hover { background: var(--bg); }
+  .gloss-q.open { background: var(--teal-lt); color: var(--teal); }
+  .gloss-q .term { color: var(--terra); font-style: italic; margin-right: 0.5rem; }
+  .gloss-q .arrow { font-size: 0.65rem; color: var(--muted); transition: transform 0.25s; }
+  .gloss-q.open .arrow { transform: rotate(180deg); color: var(--teal); }
+  .gloss-body {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.35s ease;
+    background: var(--teal-lt);
+    font-size: 0.91rem; line-height: 1.8;
+    color: var(--text-mid); padding: 0 1.2rem;
+  }
+  .gloss-body.open { max-height: 300px; padding: 0.9rem 1.2rem 1.1rem; }
+  .en-trans {
+    display: inline-block; margin-top: 0.5rem;
+    font-size: 0.82rem; color: var(--teal); font-style: italic;
+  }
+
+  /* ===== EXPRESSIONS ===== */
+  .expr-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0.9rem; margin: 1.2rem 0;
+  }
+  .expr-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 6px; padding: 1rem 1.1rem;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--terra);
+  }
+  .expr-card .fr { color: var(--terra); font-style: italic; font-size: 0.95rem; margin-bottom: 0.3rem; font-family: 'Libre Baskerville', serif; }
+  .expr-card .en { color: var(--muted); font-size: 0.83rem; }
+  .expr-card .ctx { color: var(--text-mid); font-size: 0.82rem; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--bg3); }
+
+  /* ===== QUIZ ===== */
+  .quiz-item {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 8px; padding: 1.4rem 1.6rem;
+    margin-bottom: 1.3rem; box-shadow: var(--shadow);
+  }
+  .quiz-q { font-size: 0.97rem; color: var(--navy); margin-bottom: 1rem; line-height: 1.6; font-weight: 500; }
+  .quiz-opts { display: flex; flex-direction: column; gap: 0.5rem; }
+  .quiz-opt {
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    background: var(--bg); border: 1.5px solid var(--border);
+    border-radius: 5px; padding: 0.65rem 0.9rem;
+    cursor: pointer; font-size: 0.91rem; color: var(--text-mid);
+    transition: border-color 0.18s, background 0.18s;
+  }
+  .quiz-opt:hover { border-color: var(--teal); background: var(--teal-lt); }
+  .quiz-opt.correct { border-color: var(--correct); background: #eaf7f0; color: var(--correct); }
+  .quiz-opt.wrong   { border-color: var(--wrong);   background: #fdf0f0; color: var(--wrong); }
+  .quiz-opt input { accent-color: var(--teal); flex-shrink: 0; margin-top: 2px; }
+  .quiz-fb { margin-top: 0.8rem; font-size: 0.85rem; font-style: italic; min-height: 1em; color: var(--muted); }
+  .quiz-fb.ok { color: var(--correct); }
+  .quiz-fb.ko { color: var(--wrong); }
+  .qbtn {
+    margin-top: 0.9rem;
+    background: var(--teal); color: #fff;
+    border: none; border-radius: 4px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem; font-weight: 500;
+    letter-spacing: 0.07em; text-transform: uppercase;
+    padding: 0.5rem 1.3rem; cursor: pointer;
+    box-shadow: 0 2px 8px rgba(42,107,107,0.25);
+    transition: background 0.18s, transform 0.1s;
+  }
+  .qbtn:hover { background: var(--teal-mid); transform: translateY(-1px); }
+  .qbtn:disabled { background: var(--muted); box-shadow: none; transform: none; cursor: default; }
+
+  /* ===== SCROLL TOP ===== */
+  .totop {
+    position: fixed; bottom: 2rem; right: 1.5rem; z-index: 200;
+    width: 2.6rem; height: 2.6rem; border-radius: 50%;
+    background: var(--teal); color: #fff; border: none;
+    font-size: 1.1rem; cursor: pointer;
+    box-shadow: 0 3px 12px rgba(42,107,107,0.35);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.3s, transform 0.2s;
+  }
+  .totop.show { opacity: 1; }
+  .totop:hover { transform: translateY(-2px); }
+
+  footer {
+    text-align: center; padding: 2rem 1rem;
+    color: var(--muted); font-size: 0.78rem; letter-spacing: 0.06em;
+    border-top: 1px solid var(--border);
+    background: var(--bg2);
+  }
+  footer span { color: var(--teal); }
+
+  @media (max-width: 580px) {
+    .expr-grid { grid-template-columns: 1fr; }
+    .vocab-grid { grid-template-columns: 1fr; }
+    .vh:last-of-type { display: none; }
+    .ve::before { content: '🇺🇸 '; }
+    .cmp-table th, .cmp-table td { font-size: 0.82rem; padding: 0.5rem 0.7rem; }
+    .tab-btn { font-size: 0.7rem; padding: 0.75rem 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hbg-dots"></div>
+  <div class="hbg-glow"></div>
+  <div class="triband"></div>
+  <div class="header-eyebrow">Cours de français juridique</div>
+  <h1>Exercer le droit<br><em>en France</em></h1>
+  <p class="sub">Guide pratique pour une avocate étrangère · Niveau avancé</p>
+</header>
+
+<div class="progress-strip">
+  <span id="prog-label">Chapitre 1 / 5</span>
+  <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:20%"></div></div>
+</div>
+
+<nav class="tabs">
+  <button class="tab-btn active" onclick="show(0)">1 · Le système</button>
+  <button class="tab-btn" onclick="show(1)">2 · La profession</button>
+  <button class="tab-btn" onclick="show(2)">3 · La procédure</button>
+  <button class="tab-btn" onclick="show(3)">4 · Expressions</button>
+  <button class="tab-btn" onclick="show(4)">5 · Quiz</button>
+</nav>
+
+<!-- =================== CH 1 =================== -->
+<section class="chapter visible" id="ch0">
+  <div class="ch-header">
+    <div class="ch-num">01</div>
+    <div class="ch-meta">
+      <div class="eyebrow">Les fondements</div>
+      <h2>Le système juridique français</h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>La France est une <strong>République unitaire</strong> dont le système juridique appartient à la famille du <em>droit romano-germanique</em>, aussi appelé droit civil codifié. Contrairement au modèle américain fondé sur la <em>common law</em> et le précédent jurisprudentiel, le droit français repose sur des codes écrits et systématiques. Le plus célèbre est le <strong>Code civil</strong> promulgué par Napoléon en 1804, toujours en vigueur aujourd'hui, bien qu'il ait été modifié des centaines de fois.</p>
+    <p>La Constitution de la <strong>Ve République</strong> (1958) est le texte suprême. Elle est complétée par le <em>bloc de constitutionnalité</em>, qui inclut la Déclaration des droits de l'Homme et du Citoyen (1789), le Préambule de la Constitution de 1946 — qui reconnaît notamment les droits sociaux — et la Charte de l'environnement de 2004. Le <strong>Conseil constitutionnel</strong> veille au respect de la Constitution ; c'est l'équivalent fonctionnel de la Cour suprême américaine, mais il ne statue que sur la constitutionnalité des lois, pas sur des litiges entre particuliers.</p>
+    <p>Une particularité française majeure est la <strong>dualité de l'ordre juridictionnel</strong>. Il existe deux ordres de juridiction bien séparés. L'<strong>ordre judiciaire</strong> traite les affaires civiles et pénales entre personnes privées. L'<strong>ordre administratif</strong> juge les litiges entre l'État et les citoyens. Au sommet de l'ordre judiciaire siège la <em>Cour de cassation</em> ; au sommet de l'ordre administratif, le <em>Conseil d'État</em>. En cas de conflit de compétence, c'est le <em>Tribunal des conflits</em> qui tranche.</p>
+    <p>Le droit français distingue également le <strong>droit public</strong> — qui régit les relations entre l'État et les particuliers — et le <strong>droit privé</strong>, qui gouverne les rapports entre individus. Cette distinction, fondamentale dans la formation des juristes français, est moins marquée dans la tradition juridique américaine.</p>
+  </div>
+
+  <div class="box box-gold">
+    <strong>À noter :</strong> Depuis 2010, la <em>question prioritaire de constitutionnalité</em> (QPC) permet à un justiciable de contester la constitutionnalité d'une loi applicable à son litige. Cette question est renvoyée au Conseil constitutionnel — les juges ordinaires ne peuvent pas eux-mêmes écarter une loi pour inconstitutionnalité.
+  </div>
+
+  <div class="cmp-wrap">
+    <table class="cmp-table">
+      <thead><tr><th>🇫🇷 Droit français</th><th>🇺🇸 Droit américain</th></tr></thead>
+      <tbody>
+        <tr><td>Droit civil codifié (codes écrits)</td><td>Common law (précédents jurisprudentiels)</td></tr>
+        <tr><td>Deux ordres de juridiction (judiciaire + administratif)</td><td>Un seul système unifié (fédéral / états)</td></tr>
+        <tr><td>Conseil constitutionnel (contrôle abstrait des lois)</td><td>Cour suprême (judicial review concret)</td></tr>
+        <tr><td>Le juge applique la loi ; précédent secondaire</td><td>Stare decisis : précédent contraignant</td></tr>
+        <tr><td>Cour de cassation au sommet de l'ordre judiciaire</td><td>Supreme Court au sommet de l'ordre fédéral</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vocab-title">Vocabulaire — Les institutions</div>
+  <div class="vocab-grid">
+    <div class="vh">Terme français</div><div class="vh">English</div>
+    <div class="vr"><div class="vf"><strong>le Conseil constitutionnel</strong></div><div class="ve">the Constitutional Council</div></div>
+    <div class="vr"><div class="vf"><strong>le Conseil d'État</strong></div><div class="ve">Council of State (highest administrative court)</div></div>
+    <div class="vr"><div class="vf"><strong>la Cour de cassation</strong></div><div class="ve">Court of Cassation (supreme civil/criminal court)</div></div>
+    <div class="vr"><div class="vf"><strong>le Tribunal des conflits</strong></div><div class="ve">Tribunal of Conflicts</div></div>
+    <div class="vr"><div class="vf"><strong>l'ordre judiciaire</strong></div><div class="ve">judicial order (private law courts)</div></div>
+    <div class="vr"><div class="vf"><strong>l'ordre administratif</strong></div><div class="ve">administrative order (public law courts)</div></div>
+    <div class="vr"><div class="vf"><strong>la QPC</strong></div><div class="ve">priority preliminary constitutional ruling</div></div>
+    <div class="vr"><div class="vf"><strong>le bloc de constitutionnalité</strong></div><div class="ve">the body of constitutional law</div></div>
+  </div>
+</section>
+
+<!-- =================== CH 2 =================== -->
+<section class="chapter" id="ch1">
+  <div class="ch-header">
+    <div class="ch-num">02</div>
+    <div class="ch-meta">
+      <div class="eyebrow">Exercer en France</div>
+      <h2>La profession d'avocat(e)</h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>En France, la profession d'avocat est réglementée et unifiée depuis la loi du 31 décembre 1990. Pour exercer, il faut être membre d'un <strong>barreau</strong> — l'ordre professionnel local. Il en existe 164 en France, dont le plus important est le <strong>Barreau de Paris</strong>, qui compte plus de 30 000 avocats inscrits. L'ensemble des barreaux est représenté par le <strong>Conseil national des barreaux (CNB)</strong>.</p>
+    <p>Pour une avocate américaine souhaitant exercer en France, le chemin le plus direct passe par les accords de reconnaissance mutuelle. Dans les faits, il faut généralement passer l'<strong>examen d'aptitude</strong> ou obtenir une <em>dispense</em> accordée par le CNB selon l'expérience. Un diplôme de <em>Juris Doctor</em> (J.D.) est généralement reconnu. Certains grands cabinets internationaux permettent de travailler en droit américain sans être inscrit au barreau français — mais le titre d'<em>avocat</em> ne peut alors pas être utilisé.</p>
+    <p>La déontologie de l'avocat français est encadrée par le <strong>Règlement Intérieur National (RIN)</strong>, qui impose notamment le <em>secret professionnel absolu</em>, le devoir de <em>confraternité</em> envers ses confrères, et l'interdiction du <em>démarchage</em> direct. Le <em>secret professionnel</em> est similaire à l'<em>attorney-client privilege</em> américain, mais c'est le bâtonnier qui en garantit le respect, notamment lors d'une perquisition au cabinet.</p>
+    <p>Les avocats français doivent effectuer une <strong>formation continue</strong> obligatoire de vingt heures par an. La <em>robe</em> noire est obligatoire à l'audience. Pour plaider devant la Cour de cassation ou le Conseil d'État, il faut faire appel à un <strong>avocat aux Conseils</strong>, officier ministériel spécialisé.</p>
+  </div>
+
+  <div class="box box-terra">
+    <strong>Attention :</strong> Le titre d'<em>avocat</em> est protégé en France. Un juriste étranger non inscrit au barreau peut donner des consultations dans son droit national, mais ne peut pas représenter des clients devant les juridictions françaises ni se présenter comme avocat français.
+  </div>
+
+  <div class="vocab-title">Les étapes pour s'inscrire au barreau français</div>
+  <ol class="steps">
+    <li><div class="snum">1</div><div class="sc"><strong>Vérifier l'équivalence de votre diplôme</strong>Le CNB évalue si votre formation américaine est équivalente au master en droit français. Un J.D. est généralement reconnu.</div></li>
+    <li><div class="snum">2</div><div class="sc"><strong>Déposer un dossier de dispense ou passer l'examen d'aptitude</strong>La dispense peut être accordée selon l'expérience professionnelle. L'examen comporte des épreuves écrites et orales sur le droit français.</div></li>
+    <li><div class="snum">3</div><div class="sc"><strong>Prêter serment devant la cour d'appel</strong>Formule du serment : <em>« Je jure d'exercer mes fonctions avec dignité, conscience, indépendance, probité et humanité. »</em></div></li>
+    <li><div class="snum">4</div><div class="sc"><strong>S'inscrire au tableau du barreau</strong>L'inscription est annuelle, conditionnée au paiement des cotisations et au respect des obligations de formation continue.</div></li>
+    <li><div class="snum">5</div><div class="sc"><strong>Ouvrir ou rejoindre une structure d'exercice</strong>Cabinet individuel, SCP, SELARL ou association. Les cabinets français sont généralement plus petits qu'aux États-Unis.</div></li>
+  </ol>
+
+  <div class="vocab-title">Vocabulaire — La profession</div>
+  <div class="vocab-grid">
+    <div class="vh">Terme français</div><div class="vh">English</div>
+    <div class="vr"><div class="vf"><strong>le barreau</strong></div><div class="ve">the bar (professional association)</div></div>
+    <div class="vr"><div class="vf"><strong>le bâtonnier / la bâtonnière</strong></div><div class="ve">president of the bar association</div></div>
+    <div class="vr"><div class="vf"><strong>le CNB</strong></div><div class="ve">national bar council</div></div>
+    <div class="vr"><div class="vf"><strong>le RIN</strong></div><div class="ve">national code of professional conduct</div></div>
+    <div class="vr"><div class="vf"><strong>le secret professionnel</strong></div><div class="ve">attorney-client privilege / professional secrecy</div></div>
+    <div class="vr"><div class="vf"><strong>le démarchage</strong></div><div class="ve">direct solicitation (prohibited)</div></div>
+    <div class="vr"><div class="vf"><strong>l'avocat aux Conseils</strong></div><div class="ve">attorney before the Court of Cassation</div></div>
+    <div class="vr"><div class="vf"><strong>la formation continue</strong></div><div class="ve">continuing legal education (CLE)</div></div>
+    <div class="vr"><div class="vf"><strong>la robe (d'avocat)</strong></div><div class="ve">lawyer's gown (worn in court)</div></div>
+    <div class="vr"><div class="vf"><strong>plaider</strong></div><div class="ve">to plead / to argue in court</div></div>
+  </div>
+</section>
+
+<!-- =================== CH 3 =================== -->
+<section class="chapter" id="ch2">
+  <div class="ch-header">
+    <div class="ch-num">03</div>
+    <div class="ch-meta">
+      <div class="eyebrow">En salle d'audience</div>
+      <h2>La procédure civile et pénale</h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>La procédure civile française est régie par le <strong>Code de procédure civile</strong>. Elle est principalement <em>écrite</em> — contrairement au modèle américain plus oral. Les avocats échangent des <strong>conclusions</strong> (mémoires écrits contenant leurs arguments), et le débat oral à l'audience est souvent très bref. En première instance, la juridiction de droit commun est le <strong>tribunal judiciaire</strong>, issu de la fusion en 2020 du tribunal de grande instance et du tribunal d'instance.</p>
+    <p>Il n'existe pas de <em>discovery</em> systématique comme aux États-Unis. La communication de pièces est encadrée par le principe du <strong>contradictoire</strong> : chaque partie communique les documents qu'elle produit à l'autre partie avant l'audience. L'obligation de divulguer spontanément toutes les preuves pertinentes — même défavorables — n'existe pas en droit français.</p>
+    <p>En matière pénale, la procédure est mixte : inquisitoire dans la phase d'instruction, accusatoire lors des débats. Le <strong>parquet</strong> (représenté par les procureurs) décide de l'opportunité des poursuites. Le <strong>juge d'instruction</strong>, magistrat indépendant, mène l'enquête dans les affaires complexes et peut prononcer une <em>mise en examen</em> — l'équivalent approximatif de l'inculpation américaine.</p>
+    <p>Pour les affaires pénales, trois niveaux correspondent à trois niveaux d'infractions : le <strong>tribunal de police</strong> juge les contraventions, le <strong>tribunal correctionnel</strong> juge les délits (jusqu'à dix ans de prison), et la <strong>cour d'assises</strong> juge les crimes. La cour d'assises est la seule juridiction française à siéger avec un jury populaire — six citoyens tirés au sort en première instance.</p>
+    <p>L'appel est un droit pour toutes les parties et constitue un réexamen complet — <em>à effet dévolutif</em>. Au-delà, le <strong>pourvoi en cassation</strong> devant la Cour de cassation ne porte que sur la légalité de la décision, jamais sur les faits.</p>
+  </div>
+
+  <div class="box box-teal">
+    <strong>Différence clé :</strong> Il n'existe pas de <em>plea bargaining</em> au sens américain. La <em>comparution sur reconnaissance préalable de culpabilité</em> (CRPC, 2004) y ressemble partiellement : le procureur propose une peine à un prévenu qui reconnaît sa culpabilité, mais le juge doit homologuer l'accord — et la peine est souvent moins avantageuse que dans un <em>plea deal</em> américain.
+  </div>
+
+  <div class="cmp-wrap">
+    <table class="cmp-table">
+      <thead><tr><th>Juridiction française</th><th>Équivalent approximatif en anglais</th></tr></thead>
+      <tbody>
+        <tr><td>Tribunal judiciaire</td><td>General civil trial court</td></tr>
+        <tr><td>Tribunal de commerce</td><td>Commercial / business court</td></tr>
+        <tr><td>Conseil de prud'hommes</td><td>Labor / employment tribunal</td></tr>
+        <tr><td>Tribunal de police</td><td>Petty offenses court</td></tr>
+        <tr><td>Tribunal correctionnel</td><td>Criminal court (misdemeanors / felonies)</td></tr>
+        <tr><td>Cour d'assises</td><td>Criminal court with jury (serious crimes)</td></tr>
+        <tr><td>Cour d'appel</td><td>Court of appeals</td></tr>
+        <tr><td>Cour de cassation</td><td>Supreme Court (law review only)</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="vocab-title">Vocabulaire — La procédure</div>
+  <div class="vocab-grid">
+    <div class="vh">Terme français</div><div class="vh">English</div>
+    <div class="vr"><div class="vf"><strong>les conclusions</strong></div><div class="ve">written submissions / briefs</div></div>
+    <div class="vr"><div class="vf"><strong>le principe du contradictoire</strong></div><div class="ve">the adversarial principle / due process</div></div>
+    <div class="vr"><div class="vf"><strong>le parquet</strong></div><div class="ve">the prosecutor's office / public ministry</div></div>
+    <div class="vr"><div class="vf"><strong>la mise en examen</strong></div><div class="ve">formal indictment / being charged</div></div>
+    <div class="vr"><div class="vf"><strong>la garde à vue</strong></div><div class="ve">police custody / detention</div></div>
+    <div class="vr"><div class="vf"><strong>la détention provisoire</strong></div><div class="ve">pre-trial detention / remand</div></div>
+    <div class="vr"><div class="vf"><strong>le pourvoi en cassation</strong></div><div class="ve">appeal to the Court of Cassation</div></div>
+    <div class="vr"><div class="vf"><strong>la CRPC</strong></div><div class="ve">French plea agreement</div></div>
+    <div class="vr"><div class="vf"><strong>l'effet dévolutif</strong></div><div class="ve">full review on appeal (fact + law)</div></div>
+    <div class="vr"><div class="vf"><strong>l'ordonnance de renvoi</strong></div><div class="ve">referral order (to stand trial)</div></div>
+  </div>
+</section>
+
+<!-- =================== CH 4 =================== -->
+<section class="chapter" id="ch3">
+  <div class="ch-header">
+    <div class="ch-num">04</div>
+    <div class="ch-meta">
+      <div class="eyebrow">Communiquer avec les acteurs du droit</div>
+      <h2>Expressions et formules clés</h2>
+    </div>
+  </div>
+
+  <div class="prose">
+    <p>La langue juridique française est précise, formelle, et structurée autour de formules consacrées. Maîtriser ces expressions permet de communiquer efficacement avec les clients, les confrères et les magistrats. Cliquez sur chaque terme pour découvrir la définition et la traduction.</p>
+  </div>
+
+  <div class="gloss-wrap">
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">En l'espèce</span> — formule d'argumentation</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">Utilisé pour introduire les faits du cas précis que l'on traite. Signifie « dans ce cas-ci ». Indispensable dans les conclusions écrites.<br><span class="en-trans">🇺🇸 "In the case at hand / in the instant case"</span></div>
+    </div>
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">Il est constant que…</span> — droit bien établi</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">Signifie que le principe juridique mentionné est établi et non contesté. Utilisé pour introduire une règle de droit incontestable avant d'en déduire son application.<br><span class="en-trans">🇺🇸 "It is well established that… / It is settled law that…"</span></div>
+    </div>
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">Dire et juger</span> — demande dans les conclusions</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">Dans le dispositif des conclusions, l'avocat formule ses demandes précises : <em>« dire et juger que le contrat est nul »</em>. Le juge ne peut statuer que sur ce qui lui est demandé dans le dispositif.<br><span class="en-trans">🇺🇸 "To hold and declare that…"</span></div>
+    </div>
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">Maître</span> — titre professionnel (abrégé Me)</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">Titre utilisé pour s'adresser à un(e) avocat(e). Toujours utilisé entre confrères et en signant ses actes : <em>Me Dupont</em>. Ne pas confondre avec <em>Monsieur / Madame le Juge</em>, réservé aux magistrats.<br><span class="en-trans">🇺🇸 "Counselor" (aucun équivalent direct)</span></div>
+    </div>
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">Par ces motifs</span> — conclusion de jugement</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">Formule de transition dans un jugement entre la partie explicative (les motifs) et la décision finale (le dispositif). Tout jugement est structuré en deux parties : motifs puis dispositif.<br><span class="en-trans">🇺🇸 "For these reasons, the Court…"</span></div>
+    </div>
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">Condamner aux dépens</span> — frais de procédure</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">Les <em>dépens</em> sont les frais officiels de procédure. La partie perdante est généralement condamnée à les payer. Différent des honoraires d'avocat, qui relèvent d'un accord privé.<br><span class="en-trans">🇺🇸 "Ordered to pay court costs"</span></div>
+    </div>
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">L'article 700</span> — remboursement des honoraires</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">L'article 700 du Code de procédure civile permet au juge de condamner la partie perdante à contribuer aux frais d'avocat de la partie gagnante. C'est un équivalent partiel des <em>attorney's fees</em>, mais le montant est souvent bien inférieur aux honoraires réels.<br><span class="en-trans">🇺🇸 Partial equivalent of "attorney's fees award"</span></div>
+    </div>
+    <div class="gloss-item">
+      <button class="gloss-q" onclick="tog(this)"><span><span class="term">Plaît-il à la Cour…</span> — formule de requête</span><span class="arrow">▼</span></button>
+      <div class="gloss-body">Formule archaïque encore utilisée dans les requêtes. Plus couramment : <em>« nous demandons à la cour de… »</em> ou <em>« il vous plaise de… »</em>.<br><span class="en-trans">🇺🇸 "May it please the Court…"</span></div>
+    </div>
+  </div>
+
+  <div class="vocab-title">Expressions orales à l'audience</div>
+  <div class="expr-grid">
+    <div class="expr-card">
+      <div class="fr">« Monsieur le Président / Madame la Présidente »</div>
+      <div class="en">How to address the presiding judge</div>
+      <div class="ctx">Toujours utilisé pour s'adresser au juge qui préside l'audience.</div>
+    </div>
+    <div class="expr-card">
+      <div class="fr">« Je me permets d'attirer l'attention de la Cour sur… »</div>
+      <div class="en">"May I draw the Court's attention to…"</div>
+      <div class="ctx">Formule polie pour souligner un point important à l'oral.</div>
+    </div>
+    <div class="expr-card">
+      <div class="fr">« Nous nous rapportons à nos écritures. »</div>
+      <div class="en">"We refer the Court to our written submissions."</div>
+      <div class="ctx">Utilisé quand la plaidoirie est brève et que les conclusions écrites sont complètes.</div>
+    </div>
+    <div class="expr-card">
+      <div class="fr">« La partie adverse soutient à tort que… »</div>
+      <div class="en">"The opposing party wrongly argues that…"</div>
+      <div class="ctx">Pour réfuter un argument adverse, plus direct qu'en anglais.</div>
+    </div>
+    <div class="expr-card">
+      <div class="fr">« Nous sollicitons le bénéfice de nos précédentes conclusions. »</div>
+      <div class="en">"We rely on our previous written submissions."</div>
+      <div class="ctx">Rappel de position dans un dossier avec plusieurs échanges.</div>
+    </div>
+    <div class="expr-card">
+      <div class="fr">« La décision sera mise en délibéré. »</div>
+      <div class="en">"The decision will be taken under advisement."</div>
+      <div class="ctx">Le juge annonce qu'il rendra sa décision à une date ultérieure.</div>
+    </div>
+  </div>
+</section>
+
+<!-- =================== CH 5 =================== -->
+<section class="chapter" id="ch4">
+  <div class="ch-header">
+    <div class="ch-num">05</div>
+    <div class="ch-meta">
+      <div class="eyebrow">Testez vos connaissances</div>
+      <h2>Quiz — Le droit français</h2>
+    </div>
+  </div>
+
+  <div class="quiz-item" id="q1">
+    <div class="quiz-q">1. Quelle est la juridiction compétente pour les litiges entre un employé et son employeur ?</div>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q1" value="a"> Le tribunal judiciaire</label>
+      <label class="quiz-opt"><input type="radio" name="q1" value="b"> Le tribunal correctionnel</label>
+      <label class="quiz-opt"><input type="radio" name="q1" value="c"> Le conseil de prud'hommes</label>
+      <label class="quiz-opt"><input type="radio" name="q1" value="d"> La cour d'assises</label>
+    </div>
+    <button class="qbtn" onclick="chk('q1','c','Le conseil de prud\'hommes est la juridiction spécialisée dans les litiges du travail entre salariés et employeurs.')">Vérifier</button>
+    <div class="quiz-fb" id="fb_q1"></div>
+  </div>
+
+  <div class="quiz-item" id="q2">
+    <div class="quiz-q">2. Un avocat français souhaite plaider devant la Cour de cassation. Que doit-il faire ?</div>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q2" value="a"> Il peut plaider directement comme devant n'importe quelle juridiction.</label>
+      <label class="quiz-opt"><input type="radio" name="q2" value="b"> Il doit passer par un avocat aux Conseils, officier ministériel spécialisé.</label>
+      <label class="quiz-opt"><input type="radio" name="q2" value="c"> Il doit demander l'autorisation du bâtonnier de Paris.</label>
+      <label class="quiz-opt"><input type="radio" name="q2" value="d"> Il doit obtenir une certification spéciale du CNB.</label>
+    </div>
+    <button class="qbtn" onclick="chk('q2','b','Les avocats aux Conseils sont les seuls habilités à représenter les parties devant la Cour de cassation et le Conseil d\'État.')">Vérifier</button>
+    <div class="quiz-fb" id="fb_q2"></div>
+  </div>
+
+  <div class="quiz-item" id="q3">
+    <div class="quiz-q">3. En quoi la procédure civile française diffère-t-elle fondamentalement de la procédure américaine ?</div>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q3" value="a"> En France, le jury populaire est présent dans tous les procès civils.</label>
+      <label class="quiz-opt"><input type="radio" name="q3" value="b"> En France, la procédure est principalement écrite ; les plaidoiries orales sont courtes.</label>
+      <label class="quiz-opt"><input type="radio" name="q3" value="c"> En France, le juge peut participer directement à l'enquête en matière civile.</label>
+      <label class="quiz-opt"><input type="radio" name="q3" value="d"> Il n'y a pas de différence majeure entre les deux systèmes.</label>
+    </div>
+    <button class="qbtn" onclick="chk('q3','b','La procédure civile française est principalement écrite. Les avocats échangent des conclusions détaillées, et l\'audience orale est souvent très brève — parfois quelques minutes.')">Vérifier</button>
+    <div class="quiz-fb" id="fb_q3"></div>
+  </div>
+
+  <div class="quiz-item" id="q4">
+    <div class="quiz-q">4. Qu'est-ce que la « mise en examen » en droit pénal français ?</div>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q4" value="a"> Une condamnation définitive prononcée par le tribunal correctionnel.</label>
+      <label class="quiz-opt"><input type="radio" name="q4" value="b"> Un acte par lequel le procureur ordonne un placement en garde à vue.</label>
+      <label class="quiz-opt"><input type="radio" name="q4" value="c"> Un statut accordé par le juge d'instruction quand il existe des indices sérieux contre une personne.</label>
+      <label class="quiz-opt"><input type="radio" name="q4" value="d"> L'équivalent exact du « guilty plea » américain.</label>
+    </div>
+    <button class="qbtn" onclick="chk('q4','c','La mise en examen est prononcée par le juge d\'instruction lorsqu\'il existe des indices graves et concordants. Elle n\'est pas une condamnation.')">Vérifier</button>
+    <div class="quiz-fb" id="fb_q4"></div>
+  </div>
+
+  <div class="quiz-item" id="q5">
+    <div class="quiz-q">5. Quel est le rôle du Conseil d'État dans le système juridique français ?</div>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q5" value="a"> Il est la juridiction suprême pour les affaires pénales.</label>
+      <label class="quiz-opt"><input type="radio" name="q5" value="b"> Il conseille le gouvernement et est la juridiction suprême de l'ordre administratif.</label>
+      <label class="quiz-opt"><input type="radio" name="q5" value="c"> Il contrôle la constitutionnalité des lois comme la Cour suprême américaine.</label>
+      <label class="quiz-opt"><input type="radio" name="q5" value="d"> Il s'occupe uniquement des litiges commerciaux entre entreprises françaises.</label>
+    </div>
+    <button class="qbtn" onclick="chk('q5','b','Le Conseil d\'État a une double fonction : conseiller le gouvernement sur les projets de textes, et être la juridiction suprême de l\'ordre administratif.')">Vérifier</button>
+    <div class="quiz-fb" id="fb_q5"></div>
+  </div>
+
+  <div class="quiz-item" id="q6">
+    <div class="quiz-q">6. La formule « en l'espèce » dans une conclusion d'avocat signifie :</div>
+    <div class="quiz-opts">
+      <label class="quiz-opt"><input type="radio" name="q6" value="a"> « En principe, selon la loi… »</label>
+      <label class="quiz-opt"><input type="radio" name="q6" value="b"> « Dans ce cas précis / dans les faits de ce dossier… »</label>
+      <label class="quiz-opt"><input type="radio" name="q6" value="c"> « D'après la jurisprudence constante… »</label>
+      <label class="quiz-opt"><input type="radio" name="q6" value="d"> « En toute hypothèse… »</label>
+    </div>
+    <button class="qbtn" onclick="chk('q6','b','« En l\'espèce » renvoie aux faits particuliers du dossier traité. C\'est l\'équivalent de « in the case at hand » ou « on the facts of this case ».')">Vérifier</button>
+    <div class="quiz-fb" id="fb_q6"></div>
+  </div>
+</section>
+
+<button class="totop" id="totop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<footer>Cours de français juridique · Conçu par <span>Fabien B.</span> · Usage pédagogique</footer>
+
+<script>
+  const chapters = document.querySelectorAll('section.chapter');
+  const tabs = document.querySelectorAll('.tab-btn');
+  const fill = document.getElementById('prog-fill');
+  const lbl  = document.getElementById('prog-label');
+
+  function show(i) {
+    chapters.forEach((c,j) => c.classList.toggle('visible', i===j));
+    tabs.forEach((t,j) => t.classList.toggle('active', i===j));
+    fill.style.width = ((i+1)/chapters.length*100)+'%';
+    lbl.textContent = 'Chapitre '+(i+1)+' / '+chapters.length;
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  function tog(btn) {
+    const body = btn.nextElementSibling;
+    const open = body.classList.contains('open');
+    document.querySelectorAll('.gloss-body').forEach(b => b.classList.remove('open'));
+    document.querySelectorAll('.gloss-q').forEach(b => b.classList.remove('open'));
+    if (!open) { body.classList.add('open'); btn.classList.add('open'); }
+  }
+
+  function chk(qId, correct, expl) {
+    const item = document.getElementById(qId);
+    const sel  = item.querySelector('input:checked');
+    const fb   = document.getElementById('fb_'+qId);
+    if (!sel) { fb.textContent='Veuillez choisir une réponse.'; fb.className='quiz-fb'; return; }
+    item.querySelectorAll('.quiz-opt').forEach(opt => {
+      const v = opt.querySelector('input').value;
+      opt.classList.remove('correct','wrong');
+      if (v===correct) opt.classList.add('correct');
+      else if (v===sel.value && v!==correct) opt.classList.add('wrong');
+    });
+    item.querySelectorAll('input').forEach(r => r.disabled=true);
+    item.querySelector('.qbtn').disabled=true;
+    if (sel.value===correct) { fb.className='quiz-fb ok'; fb.textContent='✓ Correct ! '+expl; }
+    else { fb.className='quiz-fb ko'; fb.textContent='✗ Pas tout à fait. '+expl; }
+  }
+
+  const totop = document.getElementById('totop');
+  window.addEventListener('scroll', () => totop.classList.toggle('show', scrollY>280));
+</script>
+</body>
+</html>
