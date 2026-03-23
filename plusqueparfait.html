@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leçon 3 — Raconter une expérience | B2+</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --coral:   #E84A3A;
+    --yellow:  #F5A623;
+    --teal:    #00A896;
+    --purple:  #7B5EA7;
+    --blue:    #3A7BD5;
+    --pink:    #D63384;
+    --orange:  #E8680A;
+    --green:   #2E9E5B;
+    --bg:      #F5F3EE;
+    --surface: #FFFFFF;
+    --border:  #E0DBD3;
+    --text:    #1E1B18;
+    --muted:   #6B6560;
+    --light-accent: #F0EDE8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg); color: var(--text);
+    min-height: 100vh; overflow-x: hidden;
+  }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #1E1B18 0%, #2D2A26 60%, #3A3530 100%);
+    padding: 56px 40px 48px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 15% 60%, rgba(123,94,167,0.35) 0%, transparent 55%),
+                radial-gradient(ellipse at 85% 20%, rgba(0,168,150,0.25) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .hero .badge {
+    display: inline-block; background: var(--teal); color: #fff;
+    font-weight: 700; font-size: 0.72rem; letter-spacing: 0.13em;
+    text-transform: uppercase; padding: 5px 18px; border-radius: 50px; margin-bottom: 18px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 900;
+    line-height: 1.1; color: #fff; margin-bottom: 14px;
+  }
+  .hero h1 span { color: var(--yellow); }
+  .hero p.subtitle {
+    font-size: 1rem; color: rgba(255,255,255,0.65);
+    max-width: 580px; margin: 0 auto 26px; line-height: 1.65;
+  }
+  .objetifs-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .obj-tag {
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 50px; padding: 5px 15px; font-size: 0.82rem;
+    color: rgba(255,255,255,0.85); backdrop-filter: blur(4px);
+  }
+  .obj-tag strong { color: var(--yellow); margin-right: 4px; }
+
+  /* CONTAINER */
+  .container { max-width: 900px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* CARDS */
+  .section-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 18px; padding: 34px 38px; margin-top: 36px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+  .section-card.visible { opacity: 1; transform: translateY(0); }
+  .section-card::before {
+    content: attr(data-num); position: absolute; top: -8px; right: 18px;
+    font-family: 'Playfair Display', serif; font-size: 6.5rem; font-weight: 900;
+    color: rgba(0,0,0,0.035); line-height: 1; pointer-events: none;
+  }
+
+  /* STRIPE + TITLE */
+  .stripe { height: 4px; border-radius: 18px 18px 0 0; margin: -34px -38px 28px; }
+  .stripe-coral  { background: var(--coral); }
+  .stripe-teal   { background: var(--teal); }
+  .stripe-purple { background: var(--purple); }
+  .stripe-yellow { background: var(--yellow); }
+  .stripe-blue   { background: var(--blue); }
+  .stripe-pink   { background: var(--pink); }
+  .stripe-orange { background: var(--orange); }
+
+  .section-title { display: flex; align-items: center; gap: 13px; margin-bottom: 24px; }
+  .section-title .icon {
+    width: 42px; height: 42px; border-radius: 11px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.25rem; flex-shrink: 0;
+  }
+  .section-title h2 { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 700; }
+  .section-title p { font-size: 0.83rem; color: var(--muted); margin-top: 1px; }
+
+  .ic-coral   { background: #FEE9E7; color: var(--coral); }
+  .ic-teal    { background: #E0F5F3; color: var(--teal); }
+  .ic-purple  { background: #EDE8F5; color: var(--purple); }
+  .ic-yellow  { background: #FEF4E0; color: var(--orange); }
+  .ic-blue    { background: #E5EFFE; color: var(--blue); }
+  .ic-pink    { background: #FCE8F1; color: var(--pink); }
+  .ic-orange  { background: #FEF0E5; color: var(--orange); }
+
+  /* LEGEND */
+  .legende { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+  .leg-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 0.8rem; color: var(--muted);
+    background: var(--light-accent); padding: 4px 12px; border-radius: 50px;
+  }
+  .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .dot-imp { background: #3A7BD5; }
+  .dot-pc  { background: #00A896; }
+  .dot-pqp { background: #F5A623; }
+
+  /* HIGHLIGHTS */
+  .imp { background: #E5EFFE; color: #1A4F9C; padding: 1px 5px; border-radius: 4px; font-weight: 600; }
+  .pc  { background: #E0F5F3; color: #006D62; padding: 1px 5px; border-radius: 4px; font-weight: 600; }
+  .pqp { background: #FEF4E0; color: #8A5A00; padding: 1px 5px; border-radius: 4px; font-weight: 600; }
+
+  .texte-body { line-height: 1.9; font-size: 1.03rem; color: var(--text); }
+  .texte-body p { margin-bottom: 15px; }
+  .texte-body p:last-child { margin-bottom: 0; }
+
+  /* VOCAB */
+  .vocab-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+  @media (max-width: 580px) { .vocab-grid { grid-template-columns: 1fr; } }
+  .vocab-item {
+    background: var(--light-accent); border: 1px solid var(--border);
+    border-radius: 9px; padding: 9px 14px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+  }
+  .vocab-fr { font-weight: 600; color: var(--text); font-size: 0.88rem; }
+  .vocab-de { color: var(--orange); font-size: 0.83rem; font-style: italic; }
+
+  /* COMPREHENSION */
+  .questions-list { list-style: none; }
+  .questions-list li {
+    background: var(--light-accent); border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 18px; margin-bottom: 10px;
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 0.97rem; line-height: 1.5;
+  }
+  .q-num {
+    width: 27px; height: 27px; border-radius: 50%;
+    background: var(--blue); color: #fff; font-weight: 700; font-size: 0.78rem;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+
+  /* GRAMMAR BOX */
+  .grammar-box {
+    background: var(--light-accent); border-left: 4px solid var(--purple);
+    border-radius: 0 12px 12px 0; padding: 16px 20px; margin: 16px 0;
+  }
+  .grammar-box h4 {
+    color: var(--purple); font-size: 0.8rem;
+    text-transform: uppercase; letter-spacing: 0.09em; margin-bottom: 9px;
+  }
+  .grammar-box p, .grammar-box li { font-size: 0.93rem; line-height: 1.75; color: var(--text); }
+  .grammar-box ul { padding-left: 18px; }
+  .formula {
+    font-family: monospace; font-size: 0.97rem; background: #EDE8F5; color: var(--purple);
+    padding: 7px 14px; border-radius: 8px; margin: 9px 0; display: inline-block;
+  }
+
+  /* ANSWER REVEAL */
+  .answer-wrap { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .btn-reveal {
+    background: none; border: 1.5px solid var(--border); color: var(--muted);
+    border-radius: 8px; padding: 4px 13px; font-size: 0.78rem;
+    cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+  }
+  .btn-reveal:hover { border-color: var(--orange); color: var(--orange); }
+  .answer-text {
+    display: none; background: #FEF4E0; border: 1px solid rgba(245,166,35,0.35);
+    color: #7A4800; padding: 4px 12px; border-radius: 8px; font-size: 0.86rem; font-weight: 500;
+  }
+  .answer-text.visible { display: inline-block; }
+
+  /* INPUTS */
+  input[type="text"] {
+    background: var(--light-accent); border: 1.5px solid var(--border);
+    border-radius: 8px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.93rem;
+    padding: 5px 11px; min-width: 110px; width: 135px; outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  input[type="text"]:focus { border-color: var(--orange); background: #FEF4E0; }
+  input.correct { border-color: var(--teal) !important; background: #E0F5F3 !important; color: #005C54; }
+  input.wrong   { border-color: var(--coral) !important; background: #FEE9E7 !important; color: #9B2217; }
+
+  textarea {
+    width: 100%; height: 190px; resize: vertical;
+    background: var(--light-accent); border: 1.5px solid var(--border);
+    border-radius: 10px; color: var(--text);
+    font-family: 'DM Sans', sans-serif; font-size: 0.97rem;
+    padding: 14px 16px; line-height: 1.75; outline: none;
+    transition: border-color 0.2s; margin-top: 10px;
+  }
+  textarea:focus { border-color: var(--pink); background: #FCE8F1; }
+
+  /* EXERCISES */
+  .ex-label {
+    font-size: 0.76rem; font-weight: 700; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 16px; display: block;
+  }
+  .ex-item { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; }
+  .ex-num {
+    width: 25px; height: 25px; border-radius: 50%; font-size: 0.78rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .ex-num-orange { background: #FEF0E5; color: var(--orange); }
+  .ex-num-yellow { background: #FEF4E0; color: #7A4800; }
+  .ex-num-purple { background: #EDE8F5; color: var(--purple); }
+  .ex-num-teal   { background: #E0F5F3; color: var(--teal); }
+  .ex-text { flex: 1; font-size: 0.96rem; line-height: 1.75; color: var(--text); }
+
+  /* BUTTONS */
+  .btn-check {
+    color: #fff; border: none; border-radius: 10px; padding: 9px 22px;
+    font-size: 0.88rem; font-weight: 700; cursor: pointer;
+    font-family: 'DM Sans', sans-serif; transition: transform 0.15s, opacity 0.15s; margin-top: 8px;
+  }
+  .btn-check:hover { transform: translateY(-1px); opacity: 0.9; }
+  .btn-coral  { background: var(--coral); }
+  .btn-yellow { background: var(--orange); }
+  .btn-purple { background: var(--purple); }
+  .btn-pink   { background: var(--pink); }
+
+  /* SCORE */
+  .score-bar {
+    background: var(--light-accent); border: 1px solid var(--border);
+    border-radius: 50px; height: 7px; margin: 13px 0 6px; overflow: hidden;
+  }
+  .score-fill {
+    height: 100%; border-radius: 50px;
+    background: linear-gradient(90deg, var(--teal), var(--blue));
+    width: 0%; transition: width 0.6s ease;
+  }
+  .score-txt { font-size: 0.83rem; color: var(--muted); }
+
+  /* CONNECTEURS */
+  .conn-grid { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 18px; }
+  .conn-tag {
+    background: #EDE8F5; border: 1px solid #C4B5E0; color: var(--purple);
+    border-radius: 8px; padding: 5px 15px; font-size: 0.88rem; font-weight: 600;
+  }
+
+  /* CONSIGNE */
+  .consigne-box {
+    background: #FCE8F1; border: 1px solid #F0B8D4;
+    border-radius: 13px; padding: 18px 20px; margin-bottom: 16px;
+  }
+  .consigne-box h4 { color: var(--pink); margin-bottom: 9px; font-size: 0.93rem; }
+  .consigne-box ul { padding-left: 20px; }
+  .consigne-box li { font-size: 0.9rem; line-height: 1.85; color: var(--text); }
+  .consigne-box li::marker { color: var(--pink); }
+
+  footer {
+    text-align: center; padding: 28px; font-size: 0.78rem; color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 600px) {
+    .section-card { padding: 26px 22px; }
+    .stripe { margin: -26px -22px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="badge">Niveau B2+ · Cours 3</div>
+  <h1>Raconter une<br><span>expérience importante</span></h1>
+  <p class="subtitle">Maîtrisez la narration complexe — imparfait, passé composé, plus-que-parfait &amp; connecteurs logiques</p>
+  <div class="objetifs-row">
+    <span class="obj-tag"><strong>🎯</strong>Imparfait</span>
+    <span class="obj-tag"><strong>🎯</strong>Passé composé</span>
+    <span class="obj-tag"><strong>🎯</strong>Plus-que-parfait</span>
+    <span class="obj-tag"><strong>🔗</strong>Connecteurs</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- 1. TEXTE -->
+  <div class="section-card" data-num="1">
+    <div class="stripe stripe-coral"></div>
+    <div class="section-title">
+      <div class="icon ic-coral">📖</div>
+      <div><h2 style="color:var(--coral)">Texte de référence</h2><p>Les temps verbaux sont mis en couleur</p></div>
+    </div>
+    <div class="legende">
+      <span class="leg-item"><span class="dot dot-imp"></span>Imparfait</span>
+      <span class="leg-item"><span class="dot dot-pc"></span>Passé composé</span>
+      <span class="leg-item"><span class="dot dot-pqp"></span>Plus-que-parfait</span>
+    </div>
+    <div class="texte-body">
+      <p>L'année dernière, <span class="pc">j'ai vécu</span> une expérience très importante qui m'<span class="pc">a vraiment changé</span>. À ce moment-là, <span class="imp">je travaillais</span> beaucoup et <span class="imp">j'étais</span> assez stressé à cause de mes études. Un jour, mon professeur m'<span class="pc">a proposé</span> de participer à une présentation devant toute la classe. Au début, <span class="pc">j'ai hésité</span> parce que je n'<span class="imp">aimais</span> pas parler en public.</p>
+      <p>Cependant, <span class="pqp">j'avais déjà préparé</span> un travail sur ce sujet, donc <span class="pc">j'ai finalement accepté</span>. Le jour de la présentation, il <span class="imp">y avait</span> beaucoup d'étudiants et tout le monde me <span class="imp">regardait</span>. <span class="imp">J'étais</span> très nerveux et <span class="imp">j'avais peur</span> d'oublier mes idées. Quand <span class="pc">j'ai commencé</span> à parler, ma voix <span class="imp">tremblait</span> un peu, mais après quelques minutes, <span class="pc">je me suis senti</span> plus à l'aise.</p>
+      <p><span class="pc">J'ai expliqué</span> mon sujet calmement et <span class="pc">j'ai essayé</span> de parler lentement. À la fin, les étudiants <span class="pc">ont posé</span> plusieurs questions et <span class="pc">j'ai réussi</span> à y répondre sans problème. Mon professeur m'<span class="pc">a félicité</span> et il <span class="pc">a dit</span> que ma présentation <span class="imp">était</span> très claire. Ce qui m'<span class="pc">a le plus marqué</span>, c'est que <span class="pqp">j'avais beaucoup plus de confiance</span> en moi après cette expérience. Depuis ce jour, je n'<span class="pc">ai plus peur</span> de parler devant un groupe.</p>
+    </div>
+  </div>
+
+  <!-- 2. VOCABULAIRE -->
+  <div class="section-card" data-num="2">
+    <div class="stripe stripe-teal"></div>
+    <div class="section-title">
+      <div class="icon ic-teal">🗂</div>
+      <div><h2 style="color:var(--teal)">Vocabulaire</h2><p>Français — Deutsch</p></div>
+    </div>
+    <div class="vocab-grid">
+      <div class="vocab-item"><span class="vocab-fr">une expérience importante</span><span class="vocab-de">eine wichtige Erfahrung</span></div>
+      <div class="vocab-item"><span class="vocab-fr">être stressé(e)</span><span class="vocab-de">gestresst sein</span></div>
+      <div class="vocab-item"><span class="vocab-fr">proposer</span><span class="vocab-de">vorschlagen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">participer</span><span class="vocab-de">teilnehmen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">hésiter</span><span class="vocab-de">zögern</span></div>
+      <div class="vocab-item"><span class="vocab-fr">parler en public</span><span class="vocab-de">vor Publikum sprechen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">accepter</span><span class="vocab-de">akzeptieren</span></div>
+      <div class="vocab-item"><span class="vocab-fr">nerveux / nerveuse</span><span class="vocab-de">nervös</span></div>
+      <div class="vocab-item"><span class="vocab-fr">oublier</span><span class="vocab-de">vergessen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">se sentir à l'aise</span><span class="vocab-de">sich wohlfühlen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">expliquer</span><span class="vocab-de">erklären</span></div>
+      <div class="vocab-item"><span class="vocab-fr">réussir</span><span class="vocab-de">erfolgreich sein</span></div>
+      <div class="vocab-item"><span class="vocab-fr">poser une question</span><span class="vocab-de">eine Frage stellen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">féliciter</span><span class="vocab-de">gratulieren / loben</span></div>
+      <div class="vocab-item"><span class="vocab-fr">avoir confiance en soi</span><span class="vocab-de">Selbstvertrauen haben</span></div>
+      <div class="vocab-item"><span class="vocab-fr">depuis ce jour</span><span class="vocab-de">seit diesem Tag</span></div>
+    </div>
+  </div>
+
+  <!-- 3. COMPRÉHENSION -->
+  <div class="section-card" data-num="3">
+    <div class="stripe stripe-blue"></div>
+    <div class="section-title">
+      <div class="icon ic-blue">💬</div>
+      <div><h2 style="color:var(--blue)">Compréhension</h2><p>Réponds aux questions en phrases complètes</p></div>
+    </div>
+    <ul class="questions-list">
+      <li>
+        <span class="q-num">1</span>
+        <div>
+          <div>Pourquoi la personne était-elle stressée ?</div>
+          <div class="answer-wrap">
+            <input type="text" placeholder="Ta réponse…" style="width:260px;">
+            <button class="btn-reveal" onclick="revealAnswer(this)">Voir réponse</button>
+            <span class="answer-text">Elle était stressée à cause de ses études et parce qu'elle travaillait beaucoup.</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="q-num">2</span>
+        <div>
+          <div>Qui lui a proposé de faire une présentation ?</div>
+          <div class="answer-wrap">
+            <input type="text" placeholder="Ta réponse…" style="width:260px;">
+            <button class="btn-reveal" onclick="revealAnswer(this)">Voir réponse</button>
+            <span class="answer-text">C'est son professeur qui lui a proposé de faire une présentation.</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="q-num">3</span>
+        <div>
+          <div>Pourquoi a-t-elle hésité ?</div>
+          <div class="answer-wrap">
+            <input type="text" placeholder="Ta réponse…" style="width:260px;">
+            <button class="btn-reveal" onclick="revealAnswer(this)">Voir réponse</button>
+            <span class="answer-text">Elle a hésité parce qu'elle n'aimait pas parler en public.</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="q-num">4</span>
+        <div>
+          <div>Comment s'est-elle sentie au début ?</div>
+          <div class="answer-wrap">
+            <input type="text" placeholder="Ta réponse…" style="width:260px;">
+            <button class="btn-reveal" onclick="revealAnswer(this)">Voir réponse</button>
+            <span class="answer-text">Au début, elle était très nerveuse et sa voix tremblait un peu.</span>
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="q-num">5</span>
+        <div>
+          <div>Qu'est-ce qui a changé après cette expérience ?</div>
+          <div class="answer-wrap">
+            <input type="text" placeholder="Ta réponse…" style="width:260px;">
+            <button class="btn-reveal" onclick="revealAnswer(this)">Voir réponse</button>
+            <span class="answer-text">Elle avait plus confiance en elle et n'avait plus peur de parler en public.</span>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- 4. GRAMMAIRE FOCUS PQP -->
+  <div class="section-card" data-num="★">
+    <div class="stripe stripe-purple"></div>
+    <div class="section-title">
+      <div class="icon ic-purple">🔑</div>
+      <div><h2 style="color:var(--purple)">Focus : Le Plus-que-parfait</h2><p>Le temps clé de cette leçon</p></div>
+    </div>
+    <div class="grammar-box">
+      <h4>Formation</h4>
+      <div class="formula">avoir / être à l'imparfait + participe passé</div>
+      <ul style="margin-top:9px;">
+        <li>J'<strong>avais préparé</strong> → <em>avais</em> (imparfait de avoir) + <em>préparé</em></li>
+        <li>Elle <strong>était partie</strong> → <em>était</em> (imparfait de être) + <em>partie</em></li>
+        <li>Ils <strong>s'étaient levés</strong> → verbe pronominal, accord au sujet</li>
+      </ul>
+    </div>
+    <div class="grammar-box" style="border-color:var(--orange);">
+      <h4>Emploi — « le passé du passé »</h4>
+      <p>Le plus-que-parfait exprime une action <strong>antérieure</strong> à une autre action passée.</p>
+      <ul style="margin-top:9px;">
+        <li><span class="pqp">J'avais déjà préparé</span> un travail → <span class="pc">j'ai accepté</span> <em>(avant → après)</em></li>
+        <li>Quand il est arrivé, elle <span class="pqp">était déjà partie</span>.</li>
+        <li>Il a mangé le gâteau que sa mère <span class="pqp">avait préparé</span>.</li>
+      </ul>
+    </div>
+    <div class="grammar-box" style="border-color:var(--teal);">
+      <h4>Auxiliaires — rappel</h4>
+      <p style="margin-bottom:7px;"><strong>Avec ÊTRE :</strong> aller, venir, partir, arriver, entrer, sortir, monter, descendre, naître, mourir, rester, tomber + tous les verbes pronominaux</p>
+      <p><strong>Avec AVOIR :</strong> tous les autres verbes</p>
+    </div>
+  </div>
+
+  <!-- EX 1 : IMP / PC -->
+  <div class="section-card" data-num="5">
+    <div class="stripe stripe-orange"></div>
+    <div class="section-title">
+      <div class="icon ic-orange">✏️</div>
+      <div><h2 style="color:var(--orange)">Exercice 1</h2><p>Imparfait ou passé composé ?</p></div>
+    </div>
+    <span class="ex-label">Conjugue le verbe entre parenthèses au bon temps</span>
+    <div id="ex1">
+      <div class="ex-item"><span class="ex-num ex-num-orange">1</span><div class="ex-text">J'<input type="text" data-answer="étais" placeholder="(être)"> très stressé.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-orange">2</span><div class="ex-text">Mon professeur m'<input type="text" data-answer="a proposé" placeholder="(proposer)"> une présentation.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-orange">3</span><div class="ex-text">Je n'<input type="text" data-answer="aimais" placeholder="(aimer)"> pas parler en public.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-orange">4</span><div class="ex-text">J'<input type="text" data-answer="ai accepté" placeholder="(accepter)"> finalement.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-orange">5</span><div class="ex-text">Les étudiants <input type="text" data-answer="ont posé" placeholder="(poser)"> des questions.</div></div>
+    </div>
+    <button class="btn-check btn-coral" onclick="checkExercise('ex1','score1','bar1')">Vérifier mes réponses</button>
+    <div class="score-bar"><div class="score-fill" id="bar1"></div></div>
+    <p class="score-txt" id="score1"></p>
+  </div>
+
+  <!-- EX 2 : PQP -->
+  <div class="section-card" data-num="6">
+    <div class="stripe stripe-yellow"></div>
+    <div class="section-title">
+      <div class="icon ic-yellow">⭐</div>
+      <div><h2 style="color:var(--orange)">Exercice 2</h2><p>Le plus-que-parfait</p></div>
+    </div>
+    <span class="ex-label">Mets le verbe au plus-que-parfait</span>
+    <div id="ex2">
+      <div class="ex-item"><span class="ex-num ex-num-yellow">1</span><div class="ex-text">J'<input type="text" data-answer="avais déjà préparé" placeholder="(préparer)" style="width:165px;"> un travail sur ce sujet.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-yellow">2</span><div class="ex-text">Quand il est arrivé, elle <input type="text" data-answer="était partie" placeholder="(partir)"> depuis une heure.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-yellow">3</span><div class="ex-text">Il a mangé le gâteau que sa mère <input type="text" data-answer="avait fait" placeholder="(faire)">.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-yellow">4</span><div class="ex-text">Nous <input type="text" data-answer="avions étudié" placeholder="(étudier)"> toute la nuit avant l'examen.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-yellow">5</span><div class="ex-text">Tu <input type="text" data-answer="avais oublié" placeholder="(oublier)"> tes clés, alors tu ne pouvais pas entrer.</div></div>
+    </div>
+    <button class="btn-check btn-yellow" onclick="checkExercise('ex2','score2','bar2')">Vérifier mes réponses</button>
+    <div class="score-bar"><div class="score-fill" id="bar2"></div></div>
+    <p class="score-txt" id="score2"></p>
+  </div>
+
+  <!-- EX 3 : CONNECTEURS -->
+  <div class="section-card" data-num="7">
+    <div class="stripe stripe-purple"></div>
+    <div class="section-title">
+      <div class="icon ic-purple">🔗</div>
+      <div><h2 style="color:var(--purple)">Exercice 3</h2><p>Connecteurs logiques</p></div>
+    </div>
+    <div class="conn-grid">
+      <span class="conn-tag">d'abord</span>
+      <span class="conn-tag">ensuite</span>
+      <span class="conn-tag">finalement</span>
+      <span class="conn-tag">cependant</span>
+      <span class="conn-tag">parce que</span>
+    </div>
+    <span class="ex-label">Complète chaque phrase avec le bon connecteur</span>
+    <div id="ex3">
+      <div class="ex-item"><span class="ex-num ex-num-purple">1</span><div class="ex-text"><input type="text" data-answer="d'abord" placeholder="connecteur…"> j'étais très nerveux.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-purple">2</span><div class="ex-text"><input type="text" data-answer="ensuite" placeholder="connecteur…"> j'ai commencé à parler.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-purple">3</span><div class="ex-text"><input type="text" data-answer="finalement" placeholder="connecteur…"> je me suis senti plus à l'aise.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-purple">4</span><div class="ex-text">J'ai hésité <input type="text" data-answer="parce que" placeholder="connecteur…"> je n'aimais pas parler en public.</div></div>
+      <div class="ex-item"><span class="ex-num ex-num-purple">5</span><div class="ex-text"><input type="text" data-answer="cependant" placeholder="connecteur…"> tout s'est bien passé.</div></div>
+    </div>
+    <button class="btn-check btn-purple" onclick="checkExercise('ex3','score3','bar3')">Vérifier mes réponses</button>
+    <div class="score-bar"><div class="score-fill" id="bar3"></div></div>
+    <p class="score-txt" id="score3"></p>
+  </div>
+
+  <!-- EX 4 : REPÉRER LES TEMPS -->
+  <div class="section-card" data-num="8">
+    <div class="stripe stripe-teal"></div>
+    <div class="section-title">
+      <div class="icon ic-teal">🔍</div>
+      <div><h2 style="color:var(--teal)">Exercice 4</h2><p>Repère les temps dans le texte</p></div>
+    </div>
+    <span class="ex-label">Retrouve une phrase de chaque type dans le texte de référence</span>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div style="background:#E0F5F3;border:1px solid #A0DDD8;border-radius:12px;padding:15px 18px;">
+        <p style="font-size:0.78rem;color:var(--teal);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">1 phrase — IMPARFAIT (description)</p>
+        <input type="text" placeholder="Écris la phrase ici…" style="width:100%;">
+        <div class="answer-wrap" style="margin-top:8px;">
+          <button class="btn-reveal" onclick="revealAnswer(this)">Voir exemple</button>
+          <span class="answer-text">« J'étais très nerveux et j'avais peur d'oublier mes idées. »</span>
+        </div>
+      </div>
+      <div style="background:#E5EFFE;border:1px solid #AABFE8;border-radius:12px;padding:15px 18px;">
+        <p style="font-size:0.78rem;color:var(--blue);font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">1 phrase — PASSÉ COMPOSÉ (action)</p>
+        <input type="text" placeholder="Écris la phrase ici…" style="width:100%;">
+        <div class="answer-wrap" style="margin-top:8px;">
+          <button class="btn-reveal" onclick="revealAnswer(this)">Voir exemple</button>
+          <span class="answer-text">« Mon professeur m'a félicité et il a dit que ma présentation était très claire. »</span>
+        </div>
+      </div>
+      <div style="background:#FEF4E0;border:1px solid rgba(245,166,35,0.35);border-radius:12px;padding:15px 18px;">
+        <p style="font-size:0.78rem;color:#8A5A00;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:8px;">1 phrase — PLUS-QUE-PARFAIT (action antérieure)</p>
+        <input type="text" placeholder="Écris la phrase ici…" style="width:100%;">
+        <div class="answer-wrap" style="margin-top:8px;">
+          <button class="btn-reveal" onclick="revealAnswer(this)">Voir exemple</button>
+          <span class="answer-text">« Cependant, j'avais déjà préparé un travail sur ce sujet. »</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTION ÉCRITE -->
+  <div class="section-card" data-num="9">
+    <div class="stripe stripe-pink"></div>
+    <div class="section-title">
+      <div class="icon ic-pink">✍️</div>
+      <div><h2 style="color:var(--pink)">Production écrite</h2><p>Écris ton propre texte</p></div>
+    </div>
+    <div class="consigne-box">
+      <h4>📋 Consigne</h4>
+      <p style="font-size:0.92rem;margin-bottom:9px;color:var(--text);">Écris <strong>10–12 phrases</strong> sur une expérience importante dans ta vie. Tu dois utiliser :</p>
+      <ul>
+        <li>L'<strong>imparfait</strong> pour les descriptions et le contexte</li>
+        <li>Le <strong>passé composé</strong> pour les actions principales</li>
+        <li>Le <strong>plus-que-parfait</strong> pour une action antérieure</li>
+        <li>Au moins <strong>3 connecteurs logiques</strong></li>
+        <li>La structure : <em>« Ce qui m'a le plus marqué, c'est… »</em></li>
+      </ul>
+    </div>
+    <textarea placeholder="Commence ici… Par exemple : « L'année dernière, j'ai vécu une expérience qui m'a beaucoup marqué… »"></textarea>
+    <div style="margin-top:10px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <button class="btn-check btn-pink" onclick="countWords()">Compter les mots</button>
+      <span id="word-count" style="font-size:0.84rem;color:var(--muted);"></span>
+    </div>
+  </div>
+
+</div>
+
+<footer>Leçon 3 — Niveau B2+ · Narration complexe en français · Cours de français langue étrangère</footer>
+
+<script>
+  const cards = document.querySelectorAll('.section-card');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.07 });
+  cards.forEach(c => obs.observe(c));
+
+  function revealAnswer(btn) {
+    const span = btn.nextElementSibling;
+    span.classList.toggle('visible');
+    btn.textContent = span.classList.contains('visible') ? 'Cacher' : 'Voir réponse';
+  }
+
+  function normalize(str) {
+    return str.toLowerCase().trim()
+      .replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a')
+      .replace(/[îï]/g,'i').replace(/[ôö]/g,'o')
+      .replace(/[ûü]/g,'u').replace(/ç/g,'c')
+      .replace(/\s+/g,' ');
+  }
+
+  function checkExercise(exId, scoreId, barId) {
+    const inputs = document.getElementById(exId).querySelectorAll('input[data-answer]');
+    let correct = 0;
+    inputs.forEach(inp => {
+      const ok = normalize(inp.value) === normalize(inp.getAttribute('data-answer'));
+      inp.classList.toggle('correct', ok);
+      inp.classList.toggle('wrong', !ok);
+      if (ok) correct++;
+    });
+    const pct = Math.round((correct / inputs.length) * 100);
+    document.getElementById(barId).style.width = pct + '%';
+    const msgs = ['Courage ! 💪','Continue ! 🌟','Bien ! 👍','Très bien ! 🎉','Parfait ! 🏆'];
+    document.getElementById(scoreId).textContent =
+      correct + '/' + inputs.length + ' — ' + pct + '% · ' + msgs[Math.min(Math.floor(pct/25), 4)];
+  }
+
+  function countWords() {
+    const words = document.querySelector('textarea').value.trim().split(/\s+/).filter(w => w.length > 0);
+    const el = document.getElementById('word-count');
+    if (!words.length) { el.textContent = '0 mot'; return; }
+    el.style.color = words.length >= 60 ? 'var(--teal)' : words.length >= 30 ? 'var(--orange)' : 'var(--coral)';
+    el.textContent = words.length + ' mot' + (words.length > 1 ? 's' : '') +
+      (words.length >= 60 ? ' ✓ Objectif atteint !' : ' (objectif : ~70 mots)');
+  }
+</script>
+</body>
+</html>
