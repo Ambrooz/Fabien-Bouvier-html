@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Familles de Mots — Cours complet</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,800;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #fef9ef;
+  --surface: #ffffff;
+  --surface2: #fff7ed;
+  --border: #ffe1b9;
+  --text: #2c2b28;
+  --muted: #7e6b4e;
+  --accent: #d45a2b;
+  --green: #2b7a4b;
+  --gold: #d99e2e;
+  --pink: #c44c6c;
+  --purple: #8b5fbf;
+  --blue: #2c6e9e;
+
+  --c-nom:  #b25d3a;
+  --c-verb: #2c7a4d;
+  --c-adj:  #2c6e9e;
+  --c-adv:  #8b5fbf;
+  --c-pref: #d99e2e;
+  --c-suf:  #c44c6c;
+  --c-de:   #5a7a5a;   /* couleur traductions allemand */
+
+  --radius: 14px;
+  --serif: 'Playfair Display', Georgia, serif;
+  --sans:  'Inter', system-ui, sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);font-size:16px;line-height:1.75;min-height:100vh;}
+
+/* ── TOPBAR ── */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(254,249,239,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 20px;height:50px;overflow-x:auto;gap:0;}
+.topbar-brand{font-family:var(--serif);font-size:.9rem;color:var(--accent);white-space:nowrap;margin-right:20px;flex-shrink:0;font-weight:600;}
+.nav-tabs{display:flex;gap:2px;flex-shrink:0;}
+.nav-tab{padding:5px 13px;border-radius:7px;font-size:.78rem;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border:none;background:none;font-family:var(--sans);transition:all .18s;}
+.nav-tab:hover{color:var(--accent);background:#ffeadb;}
+.nav-tab.active{color:var(--accent);background:rgba(212,90,43,.1);}
+.topbar-right{margin-left:auto;flex-shrink:0;}
+.btn-top{font-size:.72rem;color:var(--muted);cursor:pointer;padding:4px 10px;border-radius:6px;border:1px solid var(--border);background:none;font-family:var(--sans);transition:all .18s;}
+.btn-top:hover{color:var(--accent);border-color:var(--accent);}
+
+/* ── HERO ── */
+.hero{padding:110px 24px 72px;text-align:center;background:linear-gradient(150deg,#fff8ee 0%,#ffeedd 100%);border-bottom:1px solid var(--border);position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 39px,rgba(212,90,43,.025) 40px),repeating-linear-gradient(90deg,transparent,transparent 39px,rgba(212,90,43,.025) 40px);}
+.hero-badge{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--border);border-radius:100px;padding:4px 14px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);background:white;margin-bottom:20px;font-weight:600;}
+.hero h1{font-family:var(--serif);font-size:clamp(2rem,5.5vw,3.6rem);line-height:1.1;margin-bottom:14px;color:#3a2c1f;}
+.hero h1 em{color:var(--accent);font-style:italic;}
+.hero-sub{color:var(--muted);max-width:560px;margin:0 auto 30px;font-size:1rem;}
+.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;}
+.pill{padding:4px 14px;border-radius:100px;font-size:.75rem;font-weight:700;background:white;border:1px solid var(--border);}
+
+/* ── CHAPTERS ── */
+.chapter{display:none;max-width:860px;margin:0 auto;padding:44px 22px 80px;animation:fadeIn .3s ease;}
+.chapter.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+.ch-eyebrow{display:flex;align-items:center;gap:8px;font-size:.72rem;text-transform:uppercase;letter-spacing:.12em;color:var(--accent);font-weight:700;margin-bottom:10px;}
+.ch-num{width:26px;height:26px;border:1.5px solid rgba(212,90,43,.3);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--accent);background:white;}
+.chapter h2{font-family:var(--serif);font-size:clamp(1.7rem,3.5vw,2.6rem);line-height:1.15;color:#3a2c1f;margin-bottom:6px;}
+.chapter h2 em{color:var(--accent);font-style:italic;}
+.ch-intro{color:var(--muted);font-size:.97rem;margin-bottom:36px;max-width:680px;line-height:1.65;}
+
+/* ── SECTIONS ── */
+.section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,0,0,.03);}
+.sec-title{font-family:var(--serif);font-size:1.15rem;color:#3a2c1f;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+p{margin-bottom:.9rem;color:var(--text);}
+p:last-child{margin-bottom:0;}
+strong{color:#1e1c19;font-weight:700;}
+em{color:var(--accent);font-style:italic;}
+
+/* ── DEF / NOTE / WARN ── */
+.def-box{background:var(--surface2);border-left:3px solid var(--accent);border-radius:8px;padding:14px 18px;margin:14px 0;font-size:.91rem;}
+.def-box strong{color:var(--accent);}
+.note{background:rgba(212,90,43,.05);border:1px solid rgba(212,90,43,.18);border-radius:8px;padding:13px 16px;font-size:.86rem;color:var(--muted);margin:12px 0;}
+.note strong{color:var(--accent);}
+.warn{background:rgba(196,76,108,.05);border:1px solid rgba(196,76,108,.2);border-radius:8px;padding:13px 16px;font-size:.86rem;color:var(--muted);margin:12px 0;}
+.warn strong{color:var(--pink);}
+
+/* ── SCHEMA ── */
+.schema{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;margin:18px 0;}
+.sch-box{padding:9px 18px;border-radius:8px;font-weight:700;font-size:.87rem;text-align:center;min-width:88px;background:white;}
+.sch-arrow{color:var(--muted);font-size:1.1rem;padding:0 8px;}
+.sch-pref{background:rgba(217,158,46,.12);color:var(--c-pref);border:1px solid rgba(217,158,46,.35);}
+.sch-rad{background:#fff6ea;color:#2c2b28;border:1px solid var(--border);}
+.sch-suf{background:rgba(196,76,108,.1);color:var(--c-suf);border:1px solid rgba(196,76,108,.3);}
+.sch-label{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;opacity:.65;margin-top:3px;font-weight:400;}
+
+/* ── TABLES ── */
+table{width:100%;border-collapse:collapse;font-size:.88rem;margin:12px 0;}
+th{padding:9px 13px;text-align:left;font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;font-weight:700;background:var(--surface2);color:var(--muted);border-bottom:1px solid var(--border);}
+td{padding:10px 13px;border-bottom:1px solid var(--border);vertical-align:top;line-height:1.5;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:rgba(212,90,43,.03);}
+.b-nom {display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:700;background:rgba(178,93,58,.1);color:var(--c-nom);}
+.b-verb{display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:700;background:rgba(44,122,77,.1);color:var(--c-verb);}
+.b-adj {display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:700;background:rgba(44,110,158,.1);color:var(--c-adj);}
+.b-adv {display:inline-block;padding:2px 7px;border-radius:4px;font-size:.7rem;font-weight:700;background:rgba(139,95,191,.1);color:var(--c-adv);}
+
+/* ── TEXTE COLORÉ ── */
+.w-nom {color:var(--c-nom);font-weight:600;}
+.w-verb{color:var(--c-verb);font-weight:600;}
+.w-adj {color:var(--c-adj);font-weight:600;}
+.w-adv {color:var(--c-adv);font-weight:600;}
+.text-block{background:var(--surface2);border-radius:10px;padding:22px 26px;font-size:.96rem;line-height:1.9;margin-bottom:14px;}
+.text-block p{margin-bottom:.85rem;color:var(--text);}
+.text-block p:last-child{margin-bottom:0;}
+.legend-row{display:flex;gap:14px;flex-wrap:wrap;padding:12px 0 0;margin-top:12px;border-top:1px solid var(--border);}
+.leg{display:flex;align-items:center;gap:5px;font-size:.76rem;color:var(--muted);font-weight:500;}
+.leg-dot{width:7px;height:7px;border-radius:50%;}
+
+/* ── VOCAB CARDS ── */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:10px;}
+.vocab-card{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:13px 15px;display:flex;flex-direction:column;gap:4px;}
+.vc-fr{font-weight:700;font-size:.93rem;color:#2c2b28;}
+.vc-de{font-size:.82rem;color:var(--c-de);font-style:italic;display:flex;align-items:center;gap:5px;}
+.vc-de::before{content:'🇩🇪';font-style:normal;font-size:.75rem;}
+.vc-ex{font-size:.76rem;color:var(--muted);font-style:italic;padding-top:3px;border-top:1px dashed var(--border);margin-top:2px;}
+
+/* ── FAMILLE CARDS ── */
+.famille-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:14px;margin-top:14px;}
+.famille-card{background:white;border:1px solid var(--border);border-radius:11px;overflow:hidden;}
+.fc-head{padding:11px 15px;display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid var(--border);}
+.fc-radical{font-family:var(--serif);font-size:1.1rem;color:#2c2b28;font-weight:700;}
+.fc-sens{font-size:.72rem;color:var(--muted);}
+.fc-row{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border);}
+.fc-cell{padding:9px 13px;border-right:1px solid var(--border);font-size:.83rem;}
+.fc-cell:nth-child(even){border-right:none;}
+.fc-cell:nth-child(n+3){border-top:1px solid var(--border);}
+.fc-type{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin-bottom:2px;}
+.fc-word{font-weight:600;color:#2c2b28;font-size:.88rem;}
+.fc-de{font-size:.72rem;color:var(--c-de);font-style:italic;margin-top:1px;}
+.fc-ex{font-size:.7rem;color:var(--muted);font-style:italic;margin-top:1px;}
+
+/* ── PREFIX/SUFFIX CARDS ── */
+.ps-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(295px,1fr));gap:10px;}
+.ps-item{background:var(--surface2);border:1px solid var(--border);border-radius:9px;display:flex;gap:12px;padding:13px 15px;align-items:flex-start;}
+.ps-tag{font-family:var(--serif);font-size:1rem;font-weight:700;min-width:60px;flex-shrink:0;padding:4px 9px;border-radius:6px;text-align:center;line-height:1.35;}
+.ps-info{font-size:.84rem;}
+.ps-sens{color:var(--accent);font-weight:700;margin-bottom:3px;}
+.ps-ex{color:var(--muted);font-size:.78rem;line-height:1.55;}
+.ps-ex strong{color:var(--text);font-weight:600;}
+
+/* ── ACCORDIONS ── */
+.accordion{border:1px solid var(--border);border-radius:9px;overflow:hidden;margin-bottom:8px;}
+.acc-trigger{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 17px;background:var(--surface2);cursor:pointer;font-size:.9rem;font-weight:600;color:var(--text);font-family:var(--sans);border:none;text-align:left;transition:background .18s;gap:10px;}
+.acc-trigger:hover{background:#fff0de;}
+.acc-arrow{font-size:.72rem;color:var(--muted);transition:transform .22s;flex-shrink:0;}
+.acc-trigger.open .acc-arrow{transform:rotate(180deg);}
+.acc-body{display:none;padding:15px 18px;font-size:.88rem;border-top:1px solid var(--border);background:white;line-height:1.7;}
+.acc-body.open{display:block;}
+.acc-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);font-weight:700;margin:10px 0 5px;}
+.acc-label:first-child{margin-top:0;}
+.acc-body strong{color:var(--text);}
+
+/* ── EXERCISES ── */
+.ex-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;}
+.ex-head{display:flex;align-items:center;gap:12px;padding:13px 22px;background:var(--surface2);border-bottom:1px solid var(--border);}
+.ex-icon{width:32px;height:32px;background:rgba(212,90,43,.1);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.95rem;flex-shrink:0;}
+.ex-title{font-weight:700;font-size:.95rem;color:#2c2b28;}
+.ex-desc{font-size:.76rem;color:var(--muted);margin-top:1px;}
+.ex-body{padding:22px;}
+
+.word-bank{display:flex;gap:8px;flex-wrap:wrap;padding:11px 14px;background:rgba(217,158,46,.07);border:1px dashed rgba(217,158,46,.4);border-radius:8px;margin-bottom:18px;}
+.bank-pill{padding:3px 11px;background:white;border:1px solid var(--border);border-radius:100px;font-size:.8rem;font-weight:600;color:var(--text);}
+
+.q-row{display:flex;align-items:center;gap:10px;padding:10px 13px;background:var(--surface2);border-radius:8px;margin-bottom:7px;font-size:.9rem;flex-wrap:wrap;line-height:1.5;}
+.q-num{width:21px;height:21px;border-radius:50%;background:var(--border);color:var(--muted);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;flex-shrink:0;}
+
+input[type=text]{border:1.5px solid var(--border);border-radius:6px;padding:4px 10px;font-size:.86rem;font-family:var(--sans);background:white;color:var(--text);width:135px;outline:none;transition:border-color .18s;}
+input[type=text]:focus{border-color:var(--accent);}
+input[type=text].correct{border-color:var(--green);background:rgba(43,122,75,.07);color:var(--green);}
+input[type=text].wrong{border-color:#e68a2e;background:rgba(230,138,46,.07);color:#c45c1a;}
+
+select{border:1.5px solid var(--border);border-radius:6px;padding:4px 10px;font-size:.86rem;font-family:var(--sans);background:white;color:var(--text);cursor:pointer;outline:none;transition:border-color .18s;}
+select:focus{border-color:var(--accent);}
+select.correct{border-color:var(--green);background:rgba(43,122,75,.07);}
+select.wrong{border-color:#e68a2e;background:rgba(230,138,46,.07);}
+
+.btn{display:inline-flex;align-items:center;gap:7px;padding:8px 20px;border-radius:8px;border:none;cursor:pointer;font-size:.85rem;font-weight:600;font-family:var(--sans);transition:all .18s;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#b3481e;transform:translateY(-1px);}
+.score{display:none;margin-top:12px;padding:9px 14px;border-radius:7px;font-size:.86rem;font-weight:600;}
+.score.good{background:rgba(43,122,75,.1);color:var(--green);}
+.score.bad{background:rgba(230,138,46,.1);color:#c45c1a;}
+
+/* ── MATCHING EXERCISE ── */
+.match-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+@media(max-width:520px){.match-grid{grid-template-columns:1fr;}}
+.match-left{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:9px 13px;font-size:.88rem;font-weight:600;}
+.match-right select{width:100%;}
+.match-pair{display:contents;}
+
+/* ── QUIZ ── */
+.quiz-q{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:18px;margin-bottom:14px;}
+.quiz-q-text{font-weight:600;font-size:.95rem;margin-bottom:12px;color:#2c2b28;}
+.quiz-q-num{display:inline-block;background:var(--accent);color:#fff;border-radius:4px;padding:1px 7px;font-size:.7rem;font-weight:700;margin-right:7px;vertical-align:middle;}
+.quiz-opts{display:flex;flex-direction:column;gap:7px;}
+.quiz-opt{display:flex;align-items:flex-start;gap:9px;padding:9px 14px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:.88rem;transition:all .18s;user-select:none;background:white;}
+.quiz-opt:hover{border-color:var(--accent);background:rgba(212,90,43,.04);}
+.quiz-opt.selected{border-color:var(--accent);background:rgba(212,90,43,.07);}
+.quiz-opt.correct{border-color:var(--green);background:rgba(43,122,75,.08);color:var(--green);}
+.quiz-opt.wrong{border-color:#e68a2e;background:rgba(230,138,46,.07);color:#c45c1a;}
+.quiz-opt input[type=radio]{accent-color:var(--accent);flex-shrink:0;margin-top:3px;}
+.quiz-explain{display:none;margin-top:9px;padding:9px 13px;background:rgba(212,90,43,.05);border-left:3px solid var(--accent);border-radius:6px;font-size:.83rem;color:var(--muted);}
+.quiz-explain.show{display:block;}
+.btn-verify{padding:7px 16px;border-radius:7px;border:none;cursor:pointer;font-size:.8rem;font-weight:600;font-family:var(--sans);background:var(--accent);color:#fff;margin-top:10px;transition:all .18s;}
+.btn-verify:hover{background:#b3481e;}
+.quiz-score{background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:22px;text-align:center;margin-top:18px;display:none;}
+.quiz-score.show{display:block;}
+.qs-num{font-family:var(--serif);font-size:2.4rem;color:var(--accent);}
+.qs-label{color:var(--muted);font-size:.88rem;margin-top:3px;}
+
+/* ── TEXTAREA ── */
+textarea{width:100%;min-height:140px;border:1.5px solid var(--border);border-radius:8px;padding:13px 15px;font-size:.92rem;font-family:var(--sans);background:white;color:var(--text);resize:vertical;outline:none;transition:border-color .18s;line-height:1.72;}
+textarea:focus{border-color:var(--accent);}
+.wc{text-align:right;font-size:.73rem;color:var(--muted);margin-top:5px;}
+
+/* ── NAV ── */
+.ch-nav{display:flex;gap:10px;justify-content:space-between;margin-top:44px;padding-top:22px;border-top:1px solid var(--border);}
+.ch-btn{display:flex;align-items:center;gap:7px;padding:9px 16px;border:1px solid var(--border);border-radius:8px;cursor:pointer;font-size:.83rem;font-weight:600;font-family:var(--sans);background:white;color:var(--text);transition:all .18s;}
+.ch-btn:hover{border-color:var(--accent);color:var(--accent);}
+.ch-btn:disabled{opacity:.3;cursor:not-allowed;}
+.ch-btn.next{background:var(--accent);color:#fff;border-color:var(--accent);}
+.ch-btn.next:hover{background:#b3481e;}
+
+.page-footer{text-align:center;padding:22px;color:var(--muted);font-size:.73rem;border-top:1px solid var(--border);}
+
+@media(max-width:580px){
+  .chapter{padding:30px 15px 60px;}
+  .section{padding:18px 14px;}
+  .ps-grid{grid-template-columns:1fr;}
+  .famille-grid{grid-template-columns:1fr;}
+  .schema{gap:3px;}
+  .sch-arrow{font-size:.85rem;padding:0 4px;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<nav class="topbar">
+  <div class="topbar-brand">🌳 Familles de mots</div>
+  <div class="nav-tabs">
+    <button class="nav-tab active" onclick="goTo(0)">1 · Les bases</button>
+    <button class="nav-tab" onclick="goTo(1)">2 · Préfixes</button>
+    <button class="nav-tab" onclick="goTo(2)">3 · Suffixes</button>
+    <button class="nav-tab" onclick="goTo(3)">4 · Familles complètes</button>
+    <button class="nav-tab" onclick="goTo(4)">5 · Vocabulaire</button>
+    <button class="nav-tab" onclick="goTo(5)">6 · Exercices</button>
+    <button class="nav-tab" onclick="goTo(6)">7 · Quiz</button>
+  </div>
+  <div class="topbar-right">
+    <button class="btn-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ Haut</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-badge">A2–B1 · Lexique · Leçon 6</div>
+  <h1>Les Familles<br>de <em>Mots</em></h1>
+  <p class="hero-sub">Préfixes, suffixes, radicaux — enrichissez votre vocabulaire en comprenant la construction des mots</p>
+  <div class="pills">
+    <span class="pill" style="color:var(--c-nom)">🟠 Noms</span>
+    <span class="pill" style="color:var(--c-verb)">🟢 Verbes</span>
+    <span class="pill" style="color:var(--c-adj)">🔵 Adjectifs</span>
+    <span class="pill" style="color:var(--c-adv)">🟣 Adverbes</span>
+    <span class="pill" style="color:var(--c-pref)">🟡 Préfixes</span>
+    <span class="pill" style="color:var(--c-suf)">🩷 Suffixes</span>
+    <span class="pill" style="color:var(--c-de)">🇩🇪 Deutsch</span>
+  </div>
+</header>
+
+
+<!-- ═══════════════════════════════════════
+     CH 1 — LES BASES
+     ═══════════════════════════════════════ -->
+<div class="chapter active" id="ch0">
+  <div class="ch-eyebrow"><span class="ch-num">01</span> Les bases</div>
+  <h2>Qu'est-ce qu'une <em>famille de mots</em> ?</h2>
+  <p class="ch-intro">Des mots de la même famille partagent le même <strong>radical</strong>. En connaître un, c'est en deviner dix !</p>
+
+  <div class="section">
+    <div class="sec-title">📌 Les trois éléments clés</div>
+    <div class="def-box"><strong>Radical</strong> = la partie centrale qui porte le sens. <strong>Préfixe</strong> = avant le radical. <strong>Suffixe</strong> = après le radical.</div>
+    <div class="schema">
+      <div class="sch-box sch-pref">re-<div class="sch-label">Préfixe</div></div>
+      <span class="sch-arrow">+</span>
+      <div class="sch-box sch-rad">-chant-<div class="sch-label">Radical</div></div>
+      <span class="sch-arrow">+</span>
+      <div class="sch-box sch-suf">-eur<div class="sch-label">Suffixe</div></div>
+      <span class="sch-arrow">=</span>
+      <div class="sch-box" style="background:#fff6ea;border:1px solid var(--accent);color:#2c2b28">rechanteur<div class="sch-label" style="color:var(--accent)">mot dérivé</div></div>
+    </div>
+    <div class="note"><strong>Astuce :</strong> À partir du radical <em>port-</em>, on forme : <em>porter, porteur, transport, portable, déporter, important, rapport…</em> Des dizaines de mots !</div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">📖 Texte de référence</div>
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px;">Les mots sont colorés selon leur catégorie. Observez les ressemblances !</p>
+    <div class="text-block">
+      <p>La <span class="w-nom">nature</span> offre une <span class="w-nom">beauté</span> extraordinaire. Des <span class="w-nom">créateurs</span> du monde entier s'en inspirent. Ils <span class="w-verb">créent</span> des œuvres <span class="w-adj">naturelles</span> et <span class="w-adj">belles</span>. <span class="w-adv">Naturellement</span>, chacun a sa propre vision.</p>
+      <p>La <span class="w-nom">formation</span> artistique permet d'<span class="w-verb">embellir</span> le monde. Un artiste <span class="w-adj">créatif</span> <span class="w-verb">travaille</span> <span class="w-adv">patiemment</span>. Son <span class="w-nom">travail</span> est souvent <span class="w-adj">admirable</span>.</p>
+    </div>
+    <div class="legend-row">
+      <div class="leg"><span class="leg-dot" style="background:var(--c-nom)"></span>Nom</div>
+      <div class="leg"><span class="leg-dot" style="background:var(--c-verb)"></span>Verbe</div>
+      <div class="leg"><span class="leg-dot" style="background:var(--c-adj)"></span>Adjectif</div>
+      <div class="leg"><span class="leg-dot" style="background:var(--c-adv)"></span>Adverbe</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">🗂 Les 4 catégories — résumé</div>
+    <table>
+      <thead><tr><th>Catégorie</th><th>Rôle</th><th>Exemple français</th><th>🇩🇪 Allemand</th></tr></thead>
+      <tbody>
+        <tr><td><span class="b-nom">NOM</span></td><td>désigne une chose, personne, idée</td><td>la <strong>création</strong></td><td><em>die Erschaffung / die Schöpfung</em></td></tr>
+        <tr><td><span class="b-verb">VERBE</span></td><td>exprime une action ou un état</td><td><strong>créer</strong></td><td><em>erschaffen / kreieren</em></td></tr>
+        <tr><td><span class="b-adj">ADJECTIF</span></td><td>qualifie un nom</td><td><strong>créatif</strong></td><td><em>kreativ / schöpferisch</em></td></tr>
+        <tr><td><span class="b-adv">ADVERBE</span></td><td>modifie un verbe ou adjectif</td><td><strong>créativement</strong></td><td><em>kreativ / auf kreative Weise</em></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">🧠 Vocabulaire pour parler des mots</div>
+    <table>
+      <thead><tr><th>Terme français</th><th>🇩🇪 Allemand</th><th>Définition &amp; exemple</th></tr></thead>
+      <tbody>
+        <tr><td><strong>le radical</strong></td><td><em>der Wortstamm</em></td><td>partie centrale · ex. <em>chant-</em> dans chanter</td></tr>
+        <tr><td><strong>le préfixe</strong></td><td><em>das Präfix / die Vorsilbe</em></td><td>ajouté avant · ex. <em>re-</em> dans refaire</td></tr>
+        <tr><td><strong>le suffixe</strong></td><td><em>das Suffix / die Nachsilbe</em></td><td>ajouté après · ex. <em>-eur</em> dans chanteur</td></tr>
+        <tr><td><strong>la dérivation</strong></td><td><em>die Ableitung</em></td><td>former un mot à partir d'un autre</td></tr>
+        <tr><td><strong>le mot dérivé</strong></td><td><em>das abgeleitete Wort</em></td><td>mot formé par dérivation · ex. chanteur</td></tr>
+        <tr><td><strong>la composition</strong></td><td><em>die Zusammensetzung</em></td><td>combiner deux mots · ex. porte-monnaie</td></tr>
+        <tr><td><strong>la famille de mots</strong></td><td><em>die Wortfamilie</em></td><td>groupe de mots qui partagent un radical</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ch-nav">
+    <button class="ch-btn" disabled>← Précédent</button>
+    <button class="ch-btn next" onclick="goTo(1)">Les préfixes →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     CH 2 — PRÉFIXES
+     ═══════════════════════════════════════ -->
+<div class="chapter" id="ch1">
+  <div class="ch-eyebrow"><span class="ch-num">02</span> Formation des mots</div>
+  <h2>Les <em>préfixes</em></h2>
+  <p class="ch-intro">Le préfixe se place <strong>avant</strong> le radical. Il modifie le sens — mais <strong>ne change pas</strong> la catégorie grammaticale.</p>
+
+  <div class="section">
+    <div class="sec-title">❌ Préfixes de négation / contraire</div>
+    <div class="note"><strong>Règle :</strong> Ces préfixes donnent le sens opposé ou négatif au mot de base.</div>
+    <div class="ps-grid">
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">in- / im- / il- / ir-</span>
+        <div class="ps-info">
+          <div class="ps-sens">Contraire, négation — <em style="color:var(--c-de)">un- / nicht-</em></div>
+          <div class="ps-ex"><strong>possible</strong> → impossible · <strong>légal</strong> → illégal · <strong>réel</strong> → irréel · <strong>actif</strong> → inactif</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">dé- / dés-</span>
+        <div class="ps-info">
+          <div class="ps-sens">Action inverse — <em style="color:var(--c-de)">ent- / de-</em></div>
+          <div class="ps-ex"><strong>faire</strong> → défaire · <strong>habiller</strong> → déshabiller · <strong>couvrir</strong> → découvrir</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">mal- / mé-</span>
+        <div class="ps-info">
+          <div class="ps-sens">Mauvais, défaut — <em style="color:var(--c-de)">miss- / schlecht-</em></div>
+          <div class="ps-ex"><strong>traiter</strong> → maltraiter · <strong>chanceux</strong> → malchanceux · <strong>content</strong> → mécontent</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">non-</span>
+        <div class="ps-info">
+          <div class="ps-sens">Simple négation — <em style="color:var(--c-de)">Nicht-</em></div>
+          <div class="ps-ex"><strong>violence</strong> → non-violence · <strong>fumeur</strong> → non-fumeur · <strong>sens</strong> → non-sens</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">🔄 Préfixes de répétition et d'intensité</div>
+    <div class="ps-grid">
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">re- / ré-</span>
+        <div class="ps-info">
+          <div class="ps-sens">À nouveau — <em style="color:var(--c-de)">wieder- / nochmals</em></div>
+          <div class="ps-ex"><strong>faire</strong> → refaire · <strong>lire</strong> → relire · <strong>écrire</strong> → réécrire · <strong>venir</strong> → revenir</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">sur-</span>
+        <div class="ps-info">
+          <div class="ps-sens">Au-dessus, en excès — <em style="color:var(--c-de)">über-</em></div>
+          <div class="ps-ex"><strong>charger</strong> → surcharger · <strong>estimer</strong> → surestimer · <strong>homme</strong> → surhomme</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">sous-</span>
+        <div class="ps-info">
+          <div class="ps-sens">En dessous, insuffisant — <em style="color:var(--c-de)">unter-</em></div>
+          <div class="ps-ex"><strong>estimer</strong> → sous-estimer · <strong>développé</strong> → sous-développé · <strong>marin</strong> → sous-marin</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">pré-</span>
+        <div class="ps-info">
+          <div class="ps-sens">Avant, antériorité — <em style="color:var(--c-de)">vor-</em></div>
+          <div class="ps-ex"><strong>voir</strong> → prévoir · <strong>historique</strong> → préhistorique · <strong>parer</strong> → préparer</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">trans-</span>
+        <div class="ps-info">
+          <div class="ps-sens">À travers, changement — <em style="color:var(--c-de)">trans- / um-</em></div>
+          <div class="ps-ex"><strong>porter</strong> → transporter · <strong>former</strong> → transformer · <strong>mettre</strong> → transmettre</div>
+        </div>
+      </div>
+      <div class="ps-item">
+        <span class="ps-tag" style="background:rgba(217,158,46,.12);color:var(--c-pref)">em- / en-</span>
+        <div class="ps-info">
+          <div class="ps-sens">Transformation — <em style="color:var(--c-de)">ver- / ein-</em></div>
+          <div class="ps-ex"><strong>belle</strong> → embellir · <strong>riche</strong> → enrichir · <strong>fermer</strong> → enfermer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">📊 Tableau récapitulatif</div>
+    <table>
+      <thead><tr><th>Préfixe</th><th>Sens</th><th>🇩🇪</th><th>Exemple</th></tr></thead>
+      <tbody>
+        <tr><td><strong>re-</strong></td><td>à nouveau</td><td><em>wieder-</em></td><td>re<strong>faire</strong></td></tr>
+        <tr><td><strong>in-/im-/il-/ir-</strong></td><td>contraire</td><td><em>un-</em></td><td>im<strong>possible</strong></td></tr>
+        <tr><td><strong>dé-/dés-</strong></td><td>action inverse</td><td><em>ent-</em></td><td>dés<strong>habiller</strong></td></tr>
+        <tr><td><strong>mal-/mé-</strong></td><td>mauvais</td><td><em>miss-</em></td><td>mé<strong>content</strong></td></tr>
+        <tr><td><strong>sur-</strong></td><td>excès</td><td><em>über-</em></td><td>sur<strong>charger</strong></td></tr>
+        <tr><td><strong>sous-</strong></td><td>insuffisance</td><td><em>unter-</em></td><td>sous-<strong>estimer</strong></td></tr>
+        <tr><td><strong>pré-</strong></td><td>avant</td><td><em>vor-</em></td><td>pré<strong>voir</strong></td></tr>
+        <tr><td><strong>trans-</strong></td><td>à travers</td><td><em>trans-</em></td><td>trans<strong>porter</strong></td></tr>
+        <tr><td><strong>em-/en-</strong></td><td>transformation</td><td><em>ver-</em></td><td>em<strong>bellir</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="ch-nav">
+    <button class="ch-btn" onclick="goTo(0)">← Précédent</button>
+    <button class="ch-btn next" onclick="goTo(2)">Les suffixes →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     CH 3 — SUFFIXES
+     ═══════════════════════════════════════ -->
+<div class="chapter" id="ch2">
+  <div class="ch-eyebrow"><span class="ch-num">03</span> Formation des mots</div>
+  <h2>Les <em>suffixes</em></h2>
+  <p class="ch-intro">Le suffixe se place <strong>après</strong> le radical. Contrairement au préfixe, il change souvent la catégorie grammaticale.</p>
+
+  <div class="section">
+    <div class="sec-title" style="color:var(--c-nom)">🟠 Suffixes → NOMS</div>
+    <table>
+      <thead><tr><th>Suffixe</th><th>Sens</th><th>🇩🇪</th><th>Exemple</th></tr></thead>
+      <tbody>
+        <tr><td><strong>-tion / -sion</strong></td><td>action, résultat</td><td><em>-tion / -ung</em></td><td>créer → la créa<strong>tion</strong></td></tr>
+        <tr><td><strong>-ment</strong></td><td>action, résultat</td><td><em>-ung / -heit</em></td><td>développer → le développe<strong>ment</strong></td></tr>
+        <tr><td><strong>-age</strong></td><td>action, ensemble</td><td><em>-ung / -e</em></td><td>voyager → le voy<strong>age</strong></td></tr>
+        <tr><td><strong>-eur / -euse</strong></td><td>personne qui agit</td><td><em>-er / -erin</em></td><td>chanter → le chant<strong>eur</strong></td></tr>
+        <tr><td><strong>-teur / -trice</strong></td><td>personne qui agit</td><td><em>-or / -eur</em></td><td>créer → le créa<strong>teur</strong></td></tr>
+        <tr><td><strong>-té / -ité</strong></td><td>qualité abstraite</td><td><em>-heit / -keit</em></td><td>beau → la beau<strong>té</strong></td></tr>
+        <tr><td><strong>-esse</strong></td><td>qualité abstraite</td><td><em>-heit / -igkeit</em></td><td>riche → la rich<strong>esse</strong></td></tr>
+        <tr><td><strong>-isme</strong></td><td>doctrine, mouvement</td><td><em>-ismus</em></td><td>réel → le réal<strong>isme</strong></td></tr>
+        <tr><td><strong>-iste</strong></td><td>personne qui pratique</td><td><em>-ist(in)</em></td><td>art → l'art<strong>iste</strong></td></tr>
+        <tr><td><strong>-ance / -ence</strong></td><td>état, qualité</td><td><em>-anz / -enz</em></td><td>confier → la conf<strong>iance</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="sec-title" style="color:var(--c-adj)">🔵 Suffixes → ADJECTIFS</div>
+    <table>
+      <thead><tr><th>Suffixe</th><th>Sens</th><th>🇩🇪</th><th>Exemple</th></tr></thead>
+      <tbody>
+        <tr><td><strong>-able / -ible</strong></td><td>qui peut être fait</td><td><em>-bar / -lich</em></td><td>laver → lav<strong>able</strong> · lire → lis<strong>ible</strong></td></tr>
+        <tr><td><strong>-eux / -euse</strong></td><td>qui a la qualité de</td><td><em>-ig / -lich</em></td><td>danger → danger<strong>eux</strong></td></tr>
+        <tr><td><strong>-el / -elle</strong></td><td>relatif à</td><td><em>-ell / -lich</em></td><td>nature → natur<strong>el</strong></td></tr>
+        <tr><td><strong>-if / -ive</strong></td><td>qui a tendance à</td><td><em>-iv / -isch</em></td><td>créer → créat<strong>if</strong></td></tr>
+        <tr><td><strong>-al / -ale</strong></td><td>relatif à, propre à</td><td><em>-al / -ell</em></td><td>nation → nation<strong>al</strong></td></tr>
+        <tr><td><strong>-aire</strong></td><td>qui concerne</td><td><em>-är / -arisch</em></td><td>soleil → sol<strong>aire</strong></td></tr>
+        <tr><td><strong>-ique</strong></td><td>relatif à un domaine</td><td><em>-isch</em></td><td>histoire → histor<strong>ique</strong></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <div class="sec-title" style="color:var(--c-adv)">🟣 Suffixe → ADVERBES</div>
+    <div class="def-box"><strong>Règle d'or :</strong> adjectif <em>féminin</em> + <strong>-ment</strong> = adverbe · <em style="color:var(--c-de)">auf Deutsch : meistens mit „-weise" oder das Adjektiv allein</em></div>
+    <table>
+      <thead><tr><th>Adjectif masc.</th><th>Adjectif fém.</th><th>Adverbe</th><th>🇩🇪</th></tr></thead>
+      <tbody>
+        <tr><td>naturel</td><td>naturelle</td><td>naturelle<strong>ment</strong></td><td><em>natürlich</em></td></tr>
+        <tr><td>lent</td><td>lente</td><td>lente<strong>ment</strong></td><td><em>langsam</em></td></tr>
+        <tr><td>doux</td><td>douce</td><td>douce<strong>ment</strong></td><td><em>sanft / leise</em></td></tr>
+        <tr><td>heureux</td><td>heureuse</td><td>heureuse<strong>ment</strong></td><td><em>glücklicherweise</em></td></tr>
+        <tr><td>créatif</td><td>créative</td><td>créative<strong>ment</strong></td><td><em>kreativ / auf kreative Weise</em></td></tr>
+      </tbody>
+    </table>
+    <div class="warn"><strong>⚠️ Exceptions :</strong><br>
+    Adjectifs en <em>-ent</em> → <em>-emment</em> : évident → <strong>évidemment</strong> <em style="color:var(--c-de)">(offensichtlich)</em><br>
+    Adjectifs en <em>-ant</em> → <em>-amment</em> : courant → <strong>couramment</strong> <em style="color:var(--c-de)">(fließend)</em><br>
+    Adjectifs terminés en voyelle : poli → <strong>poliment</strong> <em style="color:var(--c-de)">(höflich)</em></div>
+  </div>
+
+  <div class="ch-nav">
+    <button class="ch-btn" onclick="goTo(1)">← Précédent</button>
+    <button class="ch-btn next" onclick="goTo(3)">Familles complètes →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     CH 4 — FAMILLES COMPLÈTES
+     ═══════════════════════════════════════ -->
+<div class="chapter" id="ch3">
+  <div class="ch-eyebrow"><span class="ch-num">04</span> Synthèse</div>
+  <h2>Familles <em>complètes</em></h2>
+  <p class="ch-intro">Chaque famille est présentée avec sa traduction allemande pour mieux mémoriser.</p>
+
+  <div class="section">
+    <div class="sec-title">🌳 8 familles essentielles</div>
+    <div class="famille-grid">
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(178,93,58,.07)"><span class="fc-radical">natur-</span><span class="fc-sens">ce qui est naturel</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">la nature</div><div class="fc-de">die Natur</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">naturaliser</div><div class="fc-de">einbürgern</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">naturel / -elle</div><div class="fc-de">natürlich</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">naturellement</div><div class="fc-de">natürlich</div></div>
+        </div>
+      </div>
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(44,122,77,.07)"><span class="fc-radical">créat-</span><span class="fc-sens">créer, inventer</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">la création</div><div class="fc-de">die Schöpfung</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">créer</div><div class="fc-de">erschaffen</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">créatif / -ive</div><div class="fc-de">kreativ</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">créativement</div><div class="fc-de">kreativ</div></div>
+        </div>
+      </div>
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(44,110,158,.07)"><span class="fc-radical">beau / bell-</span><span class="fc-sens">esthétique</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">la beauté</div><div class="fc-de">die Schönheit</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">embellir</div><div class="fc-de">verschönern</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">beau / belle</div><div class="fc-de">schön</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">joliment</div><div class="fc-de">hübsch / nett</div></div>
+        </div>
+      </div>
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(139,95,191,.07)"><span class="fc-radical">travail-</span><span class="fc-sens">effort, activité</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">le travail</div><div class="fc-de">die Arbeit</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">travailler</div><div class="fc-de">arbeiten</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">travailleur / -euse</div><div class="fc-de">fleißig</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">durement</div><div class="fc-de">hart</div></div>
+        </div>
+      </div>
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(217,158,46,.07)"><span class="fc-radical">rich-</span><span class="fc-sens">abondance</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">la richesse</div><div class="fc-de">der Reichtum</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">enrichir</div><div class="fc-de">bereichern</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">riche</div><div class="fc-de">reich</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">richement</div><div class="fc-de">reichlich / üppig</div></div>
+        </div>
+      </div>
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(196,76,108,.07)"><span class="fc-radical">port-</span><span class="fc-sens">porter, déplacer</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">le porteur</div><div class="fc-de">der Träger</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">transporter</div><div class="fc-de">transportieren</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">portable</div><div class="fc-de">tragbar / portabel</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">importamment</div><div class="fc-de">bedeutsam</div></div>
+        </div>
+      </div>
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(44,110,158,.05)"><span class="fc-radical">form-</span><span class="fc-sens">forme, instruction</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">la formation</div><div class="fc-de">die Ausbildung</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">former</div><div class="fc-de">ausbilden / formen</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">formel / formé</div><div class="fc-de">formal / ausgebildet</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">formellement</div><div class="fc-de">förmlich / formal</div></div>
+        </div>
+      </div>
+
+      <div class="famille-card">
+        <div class="fc-head" style="background:rgba(44,122,77,.05)"><span class="fc-radical">vit- / viv-</span><span class="fc-sens">vie, vitalité</span></div>
+        <div class="fc-row">
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-nom)">NOM</div><div class="fc-word">la vitalité</div><div class="fc-de">die Vitalität</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-verb)">VERBE</div><div class="fc-word">vivre / revivre</div><div class="fc-de">leben / wieder aufleben</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adj)">ADJECTIF</div><div class="fc-word">vital / vivant</div><div class="fc-de">lebenswichtig / lebendig</div></div>
+          <div class="fc-cell"><div class="fc-type" style="color:var(--c-adv)">ADVERBE</div><div class="fc-word">vitalement</div><div class="fc-de">lebenswichtig</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">🔍 Familles étendues — cliquez pour explorer</div>
+
+    <div class="accordion">
+      <button class="acc-trigger" onclick="toggleAcc(this)">Famille de <em style="color:var(--accent)">FAIRE</em> — très productive <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <div class="acc-label">Verbes dérivés</div>
+        <p><strong>refaire</strong> <em style="color:var(--c-de)">(wiedermachen)</em> · <strong>défaire</strong> <em style="color:var(--c-de)">(aufmachen/lösen)</em> · <strong>parfaire</strong> <em style="color:var(--c-de)">(vervollkommnen)</em> · <strong>contrefaire</strong> <em style="color:var(--c-de)">(fälschen)</em> · <strong>satisfaire</strong> <em style="color:var(--c-de)">(befriedigen)</em></p>
+        <div class="acc-label">Noms dérivés</div>
+        <p><strong>le fait</strong> <em style="color:var(--c-de)">(die Tatsache)</em> · <strong>le bienfait</strong> <em style="color:var(--c-de)">(die Wohltat)</em> · <strong>le méfait</strong> <em style="color:var(--c-de)">(die Missetat)</em> · <strong>le forfait</strong> <em style="color:var(--c-de)">(das Pauschalangebot)</em> · <strong>la faisabilité</strong> <em style="color:var(--c-de)">(die Machbarkeit)</em></p>
+        <div class="acc-label">Adjectifs</div>
+        <p><strong>faisable</strong> <em style="color:var(--c-de)">(machbar)</em> · <strong>parfait</strong> <em style="color:var(--c-de)">(perfekt)</em> · <strong>défait</strong> <em style="color:var(--c-de)">(aufgelöst)</em> · <strong>satisfait</strong> <em style="color:var(--c-de)">(zufrieden)</em> · <strong>infaisable</strong> <em style="color:var(--c-de)">(unmöglich)</em></p>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-trigger" onclick="toggleAcc(this)">Famille de <em style="color:var(--accent)">VOIR</em> — verbe essentiel <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <div class="acc-label">Verbes dérivés</div>
+        <p><strong>prévoir</strong> <em style="color:var(--c-de)">(voraussehen)</em> · <strong>revoir</strong> <em style="color:var(--c-de)">(wiedersehen)</em> · <strong>apercevoir</strong> <em style="color:var(--c-de)">(wahrnehmen)</em> · <strong>concevoir</strong> <em style="color:var(--c-de)">(konzipieren)</em> · <strong>décevoir</strong> <em style="color:var(--c-de)">(enttäuschen)</em></p>
+        <div class="acc-label">Noms dérivés</div>
+        <p><strong>la vision</strong> <em style="color:var(--c-de)">(die Vision)</em> · <strong>la vue</strong> <em style="color:var(--c-de)">(der Blick / die Sicht)</em> · <strong>la prévision</strong> <em style="color:var(--c-de)">(die Voraussage)</em> · <strong>la déception</strong> <em style="color:var(--c-de)">(die Enttäuschung)</em> · <strong>l'aperçu</strong> <em style="color:var(--c-de)">(der Überblick)</em></p>
+        <div class="acc-label">Adjectifs</div>
+        <p><strong>visible</strong> <em style="color:var(--c-de)">(sichtbar)</em> · <strong>invisible</strong> <em style="color:var(--c-de)">(unsichtbar)</em> · <strong>prévisible</strong> <em style="color:var(--c-de)">(vorhersehbar)</em> · <strong>décevant</strong> <em style="color:var(--c-de)">(enttäuschend)</em></p>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-trigger" onclick="toggleAcc(this)">Famille de <em style="color:var(--accent)">NATION</em> — avec préfixes <span class="acc-arrow">▼</span></button>
+      <div class="acc-body">
+        <div class="acc-label">Noms</div>
+        <p><strong>la nation</strong> <em style="color:var(--c-de)">(die Nation)</em> · <strong>la nationalité</strong> <em style="color:var(--c-de)">(die Nationalität)</em> · <strong>le nationalisme</strong> <em style="color:var(--c-de)">(der Nationalismus)</em> · <strong>l'internationalisation</strong> <em style="color:var(--c-de)">(die Internationalisierung)</em></p>
+        <div class="acc-label">Verbes</div>
+        <p><strong>nationaliser</strong> <em style="color:var(--c-de)">(verstaatlichen)</em> · <strong>internationaliser</strong> <em style="color:var(--c-de)">(internationalisieren)</em> · <strong>dénationaliser</strong> <em style="color:var(--c-de)">(denationalisieren)</em></p>
+        <div class="acc-label">Adjectifs</div>
+        <p><strong>national</strong> <em style="color:var(--c-de)">(national)</em> · <strong>international</strong> <em style="color:var(--c-de)">(international)</em> · <strong>multinational</strong> <em style="color:var(--c-de)">(multinational)</em> · <strong>supranational</strong> <em style="color:var(--c-de)">(supranational)</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="ch-nav">
+    <button class="ch-btn" onclick="goTo(2)">← Précédent</button>
+    <button class="ch-btn next" onclick="goTo(4)">Vocabulaire →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     CH 5 — VOCABULAIRE THÉMATIQUE
+     ═══════════════════════════════════════ -->
+<div class="chapter" id="ch4">
+  <div class="ch-eyebrow"><span class="ch-num">05</span> Vocabulaire</div>
+  <h2>Vocabulaire <em>thématique</em></h2>
+  <p class="ch-intro">Apprenez des mots organisés par thème, avec leur traduction allemande. Ces mots seront utilisés dans les exercices.</p>
+
+  <div class="section">
+    <div class="sec-title">🎨 Thème : Art et création</div>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vc-fr">la création <span class="b-nom">NOM</span></div><div class="vc-de">die Schöpfung / das Werk</div><div class="vc-ex">C'est une création magnifique.</div></div>
+      <div class="vocab-card"><div class="vc-fr">créer <span class="b-verb">VERBE</span></div><div class="vc-de">erschaffen / kreieren</div><div class="vc-ex">Il crée des sculptures.</div></div>
+      <div class="vocab-card"><div class="vc-fr">le créateur / la créatrice <span class="b-nom">NOM</span></div><div class="vc-de">der Schöpfer / die Schöpferin</div><div class="vc-ex">Un créateur talentueux.</div></div>
+      <div class="vocab-card"><div class="vc-fr">créatif / créative <span class="b-adj">ADJ</span></div><div class="vc-de">kreativ / schöpferisch</div><div class="vc-ex">Un esprit très créatif.</div></div>
+      <div class="vocab-card"><div class="vc-fr">la beauté <span class="b-nom">NOM</span></div><div class="vc-de">die Schönheit</div><div class="vc-ex">La beauté du paysage.</div></div>
+      <div class="vocab-card"><div class="vc-fr">embellir <span class="b-verb">VERBE</span></div><div class="vc-de">verschönern / schmücken</div><div class="vc-ex">Les fleurs embellissent la pièce.</div></div>
+      <div class="vocab-card"><div class="vc-fr">admirable <span class="b-adj">ADJ</span></div><div class="vc-de">bewundernswert</div><div class="vc-ex">Un travail admirable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">l'inspiration <span class="b-nom">NOM</span></div><div class="vc-de">die Inspiration</div><div class="vc-ex">Il cherche son inspiration.</div></div>
+      <div class="vocab-card"><div class="vc-fr">s'inspirer de <span class="b-verb">VERBE</span></div><div class="vc-de">sich inspirieren von</div><div class="vc-ex">Elle s'inspire de la nature.</div></div>
+      <div class="vocab-card"><div class="vc-fr">l'œuvre <span class="b-nom">NOM</span></div><div class="vc-de">das Werk / die Schöpfung</div><div class="vc-ex">Une œuvre d'art remarquable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">exprimer <span class="b-verb">VERBE</span></div><div class="vc-de">ausdrücken / zum Ausdruck bringen</div><div class="vc-ex">Il exprime ses émotions.</div></div>
+      <div class="vocab-card"><div class="vc-fr">l'expression <span class="b-nom">NOM</span></div><div class="vc-de">der Ausdruck / die Ausdrucksweise</div><div class="vc-ex">Une belle expression artistique.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">🌿 Thème : Nature et environnement</div>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vc-fr">la nature <span class="b-nom">NOM</span></div><div class="vc-de">die Natur</div><div class="vc-ex">La nature est précieuse.</div></div>
+      <div class="vocab-card"><div class="vc-fr">naturel / naturelle <span class="b-adj">ADJ</span></div><div class="vc-de">natürlich</div><div class="vc-ex">Un produit 100 % naturel.</div></div>
+      <div class="vocab-card"><div class="vc-fr">naturellement <span class="b-adv">ADV</span></div><div class="vc-de">natürlich / von Natur aus</div><div class="vc-ex">Il est naturellement calme.</div></div>
+      <div class="vocab-card"><div class="vc-fr">l'environnement <span class="b-nom">NOM</span></div><div class="vc-de">die Umwelt / das Umfeld</div><div class="vc-ex">Protéger l'environnement.</div></div>
+      <div class="vocab-card"><div class="vc-fr">surnaturel / -elle <span class="b-adj">ADJ</span></div><div class="vc-de">übernatürlich</div><div class="vc-ex">Un phénomène surnaturel.</div></div>
+      <div class="vocab-card"><div class="vc-fr">naturalisé / -ée <span class="b-adj">ADJ</span></div><div class="vc-de">eingebürgert / naturalisiert</div><div class="vc-ex">Un citoyen naturalisé.</div></div>
+      <div class="vocab-card"><div class="vc-fr">durable <span class="b-adj">ADJ</span></div><div class="vc-de">nachhaltig / dauerhaft</div><div class="vc-ex">Un développement durable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">préserver <span class="b-verb">VERBE</span></div><div class="vc-de">bewahren / erhalten</div><div class="vc-ex">Préserver les forêts.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">💼 Thème : Travail et formation</div>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vc-fr">le travail <span class="b-nom">NOM</span></div><div class="vc-de">die Arbeit</div><div class="vc-ex">Un bon travail d'équipe.</div></div>
+      <div class="vocab-card"><div class="vc-fr">travailler <span class="b-verb">VERBE</span></div><div class="vc-de">arbeiten</div><div class="vc-ex">Elle travaille dur.</div></div>
+      <div class="vocab-card"><div class="vc-fr">travailleur / travailleuse <span class="b-adj">ADJ</span></div><div class="vc-de">fleißig / arbeitssam</div><div class="vc-ex">Un étudiant travailleur.</div></div>
+      <div class="vocab-card"><div class="vc-fr">la formation <span class="b-nom">NOM</span></div><div class="vc-de">die Ausbildung / die Schulung</div><div class="vc-ex">Une formation de deux ans.</div></div>
+      <div class="vocab-card"><div class="vc-fr">former <span class="b-verb">VERBE</span></div><div class="vc-de">ausbilden / schulen</div><div class="vc-ex">Former de nouveaux employés.</div></div>
+      <div class="vocab-card"><div class="vc-fr">la richesse <span class="b-nom">NOM</span></div><div class="vc-de">der Reichtum</div><div class="vc-ex">La richesse d'un pays.</div></div>
+      <div class="vocab-card"><div class="vc-fr">enrichir <span class="b-verb">VERBE</span></div><div class="vc-de">bereichern</div><div class="vc-ex">Ce stage m'a enrichi.</div></div>
+      <div class="vocab-card"><div class="vc-fr">le développement <span class="b-nom">NOM</span></div><div class="vc-de">die Entwicklung</div><div class="vc-ex">Le développement personnel.</div></div>
+      <div class="vocab-card"><div class="vc-fr">développer <span class="b-verb">VERBE</span></div><div class="vc-de">entwickeln / ausbauen</div><div class="vc-ex">Développer ses compétences.</div></div>
+      <div class="vocab-card"><div class="vc-fr">sous-estimer <span class="b-verb">VERBE</span></div><div class="vc-de">unterschätzen</div><div class="vc-ex">Ne pas sous-estimer les risques.</div></div>
+      <div class="vocab-card"><div class="vc-fr">surestimer <span class="b-verb">VERBE</span></div><div class="vc-de">überschätzen</div><div class="vc-ex">Il a surestimé ses forces.</div></div>
+      <div class="vocab-card"><div class="vc-fr">refaire <span class="b-verb">VERBE</span></div><div class="vc-de">nochmals machen / neu machen</div><div class="vc-ex">Refaire un exercice.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="sec-title">🗣️ Thème : Adjectifs en -able / -ible</div>
+    <p style="color:var(--muted);font-size:.86rem;margin-bottom:12px;">Ces adjectifs signifient « qui peut être fait ». Très utiles pour s'exprimer !</p>
+    <div class="vocab-grid">
+      <div class="vocab-card"><div class="vc-fr">lavable <span class="b-adj">ADJ</span></div><div class="vc-de">waschbar</div><div class="vc-ex">Un tissu lavable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">lisible <span class="b-adj">ADJ</span></div><div class="vc-de">lesbar / leserlich</div><div class="vc-ex">Une écriture lisible.</div></div>
+      <div class="vocab-card"><div class="vc-fr">admirable <span class="b-adj">ADJ</span></div><div class="vc-de">bewundernswert</div><div class="vc-ex">Un courage admirable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">mangeable <span class="b-adj">ADJ</span></div><div class="vc-de">essbar / genießbar</div><div class="vc-ex">Ce plat est tout juste mangeable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">visible <span class="b-adj">ADJ</span></div><div class="vc-de">sichtbar</div><div class="vc-ex">Un progrès visible.</div></div>
+      <div class="vocab-card"><div class="vc-fr">cassable <span class="b-adj">ADJ</span></div><div class="vc-de">zerbrechlich / zerbrechbar</div><div class="vc-ex">Un objet cassable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">croyable <span class="b-adj">ADJ</span></div><div class="vc-de">glaubwürdig / glaubhaft</div><div class="vc-ex">C'est à peine croyable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">portable <span class="b-adj">ADJ</span></div><div class="vc-de">tragbar / portabel</div><div class="vc-ex">Un ordinateur portable.</div></div>
+      <div class="vocab-card"><div class="vc-fr">incroyable <span class="b-adj">ADJ</span></div><div class="vc-de">unglaublich</div><div class="vc-ex">Une aventure incroyable !</div></div>
+      <div class="vocab-card"><div class="vc-fr">invisible <span class="b-adj">ADJ</span></div><div class="vc-de">unsichtbar</div><div class="vc-ex">Rendu invisible.</div></div>
+      <div class="vocab-card"><div class="vc-fr">illisible <span class="b-adj">ADJ</span></div><div class="vc-de">unleserlich / unlesbar</div><div class="vc-ex">Une écriture illisible.</div></div>
+      <div class="vocab-card"><div class="vc-fr">immangeable <span class="b-adj">ADJ</span></div><div class="vc-de">ungenießbar / nicht essbar</div><div class="vc-ex">Ce plat est immangeable.</div></div>
+    </div>
+  </div>
+
+  <div class="ch-nav">
+    <button class="ch-btn" onclick="goTo(3)">← Précédent</button>
+    <button class="ch-btn next" onclick="goTo(5)">Les exercices →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     CH 6 — EXERCICES
+     ═══════════════════════════════════════ -->
+<div class="chapter" id="ch5">
+  <div class="ch-eyebrow"><span class="ch-num">06</span> Pratique</div>
+  <h2>Les <em>exercices</em></h2>
+  <p class="ch-intro">8 exercices progressifs. Tapez votre réponse et cliquez sur « Vérifier ». Les réponses ne sont pas affichées à l'avance !</p>
+
+  <!-- EX 1 : Identifier le préfixe -->
+  <div class="ex-wrap">
+    <div class="ex-head"><div class="ex-icon">🔍</div><div class="ex-meta"><div class="ex-title">Exercice 1 — Identifier le préfixe</div><div class="ex-desc">Quel préfixe a été ajouté ? Écris seulement le préfixe.</div></div></div>
+    <div class="ex-body">
+      <div id="e1">
+        <div class="q-row"><span class="q-num">1</span> <strong>refaire</strong> → préfixe : <input type="text" data-answer="re" placeholder="…"> + base : <em>faire</em></div>
+        <div class="q-row"><span class="q-num">2</span> <strong>impossible</strong> → préfixe : <input type="text" data-answer="im" placeholder="…"> + base : <em>possible</em></div>
+        <div class="q-row"><span class="q-num">3</span> <strong>déchiffrer</strong> → préfixe : <input type="text" data-answer="dé" placeholder="…"> + base : <em>chiffrer</em></div>
+        <div class="q-row"><span class="q-num">4</span> <strong>surcharger</strong> → préfixe : <input type="text" data-answer="sur" placeholder="…"> + base : <em>charger</em></div>
+        <div class="q-row"><span class="q-num">5</span> <strong>transporter</strong> → préfixe : <input type="text" data-answer="trans" placeholder="…"> + base : <em>porter</em></div>
+        <div class="q-row"><span class="q-num">6</span> <strong>prévoir</strong> → préfixe : <input type="text" data-answer="pré" placeholder="…"> + base : <em>voir</em></div>
+        <div class="q-row"><span class="q-num">7</span> <strong>sous-estimer</strong> → préfixe : <input type="text" data-answer="sous" placeholder="…"> + base : <em>estimer</em></div>
+        <div class="q-row"><span class="q-num">8</span> <strong>illégal</strong> → préfixe : <input type="text" data-answer="il" placeholder="…"> + base : <em>légal</em></div>
+        <div class="q-row"><span class="q-num">9</span> <strong>embellir</strong> → préfixe : <input type="text" data-answer="em" placeholder="…"> + base : <em>belle</em></div>
+        <div class="q-row"><span class="q-num">10</span> <strong>mécontent</strong> → préfixe : <input type="text" data-answer="mé" placeholder="…"> + base : <em>content</em></div>
+      </div>
+      <button class="btn btn-primary" onclick="checkEx('e1','s1')">✓ Vérifier</button>
+      <div class="score" id="s1"></div>
+    </div>
+  </div>
+
+  <!-- EX 2 : Former le nom -->
+  <div class="ex-wrap">
+    <div class="ex-head"><div class="ex-icon">🟠</div><div class="ex-meta"><div class="ex-title">Exercice 2 — Former le nom avec le bon suffixe</div><div class="ex-desc">Le suffixe est indiqué entre parenthèses.</div></div></div>
+    <div class="ex-body">
+      <div id="e2">
+        <div class="q-row"><span class="q-num">1</span> créer + <em>(-tion)</em> → la <input type="text" data-answer="création" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">2</span> travailler + <em>(-eur)</em> → le <input type="text" data-answer="travailleur" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">3</span> beau + <em>(-té)</em> → la <input type="text" data-answer="beauté" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">4</span> riche + <em>(-esse)</em> → la <input type="text" data-answer="richesse" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">5</span> former + <em>(-tion)</em> → la <input type="text" data-answer="formation" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">6</span> développer + <em>(-ment)</em> → le <input type="text" data-answer="développement" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">7</span> écrire + <em>(-ure)</em> → l' <input type="text" data-answer="écriture" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">8</span> art + <em>(-iste)</em> → l' <input type="text" data-answer="artiste" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">9</span> chanter + <em>(-eur)</em> → le <input type="text" data-answer="chanteur" placeholder="…"></div>
+        <div class="q-row"><span class="q-num">10</span> confier + <em>(-ance)</em> → la <input type="text" data-answer="confiance" placeholder="…"></div>
+      </div>
+      <button class="btn btn-primary" onclick="checkEx('e2','s2')">✓ Vérifier</button>
+      <div class="score" id="s2"></div>
+    </div>
+  </div>
+
+  <!-- EX 3 : -able / -ible -->
+  <div class="ex-wrap">
+    <div class="ex-head"><div class="ex-icon">📝</div><div class="ex-meta"><div class="ex-title">Exercice 3 — -able ou -ible ?</div><div class="ex-desc">Écris le suffixe correct (-able ou -ible) pour former l'adjectif.</div></div></div>
+    <div class="ex-body">
+      <div id="e3">
+        <div class="q-row"><span class="q-num">1</span> laver → lav<input type="text" data-answer="able" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(waschbar)</em></div>
+        <div class="q-row"><span class="q-num">2</span> lire → lis<input type="text" data-answer="ible" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(lesbar)</em></div>
+        <div class="q-row"><span class="q-num">3</span> admirer → admira<input type="text" data-answer="ble" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(bewundernswert)</em></div>
+        <div class="q-row"><span class="q-num">4</span> voir → vis<input type="text" data-answer="ible" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(sichtbar)</em></div>
+        <div class="q-row"><span class="q-num">5</span> manger → manga<input type="text" data-answer="ble" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(essbar)</em></div>
+        <div class="q-row"><span class="q-num">6</span> casser → cassa<input type="text" data-answer="ble" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(zerbrechbar)</em></div>
+        <div class="q-row"><span class="q-num">7</span> porter → porta<input type="text" data-answer="ble" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(tragbar)</em></div>
+        <div class="q-row"><span class="q-num">8</span> croire → croya<input type="text" data-answer="ble" placeholder="…" style="width:70px"> <em style="color:var(--c-de);font-size:.8rem">(glaubhaft)</em></div>
+      </div>
+      <button class="btn btn-primary" onclick="checkEx('e3','s3')">✓ Vérifier</button>
+      <div class="score" id="s3"></div>
+    </div>
+  </div>
+
+  <!-- EX 4 : Former l'adverbe -->
+  <div class="ex-wrap">
+    <div class="ex-head"><div class="ex-icon">🟣</div><div class="ex-meta"><div class="ex-title">Exercice 4 — Former l'adverbe en -ment</div><div class="ex-desc">Transforme l'adjectif en adverbe. Attention aux exceptions !</div></div></div>
+    <div class="ex-body">
+      <div id="e4">
+        <div class="q-row"><span class="q-num">1</span> <strong>naturel</strong> → <input type="text" data-answer="naturellement" placeholder="…"> <em style="color:var(--c-de);font-size:.8rem">(natürlich)</em></div>
+        <div class="q-row"><span class="q-num">2</span> <strong>doux</strong> → <input type="text" data-answer="doucement" placeholder="…"> <em style="color:var(--c-de);font-size:.8rem">(sanft)</em></div>
+        <div class="q-row"><span class="q-num">3</span> <strong>créatif</strong> → <input type="text" data-answer="créativement" placeholder="…"> <em style="color:var(--c-de);font-size:.8rem">(kreativ)</em></div>
+        <div class="q-row"><span class="q-num">4</span> <strong>lent</strong> → <input type="text" data-answer="lentement" placeholder="…"> <em style="color:var(--c-de);font-size:.8rem">(langsam)</em></div>
+        <div class="q-row"><span class="q-num">5</span> <strong>heureux</strong> → <input type="text" data-answer="heureusement" placeholder="…"> <em style="color:var(--c-de);font-size:.8rem">(glücklicherweise)</em></div>
+        <div class="q-row"><span class="q-num">6</span> <strong>évident</strong> → <input type="text" data-answer="évidemment" placeholder="…"> ⚠️ <em style="color:var(--c-de);font-size:.8rem">(offensichtlich)</em></div>
+        <div class="q-row"><span class="q-num">7</span> <strong>courant</strong> → <input type="text" data-answer="couramment" placeholder="…"> ⚠️ <em style="color:var(--c-de);font-size:.8rem">(fließend)</em></div>
+        <div class="q-row"><span class="q-num">8</span> <strong>poli</strong> → <input type="text" data-answer="poliment" placeholder="…"> <em style="color:var(--c-de);font-size:.8rem">(höflich)</em></div>
+      </div>
+      <button class="btn btn-primary" onclick="checkEx('e4','s4')">✓ Vérifier</button>
+      <div class="score" id="s4"></div>
+    </div>
+  </div>
+
+  <!-- EX 5 : Ajouter le bon préfixe -->
+  <div class="ex-wrap">
+    <div class="ex-head"><div class="ex-icon">🟡</div><div class="ex-meta"><div class="ex-title">Exercice 5 — Ajouter le bon préfixe</div><div class="ex-desc">Quel préfixe donne le sens indiqué entre parenthèses ?</div></div></div>
+    <div class="ex-body">
+      <div class="word-bank">
+        <span class="bank-pill">re-</span><span class="bank-pill">in-</span><span class="bank-pill">im-</span><span class="bank-pill">sur-</span><span class="bank-pill">sous-</span><span class="bank-pill">dé-</span><span class="bank-pill">pré-</span><span class="bank-pill">mal-</span><span class="bank-pill">trans-</span><span class="bank-pill">em-</span>
+      </div>
+      <div id="e5">
+        <div class="q-row"><span class="q-num">1</span> <input type="text" data-answer="em" placeholder="préf.">-bellir <em style="color:var(--muted);font-size:.82rem">(verschönern)</em></div>
+        <div class="q-row"><span class="q-num">2</span> <input type="text" data-answer="re" placeholder="préf.">-faire <em style="color:var(--muted);font-size:.82rem">(nochmals machen)</em></div>
+        <div class="q-row"><span class="q-num">3</span> <input type="text" data-answer="im" placeholder="préf.">-possible <em style="color:var(--muted);font-size:.82rem">(unmöglich)</em></div>
+        <div class="q-row"><span class="q-num">4</span> <input type="text" data-answer="sur" placeholder="préf.">-charger <em style="color:var(--muted);font-size:.82rem">(überladen)</em></div>
+        <div class="q-row"><span class="q-num">5</span> <input type="text" data-answer="sous" placeholder="préf.">-estimer <em style="color:var(--muted);font-size:.82rem">(unterschätzen)</em></div>
+        <div class="q-row"><span class="q-num">6</span> <input type="text" data-answer="trans" placeholder="préf.">-former <em style="color:var(--muted);font-size:.82rem">(verwandeln)</em></div>
+        <div class="q-row"><span class="q-num">7</span> <input type="text" data-answer="dé" placeholder="préf.">-faire <em style="color:var(--muted);font-size:.82rem">(aufmachen / lösen)</em></div>
+        <div class="q-row"><span class="q-num">8</span> <input type="text" data-answer="mal" placeholder="préf.">-traiter <em style="color:var(--muted);font-size:.82rem">(misshandeln)</em></div>
+        <div class="q-row"><span class="q-num">9</span> <input type="text" data-answer="pré" placeholder="préf.">-voir <em style="color:var(--muted);font-size:.82rem">(voraussehen)</em></div>
+        <div class="q-row"><span class="q-num">10</span> <input type="text" data-answer="in" placeholder="préf.">-actif <em style="color:var(--muted);font-size:.82rem">(inaktiv)</em></div>
+      </div>
+      <button class="btn btn-primary" onclick="checkEx('e5','s5')">✓ Vérifier</button>
+      <div class="score" id="s5"></div>
+    </div>
+  </div>
+
+  <!-- EX 6 : Trouver le mot de la même famille -->
+  <div class="ex-wrap">
+    <div class="ex-head"><div class="ex-icon">🌳</div><div class="ex-meta"><div class="ex-title">Exercice 6 — Trouver le mot de la même famille</div><div class="ex-desc">La catégorie demandée est indiquée entre parenthèses.</div></div></div>
+    <div class="ex-body">
+      <div id="e6">
+        <div class="q-row"><span class="q-num">1</span> <strong>créer</strong> → le <input type="text" data-answer="créateur" placeholder="NOM personne…"> <em style="color:var(--c-de);font-size:.8rem">(der Schöpfer)</em></div>
+        <div class="q-row"><span class="q-num">2</span> <strong>beau</strong> → la <input type="text" data-answer="beauté" placeholder="NOM qualité…"> <em style="color:var(--c-de);font-size:.8rem">(die Schönheit)</em></div>
+        <div class="q-row"><span class="q-num">3</span> <strong>riche</strong> → <input type="text" data-answer="enrichir" placeholder="VERBE…"> <em style="color:var(--c-de);font-size:.8rem">(bereichern)</em></div>
+        <div class="q-row"><span class="q-num">4</span> <strong>naturel</strong> → <input type="text" data-answer="naturellement" placeholder="ADVERBE…"> <em style="color:var(--c-de);font-size:.8rem">(natürlich)</em></div>
+        <div class="q-row"><span class="q-num">5</span> <strong>la formation</strong> → <input type="text" data-answer="former" placeholder="VERBE…"> <em style="color:var(--c-de);font-size:.8rem">(ausbilden)</em></div>
+        <div class="q-row"><span class="q-num">6</span> <strong>la beauté</strong> → <input type="text" data-answer="embellir" placeholder="VERBE…"> <em style="color:var(--c-de);font-size:.8rem">(verschönern)</em></div>
+        <div class="q-row"><span class="q-num">7</span> <strong>travailler</strong> → <input type="text" data-answer="travailleur" placeholder="ADJ…"> <em style="color:var(--c-de);font-size:.8rem">(fleißig)</em></div>
+        <div class="q-row"><span class="q-num">8</span> <strong>visible</strong> → le contraire → <input type="text" data-answer="invisible" placeholder="ADJ…"> <em style="color:var(--c-de);font-size:.8rem">(unsichtbar)</em></div>
+        <div class="q-row"><span class="q-num">9</span> <strong>croyable</strong> → le contraire → <input type="text" data-answer="incroyable" placeholder="ADJ…"> <em style="color:var(--c-de);font-size:.8rem">(unglaublich)</em></div>
+        <div class="q-row"><span class="q-num">10</span> <strong>lisible</strong> → le contraire → <input type="text" data-answer="illisible" placeholder="ADJ…"> <em style="color:var(--c-de);font-size:.8rem">(unleserlich)</em></div>
+      </div>
+      <button class="btn btn-primary" onclick="checkEx('e6','s6')">✓ Vérifier</button>
+      <div class="score" id="s6"></div>
+    </div>
+  </div>
+
+  <!-- EX 7 : Compléter la phrase -->
+  <div class="ex-wrap">
+    <div class="ex-head"><div class="ex-icon">✏️</div><div class="ex-meta"><div class="ex-title">Exercice 7 — Compléter la phrase</div><div class="ex-desc">Choisis le mot qui convient dans chaque phrase.</div></div></div>
+    <div class="ex-body">
+      <div class="word-bank">
+        <span class="bank-pill">naturellement</span><span class="bank-pill">illégal</span><span class="bank-pill">créateur</span><span class="bank-pill">embellir</span><span class="bank-pill">formation</span><span class="bank-pill">travailleuse</span><span class="bank-pill">sous-estimé</span><span class="bank-pill">développement</span><span class="bank-pill">lisible</span><span class="bank-pill">incroyable</span><span class="bank-pill">enrichi</span><span class="bank-pill">refait</span>
+      </div>
+      <div id="e7">
+        <div class="q-row"><span class="q-num">1</span> Ce peintre est un vrai <input type="text" data-answer="créateur" placeholder="…"> — il invente toujours quelque chose de nouveau.</div>
+        <div class="q-row"><span class="q-num">2</span> Stationner ici est <input type="text" data-answer="illégal" placeholder="…"> — vous risquez une amende.</div>
+        <div class="q-row"><span class="q-num">3</span> La <input type="text" data-answer="formation" placeholder="…"> des enseignants dure deux années.</div>
+        <div class="q-row"><span class="q-num">4</span> Il parle <input type="text" data-answer="naturellement" placeholder="…"> devant la caméra, sans nervosité.</div>
+        <div class="q-row"><span class="q-num">5</span> Des fleurs fraîches peuvent <input type="text" data-answer="embellir" placeholder="…"> n'importe quelle pièce.</div>
+        <div class="q-row"><span class="q-num">6</span> Marie est très <input type="text" data-answer="travailleuse" placeholder="…"> — elle finit toujours ses projets à temps.</div>
+        <div class="q-row"><span class="q-num">7</span> Le talent de cet acteur a été <input type="text" data-answer="sous-estimé" placeholder="…"> par les critiques.</div>
+        <div class="q-row"><span class="q-num">8</span> Ce voyage m'a vraiment <input type="text" data-answer="enrichi" placeholder="…"> — j'ai découvert une nouvelle culture.</div>
+        <div class="q-row"><span class="q-num">9</span> Ton écriture est très <input type="text" data-answer="lisible" placeholder="…">, je peux tout lire facilement.</div>
+        <div class="q-row"><span class="q-num">10</span> C'est <input type="text" data-answer="incroyable" placeholder="…"> comme il a progressé en si peu de temps !</div>
+      </div>
+      <button class="btn btn-primary" onclick="checkEx('e7','s7')">✓ Vérifier</button>
+      <div class="score" id="s7"></div>
+    </div>
+  </div>
+
+  <!-- EX 8 : Production -->
+  <div class="section">
+    <div class="sec-title">✍️ Production écrite</div>
+    <div class="def-box">
+      <strong>📋 Consigne :</strong> Écris <strong>12–15 phrases</strong> sur un artiste, un métier ou un sujet qui t'intéresse. Tu dois utiliser obligatoirement :
+      <ul style="margin-top:8px;margin-left:16px;color:var(--muted);">
+        <li>Au moins <strong style="color:#1e1c19">3 mots avec le suffixe -able ou -ible</strong></li>
+        <li>Au moins <strong style="color:#1e1c19">2 noms en -tion ou -ment</strong></li>
+        <li>Au moins <strong style="color:#1e1c19">2 adverbes en -ment</strong></li>
+        <li>Au moins <strong style="color:#1e1c19">2 préfixes différents</strong></li>
+        <li>La structure : <em>« Ce qui me fascine, c'est… »</em></li>
+      </ul>
+    </div>
+    <textarea id="prod" placeholder="Écris ton texte ici…" oninput="countW()"></textarea>
+    <div class="wc" id="wc">0 mot(s)</div>
+  </div>
+
+  <div class="ch-nav">
+    <button class="ch-btn" onclick="goTo(4)">← Précédent</button>
+    <button class="ch-btn next" onclick="goTo(6)">Quiz final →</button>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════
+     CH 7 — QUIZ FINAL
+     ═══════════════════════════════════════ -->
+<div class="chapter" id="ch6">
+  <div class="ch-eyebrow"><span class="ch-num">07</span> Bilan</div>
+  <h2>Quiz <em>final</em></h2>
+  <p class="ch-intro">8 questions pour tester l'ensemble de vos connaissances. Sélectionnez une réponse puis cliquez « Vérifier ».</p>
+
+  <div id="quizContainer">
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">1</span> Quel est le rôle du <strong>préfixe</strong> dans un mot dérivé ?</div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q1" value="a"> Il change la catégorie grammaticale du mot (ex. verbe → nom).</label>
+        <label class="quiz-opt"><input type="radio" name="q1" value="b"> Il modifie le sens du mot sans changer sa catégorie grammaticale.</label>
+        <label class="quiz-opt"><input type="radio" name="q1" value="c"> Il se place toujours après le radical.</label>
+        <label class="quiz-opt"><input type="radio" name="q1" value="d"> Il est toujours d'origine latine.</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'b','Le préfixe modifie le sens mais ne change PAS la catégorie grammaticale. faire (verbe) → refaire (verbe). C\'est la différence clé avec le suffixe.')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">2</span> Que signifie le suffixe <strong>-able / -ible</strong> ? <em style="color:var(--c-de);font-weight:400">(Was bedeutet -bar / -lich?)</em></div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q2" value="a"> Qui fait l'action.</label>
+        <label class="quiz-opt"><input type="radio" name="q2" value="b"> Qui peut être fait.</label>
+        <label class="quiz-opt"><input type="radio" name="q2" value="c"> Qui a la qualité de.</label>
+        <label class="quiz-opt"><input type="radio" name="q2" value="d"> Qui est très grand.</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'b','-able / -ible = qui peut être. lavable = qui peut être lavé. lisible = qui peut être lu. Sur Deutsch : -bar. Incroyable = unglaublich !')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">3</span> Le mot « <strong>illisible</strong> » <em style="color:var(--c-de);font-weight:400">(unleserlich)</em> contient :</div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q3" value="a"> Un préfixe seulement (il-).</label>
+        <label class="quiz-opt"><input type="radio" name="q3" value="b"> Un suffixe seulement (-ible).</label>
+        <label class="quiz-opt"><input type="radio" name="q3" value="c"> Un préfixe (il-) ET un suffixe (-ible) autour du radical lis-.</label>
+        <label class="quiz-opt"><input type="radio" name="q3" value="d"> Ni préfixe ni suffixe.</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'c','illisible = préfixe il- (contraire) + radical lis- (lire) + suffixe -ible (qui peut être lu). Donc : qui ne peut pas être lu. Auf Deutsch : un- + les-bar = unleserlich.')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">4</span> Comment forme-t-on l'adverbe « <strong>couramment</strong> » <em style="color:var(--c-de);font-weight:400">(fließend)</em> ?</div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q4" value="a"> courante + -ment → courantement</label>
+        <label class="quiz-opt"><input type="radio" name="q4" value="b"> courant + -ment → courantment</label>
+        <label class="quiz-opt"><input type="radio" name="q4" value="c"> courant → couramment (exception : -ant → -amment)</label>
+        <label class="quiz-opt"><input type="radio" name="q4" value="d"> courant est déjà un adverbe.</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'c','Exception ! Les adjectifs en -ant forment leur adverbe en -amment. De même : évident → évidemment (-ent → -emment). C\'est une exception à mémoriser !')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">5</span> Le préfixe allemand <em style="color:var(--c-de)">„unter-"</em> correspond en français à :</div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q5" value="a"> sur- (ex. surcharger)</label>
+        <label class="quiz-opt"><input type="radio" name="q5" value="b"> re- (ex. refaire)</label>
+        <label class="quiz-opt"><input type="radio" name="q5" value="c"> sous- (ex. sous-estimer)</label>
+        <label class="quiz-opt"><input type="radio" name="q5" value="d"> trans- (ex. transporter)</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'c','unter- = sous- en français. unterschätzen = sous-estimer. Untertitel = sous-titres. überschätzen = surestimer (über- = sur-).')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">6</span> Quel suffixe forme des noms désignant une <strong>personne qui fait une action</strong> <em style="color:var(--c-de);font-weight:400">(-er / -erin)</em> ?</div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q6" value="a"> -tion (ex. la création)</label>
+        <label class="quiz-opt"><input type="radio" name="q6" value="b"> -ment (ex. le développement)</label>
+        <label class="quiz-opt"><input type="radio" name="q6" value="c"> -eur / -teur (ex. le travailleur, le créateur)</label>
+        <label class="quiz-opt"><input type="radio" name="q6" value="d"> -able (ex. lavable)</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'c','-eur, -euse, -teur, -trice désignent une personne. Auf Deutsch : -er (m) / -erin (f). travailler → travailleur/travailleuse · créer → créateur/créatrice.')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">7</span> « <strong>enrichir</strong> » <em style="color:var(--c-de);font-weight:400">(bereichern)</em> est formé avec :</div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q7" value="a"> préfixe re- + riche + suffixe -ir</label>
+        <label class="quiz-opt"><input type="radio" name="q7" value="b"> préfixe en- + riche + suffixe -ir</label>
+        <label class="quiz-opt"><input type="radio" name="q7" value="c"> radical rich- seulement</label>
+        <label class="quiz-opt"><input type="radio" name="q7" value="d"> préfixe sur- + riche</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'b','enrichir = préfixe en- (transformation) + riche + suffixe -ir. Le préfixe em-/en- donne l\'idée de transformation. Cf. embellir = em- + belle + -ir.')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+    <div class="quiz-q">
+      <div class="quiz-q-text"><span class="quiz-q-num">8</span> Parmi ces mots, lequel appartient à la famille de « <strong>porter</strong> » <em style="color:var(--c-de);font-weight:400">(tragen)</em> ?</div>
+      <div class="quiz-opts">
+        <label class="quiz-opt"><input type="radio" name="q8" value="a"> le portrait</label>
+        <label class="quiz-opt"><input type="radio" name="q8" value="b"> le portail</label>
+        <label class="quiz-opt"><input type="radio" name="q8" value="c"> la porte</label>
+        <label class="quiz-opt"><input type="radio" name="q8" value="d"> Tous ces mots partagent le radical port- mais portail et portrait viennent d'une autre origine.</label>
+      </div>
+      <button class="btn-verify" onclick="verifyQ(this,'d','Bonne réflexion ! transporter, portable, le porteur viennent bien de porter. Mais portail vient du latin portus (porte), et portrait du latin protrahere. Les familles de mots demandent de la vigilance !')">Vérifier</button>
+      <div class="quiz-explain"></div>
+    </div>
+
+  </div>
+
+  <div class="quiz-score" id="quizScore">
+    <div class="qs-num" id="quizNum">—</div>
+    <div class="qs-label">Résultat final</div>
+  </div>
+  <button class="btn btn-primary" onclick="calcScore()" style="margin-top:18px">📊 Calculer mon score</button>
+
+  <div class="ch-nav">
+    <button class="ch-btn" onclick="goTo(5)">← Précédent</button>
+    <button class="ch-btn" onclick="goTo(0)">↩ Recommencer</button>
+  </div>
+</div>
+
+<footer class="page-footer">Leçon 6 — Niveau A2–B1 · Les familles de mots en français · Cours de français langue étrangère 🇩🇪</footer>
+
+<script>
+function goTo(n){
+  document.querySelectorAll('.chapter').forEach(c=>c.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('ch'+n).classList.add('active');
+  document.querySelectorAll('.nav-tab')[n].classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function toggleAcc(btn){
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+}
+function norm(s){
+  return s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+function checkEx(exId,scoreId){
+  const inputs=document.querySelectorAll('#'+exId+' [data-answer]');
+  let ok=0,total=0;
+  inputs.forEach(inp=>{
+    inp.classList.remove('correct','wrong');
+    const a=norm(inp.dataset.answer);
+    const v=norm(inp.value||'');
+    if(!v) return;
+    total++;
+    if(v===a){inp.classList.add('correct');ok++;}
+    else inp.classList.add('wrong');
+  });
+  const sc=document.getElementById(scoreId);
+  sc.style.display='block';
+  const all=inputs.length;
+  if(ok===all&&all>0){sc.className='score good';sc.textContent='🎉 Parfait ! '+ok+'/'+all+' bonnes réponses !';}
+  else if(total===0){sc.className='score bad';sc.textContent='Veuillez remplir au moins une réponse.';}
+  else{sc.className='score bad';sc.textContent=ok+'/'+all+' — les cases rouges sont à revoir.';}
+}
+function verifyQ(btn,correctVal,explain){
+  const q=btn.closest('.quiz-q');
+  const sel=q.querySelector('input[type=radio]:checked');
+  const expEl=btn.nextElementSibling;
+  if(!sel){expEl.textContent='Veuillez sélectionner une réponse.';expEl.classList.add('show');return;}
+  q.querySelectorAll('.quiz-opt').forEach(opt=>{
+    const inp=opt.querySelector('input');
+    if(inp.value===correctVal)opt.classList.add('correct');
+    else if(inp.value===sel.value&&inp.value!==correctVal)opt.classList.add('wrong');
+    inp.disabled=true;
+  });
+  expEl.textContent=explain;
+  expEl.classList.add('show');
+  btn.disabled=true;
+}
+function calcScore(){
+  let ok=0,answered=0;
+  document.querySelectorAll('.quiz-q').forEach(q=>{
+    if(q.querySelector('.quiz-opt.correct')||q.querySelector('.quiz-opt.wrong')){
+      answered++;
+      if(q.querySelector('.quiz-opt.correct')&&!q.querySelector('.quiz-opt.wrong'))ok++;
+    }
+  });
+  const sc=document.getElementById('quizScore');
+  sc.classList.add('show');
+  document.getElementById('quizNum').textContent=ok+'/'+answered;
+  sc.querySelector('.qs-label').textContent=answered===0?'Répondez d\'abord aux questions !':ok===answered?'🏆 Score parfait — Ausgezeichnet !':ok>=answered*.7?'👍 Très bien — Sehr gut !':'💪 Relisez le cours — Nochmal lesen !';
+}
+function countW(){
+  const t=document.getElementById('prod').value.trim();
+  document.getElementById('wc').textContent=(t?t.split(/\s+/).length:0)+' mot(s)';
+}
+document.addEventListener('change',e=>{
+  if(e.target.type==='radio'){
+    const q=e.target.closest('.quiz-q');
+    q.querySelectorAll('.quiz-opt').forEach(o=>o.classList.remove('selected'));
+    e.target.closest('.quiz-opt').classList.add('selected');
+  }
+});
+</script>
+</body>
+</html>
