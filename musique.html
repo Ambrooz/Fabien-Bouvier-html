@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche – Musique & Matériel (A2/B1)</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f1eb;
+    --surface: #ffffff;
+    --surface2: #f0ede5;
+    --border: #d8d2c6;
+    --border2: #c0b8aa;
+    --accent: #b5470e;
+    --accent2: #1a6b5c;
+    --accent3: #2d5fa6;
+    --text: #1c1914;
+    --muted: #7a7367;
+    --correct: #1a6b5c;
+    --input-bg: #faf8f4;
+    --input-border: #b8b0a0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  @media print {
+    body { background: white; }
+    .page { max-width: 100%; padding: 16px 20px 30px; }
+    .section { break-inside: avoid; page-break-inside: avoid; }
+    .reveal-btn, .print-btn { display: none !important; }
+    .answer-hidden { display: block !important; }
+    input[type="text"], textarea {
+      border: 1px solid #aaa !important;
+      background: white !important;
+    }
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  .page { max-width: 880px; margin: 0 auto; padding: 48px 36px 80px; }
+
+  /* HEADER */
+  .header {
+    background: var(--accent);
+    padding: 32px 36px 28px;
+    margin-bottom: 48px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 16px;
+  }
+  .header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.6rem, 6vw, 4.2rem);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    color: #fff;
+  }
+  .header-title span { color: #ffd4a8; }
+  .header-meta {
+    text-align: right;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.75);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    line-height: 1.9;
+  }
+  .level-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    padding: 3px 10px;
+    margin-top: 6px;
+    border: 1px solid rgba(255,255,255,0.4);
+  }
+
+  /* SECTIONS */
+  .section { margin-bottom: 52px; animation: fadeUp 0.45s ease both; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .section:nth-child(2) { animation-delay: 0.05s; }
+  .section:nth-child(3) { animation-delay: 0.1s; }
+  .section:nth-child(4) { animation-delay: 0.15s; }
+  .section:nth-child(5) { animation-delay: 0.2s; }
+  .section:nth-child(6) { animation-delay: 0.25s; }
+  .section:nth-child(7) { animation-delay: 0.3s; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    margin-bottom: 5px;
+  }
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.85rem;
+    letter-spacing: 0.06em;
+    color: var(--text);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 24px;
+  }
+
+  /* TEXTE */
+  .reading-text {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 28px 32px;
+    font-size: 1.04rem;
+    line-height: 2;
+    font-style: italic;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  }
+  .reading-text mark {
+    background: #ffeedd;
+    color: var(--accent);
+    font-style: normal;
+    font-weight: 600;
+    padding: 0 2px;
+  }
+  .comprehension-q {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-style: normal;
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  .comprehension-q strong { color: var(--text); display: block; margin-bottom: 10px; font-weight: 600; }
+  .comprehension-q ol { padding-left: 20px; }
+  .comprehension-q li { margin-bottom: 7px; }
+
+  /* VOCAB */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 14px; }
+  .vocab-block { background: var(--surface); border: 1px solid var(--border); padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .vocab-block-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.67rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--accent2);
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 10px;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .vocab-item { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px dashed var(--border); font-size: 0.91rem; gap: 8px; }
+  .vocab-item:last-child { border-bottom: none; }
+  .vocab-fr { font-weight: 500; }
+  .vocab-en { color: var(--muted); font-size: 0.81rem; font-style: italic; text-align: right; flex-shrink: 0; }
+
+  /* GRAMMAR */
+  .grammar-block { background: var(--surface); border: 1px solid var(--border); padding: 22px 26px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+  .grammar-block-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.08em; color: var(--accent3); margin-bottom: 14px; }
+  .structure { background: #e8f0fb; border-left: 3px solid var(--accent3); padding: 9px 14px; margin: 10px 0; font-family: 'DM Mono', monospace; font-size: 0.86rem; }
+  .example-list { margin: 10px 0 0; list-style: none; }
+  .example-list li { padding: 4px 0; font-size: 0.92rem; display: flex; align-items: baseline; gap: 8px; }
+  .example-list li::before { content: '→'; color: var(--accent); font-size: 0.78rem; flex-shrink: 0; }
+  .b1-tag { background: var(--accent2); color: white; font-family: 'DM Mono', monospace; font-size: 0.58rem; padding: 2px 6px; letter-spacing: 0.1em; vertical-align: middle; margin-left: 6px; border-radius: 2px; }
+
+  /* EXERCISE BLOCKS */
+  .exercise-block { background: var(--surface); border: 1px solid var(--border); padding: 26px 28px; margin-bottom: 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .exercise-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
+  .ex-num { background: var(--accent); color: #fff; font-family: 'DM Mono', monospace; font-size: 0.72rem; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; border-radius: 2px; }
+  .exercise-instruction { font-size: 0.875rem; color: var(--muted); margin-bottom: 20px; font-style: italic; }
+
+  /* Fill-in with input boxes */
+  .fill-item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 0.94rem; flex-wrap: wrap; }
+  .fill-item:last-of-type { border-bottom: none; }
+  .fill-num { color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.78rem; width: 22px; flex-shrink: 0; }
+  .fill-text { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; line-height: 2; flex: 1; }
+
+  input.answer-input {
+    display: inline-block;
+    min-width: 130px;
+    border: none;
+    border-bottom: 2px solid var(--input-border);
+    background: var(--input-bg);
+    padding: 3px 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    vertical-align: baseline;
+    border-radius: 2px 2px 0 0;
+  }
+  input.answer-input:focus { border-bottom-color: var(--accent); background: #fff8f3; }
+  input.answer-input.wide { min-width: 220px; }
+  input.answer-input.medium { min-width: 150px; }
+
+  /* Free writing items */
+  .free-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .free-item:last-of-type { border-bottom: none; }
+  .free-label { color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.78rem; width: 22px; flex-shrink: 0; padding-top: 10px; }
+  .free-content { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .free-prompt { font-size: 0.92rem; font-weight: 500; }
+  textarea.free-input {
+    width: 100%;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    border-radius: 3px;
+    padding: 8px 10px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text);
+    resize: vertical;
+    min-height: 52px;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    line-height: 1.5;
+  }
+  textarea.free-input:focus { border-color: var(--accent); background: #fff8f3; }
+
+  /* Answers */
+  .reveal-btn {
+    background: none;
+    border: 1px solid var(--border2);
+    color: var(--muted);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 8px 16px;
+    cursor: pointer;
+    margin-top: 18px;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .reveal-btn:hover { border-color: var(--accent); color: var(--accent); background: #fff4ee; }
+  .answer-hidden { display: none; }
+  .answer-box {
+    margin-top: 14px;
+    background: #f0faf7;
+    border: 1px solid #b5d9d0;
+    border-left: 3px solid var(--correct);
+    padding: 18px 22px;
+    animation: slideDown 0.25s ease;
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .answer-box-title { font-family: 'DM Mono', monospace; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--correct); margin-bottom: 12px; font-weight: 500; }
+  .answer-item { display: flex; gap: 12px; padding: 5px 0; font-size: 0.91rem; align-items: baseline; border-bottom: 1px dashed #c5e4dc; }
+  .answer-item:last-child { border-bottom: none; }
+  .answer-num { color: var(--correct); font-family: 'DM Mono', monospace; font-size: 0.76rem; width: 20px; flex-shrink: 0; }
+  .answer-text { font-weight: 500; }
+
+  /* DIALOGUE */
+  .dialogue-wrapper { background: var(--surface); border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; }
+  .dialogue-header { background: var(--accent3); padding: 14px 24px; display: flex; align-items: center; gap: 12px; }
+  .dialogue-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.08em; color: white; }
+  .dialogue-header-sub { font-family: 'DM Mono', monospace; font-size: 0.63rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; margin-left: auto; }
+  .dialogue-scene { background: #edf2fb; padding: 10px 24px; font-size: 0.82rem; color: var(--accent3); font-style: italic; font-family: 'DM Mono', monospace; border-bottom: 1px solid var(--border); }
+  .dialogue-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+
+  .dialogue-line { display: flex; gap: 12px; align-items: flex-start; }
+  .speaker { font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; width: 52px; flex-shrink: 0; padding-top: 10px; }
+  .speaker.paul { color: var(--accent); }
+  .speaker.alex { color: var(--accent3); }
+  .bubble {
+    flex: 1;
+    background: #f7f5f1;
+    border: 1px solid var(--border);
+    padding: 10px 14px;
+    font-size: 0.93rem;
+    line-height: 1.9;
+    border-radius: 0 6px 6px 6px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 3px;
+  }
+  .alex-bubble {
+    background: #eef3fc;
+    border-color: #c5d5ee;
+    border-radius: 6px 0 6px 6px;
+  }
+
+  input.dialogue-input {
+    display: inline-block;
+    min-width: 110px;
+    border: none;
+    border-bottom: 2px solid var(--input-border);
+    background: rgba(255,255,255,0.6);
+    padding: 2px 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.93rem;
+    color: var(--text);
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+    vertical-align: baseline;
+    border-radius: 2px 2px 0 0;
+  }
+  input.dialogue-input:focus { border-bottom-color: var(--accent); background: #fffaf6; }
+  input.dialogue-input.wide { min-width: 160px; }
+
+  .word-bank { background: #fffbf5; border: 1px dashed var(--border2); padding: 14px 20px; margin: 0 24px 0; }
+  .word-bank-title { font-family: 'DM Mono', monospace; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 10px; }
+  .word-chip { display: inline-block; background: white; border: 1px solid var(--border2); padding: 2px 10px; margin: 2px 3px; font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text); }
+  .dialogue-actions { padding: 16px 24px 20px; border-top: 1px solid var(--border); margin-top: 20px; }
+
+  /* MINI PROJET */
+  .project-card { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--accent2); padding: 28px 32px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .project-prompt-text { font-size: 1rem; margin-bottom: 22px; }
+  .project-prompts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; }
+  .project-prompt-item { background: var(--surface2); border: 1px solid var(--border); padding: 16px; font-size: 0.87rem; display: flex; flex-direction: column; gap: 4px; }
+  .prompt-emoji { font-size: 1.3rem; margin-bottom: 5px; }
+  .prompt-label { font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+  .prompt-hint { color: var(--muted); font-size: 0.81rem; font-style: italic; }
+
+  /* ANNONCE */
+  .annonce-card {
+    margin-top: 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    overflow: hidden;
+  }
+  .annonce-header {
+    background: #1c1914;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+  }
+  .annonce-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .annonce-tag {
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 3px 10px;
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+  .annonce-site {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .annonce-band-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.45rem;
+    letter-spacing: 0.06em;
+    color: white;
+  }
+  .annonce-body {
+    padding: 24px 28px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: start;
+  }
+  .annonce-main {}
+  .annonce-poste {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff4ee;
+    border: 1px solid #f0cdb8;
+    padding: 4px 12px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    font-weight: 500;
+    margin-bottom: 14px;
+  }
+  .annonce-text {
+    font-size: 0.95rem;
+    line-height: 1.8;
+    color: var(--text);
+    margin-bottom: 18px;
+  }
+  .annonce-text mark {
+    background: #ffeedd;
+    color: var(--accent);
+    font-weight: 600;
+    padding: 0 2px;
+  }
+  .annonce-details {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  .annonce-detail-row {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-size: 0.87rem;
+  }
+  .detail-icon { font-size: 0.9rem; flex-shrink: 0; }
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    width: 80px;
+    flex-shrink: 0;
+  }
+  .detail-value { color: var(--text); font-weight: 500; }
+  .annonce-sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    min-width: 140px;
+  }
+  .annonce-avatar {
+    width: 80px;
+    height: 80px;
+    background: #f0ede5;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+  .annonce-contact {
+    background: var(--accent);
+    color: white;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 8px 16px;
+    cursor: default;
+    text-align: center;
+    width: 100%;
+  }
+  .annonce-date {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .annonce-footer-bar {
+    background: var(--surface2);
+    border-top: 1px solid var(--border);
+    padding: 10px 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .annonce-genre-chip {
+    display: inline-block;
+    background: #1c1914;
+    color: #fff;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    padding: 3px 10px;
+    letter-spacing: 0.08em;
+  }
+  .annonce-footer-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-right: 4px;
+  }
+  @media (max-width: 580px) {
+    .annonce-body { grid-template-columns: 1fr; }
+    .annonce-sidebar { flex-direction: row; justify-content: flex-start; min-width: auto; }
+    .annonce-avatar { width: 56px; height: 56px; font-size: 1.4rem; }
+    .annonce-contact { width: auto; }
+  }
+
+  /* FOOTER */
+  .footer { margin-top: 60px; padding-top: 18px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+
+  /* PRINT BTN */
+  .print-btn {
+    position: fixed; bottom: 26px; right: 26px;
+    background: var(--accent); color: white; border: none;
+    font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    padding: 11px 18px; cursor: pointer;
+    box-shadow: 0 4px 18px rgba(181,71,14,0.3);
+    transition: transform 0.15s, box-shadow 0.15s;
+    z-index: 100;
+  }
+  .print-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(181,71,14,0.4); }
+
+  @media (max-width: 620px) {
+    .page { padding: 24px 16px 60px; }
+    .header { grid-template-columns: 1fr; padding: 24px 20px; }
+    .header-meta { text-align: left; }
+    .vocab-grid { grid-template-columns: 1fr 1fr; }
+    .project-prompts-grid { grid-template-columns: 1fr 1fr; }
+    .print-btn { display: none; }
+    input.answer-input.wide { min-width: 150px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div>
+      <div class="header-title">🎸 Musique &amp; <span>Matériel</span></div>
+    </div>
+    <div class="header-meta">
+      Cours de français<br>
+      Thème : Rock / Studio<br>
+      <span class="level-badge">A2 · B1</span>
+    </div>
+  </header>
+
+  <!-- 1. TEXTE -->
+  <section class="section">
+    <div class="section-label">Section 01</div>
+    <div class="section-title">Texte — Lecture &amp; Compréhension</div>
+    <div class="reading-text">
+      Je joue de la <mark>guitare électrique</mark> depuis plusieurs années. Au début, je jouais seul dans ma chambre, mais maintenant je veux <mark>intégrer un groupe</mark> à Bruxelles. J'utilise un <mark>ampli</mark> et quelques <mark>pédales d'effet</mark>, comme une distortion et une reverb. J'aime les sons clairs, mais parfois je préfère un son plus <mark>saturé</mark>, surtout quand je joue du rock.
+      <br><br>
+      La guitare est plus facile pour moi que la basse, parce que les <mark>cordes</mark> sont moins épaisses et que le manche est plus léger. Pendant les répétitions, je <mark>règle le volume</mark> et les aigus pour avoir un bon son. Je branche toujours ma guitare avant de vérifier l'ampli. J'aimerais rencontrer d'autres musiciens, faire des <mark>répétitions régulières</mark> et, pourquoi pas, organiser des concerts dans des petites salles de la ville.
+
+      <div class="comprehension-q">
+        <strong>🔍 Questions de compréhension</strong>
+        <ol>
+          <li>Depuis combien de temps est-ce qu'il joue de la guitare ?</li>
+          <li>Quelles pédales est-ce qu'il utilise ?</li>
+          <li>Pourquoi est-ce que la guitare est plus facile pour lui que la basse ?</li>
+          <li>Quel est son objectif final ?</li>
+        </ol>
+      </div>
+
+      <!-- ANNONCE -->
+      <div class="annonce-card">
+        <div class="annonce-header">
+          <div class="annonce-header-left">
+            <span class="annonce-tag">📢 Annonce</span>
+            <span class="annonce-band-name">Les Volts Suspendus</span>
+          </div>
+          <span class="annonce-site">musiciens.be</span>
+        </div>
+
+        <div class="annonce-body">
+          <div class="annonce-main">
+            <div class="annonce-poste">🎸 Recherche : guitariste ou bassiste</div>
+            <p class="annonce-text">
+              Nous sommes un groupe de <mark>rock alternatif</mark> basé à <mark>Bruxelles</mark>. Nous jouons ensemble depuis deux ans et nous cherchons un <mark>guitariste</mark> ou un <mark>bassiste</mark> pour compléter notre formation.<br><br>
+              Nous faisons des <mark>répétitions</mark> tous les jeudis soir dans une salle équipée — <mark>amplis</mark> et <mark>câbles</mark> fournis. Nous avons déjà joué dans plusieurs petites salles de la ville et nous préparons un <mark>concert</mark> pour le printemps.<br><br>
+              Tu dois savoir <mark>accorder</mark> ton instrument et avoir ton propre matériel (guitare ou basse). Tu devrais avoir de l'expérience avec les <mark>pédales d'effet</mark>, mais ce n'est pas obligatoire. On préfère quelqu'un de motivé avec un bon son — <mark>clair</mark> ou <mark>saturé</mark>, on est ouverts !
+            </p>
+            <div class="annonce-details">
+              <div class="annonce-detail-row">
+                <span class="detail-icon">📍</span>
+                <span class="detail-label">Lieu</span>
+                <span class="detail-value">Bruxelles (Ixelles)</span>
+              </div>
+              <div class="annonce-detail-row">
+                <span class="detail-icon">🎵</span>
+                <span class="detail-label">Style</span>
+                <span class="detail-value">Rock alternatif, indie, un peu de grunge</span>
+              </div>
+              <div class="annonce-detail-row">
+                <span class="detail-icon">📅</span>
+                <span class="detail-label">Répet.</span>
+                <span class="detail-value">Jeudi soir, 19h–21h</span>
+              </div>
+              <div class="annonce-detail-row">
+                <span class="detail-icon">📧</span>
+                <span class="detail-label">Contact</span>
+                <span class="detail-value">volts.suspendus@mail.be</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="annonce-sidebar">
+            <div class="annonce-avatar">🎙️</div>
+            <div class="annonce-contact">Contacter le groupe</div>
+            <div class="annonce-date">Publiée le 14 mars 2025</div>
+          </div>
+        </div>
+
+        <div class="annonce-footer-bar">
+          <span class="annonce-footer-label">Genres :</span>
+          <span class="annonce-genre-chip">Rock</span>
+          <span class="annonce-genre-chip">Indie</span>
+          <span class="annonce-genre-chip">Grunge</span>
+          <span class="annonce-genre-chip">Alternatif</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 2. VOCABULAIRE -->
+  <section class="section">
+    <div class="section-label">Section 02</div>
+    <div class="section-title">Vocabulaire</div>
+    <div class="vocab-grid">
+      <div class="vocab-block">
+        <div class="vocab-block-title"><span>🎸</span> Instrument</div>
+        <div class="vocab-item"><span class="vocab-fr">une guitare</span><span class="vocab-en">guitar</span></div>
+        <div class="vocab-item"><span class="vocab-fr">une basse</span><span class="vocab-en">bass guitar</span></div>
+        <div class="vocab-item"><span class="vocab-fr">les cordes</span><span class="vocab-en">strings</span></div>
+        <div class="vocab-item"><span class="vocab-fr">le manche</span><span class="vocab-en">neck</span></div>
+        <div class="vocab-item"><span class="vocab-fr">les frettes</span><span class="vocab-en">frets</span></div>
+        <div class="vocab-item"><span class="vocab-fr">le micro</span><span class="vocab-en">pickup</span></div>
+        <div class="vocab-item"><span class="vocab-fr">accorder</span><span class="vocab-en">to tune</span></div>
+      </div>
+      <div class="vocab-block">
+        <div class="vocab-block-title"><span>⚡</span> Matériel</div>
+        <div class="vocab-item"><span class="vocab-fr">un ampli</span><span class="vocab-en">amp</span></div>
+        <div class="vocab-item"><span class="vocab-fr">brancher</span><span class="vocab-en">to plug in</span></div>
+        <div class="vocab-item"><span class="vocab-fr">régler</span><span class="vocab-en">to adjust</span></div>
+        <div class="vocab-item"><span class="vocab-fr">le volume</span><span class="vocab-en">volume</span></div>
+        <div class="vocab-item"><span class="vocab-fr">les aigus</span><span class="vocab-en">treble</span></div>
+        <div class="vocab-item"><span class="vocab-fr">les graves</span><span class="vocab-en">bass (EQ)</span></div>
+        <div class="vocab-item"><span class="vocab-fr">un câble</span><span class="vocab-en">cable / lead</span></div>
+      </div>
+      <div class="vocab-block">
+        <div class="vocab-block-title"><span>🎚️</span> Effets</div>
+        <div class="vocab-item"><span class="vocab-fr">une pédale</span><span class="vocab-en">pedal</span></div>
+        <div class="vocab-item"><span class="vocab-fr">distortion</span><span class="vocab-en">distortion</span></div>
+        <div class="vocab-item"><span class="vocab-fr">reverb</span><span class="vocab-en">reverb</span></div>
+        <div class="vocab-item"><span class="vocab-fr">delay</span><span class="vocab-en">delay</span></div>
+        <div class="vocab-item"><span class="vocab-fr">chorus</span><span class="vocab-en">chorus</span></div>
+        <div class="vocab-item"><span class="vocab-fr">activer</span><span class="vocab-en">to switch on</span></div>
+        <div class="vocab-item"><span class="vocab-fr">couper</span><span class="vocab-en">to cut / bypass</span></div>
+      </div>
+      <div class="vocab-block">
+        <div class="vocab-block-title"><span>🎧</span> Son &amp; Qualité</div>
+        <div class="vocab-item"><span class="vocab-fr">clair</span><span class="vocab-en">clean</span></div>
+        <div class="vocab-item"><span class="vocab-fr">saturé</span><span class="vocab-en">distorted / dirty</span></div>
+        <div class="vocab-item"><span class="vocab-fr">puissant</span><span class="vocab-en">powerful</span></div>
+        <div class="vocab-item"><span class="vocab-fr">grave</span><span class="vocab-en">low / deep</span></div>
+        <div class="vocab-item"><span class="vocab-fr">aigu</span><span class="vocab-en">high / sharp</span></div>
+        <div class="vocab-item"><span class="vocab-fr">trop fort</span><span class="vocab-en">too loud</span></div>
+        <div class="vocab-item"><span class="vocab-fr">une répétition</span><span class="vocab-en">rehearsal</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. GRAMMAIRE -->
+  <section class="section">
+    <div class="section-label">Section 03</div>
+    <div class="section-title">Point de Grammaire</div>
+    <div class="grammar-block">
+      <div class="grammar-block-title">Exprimer une préférence</div>
+      <div class="structure">Je préfère + nom / infinitif</div>
+      <ul class="example-list">
+        <li>Je préfère la guitare à la basse.</li>
+        <li>Je préfère jouer seul le soir.</li>
+        <li>Je préfère un son clair pour la pop.</li>
+      </ul>
+      <div class="structure" style="margin-top:14px">Comparaison : plus / moins / aussi … que</div>
+      <ul class="example-list">
+        <li>La guitare est <strong>plus facile</strong> que la basse.</li>
+        <li>Les cordes sont <strong>moins épaisses</strong> sur la guitare.</li>
+        <li>Le son de la reverb est <strong>aussi doux</strong> que celui du delay.</li>
+      </ul>
+    </div>
+    <div class="grammar-block">
+      <div class="grammar-block-title">Donner un conseil</div>
+      <div class="structure">Tu dois / Il faut + infinitif</div>
+      <ul class="example-list">
+        <li>Tu dois accorder la guitare avant de jouer.</li>
+        <li>Il faut régler l'ampli correctement.</li>
+        <li>Il faut brancher le câble en premier.</li>
+      </ul>
+      <div class="structure" style="margin-top:14px">Tu devrais + infinitif <span class="b1-tag">B1</span></div>
+      <ul class="example-list">
+        <li>Tu devrais changer les cordes — elles sont vieilles.</li>
+        <li>Tu devrais essayer une pédale de chorus.</li>
+        <li>Tu devrais baisser les aigus, c'est trop strident.</li>
+      </ul>
+    </div>
+    <div class="grammar-block">
+      <div class="grammar-block-title">Exprimer la durée <span class="b1-tag">B1</span></div>
+      <div class="structure">Je joue depuis + durée / date</div>
+      <ul class="example-list">
+        <li>Je joue depuis deux ans.</li>
+        <li>Je joue depuis l'âge de quinze ans.</li>
+        <li>Je répète avec le groupe depuis le mois de janvier.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 4. EXERCICES -->
+  <section class="section">
+    <div class="section-label">Section 04</div>
+    <div class="section-title">Exercices</div>
+
+    <!-- EX 1 -->
+    <div class="exercise-block">
+      <div class="exercise-title"><span class="ex-num">1</span> Complète les phrases avec le bon mot</div>
+      <div class="exercise-instruction">Utilise les mots du vocabulaire ci-dessus.</div>
+      <div class="fill-item">
+        <span class="fill-num">1.</span>
+        <div class="fill-text"><span>Je joue de la </span><input type="text" class="answer-input medium" placeholder="…"><span> électrique depuis trois ans.</span></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">2.</span>
+        <div class="fill-text"><span>J'utilise un </span><input type="text" class="answer-input medium" placeholder="…"><span> pour amplifier le son.</span></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">3.</span>
+        <div class="fill-text"><span>Les </span><input type="text" class="answer-input medium" placeholder="…"><span> de la basse sont plus épaisses.</span></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">4.</span>
+        <div class="fill-text"><span>Je règle le </span><input type="text" class="answer-input medium" placeholder="…"><span> et les aigus avant de jouer.</span></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">5.</span>
+        <div class="fill-text"><span>J'active ma pédale de </span><input type="text" class="answer-input medium" placeholder="…"><span> pour les solos.</span></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">6.</span>
+        <div class="fill-text"><span>Il faut </span><input type="text" class="answer-input medium" placeholder="…"><span> la guitare avant chaque répétition.</span></div>
+      </div>
+      <button class="reveal-btn" onclick="toggleAnswer(this)"><span>👁</span> Afficher les réponses</button>
+      <div class="answer-hidden answer-box">
+        <div class="answer-box-title">✓ Réponses — Exercice 1</div>
+        <div class="answer-item"><span class="answer-num">1.</span><span class="answer-text">guitare</span></div>
+        <div class="answer-item"><span class="answer-num">2.</span><span class="answer-text">ampli</span></div>
+        <div class="answer-item"><span class="answer-num">3.</span><span class="answer-text">cordes</span></div>
+        <div class="answer-item"><span class="answer-num">4.</span><span class="answer-text">volume</span></div>
+        <div class="answer-item"><span class="answer-num">5.</span><span class="answer-text">distortion</span></div>
+        <div class="answer-item"><span class="answer-num">6.</span><span class="answer-text">accorder</span></div>
+      </div>
+    </div>
+
+    <!-- EX 2 -->
+    <div class="exercise-block">
+      <div class="exercise-title"><span class="ex-num">2</span> Traduction — Anglais → Français</div>
+      <div class="exercise-instruction">Traduis ces phrases en français.</div>
+      <div class="fill-item">
+        <span class="fill-num">1.</span>
+        <div class="fill-text"><span>I plug in my guitar → </span><input type="text" class="answer-input wide" placeholder="…"></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">2.</span>
+        <div class="fill-text"><span>The sound is too loud → </span><input type="text" class="answer-input wide" placeholder="…"></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">3.</span>
+        <div class="fill-text"><span>I prefer a clean sound → </span><input type="text" class="answer-input wide" placeholder="…"></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">4.</span>
+        <div class="fill-text"><span>You should change the strings → </span><input type="text" class="answer-input wide" placeholder="…"></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">5.</span>
+        <div class="fill-text"><span>I have been playing for two years → </span><input type="text" class="answer-input wide" placeholder="…"></div>
+      </div>
+      <button class="reveal-btn" onclick="toggleAnswer(this)"><span>👁</span> Afficher les réponses</button>
+      <div class="answer-hidden answer-box">
+        <div class="answer-box-title">✓ Réponses — Exercice 2</div>
+        <div class="answer-item"><span class="answer-num">1.</span><span class="answer-text">Je branche ma guitare.</span></div>
+        <div class="answer-item"><span class="answer-num">2.</span><span class="answer-text">Le son est trop fort.</span></div>
+        <div class="answer-item"><span class="answer-num">3.</span><span class="answer-text">Je préfère un son clair.</span></div>
+        <div class="answer-item"><span class="answer-num">4.</span><span class="answer-text">Tu devrais changer les cordes.</span></div>
+        <div class="answer-item"><span class="answer-num">5.</span><span class="answer-text">Je joue depuis deux ans.</span></div>
+      </div>
+    </div>
+
+    <!-- EX 3 -->
+    <div class="exercise-block">
+      <div class="exercise-title"><span class="ex-num">3</span> Parler de soi — Production libre</div>
+      <div class="exercise-instruction">Complète ces phrases avec tes propres idées. Écris des phrases complètes.</div>
+      <div class="free-item">
+        <span class="free-label">1.</span>
+        <div class="free-content">
+          <span class="free-prompt">Je joue de… depuis…</span>
+          <textarea class="free-input" placeholder="Écris ta réponse ici…" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="free-item">
+        <span class="free-label">2.</span>
+        <div class="free-content">
+          <span class="free-prompt">Je préfère…</span>
+          <textarea class="free-input" placeholder="Écris ta réponse ici…" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="free-item">
+        <span class="free-label">3.</span>
+        <div class="free-content">
+          <span class="free-prompt">J'utilise… pour jouer.</span>
+          <textarea class="free-input" placeholder="Écris ta réponse ici…" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="free-item">
+        <span class="free-label">4.</span>
+        <div class="free-content">
+          <span class="free-prompt">Mon son est…</span>
+          <textarea class="free-input" placeholder="Écris ta réponse ici…" rows="2"></textarea>
+        </div>
+      </div>
+      <div class="free-item">
+        <span class="free-label">5.</span>
+        <div class="free-content">
+          <span class="free-prompt">Mon objectif, c'est de…</span>
+          <textarea class="free-input" placeholder="Écris ta réponse ici…" rows="2"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- EX 4 -->
+    <div class="exercise-block">
+      <div class="exercise-title"><span class="ex-num">4</span> Donner un conseil — Complète les phrases</div>
+      <div class="exercise-instruction">Imagine que tu parles à un guitariste débutant.</div>
+      <div class="fill-item">
+        <span class="fill-num">1.</span>
+        <div class="fill-text"><span>Tu dois </span><input type="text" class="answer-input wide" placeholder="…"><span>.</span></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">2.</span>
+        <div class="fill-text"><span>Il faut </span><input type="text" class="answer-input wide" placeholder="…"><span>.</span></div>
+      </div>
+      <div class="fill-item">
+        <span class="fill-num">3.</span>
+        <div class="fill-text"><span>Tu devrais </span><input type="text" class="answer-input wide" placeholder="…"><span>. <span class="b1-tag">B1</span></span></div>
+      </div>
+      <button class="reveal-btn" onclick="toggleAnswer(this)"><span>👁</span> Voir des exemples</button>
+      <div class="answer-hidden answer-box">
+        <div class="answer-box-title">✓ Exemples possibles — Exercice 4</div>
+        <div class="answer-item"><span class="answer-num">1.</span><span class="answer-text">Tu dois accorder la guitare avant de jouer.</span></div>
+        <div class="answer-item"><span class="answer-num">2.</span><span class="answer-text">Il faut régler l'ampli correctement.</span></div>
+        <div class="answer-item"><span class="answer-num">3.</span><span class="answer-text">Tu devrais essayer une pédale de reverb.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. DIALOGUE À TROUS -->
+  <section class="section">
+    <div class="section-label">Section 05</div>
+    <div class="section-title">Dialogue à Trous</div>
+
+    <div class="dialogue-wrapper">
+      <div class="dialogue-header">
+        <div class="dialogue-header-title">💬 Première répétition</div>
+        <div class="dialogue-header-sub">Exercice 5 — Complète le dialogue</div>
+      </div>
+      <div class="dialogue-scene">📍 Paul arrive dans une salle de répétition à Bruxelles. Il rencontre Alex, le bassiste du groupe.</div>
+
+      <div class="dialogue-body">
+
+        <div class="dialogue-line">
+          <span class="speaker alex">Alex</span>
+          <div class="bubble alex-bubble">Salut ! Tu es Paul, le guitariste ? Tu joues depuis <input type="text" class="dialogue-input" placeholder="…"> ?</div>
+        </div>
+
+        <div class="dialogue-line">
+          <span class="speaker paul">Paul</span>
+          <div class="bubble">Oui, c'est moi ! Je joue depuis <input type="text" class="dialogue-input" placeholder="…"> ans. Et j'ai apporté mon <input type="text" class="dialogue-input" placeholder="…">.</div>
+        </div>
+
+        <div class="dialogue-line">
+          <span class="speaker alex">Alex</span>
+          <div class="bubble alex-bubble">Super. Tu dois d'abord <input type="text" class="dialogue-input wide" placeholder="…"> ta guitare — l'accordeur est là-bas.</div>
+        </div>
+
+        <div class="dialogue-line">
+          <span class="speaker paul">Paul</span>
+          <div class="bubble">D'accord. Est-ce que je peux <input type="text" class="dialogue-input" placeholder="…"> mon câble à cet ampli ?</div>
+        </div>
+
+        <div class="dialogue-line">
+          <span class="speaker alex">Alex</span>
+          <div class="bubble alex-bubble">Oui, mais attention — le <input type="text" class="dialogue-input" placeholder="…"> est peut-être trop fort. Tu devrais <input type="text" class="dialogue-input wide" placeholder="…"> d'abord.</div>
+        </div>
+
+        <div class="dialogue-line">
+          <span class="speaker paul">Paul</span>
+          <div class="bubble">OK ! Moi, je préfère un son <input type="text" class="dialogue-input" placeholder="…"> pour les répétitions — pas trop <input type="text" class="dialogue-input" placeholder="…">.</div>
+        </div>
+
+        <div class="dialogue-line">
+          <span class="speaker alex">Alex</span>
+          <div class="bubble alex-bubble">Bonne idée. On a aussi une pédale de <input type="text" class="dialogue-input" placeholder="…"> si tu veux plus de profondeur dans le son.</div>
+        </div>
+
+        <div class="dialogue-line">
+          <span class="speaker paul">Paul</span>
+          <div class="bubble">Génial ! Mon objectif, c'est de faire des <input type="text" class="dialogue-input wide" placeholder="…"> avec vous. J'espère qu'on va bien jouer ensemble !</div>
+        </div>
+
+      </div>
+
+      <div class="word-bank">
+        <div class="word-bank-title">📦 Banque de mots — utilise ces mots pour compléter le dialogue</div>
+        <span class="word-chip">accorder</span>
+        <span class="word-chip">ampli</span>
+        <span class="word-chip">brancher</span>
+        <span class="word-chip">clair</span>
+        <span class="word-chip">combien de temps</span>
+        <span class="word-chip">concerts</span>
+        <span class="word-chip">deux</span>
+        <span class="word-chip">régler le volume</span>
+        <span class="word-chip">reverb</span>
+        <span class="word-chip">saturé</span>
+        <span class="word-chip">volume</span>
+      </div>
+
+      <div class="dialogue-actions">
+        <button class="reveal-btn" onclick="toggleAnswer(this)"><span>👁</span> Afficher les réponses du dialogue</button>
+        <div class="answer-hidden answer-box">
+          <div class="answer-box-title">✓ Réponses — Dialogue à trous (Exercice 5)</div>
+          <div class="answer-item"><span class="answer-num">1.</span><span class="answer-text">Alex → « depuis <strong>combien de temps</strong> ? »</span></div>
+          <div class="answer-item"><span class="answer-num">2.</span><span class="answer-text">Paul → « depuis <strong>deux</strong> ans… mon <strong>ampli</strong> »</span></div>
+          <div class="answer-item"><span class="answer-num">3.</span><span class="answer-text">Alex → « Tu dois d'abord <strong>accorder</strong> ta guitare »</span></div>
+          <div class="answer-item"><span class="answer-num">4.</span><span class="answer-text">Paul → « Est-ce que je peux <strong>brancher</strong> mon câble ? »</span></div>
+          <div class="answer-item"><span class="answer-num">5.</span><span class="answer-text">Alex → « le <strong>volume</strong>… Tu devrais <strong>régler le volume</strong> »</span></div>
+          <div class="answer-item"><span class="answer-num">6.</span><span class="answer-text">Paul → « un son <strong>clair</strong>… pas trop <strong>saturé</strong> »</span></div>
+          <div class="answer-item"><span class="answer-num">7.</span><span class="answer-text">Alex → « une pédale de <strong>reverb</strong> »</span></div>
+          <div class="answer-item"><span class="answer-num">8.</span><span class="answer-text">Paul → « faire des <strong>concerts</strong> avec vous »</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. MINI PROJET -->
+  <section class="section">
+    <div class="section-label">Section 06</div>
+    <div class="section-title">Mini-Projet — Expression Orale</div>
+    <div class="project-card">
+      <p class="project-prompt-text">👉 Prépare une présentation de <strong>2 minutes</strong> sur ta vie de musicien. Utilise les structures de grammaire de cette fiche.</p>
+      <div class="project-prompts-grid">
+        <div class="project-prompt-item">
+          <span class="prompt-emoji">🎸</span>
+          <span class="prompt-label">Ton instrument</span>
+          <span class="prompt-hint">Lequel ? Depuis quand ? Pourquoi ?</span>
+        </div>
+        <div class="project-prompt-item">
+          <span class="prompt-emoji">🔊</span>
+          <span class="prompt-label">Ton matériel</span>
+          <span class="prompt-hint">Ampli, pédales, câbles…</span>
+        </div>
+        <div class="project-prompt-item">
+          <span class="prompt-emoji">🎛️</span>
+          <span class="prompt-label">Ton son</span>
+          <span class="prompt-hint">Clair ? Saturé ? Pourquoi ?</span>
+        </div>
+        <div class="project-prompt-item">
+          <span class="prompt-emoji">🎯</span>
+          <span class="prompt-label">Ton objectif</span>
+          <span class="prompt-hint">Groupe, concert, studio…</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <span>Cours de français — Thème musique</span>
+    <span>Niveau A2 / B1</span>
+  </footer>
+
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨 Imprimer</button>
+
+<script>
+  function toggleAnswer(btn) {
+    const box = btn.nextElementSibling;
+    const hidden = box.classList.contains('answer-hidden');
+    if (hidden) {
+      box.classList.remove('answer-hidden');
+      btn.innerHTML = '<span>🙈</span> Masquer les réponses';
+    } else {
+      box.classList.add('answer-hidden');
+      btn.innerHTML = '<span>👁</span> Afficher les réponses';
+    }
+  }
+</script>
+</body>
+</html>
