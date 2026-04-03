@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Automatisation Orale A2 – Logement & Téléphone – Édition VIVE</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FFF9F0;        /* fond crème clair */
+    --surface: #FFFFFF;
+    --card: #FFFFFF;
+    --accent: #FF5E7C;    /* rose vif */
+    --accent2: #FF8BA7;
+    --gold: #FFB347;      /* orange vif */
+    --green: #2DCD9F;     /* menthe pop */
+    --blue: #3B82F6;      /* bleu électrique */
+    --red: #FF5E7C;
+    --text: #1F2937;
+    --muted: #6B7280;
+    --border: #FDE2E4;    /* bordure très douce */
+    --shadow: 0 12px 30px rgba(0,0,0,0.05);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  /* HERO - vif et lumineux */
+  .hero {
+    background: linear-gradient(135deg, #FFE6EC 0%, #FFF0D4 100%);
+    border-bottom: 2px solid var(--accent);
+    padding: 60px 20px 50px;
+    text-align: center;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at 10% 20%, rgba(255,94,124,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-block;
+    background: #FFE6F0;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: 'Syne', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 5px 16px;
+    border-radius: 40px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 8px rgba(255,94,124,0.2);
+  }
+  .hero h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2rem, 6vw, 3.8rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+    color: #1F2937;
+  }
+  .hero h1 span { color: var(--accent); text-shadow: 0 2px 10px rgba(255,94,124,0.2); }
+  .hero-sub {
+    color: #4B5563;
+    font-size: 1.1rem;
+    max-width: 540px;
+    margin: 0 auto 30px;
+  }
+  .hero-tags {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+    margin-top: 20px;
+  }
+  .tag {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 40px;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    font-weight: 500;
+    box-shadow: var(--shadow);
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .section {
+    padding: 50px 20px;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .section-num {
+    width: 44px; height: 44px;
+    background: var(--accent);
+    color: white;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    box-shadow: 0 6px 0 #C73E5A;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1F2937;
+  }
+  .section-title span { color: var(--accent); }
+  .section-desc {
+    color: var(--muted);
+    font-size: 0.92rem;
+    margin-top: 4px;
+  }
+
+  /* PHRASE CARDS - blanc lumineux */
+  .phrase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  @media (max-width: 580px) { .phrase-grid { grid-template-columns: 1fr; } }
+  
+  .phrase-col-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 16px 12px;
+    background: #FFF5F7;
+    border-radius: 20px 20px 0 0;
+    margin-bottom: 0;
+  }
+  .phrase-col-title.ask { color: var(--blue); border-bottom: 2px solid var(--blue); }
+  .phrase-col-title.answer { color: var(--green); border-bottom: 2px solid var(--green); }
+
+  .phrase-col {
+    background: var(--surface);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid #FFE2E6;
+  }
+
+  .phrase-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid #FFEFF1;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+  }
+  .phrase-item:last-child { border-bottom: none; }
+  .phrase-item:hover { background: #FFF9FB; transform: translateX(4px); }
+  .phrase-item .num {
+    font-size: 0.7rem;
+    font-weight: 800;
+    color: var(--accent);
+    min-width: 22px;
+    padding-top: 3px;
+  }
+  .phrase-item .txt {
+    font-size: 0.96rem;
+    flex: 1;
+    font-weight: 500;
+    color: #1F2937;
+  }
+  .phrase-item .play-btn {
+    width: 32px; height: 32px;
+    border-radius: 40px;
+    border: none;
+    background: #FFF0F3;
+    color: var(--accent);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.8rem;
+    transition: all 0.2s;
+  }
+  .phrase-item .play-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: scale(1.05);
+  }
+  .phrase-item.speaking .play-btn {
+    background: var(--accent);
+    color: white;
+    animation: pulse 0.6s infinite alternate;
+  }
+  @keyframes pulse {
+    from { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,94,124,0.4); }
+    to { transform: scale(1.1); box-shadow: 0 0 0 8px rgba(255,94,124,0); }
+  }
+
+  /* DRILL - éclatant */
+  .drill-box {
+    background: var(--surface);
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .drill-header {
+    background: #FFF3F6;
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    border-bottom: 1px solid #FFE2E6;
+  }
+  .drill-header-left h3 {
+    font-family: 'Syne', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .drill-header-left p { color: #4B5563; font-size: 0.85rem; margin-top: 2px; }
+  .speed-indicator { display: flex; align-items: center; gap: 8px; background: white; padding: 5px 12px; border-radius: 60px; }
+  .speed-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); animation: blink 1s infinite; }
+  @keyframes blink { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+  
+  .drill-body { padding: 32px 28px; text-align: center; background: white; }
+  .drill-prompt-label { font-size: 0.75rem; font-weight: 800; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 12px; }
+  .drill-prompt {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 1.6rem);
+    font-weight: 700;
+    background: #FFFBF0;
+    border: 2px solid #FFE2E6;
+    border-radius: 28px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    color: #1F2937;
+    transition: all 0.2s;
+  }
+  .drill-prompt.flash { border-color: var(--accent); background: #FFF0F3; transform: scale(0.99); }
+  .drill-response { background: #EFFAF5; border: 1px solid #C0F0DF; border-radius: 24px; padding: 16px 20px; color: #1F7B5C; font-weight: 500; opacity: 0; transition: 0.3s; }
+  .drill-response.visible { opacity: 1; }
+  .timer-bar-wrap { background: #FFE2E6; border-radius: 30px; height: 6px; overflow: hidden; margin: 20px 0; }
+  .timer-bar { height: 100%; background: var(--accent); width: 100%; transition: none; }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 60px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  .btn-primary { background: var(--accent); color: white; box-shadow: 0 4px 8px rgba(255,94,124,0.3); }
+  .btn-primary:hover { background: #FF4B6B; transform: translateY(-2px); }
+  .btn-secondary { background: #F3F4F6; color: #1F2937; border: 1px solid #E5E7EB; }
+  .btn-secondary:hover { background: #E5E7EB; border-color: var(--accent); color: var(--accent); }
+  .btn-ghost { background: white; color: var(--muted); border: 1px solid #E5E7EB; }
+  .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* TRANSFORMATION */
+  .transform-grid { display: flex; flex-direction: column; gap: 14px; }
+  .transform-card {
+    background: white;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 36px 1fr;
+    align-items: center;
+    gap: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    border: 1px solid #FFE2E6;
+  }
+  .tc-left {
+    padding: 16px 20px;
+    font-size: 0.95rem;
+    background: #FFFBFB;
+    color: #374151;
+    border-right: 1px solid #FFE2E6;
+  }
+  .tc-left em { font-style: italic; font-weight: 500; color: var(--accent); }
+  .tc-arrow { font-size: 1.2rem; color: var(--gold); font-weight: bold; }
+  .tc-right {
+    padding: 16px 20px;
+    font-size: 0.95rem;
+    background: #F8FFF8;
+    font-weight: 600;
+    color: var(--green);
+    cursor: pointer;
+    border-left: 1px solid #FFE2E6;
+  }
+  .tc-right.hidden-ans { filter: blur(6px); transition: filter 0.2s; background: #F0FDF4; }
+  .tc-right.hidden-ans:hover { filter: blur(2px); }
+
+  /* DIALOGUE */
+  .dialogue-box {
+    background: white;
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .dialogue-line {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 22px;
+    border-bottom: 1px solid #FFF0F2;
+  }
+  .speaker-tag {
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 5px 14px;
+    border-radius: 40px;
+    min-width: 80px;
+    text-align: center;
+  }
+  .speaker-tag.a { background: #EFF6FF; color: var(--blue); border: 1px solid #BFDBFE; }
+  .speaker-tag.b { background: #ECFDF5; color: var(--green); border: 1px solid #A7F3D0; }
+  .dialogue-line .line-text { font-size: 0.96rem; flex: 1; font-weight: 500; }
+  .play-line-btn {
+    background: #FFF0F3;
+    border: none;
+    border-radius: 40px;
+    width: 34px; height: 34px;
+    color: var(--accent);
+    cursor: pointer;
+    transition: 0.2s;
+  }
+  .play-line-btn:hover { background: var(--accent); color: white; transform: scale(1.05); }
+
+  /* EXERCICES VIFS */
+  .exercise-card {
+    background: white;
+    border-radius: 28px;
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+    border: 1px solid #FFE8EB;
+  }
+  .ex-badge {
+    background: #FFF0D6;
+    color: var(--gold);
+    padding: 4px 14px;
+    border-radius: 40px;
+    font-weight: 800;
+  }
+  .choice-btn {
+    background: #F9FAFB;
+    border: 1px solid #E5E7EB;
+    border-radius: 60px;
+    padding: 12px 18px;
+    margin: 6px 0;
+    font-weight: 500;
+  }
+  .choice-btn.correct { background: #E0F9F0; border-color: var(--green); color: #0B5E42; }
+  .choice-btn.wrong { background: #FFECEE; border-color: var(--red); color: #B91C1C; }
+  .feedback { border-radius: 20px; padding: 14px; margin-top: 12px; }
+  .feedback.ok { background: #E0F9F0; color: #0B5E42; }
+  .feedback.err { background: #FFECEE; color: #B91C1C; }
+  .blank-input {
+    background: #FEFCE8;
+    border: 2px solid #FDE68A;
+    border-radius: 60px;
+    padding: 12px 18px;
+    width: 100%;
+    font-family: monospace;
+  }
+  .blank-input.correct { border-color: var(--green); background: #EFFAF5; }
+  .blank-input.wrong { border-color: var(--red); background: #FFECEE; }
+  .reveal-btn { background: #F3F4F6; border-radius: 60px; padding: 8px 20px; font-weight: 500; border: none; margin-top: 8px; }
+  .reveal-content { background: #FFFCF5; border-radius: 20px; padding: 16px; margin-top: 12px; border-left: 5px solid var(--gold); }
+
+  /* SCORE */
+  .score-display {
+    background: white;
+    border-radius: 40px;
+    padding: 16px 24px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: var(--shadow);
+  }
+  .score-num { font-family: 'Syne'; font-size: 2rem; font-weight: 800; color: var(--accent); }
+
+  /* VOCAB */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 14px;
+  }
+  .vocab-item {
+    background: white;
+    border-radius: 24px;
+    padding: 14px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: var(--shadow);
+  }
+  .vocab-word { font-weight: 800; color: var(--accent); }
+
+  /* SIMULATION */
+  .sim-card {
+    background: white;
+    border-radius: 32px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .sim-header {
+    background: linear-gradient(90deg, #FFF0F5 0%, #FFFFFF 100%);
+    padding: 20px 28px;
+  }
+  .sim-icon { background: var(--accent); border-radius: 20px; width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: white; }
+
+  .progress-bar-outer { position: fixed; top:0; left:0; width:100%; height: 5px; background: #FFE2E6; z-index: 200; }
+  .progress-bar-inner { height: 100%; background: var(--accent); width: 0%; }
+
+  .toc {
+    display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+    background: white; padding: 12px 20px; position: sticky; top: 0; z-index: 99;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    border-bottom: 1px solid #FFE2E6;
+  }
+  .toc a {
+    background: #FFF5F7;
+    padding: 6px 20px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 0.8rem;
+  }
+  .toc a:hover { background: var(--accent); color: white; }
+  footer { background: #FFF5F7; padding: 30px; text-align: center; color: #4B5563; border-top: 2px solid var(--accent); }
+  #score-total { position: fixed; bottom: 24px; right: 24px; background: var(--accent); padding: 10px 20px; border-radius: 60px; font-weight: bold; color: white; box-shadow: 0 8px 20px rgba(255,94,124,0.4); display: none; z-index: 200; }
+  #score-total.show { display: block; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar-outer"><div class="progress-bar-inner" id="progress-bar"></div></div>
+
+<header class="hero">
+  <div class="hero-badge">⚡ A2 Oral · Automatisation · Édition VIVE</div>
+  <h1>Parler <span>vite</span> et<br>naturellement</h1>
+  <p class="hero-sub">Logement, téléphone, informations — phrases claires, couleurs vives, réflexes immédiats.</p>
+  <div class="hero-tags"><span class="tag">🏠 Appartement</span><span class="tag">📞 Appel téléphonique</span><span class="tag">⚡ Réflexe oral</span><span class="tag">💬 A2</span></div>
+</header>
+
+<nav class="toc">
+  <a href="#bloc1">📋 Phrases clés</a><a href="#bloc2">⚡ Drill rapide</a><a href="#bloc3">🔄 Transformation</a>
+  <a href="#bloc4">🎭 Dialogue</a><a href="#bloc5">🧪 Exercices</a><a href="#bloc6">📚 Vocabulaire</a><a href="#bloc7">🎯 Simulation</a>
+</nav>
+
+<section class="section" id="bloc1"><div class="section-header"><div class="section-num">1</div><div><div class="section-title">Les <span>20 phrases</span> à automatiser</div><div class="section-desc">Cliquez sur 🔊 pour écouter. Répétez à voix haute.</div></div></div>
+  <div class="phrase-grid"><div class="phrase-col"><div class="phrase-col-title ask">🔵 Poser des questions</div><div id="questions-list"></div></div>
+  <div class="phrase-col"><div class="phrase-col-title answer">🟢 Répondre</div><div id="answers-list"></div></div></div>
+  <div style="margin-top:20px; display:flex; gap:12px;"><button class="btn btn-primary" onclick="speakAll('questions')">🔊 Toutes les questions</button><button class="btn btn-secondary" onclick="speakAll('answers')">🔊 Toutes les réponses</button></div>
+</section>
+
+<section class="section" id="bloc2"><div class="section-header"><div class="section-num">2</div><div><div class="section-title">Drill <span>ultra-rapide</span></div><div class="section-desc">Objectif : répondre en moins de 2 secondes ⚡</div></div></div>
+  <div class="drill-box"><div class="drill-header"><div><h3>Mode automatisation</h3><p>La phrase s'affiche → vous répondez → révélez la réponse</p></div><div class="speed-indicator"><div class="speed-dot"></div><span id="drill-counter">Paire <strong>0</strong> / 10</span></div></div>
+    <div class="drill-body"><div class="drill-prompt-label">📢 ON DIT :</div><div class="drill-prompt" id="drill-prompt">Appuyez sur Démarrer</div><div class="timer-bar-wrap"><div class="timer-bar" id="timer-bar"></div></div>
+    <div class="drill-response-wrap"><div class="drill-response-label">✅ RÉPONSE :</div><div class="drill-response" id="drill-response">—</div></div>
+    <div class="drill-controls"><button class="btn btn-primary" id="drill-start-btn" onclick="drillStart()">▶ Démarrer</button><button class="btn btn-secondary" id="drill-reveal-btn" onclick="drillReveal()" disabled>👁 Voir la réponse</button><button class="btn btn-ghost" id="drill-next-btn" onclick="drillNext()" disabled>→ Suivant</button></div></div></div>
+</section>
+
+<section class="section" id="bloc3"><div class="section-header"><div class="section-num">3</div><div><div class="section-title">Transformation <span>automatique</span></div><div class="section-desc">Affirmation ↔ Question. Cliquez pour révéler.</div></div></div>
+  <div class="transform-grid" id="transform-grid"></div><div style="margin-top:16px;"><button class="btn btn-secondary" onclick="revealAllTransforms()">👁 Tout révéler</button><button class="btn btn-ghost" onclick="hideAllTransforms()">🔒 Tout masquer</button></div>
+</section>
+
+<section class="section" id="bloc4"><div class="section-header"><div class="section-num">4</div><div><div class="section-title">Dialogue <span>ultra-rapide</span></div><div class="section-desc">Phrases courtes, lecture à voix haute.</div></div></div>
+  <div class="dialogue-box" id="dialogue-box"></div><div style="margin-top:16px;"><button class="btn btn-primary" onclick="playDialogue()">▶ Écouter tout le dialogue</button><button class="btn btn-secondary" onclick="stopSpeech()">⏹ Stop</button></div>
+</section>
+
+<section class="section" id="bloc5"><div class="section-header"><div class="section-num">5</div><div><div class="section-title">Exercices <span>TCF/TEF</span></div><div class="section-desc">6 exercices progressifs.</div></div></div>
+  <div class="score-display"><div class="score-icon">🎯</div><div><div class="score-label">Score total</div><div class="score-num"><span id="score-val">0</span> point(s)</div></div></div>
+  <div class="exercise-card"><div class="exercise-title"><span class="ex-badge">Exercice 1</span> Choisis la bonne question</div><div class="exercise-body">🏠 L'agent immobilier dit : <strong>« L'appartement est disponible à partir de lundi prochain. »</strong><br>❓ Quelle question est la plus pertinente ?</div><div class="choices" id="ex1-choices"></div><div class="feedback" id="ex1-fb"></div></div>
+  <div class="exercise-card"><div class="exercise-title"><span class="ex-badge">Exercice 2</span> Reformulation automatique</div><div class="exercise-body">🗣️ L'agent dit : <strong>« Les charges sont comprises dans le loyer. »</strong> Reformulez avec « Si je comprends bien… »</div><button class="reveal-btn" onclick="toggleReveal('ex2-reveal', this)">👁 Voir exemple</button><div class="reveal-content" id="ex2-reveal">✅ « Si je comprends bien, le loyer est tout inclus. »<br>✅ « Donc, concrètement, je ne paie rien en plus ? »</div></div>
+  <div class="exercise-card"><div class="exercise-title"><span class="ex-badge">Exercice 3</span> Corrige les erreurs</div><div id="ex3-list"></div><button class="btn btn-primary" style="margin-top:12px;" onclick="checkEx3()">✅ Corriger</button><div class="reveal-content" id="ex3-result"></div></div>
+  <div class="exercise-card"><div class="exercise-title"><span class="ex-badge">Exercice 4</span> Dialogue à compléter</div><div id="ex4-dialogue"></div><button class="reveal-btn" onclick="toggleReveal('ex4-reveal', this)">👁 Voir propositions</button><div class="reveal-content" id="ex4-reveal"><strong>Question 1 :</strong> « Quelle est la surface ? »<br><strong>Question 2 :</strong> « Est-ce qu'il est meublé ? »<br><strong>Question 3 :</strong> « Je peux le visiter ? »</div></div>
+  <div class="exercise-card"><div class="exercise-title"><span class="ex-badge">Exercice 5</span> Associe question/réponse</div><div id="ex5-match"></div><button class="btn btn-primary" onclick="checkEx5()">✅ Vérifier</button><div class="feedback" id="ex5-fb"></div></div>
+  <div class="exercise-card"><div class="exercise-title"><span class="ex-badge">Exercice 6</span> Mini simulation</div><div class="exercise-body">🎯 Vous appelez pour un appartement de 55 m², 900€/mois, meublé, libre dans 2 semaines. Posez au moins 4 questions.</div><button class="reveal-btn" onclick="toggleReveal('ex6-reveal', this)">👁 Voir exemple</button><div class="reveal-content" id="ex6-reveal"><em>« Il coûte combien par mois ? »<br>« Est-ce qu'il est meublé ? »<br>« Il est libre à partir de quand ? »<br>« Donc, concrètement, je peux emménager dans deux semaines ? »</em></div></div>
+</section>
+
+<section class="section" id="bloc6"><div class="section-header"><div class="section-num">6</div><div><div class="section-title">Vocabulaire <span>essentiel</span></div></div></div><div class="vocab-grid" id="vocab-grid"></div></section>
+
+<section class="section" id="bloc7"><div class="section-header"><div class="section-num">7</div><div><div class="section-title">Simulation <span>complète</span></div></div></div>
+  <div class="sim-card"><div class="sim-header"><div class="sim-icon">🎭</div><div><h3>Jeu de rôle TEF/TCF — Logement</h3><p>Étudiant = locataire · Professeur = agent</p></div></div>
+  <div class="sim-objectives" style="padding:20px;"><div class="sim-obj-title">✅ Objectifs</div><div class="sim-obj-list"><div class="sim-obj-item">Poser 10 questions de la liste</div><div class="sim-obj-item">Reformuler 3 réponses</div><div class="sim-obj-item">Répondre en moins de 2 secondes</div></div></div>
+  <div class="sim-example" style="padding:20px;"><div class="sim-bubble"><strong>– Bonjour, l'appartement est disponible ?</strong><br>– Oui.<br><strong>– Si je comprends bien, je peux le visiter demain ?</strong><br>– Exactement.</div></div></div>
+</section>
+<footer><strong>⚡ Automatisation orale A2</strong> · Logement & Téléphone · Prononcez à voix haute sans réfléchir 💬</footer>
+<div id="score-total">🎯 Score : <span id="score-total-val">0</span> pt</div>
+
+<script>
+// Données identiques à l'original mais ambiance couleurs vives
+const questions = ["Bonjour, je vous appelle pour l'appartement.","Est-ce qu'il est toujours disponible ?","Il est situé où exactement ?","Il fait combien de mètres carrés ?","Il coûte combien par mois ?","Est-ce qu'il est meublé ?","Est-ce qu'il y a des charges ?","On peut faire une visite ?","Il est libre à partir de quand ?","Je peux avoir l'adresse ?"];
+const answers = ["Oui, il est toujours disponible.","Il est situé près du centre.","Il fait 45 mètres carrés.","Il coûte 750 euros par mois.","Oui, il est meublé.","Les charges sont incluses.","Oui, vous pouvez visiter.","Il est libre à partir de lundi.","Je vous envoie l'adresse.","Pas de problème."];
+const drillPairs = [{q:"Bonjour, je vous appelle pour l'appartement.",a:"Oui, il est toujours disponible."},{q:"Il fait combien de mètres carrés ?",a:"Il fait 45 mètres carrés."},{q:"Il coûte combien par mois ?",a:"Il coûte 750 euros par mois."},{q:"Est-ce qu'il est meublé ?",a:"Oui, il est entièrement meublé."},{q:"Est-ce qu'il y a des charges ?",a:"Les charges sont incluses."},{q:"Il est situé où exactement ?",a:"Il est situé près du centre-ville."},{q:"On peut faire une visite ?",a:"Oui, je suis disponible demain."},{q:"Il est libre à partir de quand ?",a:"Il est libre à partir de lundi prochain."},{q:"Je peux avoir l'adresse ?",a:"Je vous envoie l'adresse par message."},{q:"Est-ce qu'il est toujours disponible ?",a:"Oui, il est toujours disponible."}];
+const transforms = [{from:"L'appartement est libre à partir de lundi.",to:"Il est libre à partir de quand ?"},{from:"Il coûte 800 euros par mois.",to:"Il coûte combien par mois ?"},{from:"Il est meublé.",to:"Est-ce qu'il est meublé ?"},{from:"Il y a des charges.",to:"Est-ce qu'il y a des charges ?"},{from:"Il fait 60 mètres carrés.",to:"Il fait combien de mètres carrés ?"},{from:"L'adresse est disponible.",to:"Je peux avoir l'adresse ?"},{from:"Vous pouvez visiter samedi.",to:"On peut faire une visite ?"},{from:"Il est situé près de la gare.",to:"Il est situé où exactement ?"}];
+const dialogue = [{speaker:"A",who:"Locataire",text:"Bonjour, je vous appelle pour l'appartement."},{speaker:"B",who:"Agent",text:"Oui, il est disponible."},{speaker:"A",who:"Locataire",text:"Il coûte combien ?"},{speaker:"B",who:"Agent",text:"800 euros charges comprises."},{speaker:"A",who:"Locataire",text:"Il est meublé ?"},{speaker:"B",who:"Agent",text:"Oui, entièrement."},{speaker:"A",who:"Locataire",text:"Il fait combien de mètres carrés ?"},{speaker:"B",who:"Agent",text:"45 mètres carrés."},{speaker:"A",who:"Locataire",text:"On peut faire une visite ?"},{speaker:"B",who:"Agent",text:"Oui, demain."},{speaker:"A",who:"Locataire",text:"Il est libre quand ?"},{speaker:"B",who:"Agent",text:"À partir de lundi."},{speaker:"A",who:"Locataire",text:"Je peux avoir l'adresse ?"},{speaker:"B",who:"Agent",text:"Bien sûr. Je vous envoie ça par SMS."}];
+const vocab = [{e:"🏠",w:"l'appartement",d:"logement"},{e:"📏",w:"les mètres carrés",d:"surface"},{e:"💰",w:"le loyer",d:"prix mensuel"},{e:"🪑",w:"meublé",d:"avec meubles"},{e:"⚡",w:"les charges",d:"eau/chauffage"},{e:"📅",w:"disponible",d:"libre"},{e:"🔑",w:"faire une visite",d:"voir"},{e:"📍",w:"situé",d:"localisation"}];
+const ex3Sentences = [{wrong:"Il coûte combien de euros ?",correct:"Il coûte combien d'euros ?"},{wrong:"Est-ce qu'il y a un charge ?",correct:"Est-ce qu'il y a des charges ?"},{wrong:"Je voudrais savoir est-ce qu'il est meublé ?",correct:"Je voudrais savoir s'il est meublé."},{wrong:"L'appartement fait 45 mètre carré.",correct:"L'appartement fait 45 mètres carrés."}];
+const ex5Questions = ["Il coûte combien ?","Est-ce qu'il est meublé ?","On peut faire une visite ?","Il est libre quand ?","Il y a des charges ?"];
+const ex5Answers = ["750 euros par mois.","Oui, entièrement meublé.","Oui, demain matin.","À partir de lundi.","Oui, elles sont incluses."];
+
+function renderPhrases(){
+  const ql=document.getElementById('questions-list'), al=document.getElementById('answers-list');
+  questions.forEach((q,i)=>{ ql.innerHTML+=`<div class="phrase-item" id="qi-${i}"><span class="num">${i+1}.</span><span class="txt">${q}</span><button class="play-btn" onclick="speakPhrase('${q.replace(/'/g,"\\'")}','qi-${i}')">🔊</button></div>`; });
+  answers.forEach((a,i)=>{ al.innerHTML+=`<div class="phrase-item" id="ai-${i}"><span class="num">${i+1}.</span><span class="txt">${a}</span><button class="play-btn" onclick="speakPhrase('${a.replace(/'/g,"\\'")}','ai-${i}')">🔊</button></div>`; });
+}
+function renderTransforms(){ const grid=document.getElementById('transform-grid'); transforms.forEach((t,i)=>{ grid.innerHTML+=`<div class="transform-card"><div class="tc-left"><em>${t.from}</em></div><div class="tc-arrow">→</div><div class="tc-right hidden-ans" id="tr-${i}" onclick="revealTransform(${i})">${t.to}</div></div>`; }); }
+function renderDialogue(){ const box=document.getElementById('dialogue-box'); dialogue.forEach((line,i)=>{ box.innerHTML+=`<div class="dialogue-line"><span class="speaker-tag ${line.speaker}">${line.who}</span><span class="line-text">${line.text}</span><button class="play-line-btn" onclick="speakPhrase('${line.text.replace(/'/g,"\\'")}',null)">🔊</button></div>`; }); }
+function renderVocab(){ const grid=document.getElementById('vocab-grid'); vocab.forEach(v=>{ grid.innerHTML+=`<div class="vocab-item"><div class="vocab-emoji">${v.e}</div><div><div class="vocab-word">${v.w}</div><div class="vocab-def">${v.d}</div></div></div>`; }); }
+function renderEx3(){ const cont=document.getElementById('ex3-list'); ex3Sentences.forEach((s,i)=>{ cont.innerHTML+=`<div style="margin-bottom:12px;"><div style="color:var(--red); font-size:0.85rem;">🐞 ${s.wrong}</div><input class="blank-input" id="ex3-${i}" placeholder="Corrigez..."></div>`; }); }
+function renderEx4(){ const cont=document.getElementById('ex4-dialogue'); const lines=[{type:'q',speaker:'A',who:'Locataire',id:'ex4-q1'},{type:'a',speaker:'B',who:'Agent',text:"Il fait 55 mètres carrés."},{type:'q',speaker:'A',who:'Locataire',id:'ex4-q2'},{type:'a',speaker:'B',who:'Agent',text:"Oui, il est entièrement meublé."},{type:'q',speaker:'A',who:'Locataire',id:'ex4-q3'},{type:'a',speaker:'B',who:'Agent',text:"Oui, je suis disponible samedi matin."}]; lines.forEach(l=>{ if(l.type==='a') cont.innerHTML+=`<div style="display:flex; gap:12px; padding:10px 0;"><span class="speaker-tag b">${l.who}</span><span style="color:var(--green);">${l.text}</span></div>`; else cont.innerHTML+=`<div style="display:flex; gap:12px; padding:10px 0;"><span class="speaker-tag a">${l.who}</span><input class="blank-input" id="${l.id}" placeholder="Votre question..."></div>`; }); }
+function renderEx5(){ const cont=document.getElementById('ex5-match'); let html='<div style="display:flex; flex-direction:column; gap:12px;">'; ex5Questions.forEach((q,i)=>{ let opts='<option value="">— choisissez —</option>'; ex5Answers.forEach((a,j)=>{ opts+=`<option value="${j}">${a}</option>`; }); html+=`<div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;"><div style="background:#F9FAFB; padding:10px 14px; border-radius:40px;">${q}</div><select id="ex5-sel-${i}" style="background:white; border-radius:40px; padding:10px; border:1px solid #E5E7EB;">${opts}</select></div>`; }); html+='</div>'; cont.innerHTML=html; }
+function renderEx1Choices(){ const cont=document.getElementById('ex1-choices'); cont.innerHTML=`<button class="choice-btn" onclick="checkChoice(this,'ex1',false,'ex1-fb')"><span class="choice-letter">A</span> Vous habitez dans cet immeuble ?</button><button class="choice-btn" onclick="checkChoice(this,'ex1',false,'ex1-fb')"><span class="choice-letter">B</span> C'est quoi votre numéro ?</button><button class="choice-btn" onclick="checkChoice(this,'ex1',true,'ex1-fb')"><span class="choice-letter">C</span> Il est libre exactement quel jour ?</button><button class="choice-btn" onclick="checkChoice(this,'ex1',false,'ex1-fb')"><span class="choice-letter">D</span> Est-ce qu'il y a un balcon ?</button>`; }
+
+let score=0,scored={};
+function addScore(id,pts){ if(scored[id])return; scored[id]=true; score+=pts; document.getElementById('score-val').innerText=score; document.getElementById('score-total-val').innerText=score; document.getElementById('score-total').classList.add('show'); }
+function checkChoice(btn,exId,isCorrect,fbId){ const fb=document.getElementById(fbId); const parent=btn.parentElement; const btns=parent.querySelectorAll('.choice-btn'); btns.forEach(b=>b.classList.add('disabled')); if(isCorrect){ btn.classList.add('correct'); fb.className='feedback show ok'; fb.innerText='✅ Exact !'; addScore(exId,1); } else{ btn.classList.add('wrong'); btns.forEach(b=>{ if(b.onclick?.toString().includes('true'))b.classList.add('correct'); }); fb.className='feedback show err'; fb.innerText='❌ Mauvaise réponse. La bonne est en vert.'; } }
+function toggleReveal(id,btn){ const el=document.getElementById(id); const shown=el.classList.contains('show'); el.classList.toggle('show'); btn.innerText=shown?'👁 Voir exemple':'🔒 Masquer'; }
+function checkEx3(){ let ok=0; ex3Sentences.forEach((s,i)=>{ const inp=document.getElementById('ex3-'+i); const val=inp.value.trim().toLowerCase(); const correct=s.correct.toLowerCase(); if(val===correct){ inp.className='blank-input correct'; ok++; } else inp.className='blank-input wrong'; }); document.getElementById('ex3-result').innerHTML=ok===4?'✅ Toutes les phrases sont correctes !':`✅ ${ok}/4 correctes.`; if(ok===4)addScore('ex3',2); }
+function checkEx5(){ let correct=0; ex5Questions.forEach((_,i)=>{ const sel=document.getElementById('ex5-sel-'+i); if(parseInt(sel.value)===i) correct++; }); const fb=document.getElementById('ex5-fb'); if(correct===5){ fb.className='feedback show ok'; fb.innerText='🎉 Parfait !'; addScore('ex5',2); } else{ fb.className='feedback show err'; fb.innerText=`${correct}/5 correct. Réessaie.`; } }
+
+let currentUtterance=null;
+function speakPhrase(text,itemId){ stopSpeech(); const u=new SpeechSynthesisUtterance(text); u.lang='fr-FR'; u.rate=0.9; if(itemId){ document.getElementById(itemId)?.classList.add('speaking'); u.onend=()=>document.getElementById(itemId)?.classList.remove('speaking'); } currentUtterance=u; speechSynthesis.speak(u); }
+function stopSpeech(){ if(speechSynthesis.speaking)speechSynthesis.cancel(); document.querySelectorAll('.speaking').forEach(el=>el.classList.remove('speaking')); }
+function speakAll(type){ stopSpeech(); const arr=type==='questions'?questions:answers; let i=0; function next(){ if(i>=arr.length)return; const u=new SpeechSynthesisUtterance(arr[i]); u.lang='fr-FR'; u.rate=0.9; const id=(type==='questions'?'qi-':'ai-')+i; document.getElementById(id)?.classList.add('speaking'); u.onend=()=>{ document.getElementById(id)?.classList.remove('speaking'); i++; next(); }; speechSynthesis.speak(u); } next(); }
+function playDialogue(){ stopSpeech(); let i=0; function step(){ if(i>=dialogue.length)return; const u=new SpeechSynthesisUtterance(dialogue[i].text); u.lang='fr-FR'; u.rate=0.9; u.onend=()=>{ i++; setTimeout(step,300); }; speechSynthesis.speak(u); } step(); }
+let drillIndex=-1,drillShuffled=[];
+function drillStart(){ drillShuffled=[...drillPairs].sort(()=>Math.random()-0.5); drillIndex=-1; drillNext(); }
+function drillNext(){ drillIndex++; if(drillIndex>=drillShuffled.length){ document.getElementById('drill-prompt').innerText='🎉 Terminé ! Bravo !'; document.getElementById('drill-response').classList.remove('visible'); document.getElementById('drill-reveal-btn').disabled=true; document.getElementById('drill-next-btn').disabled=true; return; } const pair=drillShuffled[drillIndex]; document.getElementById('drill-prompt').innerText=pair.q; document.getElementById('drill-prompt').classList.add('flash'); setTimeout(()=>document.getElementById('drill-prompt').classList.remove('flash'),200); document.getElementById('drill-response').innerText=pair.a; document.getElementById('drill-response').classList.remove('visible'); document.getElementById('drill-counter').innerHTML=`Paire <strong>${drillIndex+1}</strong> / ${drillShuffled.length}`; document.getElementById('drill-reveal-btn').disabled=false; document.getElementById('drill-next-btn').disabled=true; const bar=document.getElementById('timer-bar'); bar.style.transition='none'; bar.style.width='100%'; setTimeout(()=>{ bar.style.transition='width 2s linear'; bar.style.width='0%'; },20); speakPhrase(pair.q,null); }
+function drillReveal(){ document.getElementById('drill-response').classList.add('visible'); document.getElementById('drill-reveal-btn').disabled=true; document.getElementById('drill-next-btn').disabled=false; speakPhrase(drillShuffled[drillIndex].a,null); }
+function revealTransform(i){ document.getElementById('tr-'+i).classList.remove('hidden-ans'); }
+function revealAllTransforms(){ transforms.forEach((_,i)=>revealTransform(i)); }
+function hideAllTransforms(){ transforms.forEach((_,i)=>{ document.getElementById('tr-'+i).classList.add('hidden-ans'); }); }
+window.addEventListener('scroll',()=>{ const winScroll=document.body.scrollTop||document.documentElement.scrollTop; const height=document.documentElement.scrollHeight-document.documentElement.clientHeight; const scrolled=(winScroll/height)*100; document.getElementById('progress-bar').style.width=scrolled+'%'; });
+renderPhrases(); renderTransforms(); renderDialogue(); renderVocab(); renderEx3(); renderEx4(); renderEx5(); renderEx1Choices();
+</script>
+</body>
+</html>
