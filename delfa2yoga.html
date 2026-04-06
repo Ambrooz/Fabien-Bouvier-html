@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DELF A2 Oral – Coach interactif (Nouveaux sujets)</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1f35;
+  --blue: #2563eb;
+  --blue-light: #3b82f6;
+  --sky: #e0eeff;
+  --gold: #f59e0b;
+  --gold-light: #fef3c7;
+  --green: #059669;
+  --green-light: #d1fae5;
+  --red: #dc2626;
+  --red-light: #fee2e2;
+  --purple: #7c3aed;
+  --purple-light: #ede9fe;
+  --text: #0f172a;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --radius: 14px;
+  --shadow: 0 2px 20px rgba(15,31,53,0.08);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Sora', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; line-height: 1.6; }
+
+.hero { background: var(--navy); padding: 2.5rem 2rem 2rem; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse at 30% 50%, rgba(37,99,235,0.25) 0%, transparent 60%), radial-gradient(ellipse at 80% 30%, rgba(245,158,11,0.15) 0%, transparent 55%); pointer-events: none; }
+.hero-badge { display: inline-block; background: rgba(245,158,11,0.2); color: var(--gold); border: 1px solid rgba(245,158,11,0.4); border-radius: 40px; padding: 4px 16px; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem; }
+.hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); color: #fff; line-height: 1.15; margin-bottom: 0.5rem; }
+.hero h1 em { font-style: italic; color: #93c5fd; }
+.hero p { color: #94a3b8; font-size: 0.9rem; font-weight: 300; }
+.progress-strip { display: flex; justify-content: center; gap: 2rem; margin-top: 1.5rem; }
+.pstat { text-align: center; }
+.pstat-val { font-size: 1.6rem; font-weight: 600; color: #fff; }
+.pstat-lbl { font-size: 10px; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.nav { background: var(--white); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; padding: 0 1rem; display: flex; overflow-x: auto; scrollbar-width: none; }
+.nav::-webkit-scrollbar { display: none; }
+.nav-btn { border: none; background: none; padding: 0.9rem 1rem; font-family: 'Sora', sans-serif; font-size: 12.5px; font-weight: 500; color: var(--muted); cursor: pointer; border-bottom: 2px solid transparent; white-space: nowrap; transition: all 0.2s; }
+.nav-btn:hover { color: var(--blue); }
+.nav-btn.active { color: var(--blue); border-bottom-color: var(--blue); }
+
+.page { display: none; padding: 2rem 1.5rem; max-width: 880px; margin: 0 auto; }
+.page.active { display: block; }
+
+.section-head { margin-bottom: 1.5rem; }
+.section-head h2 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: var(--navy); margin-bottom: 0.25rem; }
+.section-head p { font-size: 13px; color: var(--muted); }
+
+.card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1rem; box-shadow: var(--shadow); }
+.card-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.75rem; }
+
+.tip { background: #eff6ff; border-left: 3px solid var(--blue-light); border-radius: 0 10px 10px 0; padding: 0.75rem 1rem; font-size: 13px; color: #1e40af; margin: 0.75rem 0; line-height: 1.6; }
+.tip-green { background: #f0fdf4; border-left: 3px solid var(--green); border-radius: 0 10px 10px 0; padding: 0.75rem 1rem; font-size: 13px; color: #166534; margin: 0.75rem 0; line-height: 1.6; }
+.tip-gold { background: var(--gold-light); border-left: 3px solid var(--gold); border-radius: 0 10px 10px 0; padding: 0.75rem 1rem; font-size: 13px; color: #92400e; margin: 0.75rem 0; line-height: 1.6; }
+
+/* MODELES */
+.part-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.part-btn { padding: 7px 16px; border-radius: 40px; border: 1.5px solid var(--border); background: var(--white); font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.18s; }
+.part-btn:hover { border-color: var(--purple); color: var(--purple); }
+.part-btn.active { background: var(--purple); color: #fff; border-color: var(--purple); }
+.model-panel { display: none; }
+.model-panel.active { display: block; }
+.model-block { background: #fafbff; border: 1px solid #e0e7ff; border-radius: 12px; padding: 1.2rem 1.4rem; margin: 0.75rem 0; }
+.model-block .who-tag { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--purple); margin-bottom: 0.5rem; }
+.model-block p { font-size: 14px; color: var(--text); line-height: 1.9; }
+.model-block p strong { color: var(--purple); font-weight: 600; }
+.model-dialogue { background: #f8fafc; border-radius: 12px; padding: 1rem; display: flex; flex-direction: column; gap: 8px; }
+.mdlg { display: flex; gap: 10px; align-items: flex-start; }
+.mdlg.c { flex-direction: row-reverse; }
+.mavatar { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+.mavatar.e { background: #dbeafe; color: #1e40af; }
+.mavatar.c { background: #ede9fe; color: #5b21b6; }
+.mbubble { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 0.6rem 0.9rem; font-size: 13.5px; max-width: 80%; line-height: 1.6; }
+.mbubble.c { background: #ede9fe; border-color: #c4b5fd; }
+.mbubble .mwho { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 3px; }
+.step-chip { padding: 6px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 500; display: inline-block; }
+.s1 { background: #eff6ff; color: #1e40af; }
+.s2 { background: #f0fdf4; color: #166534; }
+.s3 { background: var(--gold-light); color: #92400e; }
+.s4 { background: #fce7f3; color: #9d174d; }
+.s5 { background: var(--purple-light); color: #5b21b6; }
+
+/* EXERCICES */
+.ex-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1.5rem; margin-bottom: 1.25rem; box-shadow: var(--shadow); }
+.ex-num { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; border-radius: 50%; background: var(--purple); color: #fff; font-size: 12px; font-weight: 600; margin-right: 8px; flex-shrink: 0; }
+.ex-title { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 0.75rem; display: flex; align-items: center; }
+.fill-row { display: flex; align-items: center; gap: 10px; margin: 0.6rem 0; flex-wrap: wrap; }
+.fill-label { font-size: 13.5px; color: var(--text); white-space: nowrap; }
+.fill-input { border: none; border-bottom: 2px solid var(--border); background: transparent; font-family: 'Sora', sans-serif; font-size: 13.5px; color: var(--text); padding: 4px 6px; outline: none; min-width: 160px; flex: 1; transition: border-color 0.2s; }
+.fill-input:focus { border-bottom-color: var(--purple); }
+.example-reveal { display: none; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 0.75rem 1rem; font-size: 13px; color: #166534; line-height: 1.8; margin-top: 0.75rem; }
+.example-reveal.visible { display: block; }
+.transfo-row { background: #fafbff; border: 1px solid #e0e7ff; border-radius: 10px; padding: 0.9rem 1.1rem; margin: 0.5rem 0; }
+.transfo-row .original { font-size: 13px; color: var(--muted); margin-bottom: 0.4rem; }
+.transfo-arrow { color: var(--purple); font-weight: 600; margin-right: 6px; }
+.mini-sim { background: #fafbff; border: 1px solid #e0e7ff; border-radius: 12px; padding: 1rem; margin: 0.75rem 0; }
+.mini-q { font-size: 13.5px; font-weight: 500; color: var(--navy); margin-bottom: 0.5rem; }
+.mini-ans { border: none; border-bottom: 2px solid var(--border); background: transparent; font-family: 'Sora', sans-serif; font-size: 13.5px; width: 100%; padding: 6px 0; outline: none; color: var(--text); transition: border-color 0.2s; }
+.mini-ans:focus { border-bottom-color: var(--purple); }
+
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: 40px; border: 1px solid var(--border); font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; background: var(--white); color: var(--text); }
+.btn:hover { background: var(--bg); }
+.btn-purple { background: var(--purple); color: #fff; border-color: var(--purple); }
+.btn-purple:hover { background: #6d28d9; }
+.btn-primary { background: var(--blue); color: #fff; border-color: var(--blue); }
+.btn-primary:hover { background: #1d4ed8; }
+.btn-sm { padding: 5px 14px; font-size: 12px; }
+
+/* EXPRESSIONS */
+.phrase-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(185px, 1fr)); gap: 8px; margin: 0.75rem 0; }
+.phrase-pill { padding: 0.7rem 1rem; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg); font-size: 13px; color: var(--text); cursor: pointer; transition: all 0.18s; line-height: 1.45; font-family: 'Sora', sans-serif; text-align: left; }
+.phrase-pill:hover { border-color: var(--blue-light); background: var(--sky); }
+.phrase-pill.done { background: var(--green-light); border-color: var(--green); color: #065f46; }
+.progress-bar-wrap { height: 6px; background: var(--border); border-radius: 3px; margin: 0.75rem 0 0.4rem; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--blue), var(--blue-light)); border-radius: 3px; transition: width 0.4s ease; }
+.interro-grid { display: flex; flex-wrap: wrap; gap: 8px; margin: 0.75rem 0; }
+.interro-tag { padding: 6px 14px; background: var(--navy); color: #93c5fd; border-radius: 40px; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: none; font-family: 'Sora', sans-serif; }
+.interro-tag:hover, .interro-tag.done { background: var(--blue); color: #fff; }
+
+/* DIALOGUES */
+.scenario-tabs { display: flex; gap: 8px; margin-bottom: 1.25rem; flex-wrap: wrap; }
+.sc-btn { display: flex; align-items: center; gap: 8px; padding: 0.6rem 1.1rem; border-radius: 40px; border: 1.5px solid var(--border); background: var(--white); font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 500; color: var(--muted); cursor: pointer; transition: all 0.18s; }
+.sc-btn:hover { border-color: var(--blue); color: var(--blue); }
+.sc-btn.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+.dialogue-box { padding: 1.25rem; background: #f8fafc; border-radius: 12px; display: flex; flex-direction: column; gap: 10px; }
+.msg { display: flex; gap: 10px; align-items: flex-start; }
+.msg.cand { flex-direction: row-reverse; }
+.avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; flex-shrink: 0; }
+.avatar.e { background: #dbeafe; color: #1e40af; }
+.avatar.c { background: #d1fae5; color: #065f46; }
+.bubble { background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 0.6rem 0.9rem; font-size: 13.5px; max-width: 75%; line-height: 1.6; }
+.bubble.cand { background: #eff6ff; border-color: #bfdbfe; }
+.bubble .who { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 3px; }
+.bubble em { font-style: normal; font-weight: 600; color: var(--blue); }
+.bubble.cand em { color: #1e40af; }
+
+/* ERREURS */
+.error-row { display: flex; align-items: flex-start; gap: 12px; padding: 0.9rem 0; border-bottom: 1px solid var(--border); }
+.error-row:last-child { border-bottom: none; }
+.err-badges { display: flex; flex-direction: column; gap: 5px; flex: 1; }
+.badge-err { background: var(--red-light); color: #991b1b; padding: 4px 10px; border-radius: 6px; font-size: 12.5px; display: inline-block; }
+.badge-ok  { background: var(--green-light); color: #065f46; padding: 4px 10px; border-radius: 6px; font-size: 12.5px; display: inline-block; }
+.err-rule { font-size: 11px; color: var(--muted); min-width: 100px; text-align: right; padding-top: 4px; }
+.rule-box { background: var(--gold-light); border: 1px solid #fde68a; border-radius: 10px; padding: 0.75rem 1rem; font-size: 13px; color: #92400e; margin: 0.5rem 0; line-height: 1.6; }
+
+/* QUIZ */
+.quiz-stats { display: flex; gap: 10px; margin-bottom: 1.25rem; }
+.qstat { flex: 1; background: var(--white); border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem; text-align: center; }
+.qstat-val { font-size: 1.5rem; font-weight: 600; color: var(--navy); }
+.qstat-lbl { font-size: 11px; color: var(--muted); }
+.quiz-num { font-size: 11px; font-weight: 600; color: var(--blue); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 0.4rem; }
+.quiz-q { font-size: 15px; font-weight: 500; color: var(--navy); margin-bottom: 1rem; line-height: 1.5; }
+.quiz-opts { display: flex; flex-direction: column; gap: 8px; }
+.qopt { padding: 0.75rem 1rem; border-radius: 10px; border: 1.5px solid var(--border); background: var(--bg); font-family: 'Sora', sans-serif; font-size: 13.5px; color: var(--text); cursor: pointer; text-align: left; transition: all 0.15s; }
+.qopt:hover:not(:disabled) { border-color: var(--blue); background: var(--sky); }
+.qopt.correct { background: var(--green-light); border-color: var(--green); color: #065f46; font-weight: 500; }
+.qopt.wrong { background: var(--red-light); border-color: var(--red); color: #991b1b; }
+.qopt:disabled { cursor: default; }
+.feedback { border-radius: 10px; padding: 0.75rem 1rem; font-size: 13px; margin: 0.75rem 0; line-height: 1.6; display: none; }
+.feedback.good { background: var(--green-light); color: #065f46; border: 1px solid #a7f3d0; }
+.feedback.bad { background: var(--red-light); color: #991b1b; border: 1px solid #fca5a5; }
+.quiz-end { text-align: center; padding: 2rem; }
+.quiz-end .big-score { font-size: 3rem; font-weight: 700; color: var(--navy); }
+
+/* SIM */
+.sim-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; }
+.sim-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 1.25rem; cursor: pointer; transition: all 0.2s; text-align: left; }
+.sim-card:hover { border-color: var(--blue); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,99,235,0.12); }
+.sim-card .sim-icon { font-size: 1.8rem; margin-bottom: 0.75rem; }
+.sim-card h3 { font-size: 14px; font-weight: 600; color: var(--navy); margin-bottom: 0.3rem; }
+.sim-card p { font-size: 12px; color: var(--muted); line-height: 1.5; }
+.sim-tag { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-bottom: 0.5rem; }
+.sim-tag.p1 { background: #ede9fe; color: #5b21b6; }
+.sim-tag.p2 { background: #fef3c7; color: #92400e; }
+.sim-tag.p3 { background: #d1fae5; color: #065f46; }
+.sim-tag.full { background: #fee2e2; color: #991b1b; }
+
+@media (max-width: 600px) {
+  .page { padding: 1.25rem 1rem; }
+  .sim-grid { grid-template-columns: 1fr; }
+  .bubble { max-width: 88%; }
+  .phrase-grid { grid-template-columns: 1fr 1fr; }
+  .fill-row { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-badge">Préparation officielle DELF A2</div>
+  <h1>Oral : <em>parler sans blocage</em></h1>
+  <p>Modèles · Exercices · Expressions · Dialogues · Quiz · Simulation</p>
+  <div class="progress-strip">
+    <div class="pstat"><div class="pstat-val" id="hero-memorized">0</div><div class="pstat-lbl">Mémorisées</div></div>
+    <div class="pstat"><div class="pstat-val" id="hero-score">—</div><div class="pstat-lbl">Score quiz</div></div>
+    <div class="pstat"><div class="pstat-val">7</div><div class="pstat-lbl">Sections</div></div>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="nav-btn active" onclick="showPage('modeles', this)">📘 Modèles</button>
+  <button class="nav-btn" onclick="showPage('exercices', this)">⚡ Exercices</button>
+  <button class="nav-btn" onclick="showPage('expressions', this)">📦 Expressions</button>
+  <button class="nav-btn" onclick="showPage('dialogues', this)">💬 Dialogues</button>
+  <button class="nav-btn" onclick="showPage('erreurs', this)">⚠️ Pièges A2</button>
+  <button class="nav-btn" onclick="showPage('quiz', this)">🧠 Quiz</button>
+  <button class="nav-btn" onclick="showPage('sim', this)">🎙️ Simulation</button>
+</nav>
+
+<!-- PAGE MODÈLES (NOUVEAUX SUJETS) -->
+<div class="page active" id="page-modeles">
+  <div class="section-head">
+    <h2>📘 Modèles — lire d'abord</h2>
+    <p>Des réponses complètes niveau A2. Lisez-les à voix haute plusieurs fois.</p>
+  </div>
+  <div class="part-tabs">
+    <button class="part-btn active" onclick="showModel('p1', this)">🗣️ Partie 1 — Entretien</button>
+    <button class="part-btn" onclick="showModel('p2', this)">📌 Partie 2 — Monologue (bibliothèque)</button>
+    <button class="part-btn" onclick="showModel('p3', this)">🛍️ Partie 3 — Interaction (cours de yoga)</button>
+  </div>
+
+  <div class="model-panel active" id="model-p1">
+    <div class="card"><div class="card-label">Exemple complet — Entretien dirigé</div><div class="model-block"><div class="who-tag">Candidat — Sophie, 26 ans</div><p>Bonjour, je m'appelle Sophie. J'ai 26 ans et j'habite à Bordeaux, dans une petite maison.<br>Je suis étudiante en psychologie.<br><br>Le matin, je me réveille à 8h, je prends un café et je lis un peu. À midi, <strong>je déjeune à la fac avec des amis</strong>.<br>L'après-midi, j'ai des cours ou je travaille à la bibliothèque.<br>Le soir, je regarde une série ou <strong>je vais me promener</strong>.<br><br><strong>J'aime cette routine parce qu'elle est équilibrée</strong>, mais je n'aime pas les examens parce qu'ils sont stressants.</p></div><div class="tip-green">✅ Structure : identité → routine → goûts + parce que.</div></div>
+  </div>
+
+  <div class="model-panel" id="model-p2">
+    <div class="card">
+      <div class="card-label">Exemple de monologue — Une bibliothèque que j'adore (NOUVEAU SUJET)</div>
+      <div class="model-block">
+        <div class="who-tag">Candidat — 2 minutes de monologue</div>
+        <p>
+          <strong>Je vais vous parler d'une bibliothèque que j'adore.</strong> C'est la bibliothèque municipale de Bordeaux, près du jardin public.<br><br>
+          Dans cette bibliothèque, il y a beaucoup de livres, des ordinateurs et un espace calme pour étudier. <strong>L'ambiance est très paisible.</strong><br>
+          J'y vais deux fois par semaine, souvent avec une amie, pour lire des romans ou préparer mes examens.<br><br>
+          <strong>J'aime cet endroit parce qu'il est lumineux et gratuit</strong> et les bibliothécaires sont très gentils.<br>
+          En plus, <strong>on peut réserver une salle de travail en groupe.</strong><br><br>
+          C'est pour ça que je recommande cette bibliothèque à tous les étudiants !
+        </p>
+      </div>
+      <div class="tip-green">✅ Structure : introduction → description → explication (parce que) → conclusion.</div>
+    </div>
+  </div>
+
+  <div class="model-panel" id="model-p3">
+    <div class="card">
+      <div class="card-label">Dialogue long — Réservation de cours de yoga (NOUVEAU THÈME)</div>
+      <div class="model-dialogue">
+        <div class="mdlg c"><div class="mavatar c">V</div><div class="mbubble c"><div class="mwho">Vous</div>Bonjour, je voudrais m'inscrire à un cours de yoga, s'il vous plaît.</div></div>
+        <div class="mdlg"><div class="mavatar e">V</div><div class="mbubble"><div class="mwho">Employé</div>Bonjour ! Nous avons des cours le lundi, mercredi et vendredi. Quel jour préférez-vous ?</div></div>
+        <div class="mdlg c"><div class="mavatar c">V</div><div class="mbubble c"><div class="mwho">Vous</div>Le mercredi soir, c'est possible ? <em>Quel est le tarif ?</em></div></div>
+        <div class="mdlg"><div class="mavatar e">V</div><div class="mbubble"><div class="mwho">Employé</div>Oui, de 18h à 19h. C'est 10 euros la séance ou 35 euros pour 4 séances.</div></div>
+        <div class="mdlg c"><div class="mavatar c">V</div><div class="mbubble c"><div class="mwho">Vous</div>D'accord. <em>Est-ce que le tapis est fourni ?</em> <em>Je ne suis pas sûr de mon niveau</em>…</div></div>
+        <div class="mdlg"><div class="mavatar e">V</div><div class="mbubble"><div class="mwho">Employé</div>Oui, tapis, bloc et sangle sont inclus. Le cours est pour débutants, ne vous inquiétez pas.</div></div>
+        <div class="mdlg c"><div class="mavatar c">V</div><div class="mbubble c"><div class="mwho">Vous</div>Super. <em>Je peux payer par carte ?</em> Et <em>est-ce qu'il y a une garantie si j'annule ?</em></div></div>
+        <div class="mdlg"><div class="mavatar e">V</div><div class="mbubble"><div class="mwho">Employé</div>Oui, carte acceptée. Annulation gratuite 24h à l'avance.</div></div>
+        <div class="mdlg c"><div class="mavatar c">V</div><div class="mbubble c"><div class="mwho">Vous</div>Parfait, <em>ça me convient</em>. Je prends le forfait 4 séances. Merci et bonne journée !</div></div>
+      </div>
+      <div class="tip-green">✅ Structure : saluer → expliquer besoin → poser des questions → décider → remercier.</div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE EXERCICES (SANS RÉPONSES PRÉREMPLIES) -->
+<div class="page" id="page-exercices">
+  <div class="section-head"><h2>⚡ Exercices d'automatisation</h2><p>Complétez à voix haute. Entraînez-vous sans regarder de réponses !</p></div>
+
+  <div class="ex-card"><div class="ex-title"><span class="ex-num">1</span> Complétez votre présentation — Partie 1</div><div class="fill-row"><span class="fill-label">Je m'appelle</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">J'habite à</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">Le matin, je</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">À midi, je</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">Le soir, je</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">J'aime</span><input class="fill-input" type="text" placeholder="..."><span class="fill-label">parce que</span><input class="fill-input" type="text" placeholder="..."></div><div class="tip">💡 Dites chaque phrase à voix haute après l'avoir écrite.</div></div>
+
+  <div class="ex-card"><div class="ex-title"><span class="ex-num">2</span> Transformation — variez les mots</div><div class="transfo-row"><div class="original">Modèle : Je vais à la bibliothèque. → Transformez :</div><div class="fill-row"><span class="transfo-arrow">➡️</span><span class="fill-label">Je vais</span><input class="fill-input" type="text" placeholder="où ? (à la piscine / au cinéma...)"></div><div class="fill-row"><span class="transfo-arrow">➡️</span><span class="fill-label">Je vais à la bibliothèque</span><input class="fill-input" type="text" placeholder="quand ? (le lundi / tous les jours...)"></div></div>
+  <div class="transfo-row"><div class="original">Modèle : Je voudrais m'inscrire au yoga. → Transformez :</div><div class="fill-row"><span class="transfo-arrow">➡️</span><span class="fill-label">Je voudrais</span><input class="fill-input" type="text" placeholder="+ infinitif (louer un vélo / réserver...)"></div></div></div>
+
+  <div class="ex-card"><div class="ex-title"><span class="ex-num">3</span> Ajoutez « parce que » — justifiez</div><div class="fill-row"><span class="fill-label">J'aime cette bibliothèque parce que</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">Je veux faire du yoga parce que</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">Je prépare le DELF parce que</span><input class="fill-input" type="text" placeholder="..."></div><div class="fill-row"><span class="fill-label">Je n'aime pas me lever tôt parce que</span><input class="fill-input" type="text" placeholder="..."></div></div>
+
+  <div class="ex-card"><div class="ex-title"><span class="ex-num">4</span> Formez des questions</div><div class="fill-row"><span class="fill-label">Est-ce que vous avez</span><input class="fill-input" type="text" placeholder="... ?"></div><div class="fill-row"><span class="fill-label">Combien</span><input class="fill-input" type="text" placeholder="... ?"></div><div class="fill-row"><span class="fill-label">Est-ce qu'il y a</span><input class="fill-input" type="text" placeholder="... ?"></div><div class="fill-row"><span class="fill-label">Je peux</span><input class="fill-input" type="text" placeholder="... ?"></div><div class="fill-row"><span class="fill-label">Quel est</span><input class="fill-input" type="text" placeholder="... ?"></div></div>
+
+  <div class="ex-card"><div class="ex-title"><span class="ex-num">5</span> Mini simulation — répondez spontanément</div><div class="mini-sim"><div class="mini-q">❓ Où aimez-vous étudier ou lire ? Pourquoi ?</div><input class="mini-ans" type="text" placeholder="Votre réponse à voix haute..."></div><div class="mini-sim"><div class="mini-q">❓ Quel sport ou activité souhaitez-vous essayer ? Pourquoi ?</div><input class="mini-ans" type="text" placeholder="Votre réponse..."></div><div class="mini-sim"><div class="mini-q">❓ Pourquoi voulez-vous réussir le DELF A2 ?</div><input class="mini-ans" type="text" placeholder="Votre réponse..."></div><div class="mini-sim"><div class="mini-q">❓ Qu'est-ce que vous cherchez comme cadeau pour un ami ?</div><input class="mini-ans" type="text" placeholder="Votre réponse..."></div><button class="btn btn-sm" onclick="document.querySelectorAll('.mini-ans').forEach(i=>i.value='')">🗑️ Effacer</button>
+  <div class="tip-gold">🎯 Ne cherchez pas la perfection. Parlez naturellement, même avec des petites erreurs !</div></div>
+</div>
+
+<!-- PAGE EXPRESSIONS -->
+<div class="page" id="page-expressions">
+  <div class="section-head"><h2>📦 Expressions à automatiser</h2><p>Cliquez pour mémoriser.</p></div>
+  <div class="card"><div class="card-label">Phrases prêtes à l'emploi</div><div class="phrase-grid" id="phrase-grid"><button class="phrase-pill" onclick="memorize(this)">Je ne l'ai pas encore vu !</button><button class="phrase-pill" onclick="memorize(this)">Ça me convient parfaitement.</button><button class="phrase-pill" onclick="memorize(this)">Les prix sont abordables.</button><button class="phrase-pill" onclick="memorize(this)">Le matériel est fourni ?</button><button class="phrase-pill" onclick="memorize(this)">Je ne suis pas sûr de mon choix.</button><button class="phrase-pill" onclick="memorize(this)">Faut-il réserver à l'avance ?</button><button class="phrase-pill" onclick="memorize(this)">Est-ce qu'il y a une salle calme ?</button><button class="phrase-pill" onclick="memorize(this)">La bibliothèque est ouverte quand ?</button><button class="phrase-pill" onclick="memorize(this)">Je peux payer en espèces ?</button><button class="phrase-pill" onclick="memorize(this)">Quel est le tarif étudiant ?</button><button class="phrase-pill" onclick="memorize(this)">D'accord, super, parfait !</button><button class="phrase-pill" onclick="memorize(this)">Je peux annuler gratuitement ?</button><button class="phrase-pill" onclick="memorize(this)">Avez-vous d'autres horaires ?</button><button class="phrase-pill" onclick="memorize(this)">Est-ce que c'est pour débutants ?</button></div><div class="progress-bar-wrap"><div class="progress-bar" id="phrase-bar" style="width:0%"></div></div><p id="phrase-status">0 / 14 mémorisées</p></div>
+</div>
+
+<!-- PAGE DIALOGUES (NOUVEAUX SUJETS) -->
+<div class="page" id="page-dialogues">
+  <div class="section-head"><h2>💬 Dialogues officiels DELF A2</h2><p>Nouveaux sujets : yoga, bibliothèque, location de vélo.</p></div>
+  <div class="scenario-tabs">
+    <button class="sc-btn active" id="sc-yoga" onclick="setScenario('yoga',this)">🧘 Yoga / Sport</button>
+    <button class="sc-btn" id="sc-biblio" onclick="setScenario('biblio',this)">📚 Bibliothèque</button>
+    <button class="sc-btn" id="sc-velo" onclick="setScenario('velo',this)">🚲 Location vélo</button>
+  </div>
+  <div class="card"><div class="card-label" id="dlg-label"></div><div class="dialogue-box" id="dialogue-box"></div><div class="tip" id="dlg-tip"></div><button class="btn btn-primary" onclick="practiceDialogue()">🎤 S'entraîner avec Claude →</button></div>
+</div>
+
+<!-- PAGE ERREURS -->
+<div class="page" id="page-erreurs"><div class="section-head"><h2>⚠️ Pièges à éviter</h2></div><div class="card"><div class="card-label">Erreurs fréquentes</div><div id="error-list"></div></div><div class="card"><div class="card-label">Règles mémo</div><div class="rule-box">🔑 Après « je cherche » → UN, UNE, DES (ex: je cherche une bibliothèque)</div><div class="rule-box">🔑 « Je voudrais » + infinitif (je voudrais louer un vélo)</div><div class="rule-box">🔑 L'âge → AVOIR : j'ai 25 ans (jamais je suis 25 ans)</div><div class="rule-box">🔑 Faire du sport / de la danse / du yoga</div><div class="rule-box">🔑 La négation : je ne suis pas sûr (pas "je suis pas sûr" à l'oral formel)</div></div></div>
+
+<!-- PAGE QUIZ -->
+<div class="page" id="page-quiz"><div class="section-head"><h2>🧠 Quiz interactif</h2></div><div class="quiz-stats"><div class="qstat"><div class="qstat-val" id="q-score">0</div><div class="qstat-lbl">Score</div></div><div class="qstat"><div class="qstat-val" id="q-done">0</div><div class="qstat-lbl">Répondues</div></div><div class="qstat"><div class="qstat-val" id="q-left">10</div><div class="qstat-lbl">Restantes</div></div></div><div class="card" id="quiz-card"></div></div>
+
+<!-- PAGE SIMULATION -->
+<div class="page" id="page-sim">
+  <div class="section-head"><h2>🎙️ Simulation orale</h2><p>Choisissez un exercice. Répondez à voix haute, puis copiez le prompt dans Claude.ai.</p></div>
+  <div class="sim-grid">
+    <div class="sim-card" onclick="startSim('Fais-moi passer un entretien dirigé DELF A2 (partie 1). Pose-moi 3 questions sur ma routine, mes projets et mes loisirs. Corrige mes erreurs.')"><div class="sim-icon">🗣️</div><div class="sim-tag p1">Partie 1</div><h3>Entretien dirigé</h3><p>Routine, projets, goûts.</p></div>
+    <div class="sim-card" onclick="startSim('Donne-moi un sujet de monologue DELF A2 (partie 2) sur un lieu culturel (bibliothèque, médiathèque) ou une activité (yoga, randonnée). Évalue ma réponse.')"><div class="sim-icon">📌</div><div class="sim-tag p2">Partie 2</div><h3>Monologue guidé</h3><p>Décrivez un lieu ou une activité.</p></div>
+    <div class="sim-card" onclick="startSim('Joue le rôle d\'un employé de salle de sport. Je veux m\'inscrire à un cours de yoga. Commence le dialogue et évalue mon français.')"><div class="sim-icon">🧘</div><div class="sim-tag p3">Partie 3</div><h3>Inscription yoga</h3><p>Tarifs, matériel, horaires.</p></div>
+    <div class="sim-card" onclick="startSim('Joue le rôle d\'un bibliothécaire. Je veux savoir les horaires et comment m\'inscrire gratuitement. Commence le dialogue.')"><div class="sim-icon">📖</div><div class="sim-tag p3">Partie 3</div><h3>Bibliothèque</h3><p>Accès, horaires, prêt.</p></div>
+    <div class="sim-card" onclick="startSim('Simule un examen DELF A2 oral complet : entretien (3 questions), monologue (bibliothèque ou yoga), interaction (inscription cours). Évalue-moi sur 25 points.')"><div class="sim-icon">🎯</div><div class="sim-tag full">Complet</div><h3>Examen blanc</h3><p>Toutes les parties + évaluation.</p></div>
+  </div>
+  <div class="tip">10 minutes à voix haute chaque jour = progrès garanti le jour de l'examen !</div>
+</div>
+
+<script>
+function showPage(name, btn) { document.querySelectorAll('.page').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active')); document.getElementById('page-'+name).classList.add('active'); btn.classList.add('active'); }
+function showModel(id, btn) { document.querySelectorAll('.model-panel').forEach(p=>p.classList.remove('active')); document.querySelectorAll('.part-btn').forEach(b=>b.classList.remove('active')); document.getElementById('model-'+id).classList.add('active'); btn.classList.add('active'); }
+let memorized = 0;
+function memorize(el) { el.classList.toggle('done'); memorized = document.querySelectorAll('#phrase-grid .done').length; let pct = Math.round(memorized/14*100); document.getElementById('phrase-bar').style.width = pct+'%'; document.getElementById('phrase-status').textContent = memorized+' / 14 mémorisées'; document.getElementById('hero-memorized').textContent = memorized; }
+const scenarios = {
+  yoga: { label: '🧘 Inscription cours de yoga', tip: 'Expressions clés : <strong>« Quel est le tarif ? »</strong>, <strong>« Le tapis est fourni ? »</strong>, <strong>« Je peux annuler ? »</strong>.', msgs: [{r:'e',who:'Employé',text:'Bonjour, vous voulez un renseignement sur les cours ?'},{r:'c',who:'Vous',text:'Oui, <em>je voudrais m\'inscrire au yoga</em> débutant. Quels jours ?'},{r:'e',who:'Employé',text:'Lundi, mercredi ou vendredi soir.'},{r:'c',who:'Vous',text:'<em>Combien ça coûte ?</em> Et <em>est-ce que le tapis est fourni ?</em>'},{r:'e',who:'Employé',text:'10€ la séance, tapis inclus.'},{r:'c',who:'Vous',text:'<em>Je peux payer par carte ?</em> <em>Y a-t-il une garantie d\'annulation ?</em>'},{r:'e',who:'Employé',text:'Carte acceptée, annulation gratuite 24h avant.'},{r:'c',who:'Vous',text:'Parfait, <em>ça me convient</em>. Je prends le mercredi. Merci !'}] },
+  biblio: { label: '📚 Devenir membre de la bibliothèque', tip: 'Utilisez : <strong>« C\'est gratuit ? »</strong>, <strong>« Je peux emprunter combien de livres ? »</strong>', msgs: [{r:'e',who:'Bibliothécaire',text:'Bonjour, je peux vous aider ?'},{r:'c',who:'Vous',text:'Bonjour, <em>je voudrais m\'inscrire à la bibliothèque</em>.'},{r:'e',who:'Bibliothécaire',text:'Avec plaisir. C\'est gratuit pour les étudiants.'},{r:'c',who:'Vous',text:'Super. <em>Quels sont les horaires d\'ouverture ?</em>'},{r:'e',who:'Bibliothécaire',text:'De 10h à 19h, fermé le dimanche.'},{r:'c',who:'Vous',text:'<em>Je peux emprunter des livres pour combien de temps ?</em>'},{r:'e',who:'Bibliothécaire',text:'3 semaines, renouvelable une fois.'},{r:'c',who:'Vous',text:'<em>Est-ce qu\'il y a une salle de travail calme ?</em>'},{r:'e',who:'Bibliothécaire',text:'Oui, au premier étage.'},{r:'c',who:'Vous',text:'Merci, <em>ça me convient</em> ! Je m\'inscris tout de suite.'}] },
+  velo: { label: '🚲 Location de vélo pour la journée', tip: 'Mots utiles : <strong>« combien pour une journée ? »</strong>, <strong>« le casque est inclus ? »</strong>', msgs: [{r:'e',who:'Loueur',text:'Bonjour, vous cherchez un vélo ?'},{r:'c',who:'Vous',text:'Oui, <em>je voudrais louer un vélo</em> pour aujourd\'hui.'},{r:'e',who:'Loueur',text:'Bien sûr. 12 euros la journée.'},{r:'c',who:'Vous',text:'<em>Le casque est inclus ?</em> <em>Est-ce qu\'il y a un cadenas ?</em>'},{r:'e',who:'Loueur',text:'Casque 2€ en supplément, cadenas gratuit.'},{r:'c',who:'Vous',text:'D\'accord. <em>Je peux payer en espèces ?</em>'},{r:'e',who:'Loueur',text:'Oui, espèces ou carte.'},{r:'c',who:'Vous',text:'<em>À quelle heure je dois rendre le vélo ?</em>'},{r:'e',who:'Loueur',text:'Avant 19h.'},{r:'c',who:'Vous',text:'Parfait, <em>ça me convient</em>. Je prends le vélo. Merci !'}] }
+};
+let currentScenario = 'yoga';
+function setScenario(name, btn) { currentScenario = name; document.querySelectorAll('.sc-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); renderDialogue(); }
+function renderDialogue() { let s = scenarios[currentScenario]; document.getElementById('dlg-label').textContent = s.label; document.getElementById('dlg-tip').innerHTML = s.tip; document.getElementById('dialogue-box').innerHTML = s.msgs.map(m => `<div class="msg ${m.r}"><div class="avatar ${m.r}">${m.r==='e'?m.who[0]:'V'}</div><div class="bubble ${m.r==='c'?'cand':''}"><div class="who">${m.who}</div>${m.text}</div></div>`).join(''); }
+function practiceDialogue() { let prompts={yoga:'Joue le rôle d\'un employé de salle de sport. Je veux m\'inscrire au yoga. Commence le dialogue.',biblio:'Joue le rôle d\'un bibliothécaire. Je veux m\'inscrire gratuitement.',velo:'Joue le rôle d\'un loueur de vélos. Je veux louer un vélo.'}; if(navigator.clipboard){navigator.clipboard.writeText(prompts[currentScenario]).then(()=>alert('✅ Prompt copié !'));} else{alert(prompts[currentScenario]);} }
+const errors=[{bad:'Je suis 25 ans',good:'J\'ai 25 ans',rule:'avoir pour l\'âge'},{bad:'Je fais le sport',good:'Je fais du sport',rule:'article partitif'},{bad:'Je cherche DE yoga',good:'Je cherche UN cours de yoga',rule:'article indéfini'},{bad:'La bibliothèque c\'est gratuit',good:'La bibliothèque est gratuite',rule:'accord féminin'},{bad:'Je suis pas sûr',good:'Je ne suis pas sûr',rule:'négation complète'}];
+document.getElementById('error-list').innerHTML = errors.map(e=>`<div class="error-row"><div class="err-badges"><span class="badge-err">✗ ${e.bad}</span><span class="badge-ok">✓ ${e.good}</span></div><div class="err-rule">${e.rule}</div></div>`).join('');
+let questions=[{q:'Pour demander le prix d\'un cours de yoga :',opts:['Combien coûte le cours ?','C\'est quel le prix yoga ?','Donnez-moi le prix','Le prix c\'est combien ?'],c:0,exp:'« Combien coûte... ? » est la forme correcte.'},{q:'« Je veux m\'inscrire à la bibliothèque. C\'est gratuit ? » — bonne réponse :',opts:['Oui, c\'est gratuite.','Oui, c\'est gratuit pour les étudiants.','Oui, elle est gratuite.','Oui, gratuité.'],c:1,exp:'« C\'est gratuit pour les étudiants » est naturel.'},{q:'Choisissez la phrase correcte :',opts:['Je cherche un vélo.','Je cherche de vélo.','Je cherche vélo.','Je cherche des vélo.'],c:0,exp:'« Je cherche un vélo » — article indéfini.'},{q:'Pour demander si le casque est inclus :',opts:['Le casque est inclus ?','Est-ce que casque il y a ?','Il y a un casque ?','Casque c\'est fourni ?'],c:0,exp:'« Le casque est inclus ? » simple et correct.'},{q:'Répondez à « Quel âge avez-vous ? » :',opts:['Je suis 28 ans.','J\'ai 28 ans.','Mon âge est 28.','Je fais 28 ans.'],c:1,exp:'AVOIR pour l\'âge.'},{q:'Comment dire que vous hésitez poliment ?',opts:['Je veux pas trop...','Je ne suis pas sûr de mon choix.','C\'est compliqué.','Je sais pas.'],c:1,exp:'« Je ne suis pas sûr de mon choix » est parfait.'},{q:'Pour demander les horaires d\'une bibliothèque :',opts:['Quand ouvre la bibliothèque ?','C\'est ouvert quand ?','Quels sont les horaires ?','La bibliothèque ouvre à quelle heure ?'],c:2,exp:'« Quels sont les horaires ? » est clair et poli.'},{q:'Que dites-vous pour confirmer une réservation ?',opts:['C\'est bon.','Ça me convient.','Je prends ça.','D\'accord.'],c:1,exp:'« Ça me convient » est l\'expression idéale.'}];
+let qi=0,qscore=0,qanswered=0,shuffled=[];
+function shuffleQ(){shuffled=[...questions].sort(()=>Math.random()-0.5);qi=0;qscore=0;qanswered=0;updateQStats();renderQ();}
+function updateQStats(){document.getElementById('q-score').textContent=qscore;document.getElementById('q-done').textContent=qanswered;document.getElementById('q-left').textContent=shuffled.length-qi;document.getElementById('hero-score').textContent=qscore+'/'+shuffled.length;}
+function renderQ(){if(qi>=shuffled.length){document.getElementById('quiz-card').innerHTML=`<div class="quiz-end"><div class="big-score">${qscore}/${shuffled.length}</div><p>${qscore>=6?'🎉 Félicitations ! Vous progressez.':'💪 Continuez à vous entraîner !'}</p><button class="btn btn-primary" onclick="resetQuiz()">Recommencer le quiz</button></div>`;return;}let q=shuffled[qi];document.getElementById('quiz-card').innerHTML=`<div class="quiz-num">Question ${qi+1}/${shuffled.length}</div><div class="quiz-q">${q.q}</div><div class="quiz-opts" id="quiz-opts"></div><div class="feedback" id="quiz-feedback"></div><div id="quiz-next-wrap"></div>`;let optsDiv=document.getElementById('quiz-opts');q.opts.forEach((o,i)=>{let btn=document.createElement('button');btn.className='qopt';btn.textContent=o;btn.onclick=()=>answerQ(i);optsDiv.appendChild(btn);});}
+function answerQ(i){let q=shuffled[qi];let btns=document.querySelectorAll('.qopt');btns.forEach(b=>b.disabled=true);btns[q.c].classList.add('correct');if(i!==q.c)btns[i].classList.add('wrong');else qscore++;qanswered++;qi++;let fb=document.getElementById('quiz-feedback');fb.style.display='block';fb.className='feedback '+(i===q.c?'good':'bad');fb.textContent=(i===q.c?'✓ Correct ! ':'✗ Incorrect. ')+q.exp;document.getElementById('quiz-next-wrap').innerHTML='<button class="btn btn-primary" onclick="renderQ()">Question suivante →</button>';updateQStats();}
+function resetQuiz(){shuffleQ();}
+function startSim(prompt){if(window.confirm('Copier le prompt pour Claude.ai ?')){if(navigator.clipboard){navigator.clipboard.writeText(prompt).then(()=>alert('✅ Prompt copié ! Collez-le dans Claude.ai pour vous entraîner.'));}else{alert(prompt);}}}
+renderDialogue(); shuffleQ();
+</script>
+</body>
+</html>
