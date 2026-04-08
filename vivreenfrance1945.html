@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivre en France en démocratie depuis 1945 🇫🇷</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #f8f9ff;
+    color: #1e1e2e;
+    min-height: 100vh;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    color: white;
+    text-align: center;
+    padding: 2.5rem 1.5rem 2rem;
+  }
+  .header-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.18);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.9rem;
+    border-radius: 99px;
+    margin-bottom: 1rem;
+  }
+  .header h1 {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+  .header p {
+    font-size: 0.95rem;
+    opacity: 0.82;
+    margin-bottom: 1.8rem;
+  }
+
+  /* ─── TABS ─── */
+  .tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    color: rgba(255,255,255,0.9);
+    padding: 0.55rem 1.1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,0.25); }
+  .tab-btn.active {
+    background: white;
+    color: #4f46e5;
+    font-weight: 700;
+    border-color: white;
+  }
+
+  /* ─── CONTAINER ─── */
+  .container { max-width: 860px; margin: 0 auto; padding: 2rem 1rem 5rem; }
+
+  /* ─── SECTION TOGGLE ─── */
+  .section { display: none; }
+  .section.active { display: block; animation: fadeUp 0.3s ease; }
+  @keyframes fadeUp { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+
+  /* ─── SECTION HEADING ─── */
+  .section-heading {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #4f46e5;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e0e7ff;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* ─── PÉRIODE CARDS ─── */
+  .card {
+    background: white;
+    border-radius: 14px;
+    padding: 1.4rem 1.5rem;
+    margin-bottom: 1rem;
+    box-shadow: 0 1px 8px rgba(79,70,229,0.07);
+    border-left: 4px solid #4f46e5;
+  }
+  .card.violet  { border-left-color: #7c3aed; }
+  .card.rose    { border-left-color: #db2777; }
+  .card.orange  { border-left-color: #ea580c; }
+  .card.green   { border-left-color: #16a34a; }
+  .card.cyan    { border-left-color: #0891b2; }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+  .card-date {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    background: #f0f0ff;
+    color: #6366f1;
+    padding: 0.2rem 0.6rem;
+    border-radius: 5px;
+  }
+  .card p { font-size: 0.88rem; line-height: 1.65; color: #444; margin-bottom: 0.9rem; }
+
+  /* Tags */
+  .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    font-size: 0.7rem; font-weight: 600;
+    padding: 0.22rem 0.65rem; border-radius: 99px;
+    background: #f0f0ff; color: #4f46e5; border: 1px solid #c7d2fe;
+  }
+  .tag.rose   { background: #fdf2f8; color: #be185d; border-color: #fbcfe8; }
+  .tag.orange { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
+  .tag.green  { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
+  .tag.cyan   { background: #ecfeff; color: #0e7490; border-color: #a5f3fc; }
+
+  /* ─── NOTIONS GRID ─── */
+  .notions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+  }
+  .notion-card {
+    background: white; border-radius: 12px; padding: 1.2rem 1.3rem;
+    box-shadow: 0 1px 8px rgba(79,70,229,0.07);
+    border-top: 3px solid #4f46e5;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .notion-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(79,70,229,0.12); }
+  .notion-card.violet { border-top-color: #7c3aed; }
+  .notion-card.rose   { border-top-color: #db2777; }
+  .notion-card.orange { border-top-color: #ea580c; }
+  .notion-card.green  { border-top-color: #16a34a; }
+  .notion-card.cyan   { border-top-color: #0891b2; }
+  .notion-card h3 { font-size: 0.88rem; font-weight: 700; color: #1e1e2e; margin-bottom: 0.4rem; }
+  .notion-card p  { font-size: 0.82rem; line-height: 1.58; color: #555; }
+
+  /* ─── PERSONNAGES ─── */
+  .perso-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+  .perso-card {
+    background: white; border-radius: 12px; padding: 1.2rem 1.3rem;
+    box-shadow: 0 1px 8px rgba(79,70,229,0.07);
+    display: flex; gap: 0.9rem; align-items: flex-start;
+    border: 1px solid #e9e9f5; transition: box-shadow 0.2s;
+  }
+  .perso-card:hover { box-shadow: 0 4px 18px rgba(79,70,229,0.13); }
+  .perso-avatar { font-size: 2.1rem; flex-shrink: 0; width: 2.6rem; text-align: center; }
+  .perso-card h3  { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.15rem; }
+  .perso-role {
+    font-size: 0.7rem; font-weight: 600; color: #4f46e5;
+    text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.35rem;
+  }
+  .perso-card p { font-size: 0.8rem; line-height: 1.55; color: #555; }
+
+  /* ─── CHRONOLOGIE ─── */
+  .chrono-wrap {
+    background: white; border-radius: 14px; overflow: hidden;
+    box-shadow: 0 1px 8px rgba(79,70,229,0.07);
+  }
+  .chrono-wrap table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+  .chrono-wrap thead { background: linear-gradient(90deg, #4f46e5, #7c3aed); color: white; }
+  .chrono-wrap th { padding: 0.85rem 1.2rem; text-align: left; font-weight: 600; font-size: 0.82rem; letter-spacing: 0.04em; }
+  .chrono-wrap td { padding: 0.7rem 1.2rem; border-bottom: 1px solid #f0f0ff; vertical-align: top; }
+  .chrono-wrap tr:last-child td { border-bottom: none; }
+  .chrono-wrap tr:nth-child(even) td { background: #fafaff; }
+  .chrono-wrap tr:hover td { background: #f0f0ff; }
+  .c-date { font-weight: 700; color: #4f46e5; white-space: nowrap; }
+  .c-cat {
+    display: inline-block; font-size: 0.65rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem; border-radius: 4px; margin-bottom: 0.3rem;
+  }
+  .c-pol  { background: #dbeafe; color: #1d4ed8; }
+  .c-soc  { background: #fce7f3; color: #be185d; }
+  .c-eco  { background: #dcfce7; color: #15803d; }
+  .c-inst { background: #f3e8ff; color: #7e22ce; }
+
+  /* ─── QCM ─── */
+  .qcm-header {
+    background: white; border-radius: 12px; padding: 1rem 1.4rem;
+    margin-bottom: 1.2rem; box-shadow: 0 1px 8px rgba(79,70,229,0.07);
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .score-big   { font-size: 1.5rem; font-weight: 800; color: #4f46e5; white-space: nowrap; }
+  .score-label { font-size: 0.78rem; color: #888; }
+  .pbar-wrap { flex: 1; height: 7px; background: #e9e9f5; border-radius: 99px; overflow: hidden; }
+  .pbar { height: 100%; background: linear-gradient(90deg, #4f46e5, #7c3aed); border-radius: 99px; transition: width 0.4s; }
+
+  .qcm-card {
+    background: white; border-radius: 14px; padding: 1.6rem;
+    box-shadow: 0 1px 8px rgba(79,70,229,0.07); margin-bottom: 1rem;
+  }
+  .q-num  { font-size: 0.7rem; font-weight: 700; color: #7c3aed; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem; }
+  .q-text { font-size: 1rem; font-weight: 700; color: #1e1e2e; margin-bottom: 1.1rem; line-height: 1.4; }
+
+  .options { display: flex; flex-direction: column; gap: 0.55rem; }
+  .opt-btn {
+    background: #f8f9ff; border: 2px solid #e0e7ff; border-radius: 10px;
+    padding: 0.75rem 1.1rem; text-align: left; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.87rem; color: #1e1e2e;
+    transition: all 0.18s; font-weight: 400;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: #4f46e5; background: #eef2ff; }
+  .opt-btn.correct { background: #f0fdf4; border-color: #16a34a; color: #15803d; font-weight: 600; }
+  .opt-btn.wrong   { background: #fef2f2; border-color: #dc2626; color: #b91c1c; }
+  .opt-btn:disabled { cursor: default; }
+
+  .feedback {
+    margin-top: 0.9rem; padding: 0.8rem 1.1rem; border-radius: 8px;
+    font-size: 0.85rem; line-height: 1.55; display: none;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct { background: #f0fdf4; color: #15803d; border-left: 4px solid #16a34a; }
+  .feedback.wrong   { background: #fef2f2; color: #b91c1c; border-left: 4px solid #dc2626; }
+
+  .qcm-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 1.1rem; gap: 0.6rem; flex-wrap: wrap;
+  }
+  .btn {
+    padding: 0.65rem 1.4rem; border-radius: 9px; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.88rem; font-weight: 600; transition: all 0.18s;
+  }
+  .btn-primary { background: #4f46e5; color: white; }
+  .btn-primary:hover { background: #3730a3; }
+  .btn-outline { background: white; color: #4f46e5; border: 2px solid #c7d2fe; }
+  .btn-outline:hover { background: #eef2ff; }
+  .btn-restart { background: #f3f4f6; color: #374151; }
+  .btn-restart:hover { background: #e5e7eb; }
+
+  .result-box {
+    background: linear-gradient(135deg, #4f46e5, #7c3aed);
+    color: white; border-radius: 16px; padding: 2.5rem;
+    text-align: center; display: none;
+  }
+  .result-box.show { display: block; animation: fadeUp 0.4s ease; }
+  .result-score { font-size: 3.5rem; font-weight: 800; color: #fde68a; }
+  .result-box h3 { font-size: 1.25rem; font-weight: 700; margin: 0.5rem 0 0.7rem; }
+  .result-box p  { opacity: 0.8; font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+  @media (max-width: 580px) {
+    .notions-grid { grid-template-columns: 1fr; }
+    .perso-grid   { grid-template-columns: 1fr; }
+    .qcm-nav      { flex-direction: column; }
+    .btn          { width: 100%; text-align: center; }
+    .chrono-wrap td, .chrono-wrap th { padding: 0.6rem 0.7rem; font-size: 0.79rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="header">
+  <div class="header-badge">✨ Terminale Bac Pro — Histoire-Géo</div>
+  <h1>Vivre en France en démocratie<br>depuis 1945 🇫🇷</h1>
+  <p>Fiche de révision + QCM interactif pour cartonner au Bac !</p>
+  <div class="tabs">
+    <button class="tab-btn active" onclick="showTab('periodes',this)">📋 Fiche de révision</button>
+    <button class="tab-btn"        onclick="showTab('notions',this)">💡 Notions clés</button>
+    <button class="tab-btn"        onclick="showTab('personnages',this)">👤 Personnages</button>
+    <button class="tab-btn"        onclick="showTab('chrono',this)">📅 Chronologie</button>
+    <button class="tab-btn"        onclick="showTab('qcm',this)">✏️ QCM interactif</button>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ════════════════════════════════
+     FICHE DE RÉVISION — PÉRIODES
+════════════════════════════════ -->
+<div id="periodes" class="section active">
+  <div class="section-heading">🗂️ Les grandes périodes</div>
+
+  <div class="card">
+    <div class="card-title">🏛️ La IVe République <span class="card-date">1944 – 1958</span></div>
+    <p>À la Libération, la France reconstruit ses institutions. Le régime parlementaire est très instable (<strong>20 gouvernements en 12 ans</strong>). La <strong>Sécurité sociale</strong> est créée en 1945, premier pilier de l'État-providence. Le <strong>Plan Marshall</strong> (1948) finance la reconstruction. La France s'enlise en <strong>Indochine</strong> (1946–54) puis en <strong>Algérie</strong> (1954–62), deux guerres coloniales qui épuisent le régime. C'est aussi le début des <strong>Trente Glorieuses</strong> : forte croissance, plein emploi, hausse du niveau de vie.</p>
+    <div class="tags">
+      <span class="tag">IVe République</span>
+      <span class="tag">Sécurité sociale 1945</span>
+      <span class="tag">Plan Marshall</span>
+      <span class="tag">Guerre d'Indochine</span>
+      <span class="tag green">Trente Glorieuses</span>
+    </div>
+  </div>
+
+  <div class="card violet">
+    <div class="card-title">🦅 La Ve République — De Gaulle <span class="card-date">1958 – 1969</span></div>
+    <p>La crise algérienne provoque le retour du <strong>général de Gaulle</strong>. La <strong>Constitution du 4 octobre 1958</strong> crée la Ve République avec un exécutif fort. Le président est élu au <strong>suffrage universel direct</strong> à partir de 1962. Les <strong>Accords d'Évian</strong> (1962) accordent l'indépendance à l'Algérie. La France se dote de la <strong>bombe atomique</strong> (1960). <strong>Mai 1968</strong> est une grande crise sociale et culturelle : grève générale, révolte étudiante. De Gaulle démissionne en 1969.</p>
+    <div class="tags">
+      <span class="tag">Ve République</span>
+      <span class="tag">Constitution 1958</span>
+      <span class="tag rose">Accords d'Évian 1962</span>
+      <span class="tag">Suffrage universel direct</span>
+      <span class="tag orange">Mai 1968</span>
+    </div>
+  </div>
+
+  <div class="card rose">
+    <div class="card-title">🌱 Pompidou &amp; Giscard — Modernisation <span class="card-date">1969 – 1981</span></div>
+    <p><strong>Georges Pompidou</strong> (1969–74) poursuit l'industrialisation. Le <strong>choc pétrolier de 1973</strong> met fin aux Trente Glorieuses et marque l'entrée dans la crise économique. <strong>Valéry Giscard d'Estaing</strong> (1974–81) modernise la société : majorité à <strong>18 ans</strong>, <strong>loi Veil sur l'IVG</strong> (1975), divorce par consentement mutuel. Le chômage et l'inflation progressent fortement.</p>
+    <div class="tags">
+      <span class="tag rose">Choc pétrolier 1973</span>
+      <span class="tag">Loi Veil 1975 (IVG)</span>
+      <span class="tag">Majorité à 18 ans</span>
+      <span class="tag orange">Fin des Trente Glorieuses</span>
+    </div>
+  </div>
+
+  <div class="card orange">
+    <div class="card-title">🌹 La gauche au pouvoir — Mitterrand <span class="card-date">1981 – 1995</span></div>
+    <p><strong>François Mitterrand</strong>, premier président socialiste, conduit une politique de rupture : <strong>abolition de la peine de mort</strong> (1981), nationalisations, <strong>décentralisation</strong> (lois Defferre 1982). Face à la crise économique, il opère le "tournant de la rigueur" (1983). Deux <strong>cohabitations</strong> ont lieu (Chirac 1986–88, Balladur 1993–95). La <strong>construction européenne</strong> s'accélère avec le <strong>Traité de Maastricht</strong> (1992).</p>
+    <div class="tags">
+      <span class="tag green">Abolition peine de mort</span>
+      <span class="tag">Décentralisation 1982</span>
+      <span class="tag">Cohabitation</span>
+      <span class="tag cyan">Traité de Maastricht 1992</span>
+    </div>
+  </div>
+
+  <div class="card green">
+    <div class="card-title">🇪🇺 Chirac — France dans la mondialisation <span class="card-date">1995 – 2007</span></div>
+    <p><strong>Jacques Chirac</strong> préside dans un contexte de mondialisation. La France adopte la <strong>parité hommes-femmes</strong> en politique (loi 2000) et le <strong>quinquennat</strong> (2002). La <strong>loi sur les 35 heures</strong> (Jospin, 1998–2000) réorganise le travail. Le <strong>PACS</strong> est créé (1999). La France dit <strong>Non au référendum européen</strong> (2005). L'euro remplace le franc en 2002.</p>
+    <div class="tags">
+      <span class="tag green">Parité en politique 2000</span>
+      <span class="tag">35 heures</span>
+      <span class="tag">Quinquennat 2002</span>
+      <span class="tag cyan">Euro 2002</span>
+      <span class="tag rose">Non au référendum UE 2005</span>
+    </div>
+  </div>
+
+  <div class="card cyan">
+    <div class="card-title">⚡ Sarkozy, Hollande, Macron — Crises et renouveau <span class="card-date">2007 – aujourd'hui</span></div>
+    <p><strong>Nicolas Sarkozy</strong> affronte la <strong>crise financière de 2008</strong>. <strong>François Hollande</strong> légalise le <strong>mariage pour tous</strong> (2013), mais son mandat est endeuillé par les <strong>attentats de 2015</strong> (Charlie Hebdo, Bataclan). <strong>Emmanuel Macron</strong> (élu 2017) brise le bipartisme, affronte les <strong>Gilets Jaunes</strong> (2018–19) et la pandémie <strong>Covid-19</strong> (2020–22). La défiance envers les institutions grandit.</p>
+    <div class="tags">
+      <span class="tag orange">Crise financière 2008</span>
+      <span class="tag cyan">Mariage pour tous 2013</span>
+      <span class="tag rose">Attentats 2015</span>
+      <span class="tag">Gilets Jaunes 2018</span>
+      <span class="tag">Covid-19 2020</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     NOTIONS CLÉS
+════════════════════════════════ -->
+<div id="notions" class="section">
+  <div class="section-heading">💡 Notions clés à maîtriser</div>
+  <div class="notions-grid">
+
+    <div class="notion-card">
+      <h3>🏛️ Démocratie représentative</h3>
+      <p>Régime dans lequel les citoyens élisent des représentants pour gouverner en leur nom. En France : élections présidentielles et législatives.</p>
+    </div>
+    <div class="notion-card violet">
+      <h3>📜 Ve République</h3>
+      <p>Régime instauré par la Constitution de 1958, avec un exécutif fort. Le président est élu au suffrage universel direct depuis 1962.</p>
+    </div>
+    <div class="notion-card rose">
+      <h3>🔄 Cohabitation</h3>
+      <p>Situation où le président et le Premier ministre appartiennent à des camps politiques opposés (ex : Mitterrand + Chirac, 1986–88).</p>
+    </div>
+    <div class="notion-card orange">
+      <h3>🌍 État-providence</h3>
+      <p>État qui garantit la protection sociale : Sécurité sociale, allocations chômage, retraites, allocations familiales. Mis en place en 1945.</p>
+    </div>
+    <div class="notion-card green">
+      <h3>📈 Trente Glorieuses</h3>
+      <p>Période de forte croissance économique de 1945 à 1973. Hausse des salaires, plein emploi, développement de la société de consommation.</p>
+    </div>
+    <div class="notion-card cyan">
+      <h3>🇪🇺 Construction européenne</h3>
+      <p>Intégration européenne progressive : CECA (1951), CEE (1957), Maastricht (1992), euro (2002). La France en est un moteur.</p>
+    </div>
+    <div class="notion-card">
+      <h3>🗳️ Suffrage universel</h3>
+      <p>Droit de vote accordé à tous les citoyens adultes sans distinction. Les femmes votent en France depuis 1944.</p>
+    </div>
+    <div class="notion-card violet">
+      <h3>📊 Alternance politique</h3>
+      <p>Passage du pouvoir d'un parti à un autre par les élections. Signe de démocratie saine (ex : victoire de la gauche en 1981).</p>
+    </div>
+    <div class="notion-card rose">
+      <h3>⚖️ Laïcité</h3>
+      <p>Séparation de l'État et des religions (loi 1905). Principe constitutionnel réaffirmé, notamment avec la loi sur les signes religieux (2004).</p>
+    </div>
+    <div class="notion-card orange">
+      <h3>📉 Choc pétrolier</h3>
+      <p>Hausse brutale du prix du pétrole en 1973 et 1979 qui met fin à la croissance des Trente Glorieuses et génère chômage et inflation.</p>
+    </div>
+    <div class="notion-card green">
+      <h3>🏙️ Décentralisation</h3>
+      <p>Transfert de pouvoirs de l'État vers les collectivités locales (régions, départements). Lois Defferre en 1982, approfondies en 2003.</p>
+    </div>
+    <div class="notion-card cyan">
+      <h3>✊ Mouvement social</h3>
+      <p>Action collective pour défendre des droits : grèves, manifestations. Exemples : Mai 1968, mouvement des Gilets Jaunes (2018).</p>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     PERSONNAGES
+════════════════════════════════ -->
+<div id="personnages" class="section">
+  <div class="section-heading">👤 Personnages importants</div>
+  <div class="perso-grid">
+
+    <div class="perso-card">
+      <div class="perso-avatar">🎖️</div>
+      <div>
+        <h3>Charles de Gaulle</h3>
+        <div class="perso-role">Président 1959–1969</div>
+        <p>Fondateur de la Ve République. Rédige la Constitution de 1958, négocie l'indépendance algérienne (1962). Démissionne après le référendum de 1969.</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <div class="perso-avatar">🏗️</div>
+      <div>
+        <h3>Georges Pompidou</h3>
+        <div class="perso-role">Président 1969–1974</div>
+        <p>Modernise la France (autoroutes, industrie). Meurt en cours de mandat. Son règne est marqué par le début de la crise pétrolière.</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <div class="perso-avatar">💼</div>
+      <div>
+        <h3>Valéry Giscard d'Estaing</h3>
+        <div class="perso-role">Président 1974–1981</div>
+        <p>Modernise la société : majorité à 18 ans, légalisation de l'IVG (loi Veil 1975), divorce par consentement mutuel.</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <div class="perso-avatar">🌿</div>
+      <div>
+        <h3>Simone Veil</h3>
+        <div class="perso-role">Ministre de la Santé 1974–79</div>
+        <p>Fait voter la loi légalisant l'IVG en 1975 malgré une forte opposition. Symbole du progrès des droits des femmes.</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <div class="perso-avatar">🌹</div>
+      <div>
+        <h3>François Mitterrand</h3>
+        <div class="perso-role">Président 1981–1995</div>
+        <p>Premier socialiste président de la Ve République. Abolit la peine de mort (1981), décentralise, promeut l'Europe. Élu deux fois.</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <div class="perso-avatar">🌍</div>
+      <div>
+        <h3>Jacques Chirac</h3>
+        <div class="perso-role">Président 1995–2007</div>
+        <p>Instaure le quinquennat. Refuse la guerre en Irak (2003). En 2002 : sursaut républicain contre l'extrême-droite (Le Pen au 2e tour).</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <div class="perso-avatar">🤝</div>
+      <div>
+        <h3>Lionel Jospin</h3>
+        <div class="perso-role">Premier ministre 1997–2002</div>
+        <p>Instaure les 35 heures (1998–2000), le PACS (1999), la parité en politique. Éliminé au 1er tour de la présidentielle 2002.</p>
+      </div>
+    </div>
+
+    <div class="perso-card">
+      <div class="perso-avatar">⚡</div>
+      <div>
+        <h3>Emmanuel Macron</h3>
+        <div class="perso-role">Président depuis 2017</div>
+        <p>Fondateur d'En Marche !. Affronte les Gilets Jaunes (2018), la crise Covid (2020–22). Réélu en 2022. Défenseur de la souveraineté européenne.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     CHRONOLOGIE
+════════════════════════════════ -->
+<div id="chrono" class="section">
+  <div class="section-heading">📅 Chronologie complète</div>
+  <div class="chrono-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>📌 Date</th>
+          <th>Catégorie</th>
+          <th>Événement</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td class="c-date">1944</td><td><span class="c-cat c-pol">Politique</span></td><td>Droit de vote accordé aux <strong>femmes</strong> — ordonnance du GPRF (de Gaulle)</td></tr>
+        <tr><td class="c-date">1945</td><td><span class="c-cat c-soc">Social</span></td><td>Création de la <strong>Sécurité sociale</strong> — naissance de l'État-providence</td></tr>
+        <tr><td class="c-date">1946</td><td><span class="c-cat c-inst">Institutions</span></td><td>Constitution de la <strong>IVe République</strong> — régime parlementaire</td></tr>
+        <tr><td class="c-date">1946–54</td><td><span class="c-cat c-pol">Politique</span></td><td><strong>Guerre d'Indochine</strong> — défaite à Diên Biên Phu (1954)</td></tr>
+        <tr><td class="c-date">1948</td><td><span class="c-cat c-eco">Économie</span></td><td><strong>Plan Marshall</strong> — aide américaine à la reconstruction</td></tr>
+        <tr><td class="c-date">1951</td><td><span class="c-cat c-inst">Institutions</span></td><td>Création de la <strong>CECA</strong> — embryon de la construction européenne</td></tr>
+        <tr><td class="c-date">1954</td><td><span class="c-cat c-pol">Politique</span></td><td>Début de la <strong>Guerre d'Algérie</strong> (Toussaint rouge)</td></tr>
+        <tr><td class="c-date">1957</td><td><span class="c-cat c-inst">Institutions</span></td><td><strong>Traité de Rome</strong> — naissance de la CEE</td></tr>
+        <tr><td class="c-date">1958</td><td><span class="c-cat c-inst">Institutions</span></td><td>Constitution de la <strong>Ve République</strong> — de Gaulle revient au pouvoir</td></tr>
+        <tr><td class="c-date">1962</td><td><span class="c-cat c-pol">Politique</span></td><td>Indépendance de l'<strong>Algérie</strong> (Accords d'Évian) + Suffrage universel direct</td></tr>
+        <tr><td class="c-date">1968</td><td><span class="c-cat c-soc">Social</span></td><td>⚡ <strong>Mai 1968</strong> — grève générale, crise sociale et culturelle majeure</td></tr>
+        <tr><td class="c-date">1973</td><td><span class="c-cat c-eco">Économie</span></td><td><strong>Choc pétrolier</strong> — fin des Trente Glorieuses, montée du chômage</td></tr>
+        <tr><td class="c-date">1974</td><td><span class="c-cat c-soc">Social</span></td><td>Majorité légale à <strong>18 ans</strong> (auparavant 21 ans)</td></tr>
+        <tr><td class="c-date">1975</td><td><span class="c-cat c-soc">Social</span></td><td>Loi <strong>Veil</strong> — légalisation de l'IVG (avortement)</td></tr>
+        <tr><td class="c-date">1981</td><td><span class="c-cat c-pol">Politique</span></td><td>Élection de <strong>François Mitterrand</strong> — 1ère alternance à gauche</td></tr>
+        <tr><td class="c-date">1981</td><td><span class="c-cat c-soc">Social</span></td><td><strong>Abolition de la peine de mort</strong> (garde des Sceaux Badinter)</td></tr>
+        <tr><td class="c-date">1982</td><td><span class="c-cat c-inst">Institutions</span></td><td>Lois <strong>Defferre</strong> — décentralisation vers régions et départements</td></tr>
+        <tr><td class="c-date">1986–88</td><td><span class="c-cat c-pol">Politique</span></td><td>1ère <strong>cohabitation</strong> : Mitterrand + Chirac (Premier ministre)</td></tr>
+        <tr><td class="c-date">1992</td><td><span class="c-cat c-inst">Institutions</span></td><td><strong>Traité de Maastricht</strong> — création de l'Union Européenne</td></tr>
+        <tr><td class="c-date">1999</td><td><span class="c-cat c-soc">Social</span></td><td><strong>PACS</strong> — pacte civil de solidarité reconnaissant les couples non mariés</td></tr>
+        <tr><td class="c-date">2000</td><td><span class="c-cat c-soc">Social</span></td><td>Loi <strong>parité</strong> hommes-femmes en politique / <strong>35 heures</strong> (loi Aubry)</td></tr>
+        <tr><td class="c-date">2002</td><td><span class="c-cat c-pol">Politique</span></td><td>Le Pen au 2e tour — <strong>sursaut républicain</strong>, Chirac réélu à 82 % + Quinquennat</td></tr>
+        <tr><td class="c-date">2002</td><td><span class="c-cat c-eco">Économie</span></td><td>💶 Mise en circulation de l'<strong>euro</strong> — fin du franc français</td></tr>
+        <tr><td class="c-date">2005</td><td><span class="c-cat c-pol">Politique</span></td><td><strong>Non</strong> au référendum sur la Constitution européenne (54,7 %)</td></tr>
+        <tr><td class="c-date">2008</td><td><span class="c-cat c-eco">Économie</span></td><td><strong>Crise financière</strong> mondiale — récession, plans de relance</td></tr>
+        <tr><td class="c-date">2013</td><td><span class="c-cat c-soc">Social</span></td><td><strong>Mariage pour tous</strong> — loi Taubira sous François Hollande</td></tr>
+        <tr><td class="c-date">2015</td><td><span class="c-cat c-pol">Politique</span></td><td>⚡ <strong>Attentats</strong> — Charlie Hebdo (jan.) &amp; Bataclan (nov.) — état d'urgence</td></tr>
+        <tr><td class="c-date">2017</td><td><span class="c-cat c-pol">Politique</span></td><td>Élection d'<strong>Emmanuel Macron</strong> (En Marche !) — rupture du bipartisme</td></tr>
+        <tr><td class="c-date">2018–19</td><td><span class="c-cat c-soc">Social</span></td><td>Mouvement des <strong>Gilets Jaunes</strong> — crise sociale et fiscale</td></tr>
+        <tr><td class="c-date">2020–22</td><td><span class="c-cat c-soc">Social</span></td><td>Pandémie <strong>Covid-19</strong> — confinements, crise sanitaire et économique</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     QCM INTERACTIF
+════════════════════════════════ -->
+<div id="qcm" class="section">
+  <div class="section-heading">✏️ QCM interactif</div>
+
+  <div class="qcm-header">
+    <div>
+      <div class="score-big" id="scoreDisplay">Score : 0 / 0</div>
+      <div class="score-label">Bonne(s) réponse(s)</div>
+    </div>
+    <div class="pbar-wrap"><div class="pbar" id="progressBar" style="width:0%"></div></div>
+    <button class="btn btn-restart" onclick="restartQCM()">🔄 Recommencer</button>
+  </div>
+
+  <div id="qcmArea"></div>
+
+  <div class="result-box" id="resultBox">
+    <div class="result-score" id="resultScore"></div>
+    <h3 id="resultTitle"></h3>
+    <p id="resultMsg"></p>
+    <button class="btn btn-outline" onclick="restartQCM()" style="background:white;color:#4f46e5;">🔄 Recommencer le QCM</button>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+/* ─── TAB NAVIGATION ─── */
+function showTab(id, el) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if (el) el.classList.add('active');
+  if (id === 'qcm' && !document.getElementById('qcmArea').innerHTML.trim()) {
+    renderQuestion(0);
+  }
+}
+
+/* ─── QCM DATA ─── */
+const questions = [
+  {
+    q: "Quand la Ve République est-elle fondée ?",
+    opts: ["1944","1946","1958","1962"],
+    ans: 2,
+    exp: "La Constitution de la Ve République est promulguée le 4 octobre 1958, suite à la crise algérienne et au retour au pouvoir du général de Gaulle."
+  },
+  {
+    q: "Qui accorde le droit de vote aux femmes françaises ?",
+    opts: ["La IIIe République en 1936","Le GPRF (de Gaulle) en 1944","La IVe République en 1946","Napoléon III"],
+    ans: 1,
+    exp: "C'est l'ordonnance du Gouvernement provisoire de la République française (GPRF), présidé par de Gaulle, qui accorde le droit de vote aux femmes en avril 1944."
+  },
+  {
+    q: "Qu'est-ce que la Sécurité sociale créée en 1945 ?",
+    opts: ["Un parti politique","Un système de protection contre la maladie, la vieillesse et le chômage","Un traité européen","Une réforme de l'armée"],
+    ans: 1,
+    exp: "La Sécurité sociale (1945) est le pilier de l'État-providence : elle protège les citoyens contre les risques maladie, accidents du travail, vieillesse et chômage."
+  },
+  {
+    q: "Que désigne la période des 'Trente Glorieuses' ?",
+    opts: ["Les 30 ans de la Révolution française","La croissance économique de 1945 à 1973","Les 30 premières années de la Ve République","La colonisation (1880–1910)"],
+    ans: 1,
+    exp: "Les Trente Glorieuses (1945–1973) sont une période de forte croissance économique, de plein emploi et de développement de la société de consommation."
+  },
+  {
+    q: "Qu'est-ce que le choc pétrolier de 1973 ?",
+    opts: ["La découverte de pétrole en mer du Nord","La hausse brutale du prix du pétrole provoquant une crise économique","La nationalisation des compagnies pétrolières","Un accord de paix au Moyen-Orient"],
+    ans: 1,
+    exp: "Le choc pétrolier de 1973 est une hausse massive du prix du pétrole décidée par les pays de l'OPEP. Il met fin aux Trente Glorieuses et provoque chômage et inflation en France."
+  },
+  {
+    q: "Qui a fait voter la loi légalisant l'IVG en 1975 ?",
+    opts: ["Ségolène Royal","Simone de Beauvoir","Simone Veil","Martine Aubry"],
+    ans: 2,
+    exp: "Simone Veil, ministre de la Santé de Giscard d'Estaing, défend la loi légalisant l'IVG en 1975 malgré une forte opposition. Elle est un symbole du féminisme et des droits des femmes."
+  },
+  {
+    q: "Qu'est-ce que la cohabitation politique en France ?",
+    opts: ["Un accord entre deux partis au gouvernement","Le président et le Premier ministre sont de camps politiques opposés","Une alliance franco-allemande","Le partage du pouvoir entre Sénat et Assemblée"],
+    ans: 1,
+    exp: "La cohabitation désigne la situation où le président et le Premier ministre appartiennent à des partis différents. Ex : Mitterrand (socialiste) + Chirac (RPR) de 1986 à 1988."
+  },
+  {
+    q: "Quelle loi François Mitterrand fait-il voter dès 1981 ?",
+    opts: ["Le mariage pour tous","La décentralisation","L'abolition de la peine de mort","Les 35 heures"],
+    ans: 2,
+    exp: "Dès 1981, Mitterrand fait abolir la peine de mort par son garde des Sceaux Robert Badinter. La France devient un des premiers pays à supprimer cette peine."
+  },
+  {
+    q: "Que symbolise le Traité de Maastricht (1992) ?",
+    opts: ["La création de l'ONU","La création de l'Union Européenne et la préparation de l'euro","La fin de la guerre froide","L'adhésion de la France à l'OTAN"],
+    ans: 1,
+    exp: "Le Traité de Maastricht (1992) crée officiellement l'Union Européenne, prévoit la création de l'euro et approfondit l'intégration européenne (citoyenneté, politique étrangère)."
+  },
+  {
+    q: "Quel événement illustre la crise de la démocratie française en 2002 ?",
+    opts: ["La dissolution de l'Assemblée nationale","Le référendum sur l'Europe","Jean-Marie Le Pen accède au 2e tour de la présidentielle","La cohabitation Jospin–Chirac"],
+    ans: 2,
+    exp: "En 2002, Jean-Marie Le Pen (Front National) arrive au 2e tour de la présidentielle, éliminant Jospin. Ce 'séisme politique' provoque un sursaut républicain : Chirac est réélu avec 82% des voix."
+  },
+  {
+    q: "Que crée le PACS voté en 1999 ?",
+    opts: ["Un statut pour les couples non mariés leur accordant des droits officiels","Un impôt sur les successions","Un nouveau mode de scrutin","Un contrat de travail pour les jeunes"],
+    ans: 0,
+    exp: "Le PACS (Pacte civil de solidarité, 1999) crée un statut officiel pour les couples non mariés (hétérosexuels ou homosexuels) leur accordant des droits fiscaux et patrimoniaux."
+  },
+  {
+    q: "Le mouvement des Gilets Jaunes (2018) naît principalement de :",
+    opts: ["La légalisation du cannabis","Une hausse des taxes sur les carburants et les inégalités sociales","L'entrée d'un nouveau pays dans l'UE","Une réforme de l'éducation nationale"],
+    ans: 1,
+    exp: "Les Gilets Jaunes émergent en 2018 contre une hausse des taxes sur les carburants, puis s'élargissent à une contestation des inégalités sociales et du style de gouvernement de Macron."
+  },
+  {
+    q: "Que marque l'élection d'Emmanuel Macron en 2017 ?",
+    opts: ["Le retour de la gauche traditionnelle","La fin du quinquennat","Une rupture avec les partis traditionnels grâce à En Marche !","L'adhésion de la France à l'OTAN"],
+    ans: 2,
+    exp: "En 2017, Macron est élu avec son mouvement En Marche !, contournant PS et RPR/LR. C'est une recomposition politique majeure de la Ve République."
+  },
+  {
+    q: "Qu'est-ce que la laïcité en France ?",
+    opts: ["La religion officielle de l'État","La séparation de l'État et des religions, garantissant la liberté de conscience","L'interdiction des religions en public","La domination d'une religion sur les autres"],
+    ans: 1,
+    exp: "La laïcité (loi de 1905) sépare l'État et les religions, garantissant la liberté de conscience et l'égalité de tous les citoyens quelle que soit leur croyance."
+  },
+  {
+    q: "Quelle loi Lionel Jospin instaure-t-il entre 1998 et 2000 ?",
+    opts: ["L'abolition de la peine de mort","La semaine de travail à 35 heures","Le passage à l'euro","Le droit de vote à 16 ans"],
+    ans: 1,
+    exp: "Les lois Aubry (1998–2000) instaurent la semaine de 35 heures, réduisant le temps de travail légal dans le but de partager l'emploi et lutter contre le chômage."
+  }
+];
+
+let current = 0, score = 0, answered = [];
+
+function buildQuestion(i) {
+  const q = questions[i];
+  const opts = q.opts.map((o, j) =>
+    `<button class="opt-btn" onclick="answer(${i},${j})" id="opt_${i}_${j}">${o}</button>`
+  ).join('');
+  const isLast = i === questions.length - 1;
+  const nextLabel = isLast ? 'Voir mon résultat 🎉' : 'Question suivante →';
+  const nextAction = isLast ? 'showResult()' : `nextQ(${i+1})`;
+  return `
+    <div class="qcm-card">
+      <div class="q-num">Question ${i+1} / ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options">${opts}</div>
+      <div class="feedback" id="fb_${i}"></div>
+      <div class="qcm-nav">
+        <span></span>
+        <button class="btn btn-primary" id="nextBtn_${i}" onclick="${nextAction}" style="display:none">${nextLabel}</button>
+      </div>
+    </div>`;
+}
+
+function renderQuestion(i) {
+  current = i;
+  document.getElementById('qcmArea').innerHTML = buildQuestion(i);
+  updateProgress();
+}
+
+function answer(qi, chosen) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const q = questions[qi];
+  q.opts.forEach((_, j) => {
+    const b = document.getElementById(`opt_${qi}_${j}`);
+    b.disabled = true;
+    if (j === q.ans) b.classList.add('correct');
+    else if (j === chosen && chosen !== q.ans) b.classList.add('wrong');
+  });
+  const fb = document.getElementById(`fb_${qi}`);
+  if (chosen === q.ans) {
+    score++;
+    fb.textContent = '✅ Bonne réponse ! ' + q.exp;
+    fb.className = 'feedback correct show';
+  } else {
+    fb.textContent = '❌ Mauvaise réponse. ' + q.exp;
+    fb.className = 'feedback wrong show';
+  }
+  document.getElementById(`nextBtn_${qi}`).style.display = 'block';
+  updateProgress();
+}
+
+function nextQ(i) { renderQuestion(i); }
+
+function updateProgress() {
+  const done = answered.filter(Boolean).length;
+  document.getElementById('scoreDisplay').textContent = `Score : ${score} / ${done}`;
+  document.getElementById('progressBar').style.width = `${(done / questions.length) * 100}%`;
+}
+
+function showResult() {
+  document.getElementById('qcmArea').innerHTML = '';
+  const box = document.getElementById('resultBox');
+  box.classList.add('show');
+  document.getElementById('resultScore').textContent = `${score} / ${questions.length}`;
+  const pct = score / questions.length;
+  let title, msg;
+  if      (pct === 1)   { title = "Parfait ! 🎉";          msg = "Tu maîtrises ce chapitre à la perfection. Le Bac est à toi !"; }
+  else if (pct >= 0.8)  { title = "Très bien ! 👏";        msg = "Quasi parfait ! Relis les questions ratées et tu seras imbattable."; }
+  else if (pct >= 0.6)  { title = "Bien ! 📚";             msg = "Bon score, mais quelques points restent à consolider. Relis la fiche !"; }
+  else if (pct >= 0.4)  { title = "Peut mieux faire 💪";   msg = "Il faut retravailler la fiche de révision. Tu y arriveras !"; }
+  else                  { title = "Accroche-toi ! 📖";     msg = "Recommence depuis la fiche de révision, tu peux y arriver !"; }
+  document.getElementById('resultTitle').textContent = title;
+  document.getElementById('resultMsg').textContent   = msg;
+}
+
+function restartQCM() {
+  current = 0; score = 0; answered = [];
+  document.getElementById('resultBox').classList.remove('show');
+  renderQuestion(0);
+  updateProgress();
+}
+</script>
+</body>
+</html>
