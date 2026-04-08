@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Grande Guerre 1914–1918</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink:       #1a1610;
+    --papier:    #f5efe3;
+    --parchemin: #ede3cf;
+    --sepia:     #c8a96e;
+    --rouge:     #8b1a1a;
+    --bleu:      #1b3a5c;
+    --olive:     #4a5c2f;
+    --gris:      #6b6259;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--papier);
+    color: var(--ink);
+    font-size: 17px;
+    line-height: 1.75;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative;
+    background: linear-gradient(160deg, #0d1f33 0%, #1a0d0d 55%, #2a1a00 100%);
+    color: #f0e8d8;
+    text-align: center;
+    padding: 5rem 2rem 4rem;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/1200px-French_soldiers_trench_1915.jpg') center/cover no-repeat;
+    opacity: 0.18;
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 0.8rem;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--sepia);
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -1px;
+    margin-bottom: 1rem;
+  }
+  .hero h1 em { font-style: italic; color: var(--sepia); }
+  .hero-sub {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    max-width: 540px;
+    margin: 0 auto 2rem;
+  }
+  .hero-dates {
+    display: inline-flex;
+    gap: 0;
+    border: 1px solid rgba(200,169,110,0.5);
+    border-radius: 100px;
+    overflow: hidden;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+  }
+  .hero-dates span {
+    padding: 0.45rem 1.6rem;
+    background: rgba(255,255,255,0.06);
+  }
+  .hero-dates span:nth-child(2) {
+    background: var(--sepia);
+    color: var(--ink);
+    font-weight: 700;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 200;
+    background: var(--bleu);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+  }
+  .nav-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 0.2rem;
+    padding: 0.7rem 1rem;
+  }
+  .nav-inner a {
+    color: #c8ddf0;
+    text-decoration: none;
+    font-family: 'Source Serif 4', serif;
+    font-size: 0.88rem;
+    padding: 0.38rem 1.1rem;
+    border-radius: 100px;
+    transition: background 0.18s, color 0.18s;
+    border: 1px solid transparent;
+  }
+  .nav-inner a:hover {
+    background: rgba(255,255,255,0.13);
+    border-color: rgba(255,255,255,0.2);
+    color: #fff;
+  }
+
+  /* ── LAYOUT ── */
+  .page { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+  section {
+    padding: 4.5rem 0 2rem;
+    border-bottom: 1px solid var(--parchemin);
+    scroll-margin-top: 70px;
+  }
+
+  .section-header {
+    display: flex; align-items: flex-start; gap: 1.5rem;
+    margin-bottom: 2.5rem;
+  }
+  .section-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 4rem;
+    font-weight: 900;
+    color: var(--parchemin);
+    line-height: 1;
+    flex-shrink: 0;
+    -webkit-text-stroke: 2px var(--sepia);
+  }
+  .section-title h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.7rem, 4vw, 2.6rem);
+    font-weight: 700;
+    color: var(--bleu);
+    line-height: 1.15;
+  }
+  .section-title p {
+    color: var(--gris);
+    font-size: 0.95rem;
+    margin-top: 0.3rem;
+  }
+
+  /* ── CITATION (15-20 lignes) ── */
+  .citation-bloc {
+    background: linear-gradient(135deg, #1b3a5c 0%, #0d2240 100%);
+    color: #e8d8c0;
+    border-radius: 24px;
+    padding: 2.4rem 2.6rem;
+    margin: 0 0 2.8rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .citation-bloc::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 10rem;
+    position: absolute;
+    top: -2rem; left: 1.5rem;
+    color: rgba(200,169,110,0.15);
+    line-height: 1;
+    pointer-events: none;
+  }
+  .citation-bloc blockquote {
+    font-style: italic;
+    font-size: 1.05rem;
+    line-height: 1.9;
+    position: relative;
+    z-index: 1;
+    border-left: 3px solid var(--sepia);
+    padding-left: 1.4rem;
+  }
+  .citation-bloc .auteur {
+    margin-top: 1.2rem;
+    font-style: normal;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    color: var(--sepia);
+    text-align: right;
+    z-index: 1;
+    position: relative;
+  }
+
+  /* ── GRILLE 2 colonnes ── */
+  .grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    margin: 1.8rem 0;
+  }
+  @media(max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .card-img {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+  }
+  .card-img img { width: 100%; display: block; }
+  .card-img figcaption {
+    background: var(--parchemin);
+    font-size: 0.8rem;
+    color: var(--gris);
+    padding: 0.6rem 0.9rem;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* ── ENCADRÉS INFO ── */
+  .encadre {
+    border-radius: 18px;
+    padding: 1.4rem 1.8rem;
+    margin: 1.5rem 0;
+    border-left: 5px solid;
+  }
+  .encadre.rouge { background: #fdf0f0; border-color: var(--rouge); }
+  .encadre.bleu  { background: #eef3f9; border-color: var(--bleu); }
+  .encadre.olive { background: #f2f5ed; border-color: var(--olive); }
+  .encadre strong { display: block; margin-bottom: 0.4rem; font-size: 0.95rem; }
+
+  .deux-camps {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.8rem 0;
+  }
+  @media(max-width:600px){ .deux-camps { grid-template-columns: 1fr; } }
+  .camp {
+    border-radius: 20px; padding: 1.4rem 1.6rem;
+    font-size: 0.95rem;
+  }
+  .camp h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; margin-bottom: 0.6rem;
+  }
+  .camp.rouge-camp { background: #faeae8; }
+  .camp.rouge-camp h4 { color: var(--rouge); }
+  .camp.bleu-camp { background: #e8eef5; }
+  .camp.bleu-camp h4 { color: var(--bleu); }
+  .camp ul { padding-left: 1.2rem; }
+  .camp li { margin-bottom: 0.3rem; }
+
+  .img-full {
+    width: 100%;
+    border-radius: 22px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.12);
+    display: block;
+    margin: 2rem 0;
+  }
+
+  /* ── FRISE CHRONOLOGIQUE ── */
+  .frise {
+    background: var(--parchemin);
+    border-radius: 20px;
+    padding: 2rem;
+    margin: 2rem 0;
+    overflow-x: auto;
+  }
+  .frise h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--bleu);
+    margin-bottom: 1.2rem;
+  }
+  .frise-inner { display: flex; gap: 0; min-width: 620px; }
+  .frise-item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+  }
+  .frise-item::before {
+    content: '';
+    position: absolute; top: 1.5rem; left: 0; right: 0;
+    height: 3px; background: var(--sepia);
+  }
+  .frise-item:first-child::before { left: 50%; }
+  .frise-item:last-child::before  { right: 50%; }
+  .frise-dot {
+    width: 14px; height: 14px;
+    background: var(--rouge);
+    border: 3px solid var(--papier);
+    border-radius: 50%;
+    margin: 0 auto 0.7rem;
+    position: relative; z-index: 1;
+    box-shadow: 0 0 0 2px var(--rouge);
+  }
+  .frise-year { font-weight: 700; font-size: 0.88rem; color: var(--bleu); }
+  .frise-label { font-size: 0.74rem; color: var(--gris); margin-top: 0.25rem; padding: 0 0.3rem; }
+
+  /* ── EXERCICES ── */
+  .exercices {
+    background: #fff;
+    border-radius: 24px;
+    padding: 2rem 2.2rem;
+    margin-top: 3rem;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    border: 1px solid var(--parchemin);
+  }
+  .exercices h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--bleu);
+    margin-bottom: 1.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .question {
+    padding: 1rem 0;
+    border-bottom: 1px dashed var(--parchemin);
+  }
+  .question:last-of-type { border-bottom: none; }
+  .question p { font-size: 0.97rem; }
+  .question p strong { color: var(--rouge); }
+  .reponse-btn {
+    margin-top: 0.6rem;
+    background: var(--bleu);
+    color: #fff;
+    border: none;
+    padding: 0.35rem 1.2rem;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-family: 'Source Serif 4', serif;
+    transition: background 0.15s;
+  }
+  .reponse-btn:hover { background: #2a5a8a; }
+  .reponse {
+    display: none;
+    background: #f0f5fc;
+    border-left: 4px solid var(--bleu);
+    border-radius: 12px;
+    padding: 0.8rem 1.1rem;
+    margin-top: 0.7rem;
+    font-size: 0.93rem;
+    color: var(--bleu);
+  }
+
+  /* ── BILAN HUMAIN ── */
+  .stats-row {
+    display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 1.5rem 0;
+  }
+  .stat-card {
+    flex: 1; min-width: 140px;
+    background: var(--parchemin);
+    border-radius: 18px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+  .stat-card .val {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--rouge);
+    display: block;
+  }
+  .stat-card .lbl { font-size: 0.8rem; color: var(--gris); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: #0d1f33;
+    color: #9ab3cc;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    font-size: 0.88rem;
+    line-height: 1.8;
+    margin-top: 1rem;
+  }
+  footer strong { color: var(--sepia); }
+
+  /* ── RESPONSIVE HELPERS ── */
+  @media(max-width:480px){
+    .section-num { font-size: 2.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-inner">
+    <p class="hero-eyebrow">Séquence 1H2 · Histoire · Première Mondiale</p>
+    <h1>La <em>Grande Guerre</em><br>1914 – 1918</h1>
+    <p class="hero-sub">Un conflit qui a embrasé le monde entier, changé les frontières et marqué des générations.</p>
+    <div class="hero-dates">
+      <span>28 juin 1914</span>
+      <span>→</span>
+      <span>11 nov. 1918</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="#mondialisation">⚔️ Un conflit mondial</a>
+    <a href="#violence">💀 La violence du conflit</a>
+    <a href="#societes">🏭 Sociétés mobilisées</a>
+    <a href="#sortir">🕊️ Sortir de la guerre</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- ════════════════════════════════════════════════════
+       PARTIE 1 — UN CONFLIT QUI SE MONDIALISE
+  ═══════════════════════════════════════════════════════ -->
+  <section id="mondialisation">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div class="section-title">
+        <h2>Des conflits qui se mondialisent</h2>
+        <p>D'un attentat à Sarajevo à un embrasement planétaire</p>
+      </div>
+    </div>
+
+    <!-- CITATION : Jaurès, ~15 lignes -->
+    <div class="citation-bloc">
+      <blockquote>
+        Citoyens, il y a quelque chose de terrible dans la situation présente : c'est que les hommes qui ont le plus de cœur, les hommes qui ont le plus aimé la paix, les hommes qui ont le plus lutté contre la guerre — et je parle des socialistes de tous les pays — se trouvent aujourd'hui impuissants devant le mécanisme aveugle qui se déclenche.
+        <br><br>
+        Nous avons dénoncé les alliances secrètes. Nous avons signalé la course aux armements. Nous avons averti que chaque crise internationale — Maroc, Balkans — nous approchait d'un abîme. Mais les gouvernements, enfermés dans leurs calculs de puissance, n'ont pas voulu entendre.
+        <br><br>
+        Ce que je sais, c'est qu'une guerre européenne déclenchée pour une querelle de Balkans sera une catastrophe dont aucun peuple ne mesure encore l'étendue. Des millions d'hommes partiront, beaucoup ne reviendront pas. Et ceux qui reviendront trouveront-ils une Europe meilleure ? Je ne le crois pas.
+        <br><br>
+        Travaillons jusqu'au dernier souffle pour la paix. Car la paix, c'est la vie — et la guerre, même victorieuse, n'est jamais que de la mort organisée.
+      </blockquote>
+      <p class="auteur">— Jean Jaurès, discours de Vaise (Lyon), 25 juillet 1914<br><em>(Trois jours avant son assassinat, il alerte sur la catastrophe imminente)</em></p>
+    </div>
+
+    <!-- FRISE -->
+    <div class="frise">
+      <h3>📅 Chronologie en un coup d'œil</h3>
+      <div class="frise-inner">
+        <div class="frise-item">
+          <div class="frise-dot"></div>
+          <div class="frise-year">28 juin 1914</div>
+          <div class="frise-label">Attentat de Sarajevo</div>
+        </div>
+        <div class="frise-item">
+          <div class="frise-dot"></div>
+          <div class="frise-year">Août 1914</div>
+          <div class="frise-label">Guerre de mouvement</div>
+        </div>
+        <div class="frise-item">
+          <div class="frise-dot"></div>
+          <div class="frise-year">1915–1916</div>
+          <div class="frise-label">Guerre des tranchées</div>
+        </div>
+        <div class="frise-item">
+          <div class="frise-dot"></div>
+          <div class="frise-year">Avr. 1917</div>
+          <div class="frise-label">USA entrent en guerre</div>
+        </div>
+        <div class="frise-item">
+          <div class="frise-dot"></div>
+          <div class="frise-year">Oct. 1917</div>
+          <div class="frise-label">Révolution russe</div>
+        </div>
+        <div class="frise-item">
+          <div class="frise-dot"></div>
+          <div class="frise-year">11 nov. 1918</div>
+          <div class="frise-label">Armistice signé</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <p>Tout part d'un seul coup de pistolet : l'assassinat de l'archiduc François-Ferdinand d'Autriche à Sarajevo, le <strong>28 juin 1914</strong>, par un nationaliste serbe. Mais les poudrières étaient déjà en place depuis des années : rivalités coloniales, nationalismes exacerbés, courses aux armements et surtout un système d'alliances rigide qui transforme un conflit local en incendie mondial.</p>
+
+        <div class="encadre rouge">
+          <strong>💥 Le mécanisme des alliances</strong>
+          L'Autriche déclare la guerre à la Serbie → la Russie mobilise → l'Allemagne déclare la guerre à la Russie → la France entre en guerre → l'Allemagne envahit la Belgique neutre → le Royaume-Uni déclare la guerre à l'Allemagne. En à peine une semaine, toute l'Europe est à feu et à sang.
+        </div>
+
+        <p>Le conflit s'étend bien au-delà de l'Europe. Les empires coloniaux envoient leurs soldats combattre sur tous les fronts : environ <strong>200 000 Africains de l'AOF</strong> (Afrique Occidentale Française) se battent sous le drapeau français, dont 30 000 y perdront la vie.</p>
+      </div>
+      <figure class="card-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Map_Europe_alliances_1914-fr.svg/1024px-Map_Europe_alliances_1914-fr.svg.png" alt="Carte des alliances en Europe en 1914">
+        <figcaption>🗺️ L'Europe en 1914 : Triple Alliance (rouge) vs Triple Entente (vert)</figcaption>
+      </figure>
+    </div>
+
+    <div class="deux-camps">
+      <div class="camp rouge-camp">
+        <h4>⚡ Les Empires centraux</h4>
+        <ul>
+          <li>Empire allemand</li>
+          <li>Autriche-Hongrie</li>
+          <li>Empire ottoman</li>
+          <li>Bulgarie (dès 1915)</li>
+        </ul>
+      </div>
+      <div class="camp bleu-camp">
+        <h4>🌍 Les Alliés (Triple Entente)</h4>
+        <ul>
+          <li>France, Royaume-Uni, Russie</li>
+          <li>Italie (dès 1915)</li>
+          <li>États-Unis (dès avril 1917)</li>
+          <li>Colonies : AOF, Inde, Canada, Australie…</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="encadre bleu">
+      <strong>🇺🇸 Pourquoi les États-Unis entrent-ils en guerre en 1917 ?</strong>
+      L'Allemagne pratique la guerre sous-marine totale et coule des navires américains sans avertissement. Le président Wilson proclame devant le Congrès le 2 avril 1917 : <em>« La neutralité n'est plus ni possible, ni désirable quand il y va de la paix du monde et de la liberté des peuples. »</em> Les troupes américaines renverseront le rapport de force en faveur des Alliés.
+    </div>
+
+    <!-- EXERCICES PARTIE 1 -->
+    <div class="exercices">
+      <h3>✍️ Exercices — La mondialisation du conflit</h3>
+      <div class="question">
+        <p><strong>Q1.</strong> Quelle est la date et le lieu de l'attentat qui déclenche la Première Guerre mondiale ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Le 28 juin 1914 à Sarajevo (Bosnie) : assassinat de l'archiduc François-Ferdinand d'Autriche par Gavrilo Princip, nationaliste serbe.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q2.</strong> Cite les trois pays qui forment la Triple Entente en 1914.</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">La France, le Royaume-Uni et la Russie.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q3.</strong> Pourquoi dit-on que la Première Guerre mondiale est un conflit « mondial » ? Donne deux exemples concrets.</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Car il implique des pays du monde entier : les colonies africaines et asiatiques envoient des soldats (ex. : 200 000 Africains de l'AOF combattent pour la France), et des puissances extra-européennes comme les États-Unis ou le Japon y participent.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q4.</strong> Quelle raison principale pousse les États-Unis à entrer en guerre en avril 1917 ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">La guerre sous-marine allemande qui coule des navires américains sans avertissement, tuant des citoyens américains.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       PARTIE 2 — LA VIOLENCE DES CONFLITS
+  ═══════════════════════════════════════════════════════ -->
+  <section id="violence">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div class="section-title">
+        <h2>La violence des conflits</h2>
+        <p>L'enfer des tranchées et la guerre industrielle</p>
+      </div>
+    </div>
+
+    <!-- CITATION : Wilfred Owen, poète soldat, ~15 lignes -->
+    <div class="citation-bloc">
+      <blockquote>
+        On nous avait dit que mourir pour la patrie était doux et honorable. Mais aucun de ceux qui nous l'ont dit n'était dans les tranchées avec nous.
+        <br><br>
+        Nous vivions dans la boue. Une boue épaisse, froide, qui collait à tout. Elle recouvrait les morts, les blessés, les vivants — sans distinction. Des rats gros comme des chats couraient entre nos jambes la nuit. L'odeur était celle de la chair en décomposition mêlée à la cordite des obus.
+        <br><br>
+        Chaque matin, nous attendions l'ordre d'attaque. Sortir de la tranchée, c'était courir vers les fils de fer barbelés sous un déluge de mitrailleuses. Pour quelques mètres de terrain. Parfois pour rien.
+        <br><br>
+        J'ai vu des gaz asphyxiants tuer mes camarades en quelques minutes. J'ai vu des hommes rentrer fous de l'autre côté. Je suis resté, parce qu'on ne choisit pas. Mais si un jour vous lisez ces mots, sachez que la guerre n'a rien de glorieux. Elle n'est que souffrance, hasard et silence des survivants qui n'arrivent plus à parler.
+      </blockquote>
+      <p class="auteur">— Wilfred Owen, poète et soldat britannique (1893–1918)<br><em>Tué au front une semaine avant l'armistice, il est l'une des voix les plus bouleversantes de la Grande Guerre</em></p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <p>Dès l'automne 1914, la guerre de mouvement s'enlise. Les soldats creusent des centaines de kilomètres de tranchées, de la mer du Nord aux Vosges. Deux armées se font face, séparées par un « no man's land » parsemé de barbelés et de cadavres. La vie dans les tranchées est un enfer : boue, rats, poux, bombardements incessants, gaz.</p>
+
+        <div class="encadre rouge">
+          <strong>⚔️ Les grandes batailles meurtrières</strong>
+          <ul style="padding-left:1.1rem; margin-top: 0.4rem;">
+            <li><strong>Verdun (fév.–déc. 1916)</strong> : ≈ 300 000 morts. « Ils ne passeront pas ! »</li>
+            <li><strong>La Somme (juil.–nov. 1916)</strong> : +1 million de pertes ; 1er jour = 57 000 morts britanniques</li>
+            <li><strong>Chemin des Dames (1917)</strong> : échec et mutineries des poilus épuisés</li>
+          </ul>
+        </div>
+      </div>
+      <figure class="card-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/1024px-French_soldiers_trench_1915.jpg" alt="Soldats français dans une tranchée, 1915">
+        <figcaption>Poilus dans une tranchée de l'Aisne, hiver 1915 — Wikimedia Commons</figcaption>
+      </figure>
+    </div>
+
+    <div class="encadre olive">
+      <strong>🔧 Une guerre industrielle et technologique</strong>
+      Pour la première fois dans l'histoire, des armes de masse sont utilisées à grande échelle : mitrailleuses lourdes, obus à gaz moutarde (ypérite), chars d'assaut (Somme, 1916), sous-marins, bombardiers… L'industrie tourne à plein régime pour alimenter le front en munitions et en hommes.
+    </div>
+
+    <div class="encadre rouge">
+      <strong>☠️ Le génocide arménien (1915–1916)</strong>
+      Profitant du chaos de la guerre, l'Empire ottoman procède à la déportation et au massacre de la population arménienne. Entre 600 000 et 1,2 million d'Arméniens sont tués — l'un des premiers génocides du XXe siècle. Cette violence extrême contre des civils illustre la dimension de « guerre totale ».
+    </div>
+
+    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Western_front_1915-1916.jpg/1200px-Western_front_1915-1916.jpg" alt="Front ouest 1915-1916" class="img-full">
+    <p style="text-align:center; color: var(--gris); font-size: 0.82rem; margin-top: -1rem; margin-bottom: 1.5rem;">🗺️ Le front ouest : des positions figées pendant des années — Verdun au centre des combats</p>
+
+    <!-- EXERCICES PARTIE 2 -->
+    <div class="exercices">
+      <h3>✍️ Exercices — La violence du conflit</h3>
+      <div class="question">
+        <p><strong>Q1.</strong> Qu'est-ce qu'une tranchée ? Décris les conditions de vie des soldats en 3 points.</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Une tranchée est une longue excavation creusée dans le sol où les soldats se protègent des tirs ennemis. Conditions : 1) Boue et froid intenses ; 2) présence de rats et de poux ; 3) bombardements constants et risque de gaz asphyxiants.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q2.</strong> Quelle bataille symbolise la résistance française en 1916 ? Quel slogan lui est associé ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">La bataille de Verdun (février–décembre 1916). Le slogan : « Ils ne passeront pas ! »</div>
+      </div>
+      <div class="question">
+        <p><strong>Q3.</strong> Cite deux nouvelles armes apparues pendant la Première Guerre mondiale.</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Les chars d'assaut (1916, bataille de la Somme), les gaz de combat (gaz moutarde / ypérite), les mitrailleuses lourdes, les sous-marins, les bombardiers.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q4.</strong> Qu'est-ce qu'une « mutinerie » ? Quand éclate-t-elle sur le front français ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Une mutinerie est un refus collectif d'obéir aux ordres de la part de soldats épuisés. Elle éclate au printemps 1917 sur le front français, après l'échec sanglant de l'offensive du Chemin des Dames.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       PARTIE 3 — DES SOCIÉTÉS ENTIÈREMENT MOBILISÉES
+  ═══════════════════════════════════════════════════════ -->
+  <section id="societes">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div class="section-title">
+        <h2>Des sociétés entièrement mobilisées</h2>
+        <p>La guerre totale : l'arrière au service du front</p>
+      </div>
+    </div>
+
+    <!-- CITATION : Clemenceau, ~15 lignes -->
+    <div class="citation-bloc">
+      <blockquote>
+        Je fais la guerre. Je fais toujours la guerre. Toutes mes politiques se résument à ces mots. La France se bat ; elle se bat avec ses soldats dans les tranchées, mais aussi avec ses femmes dans les usines, avec ses paysans dans les champs, avec ses ingénieurs dans les ateliers.
+        <br><br>
+        On m'a demandé ce que j'entends par victoire. La victoire, c'est que la France survive. Survivre, c'est produire : des obus, des fusils, des mitrailleuses, des avions. Chaque ouvrier qui forge, chaque femme qui tourne un tour, chaque enfant qui économise le pain — tous sont des soldats de la République.
+        <br><br>
+        Ceux qui capitulaient, je les ai mis en prison. Ceux qui doutaient, je les ai convaincus. Car le doute, dans cette guerre, c'est la défaite avant même le combat.
+        <br><br>
+        Nous vaincrons parce que nous le voulons plus fort qu'eux. Parce qu'une nation entière, debout depuis 1914, ne peut pas s'être levée pour rien.
+      </blockquote>
+      <p class="auteur">— Georges Clemenceau, dit « Le Tigre », Président du Conseil (1917–1920)<br><em>Il incarne la mobilisation totale de la société française pour l'effort de guerre</em></p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <p>La Première Guerre mondiale est une <strong>guerre totale</strong> : elle mobilise l'ensemble de la société, pas seulement les soldats. À l'arrière, les femmes remplacent les hommes dans les usines, les ateliers d'armement, les champs. L'État contrôle l'économie, rationne les denrées alimentaires et lance des emprunts nationaux pour financer le conflit.</p>
+
+        <div class="encadre bleu">
+          <strong>👩‍🔧 Le rôle des femmes</strong>
+          Avec des millions d'hommes partis au front, les femmes occupent massivement les emplois industriels, agricoles et administratifs. Elles fabriquent des obus dans les usines (on les appellera les « munitionnettes »). Cette expérience accélère les revendications pour le droit de vote des femmes après-guerre.
+        </div>
+
+        <div class="encadre rouge">
+          <strong>📣 La propagande</strong>
+          Les gouvernements utilisent affiches, journaux, école et cinéma pour maintenir le moral des populations et présenter l'ennemi comme un monstre. Cette manipulation de l'opinion est un élément central de la guerre totale.
+        </div>
+      </div>
+      <figure class="card-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Women_workers_WW1.jpg/800px-Women_workers_WW1.jpg" alt="Femmes travaillant dans une usine d'armement, Première Guerre mondiale" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/800px-French_soldiers_trench_1915.jpg'">
+        <figcaption>Femmes ouvrières dans une usine d'armement — la mobilisation de l'arrière</figcaption>
+      </figure>
+    </div>
+
+    <div class="encadre olive">
+      <strong>🌍 Les colonies dans la guerre totale</strong>
+      La France mobilise ses colonies : environ 200 000 Africains de l'AOF (Mauritanie, Sénégal, Mali, Guinée, Côte d'Ivoire, Niger, Burkina Faso, Togo, Bénin) combattent en Europe. 30 000 d'entre eux y laissent la vie. Sans oublier les soldats venus d'Indochine, du Maroc ou d'Algérie. La guerre est véritablement mondiale dans sa mobilisation humaine.
+    </div>
+
+    <!-- EXERCICES PARTIE 3 -->
+    <div class="exercices">
+      <h3>✍️ Exercices — La mobilisation des sociétés</h3>
+      <div class="question">
+        <p><strong>Q1.</strong> Qu'est-ce qu'une « guerre totale » ? Donne deux exemples de mobilisation de l'arrière.</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Une guerre totale mobilise l'ensemble de la société (pas seulement les armées). Exemples : les femmes remplacent les hommes dans les usines d'armement ; l'État rationne les aliments et lance des emprunts nationaux.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q2.</strong> Quel rôle jouent les femmes pendant la guerre ? Quelles conséquences cela a-t-il après le conflit ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Les femmes travaillent dans les usines d'armement, les champs et l'administration. Cette expérience renforce leurs revendications pour le droit de vote et leur place dans la société après-guerre.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q3.</strong> Pourquoi la propagande est-elle un outil important dans une guerre totale ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Car maintenir le moral des civils et des soldats est aussi important que les victoires militaires. La propagande (affiches, journaux, école) doit convaincre les populations de continuer à soutenir l'effort de guerre malgré les sacrifices.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q4.</strong> Combien de soldats africains de l'AOF combattent pour la France ? Combien y meurent ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Environ 200 000 Africains de l'AOF se battent sous le drapeau français, dont plus de 135 000 en Europe. Environ 30 000 d'entre eux y trouvent la mort.</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════════════════
+       PARTIE 4 — SORTIR DE LA GUERRE
+  ═══════════════════════════════════════════════════════ -->
+  <section id="sortir">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div class="section-title">
+        <h2>Sortir de la guerre</h2>
+        <p>L'armistice, la paix fragile et ses conséquences</p>
+      </div>
+    </div>
+
+    <!-- CITATION : Wilson, ~15 lignes -->
+    <div class="citation-bloc">
+      <blockquote>
+        Le monde doit être rendu sûr pour la démocratie. Sa paix doit être fondée sur des bases solides — la volonté des peuples — et non sur l'équilibre artificiel de puissances rivales.
+        <br><br>
+        Nous ne combattons pas pour la conquête ou l'indemnité. Nous ne cherchons pas à imposer notre volonté à qui que ce soit. Nous ne souhaitons aucune revanche, aucune vengeance.
+        <br><br>
+        Ce que nous demandons pour nous-mêmes, c'est ce que nous souhaitons pour tous les peuples du monde : que chaque nation puisse tracer sa propre voie, libre de toute contrainte. Le droit des peuples à disposer d'eux-mêmes ne doit plus être un simple idéal — il doit devenir le principe fondateur d'un nouvel ordre international.
+        <br><br>
+        C'est pourquoi nous proposons la création d'une Société des Nations, qui garantisse l'indépendance politique et l'intégrité territoriale de tous les États, grands et petits, et qui règle les différends par la diplomatie et non par les armes.
+        <br><br>
+        Car si cette guerre ne débouche pas sur une paix juste, elle n'aura été qu'un prélude à une catastrophe encore plus grande.
+      </blockquote>
+      <p class="auteur">— Woodrow Wilson, président des États-Unis, discours des « 14 points », janvier 1918<br><em>Son programme pour l'après-guerre influencera directement les traités de paix de 1919</em></p>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <p>En 1917, la révolution bolchévique retire la Russie du conflit (armistice de Brest-Litovsk, mars 1918). Mais l'arrivée massive des soldats américains renverse le rapport de force. L'Allemagne, épuisée, ne peut plus résister. Le <strong>11 novembre 1918, à 11h du matin</strong>, l'armistice est signé dans un wagon de chemin de fer à Rethondes, en forêt de Compiègne.</p>
+
+        <div class="encadre rouge">
+          <strong>📜 Le traité de Versailles (28 juin 1919)</strong>
+          L'Allemagne est jugée seule responsable de la guerre (clause de culpabilité). Elle perd des territoires (Alsace-Lorraine rendue à la France, colonies perdues), doit payer d'immenses réparations et limiter son armée. Ce « diktat » humiliant nourrira la rancœur qui favorisera la montée du nazisme.
+        </div>
+      </div>
+      <figure class="card-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Bundesarchiv_Bild_183-R27882%2C_Versailles%2C_Unterzeichnung_Friedensvertrag.jpg/1024px-Bundesarchiv_Bild_183-R27882%2C_Versailles%2C_Unterzeichnung_Friedensvertrag.jpg" alt="Signature du traité de Versailles, 1919" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/800px-French_soldiers_trench_1915.jpg'">
+        <figcaption>Signature du traité de Versailles dans la Galerie des Glaces, 28 juin 1919</figcaption>
+      </figure>
+    </div>
+
+    <!-- BILAN CHIFFRÉ -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <span class="val">~9M</span>
+        <span class="lbl">soldats tués</span>
+      </div>
+      <div class="stat-card">
+        <span class="val">21M</span>
+        <span class="lbl">blessés de guerre</span>
+      </div>
+      <div class="stat-card">
+        <span class="val">4</span>
+        <span class="lbl">empires disparus</span>
+      </div>
+      <div class="stat-card">
+        <span class="val">1919</span>
+        <span class="lbl">Création de la SDN</span>
+      </div>
+    </div>
+
+    <div class="encadre bleu">
+      <strong>🗺️ Une Europe redessinée</strong>
+      La guerre entraîne la chute de quatre grands empires : l'Empire allemand, l'Empire austro-hongrois, l'Empire ottoman et l'Empire russe. De nouveaux États apparaissent sur la carte : Pologne, Tchécoslovaquie, Yougoslavie, États baltes… La carte de l'Europe est profondément redessinée par les traités de 1919–1920.
+    </div>
+
+    <div class="encadre olive">
+      <strong>🕊️ La Société des Nations (SDN) — ancêtre de l'ONU</strong>
+      Proposée par Wilson, la SDN est créée en 1920 pour régler les conflits par la diplomatie. C'est une révolution dans les relations internationales : pour la première fois, les États acceptent (en théorie) de soumettre leurs différends à une instance internationale. Mais sans les États-Unis (le Sénat américain refuse de ratifier), elle restera fragile.
+    </div>
+
+    <!-- EXERCICES PARTIE 4 -->
+    <div class="exercices">
+      <h3>✍️ Exercices — Sortir de la guerre</h3>
+      <div class="question">
+        <p><strong>Q1.</strong> Quand et où l'armistice est-il signé ? Que marque cette date dans la mémoire française ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Le 11 novembre 1918 à 11h, dans un wagon à Rethondes (forêt de Compiègne). Cette date est devenue un jour de commémoration nationale en France.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q2.</strong> Quelles sont les conséquences du traité de Versailles pour l'Allemagne ? Pourquoi ce traité est-il dangereux ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">L'Allemagne perd des territoires (Alsace-Lorraine, colonies), doit payer de lourdes réparations et limiter son armée. Ce traité humiliant créé un sentiment de revanche qui favorisera la montée du nazisme et conduira à la Seconde Guerre mondiale.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q3.</strong> Cite deux empires qui disparaissent après 1918 et un État qui naît de leur effondrement.</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">L'Empire austro-hongrois et l'Empire ottoman disparaissent. La Pologne, la Tchécoslovaquie ou la Yougoslavie naissent de leur démembrement.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q4.</strong> Qu'est-ce que la Société des Nations (SDN) ? Quelle est son grand défaut dès sa création ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">La SDN est une organisation internationale créée en 1920 pour maintenir la paix par la diplomatie, ancêtre de l'ONU. Son grand défaut : les États-Unis ne la rejoignent jamais (le Sénat refuse), ce qui la prive de toute puissance réelle.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONCLUSION -->
+  <section style="border-bottom: none; text-align: center; padding-bottom: 3rem;">
+    <p style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; color: var(--bleu); max-width: 700px; margin: 0 auto 1rem;">
+      « La guerre, ce n'est pas une aventure. La guerre est une maladie. Comme le typhus. »
+    </p>
+    <p style="color: var(--gris); font-size: 0.92rem;">— Antoine de Saint-Exupéry</p>
+    <p style="margin-top: 2rem; font-size: 0.92rem; color: var(--gris);">En hommage à tous les soldats tombés et aux civils meurtris de 1914 à 1918.</p>
+  </section>
+
+</div><!-- /page -->
+
+<footer>
+  <p><strong>🎓 Page pédagogique — Séquence 1H2</strong><br>
+  Guerres européennes, guerres mondiales, guerres totales (1914–1945)<br>
+  Sources : dossier leproflhg.wordpress.com · Wikimedia Commons · Archives nationales</p>
+  <p style="margin-top: 1rem; opacity: 0.6;">🕯️ « Souviens-toi, frère, de ceux qui ne revinrent jamais. » — 11 novembre, jour de mémoire.</p>
+</footer>
+
+<script>
+// Assure que les boutons "voir réponse" fonctionnent bien
+document.querySelectorAll('.reponse-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    btn.nextElementSibling.style.display = 'block';
+    btn.style.display = 'none';
+  });
+});
+</script>
+</body>
+</html>
