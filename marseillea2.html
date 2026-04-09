@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Marseille : une ville qui change - Niveau A2 + exercices interactifs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #fff9f0 0%, #ffefdf 100%);
+            color: #1e2a2e;
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 245, 0.96);
+            border-radius: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1), 0 5px 12px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #ff8c42, #ffb347, #ffd966);
+            padding: 2rem 2rem 1.8rem;
+            text-align: center;
+            color: #2d1b00;
+            border-bottom: 8px solid #ffd966;
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            background: #fff0d4;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 60px;
+            box-shadow: 0 6px 0 #c25d00;
+        }
+
+        .hero p {
+            margin-top: 1rem;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: #fff3e0aa;
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+        }
+
+        .content {
+            padding: 2rem 2rem 1rem;
+        }
+
+        h2 {
+            background: #ffddd3;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 1.6rem;
+            margin: 1.5rem 0 1rem 0;
+            border-left: 8px solid #f97316;
+            color: #b45309;
+        }
+
+        h3 {
+            color: #c2410c;
+            margin: 1.2rem 0 0.5rem;
+            font-size: 1.3rem;
+            padding-left: 0.5rem;
+            border-left: 5px solid #ffb347;
+        }
+
+        .highlight {
+            background-color: #fef9e3;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #b45309;
+        }
+
+        .note {
+            background: #e6f7f0;
+            border-left: 6px solid #2ecc71;
+            padding: 0.8rem 1.2rem;
+            margin: 1.2rem 0;
+            border-radius: 24px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fffcf5;
+            margin: 1.2rem 0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #ffe0b5;
+            padding: 10px 12px;
+            vertical-align: top;
+        }
+
+        th {
+            background: #ffedd5;
+            color: #9b4b00;
+        }
+
+        .badge {
+            background-color: #ff8c42;
+            color: white;
+            font-weight: bold;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .vocab-section, .expressions-section, .grammaire-section, .exercices-section {
+            background: #ffffffdd;
+            border-radius: 28px;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            border: 1px solid #ffdead;
+        }
+
+        .exercice-item {
+            background: #fff7ed;
+            margin: 1.5rem 0;
+            padding: 1rem 1.5rem;
+            border-radius: 24px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 12px;
+            margin: 10px 0 8px 0;
+            border: 2px solid #ffcd94;
+            border-radius: 28px;
+            font-size: 0.95rem;
+            background: white;
+            transition: 0.2s;
+        }
+        .input-field:focus {
+            border-color: #f97316;
+            outline: none;
+            box-shadow: 0 0 0 3px #ffe0b3;
+        }
+        .short-input {
+            width: auto;
+            min-width: 70px;
+            display: inline-block;
+            margin: 0 5px;
+        }
+        button {
+            background: #ff9f4a;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 12px;
+            margin-right: 12px;
+        }
+        button:hover {
+            background: #e67e22;
+            transform: scale(0.97);
+        }
+        .feedback {
+            background: #e9f7e1;
+            margin-top: 12px;
+            padding: 12px;
+            border-radius: 20px;
+            display: none;
+            border-left: 6px solid #2ecc71;
+            font-size: 0.9rem;
+        }
+        hr {
+            margin: 1rem 0;
+            border: 1px dashed #ffcd94;
+        }
+        footer {
+            background: #ffdec2;
+            text-align: center;
+            padding: 1.2rem;
+            font-size: 0.85rem;
+            color: #7b3f00;
+        }
+        .en-trad {
+            color: #2c6e2c;
+            font-style: italic;
+            font-size: 0.85rem;
+            display: block;
+        }
+        @media (max-width: 650px) {
+            .content { padding: 1rem; }
+            .hero h1 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🌊 Marseille a changé, <br> mais elle a gardé son âme ✨</h1>
+        <p>🇫🇷 Niveau A2 - Lire, comprendre, écrire !</p>
+    </div>
+    <div class="content">
+        <!-- ========== ARTICLE SIMPLIFIÉ ========= -->
+        <h2>🏖️ Une ville qui attire beaucoup de monde</h2>
+        <p>Regarde <span class="highlight">Marseille</span> ! La ville a de belles <strong>calanques</strong>, un <strong>Vieux-Port</strong> et un grand panneau <strong>"MARSEILLE"</strong> sur une colline.</p>
+        <p>Aujourd'hui, beaucoup de <strong>Parisiens</strong> viennent habiter à Marseille. Pourquoi ? Parce qu'il y a la mer et le soleil. Aussi, la vie est moins chère qu'à Paris. Avec le train <strong>TGV</strong>, tu es à Marseille <span class="highlight">en trois heures depuis Paris</span>.</p>
+        <p>On appelle ces nouveaux habitants les <strong>"Parseillais"</strong>. C'est un mot nouveau : <em>Paris + Marseille</em>.</p>
+        <div class="note">
+            💡 <strong>Point de grammaire – "en" / "depuis"</strong><br>
+            ✔️ <strong>En</strong> + durée → le temps nécessaire : <em>Je suis à Marseille <strong>en</strong> trois heures.</em><br>
+            ✔️ <strong>Depuis</strong> + moment → point de départ : <em>J'habite à Marseille <strong>depuis</strong> 2022.</em>
+        </div>
+        <p>Marseille change beaucoup. Maintenant, c'est une grande ville pour le cinéma et pour Internet. Mais la ville a <strong>gardé son âme</strong>. L'<strong>âme</strong>, c'est le caractère spécial d'une ville ou d'une personne. Marseille est toujours vivante, un peu folle et très chaleureuse.</p>
+
+        <h2>🎬 Marseille et le cinéma</h2>
+        <p>Aujourd'hui, on <strong>tourne</strong> beaucoup de films et de séries à Marseille. En 2024, il y a <strong>94 films</strong> et <strong>40 séries</strong> ! C'est énorme ! Netflix a mis un grand panneau "MARSEILLE" sur une colline. Le gouvernement <span class="highlight">met des billes</span> pour le cinéma : Emmanuel Macron donne <strong>22,5 milliards d'euros</strong>.</p>
+
+        <h2>🌐 Marseille et Internet</h2>
+        <p>Marseille est <strong>numéro 6 dans le monde</strong> pour l'Internet. Grâce à <strong>18 câbles sous-marins</strong> reliés à 57 pays, l'information voyage vite.</p>
+
+        <h2>🔄 La vie à Marseille : ce qui change et ce qui ne change pas</h2>
+        <h3>✨ Ce qui change : la ville se boboïse</h3>
+        <p>La ville devient plus chic. On appelle ça <strong>"se boboïser"</strong> (bobo = bourgeois-bohème). On boit du matcha au lieu du <strong>pastis</strong>, on mange des gâteaux <strong>végans</strong>.</p>
+        <h3>💙 Ce qui ne change pas</h3>
+        <p>Marseille reste une ville de <strong>mixité</strong> (cultures mélangées). Les traditions : <strong>pastis, pieds paquets</strong> (plat), et les <strong>cagoles</strong> (femmes fortes et libres). Si tu demandes à une cagole de changer de tenue, elle te répond <span class="highlight">aussi sec</span> : "Passe d'abord sur mon corps !"</p>
+
+        <h2>📊 Pourquoi j'aime Marseille ? (Résumé)</h2>
+        <table>
+            <thead><tr><th>✅ Points positifs</th><th>❌ Points négatifs</th></tr></thead>
+            <tbody>
+                <tr><td>☀️ Soleil et mer</td><td>📉 26% de pauvreté</td></tr>
+                <tr><td>💰 Vie moins chère qu'à Paris</td><td>⚠️ Beaucoup d'homicides</td></tr>
+                <tr><td>🎥 Travail (cinéma, numérique)</td><td>📈 Prix qui montent</td></tr>
+                <tr><td>🌍 Ville vivante et mixte</td><td>🏚️ Quartiers difficiles</td></tr>
+            </tbody>
+        </table>
+
+        <!-- ========== VOCABULAIRE AVEC TRADUCTION ANGLAISE ========= -->
+        <div class="vocab-section">
+            <h3>📖 VOCABULAIRE (français → english)</h3>
+            <table>
+                <thead><tr><th>Français</th><th>English</th><th>Explication simple</th></tr></thead>
+                <tbody>
+                    <tr><td>une calanque</td><td>rocky inlet / cove</td><td>petit fjord méditerranéen</td></tr>
+                    <tr><td>le Vieux-Port</td><td>Old Port</td><td>port ancien et historique</td></tr>
+                    <tr><td>un quartier</td><td>neighbourhood</td><td>partie d'une ville</td></tr>
+                    <tr><td>un panneau</td><td>sign / billboard</td><td>grand écriteau</td></tr>
+                    <tr><td>se boboïser</td><td>to become gentrified / bobo-fied</td><td>devenir chic et branché</td></tr>
+                    <tr><td>un bobo</td><td>bourgeois-bohemian</td><td>riche mais aimant la vie simple</td></tr>
+                    <tr><td>un Parseillais</td><td>Parisian who moves to Marseille</td><td>Parisien devenu Marseillais</td></tr>
+                    <tr><td>la mixité</td><td>diversity / mix</td><td>différentes cultures ensemble</td></tr>
+                    <tr><td>une cagole</td><td>typical strong Marseillaise woman</td><td>femme marseillaise forte et libre</td></tr>
+                    <tr><td>le pastis</td><td>pastis (aniseed drink)</td><td>boisson anisée du Sud</td></tr>
+                    <tr><td>les pieds paquets</td><td>stuffed sheep's feet & tripe</td><td>plat marseillais traditionnel</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ========== EXPRESSIONS ========= -->
+        <div class="expressions-section">
+            <h3>💬 EXPRESSIONS (with English)</h3>
+            <table>
+                <thead><tr><th>Expression</th><th>English meaning</th><th>Exemple</th></tr></thead>
+                <tbody>
+                    <tr><td>Prendre l'apéro</td><td>to have a drink (aperitif)</td><td><em>On prend l'apéro à 19h ?</em></td></tr>
+                    <tr><td>Mettre des billes</td><td>to invest money (informal)</td><td><em>Le gouvernement met des billes.</em></td></tr>
+                    <tr><td>Aussi sec</td><td>right away, immediately</td><td><em>Elle répond aussi sec.</em></td></tr>
+                    <tr><td>Garder son âme</td><td>to keep its soul/character</td><td><em>Marseille a gardé son âme.</em></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ========== GRAMMAIRE ========= -->
+        <div class="grammaire-section">
+            <h3>📚 RAPPELS DE GRAMMAIRE (A2)</h3>
+            <p><span class="badge">EN / DEPUIS</span> <strong>En</strong> + durée (time needed). <strong>Depuis</strong> + starting point.</p>
+            <p><span class="badge">IMPARFAIT</span> Pour décrire le passé. Radical du "nous" + -ais, -ais, -ait, -ions, -iez, -aient.<br>
+            <em>Ex: Avant, il y <strong>avait</strong> moins de cinéma. Nous <strong>habitions</strong> près du port.</em></p>
+        </div>
+
+        <!-- ========== EXERCICES INTERACTIFS AVEC CHAMPS DE TEXTE ========= -->
+        <div class="exercices-section">
+            <h3>✍️ EXERCICES (écris tes réponses dans les cases)</h3>
+            
+            <!-- EXERCICE 1 -->
+            <div class="exercice-item">
+                <p><strong>📝 Exercice 1 : Complète avec "en" ou "depuis"</strong></p>
+                <p>a. Je vais à Marseille <input type="text" id="ex1a" class="short-input" placeholder="?"> trois heures de train.<br>
+                b. J'habite à Marseille <input type="text" id="ex1b" class="short-input" placeholder="?"> 2022.<br>
+                c. Elle travaille ici <input type="text" id="ex1c" class="short-input" placeholder="?"> cinq ans.<br>
+                d. On arrive à la plage <input type="text" id="ex1d" class="short-input" placeholder="?"> vingt minutes.<br>
+                e. Il est marseillais <input type="text" id="ex1e" class="short-input" placeholder="?"> sa naissance.</p>
+                <button onclick="checkEx1()">Vérifier exercice 1</button>
+                <div id="feedback1" class="feedback"></div>
+            </div>
+
+            <!-- EXERCICE 2 : imparfait -->
+            <div class="exercice-item">
+                <p><strong>📝 Exercice 2 : Mets les verbes à l'imparfait</strong></p>
+                <p>a. Avant, Marseille <input type="text" id="ex2a" class="short-input" placeholder="être (négatif)"> une ville pour le cinéma.<br>
+                b. Nous <input type="text" id="ex2b" class="short-input" placeholder="habiter"> près du Vieux-Port il y a dix ans.<br>
+                c. Tu <input type="text" id="ex2c" class="short-input" placeholder="aimer"> beaucoup le pastis.<br>
+                d. Les cagoles <input type="text" id="ex2d" class="short-input" placeholder="parler"> très fort.<br>
+                e. Je <input type="text" id="ex2e" class="short-input" placeholder="venir"> souvent ici pour l'apéro.</p>
+                <button onclick="checkEx2()">Vérifier exercice 2</button>
+                <div id="feedback2" class="feedback"></div>
+            </div>
+
+            <!-- EXERCICE 3 : expressions -->
+            <div class="exercice-item">
+                <p><strong>📝 Exercice 3 : Relie l'expression à sa définition (écris la lettre)</strong></p>
+                <p>1. Garder son âme → <input type="text" id="ex3a" class="short-input" placeholder="lettre"><br>
+                2. Un Parseillais → <input type="text" id="ex3b" class="short-input" placeholder="lettre"><br>
+                3. Aussi sec → <input type="text" id="ex3c" class="short-input" placeholder="lettre"><br>
+                4. Mettre des billes → <input type="text" id="ex3d" class="short-input" placeholder="lettre"><br>
+                5. Prendre l'apéro → <input type="text" id="ex3e" class="short-input" placeholder="lettre"><br>
+                <span style="font-size:0.85rem;">A: donner de l'argent / B: répondre vite / C: rester spécial / D: Parisien à Marseille / E: boire un verre</span></p>
+                <button onclick="checkEx3()">Vérifier exercice 3</button>
+                <div id="feedback3" class="feedback"></div>
+            </div>
+
+            <!-- EXERCICE 4 : vrai/faux -->
+            <div class="exercice-item">
+                <p><strong>📝 Exercice 4 : Vrai ou faux ? (écris "V" ou "F")</strong></p>
+                <p>a. Les Parisiens n'aiment pas du tout Marseille. <input type="text" id="ex4a" class="short-input" placeholder="V/F"><br>
+                b. Marseille est numéro 1 pour Internet. <input type="text" id="ex4b" class="short-input" placeholder="V/F"><br>
+                c. En 2024, 94 films ont été tournés à Marseille. <input type="text" id="ex4c" class="short-input" placeholder="V/F"><br>
+                d. Le gouvernement donne de l'argent à Marseille. <input type="text" id="ex4d" class="short-input" placeholder="V/F"><br>
+                e. Les pieds paquets sont une boisson. <input type="text" id="ex4e" class="short-input" placeholder="V/F"><br>
+                f. Une cagole est une femme timide. <input type="text" id="ex4f" class="short-input" placeholder="V/F"></p>
+                <button onclick="checkEx4()">Vérifier exercice 4</button>
+                <div id="feedback4" class="feedback"></div>
+            </div>
+
+            <!-- EXERCICE 5 : mots manquants -->
+            <div class="exercice-item">
+                <p><strong>📝 Exercice 5 : Trouve le mot (complète les cases)</strong></p>
+                <p>a. Grand écriteau qu'on voit de loin : un p <input type="text" id="ex5a" class="short-input" placeholder="..."> <br>
+                b. Devenir chic et branché : se b <input type="text" id="ex5b" class="short-input" placeholder="..."> <br>
+                c. Boisson anisée du Sud : le p <input type="text" id="ex5c" class="short-input" placeholder="..."> <br>
+                d. Personne riche qui aime la vie simple : les b <input type="text" id="ex5d" class="short-input" placeholder="..."> <br>
+                e. Caractère spécial d'une ville : l' <input type="text" id="ex5e" class="short-input" placeholder="..."></p>
+                <button onclick="checkEx5()">Vérifier exercice 5</button>
+                <div id="feedback5" class="feedback"></div>
+            </div>
+
+            <!-- EXERCICE 6 : dialogue -->
+            <div class="exercice-item">
+                <p><strong>📝 Exercice 6 : Complète le dialogue avec les mots de la leçon</strong></p>
+                <p>Luc : Tu viens à Marseille ce week-end ?<br>
+                Sophie : Oui, j'arrive <input type="text" id="ex6a" class="short-input" placeholder="mot"> train. Je suis là <input type="text" id="ex6b" class="short-input" placeholder="mot"> trois heures.<br>
+                Luc : Super ! On <input type="text" id="ex6c" class="short-input" placeholder="verbe"> l'apéro ?<br>
+                Sophie : Bonne idée ! Et on mange des <input type="text" id="ex6d" class="short-input" placeholder="plat"> ?<br>
+                Luc : Je préfère un gâteau <input type="text" id="ex6e" class="short-input" placeholder="sans œufs/lait">.<br>
+                Sophie : Toi et ton côté <input type="text" id="ex6f" class="short-input" placeholder="..."> ! Tu es un vrai <input type="text" id="ex6g" class="short-input" placeholder="..."> !<br>
+                Luc : (Il répond <input type="text" id="ex6h" class="short-input" placeholder="expression">) : "Oui, et alors !"</p>
+                <button onclick="checkEx6()">Vérifier exercice 6</button>
+                <div id="feedback6" class="feedback"></div>
+            </div>
+            <p style="margin-top: 10px; font-size:0.85rem;">💡 Clique sur "Vérifier" pour voir si tes réponses sont justes. Tu peux corriger directement dans les cases.</p>
+        </div>
+
+        <div style="background:#faf0e1; border-radius: 28px; padding: 1.2rem; margin: 1.5rem 0; text-align:center;">
+            🌟 <strong>Bilan personnel :</strong> coche dans ta tête : je sais utiliser "en/depuis", l'imparfait, les expressions marseillaises ! <strong>Aussi sec, tu es prêt(e) !</strong> 🌟
+        </div>
+    </div>
+    <footer>
+        📍 Article adapté de "Vu d'Italie. Marseille a changé, mais elle a gardé son âme" - Niveau A2 - Vocabulaire bilingue + exercices à remplir.
+    </footer>
+</div>
+
+<script>
+    // Correction Exercice 1
+    function checkEx1() {
+        let a = document.getElementById("ex1a").value.trim().toLowerCase();
+        let b = document.getElementById("ex1b").value.trim().toLowerCase();
+        let c = document.getElementById("ex1c").value.trim().toLowerCase();
+        let d = document.getElementById("ex1d").value.trim().toLowerCase();
+        let e = document.getElementById("ex1e").value.trim().toLowerCase();
+        let correct = true;
+        if(a !== "en") correct=false;
+        if(b !== "depuis") correct=false;
+        if(c !== "depuis") correct=false;
+        if(d !== "en") correct=false;
+        if(e !== "depuis") correct=false;
+        let fb = document.getElementById("feedback1");
+        if(correct) fb.innerHTML = "✅ Parfait ! Toutes les réponses sont bonnes : en, depuis, depuis, en, depuis.";
+        else fb.innerHTML = "❌ Révisions : a. en / b. depuis / c. depuis / d. en / e. depuis. Réessaie !";
+        fb.style.display = "block";
+    }
+    // Exercice 2 imparfait
+    function checkEx2() {
+        let a = document.getElementById("ex2a").value.trim().toLowerCase();
+        let b = document.getElementById("ex2b").value.trim().toLowerCase();
+        let c = document.getElementById("ex2c").value.trim().toLowerCase();
+        let d = document.getElementById("ex2d").value.trim().toLowerCase();
+        let e = document.getElementById("ex2e").value.trim().toLowerCase();
+        let ok = (a === "n'était pas" || a === "n’était pas") && (b === "habitions") && (c === "aimais") && (d === "parlaient") && (e === "venais");
+        let fb = document.getElementById("feedback2");
+        if(ok) fb.innerHTML = "✅ Bravo ! Imparfait maîtrisé : n'était pas, habitions, aimais, parlaient, venais.";
+        else fb.innerHTML = "❌ Correction : n'était pas / habitions / aimais / parlaient / venais. Relis la règle !";
+        fb.style.display = "block";
+    }
+    // Exercice 3 correspondance lettres
+    function checkEx3() {
+        let a = document.getElementById("ex3a").value.trim().toUpperCase();
+        let b = document.getElementById("ex3b").value.trim().toUpperCase();
+        let c = document.getElementById("ex3c").value.trim().toUpperCase();
+        let d = document.getElementById("ex3d").value.trim().toUpperCase();
+        let e = document.getElementById("ex3e").value.trim().toUpperCase();
+        let ok = (a === "C") && (b === "D") && (c === "B") && (d === "A") && (e === "E");
+        let fb = document.getElementById("feedback3");
+        if(ok) fb.innerHTML = "✅ Excellent ! 1-C, 2-D, 3-B, 4-A, 5-E";
+        else fb.innerHTML = "❌ Bonnes réponses : 1=C, 2=D, 3=B, 4=A, 5=E. Essaie encore !";
+        fb.style.display = "block";
+    }
+    // Exercice 4 Vrai/Faux
+    function checkEx4() {
+        let a = document.getElementById("ex4a").value.trim().toUpperCase();
+        let b = document.getElementById("ex4b").value.trim().toUpperCase();
+        let c = document.getElementById("ex4c").value.trim().toUpperCase();
+        let d = document.getElementById("ex4d").value.trim().toUpperCase();
+        let e = document.getElementById("ex4e").value.trim().toUpperCase();
+        let f = document.getElementById("ex4f").value.trim().toUpperCase();
+        let ok = (a === "F") && (b === "F") && (c === "V") && (d === "V") && (e === "F") && (f === "F");
+        let fb = document.getElementById("feedback4");
+        if(ok) fb.innerHTML = "✅ Parfait ! F, F, V, V, F, F";
+        else fb.innerHTML = "❌ Réponses : a=Faux, b=Faux, c=Vrai, d=Vrai, e=Faux (c'est un plat), f=Faux (forte et libre)";
+        fb.style.display = "block";
+    }
+    // Exercice 5 mots
+    function checkEx5() {
+        let a = document.getElementById("ex5a").value.trim().toLowerCase();
+        let b = document.getElementById("ex5b").value.trim().toLowerCase();
+        let c = document.getElementById("ex5c").value.trim().toLowerCase();
+        let d = document.getElementById("ex5d").value.trim().toLowerCase();
+        let e = document.getElementById("ex5e").value.trim().toLowerCase();
+        let ok = (a === "panneau" || a.includes("panneau")) && (b === "boboïser") && (c === "pastis") && (d === "bobos") && (e === "âme");
+        let fb = document.getElementById("feedback5");
+        if(ok) fb.innerHTML = "✅ Gagné ! panneau, boboïser, pastis, bobos, âme.";
+        else fb.innerHTML = "❌ Indices : panneau / boboïser / pastis / bobos / âme. Relis le vocabulaire !";
+        fb.style.display = "block";
+    }
+    // Exercice 6 dialogue
+    function checkEx6() {
+        let a = document.getElementById("ex6a").value.trim().toLowerCase();
+        let b = document.getElementById("ex6b").value.trim().toLowerCase();
+        let c = document.getElementById("ex6c").value.trim().toLowerCase();
+        let d = document.getElementById("ex6d").value.trim().toLowerCase();
+        let e = document.getElementById("ex6e").value.trim().toLowerCase();
+        let f = document.getElementById("ex6f").value.trim().toLowerCase();
+        let g = document.getElementById("ex6g").value.trim().toLowerCase();
+        let h = document.getElementById("ex6h").value.trim().toLowerCase();
+        let ok = (a === "en") && (b === "en") && (c === "prend" || c === "prendre") && 
+                 (d === "pieds paquets" || d === "pieds-paquets") && (e === "végan" || e === "vegan") &&
+                 (f === "bobo") && (g === "parseillais") && (h === "aussi sec");
+        let fb = document.getElementById("feedback6");
+        if(ok) fb.innerHTML = "🎉 Super dialogue ! en / en / prend / pieds paquets / végan / bobo / Parseillais / aussi sec";
+        else fb.innerHTML = "💡 Correction : en, en, prend, pieds paquets, végan, bobo, Parseillais, aussi sec. Relis l'article !";
+        fb.style.display = "block";
+    }
+</script>
+</body>
+</html>
