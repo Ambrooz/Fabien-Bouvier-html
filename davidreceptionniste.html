@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>David, concierge d'hôtel · Français B2 – Alma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ink:       #1a120b;
+            --cream:     #faf6ee;
+            --warm:      #f3ead6;
+            --gold:      #c9953a;
+            --gold-lt:   #e8c47a;
+            --rust:      #a84628;
+            --rust-lt:   #d96040;
+            --sage:      #5a7260;
+            --sage-lt:   #c6d9c9;
+            --smoke:     #f0ebe0;
+            --border:    #e2d9c4;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--cream);
+            color: var(--ink);
+            line-height: 1.6;
+        }
+
+        /* ─── HERO HEADER ─── */
+        .hero {
+            background: var(--ink);
+            color: var(--cream);
+            padding: 3.5rem 2rem 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 80% 60% at 80% 50%, rgba(201,149,58,.18) 0%, transparent 70%);
+        }
+        .hero-tag {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--ink);
+            font-size: .7rem;
+            font-weight: 600;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            padding: .3rem .9rem;
+            border-radius: 2rem;
+            margin-bottom: 1.2rem;
+        }
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            line-height: 1.15;
+            max-width: 680px;
+        }
+        .hero h1 em {
+            font-style: italic;
+            color: var(--gold-lt);
+        }
+        .hero-sub {
+            margin-top: .9rem;
+            font-size: .95rem;
+            color: rgba(250,246,238,.65);
+            max-width: 540px;
+        }
+        .hero-meta {
+            margin-top: 2rem;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .meta-chip {
+            font-size: .75rem;
+            font-weight: 500;
+            padding: .35rem .8rem;
+            border: 1px solid rgba(255,255,255,.25);
+            border-radius: 2rem;
+            color: rgba(250,246,238,.8);
+        }
+
+        /* ─── LAYOUT ─── */
+        .page { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+        /* ─── SECTION TITLES ─── */
+        .section-title {
+            font-family: 'DM Serif Display', serif;
+            font-size: 1.55rem;
+            color: var(--rust);
+            margin: 2.8rem 0 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: .7rem;
+        }
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        /* ─── VIDEO PLACEHOLDER ─── */
+        .video-wrapper {
+            background: var(--ink);
+            border-radius: 1.2rem;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            max-width: 660px;
+            margin: 0 auto 1rem;
+            border: 2px solid var(--border);
+        }
+        .video-wrapper::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(201,149,58,.12), transparent 70%);
+        }
+        .play-btn {
+            width: 64px; height: 64px;
+            background: var(--gold);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            transition: transform .2s, background .2s;
+            z-index: 1;
+        }
+        .play-btn:hover { transform: scale(1.08); background: var(--gold-lt); }
+        .play-btn svg { fill: var(--ink); margin-left: 4px; }
+        .video-label {
+            color: rgba(250,246,238,.6);
+            font-size: .8rem;
+            z-index: 1;
+            text-align: center;
+            padding: 0 1rem;
+        }
+        .video-link {
+            display: inline-flex;
+            align-items: center;
+            gap: .5rem;
+            background: var(--gold);
+            color: var(--ink);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: .85rem;
+            padding: .55rem 1.3rem;
+            border-radius: 2rem;
+            transition: background .2s;
+            z-index: 1;
+        }
+        .video-link:hover { background: var(--gold-lt); }
+
+        /* ─── AVANT LA VIDÉO ─── */
+        .avant-card {
+            background: var(--smoke);
+            border: 1px solid var(--border);
+            border-left: 5px solid var(--gold);
+            border-radius: 1rem;
+            padding: 1.2rem 1.5rem;
+            font-size: .93rem;
+        }
+        .avant-card strong { color: var(--rust); }
+        .avant-card ol { margin: .7rem 0 0 1.2rem; }
+        .avant-card ol li { margin-bottom: .4rem; }
+
+        /* ─── COMPREHENSION GRID ─── */
+        .comp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 4px 18px rgba(26,18,11,.05);
+            transition: box-shadow .2s;
+        }
+        .card:hover { box-shadow: 0 8px 28px rgba(26,18,11,.1); }
+        .card-head {
+            background: var(--warm);
+            padding: .9rem 1.3rem;
+            font-weight: 700;
+            font-size: .9rem;
+            color: var(--rust);
+            border-bottom: 1px solid var(--border);
+            letter-spacing: .03em;
+        }
+        .card-body { padding: 1.2rem 1.3rem; }
+
+        /* ─── EXERCICE ITEMS ─── */
+        .exo-item { margin-bottom: 1.5rem; padding-bottom: 1.2rem; border-bottom: 1px dashed var(--border); }
+        .exo-item:last-child { border-bottom: none; margin-bottom: 0; }
+        .exo-q { font-size: .93rem; margin-bottom: .6rem; color: #2e1c0e; font-weight: 500; }
+        .exo-q strong { color: var(--rust); }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: .6rem .9rem;
+            border: 1.5px solid var(--border);
+            border-radius: .7rem;
+            background: var(--cream);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .88rem;
+            transition: border-color .2s, box-shadow .2s;
+            color: var(--ink);
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--gold);
+            box-shadow: 0 0 0 3px rgba(201,149,58,.15);
+        }
+        textarea { resize: vertical; }
+
+        .btn-reveal {
+            margin-top: .6rem;
+            background: none;
+            border: 1.5px solid var(--gold);
+            color: var(--gold);
+            font-family: 'DM Sans', sans-serif;
+            font-size: .78rem;
+            font-weight: 600;
+            padding: .35rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: background .2s, color .2s;
+            letter-spacing: .04em;
+        }
+        .btn-reveal:hover { background: var(--gold); color: var(--ink); }
+
+        .answer-hidden {
+            display: none;
+            margin-top: .8rem;
+            background: #fffbf2;
+            border-left: 4px solid var(--gold);
+            border-radius: .6rem;
+            padding: .8rem 1rem;
+            font-size: .87rem;
+            line-height: 1.55;
+            color: #2e1c0e;
+        }
+        .answer-hidden.show { display: block; }
+        .answer-hidden .label {
+            font-weight: 700;
+            color: var(--sage);
+            font-size: .72rem;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+            margin-bottom: .4rem;
+        }
+
+        /* ─── VOCAB TABLE ─── */
+        .vocab-list { list-style: none; }
+        .vocab-list li {
+            display: flex;
+            gap: .8rem;
+            padding: .55rem 0;
+            border-bottom: 1px solid var(--smoke);
+            font-size: .9rem;
+            align-items: baseline;
+        }
+        .vocab-list li:last-child { border-bottom: none; }
+        .vw { font-weight: 700; color: var(--rust); min-width: 200px; flex-shrink: 0; }
+        .vd { color: #5a4535; }
+
+        /* ─── GRAMMAR BOX ─── */
+        .grammar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: .8rem; }
+        .g-item {
+            background: var(--smoke);
+            border-radius: .8rem;
+            padding: .8rem 1rem;
+            border-top: 3px solid var(--gold);
+        }
+        .g-label { font-size: .7rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--rust); margin-bottom: .4rem; }
+        .g-body { font-size: .84rem; color: #3a2614; line-height: 1.5; }
+        .g-ex { font-style: italic; color: var(--sage); margin-top: .3rem; font-size: .8rem; }
+
+        /* ─── STORY CARD ─── */
+        .story-card {
+            background: linear-gradient(135deg, #fffdf5, #faf3e4);
+            border: 1px solid var(--border);
+            border-left: 6px solid var(--gold);
+            border-radius: 1.2rem;
+            padding: 1.6rem 1.8rem;
+        }
+        .story-card p { font-size: .95rem; line-height: 1.72; margin-bottom: .9rem; color: #2e1c0e; }
+        .story-card p:last-child { margin-bottom: 0; }
+        .story-card .hl { background: #fce9b8; border-radius: 4px; padding: 0 3px; font-weight: 500; }
+
+        /* ─── ROLEPLAY ─── */
+        .roleplay-box {
+            background: var(--ink);
+            color: var(--cream);
+            border-radius: 1.2rem;
+            padding: 1.5rem 1.8rem;
+        }
+        .roleplay-box p { font-size: .92rem; line-height: 1.65; margin-bottom: .7rem; }
+        .roleplay-box p:last-child { margin-bottom: 0; }
+        .roleplay-box strong { color: var(--gold-lt); }
+        .roleplay-box em { color: rgba(250,246,238,.7); }
+
+        /* ─── TRANSCRIPTION ─── */
+        .transcript {
+            background: var(--smoke);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 1.3rem 1.5rem;
+            font-size: .88rem;
+            line-height: 1.7;
+            color: #3a2614;
+        }
+        .transcript .speaker { font-weight: 700; color: var(--rust); }
+
+        /* ─── FOOTER ─── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 1.5rem;
+            text-align: center;
+            font-size: .78rem;
+            color: #9a7e65;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        @media (max-width: 640px) {
+            .hero { padding: 2.5rem 1.2rem 2rem; }
+            .page { padding: 1.5rem 1rem 3rem; }
+            .vw { min-width: 150px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ══════════════════════ HERO ══════════════════════ -->
+<div class="hero">
+    <div class="hero-tag">✦ Leçon personnalisée — Alma · DELF B2</div>
+    <h1>David, <em>concierge</em> dans un grand hôtel</h1>
+    <p class="hero-sub">Un portrait professionnel pour travailler le vocabulaire de l'hôtellerie, la compréhension orale et les temps du récit</p>
+    <div class="hero-meta">
+        <span class="meta-chip">🎧 Compréhension orale</span>
+        <span class="meta-chip">📚 Hôtellerie &amp; tourisme</span>
+        <span class="meta-chip">📐 Imparfait · PC · Plus-que-parfait</span>
+        <span class="meta-chip">🗣️ Expression orale DELF B2</span>
+    </div>
+</div>
+
+<div class="page">
+
+    <!-- ── AVANT DE VISIONNER ── -->
+    <div class="section-title">🎬 La vidéo TV5Monde</div>
+
+    <div class="video-wrapper">
+        <div class="play-btn" onclick="window.open('https://enseigner.tv5monde.com/fiches-pedagogiques-fle/david-concierge-dans-un-hotel','_blank')">
+            <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <p class="video-label">« David, concierge dans un hôtel »<br>TV5Monde – Français des professions</p>
+        <a class="video-link" href="https://enseigner.tv5monde.com/fiches-pedagogiques-fle/david-concierge-dans-un-hotel" target="_blank">
+            ▶ Ouvrir la fiche TV5Monde
+        </a>
+    </div>
+
+    <div class="avant-card">
+        <strong>📌 Avant de visionner — Mise en route :</strong>
+        <ol>
+            <li>Selon toi, quelles sont les qualités indispensables d'un(e) concierge d'hôtel ?</li>
+            <li>Quelle est la différence entre un <em>concierge</em>, un <em>réceptionniste</em> et un <em>bagagiste</em> ?</li>
+            <li>As-tu déjà eu affaire à un service de conciergerie remarquable ? Raconte en 2-3 phrases.</li>
+        </ol>
+    </div>
+
+    <!-- ── TRANSCRIPT ── -->
+    <div class="section-title">📄 Extrait de transcription (à lire + écouter)</div>
+    <div class="transcript">
+        <p><span class="speaker">Journaliste :</span> David, vous êtes concierge dans ce grand hôtel parisien depuis combien de temps ?</p>
+        <p><span class="speaker">David :</span> Ça fait maintenant douze ans que je travaille ici. Avant, j'avais commencé dans un hôtel trois étoiles à Bordeaux, mais j'avais toujours rêvé de travailler dans un palace. Un jour, un ancien collègue m'a contacté — il avait entendu dire qu'un poste se libérait ici. J'ai sauté sur l'occasion.</p>
+        <p><span class="speaker">Journaliste :</span> Qu'est-ce qui vous plaît le plus dans ce métier ?</p>
+        <p><span class="speaker">David :</span> C'est de trouver des solutions impossibles. Un client m'appelle à minuit parce qu'il voulait des fleurs rares pour une demande en mariage. Les fleuristes étaient fermés, la ville dormait… mais j'avais gardé le numéro d'un jardinier dans ma région natale. Il a répondu, et à huit heures du matin, les fleurs étaient là. Le client pleurait de joie.</p>
+        <p><span class="speaker">Journaliste :</span> Comment définiriez-vous votre rôle ?</p>
+        <p><span class="speaker">David :</span> Je suis un peu magicien, un peu psychologue. J'anticipe les besoins avant même que les clients ne les formulent. Et j'ai un carnet — un vrai, en papier — avec des centaines de contacts : restaurants, artisans, médecins, guides… Ce carnet, c'est mon outil de travail le plus précieux.</p>
+    </div>
+
+    <!-- ── COMPREHENSION ── -->
+    <div class="section-title">✍️ Compréhension orale & écrite</div>
+    <div class="comp-grid">
+
+        <div class="card">
+            <div class="card-head">🔍 Exercice 1 — Vrai / Faux / Pas mentionné</div>
+            <div class="card-body">
+                <div class="exo-item">
+                    <p class="exo-q">a. David travaille dans ce palace depuis plus de dix ans.</p>
+                    <select id="ex1a"><option value="">-- choisis --</option><option>Vrai</option><option>Faux</option><option>Pas mentionné</option></select>
+                    <button class="btn-reveal" onclick="revealAnswer('ans1a')">🔎 Réponse</button>
+                    <div id="ans1a" class="answer-hidden"><div class="label">✔ Réponse</div><strong>Vrai</strong> — il dit « ça fait douze ans ».</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">b. Avant ce palace, David avait travaillé à Lyon.</p>
+                    <select id="ex1b"><option value="">-- choisis --</option><option>Vrai</option><option>Faux</option><option>Pas mentionné</option></select>
+                    <button class="btn-reveal" onclick="revealAnswer('ans1b')">🔎 Réponse</button>
+                    <div id="ans1b" class="answer-hidden"><div class="label">✔ Réponse</div><strong>Faux</strong> — il avait travaillé à <em>Bordeaux</em>.</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">c. David garde un carnet papier avec ses contacts professionnels.</p>
+                    <select id="ex1c"><option value="">-- choisis --</option><option>Vrai</option><option>Faux</option><option>Pas mentionné</option></select>
+                    <button class="btn-reveal" onclick="revealAnswer('ans1c')">🔎 Réponse</button>
+                    <div id="ans1c" class="answer-hidden"><div class="label">✔ Réponse</div><strong>Vrai</strong> — il en parle comme de son « outil le plus précieux ».</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">d. Les fleurs ont été livrées le soir même à minuit.</p>
+                    <select id="ex1d"><option value="">-- choisis --</option><option>Vrai</option><option>Faux</option><option>Pas mentionné</option></select>
+                    <button class="btn-reveal" onclick="revealAnswer('ans1d')">🔎 Réponse</button>
+                    <div id="ans1d" class="answer-hidden"><div class="label">✔ Réponse</div><strong>Faux</strong> — elles étaient là à <em>huit heures du matin</em>.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">💬 Exercice 2 — Questions ouvertes</div>
+            <div class="card-body">
+                <div class="exo-item">
+                    <p class="exo-q">a. Comment David a-t-il obtenu son poste dans ce palace ?</p>
+                    <input type="text" id="ex2a" placeholder="ta réponse...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans2a')">🔎 Réponse</button>
+                    <div id="ans2a" class="answer-hidden"><div class="label">✔ Réponse</div>Un ancien collègue l'a contacté parce qu'il avait entendu dire qu'un poste se libérait. David a « sauté sur l'occasion ».</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">b. À quoi compare-t-il son métier ? Pourquoi selon vous ?</p>
+                    <input type="text" id="ex2b" placeholder="ta réponse...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans2b')">🔎 Réponse</button>
+                    <div id="ans2b" class="answer-hidden"><div class="label">✔ Réponse</div>Il se compare à un « magicien » et un « psychologue » : il fait apparaître des solutions impossibles <em>et</em> comprend les besoins des clients avant même qu'ils ne les expriment.</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">c. Quelle expression montre que David est très motivé par les défis ?</p>
+                    <input type="text" id="ex2c" placeholder="ta réponse...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans2c')">🔎 Réponse</button>
+                    <div id="ans2c" class="answer-hidden"><div class="label">✔ Réponse</div>« C'est de trouver des solutions impossibles » — il aime justement ce qui paraît irréalisable.</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ── VOCABULAIRE ── -->
+    <div class="section-title">📚 Vocabulaire de l'hôtellerie & conciergerie</div>
+    <div class="comp-grid">
+        <div class="card">
+            <div class="card-head">🏨 Métiers & espaces</div>
+            <div class="card-body">
+                <ul class="vocab-list">
+                    <li><span class="vw">un concierge</span><span class="vd">hotel concierge (service &amp; contacts)</span></li>
+                    <li><span class="vw">un(e) réceptionniste</span><span class="vd">front desk agent</span></li>
+                    <li><span class="vw">un bagagiste / groom</span><span class="vd">bellboy, porter</span></li>
+                    <li><span class="vw">un palace</span><span class="vd">luxury 5-star hotel</span></li>
+                    <li><span class="vw">la conciergerie</span><span class="vd">concierge desk / service</span></li>
+                    <li><span class="vw">la réception</span><span class="vd">front desk</span></li>
+                    <li><span class="vw">la suite</span><span class="vd">hotel suite</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">🗝️ Verbes & expressions clés</div>
+            <div class="card-body">
+                <ul class="vocab-list">
+                    <li><span class="vw">anticiper les besoins</span><span class="vd">to anticipate needs</span></li>
+                    <li><span class="vw">sauter sur l'occasion</span><span class="vd">to seize the opportunity</span></li>
+                    <li><span class="vw">un poste se libère</span><span class="vd">a position becomes available</span></li>
+                    <li><span class="vw">assurer un service personnalisé</span><span class="vd">to provide personalised service</span></li>
+                    <li><span class="vw">formuler une demande</span><span class="vd">to make / express a request</span></li>
+                    <li><span class="vw">veiller au confort</span><span class="vd">to ensure the comfort (of guests)</span></li>
+                    <li><span class="vw">rendre un séjour inoubliable</span><span class="vd">to make a stay unforgettable</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── GRAMMAIRE ── -->
+    <div class="section-title">📐 Grammaire : les trois temps du récit</div>
+    <div class="card" style="margin-bottom:1.5rem;">
+        <div class="card-head">⏳ Imparfait · Passé composé · Plus-que-parfait — comment les choisir ?</div>
+        <div class="card-body">
+            <div class="grammar-grid">
+                <div class="g-item">
+                    <div class="g-label">🔹 Imparfait</div>
+                    <div class="g-body">Contexte, description, habitude, état durable dans le passé.</div>
+                    <div class="g-ex">Les fleuristes <strong>étaient</strong> fermés. Il <strong>travaillait</strong> à Bordeaux.</div>
+                </div>
+                <div class="g-item">
+                    <div class="g-label">⚡ Passé composé</div>
+                    <div class="g-body">Action ponctuelle, événement qui <em>avance</em> l'histoire.</div>
+                    <div class="g-ex">Un collègue l'<strong>a contacté</strong>. Il <strong>a répondu</strong>.</div>
+                </div>
+                <div class="g-item">
+                    <div class="g-label">🕰️ Plus-que-parfait</div>
+                    <div class="g-body">Action antérieure à une autre dans le passé.</div>
+                    <div class="g-ex">Il <strong>avait toujours rêvé</strong> de travailler ici. J'<strong>avais gardé</strong> son numéro.</div>
+                </div>
+            </div>
+            <p style="margin-top:1rem;font-size:.88rem;color:#5a4535;">💡 <strong>Astuce :</strong> dans un récit, le passé composé fait <em>avancer</em> l'action, l'imparfait peint le <em>décor</em>, et le plus-que-parfait ouvre une <em>parenthèse vers un passé encore plus lointain</em>.</p>
+        </div>
+    </div>
+
+    <!-- ── EXERCICES GRAMMAIRE ── -->
+    <div class="comp-grid">
+        <div class="card">
+            <div class="card-head">🎯 Exercice 3 — Choisis le bon temps</div>
+            <div class="card-body">
+                <div class="exo-item">
+                    <p class="exo-q">a. David _____________ (travailler) déjà dans un hôtel à Bordeaux avant de venir à Paris.</p>
+                    <input type="text" placeholder="ta réponse...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans3a')">🔎 Vérifier</button>
+                    <div id="ans3a" class="answer-hidden"><div class="label">✔ Réponse</div><strong>avait travaillé</strong> — plus-que-parfait (action antérieure à son arrivée à Paris)</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">b. Quand le client _____________ (appeler), il _____________ (être) minuit.</p>
+                    <input type="text" placeholder="ex: a appelé / était">
+                    <button class="btn-reveal" onclick="revealAnswer('ans3b')">🔎 Vérifier</button>
+                    <div id="ans3b" class="answer-hidden"><div class="label">✔ Réponse</div><strong>a appelé / était</strong> — action soudaine (PC) + contexte (imparfait)</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">c. Chaque soir, David _____________ (consulter) son carnet pour préparer le lendemain.</p>
+                    <input type="text" placeholder="ta réponse...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans3c')">🔎 Vérifier</button>
+                    <div id="ans3c" class="answer-hidden"><div class="label">✔ Réponse</div><strong>consultait</strong> — imparfait (habitude passée)</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">d. Les fleurs _____________ (arriver) à huit heures, comme David l'_____________ (promettre).</p>
+                    <input type="text" placeholder="ta réponse...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans3d')">🔎 Vérifier</button>
+                    <div id="ans3d" class="answer-hidden"><div class="label">✔ Réponse</div><strong>sont arrivées / avait promis</strong> — action PC + promesse antérieure PQP</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-head">🔧 Exercice 4 — Corrige les erreurs</div>
+            <div class="card-body">
+                <div class="exo-item">
+                    <p class="exo-q">❌ « J'ai travaillé dans ce palace depuis douze ans. »</p>
+                    <input type="text" placeholder="ta correction...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans4a')">🔎 Corrigé</button>
+                    <div id="ans4a" class="answer-hidden"><div class="label">✔ Corrigé</div>« Je <strong>travaille</strong> dans ce palace depuis douze ans. » — avec <em>depuis</em> + action toujours en cours → présent.</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">❌ « Il a sauté sur l'<u>occasion</u>ner. »</p>
+                    <input type="text" placeholder="ta correction...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans4b')">🔎 Corrigé</button>
+                    <div id="ans4b" class="answer-hidden"><div class="label">✔ Corrigé</div>« Il a sauté sur <strong>l'occasion</strong>. » — <em>occasion</em> est un nom, pas un verbe.</div>
+                </div>
+                <div class="exo-item">
+                    <p class="exo-q">❌ « Les clients avaient formuler leurs demandes. »</p>
+                    <input type="text" placeholder="ta correction...">
+                    <button class="btn-reveal" onclick="revealAnswer('ans4c')">🔎 Corrigé</button>
+                    <div id="ans4c" class="answer-hidden"><div class="label">✔ Corrigé</div>« Les clients avaient <strong>formulé</strong> leurs demandes. » — participe passé, pas infinitif.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── VOCABULAIRE EXERCICE ── -->
+    <div class="card" style="margin:1.5rem 0;">
+        <div class="card-head">📝 Exercice 5 — Retrouve le mot (définition → terme)</div>
+        <div class="card-body">
+            <div class="comp-grid">
+                <div>
+                    <div class="exo-item">
+                        <p class="exo-q">1. Professionnel qui anticipe les besoins et connaît tous les bons contacts en ville :</p>
+                        <input type="text" placeholder="réponse...">
+                        <button class="btn-reveal" onclick="revealAnswer('ans5a')">🔎 Réponse</button>
+                        <div id="ans5a" class="answer-hidden"><div class="label">✔</div>Un <strong>concierge</strong></div>
+                    </div>
+                    <div class="exo-item">
+                        <p class="exo-q">2. Hôtel de très grand luxe, catégorie au-dessus des 5 étoiles :</p>
+                        <input type="text" placeholder="réponse...">
+                        <button class="btn-reveal" onclick="revealAnswer('ans5b')">🔎 Réponse</button>
+                        <div id="ans5b" class="answer-hidden"><div class="label">✔</div>Un <strong>palace</strong></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="exo-item">
+                        <p class="exo-q">3. Expression signifiant « profiter immédiatement d'une bonne opportunité » :</p>
+                        <input type="text" placeholder="réponse...">
+                        <button class="btn-reveal" onclick="revealAnswer('ans5c')">🔎 Réponse</button>
+                        <div id="ans5c" class="answer-hidden"><div class="label">✔</div><strong>Sauter sur l'occasion</strong></div>
+                    </div>
+                    <div class="exo-item">
+                        <p class="exo-q">4. Verbe signifiant « prévoir ce dont quelqu'un aura besoin avant qu'il ne le demande » :</p>
+                        <input type="text" placeholder="réponse...">
+                        <button class="btn-reveal" onclick="revealAnswer('ans5d')">🔎 Réponse</button>
+                        <div id="ans5d" class="answer-hidden"><div class="label">✔</div><strong>Anticiper</strong> (les besoins)</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── PRODUCTION ÉCRITE ── -->
+    <div class="section-title">✍️ Production guidée</div>
+    <div class="comp-grid">
+        <div class="card">
+            <div class="card-head">📖 Exercice 6 — Récit professionnel (5-8 phrases)</div>
+            <div class="card-body">
+                <p style="font-size:.88rem;color:#5a4535;margin-bottom:.9rem;">Tu es concierge ou réceptionniste. Raconte une anecdote où tu as résolu un problème difficile pour un client. Utilise les trois temps (imparfait, passé composé, plus-que-parfait) et au moins 4 mots du vocabulaire de la leçon.</p>
+                <textarea rows="5" placeholder="Exemple d'amorce : « Un soir de décembre, une cliente est arrivée complètement paniquée. Elle avait oublié… »"></textarea>
+                <button class="btn-reveal" onclick="revealAnswer('ans6')">📖 Voir un modèle</button>
+                <div id="ans6" class="answer-hidden"><div class="label">🌟 Modèle</div>
+                    « Un soir d'avril, une cliente est arrivée à la réception très agitée. Elle avait réservé une table dans un restaurant étoilé pour son anniversaire, mais la réservation avait été annulée par erreur. Les restaurants autour de l'hôtel affichaient tous complet. J'ai consulté mon carnet et j'ai contacté un chef que je connaissais depuis longtemps. Il nous a ouvert une table en cuisine, juste pour elle. C'était un service personnalisé que je ne pouvais pas promettre, mais la cliente pleurait de joie. Ce soir-là, j'ai compris pourquoi j'avais choisi ce métier : rendre les séjours inoubliables. »
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-head">🎙️ Exercice 7 — DELF B2 Oral : jeu de rôle</div>
+            <div class="card-body">
+                <p style="font-size:.88rem;color:#5a4535;margin-bottom:.9rem;"><strong>Situation :</strong> Tu es concierge. Un client stressé arrive et dit : <em>« Bonsoir, j'ai un dîner d'affaires très important demain soir, je n'ai pas réservé, et j'ai besoin d'un restaurant gastronomique, discret, pour huit personnes. Je peux compter sur vous ? »</em></p>
+                <p style="font-size:.88rem;color:#5a4535;margin-bottom:.9rem;">Rédige ou prépare à voix haute ta réponse professionnelle (8-10 lignes). Emploie : au moins 4 mots du vocabulaire + le conditionnel de politesse.</p>
+                <textarea rows="5" placeholder="Rédige ta réponse ici..."></textarea>
+                <button class="btn-reveal" onclick="revealAnswer('ans7')">⭐ Voir un exemple</button>
+                <div id="ans7" class="answer-hidden"><div class="label">🗣️ Exemple</div>
+                    « Bonsoir Monsieur, ne vous inquiétez pas — c'est exactement pour ce genre de situation que je suis là. J'aurais justement le contact idéal : un chef trois étoiles avec une salle privée très discrète, parfaite pour un dîner d'affaires. J'avais déjà organisé un événement similaire le mois dernier pour un autre client. Je vais les appeler maintenant pour vérifier la disponibilité. Pourriez-vous me confirmer le nombre de personnes et vos préférences — un menu dégustation ou à la carte ? Pendant ce temps, je vous prépare également un plan du quartier. Votre séjour sera parfait, j'y veille personnellement. »
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── POUR ALLER PLUS LOIN ── -->
+    <div class="section-title">🌟 Pour aller plus loin</div>
+    <div class="story-card">
+        <p><strong>🎧 Mission audio (WhatsApp / Preply) :</strong> Enregistre un monologue de <span class="hl">2 minutes</span> dans lequel tu te présentes comme concierge(ou réceptionniste) dans un hôtel de Chicago. Raconte comment tu as géré une situation difficile. Utilise <em>j'avais déjà</em>, <em>j'ai proposé</em>, <em>c'était animé</em>.</p>
+        <p><strong>📺 Ressource complémentaire :</strong> Visionne aussi la fiche TV5Monde sur <em>Kira, agente de réception</em> si disponible. Compare les deux portraits : quelles qualités ont-ils en commun ? En quoi leurs rôles diffèrent-ils ?</p>
+        <p><strong>💬 Question de réflexion :</strong> David dit qu'il est « un peu magicien ». À ton avis, est-ce une vision romantique du métier ou une réalité quotidienne ? Prépare une réponse argumentée de 3-4 phrases pour le prochain cours.</p>
+    </div>
+
+    <!-- ── ROLEPLAY FINAL ── -->
+    <div class="roleplay-box" style="margin-top:1.5rem;">
+        <p>🏨 <strong>Défi de la semaine :</strong> imagine que tu dois former un(e) nouveau/nouvelle concierge. Prépare 5 conseils essentiels que tu lui donnerais — en français, à l'oral ou à l'écrit. Commence par : <em>« Dans ce métier, il faut avant tout… »</em></p>
+        <p>📌 <strong>Rappel grammatical :</strong> pour donner des conseils, tu peux utiliser <em>il faut + infinitif</em>, <em>il est essentiel de</em>, <em>n'oublie jamais de</em>, et le conditionnel : <em>je te conseillerais de…</em></p>
+    </div>
+
+</div>
+
+<footer>
+    🏨 Leçon « David, concierge » — créée pour Alma (Chicago ↔ Lyon) · DELF B2 · Oral &amp; Précision<br>
+    Source vidéo : <a href="https://enseigner.tv5monde.com/fiches-pedagogiques-fle/david-concierge-dans-un-hotel" style="color:var(--gold);" target="_blank">TV5Monde – Français des professions</a><br>
+    ✨ « Un concierge exceptionnel ne résout pas seulement les problèmes — il les anticipe. »
+</footer>
+
+<script>
+    function revealAnswer(id) {
+        const el = document.getElementById(id);
+        if (el) el.classList.toggle('show');
+    }
+</script>
+</body>
+</html>
