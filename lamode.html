@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Mode à Paris et à Tokyo — French A2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #c2185b;
+    --rose-light: #fce4ec;
+    --rose-mid: #e91e63;
+    --indigo: #283593;
+    --indigo-light: #e8eaf6;
+    --gold: #f9a825;
+    --gold-light: #fff9c4;
+    --dark: #1a1a2e;
+    --mid: #4a4a6a;
+    --light: #f8f7fc;
+    --white: #ffffff;
+    --border: #e0ddf0;
+    --success: #2e7d32;
+    --success-bg: #e8f5e9;
+    --error: #c62828;
+    --error-bg: #ffebee;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--dark);
+    color: white;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid var(--rose);
+  }
+
+  .header-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+  }
+
+  .badge {
+    background: var(--rose);
+    color: white;
+    font-size: 0.72rem;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  /* TABS */
+  .tabs {
+    background: var(--dark);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .tabs-inner {
+    max-width: 860px;
+    margin: 0 auto;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .tabs-inner::-webkit-scrollbar { display: none; }
+
+  .tab-btn {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.55);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    padding: 11px 18px;
+    cursor: pointer;
+    white-space: nowrap;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    font-weight: 400;
+  }
+
+  .tab-btn:hover { color: rgba(255,255,255,0.85); }
+
+  .tab-btn.active {
+    color: white;
+    border-bottom-color: var(--rose);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 28px 20px 60px;
+  }
+
+  .section { display: none; }
+  .section.active { display: block; }
+
+  /* SCORE BAR */
+  .score-bar {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .score-icon { font-size: 1.3rem; }
+
+  .score-label {
+    font-size: 0.85rem;
+    color: var(--mid);
+  }
+
+  .score-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--rose);
+    font-weight: 600;
+    margin-left: auto;
+  }
+
+  /* SECTION TITLES */
+  .sec-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--dark);
+    margin-bottom: 6px;
+  }
+
+  .sec-sub {
+    font-size: 0.85rem;
+    color: var(--mid);
+    margin-bottom: 24px;
+  }
+
+  /* ARTICLE */
+  .article-source {
+    display: inline-block;
+    background: var(--rose-light);
+    color: var(--rose);
+    font-size: 0.78rem;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+
+  .article-body {
+    font-size: 1rem;
+    line-height: 1.85;
+    color: var(--dark);
+  }
+
+  .article-body p { margin-bottom: 18px; }
+
+  .article-body .highlight {
+    font-style: italic;
+    color: var(--rose);
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .vocab-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vocab-card:hover {
+    border-color: var(--rose);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(194,24,91,0.1);
+  }
+
+  .vocab-card.flipped {
+    background: var(--indigo-light);
+    border-color: var(--indigo);
+  }
+
+  .vocab-fr {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--dark);
+  }
+
+  .vocab-en {
+    font-size: 0.82rem;
+    color: var(--indigo);
+    margin-top: 4px;
+    display: none;
+  }
+
+  .vocab-ex {
+    font-size: 0.78rem;
+    color: var(--mid);
+    margin-top: 6px;
+    font-style: italic;
+    display: none;
+  }
+
+  .vocab-card.flipped .vocab-en { display: block; }
+  .vocab-card.flipped .vocab-ex { display: block; }
+
+  .vocab-hint {
+    font-size: 0.7rem;
+    color: var(--mid);
+    margin-top: 8px;
+  }
+
+  .vocab-card.flipped .vocab-hint { display: none; }
+
+  /* GRAMMAR */
+  .grammar-block {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 18px;
+  }
+
+  .grammar-block h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 14px;
+    color: var(--dark);
+  }
+
+  .grammar-block.rose { border-left: 4px solid var(--rose); }
+  .grammar-block.indigo { border-left: 4px solid var(--indigo); }
+
+  .rule-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .rule-row:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+  .rule-term {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--white);
+    background: var(--rose);
+    border-radius: 6px;
+    padding: 2px 9px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .rule-term.blue { background: var(--indigo); }
+  .rule-term.gold { background: #b8860b; }
+
+  .rule-desc {
+    font-size: 0.9rem;
+    color: var(--dark);
+  }
+
+  .rule-desc em {
+    font-style: italic;
+    color: var(--mid);
+    font-size: 0.85rem;
+  }
+
+  /* GRAMMAR TABLE */
+  .gram-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+    margin-top: 16px;
+  }
+
+  .gram-table th {
+    background: var(--indigo);
+    color: white;
+    padding: 8px 12px;
+    text-align: left;
+    font-weight: 500;
+  }
+
+  .gram-table td {
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .gram-table tr:nth-child(even) td { background: var(--indigo-light); }
+  .gram-table tr:last-child td { border-bottom: none; }
+
+  .gram-table .fwd { color: var(--rose); font-style: italic; }
+
+  /* CULTURE */
+  .culture-compare {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  @media (max-width: 540px) {
+    .culture-compare { grid-template-columns: 1fr; }
+  }
+
+  .culture-card {
+    border-radius: 12px;
+    padding: 20px;
+    border: 1px solid var(--border);
+  }
+
+  .culture-card.paris {
+    background: linear-gradient(135deg, #fce4ec 0%, #fce4ec 100%);
+    border-color: var(--rose);
+  }
+
+  .culture-card.tokyo {
+    background: linear-gradient(135deg, #e8eaf6 0%, #e8eaf6 100%);
+    border-color: var(--indigo);
+  }
+
+  .culture-flag {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
+
+  .culture-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+  }
+
+  .culture-card.paris h3 { color: var(--rose); }
+  .culture-card.tokyo h3 { color: var(--indigo); }
+
+  .culture-list {
+    list-style: none;
+    font-size: 0.88rem;
+  }
+
+  .culture-list li {
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    display: flex;
+    gap: 8px;
+  }
+
+  .culture-list li:last-child { border-bottom: none; }
+
+  .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+
+  .dot.red { background: var(--rose); }
+  .dot.blue { background: var(--indigo); }
+  .dot.gold { background: var(--gold); }
+
+  /* EXERCISES */
+  .exercise-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 22px;
+    margin-bottom: 20px;
+  }
+
+  .ex-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .ex-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--dark);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+
+  .ex-title-wrap { flex: 1; }
+
+  .ex-title {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: var(--dark);
+  }
+
+  .ex-level {
+    font-size: 0.72rem;
+    color: var(--mid);
+    margin-top: 2px;
+  }
+
+  /* MCQ */
+  .mcq-q {
+    font-size: 0.92rem;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+
+  .mcq-opts { display: flex; flex-direction: column; gap: 7px; margin-bottom: 10px; }
+
+  .mcq-opt {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 13px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.88rem;
+    transition: all 0.18s;
+    background: var(--white);
+  }
+
+  .mcq-opt:hover { border-color: var(--rose); background: var(--rose-light); }
+  .mcq-opt.correct { border-color: var(--success) !important; background: var(--success-bg) !important; }
+  .mcq-opt.wrong { border-color: var(--error) !important; background: var(--error-bg) !important; }
+
+  .radio-circle {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--border);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* FILL IN */
+  .fill-sentence {
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+    line-height: 2.2;
+  }
+
+  .fill-input {
+    border: none;
+    border-bottom: 2px solid var(--rose);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    color: var(--dark);
+    padding: 0 4px;
+    width: 140px;
+    outline: none;
+    text-align: center;
+  }
+
+  .fill-input.correct { border-color: var(--success); color: var(--success); }
+  .fill-input.wrong { border-color: var(--error); color: var(--error); }
+
+  /* TRUE/FALSE */
+  .tf-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .tf-row:last-child { border-bottom: none; margin-bottom: 0; }
+
+  .tf-stmt { font-size: 0.88rem; flex: 1; }
+
+  .tf-btns { display: flex; gap: 6px; flex-shrink: 0; }
+
+  .tf-btn {
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.18s;
+  }
+
+  .tf-btn:hover { border-color: var(--rose); }
+  .tf-btn.correct { background: var(--success-bg); border-color: var(--success); color: var(--success); }
+  .tf-btn.wrong { background: var(--error-bg); border-color: var(--error); color: var(--error); }
+
+  /* MATCHING */
+  .match-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .match-col { display: flex; flex-direction: column; gap: 7px; }
+
+  .match-item {
+    padding: 8px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.18s;
+    background: var(--white);
+  }
+
+  .match-item:hover { border-color: var(--rose); background: var(--rose-light); }
+  .match-item.selected { border-color: var(--rose); background: var(--rose-light); }
+  .match-item.matched { border-color: var(--success); background: var(--success-bg); cursor: default; }
+  .match-item.wrong-match { border-color: var(--error); background: var(--error-bg); }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    cursor: pointer;
+    border: 1.5px solid;
+    transition: all 0.18s;
+    font-weight: 500;
+  }
+
+  .btn-primary {
+    background: var(--rose);
+    color: white;
+    border-color: var(--rose);
+  }
+
+  .btn-primary:hover { background: #ad1457; }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--dark);
+    border-color: var(--border);
+  }
+
+  .btn-secondary:hover { border-color: var(--dark); }
+
+  /* CORRECTION */
+  .correction {
+    display: none;
+    background: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    margin-top: 10px;
+  }
+
+  .correction.visible { display: block; }
+
+  .correction strong { color: var(--dark); }
+
+  /* TEXTAREA */
+  .prod-area {
+    width: 100%;
+    min-height: 80px;
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.9rem;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.18s;
+  }
+
+  .prod-area:focus { border-color: var(--rose); }
+
+  /* ASTUCE */
+  .astuce {
+    background: var(--indigo-light);
+    border: 1px solid var(--indigo);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-top: 24px;
+  }
+
+  .astuce h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--indigo);
+    margin-bottom: 12px;
+  }
+
+  .astuce-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+
+  @media (max-width: 540px) {
+    .astuce-grid { grid-template-columns: 1fr; }
+  }
+
+  .astuce-col h4 {
+    font-size: 0.82rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--mid);
+    margin-bottom: 8px;
+  }
+
+  .astuce-col ul {
+    list-style: none;
+    font-size: 0.85rem;
+  }
+
+  .astuce-col ul li {
+    padding: 3px 0;
+    color: var(--dark);
+  }
+
+  .astuce-col ul li::before {
+    content: '✦ ';
+    color: var(--rose);
+    font-size: 0.7rem;
+  }
+
+  /* SEPARATEUR */
+  .sep {
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  .ex-instr {
+    font-size: 0.82rem;
+    color: var(--mid);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  /* TRANSFORM EX */
+  .transform-q {
+    background: var(--light);
+    border-left: 3px solid var(--rose);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+    margin-bottom: 10px;
+    font-size: 0.88rem;
+    font-style: italic;
+  }
+
+  .transform-instr {
+    font-size: 0.82rem;
+    color: var(--mid);
+    margin-bottom: 6px;
+  }
+
+  footer {
+    background: var(--dark);
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+    font-size: 0.78rem;
+    padding: 16px;
+    margin-top: 40px;
+  }
+
+  footer strong { color: rgba(255,255,255,0.7); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div>
+      <span class="header-title">🇫🇷 La Mode à Paris et à Tokyo</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="badge">French A2</span>
+    </div>
+  </div>
+  <div class="tabs">
+    <div class="tabs-inner">
+      <button class="tab-btn active" onclick="showTab('lecture')">📖 Lecture</button>
+      <button class="tab-btn" onclick="showTab('vocab')">📚 Vocabulaire</button>
+      <button class="tab-btn" onclick="showTab('grammaire')">📐 Grammaire</button>
+      <button class="tab-btn" onclick="showTab('exercices')">✍️ Exercices</button>
+      <button class="tab-btn" onclick="showTab('culture')">🌍 Culture</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="score-bar">
+    <span class="score-icon">🏆</span>
+    <div>
+      <div style="font-weight:500;font-size:0.9rem;">Votre progression dans la leçon</div>
+      <div class="score-label">Score cumulé</div>
+    </div>
+    <div class="score-num" id="score-display">0 / 20 points</div>
+  </div>
+
+  <!-- LECTURE -->
+  <div class="section active" id="sec-lecture">
+    <h2 class="sec-title">La Mode à Paris et à Tokyo</h2>
+    <p class="sec-sub">Un article adapté — avril 2026</p>
+
+    <span class="article-source">📰 Texte de lecture · A2</span>
+
+    <div class="article-body">
+      <p>Paris et Tokyo sont deux capitales <span class="highlight">mondiales</span> de la mode. Mais leurs styles sont très différents ! À Paris, la mode est <span class="highlight">classique</span> et élégante. Les Parisiens préfèrent les vêtements simples et <span class="highlight">raffinés</span>. Les couleurs sont souvent neutres : beige, noir, blanc ou bordeaux. La mode parisienne a des codes <span class="highlight">traditionnels</span> : un bon manteau, une belle robe, des chaussures de qualité.</p>
+
+      <p>À Tokyo, en revanche, la mode est beaucoup plus <span class="highlight">expérimentale</span>. Les Tokyoïtes adorent mélanger les styles et créer des looks <span class="highlight">originaux</span>. Dans les quartiers comme Harajuku ou Shibuya, on voit des tenues <span class="highlight">spectaculaires</span> : des couleurs vives, des motifs <span class="highlight">floraux</span>, des accessoires géants. La mode de rue <span class="highlight">japonaise</span> est célèbre dans le monde entier.</p>
+
+      <p>Pourtant, les deux villes partagent une passion commune pour la qualité et l'artisanat. À Paris, les grandes maisons comme Chanel ou Dior fabriquent des vêtements <span class="highlight">exceptionnels</span>. À Tokyo, les créateurs <span class="highlight">locaux</span> travaillent le tissu avec une précision <span class="highlight">artisanale</span> remarquable.</p>
+
+      <p>Aujourd'hui, beaucoup de jeunes créateurs voyagent entre les deux villes pour s'inspirer. Ils créent des collections <span class="highlight">internationales</span> qui mélangent le chic parisien et l'audace tokyoïte. La mode est devenue un vrai dialogue entre les cultures <span class="highlight">orientales</span> et <span class="highlight">occidentales</span>.</p>
+
+      <p>Comme le dit une styliste parisienne : « La mode n'a pas de frontières. Paris nous apprend l'élégance, Tokyo nous apprend la liberté. » Ces deux capitales sont <span class="highlight">idéales</span> pour comprendre comment la créativité peut traverser les <span class="highlight">continents</span>.</p>
+    </div>
+
+    <div style="margin-top:14px;font-size:0.78rem;color:var(--mid);">📌 Texte original — Leçon A2 · La Mode · avril 2026</div>
+  </div>
+
+  <!-- VOCABULAIRE -->
+  <div class="section" id="sec-vocab">
+    <h2 class="sec-title">Mots clés de l'article</h2>
+    <p class="sec-sub">Cliquez sur une carte pour voir la traduction et un exemple !</p>
+
+    <div class="vocab-grid" id="vocab-grid"></div>
+  </div>
+
+  <!-- GRAMMAIRE -->
+  <div class="section" id="sec-grammaire">
+    <h2 class="sec-title">Les mots en <em>-al</em> au pluriel</h2>
+    <p class="sec-sub">Révision des temps + règle des adjectifs et noms en <strong>-al</strong></p>
+
+    <!-- Règle principale -->
+    <div class="grammar-block rose">
+      <h3>🔴 Règle : adjectifs et noms en <em>-al</em></h3>
+      <div class="rule-row">
+        <span class="rule-term">Masculin pluriel</span>
+        <div class="rule-desc">
+          La plupart des mots en <strong>-al</strong> font <strong>-aux</strong> au masculin pluriel.<br>
+          <em>un style local → des styles locaux</em><br>
+          <em>un tissu floral → des tissus floraux</em>
+        </div>
+      </div>
+      <div class="rule-row">
+        <span class="rule-term">Féminin pluriel</span>
+        <div class="rule-desc">
+          Les formes féminines font <strong>-ales</strong> (pluriel régulier).<br>
+          <em>une mode locale → des modes locales</em><br>
+          <em>une robe florale → des robes florales</em>
+        </div>
+      </div>
+      <div class="rule-row">
+        <span class="rule-term gold">Exceptions</span>
+        <div class="rule-desc">
+          Quelques mots gardent le <strong>-als</strong> : <em>bal → bals</em>, <em>festival → festivals</em>, <em>carnaval → carnavals</em>.<br>
+          À mémoriser car ils ne suivent pas la règle générale !
+        </div>
+      </div>
+    </div>
+
+    <!-- Tableau -->
+    <div class="grammar-block indigo">
+      <h3>📊 Tableau des formes</h3>
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>Singulier</th>
+            <th>Masc. pluriel</th>
+            <th>Fém. pluriel</th>
+            <th>Exemple</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>mondial</td><td class="fwd">mondiaux</td><td>mondiales</td><td><em>des créateurs mondiaux</em></td></tr>
+          <tr><td>local</td><td class="fwd">locaux</td><td>locales</td><td><em>des quartiers locaux</em></td></tr>
+          <tr><td>floral</td><td class="fwd">floraux</td><td>florales</td><td><em>des motifs floraux</em></td></tr>
+          <tr><td>oriental</td><td class="fwd">orientaux</td><td>orientales</td><td><em>des styles orientaux</em></td></tr>
+          <tr><td>occidental</td><td class="fwd">occidentaux</td><td>occidentales</td><td><em>des influences occidentales</em></td></tr>
+          <tr><td>traditionnel</td><td class="fwd">traditionnels</td><td>traditionnelles</td><td><em>Attention : -nel → -nels !</em></td></tr>
+          <tr><td>festival</td><td class="fwd">festivals ⚠️</td><td>festivals</td><td><em>Exception : pas de -aux</em></td></tr>
+          <tr><td>idéal</td><td class="fwd">idéaux</td><td>idéales</td><td><em>des vêtements idéaux</em></td></tr>
+          <tr><td>artisanal</td><td class="fwd">artisanaux</td><td>artisanales</td><td><em>des techniques artisanales</em></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Révision des temps -->
+    <div class="sep"></div>
+    <h2 class="sec-title" style="font-size:1.3rem;">Révision des temps</h2>
+    <p class="sec-sub" style="margin-bottom:16px;">Les temps principaux utilisés dans le texte</p>
+
+    <div class="grammar-block rose">
+      <h3>⏰ Présent de l'indicatif</h3>
+      <div class="rule-row">
+        <span class="rule-term">Usage</span>
+        <div class="rule-desc">Une situation actuelle, une habitude, une vérité générale.<br><em>Les Parisiens <strong>préfèrent</strong> les vêtements simples.</em></div>
+      </div>
+      <div class="rule-row">
+        <span class="rule-term blue">Être</span>
+        <div class="rule-desc">je suis · tu es · il est · nous sommes · vous êtes · ils sont</div>
+      </div>
+      <div class="rule-row">
+        <span class="rule-term blue">Avoir</span>
+        <div class="rule-desc">j'ai · tu as · il a · nous avons · vous avez · ils ont</div>
+      </div>
+    </div>
+
+    <div class="grammar-block indigo">
+      <h3>⏰ Passé composé</h3>
+      <div class="rule-row">
+        <span class="rule-term blue">Usage</span>
+        <div class="rule-desc">Une action passée et terminée.<br><em>Les créateurs <strong>ont voyagé</strong> entre les deux villes.</em></div>
+      </div>
+      <div class="rule-row">
+        <span class="rule-term blue">Formation</span>
+        <div class="rule-desc"><strong>avoir / être</strong> (présent) + participe passé<br><em>il a créé · elle est allée · ils ont fabriqué</em></div>
+      </div>
+    </div>
+
+    <div class="grammar-block rose">
+      <h3>⏰ Imparfait</h3>
+      <div class="rule-row">
+        <span class="rule-term">Usage</span>
+        <div class="rule-desc">Une habitude passée, une description dans le passé.<br><em>Avant, les stylistes <strong>travaillaient</strong> seulement dans leur pays.</em></div>
+      </div>
+      <div class="rule-row">
+        <span class="rule-term">Formation</span>
+        <div class="rule-desc">radical du verbe (nous, présent) + <strong>-ais, -ais, -ait, -ions, -iez, -aient</strong><br><em>je portais · tu portais · il portait…</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXERCICES -->
+  <div class="section" id="sec-exercices">
+    <h2 class="sec-title">Mettez en pratique !</h2>
+    <p class="sec-sub">10 exercices variés pour tester votre compréhension</p>
+
+    <!-- EX 1 : QCM -->
+    <div class="exercise-card">
+      <div class="ex-header">
+        <div class="ex-num">1</div>
+        <div class="ex-title-wrap">
+          <div class="ex-title">Compréhension du texte</div>
+          <div class="ex-level">● Facile · Choisissez la bonne réponse (QCM)</div>
+        </div>
+      </div>
+
+      <div id="mcq-container"></div>
+      <div id="mcq-correction" class="correction"></div>
+    </div>
+
+    <!-- EX 2 : Pluriel en -al -->
+    <div class="exercise-card">
+      <div class="ex-header">
+        <div class="ex-num">2</div>
+        <div class="ex-title-wrap">
+          <div class="ex-title">Mots en <em>-al</em> : formez le pluriel</div>
+          <div class="ex-level">● Moyen · Complétez avec la bonne forme plurielle</div>
+        </div>
+      </div>
+      <p class="ex-instr">Choisissez : -aux (masc.) ou -ales (fém.)</p>
+
+      <div id="al-container"></div>
+      <div style="margin-top:12px;">
+        <button class="btn btn-primary" onclick="checkAl()">Vérifier</button>
+      </div>
+      <div id="al-correction" class="correction"></div>
+    </div>
+
+    <!-- EX 3 : Révision des temps -->
+    <div class="exercise-card">
+      <div class="ex-header">
+        <div class="ex-num">3</div>
+        <div class="ex-title-wrap">
+          <div class="ex-title">Révision des temps : conjuguez</div>
+          <div class="ex-level">● Moyen · Mettez le verbe au temps indiqué</div>
+        </div>
+      </div>
+      <p class="ex-instr">Conjuguez le verbe entre parenthèses au temps demandé.</p>
+
+      <div id="temps-container"></div>
+      <div style="margin-top:12px;">
+        <button class="btn btn-primary" onclick="checkTemps()">Vérifier</button>
+      </div>
+      <div id="temps-correction" class="correction"></div>
+    </div>
+
+    <!-- EX 4 : Vrai / Faux -->
+    <div class="exercise-card">
+      <div class="ex-header">
+        <div class="ex-num">4</div>
+        <div class="ex-title-wrap">
+          <div class="ex-title">Vrai ou Faux ?</div>
+          <div class="ex-level">● Facile · Répondez sur le texte</div>
+        </div>
+      </div>
+
+      <div id="tf-container"></div>
+      <div id="tf-correction" class="correction"></div>
+    </div>
+
+    <!-- EX 5 : Association -->
+    <div class="exercise-card">
+      <div class="ex-header">
+        <div class="ex-num">5</div>
+        <div class="ex-title-wrap">
+          <div class="ex-title">Association : Français ↔ Anglais</div>
+          <div class="ex-level">● Moyen · Cliquez sur un mot puis sa traduction</div>
+        </div>
+      </div>
+      <p class="ex-instr">Cliquez sur un mot français, puis sur sa traduction anglaise.</p>
+
+      <div class="match-grid">
+        <div class="match-col" id="match-fr"></div>
+        <div class="match-col" id="match-en"></div>
+      </div>
+      <div id="match-result" style="font-size:0.85rem;color:var(--mid);"></div>
+    </div>
+
+    <!-- EX 6 : Transformation -->
+    <div class="exercise-card">
+      <div class="ex-header">
+        <div class="ex-num">6</div>
+        <div class="ex-title-wrap">
+          <div class="ex-title">Transformez les phrases</div>
+          <div class="ex-level">● Difficile · Mettez au pluriel ou changez le temps</div>
+        </div>
+      </div>
+
+      <div id="transform-container"></div>
+    </div>
+
+    <!-- EX 7 : Production écrite -->
+    <div class="exercise-card">
+      <div class="ex-header">
+        <div class="ex-num">7</div>
+        <div class="ex-title-wrap">
+          <div class="ex-title">Production écrite</div>
+          <div class="ex-level">● Difficile · Répondez en français, 2–3 phrases</div>
+        </div>
+      </div>
+
+      <div id="prod-container"></div>
+    </div>
+  </div>
+
+  <!-- CULTURE -->
+  <div class="section" id="sec-culture">
+    <h2 class="sec-title">Paris 🆚 Tokyo</h2>
+    <p class="sec-sub">La mode : deux capitales, deux philosophies</p>
+
+    <div class="culture-compare">
+      <div class="culture-card paris">
+        <div class="culture-flag">🇫🇷</div>
+        <h3>À Paris</h3>
+        <ul class="culture-list">
+          <li><span class="dot red"></span>Style classique et élégant</li>
+          <li><span class="dot red"></span>Couleurs neutres : beige, noir, blanc</li>
+          <li><span class="dot gold"></span>Grandes maisons : Chanel, Dior, Givenchy</li>
+          <li><span class="dot gold"></span>Le manteau et la robe : pièces maîtresses</li>
+          <li><span class="dot red"></span>Qualité et sobriété valorisées</li>
+          <li><span class="dot red"></span>Le « je-ne-sais-quoi » parisien</li>
+        </ul>
+      </div>
+      <div class="culture-card tokyo">
+        <div class="culture-flag">🇯🇵</div>
+        <h3>À Tokyo</h3>
+        <ul class="culture-list">
+          <li><span class="dot blue"></span>Style expérimental et audacieux</li>
+          <li><span class="dot blue"></span>Couleurs vives, motifs originaux</li>
+          <li><span class="dot gold"></span>Quartiers : Harajuku, Shibuya, Omotesando</li>
+          <li><span class="dot gold"></span>Mélange des styles : kawaii, punk, lolita…</li>
+          <li><span class="dot blue"></span>Artisanat textile traditionnel</li>
+          <li><span class="dot blue"></span>La rue comme podium de mode</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="astuce" style="margin-top:24px;">
+      <h3>💡 Vocabulaire culturel à retenir</h3>
+      <div class="astuce-grid">
+        <div class="astuce-col">
+          <h4>🇫🇷 Paris</h4>
+          <ul>
+            <li>le prêt-à-porter</li>
+            <li>la haute couture</li>
+            <li>un créateur / une créatrice</li>
+            <li>un défilé de mode</li>
+            <li>le style parisien</li>
+            <li>une maison de couture</li>
+          </ul>
+        </div>
+        <div class="astuce-col">
+          <h4>🇯🇵 Tokyo</h4>
+          <ul>
+            <li>la mode de rue (street fashion)</li>
+            <li>un look original</li>
+            <li>les accessoires</li>
+            <li>un motif floral / géométrique</li>
+            <li>mélanger les styles</li>
+            <li>l'artisanat local</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <strong>French A2 · La Mode à Paris et à Tokyo</strong> · Texte original — Leçon A2 · avril 2026 · 🇫🇷 Bonne continuation !
+</footer>
+
+<script>
+// ========== STATE ==========
+let score = 0;
+let maxScore = 20;
+
+function addScore(n) {
+  score = Math.min(maxScore, score + n);
+  document.getElementById('score-display').textContent = score + ' / ' + maxScore + ' points';
+}
+
+// ========== TABS ==========
+function showTab(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ========== VOCAB ==========
+const vocabData = [
+  { fr: 'la mode', en: 'fashion', ex: '« La mode à Tokyo est très originale. »' },
+  { fr: 'élégant(e)', en: 'elegant', ex: '« Un style élégant et classique. »' },
+  { fr: 'un tissu', en: 'a fabric', ex: '« Ce tissu est de grande qualité. »' },
+  { fr: 'un motif', en: 'a pattern', ex: '« Des motifs floraux très colorés. »' },
+  { fr: 'un créateur', en: 'a designer', ex: '« Un créateur local inspiré par Tokyo. »' },
+  { fr: 'un défilé', en: 'a fashion show', ex: '« Le défilé Chanel à Paris. »' },
+  { fr: 'raffiné(e)', en: 'refined / sophisticated', ex: '« Un look raffiné et sobre. »' },
+  { fr: 'une tenue', en: 'an outfit', ex: '« Sa tenue est spectaculaire. »' },
+  { fr: 'mélanger', en: 'to mix / combine', ex: '« Ils aiment mélanger les styles. »' },
+  { fr: 'l\'artisanat', en: 'craftsmanship', ex: '« L\'artisanat japonais est remarquable. »' },
+  { fr: 'une collection', en: 'a collection', ex: '« Une nouvelle collection internationale. »' },
+  { fr: 'sobre', en: 'understated / simple', ex: '« Les Parisiens préfèrent un style sobre. »' },
+  { fr: 'une frontière', en: 'a border / boundary', ex: '« La mode n\'a pas de frontières. »' },
+  { fr: 'vif / vive', en: 'bright (colour)', ex: '« Des couleurs vives très populaires à Tokyo. »' },
+  { fr: 'un accessoire', en: 'an accessory', ex: '« Des accessoires géants et originaux. »' },
+  { fr: 's\'inspirer', en: 'to draw inspiration', ex: '« Ils s\'inspirent des deux villes. »' },
+];
+
+function buildVocab() {
+  const grid = document.getElementById('vocab-grid');
+  vocabData.forEach(v => {
+    const card = document.createElement('div');
+    card.className = 'vocab-card';
+    card.innerHTML = `
+      <div class="vocab-fr">${v.fr}</div>
+      <div class="vocab-en">${v.en}</div>
+      <div class="vocab-ex">${v.ex}</div>
+      <div class="vocab-hint" style="font-size:0.7rem;color:var(--mid);margin-top:6px;">cliquer ▾</div>
+    `;
+    card.addEventListener('click', () => card.classList.toggle('flipped'));
+    grid.appendChild(card);
+  });
+}
+
+// ========== MCQ ==========
+const mcqData = [
+  {
+    q: '1. Comment est décrit le style parisien dans l\'article ?',
+    opts: ['Expérimental et coloré', 'Classique et élégant', 'Sportif et décontracté'],
+    ans: 1,
+    corr: '« Classique et élégant » — Le texte dit : « À Paris, la mode est classique et élégante. »'
+  },
+  {
+    q: '2. Quel quartier de Tokyo est mentionné dans l\'article ?',
+    opts: ['Shinjuku', 'Asakusa', 'Harajuku'],
+    ans: 2,
+    corr: '« Harajuku » — Le texte cite « des quartiers comme Harajuku ou Shibuya ».'
+  },
+  {
+    q: '3. Qu\'est-ce que les jeunes créateurs font aujourd\'hui ?',
+    opts: ['Ils restent dans leur pays.', 'Ils voyagent entre Paris et Tokyo.', 'Ils créent seulement pour Paris.'],
+    ans: 1,
+    corr: '« Ils voyagent entre les deux villes » — « beaucoup de jeunes créateurs voyagent entre les deux villes pour s\'inspirer ».'
+  },
+  {
+    q: '4. Quel est le point commun entre Paris et Tokyo selon l\'article ?',
+    opts: ['Les mêmes couleurs', 'La passion pour la qualité et l\'artisanat', 'Les mêmes grandes maisons de mode'],
+    ans: 1,
+    corr: '« La passion pour la qualité et l\'artisanat » — Le texte dit : « les deux villes partagent une passion commune pour la qualité et l\'artisanat ».'
+  }
+];
+
+let mcqDone = false;
+function buildMcq() {
+  const c = document.getElementById('mcq-container');
+  mcqData.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.style.marginBottom = '18px';
+    block.innerHTML = `<div class="mcq-q">${q.q}</div>`;
+    const opts = document.createElement('div');
+    opts.className = 'mcq-opts';
+    q.opts.forEach((o, oi) => {
+      const btn = document.createElement('div');
+      btn.className = 'mcq-opt';
+      btn.dataset.qi = qi;
+      btn.dataset.oi = oi;
+      btn.innerHTML = `<span class="radio-circle"></span> ${o}`;
+      btn.addEventListener('click', function() {
+        if (mcqDone) return;
+        const qBtns = document.querySelectorAll(`.mcq-opt[data-qi="${qi}"]`);
+        qBtns.forEach(b => b.classList.remove('correct', 'wrong'));
+        if (oi === q.ans) {
+          btn.classList.add('correct');
+        } else {
+          btn.classList.add('wrong');
+          qBtns[q.ans].classList.add('correct');
+        }
+        const corr = document.getElementById('mcq-correction');
+        corr.innerHTML = '<strong>✅ Correction :</strong> ' + q.corr;
+        corr.classList.add('visible');
+        if (!btn.dataset.scored) {
+          btn.dataset.scored = '1';
+          if (oi === q.ans) addScore(1);
+        }
+      });
+      opts.appendChild(btn);
+    });
+    block.appendChild(opts);
+    c.appendChild(block);
+  });
+}
+
+// ========== AL PLURIEL ==========
+const alData = [
+  { sentence: 'Les créateurs sont connus dans les marchés ', blank: 'mondiaux', clue: '(mondial, masc.)' },
+  { sentence: 'Les stylistes apprécient les techniques ', blank: 'artisanales', clue: '(artisanal, fém.)' },
+  { sentence: 'Les quartiers de Tokyo sont très ', blank: 'locaux', clue: '(local, masc.)' },
+  { sentence: 'Les robes ont de beaux motifs ', blank: 'floraux', clue: '(floral, masc.)' },
+  { sentence: 'Les influences ', blank: 'orientales', clue: '(oriental, fém.)', end: ' sont visibles dans sa collection.' },
+];
+
+function buildAl() {
+  const c = document.getElementById('al-container');
+  alData.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'fill-sentence';
+    row.style.marginBottom = '12px';
+    row.innerHTML = `${i+1}. ${item.sentence}<input class="fill-input" id="al-${i}" placeholder="?"> ${item.end || '.'} <em style="font-size:0.78rem;color:var(--mid);">${item.clue}</em>`;
+    c.appendChild(row);
+  });
+}
+
+function checkAl() {
+  let correct = 0;
+  alData.forEach((item, i) => {
+    const input = document.getElementById('al-' + i);
+    const val = input.value.trim().toLowerCase();
+    const expected = item.blank.toLowerCase();
+    if (val === expected) {
+      input.classList.add('correct');
+      input.classList.remove('wrong');
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      input.classList.remove('correct');
+      input.value = item.blank;
+    }
+  });
+  const c = document.getElementById('al-correction');
+  c.innerHTML = `<strong>✅ Résultat :</strong> ${correct} / ${alData.length} bonnes réponses.<br>
+    <strong>Rappel :</strong> -al → -aux (masc.) / -ales (fém.) · Exceptions : festival → festivals, bal → bals`;
+  c.classList.add('visible');
+  addScore(correct);
+}
+
+// ========== RÉVISION DES TEMPS ==========
+const tempsData = [
+  { sentence: 'Hier, les créateurs ', verb: 'voyager', tense: 'passé composé', blank: 'ont voyagé', rest: ' entre Paris et Tokyo.' },
+  { sentence: 'Quand elle était jeune, elle ', verb: 'porter', tense: 'imparfait', blank: 'portait', rest: ' des robes colorées.' },
+  { sentence: 'Aujourd\'hui, la mode de Tokyo ', verb: 'être', tense: 'présent', blank: 'est', rest: ' célèbre dans le monde entier.' },
+  { sentence: 'L\'année dernière, ils ', verb: 'créer', tense: 'passé composé', blank: 'ont créé', rest: ' une collection internationale.' },
+  { sentence: 'Avant, les maisons de couture ', verb: 'fabriquer', tense: 'imparfait', blank: 'fabriquaient', rest: ' uniquement à Paris.' },
+];
+
+function buildTemps() {
+  const c = document.getElementById('temps-container');
+  tempsData.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.style.marginBottom = '14px';
+    row.innerHTML = `
+      <div style="font-size:0.8rem;color:var(--mid);margin-bottom:4px;">${i+1}. Verbe : <strong>${item.verb}</strong> — ${item.tense}</div>
+      <div class="fill-sentence">${item.sentence}<input class="fill-input" id="temps-${i}" placeholder="?" style="width:160px;">${item.rest}</div>
+    `;
+    c.appendChild(row);
+  });
+}
+
+function checkTemps() {
+  let correct = 0;
+  tempsData.forEach((item, i) => {
+    const input = document.getElementById('temps-' + i);
+    const val = input.value.trim().toLowerCase();
+    const expected = item.blank.toLowerCase();
+    if (val === expected) {
+      input.classList.add('correct');
+      input.classList.remove('wrong');
+      correct++;
+    } else {
+      input.classList.add('wrong');
+      input.classList.remove('correct');
+      input.value = item.blank;
+    }
+  });
+  const c = document.getElementById('temps-correction');
+  c.innerHTML = `<strong>✅ Résultat :</strong> ${correct} / ${tempsData.length} bonnes réponses.<br>
+    <strong>Rappel :</strong> Présent = situation actuelle · Passé composé = action terminée · Imparfait = habitude passée / description`;
+  c.classList.add('visible');
+  addScore(correct);
+}
+
+// ========== VRAI / FAUX ==========
+const tfData = [
+  { stmt: 'Les Parisiens préfèrent les couleurs vives et originales.', ans: false, corr: 'Faux. « Les couleurs sont souvent neutres : beige, noir, blanc ou bordeaux. »' },
+  { stmt: 'Le quartier de Harajuku se trouve à Tokyo.', ans: true, corr: 'Vrai. Le texte mentionne « des quartiers comme Harajuku ou Shibuya ».' },
+  { stmt: 'Les créateurs ne voyagent jamais entre Paris et Tokyo.', ans: false, corr: 'Faux. « Beaucoup de jeunes créateurs voyagent entre les deux villes pour s\'inspirer. »' },
+  { stmt: 'Paris et Tokyo partagent une passion pour l\'artisanat.', ans: true, corr: 'Vrai. « Les deux villes partagent une passion commune pour la qualité et l\'artisanat. »' },
+];
+
+function buildTf() {
+  const c = document.getElementById('tf-container');
+  tfData.forEach((item, i) => {
+    const row = document.createElement('div');
+    row.className = 'tf-row';
+    row.innerHTML = `
+      <div class="tf-stmt">${i+1}. ${item.stmt}</div>
+      <div class="tf-btns">
+        <button class="tf-btn" onclick="checkTf(${i}, true, ${item.ans})">Vrai</button>
+        <button class="tf-btn" onclick="checkTf(${i}, false, ${item.ans})">Faux</button>
+      </div>
+    `;
+    c.appendChild(row);
+  });
+}
+
+function checkTf(i, chosen, correct) {
+  const btns = document.querySelectorAll(`.tf-row:nth-child(${i+1}) .tf-btn`);
+  btns.forEach(b => b.classList.remove('correct', 'wrong'));
+  const chosenBtn = document.querySelectorAll(`.tf-row:nth-child(${i+1}) .tf-btn`)[chosen ? 0 : 1];
+  if (chosen === correct) {
+    chosenBtn.classList.add('correct');
+    const c = document.getElementById('tf-correction');
+    c.innerHTML = `<strong>✅ Correction :</strong> ${tfData[i].corr}`;
+    c.classList.add('visible');
+    addScore(1);
+  } else {
+    chosenBtn.classList.add('wrong');
+    const c = document.getElementById('tf-correction');
+    c.innerHTML = `<strong>❌ Correction :</strong> ${tfData[i].corr}`;
+    c.classList.add('visible');
+  }
+}
+
+// ========== MATCHING ==========
+const matchPairs = [
+  { fr: 'un tissu', en: 'a fabric' },
+  { fr: 'un défilé', en: 'a fashion show' },
+  { fr: 'mélanger', en: 'to mix' },
+  { fr: 'raffiné', en: 'refined' },
+  { fr: 'une tenue', en: 'an outfit' },
+];
+
+let selectedFr = null;
+let selectedEn = null;
+let matchedCount = 0;
+
+function buildMatch() {
+  const frCol = document.getElementById('match-fr');
+  const enCol = document.getElementById('match-en');
+
+  const shuffledEn = [...matchPairs].sort(() => Math.random() - 0.5);
+
+  matchPairs.forEach(p => {
+    const btn = document.createElement('div');
+    btn.className = 'match-item';
+    btn.dataset.key = p.fr;
+    btn.dataset.side = 'fr';
+    btn.textContent = p.fr;
+    btn.addEventListener('click', () => selectMatch(btn, 'fr', p.fr));
+    frCol.appendChild(btn);
+  });
+
+  shuffledEn.forEach(p => {
+    const btn = document.createElement('div');
+    btn.className = 'match-item';
+    btn.dataset.key = p.fr;
+    btn.dataset.side = 'en';
+    btn.textContent = p.en;
+    btn.addEventListener('click', () => selectMatch(btn, 'en', p.fr));
+    enCol.appendChild(btn);
+  });
+}
+
+function selectMatch(btn, side, key) {
+  if (btn.classList.contains('matched')) return;
+
+  if (side === 'fr') {
+    document.querySelectorAll('.match-item[data-side="fr"]').forEach(b => b.classList.remove('selected'));
+    selectedFr = key;
+    btn.classList.add('selected');
+  } else {
+    document.querySelectorAll('.match-item[data-side="en"]').forEach(b => b.classList.remove('selected'));
+    selectedEn = key;
+    btn.classList.add('selected');
+  }
+
+  if (selectedFr && selectedEn) {
+    if (selectedFr === selectedEn) {
+      document.querySelectorAll(`.match-item[data-key="${selectedFr}"]`).forEach(b => {
+        b.classList.remove('selected');
+        b.classList.add('matched');
+      });
+      matchedCount++;
+      addScore(1);
+      if (matchedCount === matchPairs.length) {
+        document.getElementById('match-result').textContent = '✅ Parfait ! Tous les mots sont associés !';
+      }
+    } else {
+      document.querySelectorAll('.match-item').forEach(b => {
+        b.classList.remove('selected');
+        b.classList.add('wrong-match');
+      });
+      setTimeout(() => {
+        document.querySelectorAll('.match-item').forEach(b => b.classList.remove('wrong-match'));
+      }, 700);
+    }
+    selectedFr = null;
+    selectedEn = null;
+  }
+}
+
+// ========== TRANSFORMATION ==========
+const transformData = [
+  {
+    q: '« Ce défilé est mondial. »',
+    instr: 'Mettez au pluriel masculin (accordez l\'adjectif) :',
+    ans: 'Ces défilés sont mondiaux.',
+    hint: 'mondial → mondiaux (masc. plur.)'
+  },
+  {
+    q: '« Les créateurs voyagent à Paris. » (hier)',
+    instr: 'Mettez au passé composé :',
+    ans: 'Les créateurs ont voyagé à Paris.',
+    hint: 'voyager → avoir + voyagé'
+  },
+  {
+    q: '« Elle porte des robes florales. » (habitude dans le passé)',
+    instr: 'Mettez à l\'imparfait :',
+    ans: 'Elle portait des robes florales.',
+    hint: 'porter → portait (imparfait, 3e pers. sg.)'
+  },
+];
+
+function buildTransform() {
+  const c = document.getElementById('transform-container');
+  transformData.forEach((item, i) => {
+    const block = document.createElement('div');
+    block.style.marginBottom = '20px';
+    block.innerHTML = `
+      <div class="transform-q">${item.q}</div>
+      <div class="transform-instr">${item.instr}</div>
+      <textarea class="prod-area" id="tr-${i}" rows="2" placeholder="Votre réponse..."></textarea>
+      <div style="margin-top:6px;">
+        <button class="btn btn-secondary" onclick="showTransform(${i})">Voir la correction</button>
+      </div>
+      <div class="correction" id="tr-corr-${i}">
+        <strong>✅ Correction suggérée :</strong> ${item.ans}<br>
+        <em>${item.hint}</em>
+      </div>
+    `;
+    c.appendChild(block);
+  });
+}
+
+function showTransform(i) {
+  document.getElementById('tr-corr-' + i).classList.add('visible');
+}
+
+// ========== PRODUCTION ==========
+const prodData = [
+  {
+    q: '18. Pourquoi la mode parisienne utilise-t-elle souvent des couleurs neutres ? (Donnez une raison d\'après le texte.)',
+    corr: 'La mode parisienne utilise des couleurs neutres parce qu\'elle valorise l\'élégance et la sobriété. Le style parisien préfère la qualité à l\'excentricité. Votre réponse peut être différente si elle est justifiée !'
+  },
+  {
+    q: '19. Quelle est la différence principale entre la mode à Paris et la mode à Tokyo ?',
+    corr: 'La principale différence est que Paris valorise l\'élégance classique, tandis que Tokyo préfère les styles expérimentaux et colorés. À Paris, les codes sont traditionnels ; à Tokyo, on mélange les influences et on ose l\'originalité.'
+  },
+  {
+    q: '20. 💬 Et vous ? Préférez-vous le style parisien ou le style tokyoïte ? Expliquez en français !',
+    corr: 'Personnellement, je préfère le style parisien parce que j\'aime les vêtements élégants et discrets. Mais j\'admire aussi l\'audace des créateurs de Tokyo ! Les deux styles sont fascinants à leur façon.',
+    isPersonal: true
+  }
+];
+
+function buildProd() {
+  const c = document.getElementById('prod-container');
+  prodData.forEach((item, i) => {
+    const block = document.createElement('div');
+    block.style.marginBottom = '20px';
+    block.innerHTML = `
+      <div style="font-size:0.9rem;font-weight:500;margin-bottom:8px;">${item.q}</div>
+      <textarea class="prod-area" id="prod-${i}" rows="3" placeholder="Répondez ici en français..."></textarea>
+      <div style="margin-top:6px;">
+        <button class="btn btn-secondary" onclick="showProd(${i})">${item.isPersonal ? 'Voir un exemple' : 'Voir la correction'}</button>
+      </div>
+      <div class="correction" id="prod-corr-${i}">
+        <strong>${item.isPersonal ? '💡 Exemple de réponse :' : '✅ Réponse suggérée :'}</strong> ${item.corr}
+      </div>
+    `;
+    c.appendChild(block);
+  });
+}
+
+function showProd(i) {
+  document.getElementById('prod-corr-' + i).classList.add('visible');
+}
+
+// ========== INIT ==========
+buildVocab();
+buildMcq();
+buildAl();
+buildTemps();
+buildTf();
+buildMatch();
+buildTransform();
+buildProd();
+</script>
+</body>
+</html>
