@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>DELF A2 : Leçon orale – Projet d'avenir & Cinéma</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f7f9fc 0%, #eef2f5 100%);
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, sans-serif;
+            padding: 2rem 1rem;
+            color: #1a2c3e;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #1E3C4F 0%, #2B5C6F 100%);
+            border-radius: 2rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2.2rem;
+            color: white;
+            box-shadow: 0 20px 30px -12px rgba(0,0,0,0.2);
+        }
+
+        .hero h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .hero h1 span {
+            background: #FFB74D;
+            color: #1e2f3a;
+            font-size: 1.2rem;
+            padding: 5px 12px;
+            border-radius: 60px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            margin-top: 12px;
+            font-size: 1.1rem;
+            font-weight: 400;
+            opacity: 0.95;
+        }
+
+        /* Onglets */
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 28px;
+            border-bottom: 2px solid #cbdae6;
+            padding-bottom: 6px;
+        }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.05rem;
+            font-weight: 600;
+            padding: 12px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1e3c4f;
+            font-family: inherit;
+        }
+
+        .tab-btn:hover {
+            background: #e2e9f0;
+        }
+
+        .tab-btn.active {
+            background: #2B5C6F;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active-content {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* Cartes */
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.8rem 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            border-left: 7px solid #FFB74D;
+            padding-left: 20px;
+            color: #1E3C4F;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.4rem 0 0.8rem 0;
+            color: #2B5C6F;
+        }
+
+        .model-box {
+            background: #fef7e0;
+            border-left: 6px solid #ffb347;
+            padding: 1.4rem;
+            border-radius: 1.2rem;
+            margin: 1rem 0;
+            font-size: 1rem;
+            line-height: 1.55;
+            font-weight: 400;
+            color: #1f2e3a;
+        }
+
+        .dialogue-line .speaker-name {
+            font-weight: 700;
+            color: #B45F1B;
+        }
+
+        .exercise {
+            background: #F0F6FA;
+            border-radius: 1.4rem;
+            padding: 1.5rem;
+            margin: 1.2rem 0;
+            border: 1px solid #cde3ef;
+        }
+
+        .exercise-title {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #1E3C4F;
+        }
+
+        .input-group {
+            margin: 18px 0;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #cbdae6;
+            font-size: 1rem;
+            font-family: inherit;
+            background: white;
+            transition: 0.2s;
+        }
+
+        textarea {
+            border-radius: 24px;
+            resize: vertical;
+        }
+
+        button.small-btn {
+            background: #2B5C6F;
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.2s;
+            font-size: 0.9rem;
+        }
+
+        button.small-btn:hover {
+            background: #1e4456;
+            transform: scale(0.97);
+        }
+
+        .feedback {
+            font-size: 0.95rem;
+            margin-top: 12px;
+            font-weight: 400;
+            color: #2c6e2f;
+            background: #e9f3e6;
+            padding: 10px 14px;
+            border-radius: 28px;
+        }
+
+        hr {
+            margin: 1.5rem 0;
+            border-color: #e0e9f0;
+        }
+
+        .badge {
+            background: #FFB74D;
+            padding: 4px 14px;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-right: 12px;
+        }
+
+        .grid-2 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+        }
+
+        .grid-2 > div {
+            flex: 1 1 280px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #5e7b8c;
+        }
+
+        @media (max-width: 700px) {
+            .card {
+                padding: 1.2rem;
+            }
+            .hero h1 {
+                font-size: 1.6rem;
+            }
+            .tab-btn {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
+
+        ul li {
+            font-weight: 400;
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>
+            🎤 DELF A2 – Leçon complète (oral) 
+            <span>Parler sans blocage</span>
+        </h1>
+        <p>✨ Modèles • Automatisation • Méthode + analyse • Simulation longue</p>
+    </div>
+
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="modeles">📘 1. MODÈLES (à lire d'abord)</button>
+        <button class="tab-btn" data-tab="automatisation">⚡ 2. EXERCICES D’AUTOMATISATION</button>
+        <button class="tab-btn" data-tab="methode">🧠 3. MÉTHODE + ANALYSE</button>
+        <button class="tab-btn" data-tab="pratique">🎙️ 4. PRATIQUE INTERACTIVE</button>
+    </div>
+
+    <!-- 1. MODÈLES -->
+    <div id="modeles" class="tab-content active-content">
+        <div class="card">
+            <h2>🗣️ Partie 1 : Entretien dirigé</h2>
+            <div class="model-box">
+                💬 <strong>Exemple – Camille (projet d'avenir)</strong><br><br>
+                Bonjour, je m’appelle Camille. J’ai 17 ans et j’habite à Bordeaux avec ma famille.<br>
+                Je suis lycéenne, je prépare mon baccalauréat.<br>
+                Le matin, je me lève à 7 heures, je prends mon petit-déjeuner et je vais au lycée.<br>
+                À midi, je déjeune à la cantine avec mes amies.<br>
+                L’après-midi, j’ai cours de français, d’histoire et d’anglais.<br>
+                Le soir, je fais mes devoirs, puis je regarde une série ou je sors avec des amis.<br>
+                Plus tard, je veux devenir architecte d’intérieur. J’aime décorer et organiser les espaces.<br>
+                Ce que j’aime dans ma vie actuelle, c’est apprendre des choses nouvelles. Ce que je n’aime pas, c’est le stress des examens.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📌 Partie 2 : Monologue – « Que voulez-vous faire plus tard ? »</h2>
+            <div class="model-box">
+                🎯 <strong>Exemple – Théo : futur développeur web</strong><br><br>
+                Je vais vous parler de mon projet professionnel. Plus tard, je veux devenir développeur web.<br>
+                J’aime beaucoup l’informatique et créer des sites internet.<br>
+                Pour y arriver, je vais d’abord passer un bac technologique, puis faire un BTS ou une licence en informatique.<br>
+                Je vais essayer de trouver un stage dans une agence web.<br>
+                J’aime ce métier parce qu’on peut être créatif et travailler en équipe.<br>
+                À long terme, j’aimerais voyager tout en travaillant à distance. C’est pour ça que je me prépare dès maintenant.
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🛍️ Partie 3 : Interaction – DIALOGUE LONG</h2>
+            <div class="model-box">
+                <div class="dialogue-line"><span class="speaker-name">🎬 Inviter un ami au cinéma et donner un avis sur un film</span></div>
+                <div class="dialogue-line"><span class="speaker-name">👤 Vous :</span> Salut Léo, ça te dit d’aller au cinéma samedi après-midi ?</div>
+                <div class="dialogue-line"><span class="speaker-name">🧑‍🤝‍🧑 Ami :</span> Pourquoi pas ! Qu’est-ce qu’il y a de nouveau ?</div>
+                <div class="dialogue-line"><span class="speaker-name">👤 Vous :</span> Il y a un film qui s’appelle « L’Odyssée des rêves », c’est un film d’aventure et de science-fiction. Je l’ai vu la semaine dernière, je peux te dire mon avis.</div>
+                <div class="dialogue-line"><span class="speaker-name">🧑‍🤝‍🧑 Ami :</span> Ah oui, tu l’as déjà vu ? Alors, il est bien ?</div>
+                <div class="dialogue-line"><span class="speaker-name">👤 Vous :</span> Franchement, j’ai adoré ! L’histoire est très originale, les acteurs sont incroyables, et les effets spéciaux sont magnifiques. Mais attention, il est un peu long (presque 2h30).</div>
+                <div class="dialogue-line"><span class="speaker-name">🧑‍🤝‍🧑 Ami :</span> D’accord, et toi, tu aimes ce genre de films en général ?</div>
+                <div class="dialogue-line"><span class="speaker-name">👤 Vous :</span> Moi, j’adore la science-fiction et l’aventure. Je n’aime pas trop les films d’horreur, ça me fait trop peur. Et toi, quel style tu préfères ?</div>
+                <div class="dialogue-line"><span class="speaker-name">🧑‍🤝‍🧑 Ami :</span> Je suis plutôt comédie, mais pourquoi pas essayer celui-ci. Tu le recommandes vraiment ?</div>
+                <div class="dialogue-line"><span class="speaker-name">👤 Vous :</span> Oui, à 100% ! Il y a aussi des moments drôles, tu ne t’ennuieras pas. En plus, la bande-son est super.</div>
+                <div class="dialogue-line"><span class="speaker-name">🧑‍🤝‍🧑 Ami :</span> D’accord, allons-y ! C’est à quelle heure ?</div>
+                <div class="dialogue-line"><span class="speaker-name">👤 Vous :</span> Il y a une séance à 15h, et une autre à 18h. Moi, je préfère 15h, comme ça on peut boire un verre après.</div>
+                <div class="dialogue-line"><span class="speaker-name">🧑‍🤝‍🧑 Ami :</span> Parfait, 15h ça me va. On se retrouve devant le cinéma à 14h45 ?</div>
+                <div class="dialogue-line"><span class="speaker-name">👤 Vous :</span> Super ! J’apporte des popcorns, et toi les boissons. À samedi !</div>
+                <div class="dialogue-line"><span class="speaker-name">🧑‍🤝‍🧑 Ami :</span> À samedi, merci pour l’invitation !</div>
+            </div>
+            <p style="margin-top: 14px;">✅ Structure gagnante : saluer → inviter → proposer un film → donner son avis → demander les goûts → organiser → confirmer → remercier.</p>
+        </div>
+    </div>
+
+    <!-- 2. EXERCICES D'AUTOMATISATION : AVEC NOUVEAUX EXERCICES -->
+    <div id="automatisation" class="tab-content">
+        <div class="card">
+            <h2>⚡ Parler vite et sans réfléchir trop</h2>
+            <p>💡 Complète à voix haute ou écris ta réponse. Les champs sont vides pour t'entraîner.</p>
+            
+            <!-- Exercice 1 existant (partie 1) -->
+            <div class="exercise">
+                <div class="exercise-title">🔁 Exercice 1 – Complète rapidement (Partie 1 + projet)</div>
+                <div class="input-group"><label>Je m’appelle <input type="text" id="ex1_nom" placeholder="..."></label></div>
+                <div class="input-group"><label>J’habite à <input type="text" id="ex1_ville" placeholder="..."></label></div>
+                <div class="input-group"><label>Le matin, je <input type="text" id="ex1_matin" placeholder="..."></label></div>
+                <div class="input-group"><label>À midi, je <input type="text" id="ex1_midi" placeholder="..."></label></div>
+                <div class="input-group"><label>Le soir, je <input type="text" id="ex1_soir" placeholder="..."></label></div>
+                <div class="input-group"><label>Plus tard, je veux <input type="text" id="ex1_projet" placeholder="..."></label></div>
+                <div class="input-group"><label>J’aime ce projet parce que <input type="text" id="ex1_parce" placeholder="..."></label></div>
+                <button class="small-btn" id="checkEx1">✅ Voir un exemple</button>
+                <div id="feedbackEx1" class="feedback"></div>
+            </div>
+
+            <!-- NOUVEAU : Exercice 2A – Transformation projet (métier + étapes détaillées) -->
+            <div class="exercise">
+                <div class="exercise-title">🔄 Exercice 2 – Développe ton projet (Partie 2)</div>
+                <p><strong>Modèle :</strong> Je veux être médecin. → transforme en phrase plus développée :</p>
+                <div class="input-group"><label>➡️ Je veux être <input type="text" id="ex2_metier" placeholder="ex: enseignant pour les enfants"></label></div>
+                <div class="input-group"><label>➡️ Pour y arriver, je vais <input type="text" id="ex2_etapes" placeholder="ex: passer des examens, avoir le BAC, faire des études"></label></div>
+                <div class="input-group"><label>➡️ J’aime ce métier parce que <input type="text" id="ex2_pourquoi" placeholder="ex: j’aime aider les autres"></label></div>
+                <button class="small-btn" id="checkEx2">💡 Suggestions d’exemples</button>
+                <div id="feedbackEx2" class="feedback"></div>
+            </div>
+
+            <!-- NOUVEAU : Exercice 2B – Parcours chronologique (d'abord, ensuite, puis, enfin) -->
+            <div class="exercise">
+                <div class="exercise-title">📅 Exercice 3 – Organise ton parcours (Partie 2)</div>
+                <p>Utilise les connecteurs : <strong>d'abord, ensuite, puis, enfin</strong></p>
+                <div class="input-group"><label>D'abord, je vais <input type="text" id="ex3_dabord" placeholder="..."></label></div>
+                <div class="input-group"><label>Ensuite, je vais <input type="text" id="ex3_ensuite" placeholder="..."></label></div>
+                <div class="input-group"><label>Puis, je vais <input type="text" id="ex3_puis" placeholder="..."></label></div>
+                <div class="input-group"><label>Enfin, je vais <input type="text" id="ex3_enfin" placeholder="..."></label></div>
+                <button class="small-btn" id="checkEx3">📌 Voir un exemple structuré</button>
+                <div id="feedbackEx3" class="feedback"></div>
+            </div>
+
+            <!-- NOUVEAU : Exercice 4A – Questions cinéma (invitation + horaire) -->
+            <div class="exercise">
+                <div class="exercise-title">🎬 Exercice 4 – Invitation au cinéma (Partie 3)</div>
+                <p>Entraîne-toi : "Ça te dit d’aller au cinéma ?", "Quel film tu veux voir ?", "À quelle heure ?"</p>
+                <div class="input-group"><label>✏️ Une invitation pour un ami : <input type="text" id="ex4_invitation" placeholder="..."></label></div>
+                <div class="input-group"><label>✏️ Proposer un film : <input type="text" id="ex4_film" placeholder="..."></label></div>
+                <div class="input-group"><label>✏️ Proposer une heure : <input type="text" id="ex4_heure" placeholder="..."></label></div>
+                <div class="input-group"><label>✏️ Proposer un lieu de rendez-vous : <input type="text" id="ex4_lieu" placeholder="..."></label></div>
+                <button class="small-btn" id="checkEx4">📢 Idées de questions naturelles</button>
+                <div id="feedbackEx4" class="feedback"></div>
+            </div>
+
+            <!-- NOUVEAU : Exercice 4B – Donner son avis sur un film -->
+            <div class="exercise">
+                <div class="exercise-title">⭐ Exercice 5 – Donner son avis (Partie 3)</div>
+                <div class="input-group"><label>J’ai adoré ce film parce que <input type="text" id="ex5_avis_positif" placeholder="..."></label></div>
+                <div class="input-group"><label>Je n’ai pas aimé ce film parce que <input type="text" id="ex5_avis_negatif" placeholder="..."></label></div>
+                <div class="input-group"><label>Je recommande ce film car <input type="text" id="ex5_recommander" placeholder="..."></label></div>
+                <button class="small-btn" id="checkEx5">🎭 Exemples d’avis</button>
+                <div id="feedbackEx5" class="feedback"></div>
+            </div>
+
+            <!-- NOUVEAU : Exercice 4C – Dialoguer (poser des questions à un ami) -->
+            <div class="exercise">
+                <div class="exercise-title">💬 Exercice 6 – Poser des questions (Partie 3)</div>
+                <div class="input-group"><label>Demander son genre préféré : <input type="text" id="ex6_genre" placeholder="..."></label></div>
+                <div class="input-group"><label>Demander son dernier film vu : <input type="text" id="ex6_dernier" placeholder="..."></label></div>
+                <div class="input-group"><label>Demander son avis sur un film que tu as aimé : <input type="text" id="ex6_avis" placeholder="..."></label></div>
+                <button class="small-btn" id="checkEx6">🗣️ Exemples de questions</button>
+                <div id="feedbackEx6" class="feedback"></div>
+            </div>
+
+            <!-- NOUVEAU : Exercice 5 – Mini simulation rapide (cinéma) améliorée -->
+            <div class="exercise">
+                <div class="exercise-title">🎤 Exercice 7 – Mini simulation rapide (cinéma)</div>
+                <p>Réponds immédiatement (oralement ou par écrit) :</p>
+                <div class="input-group"><label>❓ Quel est ton film préféré ? <input type="text" id="simu_film" placeholder="..."></label></div>
+                <div class="input-group"><label>❓ Pourquoi tu l’aimes ? <input type="text" id="simu_pourquoi" placeholder="..."></label></div>
+                <div class="input-group"><label>❓ Tu veux aller au cinéma quand ? <input type="text" id="simu_quand" placeholder="..."></label></div>
+                <div class="input-group"><label>❓ Quel genre de films tu n’aimes pas ? <input type="text" id="simu_genre_pas" placeholder="..."></label></div>
+                <button class="small-btn" id="checkSimu">💬 Exemples de réponses naturelles</button>
+                <div id="feedbackSimu" class="feedback"></div>
+            </div>
+
+            <!-- NOUVEAU : Exercice de reformulation (projet) -->
+            <div class="exercise">
+                <div class="exercise-title">🔄 Exercice 8 – Reformule avec "d’abord, ensuite, enfin"</div>
+                <p>Transforme cette phrase courte en un petit paragraphe : <br><strong>"Je veux devenir boulanger. Je vais apprendre mon métier."</strong></p>
+                <div class="input-group"><label>Ta reformulation : <textarea id="ex8_reformulation" rows="2" placeholder="D’abord, ... ensuite, ... enfin ..."></textarea></label></div>
+                <button class="small-btn" id="checkEx8">🥖 Voir un exemple</button>
+                <div id="feedbackEx8" class="feedback"></div>
+            </div>
+
+            <p style="margin-top: 16px; background: #FFF3E0; padding: 14px; border-radius: 28px;">🎯 Objectif : parler simple, clairement, sans blocage !</p>
+        </div>
+    </div>
+
+    <!-- 3. MÉTHODE + ANALYSE -->
+    <div id="methode" class="tab-content">
+        <div class="card">
+            <h2>🧠 Méthode pour réussir l’oral A2</h2>
+            <div class="grid-2">
+                <div>
+                    <h3>✅ Partie 1 – Entretien</h3>
+                    <p>➜ Identité + routine + projet d'avenir.<br>
+                    🔹 Commence par “Je m’appelle… j’habite…”<br>
+                    🔹 Parle de ta journée (matin, midi, soir).<br>
+                    🔹 Termine par “Plus tard, je veux… parce que…”</p>
+                </div>
+                <div>
+                    <h3>✅ Partie 2 – Monologue (projet d'avenir)</h3>
+                    <p>➜ Introduire (Je vais vous parler de mon projet…)<br>
+                    ➜ Annoncer le métier / les études<br>
+                    ➜ Expliquer les étapes (d’abord, ensuite)<br>
+                    ➜ Justifier (parce que, pour)<br>
+                    ➜ Conclure (Voilà mon projet, j’espère le réaliser)</p>
+                </div>
+                <div>
+                    <h3>✅ Partie 3 – Interaction (cinéma)</h3>
+                    <p>➜ Inviter (Ça te dit d’aller au cinéma ?)<br>
+                    ➜ Donner son avis (J’ai adoré / Je n’ai pas aimé parce que…)<br>
+                    ➜ Demander les goûts (Et toi, tu préfères quoi ?)<br>
+                    ➜ Organiser (À quelle heure ? Où ?)</p>
+                </div>
+            </div>
+            <hr>
+            <h3>⚠️ Erreurs fréquentes à éviter</h3>
+            <ul style="margin-left: 1.6rem; line-height: 1.7;">
+                <li>❌ Je suis 20 ans → ✔ J’ai 20 ans</li>
+                <li>❌ Je veux faire le médecin → ✔ Je veux être médecin</li>
+                <li>❌ Je travail → ✔ Je travaille</li>
+                <li>❌ Je aime → ✔ J’aime</li>
+                <li>❌ Je invite mon ami → ✔ J’invite mon ami</li>
+            </ul>
+            <div class="model-box" style="margin-top: 24px;">
+                💡 <strong>Conseil final :</strong> Au A2, le plus important c’est parler simple, clairement, sans chercher des mots compliqués. La fluidité > la perfection.
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. PRATIQUE INTERACTIVE -->
+    <div id="pratique" class="tab-content">
+        <div class="card">
+            <h2>🎙️ Simulation orale – Jouer le rôle candidat</h2>
+            <p>Réponds aux questions types. Les champs sont vides pour que tu écrives ta propre réponse.</p>
+            
+            <div class="exercise">
+                <div class="exercise-title">📌 Question 1 (Entretien) : « Parle-moi de ta journée typique et dis-moi ce que tu veux faire plus tard. »</div>
+                <textarea id="simul_journee" rows="2" placeholder="Écris ta réponse ici..."></textarea>
+                <button class="small-btn" id="corrigeJournee">📖 Voir un exemple de réponse A2</button>
+                <div id="feedbackJournee" class="feedback"></div>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">📌 Question 2 (Monologue) : « Que voulez-vous faire plus tard ? Décrivez votre projet en détail. »</div>
+                <textarea id="simul_projet" rows="3" placeholder="Parle de ton métier rêvé, des études, des raisons..."></textarea>
+                <button class="small-btn" id="corrigeProjet">🌟 Voir modèle structuré</button>
+                <div id="feedbackProjet" class="feedback"></div>
+            </div>
+
+            <div class="exercise">
+                <div class="exercise-title">📌 Question 3 (Interaction longue) : « Vous voulez inviter un ami au cinéma pour voir un film que vous avez déjà vu. Donnez votre avis, proposez une séance, organisez la sortie. Dialoguez avec l’examinateur (6-8 échanges). »</div>
+                <textarea id="simul_cinema" rows="4" placeholder="Écris ton dialogue ici..."></textarea>
+                <button class="small-btn" id="corrigeCinema">🍿 Voir un dialogue long et naturel (exemple)</button>
+                <div id="feedbackCinema" class="feedback"></div>
+            </div>
+
+            <div class="model-box" style="margin-top: 20px;">
+                💡 <strong>Astuce bonus :</strong> Pour chaque réponse, utilise « parce que », des connecteurs simples (d’abord, ensuite, puis, enfin). N’aie pas peur de répéter des phrases simples. L’important, c’est d’être compris(e) et de montrer que tu peux interagir sans bloquer !
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        🎯 DELF A2 – Oral : projet d'avenir + cinéma. <br> Entraîne-toi à voix haute chaque jour 10 minutes.
+    </footer>
+</div>
+
+<script>
+    // Onglets
+    const tabs = document.querySelectorAll('.tab-btn');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const tabId = btn.getAttribute('data-tab');
+            contents.forEach(content => content.classList.remove('active-content'));
+            tabs.forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active-content');
+            btn.classList.add('active');
+        });
+    });
+
+    // Feedbacks pour tous les exercices
+    document.getElementById('checkEx1').addEventListener('click', () => {
+        document.getElementById('feedbackEx1').innerHTML = `🗣️ Exemple complet : "Je m’appelle Thomas, j’habite à Lyon. Le matin, je prends le métro. À midi, je mange à la cantine. Le soir, je révise mes cours. Plus tard, je veux devenir ingénieur parce que j’aime les maths et construire des choses." — Continue comme ça !`;
+    });
+    
+    document.getElementById('checkEx2').addEventListener('click', () => {
+        document.getElementById('feedbackEx2').innerHTML = `✅ Exemples : "Je veux être enseignant pour les enfants. Pour y arriver, je vais passer des examens, avoir le BAC, faire des études. J’aime ce métier parce que j’aime transmettre des connaissances."<br>Ou : "Je veux être médecin. Pour y arriver, je vais faire des études longues à l’université. J’aime ce métier parce que je veux sauver des vies."`;
+    });
+    
+    document.getElementById('checkEx3').addEventListener('click', () => {
+        document.getElementById('feedbackEx3').innerHTML = `📌 Exemple structuré : "D’abord, je vais passer mon baccalauréat. Ensuite, je vais m’inscrire à l’université. Puis, je vais faire des stages dans mon domaine. Enfin, je vais chercher un emploi dans une entreprise."`;
+    });
+    
+    document.getElementById('checkEx4').addEventListener('click', () => {
+        let invitation = document.getElementById('ex4_invitation').value.trim();
+        let film = document.getElementById('ex4_film').value.trim();
+        let heure = document.getElementById('ex4_heure').value.trim();
+        let lieu = document.getElementById('ex4_lieu').value.trim();
+        document.getElementById('feedbackEx4').innerHTML = `💡 Exemples de questions :<br>
+        • Invitation : "Ça te dit d’aller au cinéma samedi ?" / "Tu veux voir un film ce week-end ?"<br>
+        • Proposer un film : "Qu’est-ce que tu penses de 'Barbie' ?" / "On pourrait voir 'Oppenheimer', tu veux ?"<br>
+        • Proposer une heure : "On se retrouve à 15h ?" / "La séance de 18h te va ?"<br>
+        • Lieu : "On se donne rendez-vous devant le cinéma Gaumont ?" / "Je t’attends à l’entrée principale."<br>
+        Tes idées : inviter («${invitation || "..."}»), film («${film || "..."}»), heure («${heure || "..."}»), lieu («${lieu || "..."}») — continue !`;
+    });
+    
+    document.getElementById('checkEx5').addEventListener('click', () => {
+        document.getElementById('feedbackEx5').innerHTML = `🎭 Exemples d’avis :<br>
+        • "J’ai adoré ce film parce que l’histoire est passionnante et les acteurs sont formidables."<br>
+        • "Je n’ai pas aimé ce film parce que c’était trop long et ennuyeux."<br>
+        • "Je recommande ce film car il fait rire et réfléchir en même temps."`;
+    });
+    
+    document.getElementById('checkEx6').addEventListener('click', () => {
+        document.getElementById('feedbackEx6').innerHTML = `🗣️ Exemples de questions :<br>
+        • "Quel genre de films préfères-tu ?"<br>
+        • "Quel est le dernier film que tu as vu ?"<br>
+        • "Qu’est-ce que tu as pensé de 'Avatar 2' ? Moi, j’ai trouvé les effets spéciaux incroyables."`;
+    });
+    
+    document.getElementById('checkSimu').addEventListener('click', () => {
+        document.getElementById('feedbackSimu').innerHTML = `🗣️ Exemples naturels :<br>
+        • "Mon film préféré est 'Intouchables' parce qu’il est drôle et touchant."<br>
+        • "Je l’aime parce que l’histoire est belle et les acteurs sont formidables."<br>
+        • "Je veux aller au cinéma samedi après-midi, vers 15h."<br>
+        • "Je n’aime pas les films d’horreur car j’ai trop peur."<br>
+        ⏱️ Objectif : répondre sans hésitation.`;
+    });
+    
+    document.getElementById('checkEx8').addEventListener('click', () => {
+        document.getElementById('feedbackEx8').innerHTML = `🥖 Exemple de reformulation : "D’abord, je vais passer un CAP de boulangerie. Ensuite, je vais travailler dans une boulangerie pour apprendre le métier. Enfin, j’aimerais ouvrir ma propre boulangerie."`;
+    });
+    
+    // Simulations
+    document.getElementById('corrigeJournee').addEventListener('click', () => {
+        document.getElementById('feedbackJournee').innerHTML = `📘 Exemple A2 : "D’habitude, le matin je me lève à 7h, je prends un petit-déjeuner et je vais en cours. À midi, je mange à la cantine avec mes amis. Le soir, je fais mes devoirs ou je regarde la télévision. Plus tard, je veux devenir infirmière parce que j’aime aider les gens."`;
+    });
+    document.getElementById('corrigeProjet').addEventListener('click', () => {
+        document.getElementById('feedbackProjet').innerHTML = `🌟 Modèle structuré : "Je vais vous parler de mon projet d’avenir. Plus tard, je veux devenir professeur des écoles. J’aime les enfants et expliquer des choses. Pour y arriver, je vais d’abord passer mon bac, ensuite faire une licence et un master. Pendant mes études, je ferai des stages dans des écoles. J’aime ce métier parce que c’est utile et varié. Voilà mon projet, j’espère le réaliser." (introduction, métier, étapes, raisons, conclusion)`;
+    });
+    document.getElementById('corrigeCinema').addEventListener('click', () => {
+        document.getElementById('feedbackCinema').innerHTML = `🍿 <strong>Dialogue long (cinéma + avis) :</strong><br>
+        <span class="speaker-name">👤 Vous :</span> Salut, ça te dit d’aller au cinéma dimanche ?<br>
+        <span class="speaker-name">🧑‍🤝‍🧑 Examinateur :</span> Pourquoi pas ! Qu’est-ce qu’on pourrait voir ?<br>
+        <span class="speaker-name">👤 Vous :</span> J’ai vu « Barbie » la semaine dernière, c’était génial ! C’est une comédie très drôle et colorée. J’ai adoré.<br>
+        <span class="speaker-name">🧑‍🤝‍🧑 Examinateur :</span> Ah bon ? Tu le recommandes vraiment ?<br>
+        <span class="speaker-name">👤 Vous :</span> Oui, à 100% ! Les acteurs sont excellents et il y a des messages intéressants. Toi, tu aimes les comédies ?<br>
+        <span class="speaker-name">🧑‍🤝‍🧑 Examinateur :</span> Oui, j’aime bien, mais je préfère les films d’aventure.<br>
+        <span class="speaker-name">👤 Vous :</span> D’accord, alors on peut voir un film d’aventure. Il y a « Indiana Jones » qui passe. Tu veux y aller dimanche à 16h ?<br>
+        <span class="speaker-name">🧑‍🤝‍🧑 Examinateur :</span> Parfait, 16h ça me va. On se retrouve devant le cinéma ?<br>
+        <span class="speaker-name">👤 Vous :</span> Oui, à 15h45. J’apporte des popcorns !<br>
+        <span class="speaker-name">🧑‍🤝‍🧑 Examinateur :</span> Super, à dimanche !<br>
+        ➡️ N’hésite pas à t’inspirer de ce dialogue pour t’entraîner.`;
+    });
+</script>
+</body>
+</html>
