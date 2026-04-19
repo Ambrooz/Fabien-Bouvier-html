@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🎨 Musée des peintres – 中法画家博物馆 🖌️ (A2 · visite & couleurs)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, 'Noto Sans', sans-serif;
+            background: linear-gradient(145deg, #f9f2e0 0%, #ffe6c9 100%);
+            padding: 2rem 1rem;
+            color: #2d3e2b;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffff5;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            padding: 2rem 2rem 2.5rem;
+            transition: all 0.2s;
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(120deg, #b45309, #eab308, #2c6e2f);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.8rem;
+        }
+
+        .badge {
+            background: #ffde9e;
+            border-radius: 40px;
+            padding: 0.2rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #7a4c1a;
+        }
+
+        .level {
+            background: #cbe5b4;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.5rem 0 1.2rem;
+            color: #2a6b2f;
+        }
+
+        .card-lecture {
+            background: #fff9ef;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+            border: 2px solid #ffdd99;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            border-left: 10px solid #f4a261;
+            padding-left: 1rem;
+            margin: 1.8rem 0 1rem 0;
+            color: #b64926;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.8rem;
+            color: #c97e2c;
+            background: #fff0db;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 2rem;
+        }
+
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fef5e6;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .vocab-table th, .vocab-table td {
+            border-bottom: 1px solid #f7e5cc;
+            padding: 0.8rem 0.8rem;
+            text-align: left;
+        }
+
+        .vocab-table th {
+            background: #fae6c3;
+            font-weight: 700;
+            color: #7b3f00;
+        }
+
+        .flou {
+            background-color: #fce4b3;
+            border-radius: 40px;
+            padding: 0.2rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .flou:hover {
+            background-color: #ffcd7e;
+        }
+
+        .time-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .time-card {
+            background: #fff3e0;
+            border-radius: 1.5rem;
+            padding: 0.8rem 1rem;
+            flex: 1;
+            min-width: 130px;
+            text-align: center;
+            border-top: 6px solid;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        .exercice {
+            background: #fef5e8;
+            padding: 1.3rem;
+            border-radius: 1.8rem;
+            margin: 1.5rem 0;
+            border: 1px solid #ffddb0;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.03);
+        }
+
+        input, textarea {
+            background: white;
+            border: 2px solid #ffcf9a;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            width: 100%;
+            margin: 0.4rem 0;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #f4a261;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(244,162,97,0.2);
+        }
+
+        button {
+            background: #ffb347;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            font-weight: bold;
+            color: #402a1a;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: #e6952c;
+            transform: scale(0.97);
+            color: white;
+        }
+
+        .feedback {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #b45f2b;
+            background: #fff3e0;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            display: inline-block;
+        }
+
+        .qcm label {
+            display: block;
+            margin: 0.4rem 0;
+            background: #fff4e6;
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+        }
+
+        hr {
+            margin: 1.8rem 0;
+            border: 1px solid #ffdead;
+        }
+
+        .auto-eval {
+            background: #e9f0db;
+            padding: 1.2rem;
+            border-radius: 1.8rem;
+            margin-top: 2rem;
+            border: 2px solid #d4bb8c;
+        }
+
+        .color-badge {
+            background: #ffd966;
+            border-radius: 20px;
+            padding: 0.1rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🎨 Musée des peintres – 中法画家博物馆 🖌️ <span class="badge">séance 3 · visite & couleurs</span></h1>
+    <div class="level">🎯 Niveau A2 · Découverte des peintres chinois et français · Temps : présent, futur, imparfait, passé composé</div>
+
+    <!-- TEXTE : visite au musée des Beaux-Arts -->
+    <div class="card-lecture">
+        <h2>📘 1. Texte de lecture : La visite au musée des peintres</h2>
+        <p>Un samedi matin, Zixuan et sa classe visitent le <strong>Musée des Beaux-Arts</strong>. Aujourd'hui, une exposition spéciale réunit des peintres chinois et français. Zixuan est très excité : il aime beaucoup les couleurs et les paysages.</p>
+        <p>Dans la première salle, ils découvrent des œuvres de <strong>Qi Baishi</strong>, un célèbre peintre chinois. Zixuan admire des crevettes et des oiseaux dessinés à l'encre de Chine. « Comme c'est délicat ! » murmure-t-il. La guide explique : « Qi Baishi peignait souvent des petites scènes de la nature. »</p>
+        <p>Ensuite, la classe entre dans une salle pleine de lumière. C'est l'espace des impressionnistes français. Zixuan reconnaît un tableau de <strong>Claude Monet</strong> : « Les Nymphéas ! » Il s'approche et observe les touches de couleur. « Monet aimait peindre son jardin à Giverny », dit la guide. Zixuan imagine les nénuphars flottant sur l'eau.</p>
+        <p>Plus loin, un tableau de <strong>Xu Beihong</strong> attire son attention : des chevaux au galop. « Ces chevaux ont l'air si vivants ! » s'exclame Yutong, qui est venue comme volontaire. Zixuan prend son carnet et écrit : « Je vais m'entraîner à dessiner des animaux. »</p>
+        <p>À la fin de la visite, la guide propose un jeu : associer chaque peintre à son pays. Zixuan et Yutong répondent sans hésiter. La guide leur offre deux cartes postales. Zixuan est ravi. « Un jour, j'irai à Giverny pour voir le jardin de Monet ! » promet-il. Yutong sourit : « Et moi, je peindrai un portrait à la manière de Qi Baishi. » Leur mère les attend à la sortie : « Vous allez devenir de vrais artistes ! »</p>
+        <p><em>📖 Vocabulaire : peintre → 画家 · encre de Chine → 墨 · nénuphar → 睡莲 · cheval au galop → 奔腾的马 · paysage → 风景 · délicat → 精致 · impressionniste → 印象派</em></p>
+    </div>
+
+    <!-- COMPRÉHENSION ÉCRITE (cases blanches) -->
+    <h2>📝 2. Compréhension écrite – À toi d'écrire ! ✍️</h2>
+    <div style="background:#fef2e0; border-radius:1.8rem; padding:1rem 1.5rem;">
+        <p><strong>1. Quel musée Zixuan visite-t-il avec sa classe ?</strong><br><input type="text" id="rep1" placeholder="Écris ta réponse ici..."></p>
+        <p><strong>2. Quel peintre chinois a peint des crevettes et des oiseaux ?</strong><br><input type="text" id="rep2" placeholder="Écris ta réponse ici..."></p>
+        <p><strong>3. Quelle œuvre de Claude Monet Zixuan admire-t-il ?</strong><br><input type="text" id="rep3" placeholder="Écris ta réponse ici..."></p>
+        <p><strong>4. Que promet Zixuan à la fin de la visite ?</strong><br><input type="text" id="rep4" placeholder="Écris ta réponse ici..."></p>
+        <p><strong>5. Qu'est-ce que Yutong veut peindre plus tard ?</strong><br><input type="text" id="rep5" placeholder="Écris ta réponse ici..."></p>
+        <button onclick="verifComprehension()">Vérifier quelques indices</button>
+        <div id="feedbackComp" class="feedback"></div>
+    </div>
+
+    <!-- VOCABULAIRE CHINOIS -> FRANÇAIS (flouté) -->
+    <h2>📖 3. Vocabulaire (chinois → français) – clique pour révéler</h2>
+    <table class="vocab-table">
+        <thead><tr><th>中文 (chinois)</th><th>Français (mot flouté → clic)</th></tr></thead>
+        <tbody>
+            <tr><td>画家</td><td><span class="flou" onclick="revealMot(this, 'peintre')">[mot flouté]</span></td></tr>
+            <tr><td>墨 / 水墨画</td><td><span class="flou" onclick="revealMot(this, 'encre de Chine')">[mot flouté]</span></td></tr>
+            <tr><td>睡莲</td><td><span class="flou" onclick="revealMot(this, 'nénuphar')">[mot flouté]</span></td></tr>
+            <tr><td>奔腾的马</td><td><span class="flou" onclick="revealMot(this, 'cheval au galop')">[mot flouté]</span></td></tr>
+            <tr><td>风景</td><td><span class="flou" onclick="revealMot(this, 'paysage')">[mot flouté]</span></td></tr>
+            <tr><td>精致</td><td><span class="flou" onclick="revealMot(this, 'délicat / délicate')">[mot flouté]</span></td></tr>
+            <tr><td>印象派</td><td><span class="flou" onclick="revealMot(this, 'impressionniste')">[mot flouté]</span></td></tr>
+            <tr><td>画册 / 速写本</td><td><span class="flou" onclick="revealMot(this, 'carnet de dessin')">[mot flouté]</span></td></tr>
+        </tbody>
+    </table>
+
+    <!-- TEMPS DU RÉCIT -->
+    <h2>⏳ 4. Temps du récit – identifie et écris</h2>
+    <div class="time-box">
+        <div class="time-card" style="border-top-color:#3b82f6;">🔵 PRÉSENT<br>Trouve 1 verbe : <input type="text" class="small-input" id="tempsPresent" placeholder="ex: admire" style="width:90%; margin-top:6px;"></div>
+        <div class="time-card" style="border-top-color:#f59e0b;">🟢 FUTUR (simple/proche)<br>exemple : <input type="text" id="tempsFutur" placeholder="ex: j'irai" style="width:90%;"></div>
+        <div class="time-card" style="border-top-color:#e67e22;">🟠 IMPARFAIT<br>verbe à l'imparfait : <input type="text" id="tempsImparfait" placeholder="ex: peignait" style="width:90%;"></div>
+        <div class="time-card" style="border-top-color:#e63946;">🔴 PASSÉ COMPOSÉ<br>ex : <input type="text" id="tempsPasse" placeholder="ex: a observé" style="width:90%;"></div>
+    </div>
+    <button onclick="corrigerTemps()">Voir exemples de réponses</button>
+    <div id="feedbackTemps" class="feedback"></div>
+
+    <!-- EXERCICE 1 : CONJUGAISON (cases blanches) -->
+    <div class="exercice">
+        <h3>✍️ Exercice 1 : Conjugue au bon temps</h3>
+        <p>① Hier, Zixuan ________ (admirer, passé composé) les tableaux de Monet.<br>
+        <input type="text" id="exo1a" placeholder="ta réponse"></p>
+        <p>② Pendant la visite, la guide ________ (expliquer, imparfait) chaque œuvre.<br>
+        <input type="text" id="exo1b" placeholder="ta réponse"></p>
+        <p>③ Demain, les élèves ________ (dessiner, futur simple) un paysage à la maison.<br>
+        <input type="text" id="exo1c" placeholder="ta réponse"></p>
+        <p>④ Tous les weekends, Zixuan ________ (visiter, présent) un musée avec sa sœur.<br>
+        <input type="text" id="exo1d" placeholder="ta réponse"></p>
+        <button onclick="corrigeExo1()">Correction</button>
+        <div id="corrExo1" class="feedback"></div>
+    </div>
+
+    <!-- EXERCICE 2 : TRANSFORMATION -->
+    <div class="exercice">
+        <h3>🔄 Exercice 2 : Transforme au passé composé et futur simple</h3>
+        <p>🔹 "Zixuan observe les nénuphars."<br>
+        Passé composé : <input type="text" id="transfo1PC" placeholder="écris ici"><br>
+        Futur simple : <input type="text" id="transfo1Futur" placeholder="écris ici"></p>
+        <p>🔹 "La guide répond aux questions."<br>
+        Passé composé : <input type="text" id="transfo2PC" placeholder="écris ici"><br>
+        Futur simple : <input type="text" id="transfo2Futur" placeholder="écris ici"></p>
+        <button onclick="corrigeTransfo()">Afficher corrigé type</button>
+        <div id="corrTransfo" class="feedback"></div>
+    </div>
+
+    <!-- EXERCICE 3 : IMPARFAIT ou PASSÉ COMPOSÉ (cases) -->
+    <div class="exercice">
+        <h3>⚖️ Exercice 3 : Imparfait ou passé composé ?</h3>
+        <p>① Autrefois, Qi Baishi ________ (peindre) beaucoup d'animaux.<br><input type="text" id="exo3a"></p>
+        <p>② Soudain, Zixuan ________ (voir) un tableau impressionnant.<br><input type="text" id="exo3b"></p>
+        <p>③ Chaque été, la famille ________ (aller) au musée des Beaux-Arts.<br><input type="text" id="exo3c"></p>
+        <button onclick="corrigeImparfaitPC()">Correction</button>
+        <div id="corrImparfait" class="feedback"></div>
+    </div>
+
+    <!-- REMETTRE DANS L'ORDRE avec zones de texte -->
+    <h2>🧩 5. Remettre les mots dans l'ordre</h2>
+    <div style="background:#faf0df; border-radius:1.5rem; padding:1rem; margin-bottom:1rem;">
+        <p>a) admirent / les / visiteurs / tableau / ce / beaucoup</p>
+        <input type="text" id="ordre1" placeholder="Ta phrase ici ..." style="width:100%;">
+        <p>b) Monet / jardin / peignait / son / souvent</p>
+        <input type="text" id="ordre2" placeholder="Ta phrase ici ...">
+        <button onclick="corrigeOrdre()">Vérifier (propositions)</button>
+        <div id="feedbackOrdre" class="feedback"></div>
+    </div>
+
+    <!-- QCM : CHOIX MULTIPLES (sans réponses affichées automatiquement) -->
+    <h2>✅ 6. QCM – Choisis la bonne réponse (écris la lettre)</h2>
+    <div class="qcm" style="background:#fff3e0; padding:1rem; border-radius:1.8rem;">
+        <p><strong>1. Quel peintre français est connu pour ses Nymphéas ?</strong><br> a) Xu Beihong &nbsp; b) Qi Baishi &nbsp; c) Claude Monet</p>
+        <input type="text" id="qcm1" placeholder="ta réponse (a, b ou c)"><br>
+        <p><strong>2. Où Zixuan veut-il aller plus tard ?</strong><br> a) À Pékin &nbsp; b) À Giverny &nbsp; c) À Shanghai</p>
+        <input type="text" id="qcm2" placeholder="ta réponse"><br>
+        <p><strong>3. « Zixuan écrivait dans son carnet » : ce verbe est à quel temps ?</strong><br> a) présent &nbsp; b) imparfait &nbsp; c) passé composé</p>
+        <input type="text" id="qcm3" placeholder="ta réponse"><br>
+        <p><strong>4. Que fait la guide à la fin de la visite ?</strong><br> a) Elle offre des cartes postales &nbsp; b) Elle punit les enfants &nbsp; c) Elle chante une chanson</p>
+        <input type="text" id="qcm4" placeholder="ta réponse"><br>
+        <button onclick="afficherCorrigeQCM()">Voir corrigé QCM</button>
+        <div id="corrQCM" class="feedback"></div>
+    </div>
+
+    <!-- EXPRESSION ÉCRITE LIBRE -->
+    <h2>🎨 7. Expression écrite – Raconte ta visite imaginaire</h2>
+    <p>👉 Utilise les 4 temps (présent, passé composé, imparfait, futur). Parle d'un musée ou d'une exposition que tu aimerais voir.</p>
+    <textarea rows="5" id="expressionTexte" placeholder="Exemple : La semaine dernière, je suis allé(e) au musée des impressionnistes. J’admirais les couleurs... Demain, je lirai un livre sur Monet." style="width:100%; border-radius:1.2rem;"></textarea>
+    <button onclick="encouragement()">💡 Astuce temps</button>
+    <div id="astuceExpr" class="feedback"></div>
+
+    <!-- AUTO-ÉVALUATION COULEURS -->
+    <div class="auto-eval">
+        <h2>📊 8. Auto-évaluation 🎨</h2>
+        <p>📌 Je comprends le texte sur les peintres chinois et français : 
+            <select id="auto1"><option>✅ Oui</option><option>⚠️ Un peu</option><option>❌ Non</option></select>
+        </p>
+        <p>📌 Je sais conjuguer au futur simple et passé composé : 
+            <select id="auto2"><option>✅ Oui</option><option>⚠️ Moyen</option><option>❌ Encore des doutes</option></select>
+        </p>
+        <p>📌 Trois mots retenus (chinois→français) :<br>
+        <input type="text" placeholder="mot chinois 1" style="width:45%;"> → <input type="text" placeholder="français" style="width:45%;"><br>
+        <input type="text" placeholder="mot chinois 2" style="width:45%;"> → <input type="text" placeholder="français" style="width:45%;"><br>
+        <input type="text" placeholder="mot chinois 3" style="width:45%;"> → <input type="text" placeholder="français" style="width:45%;">
+        </p>
+        <p>🎯 Objectif : Découvrir l'art chinois et français, maîtriser les 4 temps, enrichir le vocabulaire. <br>🌟 Bravo pour ta visite au musée imaginaire !</p>
+    </div>
+</div>
+
+<script>
+    // révéler vocabulaire flouté
+    function revealMot(element, trad) {
+        element.innerText = trad;
+        element.style.backgroundColor = "#cbe5b4";
+        element.style.cursor = "default";
+        element.removeAttribute("onclick");
+    }
+
+    // compréhension écrite : feedback non intrusif (donne des réponses types)
+    function verifComprehension() {
+        let rep1 = document.getElementById("rep1").value.trim().toLowerCase();
+        let rep2 = document.getElementById("rep2").value.trim().toLowerCase();
+        let rep3 = document.getElementById("rep3").value.trim().toLowerCase();
+        let rep4 = document.getElementById("rep4").value.trim().toLowerCase();
+        let rep5 = document.getElementById("rep5").value.trim().toLowerCase();
+        let msg = "💡 Indices : 1. musée des Beaux-Arts  2. Qi Baishi  3. Les Nymphéas  4. aller à Giverny  5. un portrait à la manière de Qi Baishi";
+        document.getElementById("feedbackComp").innerHTML = msg;
+    }
+
+    // correction temps du récit (exemples)
+    function corrigerTemps() {
+        document.getElementById("feedbackTemps").innerHTML = "✅ Exemples possibles : Présent → 'admire' / 's'approche' ; Futur → 'j'irai' / 'peindrai' ; Imparfait → 'peignait' / 'aimait' ; Passé composé → 'a observé' / 'a pris'.";
+    }
+
+    // exo 1 conjugaison
+    function corrigeExo1() {
+        let a = document.getElementById("exo1a").value;
+        let b = document.getElementById("exo1b").value;
+        let c = document.getElementById("exo1c").value;
+        let d = document.getElementById("exo1d").value;
+        document.getElementById("corrExo1").innerHTML = "✔️ Réponses attendues : ① a admiré  ② expliquait  ③ dessineront  ④ visite. (Peuvent varier si bien conjugués)";
+    }
+    // transformation
+    function corrigeTransfo() {
+        document.getElementById("corrTransfo").innerHTML = "🔹 Passé composé : 'Zixuan a observé les nénuphars.' / Futur simple : 'Zixuan observera les nénuphars.'<br>🔹 Passé composé : 'La guide a répondu aux questions.' / Futur : 'La guide répondra aux questions.'";
+    }
+    // imparfait ou passé composé
+    function corrigeImparfaitPC() {
+        document.getElementById("corrImparfait").innerHTML = "① peignait (imparfait)  ② a vu (passé composé)  ③ allait (imparfait)";
+    }
+    // ordre phrases
+    function corrigeOrdre() {
+        document.getElementById("feedbackOrdre").innerHTML = "📝 Proposition : a) Les visiteurs admirent beaucoup ce tableau. / b) Monet peignait souvent son jardin.";
+    }
+    // QCM corrigé
+    function afficherCorrigeQCM() {
+        document.getElementById("corrQCM").innerHTML = "✅ 1.c (Claude Monet)  2.b (À Giverny)  3.b (imparfait)  4.a (Elle offre des cartes postales)";
+    }
+    // encouragement expression écrite
+    function encouragement() {
+        document.getElementById("astuceExpr").innerHTML = "🎨 Pense à utiliser : passé composé (j'ai vu), imparfait (il y avait), présent (j'aime), futur (je visiterai).";
+    }
+</script>
+</body>
+</html>
