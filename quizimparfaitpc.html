@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Quiz : Imparfait vs Passé composé</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f7f3;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #e67e22;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .score-box {
+            background-color: #e67e22;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        .progress-box {
+            background-color: #f2d9c6;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: bold;
+        }
+        .question-card {
+            background-color: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            border-left: 8px solid #e67e22;
+        }
+        .question-text {
+            font-size: 1.3em;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+        .tense-badge {
+            display: inline-block;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .tense-badge.imp {
+            background-color: #e67e22;
+        }
+        .tense-badge.pc {
+            background-color: #2980b9;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .option-btn {
+            background-color: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            border-radius: 50px;
+            padding: 12px 20px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-family: monospace;
+            font-size: 1.1em;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: #f2d9c6;
+            border-color: #e67e22;
+            transform: scale(1.01);
+        }
+        .option-btn.correct-highlight {
+            background-color: #2ecc71;
+            border-color: #27ae60;
+            color: white;
+        }
+        .option-btn.wrong-highlight {
+            background-color: #e74c3c;
+            border-color: #c0392b;
+            color: white;
+            text-decoration: line-through;
+        }
+        .option-btn:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+        .feedback {
+            margin-top: 15px;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: none;
+        }
+        .feedback.show {
+            display: block;
+        }
+        .feedback.correct-fb {
+            background-color: #d5f4e6;
+            color: #27ae60;
+            border-left: 4px solid #2ecc71;
+        }
+        .feedback.wrong-fb {
+            background-color: #fadbd7;
+            color: #c0392b;
+            border-left: 4px solid #e74c3c;
+        }
+        .next-btn {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: background 0.2s;
+        }
+        .next-btn:hover {
+            background-color: #d35400;
+        }
+        .restart-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 40px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .restart-btn:hover {
+            background-color: #2980b9;
+        }
+        .results {
+            text-align: center;
+            padding: 30px;
+            background-color: #fff8e7;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+        .final-score {
+            font-size: 2.5em;
+            color: #e67e22;
+            font-weight: bold;
+        }
+        hr {
+            margin: 30px 0;
+            border: 0;
+            height: 1px;
+            background: #e0e0e0;
+        }
+        details summary {
+            cursor: pointer;
+            color: #e67e22;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            font-size: 0.8em;
+            color: #7f8c8d;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🎮 Quiz : Imparfait vs Passé composé</h1>
+<p>Chaque question te donne un temps et un sujet. Choisis la bonne conjugaison parmi les 3 propositions !</p>
+
+<div class="quiz-header">
+    <div class="progress-box" id="progress">Question 1 / 40</div>
+    <div class="score-box" id="score">Score: 0</div>
+</div>
+
+<div id="quiz-container"></div>
+
+<footer>
+    <p>🎯 Entraîne-toi à distinguer l'imparfait et le passé composé !</p>
+</footer>
+
+<script>
+    // 40 questions avec alternance aléatoire des temps (imparfait et passé composé)
+    // Mélange de verbes réguliers, irréguliers, avec être et avoir
+    const questions = [
+        // Passé composé (20)
+        { tense: "passé composé", subject: "il", options: ["avait", "a eu", "aurait"], correct: "a eu" },
+        { tense: "passé composé", subject: "elles", options: ["sont parties", "étaient parties", "seraient parties"], correct: "sont parties" },
+        { tense: "passé composé", subject: "nous", options: ["avons pris", "prenions", "prendrons"], correct: "avons pris" },
+        { tense: "passé composé", subject: "ils", options: ["faisaient", "ont fait", "feraient"], correct: "ont fait" },
+        { tense: "passé composé", subject: "vous", options: ["avez vu", "voyiez", "verrez"], correct: "avez vu" },
+        { tense: "passé composé", subject: "tu", options: ["as compris", "comprenais", "comprendras"], correct: "as compris" },
+        { tense: "passé composé", subject: "il", options: ["est venu", "venait", "viendra"], correct: "est venu" },
+        { tense: "passé composé", subject: "elles", options: ["se sont levées", "se levaient", "se lèveront"], correct: "se sont levées" },
+        { tense: "passé composé", subject: "je", options: ["ai dit", "disais", "dirai"], correct: "ai dit" },
+        { tense: "passé composé", subject: "ils", options: ["sont arrivés", "arrivaient", "arriveront"], correct: "sont arrivés" },
+        { tense: "passé composé", subject: "vous", options: ["êtes sortis", "sortiez", "sortirez"], correct: "êtes sortis" },
+        { tense: "passé composé", subject: "nous", options: ["avons écrit", "écrivions", "écrirons"], correct: "avons écrit" },
+        { tense: "passé composé", subject: "tu", options: ["es tombé", "tombais", "tomberas"], correct: "es tombé" },
+        { tense: "passé composé", subject: "je", options: ["ai ouvert", "ouvrais", "ouvrirai"], correct: "ai ouvert" },
+        { tense: "passé composé", subject: "elles", options: ["ont couru", "couraient", "courront"], correct: "ont couru" },
+        { tense: "passé composé", subject: "il", options: ["a dormi", "dormait", "dormira"], correct: "a dormi" },
+        { tense: "passé composé", subject: "je", options: ["suis devenu", "devenais", "deviendrai"], correct: "suis devenu" },
+        { tense: "passé composé", subject: "nous", options: ["avons connu", "connaissions", "connaîtrons"], correct: "avons connu" },
+        { tense: "passé composé", subject: "vous", options: ["avez réussi", "réussissiez", "réussirez"], correct: "avez réussi" },
+        { tense: "passé composé", subject: "elle", options: ["a choisi", "choisissait", "choisira"], correct: "a choisi" },
+        
+        // Imparfait (20)
+        { tense: "imparfait", subject: "je", options: ["ai mangé", "mangeais", "mangerai"], correct: "mangeais" },
+        { tense: "imparfait", subject: "tu", options: ["as joué", "jouais", "joueras"], correct: "jouais" },
+        { tense: "imparfait", subject: "elle", options: ["a été", "était", "sera"], correct: "était" },
+        { tense: "imparfait", subject: "nous", options: ["sommes montés", "montions", "monterons"], correct: "montions" },
+        { tense: "imparfait", subject: "elles", options: ["ont dansé", "dansaient", "danseront"], correct: "dansaient" },
+        { tense: "imparfait", subject: "je", options: ["ai eu", "avais", "aurai"], correct: "avais" },
+        { tense: "imparfait", subject: "vous", options: ["avez attendu", "attendiez", "attendrez"], correct: "attendiez" },
+        { tense: "imparfait", subject: "nous", options: ["avons voulu", "voulions", "voudrons"], correct: "voulions" },
+        { tense: "imparfait", subject: "tu", options: ["as fait", "faisais", "feras"], correct: "faisais" },
+        { tense: "imparfait", subject: "elle", options: ["a choisi", "choisissait", "choisira"], correct: "choisissait" },
+        { tense: "imparfait", subject: "je", options: ["ai pu", "pouvais", "pourrai"], correct: "pouvais" },
+        { tense: "imparfait", subject: "elles", options: ["ont ri", "riaient", "riront"], correct: "riaient" },
+        { tense: "imparfait", subject: "il", options: ["a plu", "pleuvait", "pleuvra"], correct: "pleuvait" },
+        { tense: "imparfait", subject: "nous", options: ["avons dîné", "dînions", "dînerons"], correct: "dînions" },
+        { tense: "imparfait", subject: "vous", options: ["avez eu", "aviez", "aurez"], correct: "aviez" },
+        { tense: "imparfait", subject: "tu", options: ["as mis", "mettais", "mettras"], correct: "mettais" },
+        { tense: "imparfait", subject: "je", options: ["ai souri", "souriais", "sourirai"], correct: "souriais" },
+        { tense: "imparfait", subject: "elles", options: ["ont lu", "lisaient", "liront"], correct: "lisaient" },
+        { tense: "imparfait", subject: "il", options: ["a fallu", "fallait", "faudra"], correct: "fallait" },
+        { tense: "imparfait", subject: "tu", options: ["as voulu", "voulais", "voudras"], correct: "voulais" }
+    ];
+
+    // Mélanger les questions pour une alternance vraiment aléatoire
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    const shuffledQuestions = shuffleArray([...questions]);
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+    let answerLocked = false;
+    let userAnswers = new Array(40).fill(null);
+
+    const quizContainer = document.getElementById('quiz-container');
+    const progressSpan = document.getElementById('progress');
+    const scoreSpan = document.getElementById('score');
+
+    function updateUI() {
+        progressSpan.textContent = `Question ${currentQuestionIndex + 1} / 40`;
+        scoreSpan.textContent = `Score: ${score}`;
+    }
+
+    function renderQuestion() {
+        if (currentQuestionIndex >= shuffledQuestions.length) {
+            showResults();
+            return;
+        }
+
+        const q = shuffledQuestions[currentQuestionIndex];
+        const hasAnswered = userAnswers[currentQuestionIndex] !== null;
+        const selectedAnswer = userAnswers[currentQuestionIndex];
+        
+        let tenseClass = q.tense === "imparfait" ? "imp" : "pc";
+        let tenseDisplay = q.tense === "imparfait" ? "🕰️ IMPARFAIT" : "⚡ PASSÉ COMPOSÉ";
+        let tenseEmoji = q.tense === "imparfait" ? "🕰️" : "⚡";
+        
+        let html = `
+            <div class="question-card">
+                <div class="tense-badge ${tenseClass}">${tenseEmoji} ${tenseDisplay}</div>
+                <div class="question-text">
+                    📝 <strong style="font-size:1.2em;">${q.subject}</strong> au ${q.tense} :<br>
+                    <span style="font-size:1.1em;">"${q.subject} ..."</span>
+                </div>
+                <div class="options">
+        `;
+        
+        // Mélanger l'ordre des options pour plus de défi
+        const shuffledOptions = [...q.options];
+        for (let i = shuffledOptions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffledOptions[i], shuffledOptions[j]] = [shuffledOptions[j], shuffledOptions[i]];
+        }
+        
+        shuffledOptions.forEach((opt, idx) => {
+            let isCorrect = (opt === q.correct);
+            let isSelected = (selectedAnswer === opt);
+            let btnClass = "";
+            
+            if (hasAnswered) {
+                if (isCorrect) btnClass = "correct-highlight";
+                else if (isSelected && !isCorrect) btnClass = "wrong-highlight";
+            }
+            
+            html += `
+                <button class="option-btn ${btnClass}" data-opt="${opt}" ${hasAnswered ? 'disabled' : ''}>
+                    ${String.fromCharCode(65+idx)}. ${opt}
+                </button>
+            `;
+        });
+        
+        let feedbackHtml = "";
+        if (hasAnswered) {
+            const isAnsCorrect = (selectedAnswer === q.correct);
+            feedbackHtml = `
+                <div class="feedback show ${isAnsCorrect ? 'correct-fb' : 'wrong-fb'}">
+                    ${isAnsCorrect ? '✅ Bravo ! Bonne réponse !' : `❌ La bonne réponse était : "${q.correct}".`}
+                    <br><span style="font-size:0.85em;">💡 ${q.tense === "imparfait" ? "L'imparfait décrit une habitude ou une description dans le passé." : "Le passé composé exprime une action ponctuelle terminée dans le passé."}</span>
+                </div>
+            `;
+        }
+        
+        html += `
+                </div>
+                ${feedbackHtml}
+                ${!hasAnswered ? '<button class="next-btn" id="next-btn-disabled" style="opacity:0.5;" disabled>Valider d\'abord une réponse</button>' : '<button class="next-btn" id="next-btn">Question suivante →</button>'}
+            </div>
+        `;
+        
+        quizContainer.innerHTML = html;
+        
+        if (!hasAnswered) {
+            const optionButtons = document.querySelectorAll('.option-btn');
+            optionButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if (answerLocked) return;
+                    const chosen = btn.getAttribute('data-opt');
+                    handleAnswer(chosen);
+                });
+            });
+        } else {
+            const nextBtn = document.getElementById('next-btn');
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    currentQuestionIndex++;
+                    answerLocked = false;
+                    updateUI();
+                    renderQuestion();
+                });
+            }
+        }
+    }
+    
+    function handleAnswer(chosen) {
+        if (answerLocked) return;
+        
+        const q = shuffledQuestions[currentQuestionIndex];
+        const isCorrect = (chosen === q.correct);
+        
+        if (isCorrect) {
+            score++;
+            scoreSpan.textContent = `Score: ${score}`;
+        }
+        
+        userAnswers[currentQuestionIndex] = chosen;
+        answerLocked = true;
+        
+        renderQuestion();
+    }
+    
+    function showResults() {
+        const total = shuffledQuestions.length;
+        const percentage = Math.round((score / total) * 100);
+        let message = "";
+        if (percentage >= 90) message = "🏆 Exceptionnel ! Tu es un expert des temps du passé !";
+        else if (percentage >= 70) message = "🎉 Très bien ! Continue comme ça !";
+        else if (percentage >= 50) message = "📚 Bon travail ! Revois les règles et réessaie !";
+        else message = "💪 Entraîne-toi encore ! Tu vas y arriver !";
+        
+        // Compter les résultats par temps
+        let impCount = { total: 0, correct: 0 };
+        let pcCount = { total: 0, correct: 0 };
+        
+        shuffledQuestions.forEach((q, idx) => {
+            if (q.tense === "imparfait") {
+                impCount.total++;
+                if (userAnswers[idx] === q.correct) impCount.correct++;
+            } else {
+                pcCount.total++;
+                if (userAnswers[idx] === q.correct) pcCount.correct++;
+            }
+        });
+        
+        let resultsHtml = `
+            <div class="results">
+                <h2>🎯 Quiz terminé !</h2>
+                <div class="final-score">${score} / ${total}</div>
+                <p>${message}</p>
+                <p>${percentage}% de réponses correctes</p>
+                
+                <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin: 20px 0;">
+                    <div style="background:#e67e22; color:white; padding:10px 20px; border-radius:15px;">
+                        🕰️ Imparfait<br>${impCount.correct}/${impCount.total}
+                    </div>
+                    <div style="background:#2980b9; color:white; padding:10px 20px; border-radius:15px;">
+                        ⚡ Passé composé<br>${pcCount.correct}/${pcCount.total}
+                    </div>
+                </div>
+                
+                <button class="restart-btn" id="restart-quiz">🔄 Recommencer le quiz</button>
+                <hr>
+                <details>
+                    <summary>📋 Voir toutes mes réponses (40 questions)</summary>
+                    <div style="text-align:left; margin-top:15px; max-height:400px; overflow-y:auto;">
+        `;
+        
+        shuffledQuestions.forEach((q, idx) => {
+            const userAns = userAnswers[idx];
+            const isCorrect = (userAns === q.correct);
+            const statusIcon = isCorrect ? "✅" : "❌";
+            const tenseColor = q.tense === "imparfait" ? "color:#e67e22" : "color:#2980b9";
+            const tenseEmoji = q.tense === "imparfait" ? "🕰️" : "⚡";
+            
+            resultsHtml += `
+                <div style="margin-bottom:12px; padding:8px; border-bottom:1px solid #eee;">
+                    <strong>${idx+1}.</strong> <span style="${tenseColor}">${tenseEmoji} ${q.tense}</span> · ${q.subject} : 
+                    <span style="font-family:monospace;">${userAns || "non répondu"}</span>
+                    ${statusIcon}
+                    <span style="color:#7f8c8d; font-size:0.8em;"> (réponse: ${q.correct})</span>
+                </div>
+            `;
+        });
+        
+        resultsHtml += `
+                    </div>
+                </details>
+            </div>
+        `;
+        
+        quizContainer.innerHTML = resultsHtml;
+        document.getElementById('restart-quiz').addEventListener('click', () => {
+            restartQuiz();
+        });
+    }
+    
+    function restartQuiz() {
+        // Re-mélanger les questions pour une nouvelle partie
+        const newShuffled = shuffleArray([...questions]);
+        shuffledQuestions.length = 0;
+        shuffledQuestions.push(...newShuffled);
+        
+        currentQuestionIndex = 0;
+        score = 0;
+        answerLocked = false;
+        userAnswers = new Array(40).fill(null);
+        updateUI();
+        renderQuestion();
+    }
+    
+    renderQuestion();
+    updateUI();
+</script>
+</body>
+</html>
