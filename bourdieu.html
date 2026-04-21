@@ -1,0 +1,1514 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DELF C1 — Leçon 2 : Inégalités scolaires & réformes</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --encre: #1c1917;
+  --ardoise: #2d3a2e;
+  --sauge: #4a6741;
+  --vert-pale: #d4e6d0;
+  --lin: #f5f0e8;
+  --parchemin: #faf7f2;
+  --or: #b5832a;
+  --or-pale: #f0dba8;
+  --rouge-brique: #8b3a2f;
+  --gris-doux: #8a8070;
+  --blanc-casse: #fefdf9;
+  --shadow: 0 2px 20px rgba(28,25,23,0.08);
+  --shadow-md: 0 6px 32px rgba(28,25,23,0.12);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--lin);
+  color: var(--encre);
+  min-height: 100vh;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 80% 20%, rgba(74,103,65,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 60% at 10% 80%, rgba(181,131,42,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── BANDEAU TOP ── */
+.lecon-bandeau {
+  background: var(--ardoise);
+  color: var(--parchemin);
+  text-align: center;
+  padding: 10px 20px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  position: relative;
+  z-index: 10;
+}
+.lecon-bandeau a {
+  color: var(--or-pale);
+  text-decoration: none;
+  margin: 0 16px;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.lecon-bandeau a:hover { opacity: 1; }
+
+/* ── HEADER ── */
+header {
+  background: var(--parchemin);
+  border-bottom: 2px solid var(--vert-pale);
+  padding: 0;
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.header-grid {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 48px 32px 40px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 32px;
+  align-items: end;
+}
+
+@media (max-width: 640px) { .header-grid { grid-template-columns: 1fr; } }
+
+.header-left {}
+
+.lecon-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.lecon-tag .num {
+  width: 36px; height: 36px;
+  background: var(--ardoise);
+  color: var(--or-pale);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+.lecon-tag .suite {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sauge);
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(1.9rem, 4.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--encre);
+  margin-bottom: 10px;
+}
+h1 em { color: var(--sauge); font-style: italic; }
+
+.header-desc {
+  font-size: 0.92rem;
+  color: var(--gris-doux);
+  line-height: 1.65;
+  max-width: 480px;
+  margin-bottom: 20px;
+}
+
+.header-chips {
+  display: flex; gap: 8px; flex-wrap: wrap;
+}
+.chip {
+  background: var(--vert-pale);
+  color: var(--ardoise);
+  font-size: 0.75rem;
+  padding: 5px 12px;
+  border-radius: 100px;
+  font-family: 'Fira Code', monospace;
+  letter-spacing: 0.04em;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.stat-box {
+  background: var(--ardoise);
+  color: var(--parchemin);
+  border-radius: 10px;
+  padding: 18px 22px;
+  text-align: right;
+  min-width: 140px;
+}
+.stat-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: var(--or-pale);
+  line-height: 1;
+}
+.stat-label { font-size: 0.72rem; color: rgba(245,240,232,0.6); margin-top: 4px; font-family: 'Fira Code', monospace; letter-spacing: 0.08em; }
+
+/* ── NAV ── */
+.nav-outer {
+  background: var(--blanc-casse);
+  border-bottom: 1.5px solid rgba(74,103,65,0.12);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  box-shadow: 0 1px 12px rgba(28,25,23,0.06);
+}
+.nav-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 32px;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+}
+.nav-tab {
+  background: none;
+  border: none;
+  padding: 16px 20px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  color: var(--gris-doux);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  position: relative;
+}
+.nav-tab:hover { color: var(--ardoise); }
+.nav-tab.active { color: var(--ardoise); border-bottom-color: var(--sauge); font-weight: 500; }
+
+/* ── MAIN ── */
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 32px 80px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── SECTION ── */
+.section { display: none; animation: slideIn 0.35s ease both; }
+.section.active { display: block; }
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--blanc-casse);
+  border: 1.5px solid rgba(74,103,65,0.12);
+  border-radius: 10px;
+  padding: 36px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.card + .card { }
+
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--sauge);
+  margin-bottom: 16px;
+}
+.section-label::before {
+  content: '';
+  width: 18px; height: 1.5px;
+  background: var(--sauge);
+}
+
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.65rem;
+  font-weight: 700;
+  color: var(--encre);
+  margin-bottom: 18px;
+  line-height: 1.2;
+}
+h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--encre);
+  margin: 22px 0 10px;
+}
+
+p { line-height: 1.82; font-size: 0.97rem; margin-bottom: 14px; }
+p:last-child { margin-bottom: 0; }
+
+/* ── TEXTE ── */
+.texte-principal {
+  background: var(--parchemin);
+  border: 1px solid rgba(28,25,23,0.08);
+  border-left: 5px solid var(--sauge);
+  border-radius: 0 8px 8px 0;
+  padding: 32px 36px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.08rem;
+  line-height: 1.9;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow);
+}
+.texte-principal p { font-size: 1.05rem; }
+.texte-principal .mot-cle {
+  background: var(--or-pale);
+  padding: 0 3px;
+  border-radius: 2px;
+  cursor: help;
+  font-style: italic;
+  position: relative;
+}
+
+.repere-box {
+  background: var(--vert-pale);
+  border: 1px solid rgba(74,103,65,0.2);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-top: 18px;
+}
+.repere-titre {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--ardoise);
+  margin-bottom: 10px;
+}
+.repere-liste {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.repere-tag {
+  background: var(--ardoise);
+  color: var(--or-pale);
+  font-size: 0.8rem;
+  padding: 4px 12px;
+  border-radius: 100px;
+  font-style: italic;
+}
+
+/* ── VOCAB ── */
+.vocab-accordion { display: flex; flex-direction: column; gap: 6px; }
+.vocab-row {
+  border: 1.5px solid rgba(28,25,23,0.08);
+  border-radius: 7px;
+  overflow: hidden;
+  background: var(--parchemin);
+  transition: box-shadow 0.2s;
+}
+.vocab-row:hover { box-shadow: var(--shadow); }
+.vocab-header {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  cursor: pointer;
+  gap: 14px;
+}
+.vocab-num {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: var(--or);
+  min-width: 22px;
+}
+.vocab-mot-nom {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  flex: 1;
+}
+.vocab-nature {
+  font-size: 0.72rem;
+  color: var(--gris-doux);
+  font-style: italic;
+  font-family: 'Fira Code', monospace;
+}
+.vocab-arrow { font-size: 0.7rem; color: var(--sauge); margin-left: 8px; transition: transform 0.2s; }
+.vocab-row.open .vocab-arrow { transform: rotate(180deg); }
+.vocab-body {
+  display: none;
+  padding: 0 20px 16px 56px;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--encre);
+  border-top: 1px dashed rgba(28,25,23,0.1);
+  padding-top: 12px;
+}
+.vocab-row.open .vocab-body { display: block; }
+.vocab-exemple {
+  margin-top: 8px;
+  font-style: italic;
+  color: var(--sauge);
+  font-size: 0.88rem;
+}
+.vocab-en {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 9px;
+  background: var(--or-pale);
+  border: 1px solid rgba(181,131,42,0.28);
+  border-radius: 4px;
+  padding: 4px 11px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.78rem;
+  color: #6b4c10;
+  font-style: normal;
+}
+.vocab-en::before { content: '🇬🇧'; font-size: 0.85rem; }
+
+/* ── QCM ── */
+.qcm-q {
+  margin-bottom: 20px;
+  background: var(--parchemin);
+  border: 1.5px solid rgba(28,25,23,0.08);
+  border-radius: 8px;
+  padding: 20px 24px;
+}
+.qcm-enonce {
+  font-size: 0.97rem;
+  line-height: 1.7;
+  margin-bottom: 14px;
+  font-weight: 500;
+}
+.options { display: flex; flex-direction: column; gap: 8px; }
+.opt {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 16px;
+  border: 1.5px solid rgba(28,25,23,0.1);
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  background: var(--blanc-casse);
+  transition: all 0.18s;
+  user-select: none;
+}
+.opt:hover { border-color: var(--sauge); }
+.opt-letter {
+  width: 24px; height: 24px;
+  border-radius: 50%;
+  background: var(--vert-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: var(--ardoise);
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+.opt.correct { border-color: var(--sauge); background: rgba(74,103,65,0.08); }
+.opt.correct .opt-letter { background: var(--sauge); color: white; }
+.opt.wrong { border-color: var(--rouge-brique); background: rgba(139,58,47,0.07); }
+.opt.wrong .opt-letter { background: var(--rouge-brique); color: white; }
+
+/* ── CORRIGÉ ── */
+.voir-corrige-btn {
+  background: none;
+  border: 1.5px solid var(--ardoise);
+  border-radius: 5px;
+  padding: 7px 18px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.83rem;
+  cursor: pointer;
+  color: var(--ardoise);
+  margin-top: 12px;
+  transition: all 0.2s;
+}
+.voir-corrige-btn:hover { background: var(--ardoise); color: var(--parchemin); }
+
+.corrige-box {
+  display: none;
+  margin-top: 12px;
+  background: rgba(74,103,65,0.07);
+  border: 1px solid rgba(74,103,65,0.22);
+  border-radius: 7px;
+  padding: 16px 20px;
+  font-size: 0.92rem;
+  line-height: 1.72;
+  color: var(--ardoise);
+}
+.corrige-box.visible { display: block; animation: slideIn 0.3s ease; }
+
+/* ── LACUNES ── */
+.lacune-phrase {
+  font-size: 1rem;
+  line-height: 2.4;
+  margin-bottom: 8px;
+}
+.lacune-input {
+  display: inline-block;
+  border: none;
+  border-bottom: 2px solid var(--ardoise);
+  background: transparent;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  color: var(--ardoise);
+  min-width: 130px;
+  padding: 0 6px 2px;
+  outline: none;
+  transition: border-color 0.2s;
+  vertical-align: baseline;
+  text-align: center;
+}
+.lacune-input:focus { border-color: var(--sauge); }
+.lacune-input.ok   { border-color: var(--sauge); color: var(--sauge); }
+.lacune-input.nok  { border-color: var(--rouge-brique); color: var(--rouge-brique); }
+
+/* ── VRAI FAUX ── */
+.vf-item {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(28,25,23,0.07);
+}
+.vf-item:last-child { border-bottom: none; }
+.vf-enonce { flex: 1; font-size: 0.95rem; line-height: 1.65; }
+.vf-justif {
+  font-size: 0.82rem;
+  color: var(--gris-doux);
+  margin-top: 6px;
+  font-style: italic;
+  display: none;
+}
+.vf-buttons { display: flex; gap: 7px; flex-shrink: 0; }
+.vf-btn {
+  background: none;
+  border: 1.5px solid rgba(28,25,23,0.15);
+  border-radius: 4px;
+  padding: 5px 13px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.72rem;
+  cursor: pointer;
+  color: var(--encre);
+  transition: all 0.18s;
+  letter-spacing: 0.04em;
+}
+.vf-btn:hover { background: var(--ardoise); color: var(--parchemin); border-color: var(--ardoise); }
+.vf-btn.v-ok   { background: var(--sauge); color: white; border-color: var(--sauge); }
+.vf-btn.v-nok  { background: var(--rouge-brique); color: white; border-color: var(--rouge-brique); }
+.vf-btn.v-rev  { background: var(--vert-pale); color: var(--ardoise); border-color: var(--sauge); }
+
+/* ── SCORE ── */
+.score-panel {
+  display: none;
+  background: var(--ardoise);
+  color: var(--parchemin);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin-top: 20px;
+  align-items: center;
+  gap: 20px;
+}
+.score-panel.show { display: flex; animation: slideIn 0.4s ease; }
+.score-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--or-pale);
+  line-height: 1;
+  min-width: 80px;
+}
+.score-comment { font-size: 0.9rem; line-height: 1.6; }
+.score-comment strong { color: var(--or-pale); display: block; font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; margin-bottom: 4px; }
+
+/* ── GRAMMAIRE ── */
+.gramm-regle {
+  background: var(--parchemin);
+  border: 1.5px solid rgba(74,103,65,0.18);
+  border-radius: 8px;
+  padding: 22px 26px;
+  margin-bottom: 22px;
+}
+.gramm-titre {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--ardoise);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.gramm-titre::before {
+  content: '';
+  width: 4px; height: 20px;
+  background: var(--sauge);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.table-gramm {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin-top: 10px;
+}
+.table-gramm th {
+  background: var(--ardoise);
+  color: var(--or-pale);
+  padding: 10px 14px;
+  text-align: left;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+.table-gramm td {
+  padding: 10px 14px;
+  border-bottom: 1px solid rgba(28,25,23,0.07);
+  line-height: 1.5;
+  vertical-align: top;
+}
+.table-gramm tr:last-child td { border-bottom: none; }
+.table-gramm tr:nth-child(even) td { background: rgba(74,103,65,0.04); }
+.table-gramm .em { font-style: italic; color: var(--sauge); }
+
+/* ── PRODUCTION ── */
+.sujet-encadre {
+  background: var(--ardoise);
+  color: var(--parchemin);
+  border-radius: 10px;
+  padding: 26px 30px;
+  margin-bottom: 22px;
+}
+.sujet-titre {
+  font-family: 'Fira Code', monospace;
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--or-pale);
+  margin-bottom: 12px;
+  opacity: 0.8;
+}
+.sujet-consigne {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.1rem;
+  line-height: 1.75;
+}
+.sujet-consigne strong { color: var(--or-pale); }
+
+.connecteurs-palette {
+  display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 12px;
+}
+.conn-chip {
+  background: var(--vert-pale);
+  border: 1px solid rgba(74,103,65,0.2);
+  color: var(--ardoise);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.75rem;
+  padding: 5px 13px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.conn-chip:hover { background: var(--ardoise); color: var(--or-pale); border-color: var(--ardoise); }
+
+.prod-textarea {
+  width: 100%;
+  min-height: 180px;
+  border: 1.5px solid rgba(28,25,23,0.12);
+  border-radius: 7px;
+  padding: 16px 20px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--encre);
+  background: var(--parchemin);
+  resize: vertical;
+  transition: border-color 0.2s;
+}
+.prod-textarea:focus { outline: none; border-color: var(--sauge); }
+
+.stats-ligne {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 8px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  color: var(--gris-doux);
+}
+.stats-vert { color: var(--sauge); font-weight: 500; }
+
+.grille-eval {
+  display: flex; flex-direction: column; gap: 10px;
+  margin-top: 16px;
+}
+.eval-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 12px 18px;
+  background: var(--parchemin);
+  border: 1.5px solid rgba(28,25,23,0.08);
+  border-radius: 7px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+.eval-check { flex: 1; }
+.eval-btns { display: flex; gap: 7px; }
+.eval-btn {
+  background: none;
+  border: 1.5px solid rgba(28,25,23,0.15);
+  border-radius: 4px;
+  padding: 5px 14px;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.7rem;
+  cursor: pointer;
+  color: var(--encre);
+  transition: all 0.18s;
+}
+.eval-btn:hover { background: var(--ardoise); color: var(--parchemin); }
+.eval-btn.yes { background: var(--sauge); color: white; border-color: var(--sauge); }
+.eval-btn.no  { background: var(--rouge-brique); color: white; border-color: var(--rouge-brique); }
+
+/* ── EXPRESSIONS ── */
+.expr-table { width: 100%; border-collapse: collapse; }
+.expr-table th {
+  background: var(--ardoise);
+  color: var(--or-pale);
+  padding: 10px 16px;
+  text-align: left;
+  font-family: 'Fira Code', monospace;
+  font-size: 0.67rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 400;
+}
+.expr-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(28,25,23,0.07);
+  font-size: 0.92rem;
+  line-height: 1.6;
+  vertical-align: top;
+}
+.expr-table tr:last-child td { border-bottom: none; }
+.expr-table tr:nth-child(even) td { background: var(--parchemin); }
+.expr-fr-cell { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 600; color: var(--ardoise); }
+.expr-contexte { color: var(--gris-doux); font-style: italic; font-size: 0.85rem; }
+
+/* ── NOTE ── */
+.note-box {
+  background: linear-gradient(135deg, var(--ardoise), #3a4f3b);
+  color: var(--parchemin);
+  border-radius: 8px;
+  padding: 20px 24px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+  margin-top: 20px;
+}
+.note-box strong { color: var(--or-pale); }
+
+/* ── PROGRESS ── */
+.progress-fixed {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 2.5px;
+  background: rgba(28,25,23,0.08);
+  z-index: 200;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--sauge);
+  transition: width 0.4s ease;
+  width: 20%;
+}
+
+/* ── EXERCICE HEADER ── */
+.ex-header {
+  display: flex; align-items: center; gap: 12px; margin-bottom: 16px;
+}
+.ex-num {
+  background: var(--ardoise);
+  color: var(--or-pale);
+  font-family: 'Fira Code', monospace;
+  font-size: 0.68rem;
+  padding: 4px 12px;
+  border-radius: 3px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.ex-titre-txt {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--encre);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .card { padding: 22px 18px; }
+  main { padding: 28px 16px 60px; }
+  .header-grid { padding: 32px 16px 28px; }
+  .nav-inner { padding: 0 16px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-fixed"><div class="progress-fill" id="prog"></div></div>
+
+<div class="lecon-bandeau">
+  📗 DELF C1 &nbsp;·&nbsp; Thème : L'éducation
+  <a href="delf-c1-systeme-educatif.html">← Leçon 1</a>
+  <span style="color:var(--or-pale);opacity:1;">Leçon 2 : Inégalités & réformes</span>
+</div>
+
+<header>
+  <div class="header-grid">
+    <div class="header-left">
+      <div class="lecon-tag">
+        <div class="num">02</div>
+        <div class="suite">Suite de la leçon — même thème</div>
+      </div>
+      <h1>Inégalités scolaires &<br><em>réformes pédagogiques</em></h1>
+      <p class="header-desc">Approfondissez votre maîtrise du thème éducatif avec un nouveau texte argumentatif, un lexique sociologique et des exercices de niveau C1.</p>
+      <div class="header-chips">
+        <span class="chip">texte argumentatif</span>
+        <span class="chip">subjonctif passé</span>
+        <span class="chip">nominalisation</span>
+        <span class="chip">registre soutenu</span>
+      </div>
+    </div>
+    <div class="header-right">
+      <div class="stat-box">
+        <div class="stat-big">C1</div>
+        <div class="stat-label">niveau CECRL</div>
+      </div>
+      <div class="stat-box" style="background:var(--sauge);">
+        <div class="stat-big" style="color:var(--or-pale);font-size:1.6rem;">5</div>
+        <div class="stat-label">modules</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="nav-outer">
+  <div class="nav-inner">
+    <button class="nav-tab active" onclick="go('texte',this)">📄 Texte</button>
+    <button class="nav-tab" onclick="go('vocabulaire',this)">🔤 Vocabulaire</button>
+    <button class="nav-tab" onclick="go('grammaire',this)">✏️ Grammaire</button>
+    <button class="nav-tab" onclick="go('comprehension',this)">🎯 Compréhension</button>
+    <button class="nav-tab" onclick="go('production',this)">✍️ Production</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════════════ TEXTE ══════════════ -->
+<div class="section active" id="texte">
+  <div class="card">
+    <div class="section-label">Texte support C1 — registre soutenu</div>
+    <h2>L'école face aux inégalités : entre constats alarmants et réformes ambitieuses</h2>
+
+    <div class="texte-principal">
+      <p>Depuis plusieurs décennies, la question des <span class="mot-cle" title="divisions profondes">fractures scolaires</span> occupe une place centrale dans le débat public français. Si l'école républicaine se veut l'instrument par excellence de la <span class="mot-cle" title="ascension dans la hiérarchie sociale">mobilité sociale</span>, force est de constater que la réalité s'avère bien plus contrastée. De nombreux travaux sociologiques, à commencer par ceux de Pierre Bourdieu, ont mis en lumière le rôle décisif de l'<span class="mot-cle" title="héritage culturel familial">héritage culturel</span> dans la trajectoire scolaire d'un élève : la maîtrise du « <span class="mot-cle" title="aptitudes liées au milieu familial cultivé">capital culturel</span> » transmis en famille conditionne largement les chances de réussite, quand bien même l'institution scolaire prétend évaluer tous les élèves à égalité.</p>
+
+      <p>Face à ce constat, les pouvoirs publics ont multiplié les dispositifs correcteurs. La politique d'<span class="mot-cle" title="zones d'éducation prioritaire">éducation prioritaire</span>, mise en place dès 1981, vise à concentrer des ressources supplémentaires dans les établissements des quartiers défavorisés. Quelque 1 100 réseaux d'éducation prioritaire (REP et REP+) accueillent aujourd'hui environ 20 % des élèves français. Pourtant, leur efficacité reste débattue : si les moyens alloués ont augmenté, l'<span class="mot-cle" title="manque, insuffisance">insuffisance</span> des résultats interpelle les chercheurs en sciences de l'éducation. Il semblerait que les inégalités tiennent davantage aux conditions socio-économiques familiales qu'à la seule qualité de l'enseignement dispensé.</p>
+
+      <p>Par ailleurs, la question de l'<span class="mot-cle" title="choix de filière ou de métier">orientation</span> cristallise les tensions. Bien que la réforme du lycée de 2019 ait supprimé les anciennes filières L, ES et S pour les remplacer par un système de spécialités, les sociologues soulignent que les élèves issus de milieux favorisés <span class="mot-cle" title="guident, orientent">infléchissent</span> davantage leurs choix vers les spécialités les plus valorisées, telles que mathématiques et physique-chimie. Cette <span class="mot-cle" title="hiérarchie informelle">hiérarchie implicite</span> entre les disciplines reproduit, sous une forme rénovée, les inégalités d'antan. En outre, le recours croissant aux cours particuliers — secteur évalué à plus de deux milliards d'euros par an en France — creuse un fossé supplémentaire entre les familles qui peuvent y recourir et celles qui ne le peuvent pas.</p>
+
+      <p>Néanmoins, des avancées méritent d'être saluées. La généralisation de l'école à 3 ans, la démocratisation du baccalauréat (passé de 5 % de bacheliers en 1950 à plus de 85 % aujourd'hui) et l'essor des <span class="mot-cle" title="classes préparatoires aux grandes écoles">prépas</span> dans les lycées de banlieue constituent des signaux encourageants. Parallèlement, l'essor du numérique éducatif offre de nouvelles perspectives pour <span class="mot-cle" title="combler les écarts">résorber les écarts</span>, à condition d'accompagner les enseignants dans cette mutation. Car la clé de voûte de toute réforme demeure l'enseignant : valoriser la profession, réduire les inégalités de dotation entre établissements et encourager l'innovation pédagogique constituent des leviers incontournables pour que l'école tienne enfin la promesse républicaine qui est la sienne.</p>
+    </div>
+
+    <div class="repere-box">
+      <div class="repere-titre">🔍 Points de langue à repérer dans ce texte</div>
+      <div class="repere-liste">
+        <span class="repere-tag">bien que + subjonctif passé</span>
+        <span class="repere-tag">quand bien même</span>
+        <span class="repere-tag">force est de constater</span>
+        <span class="repere-tag">nominalisation</span>
+        <span class="repere-tag">condition + infinitif</span>
+        <span class="repere-tag">restriction (ne… que)</span>
+        <span class="repere-tag">tournures impersonnelles</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Analyse stylistique C1</div>
+    <h2>Structures remarquables</h2>
+    <table class="table-gramm">
+      <thead><tr><th>Extrait du texte</th><th>Valeur / fonction</th></tr></thead>
+      <tbody>
+        <tr><td><span class="em">« force est de constater que… »</span></td><td>Tournure impersonnelle soutenue exprimant une évidence s'imposant à tous.</td></tr>
+        <tr><td><span class="em">« quand bien même l'institution prétend… »</span></td><td>Concessif fort = « même si » ; souvent suivi du conditionnel ou de l'indicatif.</td></tr>
+        <tr><td><span class="em">« Bien que la réforme ait supprimé… »</span></td><td>Concession + <strong>subjonctif passé</strong> (fait antérieur).</td></tr>
+        <tr><td><span class="em">« à condition d'accompagner… »</span></td><td>Condition restrictive = seulement si l'on accompagne. Registre soutenu.</td></tr>
+        <tr><td><span class="em">« la réalité s'avère bien plus contrastée »</span></td><td>S'avérer + adj. = se révéler. Verbe soutenu privilégié à « être ».</td></tr>
+        <tr><td><span class="em">« creuse un fossé supplémentaire »</span></td><td>Métaphore lexicalisée fréquente dans les textes sociologiques.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════ VOCABULAIRE ══════════════ -->
+<div class="section" id="vocabulaire">
+  <div class="card">
+    <div class="section-label">Lexique sociologique & éducatif C1</div>
+    <h2>Vocabulaire du texte</h2>
+    <p style="color:var(--gris-doux);font-size:0.87rem;margin-bottom:18px;font-style:italic;">Cliquez sur chaque entrée pour dérouler la définition et un exemple.</p>
+    <div class="vocab-accordion">
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">01</span>
+          <span class="vocab-mot-nom">Fracture scolaire</span>
+          <span class="vocab-nature">n.f.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">educational divide / school gap</span>
+          Division profonde qui sépare des groupes d'élèves selon leur origine sociale, géographique ou économique, se traduisant par des écarts significatifs de résultats et de parcours.
+          <div class="vocab-exemple">Ex. : « La fracture scolaire entre zones rurales et urbaines reste préoccupante malgré les efforts déployés. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">02</span>
+          <span class="vocab-mot-nom">Mobilité sociale</span>
+          <span class="vocab-nature">n.f.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">social mobility</span>
+          Possibilité pour un individu de changer de position dans la hiérarchie sociale par rapport à celle de ses parents (mobilité ascendante) ou de la maintenir (immobilité sociale).
+          <div class="vocab-exemple">Ex. : « L'école est censée favoriser la mobilité sociale, mais les données montrent qu'elle la reproduit souvent. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">03</span>
+          <span class="vocab-mot-nom">Capital culturel</span>
+          <span class="vocab-nature">n.m.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">cultural capital</span>
+          Concept du sociologue Pierre Bourdieu désignant l'ensemble des ressources culturelles (savoirs, savoir-faire, diplômes, habitus) héritées du milieu familial et valorisées par le système scolaire.
+          <div class="vocab-exemple">Ex. : « Le capital culturel des parents joue un rôle décisif dans la réussite de leurs enfants à l'école. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">04</span>
+          <span class="vocab-mot-nom">Éducation prioritaire</span>
+          <span class="vocab-nature">n.f.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">priority education (policy) / targeted school funding</span>
+          Politique publique française consistant à attribuer des ressources supplémentaires (moyens humains, financiers, pédagogiques) aux établissements scolaires situés dans les zones socialement défavorisées.
+          <div class="vocab-exemple">Ex. : « Les enseignants des réseaux d'éducation prioritaire bénéficient d'une prime et de classes réduites. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">05</span>
+          <span class="vocab-mot-nom">Orientation</span>
+          <span class="vocab-nature">n.f.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">academic / career guidance, tracking</span>
+          Processus par lequel un élève est guidé — ou se guide — vers une filière, une spécialité ou un métier. Moment charnière souvent révélateur des inégalités sociales.
+          <div class="vocab-exemple">Ex. : « L'orientation post-troisième reproduit souvent les inégalités : les enfants de milieux défavorisés sont surreprésentés dans la voie professionnelle. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">06</span>
+          <span class="vocab-mot-nom">Hiérarchie implicite</span>
+          <span class="vocab-nature">n.f.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">unspoken / implicit hierarchy</span>
+          Classement non officiel mais socialement reconnu entre disciplines, filières ou diplômes, qui influence les choix des familles sans jamais être formellement énoncé.
+          <div class="vocab-exemple">Ex. : « La hiérarchie implicite qui place les maths au sommet continue d'orienter massivement les meilleurs élèves vers les filières scientifiques. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">07</span>
+          <span class="vocab-mot-nom">Résorber les écarts</span>
+          <span class="vocab-nature">loc. verb.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">to close / bridge the gap(s)</span>
+          Réduire progressivement les différences (de niveau, de résultats, de chances) jusqu'à les faire disparaître ou les rendre négligeables.
+          <div class="vocab-exemple">Ex. : « Le plan France 2030 ambitionne de résorber les écarts de réussite entre académies d'ici dix ans. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">08</span>
+          <span class="vocab-mot-nom">Levier</span>
+          <span class="vocab-nature">n.m.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">lever, driver, tool for change</span>
+          Moyen d'action qui permet de produire un effet important par un effort ciblé. Métaphore mécanique très employée dans le discours politique et académique.
+          <div class="vocab-exemple">Ex. : « La formation continue des enseignants constitue l'un des leviers les plus efficaces pour améliorer les résultats des élèves. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">09</span>
+          <span class="vocab-mot-nom">Clé de voûte</span>
+          <span class="vocab-nature">n.f.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">keystone, linchpin, cornerstone</span>
+          Élément central et indispensable sans lequel un ensemble s'effondrerait. Expression imagée issue de l'architecture.
+          <div class="vocab-exemple">Ex. : « La confiance entre enseignants et familles reste la clé de voûte de tout projet éducatif réussi. »</div>
+        </div>
+      </div>
+
+      <div class="vocab-row" onclick="toggleVocab(this)">
+        <div class="vocab-header">
+          <span class="vocab-num">10</span>
+          <span class="vocab-mot-nom">Dispositif correcteur</span>
+          <span class="vocab-nature">n.m.</span>
+          <span class="vocab-arrow">▼</span>
+        </div>
+        <div class="vocab-body">
+          <span class="vocab-en">corrective measure / compensatory policy</span>
+          Mesure ou ensemble de mesures mises en place par les pouvoirs publics pour compenser des inégalités ou remédier à des dysfonctionnements constatés dans un système.
+          <div class="vocab-exemple">Ex. : « Les bourses sur critères sociaux constituent un dispositif correcteur essentiel pour maintenir les étudiants modestes dans l'enseignement supérieur. »</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Exercice lexical — complétion</div>
+    <h2>Complétez avec le mot juste</h2>
+    <p style="color:var(--gris-doux);font-size:0.87rem;margin-bottom:20px;font-style:italic;">Choisissez parmi : <strong>levier · fracture · orientation · dispositifs · capital culturel · résorber · clé de voûte · hiérarchie implicite</strong></p>
+
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="qcm-q" style="padding:16px 20px;">
+        <p class="lacune-phrase">1. Pierre Bourdieu a montré que le <input class="lacune-input" data-ans="capital culturel" placeholder="…"> transmis en famille conditionne largement la réussite scolaire.</p>
+        <div style="font-size:0.82rem;color:var(--gris-doux);margin-top:4px;font-style:italic;">Tapez votre réponse puis appuyez sur Entrée.</div>
+      </div>
+      <div class="qcm-q" style="padding:16px 20px;">
+        <p class="lacune-phrase">2. La formation des enseignants constitue un <input class="lacune-input" data-ans="levier" placeholder="…"> essentiel pour améliorer l'équité scolaire.</p>
+      </div>
+      <div class="qcm-q" style="padding:16px 20px;">
+        <p class="lacune-phrase">3. Malgré les <input class="lacune-input" data-ans="dispositifs" placeholder="…"> mis en place, les inégalités entre établissements persistent.</p>
+      </div>
+      <div class="qcm-q" style="padding:16px 20px;">
+        <p class="lacune-phrase">4. Le numérique éducatif pourrait aider à <input class="lacune-input" data-ans="résorber" placeholder="…"> les écarts entre élèves de milieux différents.</p>
+      </div>
+      <div class="qcm-q" style="padding:16px 20px;">
+        <p class="lacune-phrase">5. La confiance entre l'école et les familles reste la <input class="lacune-input" data-ans="clé de voûte" placeholder="…"> du projet républicain.</p>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:22px;">
+      <strong>Note culturelle :</strong> Pierre Bourdieu (1930–2002) est l'un des sociologues français les plus influents. Ses travaux sur le <em>capital culturel</em>, le <em>champ</em> et l'<em>habitus</em> ont profondément marqué la sociologie de l'éducation. Son ouvrage <em>Les Héritiers</em> (1964, coécrit avec Jean-Claude Passeron) a mis en évidence comment l'école reproduit les inégalités sociales au lieu de les atténuer.
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ GRAMMAIRE ══════════════ -->
+<div class="section" id="grammaire">
+  <div class="card">
+    <div class="section-label">Grammaire avancée C1</div>
+    <h2>Le subjonctif passé dans la concession</h2>
+
+    <div class="gramm-regle">
+      <div class="gramm-titre">Formation du subjonctif passé</div>
+      <p>Le <strong>subjonctif passé</strong> = auxiliaire (<em>avoir</em> ou <em>être</em>) au subjonctif présent + participe passé.</p>
+      <table class="table-gramm" style="margin-top:14px;">
+        <thead><tr><th>Verbe</th><th>Subjonctif présent</th><th>Subjonctif passé</th><th>Exemple d'emploi</th></tr></thead>
+        <tbody>
+          <tr><td>supprimer</td><td>qu'il supprime</td><td class="em">qu'il ait supprimé</td><td>Bien que la réforme <em>ait supprimé</em> les filières…</td></tr>
+          <tr><td>mettre en place</td><td>qu'on mette</td><td class="em">qu'on ait mis en place</td><td>Bien qu'on <em>ait mis en place</em> des aides…</td></tr>
+          <tr><td>arriver</td><td>qu'il arrive</td><td class="em">qu'il soit arrivé</td><td>Bien qu'il <em>soit arrivé</em> en retard…</td></tr>
+          <tr><td>se rendre compte</td><td>qu'on se rende</td><td class="em">qu'on se soit rendu compte</td><td>Bien qu'on <em>se soit rendu compte</em> du problème…</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:14px;color:var(--gris-doux);font-size:0.88rem;font-style:italic;">⚠ Le subjonctif passé s'utilise quand l'action de la subordonnée est <strong>antérieure</strong> à l'action de la principale.</p>
+    </div>
+
+    <div class="ex-header">
+      <span class="ex-num">Exercice 1</span>
+      <span class="ex-titre-txt">Transformez au subjonctif passé</span>
+    </div>
+    <p style="font-size:0.92rem;margin-bottom:16px;color:var(--gris-doux);font-style:italic;">Réécrivez chaque phrase en utilisant <strong>bien que</strong> + subjonctif passé, puis vérifiez.</p>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">1. La réforme a supprimé les anciennes filières. Pourtant, les inégalités persistent.</div>
+      <textarea style="width:100%;min-height:70px;border:1.5px solid rgba(28,25,23,0.12);border-radius:6px;padding:10px 14px;font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.7;background:var(--parchemin);resize:vertical;" placeholder="Bien que la réforme ait…"></textarea>
+      <button class="voir-corrige-btn" onclick="toggleCorrige(this)">Voir le corrigé</button>
+      <div class="corrige-box">
+        ✅ <strong>Bien que la réforme ait supprimé les anciennes filières, les inégalités persistent.</strong><br>
+        <em>→ subjonctif passé : la suppression (passé) précède le constat actuel (présent).</em>
+      </div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">2. Les pouvoirs publics ont augmenté les moyens alloués. Pourtant, les résultats restent insuffisants.</div>
+      <textarea style="width:100%;min-height:70px;border:1.5px solid rgba(28,25,23,0.12);border-radius:6px;padding:10px 14px;font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.7;background:var(--parchemin);resize:vertical;" placeholder="Bien que les pouvoirs publics aient…"></textarea>
+      <button class="voir-corrige-btn" onclick="toggleCorrige(this)">Voir le corrigé</button>
+      <div class="corrige-box">
+        ✅ <strong>Bien que les pouvoirs publics aient augmenté les moyens alloués, les résultats restent insuffisants.</strong>
+      </div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">3. Le gouvernement a lancé un plan numérique ambitieux. L'intégration des technologies en classe reste partielle.</div>
+      <textarea style="width:100%;min-height:70px;border:1.5px solid rgba(28,25,23,0.12);border-radius:6px;padding:10px 14px;font-family:'Cormorant Garamond',serif;font-size:1rem;line-height:1.7;background:var(--parchemin);resize:vertical;" placeholder="Bien que le gouvernement ait…"></textarea>
+      <button class="voir-corrige-btn" onclick="toggleCorrige(this)">Voir le corrigé</button>
+      <div class="corrige-box">
+        ✅ <strong>Bien que le gouvernement ait lancé un plan numérique ambitieux, l'intégration des technologies en classe reste partielle.</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Grammaire avancée C1</div>
+    <h2>La nominalisation</h2>
+    <div class="gramm-regle">
+      <div class="gramm-titre">Pourquoi nominaliser ?</div>
+      <p>La nominalisation (transformer un verbe ou un adjectif en nom) est caractéristique du registre soutenu et des textes argumentatifs. Elle densifie le style et évite la répétition des structures verbales.</p>
+      <table class="table-gramm" style="margin-top:14px;">
+        <thead><tr><th>Verbe/Adjectif</th><th>Nom correspondant</th><th>Emploi dans un texte</th></tr></thead>
+        <tbody>
+          <tr><td>constater</td><td class="em">le constat</td><td>« Face à ce constat, les pouvoirs publics ont réagi. »</td></tr>
+          <tr><td>échouer</td><td class="em">l'échec</td><td>« L'échec scolaire précoce reste un défi majeur. »</td></tr>
+          <tr><td>orienter</td><td class="em">l'orientation</td><td>« L'orientation cristallise les tensions sociales. »</td></tr>
+          <tr><td>inégal</td><td class="em">l'inégalité</td><td>« Les inégalités territoriales persistent. »</td></tr>
+          <tr><td>démocratiser</td><td class="em">la démocratisation</td><td>« La démocratisation du bac constitue une avancée. »</td></tr>
+          <tr><td>valoriser</td><td class="em">la valorisation</td><td>« La valorisation des métiers enseignants est urgente. »</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ex-header">
+      <span class="ex-num">Exercice 2</span>
+      <span class="ex-titre-txt">Nominalisez les phrases suivantes</span>
+    </div>
+    <p style="font-size:0.92rem;margin-bottom:16px;color:var(--gris-doux);font-style:italic;">Réécrivez en remplaçant la proposition verbale soulignée par un groupe nominal.</p>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">1. <em>Le fait que le baccalauréat se démocratise</em> constitue un progrès indéniable.</div>
+      <textarea style="width:100%;min-height:55px;border:1.5px solid rgba(28,25,23,0.12);border-radius:6px;padding:10px 14px;font-family:'Cormorant Garamond',serif;font-size:1rem;background:var(--parchemin);resize:none;" placeholder="La démocratisation du baccalauréat…"></textarea>
+      <button class="voir-corrige-btn" onclick="toggleCorrige(this)">Voir le corrigé</button>
+      <div class="corrige-box">✅ <strong>La démocratisation du baccalauréat</strong> constitue un progrès indéniable.</div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">2. <em>Orienter les élèves correctement</em> reste un défi pour le système éducatif français.</div>
+      <textarea style="width:100%;min-height:55px;border:1.5px solid rgba(28,25,23,0.12);border-radius:6px;padding:10px 14px;font-family:'Cormorant Garamond',serif;font-size:1rem;background:var(--parchemin);resize:none;" placeholder="L'orientation…"></textarea>
+      <button class="voir-corrige-btn" onclick="toggleCorrige(this)">Voir le corrigé</button>
+      <div class="corrige-box">✅ <strong>L'orientation des élèves</strong> reste un défi pour le système éducatif français.</div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">3. <em>Valoriser les enseignants</em> est indispensable pour attirer les meilleurs profils dans la profession.</div>
+      <textarea style="width:100%;min-height:55px;border:1.5px solid rgba(28,25,23,0.12);border-radius:6px;padding:10px 14px;font-family:'Cormorant Garamond',serif;font-size:1rem;background:var(--parchemin);resize:none;" placeholder="La valorisation…"></textarea>
+      <button class="voir-corrige-btn" onclick="toggleCorrige(this)">Voir le corrigé</button>
+      <div class="corrige-box">✅ <strong>La valorisation des enseignants</strong> est indispensable pour attirer les meilleurs profils dans la profession.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Expressions & registre soutenu</div>
+    <h2>Formules à retenir pour le C1</h2>
+    <table class="expr-table">
+      <thead><tr><th>Expression</th><th>Signification</th><th>Contexte d'emploi</th></tr></thead>
+      <tbody>
+        <tr>
+          <td class="expr-fr-cell">Force est de constater que</td>
+          <td>On ne peut qu'admettre, on est obligé de reconnaître que</td>
+          <td class="expr-contexte">Introduire un constat difficile ou contre-intuitif dans un texte argumentatif</td>
+        </tr>
+        <tr>
+          <td class="expr-fr-cell">Quand bien même</td>
+          <td>Même si, alors même que (concession forte)</td>
+          <td class="expr-contexte">Registre très soutenu ; + conditionnel ou indicatif selon le sens</td>
+        </tr>
+        <tr>
+          <td class="expr-fr-cell">Creuser un fossé</td>
+          <td>Aggraver des inégalités, accentuer des différences</td>
+          <td class="expr-contexte">Métaphore fréquente dans les textes sociologiques et politiques</td>
+        </tr>
+        <tr>
+          <td class="expr-fr-cell">Cristalliser les tensions</td>
+          <td>Concentrer et exacerber des tensions latentes autour d'un point précis</td>
+          <td class="expr-contexte">Pour décrire un sujet de débat qui polarise les opinions</td>
+        </tr>
+        <tr>
+          <td class="expr-fr-cell">Des avancées méritent d'être saluées</td>
+          <td>Il faut reconnaître certains progrès, même s'il reste des problèmes</td>
+          <td class="expr-contexte">Nuancer une analyse critique en reconnaissant les aspects positifs</td>
+        </tr>
+        <tr>
+          <td class="expr-fr-cell">S'avérer (+ adjectif)</td>
+          <td>Se révéler être (plus soutenu que « être » ou « être finalement »)</td>
+          <td class="expr-contexte">« La réalité s'avère bien plus complexe qu'il n'y paraît. »</td>
+        </tr>
+        <tr>
+          <td class="expr-fr-cell">Incontournable</td>
+          <td>Qu'on ne peut pas éviter, absolument nécessaire</td>
+          <td class="expr-contexte">Souvent attribut ou épithète dans les textes argumentatifs</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ══════════════ COMPRÉHENSION ══════════════ -->
+<div class="section" id="comprehension">
+  <div class="card">
+    <div class="section-label">Compréhension fine — QCM C1</div>
+    <h2>Questions de compréhension</h2>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">1. Selon le texte, quelle est la principale thèse des travaux de Pierre Bourdieu sur l'école ?</div>
+      <div class="options">
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">A</span> L'école est un espace parfaitement méritocratique qui efface les origines sociales.</div>
+        <div class="opt" onclick="chkQCM(this,'c')"><span class="opt-letter">B</span> L'héritage culturel familial conditionne largement les chances de réussite scolaire.</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">C</span> Les inégalités scolaires sont principalement dues à la qualité des enseignants.</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">D</span> Le système d'orientation est le seul facteur d'inégalité dans l'école française.</div>
+      </div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">2. Quelle proportion d'élèves français sont scolarisés dans les réseaux d'éducation prioritaire ?</div>
+      <div class="options">
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">A</span> 5 %</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">B</span> 10 %</div>
+        <div class="opt" onclick="chkQCM(this,'c')"><span class="opt-letter">C</span> 20 %</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">D</span> 35 %</div>
+      </div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">3. En quoi la réforme du lycée de 2019 est-elle critiquée par les sociologues, selon le texte ?</div>
+      <div class="options">
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">A</span> Elle a supprimé trop de matières scientifiques.</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">B</span> Elle n'a pas permis d'augmenter le taux de bacheliers.</div>
+        <div class="opt" onclick="chkQCM(this,'c')"><span class="opt-letter">C</span> Les élèves favorisés choisissent toujours les spécialités les plus valorisées, reproduisant ainsi les inégalités.</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">D</span> Elle a diminué l'autonomie des enseignants dans leurs programmes.</div>
+      </div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">4. Quel secteur économique est cité comme creusant des inégalités supplémentaires entre familles ?</div>
+      <div class="options">
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">A</span> Les activités périscolaires sportives</div>
+        <div class="opt" onclick="chkQCM(this,'c')"><span class="opt-letter">B</span> Le secteur des cours particuliers payants</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">C</span> Les éditeurs de manuels scolaires</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">D</span> Les établissements privés sous contrat</div>
+      </div>
+    </div>
+
+    <div class="qcm-q">
+      <div class="qcm-enonce">5. Quel taux de bacheliers la France atteignait-elle en 1950 ?</div>
+      <div class="options">
+        <div class="opt" onclick="chkQCM(this,'c')"><span class="opt-letter">A</span> 5 %</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">B</span> 15 %</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">C</span> 30 %</div>
+        <div class="opt" onclick="chkQCM(this,'w')"><span class="opt-letter">D</span> 50 %</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Inférence et nuance — Vrai / Faux justifié</div>
+    <h2>Vrai, Faux ou Non dit ?</h2>
+    <p style="color:var(--gris-doux);font-size:0.87rem;margin-bottom:20px;font-style:italic;">Au niveau C1, vous devez distinguer ce qui est <strong>dit</strong>, ce qui est <strong>faux</strong> selon le texte, et ce qui n'est <strong>pas mentionné</strong> (ND).</p>
+
+    <div id="vf-c2">
+      <div class="vf-item" data-rep="faux">
+        <div>
+          <div class="vf-enonce">1. Selon le texte, la politique d'éducation prioritaire a été un succès indéniable.</div>
+          <div class="vf-justif">Justification : le texte indique que l'efficacité de cette politique « reste débattue » et que les résultats sont insuffisants.</div>
+        </div>
+        <div class="vf-buttons">
+          <button class="vf-btn" onclick="chkVF(this,'vrai')">V</button>
+          <button class="vf-btn" onclick="chkVF(this,'faux')">F</button>
+          <button class="vf-btn" onclick="chkVF(this,'nd')">ND</button>
+        </div>
+      </div>
+      <div class="vf-item" data-rep="vrai">
+        <div>
+          <div class="vf-enonce">2. La démocratisation du baccalauréat est présentée comme un signal positif dans le texte.</div>
+          <div class="vf-justif">Justification : le texte cite explicitement « la démocratisation du baccalauréat » parmi les « avancées à saluer ».</div>
+        </div>
+        <div class="vf-buttons">
+          <button class="vf-btn" onclick="chkVF(this,'vrai')">V</button>
+          <button class="vf-btn" onclick="chkVF(this,'faux')">F</button>
+          <button class="vf-btn" onclick="chkVF(this,'nd')">ND</button>
+        </div>
+      </div>
+      <div class="vf-item" data-rep="nd">
+        <div>
+          <div class="vf-enonce">3. Le texte précise que la France dépense plus que la moyenne européenne par élève.</div>
+          <div class="vf-justif">Cette information n'est pas mentionnée dans le texte.</div>
+        </div>
+        <div class="vf-buttons">
+          <button class="vf-btn" onclick="chkVF(this,'vrai')">V</button>
+          <button class="vf-btn" onclick="chkVF(this,'faux')">F</button>
+          <button class="vf-btn" onclick="chkVF(this,'nd')">ND</button>
+        </div>
+      </div>
+      <div class="vf-item" data-rep="vrai">
+        <div>
+          <div class="vf-enonce">4. L'enseignant est présenté comme l'élément central de toute réforme éducative.</div>
+          <div class="vf-justif">Justification : « la clé de voûte de toute réforme demeure l'enseignant ».</div>
+        </div>
+        <div class="vf-buttons">
+          <button class="vf-btn" onclick="chkVF(this,'vrai')">V</button>
+          <button class="vf-btn" onclick="chkVF(this,'faux')">F</button>
+          <button class="vf-btn" onclick="chkVF(this,'nd')">ND</button>
+        </div>
+      </div>
+      <div class="vf-item" data-rep="nd">
+        <div>
+          <div class="vf-enonce">5. Pierre Bourdieu a enseigné à l'École normale supérieure.</div>
+          <div class="vf-justif">Le texte mentionne ses travaux mais ne précise rien de sa biographie ou de ses postes d'enseignement.</div>
+        </div>
+        <div class="vf-buttons">
+          <button class="vf-btn" onclick="chkVF(this,'vrai')">V</button>
+          <button class="vf-btn" onclick="chkVF(this,'faux')">F</button>
+          <button class="vf-btn" onclick="chkVF(this,'nd')">ND</button>
+        </div>
+      </div>
+      <div class="vf-item" data-rep="faux">
+        <div>
+          <div class="vf-enonce">6. Selon le texte, le numérique est déjà pleinement intégré dans les pratiques pédagogiques françaises.</div>
+          <div class="vf-justif">Justification : le texte dit que le numérique « offre de nouvelles perspectives » à condition d'accompagner les enseignants, suggérant que ce n'est pas encore le cas.</div>
+        </div>
+        <div class="vf-buttons">
+          <button class="vf-btn" onclick="chkVF(this,'vrai')">V</button>
+          <button class="vf-btn" onclick="chkVF(this,'faux')">F</button>
+          <button class="vf-btn" onclick="chkVF(this,'nd')">ND</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="score-panel" id="scorePanel2">
+      <div class="score-big" id="score2Num">0/6</div>
+      <div class="score-comment">
+        <strong id="score2Titre">—</strong>
+        <span id="score2Txt">—</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ PRODUCTION ══════════════ -->
+<div class="section" id="production">
+  <div class="card">
+    <div class="section-label">Production écrite — niveau C1</div>
+    <h2>Sujet de synthèse argumentée</h2>
+    <div class="sujet-encadre">
+      <div class="sujet-titre">Consigne — 200–250 mots</div>
+      <p class="sujet-consigne">
+        En vous appuyant sur les deux textes de cette série de leçons, rédigez un paragraphe argumenté répondant à la question suivante :<br><br>
+        <strong>« L'école française tient-elle vraiment sa promesse d'égalité des chances ? »</strong><br><br>
+        Votre développement devra comporter : une thèse clairement énoncée, au moins deux arguments illustrés de données précises tirées des textes, et une concession. Utilisez au minimum une <strong>nominalisation</strong> et le <strong>subjonctif passé</strong>.
+      </p>
+    </div>
+
+    <div style="margin-bottom:10px;">
+      <p style="font-size:0.82rem;color:var(--gris-doux);margin-bottom:8px;font-family:'Fira Code',monospace;text-transform:uppercase;letter-spacing:0.1em;">Insérer un connecteur :</p>
+      <div class="connecteurs-palette">
+        <span class="conn-chip" onclick="ins('Force est de constater que ')">force est de constater</span>
+        <span class="conn-chip" onclick="ins('Bien que … ait …, ')">bien que (subj. passé)</span>
+        <span class="conn-chip" onclick="ins('Quand bien même ')">quand bien même</span>
+        <span class="conn-chip" onclick="ins('Néanmoins, ')">néanmoins</span>
+        <span class="conn-chip" onclick="ins('En outre, ')">en outre</span>
+        <span class="conn-chip" onclick="ins('Par ailleurs, ')">par ailleurs</span>
+        <span class="conn-chip" onclick="ins('À condition de ')">à condition de</span>
+        <span class="conn-chip" onclick="ins('Il n\'en demeure pas moins que ')">il n'en demeure pas moins</span>
+        <span class="conn-chip" onclick="ins('Des avancées méritent d\'être saluées : ')">avancées à saluer</span>
+      </div>
+    </div>
+
+    <textarea class="prod-textarea" id="prodTxt" placeholder="Commencez votre paragraphe ici…" oninput="majStats()"></textarea>
+    <div class="stats-ligne">
+      <span>Nominalisations repérées : <span class="stats-vert" id="nomCount">0</span> &nbsp;|&nbsp; Subjonctif passé détecté : <span class="stats-vert" id="subjCount">non</span></span>
+      <span id="wc">0 mot(s)</span>
+    </div>
+
+    <div style="margin-top:22px;">
+      <button class="voir-corrige-btn" onclick="toggleCorrige(this)">Voir un exemple de production</button>
+      <div class="corrige-box">
+        <strong>Exemple de réponse :</strong><br><br>
+        Force est de constater que l'école française peine à tenir pleinement sa promesse d'égalité des chances. En effet, la démocratisation du baccalauréat — passé de 5 % de reçus en 1950 à plus de 85 % aujourd'hui — constitue une avancée indéniable. Néanmoins, cette réussite statistique masque des inégalités persistantes : selon les données du texte, un enfant de cadre a 4,5 fois plus de chances d'obtenir un bac général qu'un enfant d'ouvrier. De surcroît, la hiérarchie implicite entre spécialités reproduit, sous une forme rénovée, les logiques de sélection sociale d'antan. Il n'en demeure pas moins que des avancées méritent d'être saluées : bien que les pouvoirs publics aient mis en place de nombreux dispositifs correcteurs, dont les réseaux d'éducation prioritaire bénéficiant à 20 % des élèves, leur efficacité reste limitée tant que les conditions socio-économiques familiales ne sont pas prises en compte. La valorisation des enseignants et le développement du numérique éducatif constituent des leviers prometteurs, à condition d'être accompagnés d'une véritable volonté politique.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="section-label">Auto-évaluation — grille C1</div>
+    <h2>Évaluez votre production</h2>
+    <div class="grille-eval">
+      <div class="eval-row"><div class="eval-check">📌 J'ai formulé une thèse claire dès le début du paragraphe.</div><div class="eval-btns"><button class="eval-btn" onclick="evalToggle(this,'yes')">OUI</button><button class="eval-btn" onclick="evalToggle(this,'no')">NON</button></div></div>
+      <div class="eval-row"><div class="eval-check">📌 J'ai utilisé au moins deux données chiffrées tirées des textes.</div><div class="eval-btns"><button class="eval-btn" onclick="evalToggle(this,'yes')">OUI</button><button class="eval-btn" onclick="evalToggle(this,'no')">NON</button></div></div>
+      <div class="eval-row"><div class="eval-check">📌 J'ai intégré une concession avec « bien que » + subjonctif passé.</div><div class="eval-btns"><button class="eval-btn" onclick="evalToggle(this,'yes')">OUI</button><button class="eval-btn" onclick="evalToggle(this,'no')">NON</button></div></div>
+      <div class="eval-row"><div class="eval-check">📌 J'ai utilisé au moins une nominalisation (ex. : « la démocratisation… », « la valorisation… »).</div><div class="eval-btns"><button class="eval-btn" onclick="evalToggle(this,'yes')">OUI</button><button class="eval-btn" onclick="evalToggle(this,'no')">NON</button></div></div>
+      <div class="eval-row"><div class="eval-check">📌 Mon vocabulaire est varié et de registre soutenu (j'ai évité les répétitions).</div><div class="eval-btns"><button class="eval-btn" onclick="evalToggle(this,'yes')">OUI</button><button class="eval-btn" onclick="evalToggle(this,'no')">NON</button></div></div>
+      <div class="eval-row"><div class="eval-check">📌 J'ai respecté la longueur imposée (200–250 mots).</div><div class="eval-btns"><button class="eval-btn" onclick="evalToggle(this,'yes')">OUI</button><button class="eval-btn" onclick="evalToggle(this,'no')">NON</button></div></div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ── Navigation ──
+const SECTIONS = ['texte','vocabulaire','grammaire','comprehension','production'];
+function go(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+  const idx = SECTIONS.indexOf(id);
+  document.getElementById('prog').style.width = ((idx+1)/SECTIONS.length*100)+'%';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ── Vocab ──
+function toggleVocab(row) {
+  row.classList.toggle('open');
+}
+
+// ── Corrigé caché ──
+function toggleCorrige(btn) {
+  const box = btn.nextElementSibling;
+  box.classList.toggle('visible');
+  btn.textContent = box.classList.contains('visible') ? 'Masquer le corrigé' : 'Voir le corrigé';
+}
+
+// ── QCM C2 ──
+function chkQCM(el, verdict) {
+  const opts = el.parentElement.querySelectorAll('.opt');
+  opts.forEach(o => o.classList.remove('correct','wrong'));
+  if (verdict === 'c') {
+    el.classList.add('correct');
+  } else {
+    el.classList.add('wrong');
+    opts.forEach(o => { if (o.getAttribute('onclick').includes("'c'")) o.classList.add('correct'); });
+  }
+}
+
+// ── Vrai / Faux / ND ──
+let vf2score = 0, vf2done = 0;
+function chkVF(btn, choice) {
+  const item = btn.closest('.vf-item');
+  if (item.dataset.answered) return;
+  item.dataset.answered = '1';
+  vf2done++;
+  const correct = item.dataset.rep;
+  const allBtns = item.querySelectorAll('.vf-btn');
+  allBtns.forEach(b => b.disabled = true);
+  if (choice === correct) {
+    btn.classList.add('v-ok');
+    vf2score++;
+  } else {
+    btn.classList.add('v-nok');
+    allBtns.forEach(b => {
+      if (b.textContent === correct.toUpperCase().slice(0,2) ||
+          (correct === 'vrai' && b.textContent === 'V') ||
+          (correct === 'faux' && b.textContent === 'F') ||
+          (correct === 'nd'   && b.textContent === 'ND'))
+        b.classList.add('v-rev');
+    });
+  }
+  item.querySelector('.vf-justif').style.display = 'block';
+  if (vf2done >= 6) showScore2();
+}
+
+function showScore2() {
+  const p = document.getElementById('scorePanel2');
+  p.classList.add('show');
+  document.getElementById('score2Num').textContent = vf2score + '/6';
+  const tit = ['À retravailler','Continuez vos efforts !','Bien !','Très bien !','Excellent !','Parfait — niveau C1 atteint ! 🎓'];
+  const msg = ['Relisez attentivement le texte.','Certains passages méritent une seconde lecture.','Vous avez bien saisi l\'essentiel.','Belle maîtrise de l\'inférence.','Félicitations, vous distinguez très bien dit / non-dit.','Score parfait !'];
+  const i = Math.min(vf2score, 5);
+  document.getElementById('score2Titre').textContent = tit[i];
+  document.getElementById('score2Txt').textContent = msg[i];
+}
+
+// ── Lacunes ──
+document.querySelectorAll('.lacune-input').forEach(inp => {
+  inp.addEventListener('keyup', function(e) {
+    const val = this.value.trim().toLowerCase();
+    const ans = this.dataset.ans.toLowerCase();
+    if (val === ans) { this.classList.add('ok'); this.classList.remove('nok'); }
+    else if (val.length > 0) { this.classList.remove('ok'); this.classList.add('nok'); }
+    else { this.classList.remove('ok','nok'); }
+  });
+});
+
+// ── Production ──
+const NOMS = ['démocratisation','valorisation','orientation','inégalité','fracture','constat','échec','dispositif','résorption','insuffisance'];
+const SUBJ = ["ait supprimé","ait mis en place","ait augmenté","ait lancé","ait été","soit arrivé","se soit rendu","aient développé","ait réduit","aient établi"];
+function majStats() {
+  const txt = document.getElementById('prodTxt').value;
+  const low = txt.toLowerCase();
+  document.getElementById('wc').textContent = (txt.trim()===''?0:txt.trim().split(/\s+/).length)+' mot(s)';
+  const n = NOMS.filter(w => low.includes(w)).length;
+  document.getElementById('nomCount').textContent = n;
+  const s = SUBJ.some(w => low.includes(w));
+  document.getElementById('subjCount').textContent = s ? 'oui ✓' : 'non';
+}
+function ins(txt) {
+  const ta = document.getElementById('prodTxt');
+  const p = ta.selectionStart;
+  ta.value = ta.value.slice(0,p)+txt+ta.value.slice(ta.selectionEnd);
+  ta.selectionStart = ta.selectionEnd = p+txt.length;
+  ta.focus(); majStats();
+}
+
+// ── Évaluation ──
+function evalToggle(btn, type) {
+  const pair = btn.parentElement.querySelectorAll('.eval-btn');
+  pair.forEach(b => b.classList.remove('yes','no'));
+  btn.classList.add(type);
+}
+</script>
+</body>
+</html>
