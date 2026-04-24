@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>DELF A2 – Santé & Médecin | Cours Complet 2h</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-cream: #FFFBF5;
+      --coral: #FF6B5C;
+      --coral-light: #FFE4E0;
+      --mint: #4CBFA6;
+      --mint-light: #DCF5EF;
+      --sunny: #F9C74F;
+      --sunny-light: #FEF3D6;
+      --lavender: #9B5DE5;
+      --lavender-light: #F0E6FF;
+      --ocean: #2D7A8C;
+      --peach: #FFB86B;
+      --error-red: #E63946;
+      --success-green: #2A9D8F;
+      --shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+      --radius-xl: 28px;
+    }
+
+    body {
+      background: var(--bg-cream);
+      font-family: 'Inter', sans-serif;
+      color: #2D2B28;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .header-modern {
+      background: linear-gradient(135deg, #2C3E50, #1A2A3A);
+      color: white;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .header-flex {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+    }
+    .logo span {
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+    .progress-area {
+      flex: 1;
+      max-width: 260px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      margin-bottom: 5px;
+    }
+    .progress-bar-bg {
+      background: rgba(255,255,255,0.25);
+      border-radius: 40px;
+      height: 6px;
+    }
+    .progress-fill {
+      background: var(--sunny);
+      width: 0%;
+      height: 100%;
+      border-radius: 40px;
+      transition: width 0.4s;
+    }
+    .score-badge {
+      background: var(--coral);
+      padding: 6px 20px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    /* Navigation */
+    .nav-steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px auto 20px;
+      max-width: 1100px;
+    }
+    .nav-dot {
+      width: 44px;
+      height: 44px;
+      background: #EFE4D8;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #5A4A3A;
+      border: 2px solid transparent;
+    }
+    .nav-dot.active {
+      background: var(--coral);
+      color: white;
+      transform: scale(1.05);
+      border-color: var(--sunny);
+    }
+    .nav-dot.done {
+      background: var(--mint);
+      color: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    .module {
+      display: none;
+      animation: fadeSlide 0.4s ease;
+    }
+    .module.active-module {
+      display: block;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* Cartes colorées */
+    .card {
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .card-white {
+      background: white;
+      border-bottom: 8px solid var(--coral);
+    }
+    .card-mint {
+      background: var(--mint-light);
+      border-left: 8px solid var(--mint);
+    }
+    .card-sunny {
+      background: var(--sunny-light);
+      border-top: 8px solid var(--sunny);
+    }
+    .card-lavender {
+      background: var(--lavender-light);
+      border-right: 8px solid var(--lavender);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--ocean);
+      color: white;
+      padding: 4px 16px;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      color: #1F2D3D;
+    }
+    .bubble-text {
+      background: #FDF8F0;
+      padding: 1.3rem;
+      border-radius: 24px;
+      margin: 1rem 0;
+      border: 1px solid #FFDFB5;
+    }
+    .btn-primary {
+      background: var(--coral);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--coral);
+      padding: 10px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--coral);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .qcm-block {
+      background: #FFF5E8;
+      border-radius: 24px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+    }
+    .qcm-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .qcm-btn {
+      background: white;
+      border: 1px solid #DCB88A;
+      padding: 8px 22px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.1s;
+      font-weight: 500;
+    }
+    .qcm-btn.correct-choice {
+      background: var(--success-green);
+      color: white;
+      border-color: var(--success-green);
+    }
+    .qcm-btn.wrong-choice {
+      background: var(--error-red);
+      color: white;
+      text-decoration: line-through;
+    }
+    .dialogue-box {
+      background: #1F2D3D;
+      color: #F0F0F0;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin: 1.2rem 0;
+      font-family: monospace;
+    }
+    .speaker {
+      color: var(--sunny);
+      font-weight: 700;
+    }
+    .expression-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 1rem 0;
+    }
+    .expr-chip {
+      background: white;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--peach);
+      font-size: 0.85rem;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 24px;
+      border: 2px solid var(--peach);
+      padding: 1rem;
+      background: #FFFFF5;
+      font-family: 'Inter', monospace;
+      margin: 10px 0;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .final-area {
+      background: linear-gradient(145deg, #FFE8D6, #FFDAB9);
+      text-align: center;
+      border-radius: 48px;
+      padding: 2.5rem;
+    }
+    @media (max-width: 680px) {
+      .card { padding: 1.2rem; }
+      h3 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header-modern">
+  <div class="header-flex">
+    <div class="logo">
+      <h2>🩺 DELF A2 · Santé & Médecin</h2>
+      <span>Parler de ses problèmes – 2h de préparation</span>
+    </div>
+    <div class="progress-area">
+      <div class="progress-label"><span>Progression</span><span id="progressPercent">0%</span></div>
+      <div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="score-badge" id="headerScore">🏆 Score: 0 pts</div>
+  </div>
+</header>
+
+<div class="nav-steps" id="navDots"></div>
+
+<div class="container">
+  <!-- MODULE 1 : Lecture compréhension -->
+  <div id="module1" class="module active-module">
+    <div class="card card-white">
+      <span class="badge">📖 COMPRÉHENSION ÉCRITE – 20 min</span>
+      <h3>Une grippe pas de chance</h3>
+      <div class="bubble-text">
+        <p>📌 <strong>Texte : "Fatiguée et fiévreuse"</strong><br><br>
+        Depuis trois jours, Sophie ne va pas bien. Tout a commencé lundi soir : une légère douleur à la gorge, puis une grosse fatigue. Mardi matin, elle s'est réveillée avec 38,7°C de fièvre. Elle a essayé de travailler, mais elle n'arrivait pas à se concentrer. Son chef lui a dit : « Tu devrais rentrer chez toi et te reposer. »<br>
+        Sophie est allée à la pharmacie acheter du paracétamol et des pastilles pour la gorge. Ensuite, elle a appelé son médecin pour prendre un rendez-vous. La secrétaire lui a proposé un créneau le lendemain à 11h. Sophie a accepté. Maintenant, elle reste au lit, boit beaucoup d'eau et regarde des séries. Elle espère aller mieux avant le week-end parce qu'elle doit fêter son anniversaire samedi.</p>
+      </div>
+      <div class="grid-2">
+        <div><strong>❓ Questions (à répondre à l'oral)</strong><br>
+         1. Quels sont les symptômes de Sophie ?<br>
+         2. Que lui a conseillé son chef ?<br>
+         3. Qu’a-t-elle acheté à la pharmacie ?<br>
+         4. Quand a-t-elle rendez-vous chez le médecin ?<br>
+         5. Pourquoi veut-elle guérir vite ?
+        </div>
+        <button class="btn-outline" onclick="toggleAnswer('readingAnswers')">🔍 Voir les réponses</button>
+        <div id="readingAnswers" style="display:none; margin-top:15px; background:#EAF7F0; border-radius:20px; padding:12px;">✅ 1. Mal de gorge, fièvre 38,7°, fatigue. 2. Rentrer chez elle et se reposer. 3. Paracétamol + pastilles gorge. 4. Le lendemain à 11h. 5. Pour son anniversaire samedi.</div>
+      </div>
+      <div class="nav-buttons"><button class="btn-primary" onclick="goToModule(2)">🎧 Compréhension orale →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 2 : Compréhension orale (sans ✅ dans les choix) -->
+  <div id="module2" class="module">
+    <div class="card card-mint">
+      <span class="badge">🎤 COMPRÉHENSION ORALE – 20 min</span>
+      <h3>Message vocal au docteur</h3>
+      <div class="bubble-text">
+        <p>📢 <strong>Script audio (synthèse vocale disponible) :</strong><br>
+        « Bonjour docteur, c’est Amélie Dupont. Je suis désolée, mais je ne peux pas venir à mon rendez-vous de 14h aujourd’hui. J’ai eu un violent mal de tête cette nuit et j’ai vomi. Je suis clouée au lit. Est-ce que vous pourriez me donner un autre créneau demain matin ? Merci. Au revoir. »</p>
+        <button class="btn-outline" onclick="speakHealthMessage()">🔊 Lire à voix haute</button>
+      </div>
+      
+      <div class="qcm-block">
+        <p><strong>1️⃣ Quel est le motif de l’annulation ?</strong></p>
+        <div class="qcm-options" id="oralQ1">
+          <button class="qcm-btn" onclick="checkOral(1, 'Problème dentaire', this)">Problème dentaire</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'Mal de tête et vomissements', this)">Mal de tête et vomissements</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'Accident de voiture', this)">Accident de voiture</button>
+        </div>
+        <div id="oralFeed1" class="feedback-text" style="font-size:0.8rem; margin-top:6px;"></div>
+      </div>
+
+      <div class="qcm-block">
+        <p><strong>2️⃣ Quelle solution propose-t-elle ?</strong></p>
+        <div class="qcm-options" id="oralQ2">
+          <button class="qcm-btn" onclick="checkOral(2, 'Annuler définitivement', this)">Annuler définitivement</button>
+          <button class="qcm-btn" onclick="checkOral(2, 'Un autre créneau demain matin', this)">Un autre créneau demain matin</button>
+        </div>
+        <div id="oralFeed2"></div>
+      </div>
+
+      <div class="qcm-block">
+        <p><strong>3️⃣ À quelle heure était le rendez-vous initial ?</strong></p>
+        <div class="qcm-options" id="oralQ3">
+          <button class="qcm-btn" onclick="checkOral(3, '9h', this)">9h</button>
+          <button class="qcm-btn" onclick="checkOral(3, '14h', this)">14h</button>
+          <button class="qcm-btn" onclick="checkOral(3, '17h', this)">17h</button>
+        </div>
+        <div id="oralFeed3"></div>
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(1)">← Lecture</button><button class="btn-primary" onclick="goToModule(3)">👨‍⚕️ Consultation médicale →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 3 : DIALOGUE MÉDECIN – version longue avec automatismes -->
+  <div id="module3" class="module">
+    <div class="card card-lavender">
+      <span class="badge">👨‍⚕️ JEU DE RÔLE – CONSULTATION MÉDECIN (35 min)</span>
+      <h3>Chez le médecin généraliste</h3>
+      
+      <div class="dialogue-box">
+        <p><span class="speaker">🧑‍⚕️ MÉDECIN :</span> "Bonjour, asseyez-vous. Qu’est-ce qui vous amène aujourd’hui ?"</p>
+        <p><span class="speaker">🧑 PATIENT :</span> "Bonjour docteur. Je ne me sens pas bien depuis plusieurs jours."</p>
+        <p><span class="speaker">🧑‍⚕️ MÉDECIN :</span> "Quels sont vos symptômes exactement ?"</p>
+        <p><span class="speaker">🧑 PATIENT :</span> "J’ai de la fièvre, environ 38,5°, et je tousse beaucoup. J’ai aussi mal à la gorge."</p>
+        <p><span class="speaker">🧑‍⚕️ MÉDECIN :</span> "Depuis quand ?"</p>
+        <p><span class="speaker">🧑 PATIENT :</span> "Ça a commencé il y a trois jours, après une soirée très froide."</p>
+        <p><span class="speaker">🧑‍⚕️ MÉDECIN :</span> "Avez-vous pris votre température ce matin ?"</p>
+        <p><span class="speaker">🧑 PATIENT :</span> "Oui, 38,2°C. Je me sens très fatigué(e), j’ai des courbatures."</p>
+        <p><span class="speaker">🧑‍⚕️ MÉDECIN :</span> "Je vais écouter vos poumons. Respirez profondément... Ce n’est pas grave, c’est une forte grippe. Je vais vous prescrire du repos, des médicaments contre la fièvre et buvez beaucoup d’eau."</p>
+        <p><span class="speaker">🧑 PATIENT :</span> "Dois-je revenir pour une deuxième visite ?"</p>
+        <p><span class="speaker">🧑‍⚕️ MÉDECIN :</span> "Seulement si la fièvre ne baisse pas dans 3 jours. Au revoir et bon rétablissement !"</p>
+      </div>
+
+      <div class="bubble-text" id="randomSymptomBox">
+        💬 <strong>Situation actuelle :</strong> Vous êtes fatigué(e) depuis plusieurs jours, vous avez de la fièvre et une toux sèche. Le médecin vous pose des questions.
+      </div>
+      <button class="btn-primary" style="background: var(--lavender);" onclick="randomSymptom()">🎲 Changer les symptômes (aléatoire)</button>
+
+      <h4 style="margin-top: 1.5rem;">🗣️ Phrases à automatiser (répétez à voix haute)</h4>
+      <div class="expression-list">
+        <span class="expr-chip">J’ai mal à la tête / à la gorge / au ventre</span>
+        <span class="expr-chip">J’ai de la fièvre / de la température</span>
+        <span class="expr-chip">Je tousse beaucoup / j’ai une toux sèche</span>
+        <span class="expr-chip">Ça a commencé hier / il y a trois jours</span>
+        <span class="expr-chip">Je me sens faible / épuisé(e)</span>
+        <span class="expr-chip">J’ai des courbatures partout</span>
+        <span class="expr-chip">Je n’arrive pas à avaler</span>
+        <span class="expr-chip">Est-ce que vous pouvez me prescrire quelque chose ?</span>
+        <span class="expr-chip">Dois-je revenir ?</span>
+      </div>
+
+      <div class="grid-2">
+        <div style="background:#F0E6FF; border-radius:24px; padding:1rem;">
+          <strong>🎤 QUESTIONS TYPE DU MÉDECIN (entraînez-vous à répondre)</strong><br>
+          • Depuis quand avez-vous ces symptômes ?<br>
+          • Avez-vous pris votre température ?<br>
+          • Est-ce que vous toussez ?<br>
+          • Avez-vous mal quelque part ?<br>
+          • Est-ce que vous avez déjà vu un médecin ?<br>
+          • Prenez-vous des médicaments ?
+        </div>
+        <div style="background:#E0F7F0; border-radius:24px; padding:1rem;">
+          <strong>💬 RÉPONSES MODÈLES (à adapter)</strong><br>
+          • "Depuis trois jours."<br>
+          • "Oui, j’avais 38,5° ce matin."<br>
+          • "Oui, une toux sèche, surtout la nuit."<br>
+          • "J’ai mal à la gorge et à la tête."<br>
+          • "Non, c’est la première fois."<br>
+          • "Non, rien pour l’instant."
+        </div>
+      </div>
+
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(2)">← Oral</button><button class="btn-primary" onclick="goToModule(4)">✍️ Production écrite →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 4 : PRODUCTION ÉCRITE -->
+  <div id="module4" class="module">
+    <div class="card card-white">
+      <span class="badge">✍️ PRODUCTION ÉCRITE – 25 min</span>
+      <h3>Écrire pour annuler un rendez-vous médical</h3>
+      <p><strong>Consigne :</strong> Vous avez une forte fièvre + vomissements. Vous écrivez un message au secrétariat du docteur (60-80 mots). Incluez : excuse, explication des symptômes, proposition d’un nouveau créneau, formule de politesse.</p>
+      <textarea id="writingMsg" rows="5" placeholder="Bonjour Madame, je suis désolé(e) mais..."></textarea>
+      <div id="wordCountMsg">0 mots</div>
+      <button class="btn-outline" onclick="showModelMessage()">📧 Voir un modèle</button>
+      <div id="modelMsg" style="display:none; margin-top:12px; background:#EAF9F0; border-radius:24px; padding:1rem;">
+        ✉️ <strong>Exemple (76 mots) :</strong><br>
+        "Bonjour Madame, je suis sincèrement désolé(e) mais je ne pourrai pas venir à mon rendez-vous de 15h aujourd'hui. Depuis cette nuit, j’ai 39°C de fièvre et je vomis. Le médecin m’a conseillé de rester au lit. Pourriez-vous me donner un autre rendez-vous lundi matin ? Merci de votre compréhension. Cordialement, Lucas."
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(3)">← Dialogue médecin</button><button class="btn-primary" onclick="goToModule(5)">✅ Auto-évaluation →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 5 : RÉVISION & ERREURS -->
+  <div id="module5" class="module">
+    <div class="card card-sunny">
+      <span class="badge">📌 RÉVISION – Pièges fréquents (15 min)</span>
+      <h3>Ce qu’il faut éviter à l’oral DELF A2</h3>
+      <div class="grid-2">
+        <div style="background:#FFE0E0; border-radius:24px; padding:1rem;">
+          ❌ <strong>Erreurs fréquentes</strong><br>
+          • "Je suis mal à la tête" → ❌<br>
+          • "J’ai mal de gorge" → ❌<br>
+          • "Je dois aller à pharmacie" → ❌<br>
+          • "Je suis fatigué depuis trois jours" (verbe correct mais attention à l'accord) → OK mais "depuis" avec présent
+        </div>
+        <div style="background:#DCF5EF; border-radius:24px; padding:1rem;">
+          ✅ <strong>Corrections</strong><br>
+          • "J’ai mal à la tête"<br>
+          • "J’ai mal à la gorge"<br>
+          • "Je dois aller À LA pharmacie"<br>
+          • "Je suis fatigué(e) depuis trois jours"
+        </div>
+      </div>
+      <div class="bubble-text">
+        🧠 <strong>Mots clés à retenir :</strong> un médecin, un rendez-vous, une ordonnance, des médicaments, se reposer, avoir de la fièvre, tousser, vomir, une grippe, une angine.
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(4)">← Écrit</button><button class="btn-primary" onclick="goToModule(6)">🏁 Final →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 6 : FINAL -->
+  <div id="module6" class="module">
+    <div class="final-area">
+      <span class="badge" style="background: var(--ocean);">🌟 FÉLICITATIONS !</span>
+      <h3>Prêt(e) pour le DELF A2 – thème santé</h3>
+      <p style="font-size:1.2rem; margin: 20px 0;">🎯 Votre score : <strong id="finalScoreSpan">0</strong> / 6 points</p>
+      <p>💪 Vous savez décrire vos symptômes, comprendre un médecin, annuler un rendez-vous et écrire un message d'excuse.</p>
+      <button class="btn-primary" onclick="restartCourse()">🔄 Recommencer le cours</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentMod = 1;
+  let totalScore = 0;
+  let oralAnswered = { q1: false, q2: false, q3: false };
+  const MAX_SCORE = 6;
+
+  function updateUI() {
+    let percent = Math.floor(((currentMod-1)/6)*100);
+    document.getElementById('progressFill').style.width = percent+'%';
+    document.getElementById('progressPercent').innerText = percent+'%';
+    document.getElementById('headerScore').innerHTML = `🏆 Score: ${totalScore} pts`;
+    if(document.getElementById('finalScoreSpan')) document.getElementById('finalScoreSpan').innerText = totalScore;
+  }
+
+  function addScore() {
+    if(totalScore < MAX_SCORE) totalScore++;
+    updateUI();
+  }
+
+  function checkOral(questionId, correctAnswer, btnElement) {
+    if(questionId === 1 && oralAnswered.q1) return;
+    if(questionId === 2 && oralAnswered.q2) return;
+    if(questionId === 3 && oralAnswered.q3) return;
+
+    let isCorrect = false;
+    if(questionId === 1 && correctAnswer === 'Mal de tête et vomissements') isCorrect = true;
+    if(questionId === 2 && correctAnswer === 'Un autre créneau demain matin') isCorrect = true;
+    if(questionId === 3 && correctAnswer === '14h') isCorrect = true;
+
+    let parent = btnElement.parentNode;
+    let allBtns = parent.querySelectorAll('.qcm-btn');
+    allBtns.forEach(btn => btn.disabled = true);
+    
+    if(isCorrect) {
+      btnElement.classList.add('correct-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '✅ Bonne réponse ! +1 point';
+      if(questionId === 1 && !oralAnswered.q1) { oralAnswered.q1 = true; addScore(); }
+      if(questionId === 2 && !oralAnswered.q2) { oralAnswered.q2 = true; addScore(); }
+      if(questionId === 3 && !oralAnswered.q3) { oralAnswered.q3 = true; addScore(); }
+    } else {
+      btnElement.classList.add('wrong-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '❌ Réécoutez le message.';
+    }
+  }
+
+  function speakHealthMessage() {
+    let text = "Bonjour docteur, c’est Amélie Dupont. Je suis désolée, mais je ne peux pas venir à mon rendez-vous de 14h aujourd’hui. J’ai eu un violent mal de tête cette nuit et j’ai vomi. Je suis clouée au lit. Est-ce que vous pourriez me donner un autre créneau demain matin ? Merci.";
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function randomSymptom() {
+    const situations = [
+      "Vous avez mal aux oreilles et vous avez de la fièvre depuis 2 jours. Expliquez au médecin.",
+      "Vous avez mal au ventre après avoir mangé au restaurant. Décrivez vos symptômes.",
+      "Vous avez très mal à la gorge, vous n’arrivez plus à parler. Le médecin vous interroge.",
+      "Vous êtes tombé(e) dans l’escalier et vous avez une entorse à la cheville. Racontez l’accident.",
+      "Vous avez des vertiges et une grande fatigue. Le médecin vous conseille une prise de sang."
+    ];
+    let idx = Math.floor(Math.random() * situations.length);
+    let box = document.getElementById('randomSymptomBox');
+    if(box) box.innerHTML = `💬 <strong>Situation aléatoire :</strong> ${situations[idx]}`;
+  }
+
+  function toggleAnswer(id) {
+    let el = document.getElementById(id);
+    if(el.style.display === 'none') el.style.display = 'block';
+    else el.style.display = 'none';
+  }
+
+  function showModelMessage() {
+    let model = document.getElementById('modelMsg');
+    if(model.style.display === 'none') model.style.display = 'block';
+    else model.style.display = 'none';
+    if(!window.writingBonus && document.getElementById('writingMsg').value.trim().length > 40) {
+      window.writingBonus = true;
+      if(totalScore + 2 <= MAX_SCORE) totalScore += 2;
+      else totalScore = MAX_SCORE;
+      updateUI();
+      alert("📝 +2 points bonus pour ton message écrit !");
+    }
+  }
+
+  const textareaEl = document.getElementById('writingMsg');
+  if(textareaEl) {
+    textareaEl.addEventListener('input', function() {
+      let words = this.value.trim().split(/\s+/).filter(w => w.length>0).length;
+      document.getElementById('wordCountMsg').innerText = words + " mots";
+    });
+  }
+
+  function goToModule(n) {
+    for(let i=1;i<=6;i++) {
+      let mod = document.getElementById(`module${i}`);
+      if(mod) mod.classList.remove('active-module');
+    }
+    document.getElementById(`module${n}`).classList.add('active-module');
+    currentMod = n;
+    updateUI();
+    updateNavDots();
+  }
+
+  function updateNavDots() {
+    let dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, idx) => {
+      let num = idx+1;
+      dot.classList.remove('active', 'done');
+      if(num === currentMod) dot.classList.add('active');
+      if(num < currentMod) dot.classList.add('done');
+    });
+  }
+
+  function buildNav() {
+    let container = document.getElementById('navDots');
+    container.innerHTML = '';
+    for(let i=1;i<=6;i++) {
+      let dot = document.createElement('div');
+      dot.classList.add('nav-dot');
+      dot.innerText = i;
+      dot.onclick = () => goToModule(i);
+      container.appendChild(dot);
+    }
+    updateNavDots();
+  }
+
+  function restartCourse() {
+    totalScore = 0;
+    oralAnswered = { q1: false, q2: false, q3: false };
+    window.writingBonus = false;
+    document.querySelectorAll('.qcm-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove('correct-choice', 'wrong-choice');
+    });
+    document.querySelectorAll('[id^="oralFeed"]').forEach(el => el.innerHTML = '');
+    if(textareaEl) textareaEl.value = '';
+    document.getElementById('wordCountMsg').innerText = '0 mots';
+    goToModule(1);
+  }
+
+  buildNav();
+  updateUI();
+</script>
+</body>
+</html>
