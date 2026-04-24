@@ -1,0 +1,1497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C1 · Réseaux sociaux · Pour apprenants germanophones</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #1a1a2e;
+  --ink-soft: #3d3d5c;
+  --ink-muted: #7a7a9a;
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --border: #e0ddd4;
+  --accent: #2d6a4f;
+  --accent-light: #d8f3dc;
+  --accent-dark: #1b4332;
+  --warn: #b5451b;
+  --warn-light: #fde8de;
+  --info: #1e4d8c;
+  --info-light: #dbeafe;
+  --gold: #9a6e00;
+  --gold-light: #fef3c7;
+  --tag-b2: #5b21b6;
+  --tag-b2-bg: #ede9fe;
+  --tag-c1: #065f46;
+  --tag-c1-bg: #d1fae5;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.sidebar-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* SIDEBAR NAV */
+.sidebar {
+  background: var(--ink);
+  color: white;
+  padding: 2rem 1.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-brand {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  color: #a0e0b8;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.sidebar-sub {
+  font-size: 0.7rem;
+  color: #7a7a9a;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: #c4c4d4;
+  transition: 0.15s;
+  text-decoration: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
+.nav-item.active { background: rgba(160,224,184,0.15); color: #a0e0b8; }
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #3d3d5c;
+  flex-shrink: 0;
+  transition: 0.15s;
+}
+.nav-item.active .nav-dot, .nav-item:hover .nav-dot { background: #a0e0b8; }
+
+.nav-section {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4a4a6a;
+  margin: 1rem 0 0.3rem 0.7rem;
+}
+
+.progress-bar-wrap {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid #2a2a4a;
+}
+
+.progress-label {
+  font-size: 0.7rem;
+  color: #7a7a9a;
+  margin-bottom: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar {
+  height: 4px;
+  background: #2a2a4a;
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #a0e0b8, #52c97a);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* MAIN CONTENT */
+main {
+  padding: 3rem 3rem 4rem;
+  max-width: 820px;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+}
+
+.level-badges {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+.badge-b2 { background: var(--tag-b2-bg); color: var(--tag-b2); }
+.badge-c1 { background: var(--tag-c1-bg); color: var(--tag-c1); }
+.badge-de { background: #fef3c7; color: #92400e; }
+
+.page-header h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+}
+
+.page-header p {
+  color: var(--ink-muted);
+  font-size: 0.9rem;
+  max-width: 520px;
+}
+
+/* SECTION CARDS */
+.section {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  scroll-margin-top: 2rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.3rem 1.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+}
+
+.section-body {
+  padding: 1.8rem;
+}
+
+/* TEXT PASSAGE */
+.texte-passage {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.texte-passage p { margin-bottom: 1rem; }
+.texte-passage p:last-child { margin-bottom: 0; }
+.texte-passage strong { color: var(--ink); font-weight: 600; }
+
+/* ALERT BOXES */
+.alert {
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.alert-warn {
+  background: var(--warn-light);
+  border-left: 3px solid var(--warn);
+  color: #7a2a0a;
+}
+
+.alert-info {
+  background: var(--info-light);
+  border-left: 3px solid var(--info);
+  color: #0c2d5c;
+}
+
+.alert-gold {
+  background: var(--gold-light);
+  border-left: 3px solid var(--gold);
+  color: #5c3e00;
+}
+
+.alert-success {
+  background: var(--accent-light);
+  border-left: 3px solid var(--accent);
+  color: var(--accent-dark);
+}
+
+.alert strong { display: block; margin-bottom: 0.3rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+/* GERMANISM BOX */
+.germanism-box {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.87rem;
+}
+
+.germanism-box .g-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: #ea580c;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.germanism-box p { color: #7c2d12; line-height: 1.6; }
+.germanism-box .expl { color: #9a3412; margin-top: 0.3rem; font-style: italic; }
+
+/* EXERCISES */
+.exercise-block {
+  margin-top: 1.5rem;
+}
+
+.exercise-q {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.exercise-q label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.exercise-q .level-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+.exercise-q input[type="text"],
+.exercise-q textarea {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: white;
+  transition: 0.15s;
+  resize: vertical;
+}
+
+.exercise-q input:focus, .exercise-q textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+}
+
+.error-item {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: start;
+  gap: 0.8rem;
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.88rem;
+}
+
+.error-wrong {
+  color: var(--warn);
+  font-style: italic;
+}
+
+.error-arrow {
+  text-align: center;
+  color: var(--ink-muted);
+  font-size: 1.1rem;
+  padding-top: 0.1rem;
+}
+
+.error-input input {
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.87rem;
+  color: var(--ink);
+  background: white;
+}
+
+.error-input input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+}
+
+/* BUTTONS */
+.btn-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--ink);
+  color: white;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  transition: 0.15s;
+}
+
+.btn-check:hover { background: var(--ink-soft); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  color: var(--ink-muted);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  margin-left: 0.5rem;
+  transition: 0.15s;
+}
+
+.btn-secondary:hover { border-color: var(--ink-muted); color: var(--ink); }
+
+/* ANSWER PANEL */
+.answer-panel {
+  background: var(--surface2);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  display: none;
+  color: var(--ink-soft);
+}
+
+.answer-panel.visible { display: block; }
+
+.answer-panel .correct { color: var(--accent-dark); font-weight: 600; }
+.answer-panel .why { margin-top: 0.5rem; color: var(--ink-muted); font-size: 0.83rem; border-top: 1px solid var(--border); padding-top: 0.5rem; }
+.answer-panel .why strong { color: var(--ink-soft); }
+
+/* WRITING ZONE */
+.writing-zone textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink);
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.writing-zone textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+}
+
+.writing-checklist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.8rem 0;
+}
+
+.check-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.77rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: 0.15s;
+  user-select: none;
+}
+
+.check-tag.done {
+  background: var(--tag-c1-bg);
+  border-color: var(--accent);
+  color: var(--tag-c1);
+}
+
+.check-tag .checkmark { font-size: 0.7rem; }
+
+/* WORD COUNT */
+.wc-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+}
+
+.wc-text { font-size: 0.78rem; color: var(--ink-muted); }
+.wc-progress {
+  flex: 1;
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.wc-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+/* AI CHAT SECTION */
+.ai-chat-section {
+  background: var(--ink);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.ai-chat-header {
+  padding: 1.2rem 1.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.ai-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #a0e0b8;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.ai-chat-title { color: white; font-size: 0.9rem; font-weight: 500; }
+.ai-chat-sub { color: #5a5a7a; font-size: 0.75rem; margin-left: auto; }
+
+.chat-messages {
+  padding: 1.2rem 1.8rem;
+  min-height: 160px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.msg {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+}
+
+.msg-avatar {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.msg-ai .msg-avatar { background: rgba(160,224,184,0.15); color: #a0e0b8; }
+.msg-user .msg-avatar { background: rgba(255,255,255,0.08); color: #7a7a9a; }
+
+.msg-bubble {
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  max-width: 86%;
+}
+
+.msg-ai .msg-bubble { background: rgba(255,255,255,0.06); color: #d0d0e0; }
+.msg-user .msg-bubble { background: rgba(255,255,255,0.04); color: #8080a0; }
+
+.msg-ai .msg-bubble em { color: #a0e0b8; font-style: normal; font-weight: 500; }
+.msg-ai .msg-bubble code { background: rgba(160,224,184,0.1); color: #a0e0b8; padding: 0.1rem 0.4rem; border-radius: 4px; font-family: monospace; font-size: 0.82rem; }
+
+.chat-input-row {
+  padding: 1rem 1.8rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 0.6rem;
+}
+
+.chat-input-row input {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.chat-input-row input::placeholder { color: #4a4a6a; }
+
+.chat-input-row input:focus {
+  border-color: rgba(160,224,184,0.3);
+}
+
+.btn-send {
+  background: rgba(160,224,184,0.15);
+  border: 1px solid rgba(160,224,184,0.25);
+  color: #a0e0b8;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: 'DM Sans', sans-serif;
+  transition: 0.15s;
+}
+
+.btn-send:hover { background: rgba(160,224,184,0.22); }
+.btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.quick-questions {
+  padding: 0 1.8rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.quick-q {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #6a6a8a;
+  cursor: pointer;
+  background: none;
+  font-family: 'DM Sans', sans-serif;
+  transition: 0.15s;
+}
+
+.quick-q:hover { border-color: rgba(160,224,184,0.3); color: #a0e0b8; }
+
+/* VOCAB GRID */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.vocab-card {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.vocab-card:hover { border-color: var(--border); }
+.vocab-card.revealed { border-color: var(--accent); }
+
+.vocab-fr { font-weight: 600; font-size: 0.9rem; color: var(--ink); }
+.vocab-ex { font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.2rem; font-style: italic; }
+.vocab-de { font-size: 0.82rem; color: var(--tag-b2); margin-top: 0.4rem; display: none; }
+.vocab-card.revealed .vocab-de { display: block; }
+.vocab-hint { font-size: 0.7rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.vocab-card.revealed .vocab-hint { display: none; }
+
+/* RESPONSIVE */
+@media (max-width: 860px) {
+  .sidebar-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  main { padding: 2rem 1.5rem 3rem; }
+  .error-item { grid-template-columns: 1fr; }
+  .error-arrow { display: none; }
+}
+
+/* DIVIDER */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 1.2rem 0;
+}
+
+hr { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+
+/* Scroll styling */
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+</style>
+</head>
+<body>
+
+<div class="sidebar-layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">Français C1<br>pour germanophones</div>
+  <div class="sidebar-sub">B2 → C1 · Réseaux sociaux</div>
+
+  <div class="nav-section">Contenu</div>
+  <a class="nav-item active" href="#intro"><span class="nav-dot"></span>Introduction</a>
+  <a class="nav-item" href="#texte"><span class="nav-dot"></span>Texte & compréhension</a>
+  <a class="nav-item" href="#vocab"><span class="nav-dot"></span>Vocabulaire C1</a>
+  <a class="nav-item" href="#erreurs-de"><span class="nav-dot"></span>Erreurs typiques DE→FR</a>
+  <a class="nav-item" href="#grammaire"><span class="nav-dot"></span>Conditionnel passé</a>
+  <a class="nav-item" href="#impersonnel"><span class="nav-dot"></span>Impersonnel & regret</a>
+  <a class="nav-item" href="#ecriture"><span class="nav-dot"></span>Production écrite</a>
+  <a class="nav-item" href="#assistant"><span class="nav-dot"></span>Tuteur IA</a>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span>Progression</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+<!-- PAGE HEADER -->
+<div class="page-header" id="intro">
+  <div class="level-badges">
+    <span class="badge badge-b2">Votre niveau : B2</span>
+    <span class="badge badge-c1">Objectif : C1</span>
+    <span class="badge badge-de">Germanophone 🇨🇭</span>
+  </div>
+  <h1>Les réseaux sociaux :<br>lien ou illusion ?</h1>
+  <p>Ce module cible les erreurs que font spécifiquement les apprenants germanophones francophones suisses au passage B2→C1. Grammaire, vocabulaire, production écrite et tuteur IA intégré.</p>
+</div>
+
+<!-- SECTION 1 : TEXTE -->
+<div class="section" id="texte">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">Compréhension écrite — Le paradoxe de l'hyperconnexion</div>
+    <span class="badge badge-b2">B2→C1</span>
+  </div>
+  <div class="section-body">
+    <div class="texte-passage">
+      <p>À l'ère du numérique, les réseaux sociaux font désormais partie intégrante de notre quotidien. Ils ont bouleversé nos façons de communiquer, de travailler et même de ressentir les liens affectifs. D'un côté, ils abolissent les distances : un étudiant à Zurich peut dialoguer en temps réel avec sa famille à Lausanne ou à l'autre bout du monde. Des communautés de passionnés se créent autour d'intérêts communs, et l'information circule à une vitesse inédite.</p>
+      <p>Cependant, les chercheurs en psychologie sociale mettent en garde contre une illusion : cette <strong>proximité apparente</strong> cache souvent une solitude paradoxale. Passer plus de quatre heures par jour sur les plateformes peut <strong>nuire à la qualité du sommeil, perturber la concentration et renforcer un sentiment d'isolement</strong>. Le mécanisme est bien connu : la comparaison sociale constante – via les vies « parfaites » affichées sur Instagram ou TikTok – <strong>affecte la confiance en soi</strong>, en particulier chez les adolescents. Par ailleurs, l'algorithme enferme chaque utilisateur dans une <em>bulle filtrante</em>, réduisant l'exposition à la diversité des points de vue.</p>
+      <p>D'un autre côté, <strong>il serait injuste de diaboliser</strong> ces outils. Pendant les confinements, les réseaux ont permis de lutter contre l'isolement forcé. Ils favorisent l'apprentissage, la créativité et l'engagement citoyen. Sans eux, beaucoup d'initiatives solidaires n'auraient jamais vu le jour.</p>
+      <p>Plutôt qu'une interdiction radicale, de nombreux experts préconisent d'<strong>encadrer</strong> l'usage et d'investir massivement dans l'<strong>éducation numérique</strong>. <strong>Il aurait fallu éduquer bien plus tôt</strong> aux risques d'addiction comportementale. Les réseaux sociaux restent des outils : leur impact dépend de l'usage que nous en faisons.</p>
+    </div>
+
+    <div class="alert alert-gold">
+      <strong>Stratégie de lecture C1</strong>
+      Au niveau C1, repérez les <em>connecteurs logiques</em> (cependant, d'un autre côté, par ailleurs) et les structures <em>argumentatives</em> (il serait injuste de, plutôt que). Ils structurent le raisonnement — et vous devrez les réutiliser à l'écrit.
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-q">
+        <label>1. Pourquoi l'auteur parle-t-il de « proximité apparente » ? <span class="level-tag badge-b2">B2</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Warum spricht der Autor von „scheinbarer Nähe"? Was steckt hinter diesem Widerspruch?</em></div>
+        <input type="text" placeholder="Expliquez avec vos propres mots...">
+      </div>
+      <div class="exercise-q">
+        <label>2. Nommez trois effets négatifs cités dans le texte. <span class="level-tag badge-b2">B2</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Nennen Sie drei negative Auswirkungen, die im Text erwähnt werden.</em></div>
+        <input type="text" placeholder="1)  2)  3) ...">
+      </div>
+      <div class="exercise-q">
+        <label>3. Reformulez la thèse finale de l'auteur en une phrase (sans copier le texte). <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Formulieren Sie die Hauptthese des Autors in einem eigenen Satz um (nicht kopieren!).</em></div>
+        <input type="text" placeholder="Selon l'auteur, l'enjeu ne réside pas dans...">
+      </div>
+      <div class="exercise-q">
+        <label>4. Quelle nuance l'auteur apporte-t-il en mentionnant les confinements ? Quel procédé argumentatif utilise-t-il ? <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Welches rhetorische Mittel setzt der Autor ein, wenn er die Lockdowns erwähnt? (Hinweis: Einräumung / Konzession)</em></div>
+        <input type="text" placeholder="Il utilise une concession / un contre-argument pour...">
+      </div>
+      <button class="btn-check" onclick="toggleAnswer('ans-compre')">Voir les pistes de correction</button>
+      <div class="answer-panel" id="ans-compre">
+        <div class="correct">1.</div> On a l'impression d'être proches, mais les échanges manquent de profondeur ; l'algorithme crée des bulles qui isolent davantage.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Man glaubt, nah beieinander zu sein, doch die Austausche bleiben oberflächlich — und der Algorithmus verstärkt die Isolation.</div>
+        <div class="correct" style="margin-top:0.6rem;">2.</div> Nuire au sommeil · perturber la concentration · renforcer l'isolement · affecter la confiance en soi (au choix).
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Den Schlaf beeinträchtigen · die Konzentration stören · das Isolation verstärken · das Selbstvertrauen schwächen</div>
+        <div class="correct" style="margin-top:0.6rem;">3.</div> Selon l'auteur, l'enjeu n'est pas d'interdire les réseaux, mais d'apprendre à en faire un usage réfléchi grâce à l'éducation numérique.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Es geht nicht darum, soziale Netzwerke zu verbieten, sondern einen bewussten Umgang damit durch digitale Bildung zu fördern.</div>
+        <div class="correct" style="margin-top:0.6rem;">4.</div> Il introduit une concession (concessio) : il reconnaît un avantage réel pour renforcer la crédibilité de son raisonnement avant de revenir à sa thèse principale.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Er verwendet eine Konzession (Einräumung): Er räumt einen echten Vorteil ein, um glaubwürdiger zu wirken, bevor er zur Hauptthese zurückkehrt.</div>
+        <div class="why"><strong>Conseil C1 :</strong> dans votre production écrite, utilisez le même procédé : accordez un point à l'adversaire avant de défendre votre position. C'est une marque d'argumentation nuancée attendue au C1.<br><span style="color:#5b21b6; font-size:0.8rem;">🇩🇪 <em>Räumen Sie in Ihrem Aufsatz einen Punkt der Gegenseite ein — das zeigt argumentative Reife auf C1-Niveau.</em></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2 : VOCABULAIRE -->
+<div class="section" id="vocab">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">Vocabulaire C1 — Reformulation & registre soutenu</div>
+    <span class="badge badge-c1">C1</span>
+  </div>
+  <div class="section-body">
+    <div class="alert alert-info">
+      <strong>Exercice</strong>
+      Cliquez sur chaque carte pour révéler la traduction allemande et vérifier votre compréhension. Puis utilisez ces mots dans la production écrite.
+    </div>
+
+    <div class="vocab-grid">
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">nuire à (qch)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: schaden / beeinträchtigen</div>
+        <div class="vocab-ex">« Les réseaux peuvent nuire au sommeil. »</div>
+        <div class="vocab-de"><em>Konstruktion: nuire à + nom (kein Artikel) · C1 — nie „avoir un effet négatif sur"</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">diaboliser</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: verteufeln / dämonisieren</div>
+        <div class="vocab-ex">« Il serait injuste de diaboliser ces outils. »</div>
+        <div class="vocab-de"><em>Von „diable" (Teufel) · Faux ami piège · ≠ critiquer (kritisieren)</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">encadrer</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: regulieren / in Bahnen lenken</div>
+        <div class="vocab-ex">« Mieux vaut encadrer l'usage que l'interdire. »</div>
+        <div class="vocab-de"><em>≠ interdire (verbieten) · ≠ surveiller (überwachen) · idée de cadre = Rahmen</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">la bulle filtrante</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: die Filterblase</div>
+        <div class="vocab-ex">« L'algorithme enferme dans une bulle filtrante. »</div>
+        <div class="vocab-de"><em>Terme clé du discours numérique — à mémoriser absolument · synonyme : chambre d'écho = Echokammer</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">préconiser</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: empfehlen / befürworten</div>
+        <div class="vocab-ex">« Les experts préconisent l'éducation numérique. »</div>
+        <div class="vocab-de"><em>Plus soutenu que „recommander" · toujours suivi d'un nom ou de + inf.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">paradoxal(e)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: paradox / widersprüchlich</div>
+        <div class="vocab-ex">« Une solitude paradoxale. »</div>
+        <div class="vocab-de"><em>Adverbe : paradoxalement = paradoxerweise · souvent utilisé en ouverture d'argumentation</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">l'engagement citoyen</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: zivilgesellschaftl. Engagement</div>
+        <div class="vocab-ex">« Les réseaux favorisent l'engagement citoyen. »</div>
+        <div class="vocab-de"><em>Thème politique courant · synonymes : la mobilisation collective, l'implication civique</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">inédit(e)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: beispiellos / noch nie dagewesen</div>
+        <div class="vocab-ex">« Une vitesse de diffusion inédite. »</div>
+        <div class="vocab-de"><em>≠ nouveau (neu) — connotation bien plus forte · quasi-synonyme : sans précédent</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">susciter (qch)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: hervorrufen / auslösen / wecken</div>
+        <div class="vocab-ex">« Les réseaux suscitent des débats passionnés. »</div>
+        <div class="vocab-de"><em>≠ provoquer (klingt negativer) · très utile : susciter l'intérêt / des craintes / des tensions</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">mettre en garde (contre)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: warnen (vor) / mahnen</div>
+        <div class="vocab-ex">« Les chercheurs mettent en garde contre les dérives. »</div>
+        <div class="vocab-de"><em>Structure: mettre qn en garde contre qch · toujours suivi de „contre"</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">entraver</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: behindern / hemmen / erschweren</div>
+        <div class="vocab-ex">« La désinformation entrave le débat démocratique. »</div>
+        <div class="vocab-de"><em>Registre soutenu · ≠ bloquer (blockieren, plus brutal) · synonyme: freiner</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">la désinformation</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: die Desinformation / Falschinformation</div>
+        <div class="vocab-ex">« La désinformation se propage rapidement en ligne. »</div>
+        <div class="vocab-de"><em>≠ mésinformation (Fehlinformation, non intentionnel) · la désinformation est délibérée</em></div>
+        <div class="vocab-hint">➜ Cliquer pour notes avancées</div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem; color:var(--ink-soft);">Reformulation soutenue</h3>
+    <p style="font-size:0.82rem; color:var(--ink-muted); margin-bottom:1rem;">Remplacez les mots entre parenthèses par le terme C1 le plus précis. Plusieurs exercices sont groupés par type.</p>
+    <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:1rem;">🇩🇪 <em>Ersetzen Sie den eingeklammerten Ausdruck durch den treffendsten C1-Begriff aus den Karten oben. Die deutsche Übersetzung steht in eckigen Klammern als Hilfe.</em></div>
+
+    <div class="exercise-q">
+      <label style="font-weight:700; color:var(--ink); font-size:0.88rem;">Partie A — Verbes d'action</label>
+      <div style="display:grid; gap:0.6rem; margin-top:0.6rem;">
+        <input type="text" placeholder='1. Les algorithmes peuvent (avoir un effet négatif sur) [beeinträchtigen] la santé mentale. → Les algorithmes peuvent ___ la santé mentale.'>
+        <input type="text" placeholder='2. La désinformation (freine / complique) [hemmt] le débat démocratique. → La désinformation ___ le débat démocratique.'>
+        <input type="text" placeholder='3. Ces images (provoquent / éveillent) [wecken] un sentiment de jalousie. → Ces images ___ un sentiment de jalousie.'>
+        <input type="text" placeholder='4. Les spécialistes (avertissent) [warnen vor] les risques d'addiction. → Les spécialistes ___ contre les risques d'addiction.'>
+      </div>
+    </div>
+
+    <div class="exercise-q" style="margin-top:0.8rem;">
+      <label style="font-weight:700; color:var(--ink); font-size:0.88rem;">Partie B — Noms & adjectifs</label>
+      <div style="display:grid; gap:0.6rem; margin-top:0.6rem;">
+        <input type="text" placeholder='5. Chaque utilisateur est enfermé dans sa (zone d'information personnalisée) [Filterblase]. → ... dans sa ___.'>
+        <input type="text" placeholder='6. C'est un phénomène (jamais vu auparavant) [beispiellos] dans l'histoire des médias. → C'est un phénomène ___.'>
+        <input type="text" placeholder='7. Cette situation est (contradictoire, pleine de contradictions) [widersprüchlich] : plus connectés, plus seuls. → Cette situation est ___.'>
+        <input type="text" placeholder='8. La diffusion de fausses nouvelles délibérées s'appelle la (fausse information intentionnelle) [Desinformation]. → ... s'appelle la ___.'>
+      </div>
+    </div>
+
+    <div class="exercise-q" style="margin-top:0.8rem;">
+      <label style="font-weight:700; color:var(--ink); font-size:0.88rem;">Partie C — Registre soutenu (B2 → C1)</label>
+      <div style="display:grid; gap:0.6rem; margin-top:0.6rem;">
+        <input type="text" placeholder='9. « Il ne faut pas voir les réseaux comme totalement négatifs. » → C1 : « Il serait injuste de ___ les réseaux. »'>
+        <input type="text" placeholder='10. « Les experts disent qu'il faut mieux contrôler les algorithmes. » → C1 : « Les experts ___ un meilleur encadrement des algorithmes. »'>
+        <input type="text" placeholder='11. « On voit une vitesse de diffusion jamais vue. » → C1 : « On observe une vitesse de diffusion ___ . »'>
+      </div>
+    </div>
+
+    <button class="btn-check" onclick="toggleAnswer('ans-vocab')">Voir corrigé complet</button>
+    <div class="answer-panel" id="ans-vocab">
+      <div style="font-weight:600; color:var(--accent-dark); margin-bottom:0.6rem;">Partie A — Verbes d'action</div>
+      <div class="correct">1.</div> Les algorithmes peuvent <em>nuire à</em> la santé mentale.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>nuire à</em> = beeinträchtigen/schaden · Achtung: nuire <strong>à</strong> + nom (nie „nuire" allein)</div>
+      <div class="correct" style="margin-top:0.5rem;">2.</div> La désinformation <em>entrave</em> le débat démocratique.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>entraver</em> = hemmen/behindern · feiner als „bloquer" oder „empêcher"</div>
+      <div class="correct" style="margin-top:0.5rem;">3.</div> Ces images <em>suscitent</em> un sentiment de jalousie.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>susciter</em> = wecken/auslösen · neutraler als „provoquer" (das klingt aggressiver)</div>
+      <div class="correct" style="margin-top:0.5rem;">4.</div> Les spécialistes <em>mettent en garde</em> contre les risques d'addiction.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>mettre en garde contre</em> = warnen vor · Struktur fest: mettre qn en garde <strong>contre</strong> qch</div>
+
+      <div style="font-weight:600; color:var(--accent-dark); margin-top:1rem; margin-bottom:0.6rem;">Partie B — Noms & adjectifs</div>
+      <div class="correct">5.</div> … dans sa <em>bulle filtrante</em>.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 die Filterblase · Synonyme: chambre d'écho = Echokammer</div>
+      <div class="correct" style="margin-top:0.5rem;">6.</div> C'est un phénomène <em>inédit</em> dans l'histoire des médias.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 beispiellos / noch nie dagewesen · viel stärker als „nouveau" oder „récent"</div>
+      <div class="correct" style="margin-top:0.5rem;">7.</div> Cette situation est <em>paradoxale</em> : plus connectés, plus seuls.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 paradox / widersprüchlich · Adverb: <em>paradoxalement</em> = paradoxerweise</div>
+      <div class="correct" style="margin-top:0.5rem;">8.</div> … s'appelle la <em>désinformation</em>.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 die Desinformation = absichtliche Falschinformation · ≠ <em>mésinformation</em> (unabsichtlich)</div>
+
+      <div style="font-weight:600; color:var(--accent-dark); margin-top:1rem; margin-bottom:0.6rem;">Partie C — Registre soutenu</div>
+      <div class="correct">9.</div> « Il serait injuste de <em>diaboliser</em> les réseaux. »
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 verteufeln · viel gehobener als „critiquer" oder „rejeter"</div>
+      <div class="correct" style="margin-top:0.5rem;">10.</div> « Les experts <em>préconisent</em> un meilleur encadrement des algorithmes. »
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 befürworten/empfehlen · gehobener als „recommander" · Konstruktion: préconiser + nom ou de + inf.</div>
+      <div class="correct" style="margin-top:0.5rem;">11.</div> « On observe une vitesse de diffusion <em>inédite</em>. »
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 beispiellos · in Kombination mit „sans précédent" noch stärker: „une vitesse inédite, sans précédent"</div>
+
+      <div class="why"><strong>Astuce C1 :</strong> apprenez ces mots avec leur construction (nuire <strong>à</strong>, mettre en garde <strong>contre</strong>, préconiser <strong>de</strong>) — les correcteurs du DALF sanctionnent les mauvaises prépositions autant que les mauvais mots.<br><span style="color:#5b21b6; font-size:0.8rem;">🇩🇪 <em>Lernen Sie jedes Wort mit seiner Präposition — die Korrektoren bestrafen falsche Präpositionen genauso wie falsche Wörter.</em></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3 : ERREURS TYPIQUES GERMANOPHONES -->
+<div class="section" id="erreurs-de">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">Erreurs typiques des germanophones — Interférences DE→FR</div>
+    <span class="badge badge-de">Spécifique 🇨🇭</span>
+  </div>
+  <div class="section-body">
+    <div class="alert alert-warn">
+      <strong>Pourquoi cette section ?</strong>
+      Certaines erreurs sont communes à tous les apprenants ; d'autres sont spécifiques aux germanophones. Ce sont ces dernières que le jury du C1 repère immédiatement.
+    </div>
+
+    <div class="germanism-box">
+      <span class="g-label">Germanisme 1 — Calque de structure</span>
+      <p>❌ « Je <em>mache</em> une Pause numérique. » / « Il faut <em>aufhören</em> mit den Réseaux. »</p>
+      <p class="expl">→ Même en français, l'influence du dialecte suisse-allemand peut générer des calques. Vérifiez que vos métaphores restent françaises.</p>
+    </div>
+
+    <div class="germanism-box">
+      <span class="g-label">Germanisme 2 — Faux pluriels et articles</span>
+      <p>❌ « <em>Les</em> informations est importante. » (accord singulier après pluriel)</p>
+      <p>❌ « Il parle <em>de</em> les jeunes » (pas de contraction de + les = des)</p>
+      <p class="expl">→ En allemand, la contraction von + den n'a pas d'équivalent automatique. En français : de + les = <strong>des</strong> / de + le = <strong>du</strong>.</p>
+    </div>
+
+    <div class="germanism-box">
+      <span class="g-label">Germanisme 3 — Ordre des mots après négation</span>
+      <p>❌ « Elle ne veut pas <em>les réseaux utiliser</em>. »</p>
+      <p class="expl">→ L'infinitif allemand se place en fin de groupe (SOV). En français, l'ordre est SVO : « Elle ne veut pas <strong>utiliser les réseaux</strong>. »</p>
+    </div>
+
+    <div class="germanism-box">
+      <span class="g-label">Germanisme 4 — Subjonctif oublié</span>
+      <p>❌ « Bien qu'il <em>est</em> utile, il crée des problèmes. »</p>
+      <p class="expl">→ Après <em>bien que, quoique, pour que, à condition que</em> → subjonctif obligatoire : « Bien qu'il <strong>soit</strong> utile... » En allemand, obwohl + Indikativ est correct — pas en français !</p>
+    </div>
+
+    <div class="germanism-box">
+      <span class="g-label">Germanisme 5 — « Werden » traduit par « devenir » (faux ami)</span>
+      <p>❌ « Les réseaux <em>deviendront</em> utilisés par tout le monde. » (traduction de <em>werden</em> + Partizip)</p>
+      <p class="expl">→ Le passif futur en français = <strong>seront utilisés</strong>. « Devenir » signifie Werden seulement dans le sens de « se transformer en » (Er wird Arzt = Il <strong>devient</strong> médecin).</p>
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:1rem; color:var(--ink-soft);">Exercice — Corrigez les germanismes</h3>
+
+    <div class="error-item">
+      <div><span class="error-wrong">❌ « Il faut que les jeunes comprennent les risques. »</span><div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.3rem;">Indice : mode verbal après <em>il faut que</em></div><div style="font-size:0.75rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>Welchen Modus braucht man nach „il faut que"?</em></div></div>
+      <div class="error-arrow">→</div>
+      <div class="error-input"><input type="text" placeholder="Correction..."></div>
+    </div>
+
+    <div class="error-item">
+      <div><span class="error-wrong">❌ « Bien que les réseaux sont utiles, ils posent des risques. »</span><div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.3rem;">Indice : conjonction de concession</div><div style="font-size:0.75rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>„obwohl" + Indikativ ist auf Deutsch korrekt — auf Französisch nicht!</em></div></div>
+      <div class="error-arrow">→</div>
+      <div class="error-input"><input type="text" placeholder="Correction..."></div>
+    </div>
+
+    <div class="error-item">
+      <div><span class="error-wrong">❌ « Elle ne peut pas les réseaux éviter complètement. »</span><div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.3rem;">Indice : ordre SVO</div><div style="font-size:0.75rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>Im Deutschen: SOV (Verb am Ende). Im Französischen: SVO — das Verb kommt direkt nach dem Subjekt/Modal.</em></div></div>
+      <div class="error-arrow">→</div>
+      <div class="error-input"><input type="text" placeholder="Correction..."></div>
+    </div>
+
+    <div class="error-item">
+      <div><span class="error-wrong">❌ « Les applis deviendront téléchargées des millions de fois. »</span><div style="font-size:0.78rem; color:var(--ink-muted); margin-top:0.3rem;">Indice : passif futur</div><div style="font-size:0.75rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>„werden + Partizip" (Passiv Futur) ≠ „devenir" — das ist ein Faux ami!</em></div></div>
+      <div class="error-arrow">→</div>
+      <div class="error-input"><input type="text" placeholder="Correction..."></div>
+    </div>
+
+    <button class="btn-check" onclick="toggleAnswer('ans-germ')">Voir les corrections</button>
+    <div class="answer-panel" id="ans-germ">
+      <div class="correct">1.</div> « Il faut que les jeunes <em>comprennent</em> les risques. » → déjà correct ! <em>comprennent</em> est bien au subjonctif présent. ✓
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>comprennent</em> = Subjonctif présent von <em>comprendre</em> · deutsch: „dass die Jugendlichen die Risiken verstehen"</div>
+      <div class="correct" style="margin-top:0.6rem;">2.</div> « Bien que les réseaux <strong>soient</strong> utiles, ils posent des risques. » — subjonctif obligatoire après <em>bien que</em>.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>soient</em> = Subjonctif von <em>être</em> · obwohl + Subjonctif (≠ Deutsch: obwohl + Indikativ)</div>
+      <div class="correct" style="margin-top:0.6rem;">3.</div> « Elle ne peut pas <strong>éviter complètement les réseaux</strong>. » — ordre SVO : verbe après le modal, COD après le verbe.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Deutsch: SOV → „Sie kann die Netzwerke nicht völlig vermeiden" · Französisch: SVO → Verb direkt nach dem Modal</div>
+      <div class="correct" style="margin-top:0.6rem;">4.</div> « Les applis <strong>seront téléchargées</strong> des millions de fois. » — passif futur = être (futur) + participe passé.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Passiv Futur: <em>werden + Partizip</em> (DE) = <em>être (futur) + participe passé</em> (FR) · <em>devenir</em> = „werden" nur im Sinne von „sich verwandeln in"</div>
+      <div class="why"><strong>Moyen mnémotechnique :</strong> bien que / quoique / pour que / à condition que = subjonctif. Toujours. Aucune exception.<br><span style="color:#5b21b6; font-size:0.8rem;">🇩🇪 <em>Merksatz: Diese Konjunktionen verlangen IMMER den Subjonctif — anders als im Deutschen!</em></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4 : GRAMMAIRE -->
+<div class="section" id="grammaire">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">Grammaire C1 — Conditionnel passé : regret & hypothèse</div>
+    <span class="badge badge-c1">C1 essentiel</span>
+  </div>
+  <div class="section-body">
+    <div class="alert alert-warn">
+      <strong>La règle des règles — Si + aurait n'existe pas</strong>
+      C'est l'erreur la plus sanctionnée au DALF C1. Elle est particulièrement fréquente chez les germanophones car en allemand, <em>wenn er gekommen wäre</em> utilise un seul mode (Konjunktiv II) là où le français en exige deux.
+      <div style="margin-top:0.8rem; display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.85rem;">
+        <div style="background:rgba(182,69,27,0.08); padding:0.7rem; border-radius:6px;">❌ Si j'<strong>aurais su</strong>, j'aurais agi.</div>
+        <div style="background:rgba(45,106,79,0.1); padding:0.7rem; border-radius:6px;">✅ Si j'<strong>avais su</strong>, j'aurais agi.</div>
+      </div>
+      <div style="margin-top:0.5rem; font-size:0.83rem;">La proposition en <em>si</em> → <strong>plus-que-parfait</strong> · La principale → <strong>conditionnel passé</strong></div>
+      <div style="margin-top:0.6rem; background:rgba(91,33,182,0.06); padding:0.7rem; border-radius:6px; font-size:0.82rem; color:#5b21b6;">
+        🇩🇪 <strong>Vergleich Deutsch–Französisch :</strong><br>
+        DE: <em>Wenn ich es gewusst hätte</em> (Konj. II Plusquamperfekt) → <em>hätte ich gehandelt</em> (Konj. II)<br>
+        FR: <em>Si j'avais su</em> (plus-que-parfait = PQP) → <em>j'aurais agi</em> (conditionnel passé)<br>
+        <strong>Fehler :</strong> Im Deutschen steht in beiden Teilen der Konjunktiv II — viele übertragen das auf Französisch und schreiben „si + aurait" → falsch!
+      </div>
+    </div>
+
+    <div class="alert alert-gold">
+      <strong>Construction complète</strong>
+      Si + [plus-que-parfait] , [conditionnel passé]<br>
+      <em>Si les jeunes <strong>avaient été éduqués</strong> (PQP), ils <strong>n'auraient pas développé</strong> (CP) ces dépendances.</em>
+      <div style="margin-top:0.5rem; font-size:0.82rem; color:#5b21b6;">🇩🇪 <em>Wenn die Jugendlichen aufgeklärt worden wären (PQP), hätten sie diese Sucht nicht entwickelt (Kondit. passé).</em></div>
+    </div>
+
+    <div class="exercise-block">
+      <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:1rem; color:var(--ink-soft);">Exercice 1 — Corrigez les erreurs (si + aurait)</h3>
+
+      <div class="error-item">
+        <div><span class="error-wrong">❌ « Si les jeunes auraient été éduqués, ils ne tomberaient pas dans les pièges. »</span><div style="font-size:0.75rem; color:#5b21b6; margin-top:0.3rem;">🇩🇪 <em>„auraient été" klingt wie Konjunktiv II, aber nach „si" braucht man PQP: avaient été</em></div></div>
+        <div class="error-arrow">→</div>
+        <div class="error-input"><input type="text" placeholder="Si les jeunes..."></div>
+      </div>
+
+      <div class="error-item">
+        <div><span class="error-wrong">❌ « Si on aurait régulé plus tôt, on aurait moins d'addiction. »</span><div style="font-size:0.75rem; color:#5b21b6; margin-top:0.3rem;">🇩🇪 <em>Nach „si" → PQP (avait régulé), nicht Konditionnel (aurait régulé)</em></div></div>
+        <div class="error-arrow">→</div>
+        <div class="error-input"><input type="text" placeholder="Si on..."></div>
+      </div>
+
+      <div class="error-item">
+        <div><span class="error-wrong">❌ « Si j'aurais su l'impact des réseaux, j'aurais changé mes habitudes. »</span><div style="font-size:0.75rem; color:#5b21b6; margin-top:0.3rem;">🇩🇪 <em>Klassischer Fehler: beide Teile klingen nach Konjunktiv II. Erster Teil → PQP: avais su</em></div></div>
+        <div class="error-arrow">→</div>
+        <div class="error-input"><input type="text" placeholder="Si j'..."></div>
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-cond1')">Voir corrections + explications</button>
+      <div class="answer-panel" id="ans-cond1">
+        <div class="correct">1.</div> Si les jeunes <em>avaient été éduqués</em>, ils ne tomberaient pas dans les pièges.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>avaient été éduqués</em> = PQP Passiv · Hauptsatz: Konditionnel présent (Wirkung noch möglich in der Gegenwart)</div>
+        <div class="why"><strong>Analyse :</strong> <em>avaient été éduqués</em> = plus-que-parfait passif. La principale garde le conditionnel présent ici car l'effet est encore possible dans le présent.</div>
+        <div class="correct" style="margin-top:0.6rem;">2.</div> Si on <em>avait régulé</em> plus tôt, on aurait moins d'addiction.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>avait régulé</em> = PQP · Hauptsatz: Konditionnel présent (aktueller hypothetischer Zustand)</div>
+        <div class="why"><strong>Analyse :</strong> <em>avait régulé</em> = PQP. Principale au conditionnel présent (état actuel hypothétique).</div>
+        <div class="correct" style="margin-top:0.6rem;">3.</div> Si j'<em>avais su</em> l'impact des réseaux, j'aurais changé mes habitudes.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>avais su</em> = PQP · <em>aurais changé</em> = Konditionnel passé · beide Teile vollständig in der Vergangenheit</div>
+        <div class="why"><strong>Analyse :</strong> Les deux parties au passé → PQP + conditionnel passé. Hypothèse entièrement révolue.</div>
+      </div>
+
+      <div class="divider"></div>
+      <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:1rem; color:var(--ink-soft);">Exercice 2 — Construire des phrases avec conditionnel passé (regret)</h3>
+
+      <div class="exercise-q">
+        <label>Transformez en exprimant un regret passé :<br>« Les plateformes n'ont pas limité l'accès des mineurs. » <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Drücken Sie Bedauern aus: „Wenn die Plattformen den Zugang beschränkt hätten, hätte man..."</em></div>
+        <input type="text" placeholder="Si les plateformes avaient limité..., on aurait...">
+      </div>
+
+      <div class="exercise-q">
+        <label>Transformez en exprimant un regret passé :<br>« Les parents n'ont pas suffisamment expliqué les dangers. » <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>„Wenn die Eltern die Gefahren ausreichend erklärt hätten, hätten die Jugendlichen..."</em></div>
+        <input type="text" placeholder="Si les parents avaient...">
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-cond2')">Voir exemples de réponse</button>
+      <div class="answer-panel" id="ans-cond2">
+        <div class="correct">1.</div> Si les plateformes <em>avaient limité</em> l'accès des mineurs, on <em>aurait évité</em> de nombreuses formes de harcèlement en ligne.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Wenn die Plattformen den Zugang Minderjähriger eingeschränkt hätten, hätte man viele Formen von Online-Mobbing vermieden.</div>
+        <div class="correct" style="margin-top:0.6rem;">2.</div> Si les parents <em>avaient suffisamment expliqué</em> les dangers, les adolescents <em>auraient développé</em> une meilleure résistance aux mécanismes d'addiction.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Wenn die Eltern die Gefahren genügend erklärt hätten, hätten Jugendliche eine bessere Widerstandsfähigkeit gegen Suchtmechanismen entwickelt.</div>
+        <div class="why"><strong>Remarque stylistique C1 :</strong> variez la longueur de la principale. Une phrase courte après une longue proposition en <em>si</em> donne plus d'impact rhétorique.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5 : IMPERSONNEL -->
+<div class="section" id="impersonnel">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">Structures impersonnelles & regret passé</div>
+    <span class="badge badge-c1">C1</span>
+  </div>
+  <div class="section-body">
+    <div class="alert alert-info">
+      <strong>Structures à maîtriser</strong>
+      Les structures impersonnelles permettent d'exprimer un jugement sans s'engager personnellement — très attendu dans l'argumentation académique au C1.
+    </div>
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:1rem 0;">
+      <div style="background:var(--surface2); border-radius:10px; padding:1rem;">
+        <div style="font-weight:600; font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.5rem;">+ INFINITIF</div>
+        <div style="font-size:0.87rem; line-height:1.6;">
+          Il <strong>aurait fallu</strong> éduquer...<br>
+          Il <strong>aurait été nécessaire de</strong> limiter...<br>
+          Il <strong>aurait mieux valu</strong> réguler...
+        </div>
+      </div>
+      <div style="background:var(--surface2); border-radius:10px; padding:1rem;">
+        <div style="font-weight:600; font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.5rem;">+ QUE + SUBJONCTIF</div>
+        <div style="font-size:0.87rem; line-height:1.6;">
+          Il <strong>aurait fallu que</strong> les parents <em>agissent</em>...<br>
+          Il <strong>aurait été essentiel que</strong> l'État <em>intervînt</em>...<br>
+          Il <strong>aurait suffi que</strong> l'on <em>sensibilisât</em>...
+        </div>
+      </div>
+    </div>
+
+    <div class="germanism-box">
+      <span class="g-label">Note pour germanophones</span>
+      <p>En allemand, <em>Es wäre nötig gewesen, zu + Infinitiv</em> ou <em>dass + Konjunktiv</em> — les deux constructions existent aussi. La différence : en français, le subjonctif imparfait (qu'il <em>fît</em>) est très soutenu et peut être remplacé par le présent (qu'il <em>fasse</em>) au C1 sans pénalité.</p>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-q">
+        <label>Reformulez avec « il aurait fallu » ou « il aurait été nécessaire de/que » :<br>« On n'a pas assez limité le temps d'écran des adolescents. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Umformulierung mit „Es wäre nötig gewesen, ... zu + Inf." oder „Es hätte sein müssen, dass..."</em></div>
+        <input type="text" placeholder="Il aurait fallu...">
+      </div>
+      <div class="exercise-q">
+        <label>Reformulez :<br>« Les gouvernements n'ont pas agi assez tôt face aux GAFAM. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>„Es wäre notwendig gewesen, dass die Regierungen... (Subjonctif!)"</em></div>
+        <input type="text" placeholder="Il aurait été nécessaire que...">
+      </div>
+      <div class="exercise-q">
+        <label>Reformulez (variante avec « mieux valoir ») :<br>« On aurait dû prioriser l'éducation au numérique dès l'école primaire. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>„Il aurait mieux valu" = Es wäre besser gewesen / man hätte besser daran getan, zu...</em></div>
+        <input type="text" placeholder="Il aurait mieux valu...">
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-impers')">Voir pistes de correction</button>
+      <div class="answer-panel" id="ans-impers">
+        <div class="correct">1.</div> Il aurait fallu mieux limiter le temps d'écran des adolescents. / Il aurait fallu que l'on limitât (ou <em>limite</em>) davantage le temps d'écran.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Es wäre nötig gewesen, die Bildschirmzeit Jugendlicher stärker einzuschränken.</div>
+        <div class="correct" style="margin-top:0.6rem;">2.</div> Il aurait été nécessaire que les gouvernements agissent beaucoup plus tôt face aux GAFAM.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>agissent</em> = Subjonctif présent von <em>agir</em> · Es wäre notwendig gewesen, dass die Regierungen viel früher gegenüber den GAFAM handelten.</div>
+        <div class="correct" style="margin-top:0.6rem;">3.</div> Il aurait mieux valu prioriser l'éducation au numérique dès l'école primaire.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Es wäre besser gewesen, die digitale Bildung schon in der Grundschule zu priorisieren.</div>
+        <div class="why"><strong>Erreur fréquente au C1 :</strong> ne pas mettre le subjonctif après <em>il aurait fallu que</em>. Le verbe dans la subordonnée doit être au subjonctif, pas au conditionnel.<br><span style="color:#5b21b6; font-size:0.8rem;">🇩🇪 <em>Häufiger Fehler: Nach „il aurait fallu que" steht IMMER der Subjonctif, nicht der Konditionnel!</em></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 6 : PRODUCTION ÉCRITE -->
+<div class="section" id="ecriture">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-title">Production écrite — Texte argumentatif C1</div>
+    <span class="badge badge-c1">C1 · 200–250 mots</span>
+  </div>
+  <div class="section-body">
+    <div class="alert alert-gold">
+      <strong>Sujet</strong>
+      « Les réseaux sociaux constituent-ils un outil d'émancipation ou un instrument de contrôle social ? Argumentez en nuançant votre position. »
+      <div style="margin-top:0.5rem; font-size:0.82rem; color:#5b21b6;">🇩🇪 <em>„Sind soziale Netzwerke ein Werkzeug der Emanzipation oder ein Instrument sozialer Kontrolle? Argumentieren Sie mit Nuancen."</em></div>
+    </div>
+
+    <p style="font-size:0.85rem; color:var(--ink-muted); margin-bottom:1rem;">Cochez chaque élément au fur et à mesure que vous l'intégrez dans votre texte :</p>
+
+    <div class="writing-checklist" id="checklist">
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 2 connecteurs logiques <span style="font-size:0.65rem; color:#5b21b6;">(Konnektoren)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> bien que + subjonctif <span style="font-size:0.65rem; color:#5b21b6;">(obwohl + Subj.)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> conditionnel passé <span style="font-size:0.65rem; color:#5b21b6;">(Kondit. passé)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> il aurait fallu / il serait temps que <span style="font-size:0.65rem; color:#5b21b6;">(es wäre nötig gewesen)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 1 terme C1 du vocabulaire <span style="font-size:0.65rem; color:#5b21b6;">(nuire à, encadrer...)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> concession à l'adversaire <span style="font-size:0.65rem; color:#5b21b6;">(Einräumung)</span></span>
+    </div>
+
+    <div class="writing-zone">
+      <textarea id="essay-area" placeholder="Rédigez votre texte ici... (200–250 mots)" oninput="updateWordCount(this)"></textarea>
+    </div>
+
+    <div class="wc-bar">
+      <div class="wc-text" id="wc-text">0 / 200–250 mots</div>
+      <div class="wc-progress"><div class="wc-fill" id="wc-fill" style="width:0%"></div></div>
+    </div>
+
+    <button class="btn-check" onclick="toggleAnswer('ans-essay')">Voir un exemple de production C1</button>
+    <button class="btn-secondary" onclick="sendEssayToChat()">Faire corriger par le tuteur IA ↗</button>
+    <div class="answer-panel" id="ans-essay">
+      <div class="correct">Exemple de production C1 (215 mots)</div>
+      <div style="margin-top:0.6rem; font-style:italic; line-height:1.75; font-size:0.88rem;">
+        Les réseaux sociaux incarnent aujourd'hui une ambivalence profonde : outils d'émancipation pour certains, vecteurs de contrôle social pour d'autres. <em>Bien qu'ils aient</em> permis à des voix marginalisées de se faire entendre — comme lors des mobilisations climatiques ou des révolutions arabes —, ils ont également engendré de nouveaux mécanismes de surveillance et de conformisme social.
+        <br><br>
+        D'un côté, leur potentiel libérateur est indéniable : ils offrent aux individus la possibilité de contester le pouvoir, de s'organiser et de créer des liens par-delà les frontières. <em>En revanche</em>, les algorithmes de recommandation ne visent pas à émanciper l'utilisateur, mais à maximiser son engagement, c'est-à-dire à le maintenir captif. <em>Il aurait fallu encadrer</em> ces mécanismes dès leur apparition, au lieu d'en laisser le contrôle exclusif aux entreprises technologiques.
+        <br><br>
+        <em>Par ailleurs</em>, la notion même d'émancipation doit être questionnée : peut-on parler de liberté lorsque chaque clic est analysé, monétisé et redirigé à des fins publicitaires ou politiques ? En définitive, les réseaux sociaux ne sont ni neutres ni intrinsèquement libérateurs ; ils reflètent les rapports de force de la société qui les produit. <em>Il serait temps que</em> les États imposent une transparence algorithmique contraignante.
+      </div>
+      <div class="why"><strong>Points forts :</strong> concession initiale (bien qu'ils aient permis), 3 connecteurs, conditionnel passé (il aurait fallu), impersonnelle finale (il serait temps que), vocabulaire soutenu (vecteurs, mécanismes, contraignante).</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 7 : TUTEUR IA -->
+<div class="ai-chat-section" id="assistant">
+  <div class="ai-chat-header">
+    <div class="ai-dot"></div>
+    <div class="ai-chat-title">Tuteur IA — Posez vos questions en français</div>
+    <div class="ai-chat-sub">Propulsé par Claude</div>
+  </div>
+
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg msg-ai">
+      <div class="msg-avatar">AI</div>
+      <div class="msg-bubble">
+        Bonjour ! Je suis votre tuteur de français. Posez-moi une question sur la grammaire, le vocabulaire, ou faites-moi corriger une phrase ou un paragraphe. Je répondrai toujours en expliquant <em>pourquoi</em> — pas seulement la correction. Vous pouvez aussi écrire en allemand si vous ne savez pas comment formuler votre question en français.
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-questions">
+    <button class="quick-q" onclick="sendQuickQ('Quelle est la différence entre le conditionnel présent et le conditionnel passé ?')">Conditionnel présent vs passé</button>
+    <button class="quick-q" onclick="sendQuickQ('Pouvez-vous m\'expliquer quand utiliser le subjonctif après bien que ?')">Subjonctif après bien que</button>
+    <button class="quick-q" onclick="sendQuickQ('Quelles sont les erreurs typiques d\'un germanophone en français ?')">Erreurs germanophones</button>
+    <button class="quick-q" onclick="sendQuickQ('Donnez-moi 5 connecteurs logiques pour une argumentation C1.')">Connecteurs C1</button>
+    <button class="quick-q" onclick="sendQuickQ('Wie unterscheidet sich das Subjonctif vom Konjunktiv II auf Deutsch ?')">Subjonctif vs Konjunktiv II</button>
+  </div>
+
+  <div class="chat-input-row">
+    <input type="text" id="chat-input" placeholder="Posez une question ou soumettez une phrase à corriger..." onkeydown="if(event.key==='Enter') sendChat()">
+    <button class="btn-send" id="btn-send" onclick="sendChat()">Envoyer</button>
+  </div>
+</div>
+
+<div style="height:1px; background:var(--border); margin:0 0 1.5rem;"></div>
+<div style="font-size:0.78rem; color:var(--ink-muted); text-align:center; padding-bottom:2rem;">
+  Module B2→C1 · Réseaux sociaux · Pour apprenants germanophones · DALF C1
+</div>
+
+</main>
+</div>
+
+<script>
+// ── NAV ACTIVE STATE ──
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── TOGGLE ANSWER ──
+function toggleAnswer(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('visible');
+  updateProgress();
+}
+
+// ── VOCAB REVEAL ──
+function revealVocab(card) {
+  card.classList.toggle('revealed');
+  updateProgress();
+}
+
+// ── WORD COUNT ──
+function updateWordCount(ta) {
+  const words = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  const min = 200, max = 250;
+  const pct = Math.min(100, Math.round((words / max) * 100));
+  document.getElementById('wc-text').textContent = `${words} / 200–250 mots`;
+  const fill = document.getElementById('wc-fill');
+  fill.style.width = pct + '%';
+  fill.style.background = words >= min && words <= max ? '#2d6a4f' : words > max ? '#b5451b' : '#2d6a4f';
+}
+
+// ── CHECKLIST ──
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  el.querySelector('.checkmark').textContent = el.classList.contains('done') ? '✓' : '○';
+}
+
+// ── PROGRESS ──
+function updateProgress() {
+  const inputs = document.querySelectorAll('input[type="text"], textarea');
+  let filled = 0;
+  inputs.forEach(inp => { if (inp.value.trim().length > 5) filled++; });
+  const revealed = document.querySelectorAll('.answer-panel.visible').length;
+  const total = inputs.length + 5;
+  const pct = Math.round(((filled + revealed) / total) * 100);
+  const capped = Math.min(100, pct);
+  document.getElementById('progress-fill').style.width = capped + '%';
+  document.getElementById('progress-pct').textContent = capped + '%';
+}
+
+document.querySelectorAll('input[type="text"], textarea').forEach(inp => {
+  inp.addEventListener('input', updateProgress);
+});
+
+// ── SEND ESSAY TO CHAT ──
+function sendEssayToChat() {
+  const essay = document.getElementById('essay-area').value.trim();
+  if (!essay) {
+    alert('Rédigez d\'abord votre texte dans la zone de production écrite !');
+    return;
+  }
+  const prompt = `Voici ma production écrite pour le DALF C1. Merci de la corriger en détail : relevez les erreurs grammaticales (notamment les germanismes, le subjonctif, le conditionnel passé), évaluez le vocabulaire, la cohérence argumentative et donnez-moi un niveau estimé (B2/C1). Voici mon texte :\n\n${essay}`;
+  document.getElementById('chat-input').value = prompt;
+  document.getElementById('assistant').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => sendChat(), 300);
+}
+
+// ── QUICK QUESTIONS ──
+function sendQuickQ(text) {
+  document.getElementById('chat-input').value = text;
+  sendChat();
+}
+
+// ── AI CHAT ──
+const chatHistory = [];
+
+const SYSTEM_PROMPT = `Tu es un tuteur expert en français langue étrangère, spécialisé dans la préparation au DALF C1 pour apprenants germanophones (notamment suisses-allemands). 
+
+Tes réponses doivent :
+1. Toujours expliquer POURQUOI, pas seulement donner la correction.
+2. Quand pertinent, faire un parallèle avec l'allemand pour aider la compréhension (ex: "En allemand obwohl + Indikativ, mais en français bien que + subjonctif").
+3. Utiliser un vocabulaire accessible B2-C1 dans tes explications.
+4. Être concises mais complètes (max 150 mots sauf si une correction détaillée est demandée).
+5. Si l'utilisateur écrit en allemand, répondre en français mais indiquer brièvement en allemand le point-clé.
+6. Pour les corrections de texte : identifier d'abord les 3 erreurs les plus importantes, puis les erreurs mineures.
+7. Toujours terminer par un conseil pratique d'une ligne.
+
+Le contexte pédagogique est : réseaux sociaux / numérique / argumentation.`;
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const btn = document.getElementById('btn-send');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMsg('user', text);
+  input.value = '';
+  btn.disabled = true;
+
+  chatHistory.push({ role: 'user', content: text });
+
+  const typingId = addMsg('ai', '…', true);
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+
+    const data = await res.json();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Désolé, je n\'ai pas pu répondre.';
+
+    removeMsg(typingId);
+    const formattedReply = reply
+      .replace(/\*\*(.*?)\*\*/g, '<em>$1</em>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+    addMsg('ai', formattedReply, false, true);
+    chatHistory.push({ role: 'assistant', content: reply });
+  } catch (e) {
+    removeMsg(typingId);
+    addMsg('ai', 'Une erreur s\'est produite. Vérifiez votre connexion et réessayez.');
+  }
+
+  btn.disabled = false;
+}
+
+let msgCounter = 0;
+
+function addMsg(role, content, isTyping = false, isHtml = false) {
+  const id = 'msg-' + (++msgCounter);
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role}`;
+  div.id = id;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = role === 'ai' ? 'AI' : 'Moi';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  if (isHtml) bubble.innerHTML = content;
+  else bubble.textContent = content;
+  if (isTyping) bubble.style.opacity = '0.5';
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return id;
+}
+
+function removeMsg(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+</script>
+</body>
+</html>
