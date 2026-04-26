@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🐾 Refuge des Animaux – 动物伙伴之家 🐕 (A2 · soins & adoption)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Quicksand', system-ui, -apple-system, 'Noto Sans', sans-serif;
+            background: linear-gradient(145deg, #dfe9cf 0%, #c8e0c2 100%);
+            padding: 2rem 1rem;
+            color: #2a4d2e;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #feffef;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            padding: 2rem 2rem 2.5rem;
+            transition: all 0.2s;
+        }
+
+        h1 {
+            font-size: 2rem;
+            background: linear-gradient(120deg, #2b6e3c, #e0a82b, #c25b2e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 0.8rem;
+        }
+
+        .badge {
+            background: #e9dfb2;
+            border-radius: 40px;
+            padding: 0.2rem 1rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #4f6b2e;
+        }
+
+        .level {
+            background: #d4e6b0;
+            display: inline-block;
+            padding: 0.25rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin: 0.5rem 0 1.2rem;
+            color: #2c6b2f;
+        }
+
+        .card-lecture {
+            background: #fffff2;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin: 1.5rem 0;
+            border: 2px solid #cbe2b5;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+        }
+
+        h2 {
+            font-size: 1.7rem;
+            border-left: 10px solid #74a84a;
+            padding-left: 1rem;
+            margin: 1.8rem 0 1rem 0;
+            color: #3f6b2f;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin: 1rem 0 0.8rem;
+            color: #5f8b3c;
+            background: #eef5e4;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 2rem;
+        }
+
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #faf9ea;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            margin: 1rem 0;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .vocab-table th, .vocab-table td {
+            border-bottom: 1px solid #e6e0bc;
+            padding: 0.8rem 0.8rem;
+            text-align: left;
+        }
+
+        .vocab-table th {
+            background: #e2f0cf;
+            font-weight: 700;
+            color: #3a5a23;
+        }
+
+        .flou {
+            background-color: #f3e3b5;
+            border-radius: 40px;
+            padding: 0.2rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-block;
+            font-weight: 500;
+        }
+
+        .flou:hover {
+            background-color: #e2cd93;
+        }
+
+        .time-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .time-card {
+            background: #f7fcec;
+            border-radius: 1.5rem;
+            padding: 0.8rem 1rem;
+            flex: 1;
+            min-width: 130px;
+            text-align: center;
+            border-top: 6px solid;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.02);
+        }
+
+        .exercice {
+            background: #fefcf0;
+            padding: 1.3rem;
+            border-radius: 1.8rem;
+            margin: 1.5rem 0;
+            border: 1px solid #d6e2bc;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.03);
+        }
+
+        input, textarea {
+            background: white;
+            border: 2px solid #cbdba1;
+            border-radius: 1rem;
+            padding: 0.6rem 1rem;
+            font-size: 0.95rem;
+            width: 100%;
+            margin: 0.4rem 0;
+            font-family: inherit;
+            transition: 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #74a84a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(116,168,74,0.2);
+        }
+
+        button {
+            background: #9bc06e;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 60px;
+            font-weight: bold;
+            color: #2d3e1f;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            transition: 0.2s;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            background: #7da54a;
+            transform: scale(0.97);
+            color: white;
+        }
+
+        .feedback {
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            color: #557c2f;
+            background: #f2f8e6;
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            display: inline-block;
+        }
+
+        .qcm label {
+            display: block;
+            margin: 0.4rem 0;
+            background: #fbfbea;
+            padding: 0.4rem 0.8rem;
+            border-radius: 2rem;
+        }
+
+        hr {
+            margin: 1.8rem 0;
+            border: 1px solid #e2e6b3;
+        }
+
+        .auto-eval {
+            background: #ecf5e1;
+            padding: 1.2rem;
+            border-radius: 1.8rem;
+            margin-top: 2rem;
+            border: 2px solid #bdd489;
+        }
+
+        .color-badge {
+            background: #e3e2aa;
+            border-radius: 20px;
+            padding: 0.1rem 0.6rem;
+            font-size: 0.7rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🐾 Refuge des Animaux – 动物伙伴之家 🐈 <span class="badge">séance 4 · soins & adoption</span></h1>
+    <div class="level">🐣 Niveau A2 · Prendre soin des animaux, adopter, décrire une journée au refuge · Temps : présent, futur, imparfait, passé composé</div>
+
+    <!-- TEXTE : journée au refuge -->
+    <div class="card-lecture">
+        <h2>📘 1. Texte de lecture : Une journée au refuge SPA</h2>
+        <p>Chaque mercredi après-midi, Lina et son grand frère Lucas <strong>vont</strong> au refuge des animaux « Les Pattes Douces ». Ils adorent aider les bénévoles. Dans ce refuge, il y a des chiens, des chats, mais aussi des lapins et des perruches.</p>
+        <p>Lina entre dans la chatterie. Une petite chatte grise aux yeux verts la regarde timidement. « Elle s'appelle Mistoufle, explique Sophie, la soigneuse. On l'a trouvée dans la rue il y a deux semaines. » Lina caresse doucement Mistoufle et la chatte ronronne. « Tu vas trouver une famille bientôt ! » murmure Lina.</p>
+        <p>De son côté, Lucas promène <strong>Hector</strong>, un grand chien brun très gentil. « Avant, Hector avait peur des humains, raconte Sophie. Mais maintenant, il fait confiance. » Lucas lance une balle : Hector court, rapporte et remue la queue. Lucas rit. « Un jour, j'adopterai un chien comme lui. »</p>
+        <p>Ensuite, ils nettoient les cages des lapins. Lina remplace l'eau et donne des carottes fraîches. « Il faut être doux et patient », dit-elle. Sophie sourit : « Vous êtes formidables ! Samedi prochain, nous organiserons une journée portes ouvertes. »</p>
+        <p>À la fin, Lina écrit dans son journal : « Aujourd'hui, j'ai appris à brosser un chat. Demain, je préparerai des affiches pour aider aux adoptions. » Lucas ajoute : « Je suis content car Hector a été adopté par une famille ! » Tous les deux repartent fatigués mais heureux. Leur mère les attend : « Alors, vous allez devenir vétérinaires ? »</p>
+        <p><em>📖 Vocabulaire : refuge → 收容所 · bénévole → 志愿者 · ronronner → 发出呼噜声 · la queue → 尾巴 · cage → 笼子 · doux/douce → 温柔 · adopter → 领养 · vétérinaire → 兽医</em></p>
+    </div>
+
+    <!-- COMPRÉHENSION ÉCRITE -->
+    <h2>📝 2. Compréhension écrite – À toi d'écrire ! ✍️</h2>
+    <div style="background:#f8fee7; border-radius:1.8rem; padding:1rem 1.5rem;">
+        <p><strong>1. Où vont Lina et Lucas chaque mercredi après-midi ?</strong><br><input type="text" id="rep1" placeholder="Écris ta réponse..."></p>
+        <p><strong>2. Comment s'appelle la petite chatte grise ?</strong><br><input type="text" id="rep2" placeholder="Écris ta réponse..."></p>
+        <p><strong>3. Que fait Lucas avec Hector ? (une action)</strong><br><input type="text" id="rep3" placeholder="Écris ta réponse..."></p>
+        <p><strong>4. Que promet Lina dans son journal pour le lendemain ?</strong><br><input type="text" id="rep4" placeholder="Écris ta réponse..."></p>
+        <p><strong>5. Quelle bonne nouvelle à la fin pour Hector ?</strong><br><input type="text" id="rep5" placeholder="Écris ta réponse..."></p>
+        <button onclick="verifComprehension()">Vérifier quelques indices</button>
+        <div id="feedbackComp" class="feedback"></div>
+    </div>
+
+    <!-- VOCABULAIRE CHINOIS -> FRANÇAIS flouté -->
+    <h2>📖 3. Vocabulaire (chinois → français) – clique pour révéler</h2>
+    <table class="vocab-table">
+        <thead><tr><th>中文 (chinois)</th><th>Français (mot flouté → clic)</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>收容所</td><td><span class="flou" onclick="revealMot(this, 'refuge')">[mot flouté]</span></td></tr>
+            <tr><td>志愿者</td><td><span class="flou" onclick="revealMot(this, 'bénévole')">[mot flouté]</span></td></tr>
+            <tr><td>呼噜声 (ronron)</td><td><span class="flou" onclick="revealMot(this, 'ronronner')">[mot flouté]</span></td></tr>
+            <tr><td>尾巴</td><td><span class="flou" onclick="revealMot(this, 'la queue')">[mot flouté]</span></td></tr>
+            <tr><td>笼子</td><td><span class="flou" onclick="revealMot(this, 'cage')">[mot flouté]</span></td></tr>
+            <tr><td>温柔</td><td><span class="flou" onclick="revealMot(this, 'doux / douce')">[mot flouté]</span></td></tr>
+            <tr><td>领养</td><td><span class="flou" onclick="revealMot(this, 'adopter')">[mot flouté]</span></td></tr>
+            <tr><td>兽医</td><td><span class="flou" onclick="revealMot(this, 'vétérinaire')">[mot flouté]</span></td></tr>
+        </tbody>
+    </table>
+
+    <!-- TEMPS DU RÉCIT (à identifier) -->
+    <h2>⏳ 4. Temps du récit – identifie et écris</h2>
+    <div class="time-box">
+        <div class="time-card" style="border-top-color:#3b82f6;">🔵 PRÉSENT<br>Trouve 1 verbe : <input type="text" class="small-input" id="tempsPresent" placeholder="ex: vont" style="width:90%; margin-top:6px;"></div>
+        <div class="time-card" style="border-top-color:#f59e0b;">🟢 FUTUR (simple/proche)<br>exemple : <input type="text" id="tempsFutur" placeholder="ex: adopterai" style="width:90%;"></div>
+        <div class="time-card" style="border-top-color:#e67e22;">🟠 IMPARFAIT<br>verbe à l'imparfait : <input type="text" id="tempsImparfait" placeholder="ex: avait peur" style="width:90%;"></div>
+        <div class="time-card" style="border-top-color:#e63946;">🔴 PASSÉ COMPOSÉ<br>ex : <input type="text" id="tempsPasse" placeholder="ex: a été adopté" style="width:90%;"></div>
+    </div>
+    <button onclick="corrigerTemps()">Voir exemples de réponses</button>
+    <div id="feedbackTemps" class="feedback"></div>
+
+    <!-- EXERCICE 1 CONJUGAISON -->
+    <div class="exercice">
+        <h3>✍️ Exercice 1 : Conjugue au bon temps</h3>
+        <p>① La semaine dernière, Lucas ________ (promener, passé composé) Hector dans le parc.<br>
+        <input type="text" id="exo1a" placeholder="ta réponse"></p>
+        <p>② Quand Lina était petite, elle ________ (avoir, imparfait) toujours peur des chiens.<br>
+        <input type="text" id="exo1b" placeholder="ta réponse"></p>
+        <p>③ Samedi prochain, les bénévoles ________ (organiser, futur simple) une journée portes ouvertes.<br>
+        <input type="text" id="exo1c" placeholder="ta réponse"></p>
+        <p>④ Tous les jours, Lina ________ (nourrir, présent) les lapins du refuge.<br>
+        <input type="text" id="exo1d" placeholder="ta réponse"></p>
+        <button onclick="corrigeExo1()">Correction</button>
+        <div id="corrExo1" class="feedback"></div>
+    </div>
+
+    <!-- EXERCICE 2 TRANSFORMATION passé composé / futur -->
+    <div class="exercice">
+        <h3>🔄 Exercice 2 : Transforme au passé composé et futur simple</h3>
+        <p>🔹 "Lina caresse doucement la chatte."<br>
+        Passé composé : <input type="text" id="transfo1PC" placeholder="écris ici"><br>
+        Futur simple : <input type="text" id="transfo1Futur" placeholder="écris ici"></p>
+        <p>🔹 "Les enfants nettoient les cages."<br>
+        Passé composé : <input type="text" id="transfo2PC" placeholder="écris ici"><br>
+        Futur simple : <input type="text" id="transfo2Futur" placeholder="écris ici"></p>
+        <button onclick="corrigeTransfo()">Afficher corrigé type</button>
+        <div id="corrTransfo" class="feedback"></div>
+    </div>
+
+    <!-- EXERCICE 3 IMPARFAIT / PASSÉ COMPOSÉ -->
+    <div class="exercice">
+        <h3>⚖️ Exercice 3 : Imparfait ou passé composé ?</h3>
+        <p>① Autrefois, Mistoufle ________ (vivre) dans la rue.<br><input type="text" id="exo3a"></p>
+        <p>② Soudain, Lucas ________ (voir) un chien très joyeux.<br><input type="text" id="exo3b"></p>
+        <p>③ Chaque matin, Sophie ________ (donner) à manger aux chats.<br><input type="text" id="exo3c"></p>
+        <button onclick="corrigeImparfaitPC()">Correction</button>
+        <div id="corrImparfait" class="feedback"></div>
+    </div>
+
+    <!-- REMETTRE DANS L'ORDRE -->
+    <h2>🧩 5. Remettre les mots dans l'ordre</h2>
+    <div style="background:#f6fbe9; border-radius:1.5rem; padding:1rem; margin-bottom:1rem;">
+        <p>a) au / les / refuge / mercredi / vont / enfants / chaque</p>
+        <input type="text" id="ordre1" placeholder="Ta phrase ..." style="width:100%;">
+        <p>b) adopté / une / chien / famille / ce / a / été / par</p>
+        <input type="text" id="ordre2" placeholder="Ta phrase ...">
+        <button onclick="corrigeOrdre()">Vérifier (propositions)</button>
+        <div id="feedbackOrdre" class="feedback"></div>
+    </div>
+
+    <!-- QCM choix multiple -->
+    <h2>✅ 6. QCM – Choisis la bonne réponse (écris la lettre)</h2>
+    <div class="qcm" style="background:#fefce6; padding:1rem; border-radius:1.8rem;">
+        <p><strong>1. Qui est Sophie dans le texte ?</strong><br> a) une vétérinaire &nbsp; b) une soigneuse bénévole &nbsp; c) la mère de Lina</p>
+        <input type="text" id="qcm1" placeholder="ta réponse (a, b ou c)"><br>
+        <p><strong>2. Qu'est-ce que Lina fait pour les lapins ?</strong><br> a) Elle les promène &nbsp; b) Elle nettoie les cages et donne des carottes &nbsp; c) Elle les brosse</p>
+        <input type="text" id="qcm2" placeholder="ta réponse"><br>
+        <p><strong>3. « Hector avait peur des humains » : verbe à quel temps ?</strong><br> a) présent &nbsp; b) imparfait &nbsp; c) passé composé</p>
+        <input type="text" id="qcm3" placeholder="ta réponse"><br>
+        <p><strong>4. Que se passe-t-il à la fin pour Hector ?</strong><br> a) Il se perd &nbsp; b) Il est adopté par une famille &nbsp; c) Il retourne dans la rue</p>
+        <input type="text" id="qcm4" placeholder="ta réponse"><br>
+        <button onclick="afficherCorrigeQCM()">Voir corrigé QCM</button>
+        <div id="corrQCM" class="feedback"></div>
+    </div>
+
+    <!-- EXPRESSION ÉCRITE -->
+    <h2>🐕 7. Expression écrite – Raconte ton expérience avec les animaux</h2>
+    <p>👉 Utilise les 4 temps (présent, passé composé, imparfait, futur). Parle d'un animal que tu as soigné ou que tu aimerais adopter.</p>
+    <textarea rows="5" id="expressionTexte" placeholder="Exemple : Quand j'étais petit(e), j'avais un hamster. Un jour, je l'ai emmené chez le vétérinaire. Maintenant, je donne des conseils à mes amis. Plus tard, j'ouvrirai un petit refuge." style="width:100%; border-radius:1.2rem;"></textarea>
+    <button onclick="encouragement()">💡 Astuce temps</button>
+    <div id="astuceExpr" class="feedback"></div>
+
+    <!-- AUTO-ÉVALUATION -->
+    <div class="auto-eval">
+        <h2>📊 8. Auto-évaluation 🐾</h2>
+        <p>📌 Je comprends le texte sur le refuge et les animaux : 
+            <select id="auto1"><option>✅ Oui</option><option>⚠️ Un peu</option><option>❌ Non</option></select>
+        </p>
+        <p>📌 Je sais utiliser le passé composé et l'imparfait pour raconter : 
+            <select id="auto2"><option>✅ Oui</option><option>⚠️ Moyen</option><option>❌ Encore des doutes</option></select>
+        </p>
+        <p>📌 Trois mots retenus (chinois→français) :<br>
+        <input type="text" placeholder="mot chinois 1" style="width:45%;"> → <input type="text" placeholder="français" style="width:45%;"><br>
+        <input type="text" placeholder="mot chinois 2" style="width:45%;"> → <input type="text" placeholder="français" style="width:45%;"><br>
+        <input type="text" placeholder="mot chinois 3" style="width:45%;"> → <input type="text" placeholder="français" style="width:45%;">
+        </p>
+        <p>🎯 Objectif : Savoir parler des soins aux animaux, adopter, utiliser les 4 temps avec un lexique solidaire. <br>🌟 Bravo, tu deviens un super protecteur des animaux !</p>
+    </div>
+</div>
+
+<script>
+    // révéler vocab flouté
+    function revealMot(element, trad) {
+        element.innerText = trad;
+        element.style.backgroundColor = "#d0e2a5";
+        element.style.cursor = "default";
+        element.removeAttribute("onclick");
+    }
+
+    // compréhension écrit indices
+    function verifComprehension() {
+        let msg = "💡 Indices : 1. au refuge « Les Pattes Douces » / SPA  2. Mistoufle  3. Il promène Hector / lance une balle  4. préparer des affiches  5. Hector a été adopté par une famille";
+        document.getElementById("feedbackComp").innerHTML = msg;
+    }
+
+    function corrigerTemps() {
+        document.getElementById("feedbackTemps").innerHTML = "✅ Exemples : Présent → 'vont' / 'caresse' ; Futur → 'adopterai' / 'organiserons' ; Imparfait → 'avait peur' / 'était' ; Passé composé → 'a été adopté' / 'ai appris'.";
+    }
+
+    function corrigeExo1() {
+        document.getElementById("corrExo1").innerHTML = "✔️ Réponses attendues : ① a promené  ② avait  ③ organiseront  ④ nourrit. (Variantes acceptées si bien conjuguées)";
+    }
+
+    function corrigeTransfo() {
+        document.getElementById("corrTransfo").innerHTML = "🔹 Passé composé : 'Lina a caressé doucement la chatte.' / Futur simple : 'Lina caressera doucement la chatte.'<br>🔹 Passé composé : 'Les enfants ont nettoyé les cages.' / Futur : 'Les enfants nettoieront les cages.'";
+    }
+
+    function corrigeImparfaitPC() {
+        document.getElementById("corrImparfait").innerHTML = "① vivait (imparfait)  ② a vu (passé composé)  ③ donnait (imparfait)";
+    }
+
+    function corrigeOrdre() {
+        document.getElementById("feedbackOrdre").innerHTML = "📝 Proposition : a) Les enfants vont au refuge chaque mercredi. / b) Ce chien a été adopté par une famille.";
+    }
+
+    function afficherCorrigeQCM() {
+        document.getElementById("corrQCM").innerHTML = "✅ 1.b (une soigneuse bénévole)  2.b (Elle nettoie les cages et donne des carottes)  3.b (imparfait)  4.b (Il est adopté par une famille)";
+    }
+
+    function encouragement() {
+        document.getElementById("astuceExpr").innerHTML = "🐶 Astuce : passé composé (j'ai adopté), imparfait (c'était un chien joyeux), présent (je m'occupe), futur (je deviendrai vétérinaire).";
+    }
+</script>
+</body>
+</html>
