@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>DELF A2 – Achats & Services | Cours Complet 2h</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-cream: #FFFBF5;
+      --coral: #FF6B5C;
+      --coral-light: #FFE4E0;
+      --mint: #4CBFA6;
+      --mint-light: #DCF5EF;
+      --sunny: #F9C74F;
+      --sunny-light: #FEF3D6;
+      --lavender: #9B5DE5;
+      --lavender-light: #F0E6FF;
+      --ocean: #2D7A8C;
+      --peach: #FFB86B;
+      --error-red: #E63946;
+      --success-green: #2A9D8F;
+      --shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+      --radius-xl: 28px;
+    }
+
+    body {
+      background: var(--bg-cream);
+      font-family: 'Inter', sans-serif;
+      color: #2D2B28;
+      line-height: 1.5;
+    }
+
+    .header-modern {
+      background: linear-gradient(135deg, #2C3E50, #1A2A3A);
+      color: white;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .header-flex {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+    }
+    .logo span {
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+    .progress-area {
+      flex: 1;
+      max-width: 260px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      margin-bottom: 5px;
+    }
+    .progress-bar-bg {
+      background: rgba(255,255,255,0.25);
+      border-radius: 40px;
+      height: 6px;
+    }
+    .progress-fill {
+      background: var(--sunny);
+      width: 0%;
+      height: 100%;
+      border-radius: 40px;
+      transition: width 0.4s;
+    }
+    .score-badge {
+      background: var(--coral);
+      padding: 6px 20px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .nav-steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px auto 20px;
+      max-width: 1100px;
+    }
+    .nav-dot {
+      width: 44px;
+      height: 44px;
+      background: #EFE4D8;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #5A4A3A;
+      border: 2px solid transparent;
+    }
+    .nav-dot.active {
+      background: var(--coral);
+      color: white;
+      transform: scale(1.05);
+      border-color: var(--sunny);
+    }
+    .nav-dot.done {
+      background: var(--mint);
+      color: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    .module {
+      display: none;
+      animation: fadeSlide 0.4s ease;
+    }
+    .module.active-module {
+      display: block;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .card-white {
+      background: white;
+      border-bottom: 8px solid var(--coral);
+    }
+    .card-mint {
+      background: var(--mint-light);
+      border-left: 8px solid var(--mint);
+    }
+    .card-sunny {
+      background: var(--sunny-light);
+      border-top: 8px solid var(--sunny);
+    }
+    .card-lavender {
+      background: var(--lavender-light);
+      border-right: 8px solid var(--lavender);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--ocean);
+      color: white;
+      padding: 4px 16px;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      color: #1F2D3D;
+    }
+    .bubble-text {
+      background: #FDF8F0;
+      padding: 1.3rem;
+      border-radius: 24px;
+      margin: 1rem 0;
+      border: 1px solid #FFDFB5;
+    }
+    .btn-primary {
+      background: var(--coral);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--coral);
+      padding: 10px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--coral);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .qcm-block {
+      background: #FFF5E8;
+      border-radius: 24px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+    }
+    .qcm-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .qcm-btn {
+      background: white;
+      border: 1px solid #DCB88A;
+      padding: 8px 22px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.1s;
+      font-weight: 500;
+    }
+    .qcm-btn.correct-choice {
+      background: var(--success-green);
+      color: white;
+      border-color: var(--success-green);
+    }
+    .qcm-btn.wrong-choice {
+      background: var(--error-red);
+      color: white;
+      text-decoration: line-through;
+    }
+    .dialogue-box {
+      background: #1F2D3D;
+      color: #F0F0F0;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin: 1.2rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .speaker {
+      color: var(--sunny);
+      font-weight: 700;
+      display: inline-block;
+      min-width: 100px;
+    }
+    .dialogue-line {
+      margin-bottom: 12px;
+    }
+    .expression-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 1rem 0;
+    }
+    .expr-chip {
+      background: white;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--peach);
+      font-size: 0.85rem;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 24px;
+      border: 2px solid var(--peach);
+      padding: 1rem;
+      background: #FFFFF5;
+      font-family: 'Inter', monospace;
+      margin: 10px 0;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .final-area {
+      background: linear-gradient(145deg, #FFE8D6, #FFDAB9);
+      text-align: center;
+      border-radius: 48px;
+      padding: 2.5rem;
+    }
+    .expression-category {
+      margin: 1.5rem 0 1rem 0;
+      font-weight: 700;
+      color: var(--ocean);
+      border-left: 4px solid var(--coral);
+      padding-left: 12px;
+    }
+    @media (max-width: 680px) {
+      .card { padding: 1.2rem; }
+      h3 { font-size: 1.4rem; }
+      .speaker { display: block; margin-bottom: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header-modern">
+  <div class="header-flex">
+    <div class="logo">
+      <h2>🛍️ DELF A2 · Achats & Services</h2>
+      <span>Retours, réclamations, commandes – 2h de préparation</span>
+    </div>
+    <div class="progress-area">
+      <div class="progress-label"><span>Progression</span><span id="progressPercent">0%</span></div>
+      <div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="score-badge" id="headerScore">🏆 Score: 0 pts</div>
+  </div>
+</header>
+
+<div class="nav-steps" id="navDots"></div>
+
+<div class="container">
+  <!-- MODULE 1 : Lecture compréhension -->
+  <div id="module1" class="module active-module">
+    <div class="card card-white">
+      <span class="badge">📖 COMPRÉHENSION ÉCRITE – 20 min</span>
+      <h3>Un pull trop petit</h3>
+      <div class="bubble-text">
+        <p>📌 <strong>Texte : "Achat en ligne décevant"</strong><br><br>
+        J'ai acheté un pull bleu en ligne la semaine dernière. Quand j'ai reçu le colis, j'ai essayé le pull. Il est trop petit et la couleur n'est pas la même que sur la photo (vert clair, pas bleu). Je veux l'échanger contre une taille M. J'ai cherché le service client sur le site. Pas de téléphone, seulement un formulaire de contact. J'ai écrit un message, mais je n'ai pas eu de réponse. Finalement, je vais aller au magasin en ville pour le retourner.</p>
+      </div>
+      <div class="grid-2">
+        <div><strong>❓ Questions (à répondre à l'oral)</strong><br>
+         1. Quels sont les deux problèmes du pull ?<br>
+         2. Pourquoi la personne ne peut-elle pas téléphoner au service client ?<br>
+         3. Quelle est sa solution finale ?<br>
+         4. Que feriez-vous à sa place ?
+        </div>
+        <button class="btn-outline" onclick="toggleAnswer('readingAnswers')">🔍 Voir les réponses</button>
+        <div id="readingAnswers" style="display:none; margin-top:15px; background:#EAF7F0; border-radius:20px; padding:12px;">✅ 1. Trop petit + couleur différente (vert clair au lieu de bleu). 2. Pas de numéro de téléphone, seulement un formulaire. 3. Aller au magasin en ville pour retourner l'article. 4. (réponse personnelle)</div>
+      </div>
+      <div class="nav-buttons"><button class="btn-primary" onclick="goToModule(2)">🎧 Compréhension orale →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 2 : Compréhension orale -->
+  <div id="module2" class="module">
+    <div class="card card-mint">
+      <span class="badge">🎤 COMPRÉHENSION ORALE – 20 min</span>
+      <h3>Message vocal : mauvais colis</h3>
+      <div class="bubble-text">
+        <p>📢 <strong>Script audio (synthèse vocale disponible) :</strong><br>
+        « Bonjour, c’est Mme Legrand. Je vous appelle concernant ma commande n°A2-891. J’ai reçu le mauvais colis : j’ai commandé deux chargeurs de téléphone, mais vous m’avez envoyé deux câbles USB seulement. J’ai besoin des chargeurs avant vendredi. Pouvez-vous me rappeler au 06 12 34 56 78 pour organiser un échange ? Merci. »</p>
+        <button class="btn-outline" onclick="speakShopMessage()">🔊 Lire à voix haute</button>
+      </div>
+      
+      <div class="qcm-block">
+        <p><strong>1️⃣ Quel est le problème avec la commande ?</strong></p>
+        <div class="qcm-options" id="oralQ1">
+          <button class="qcm-btn" onclick="checkOral(1, 'Colis perdu', this)">Colis perdu</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'Reçu câbles USB au lieu de chargeurs', this)">Reçu câbles USB au lieu de chargeurs</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'Chargeurs cassés', this)">Chargeurs cassés</button>
+        </div>
+        <div id="oralFeed1" class="feedback-text" style="font-size:0.8rem; margin-top:6px;"></div>
+      </div>
+
+      <div class="qcm-block">
+        <p><strong>2️⃣ Quand Mme Legrand a-t-elle besoin des chargeurs ?</strong></p>
+        <div class="qcm-options" id="oralQ2">
+          <button class="qcm-btn" onclick="checkOral(2, 'Lundi prochain', this)">Lundi prochain</button>
+          <button class="qcm-btn" onclick="checkOral(2, 'Avant vendredi', this)">Avant vendredi</button>
+          <button class="qcm-btn" onclick="checkOral(2, 'Dans un mois', this)">Dans un mois</button>
+        </div>
+        <div id="oralFeed2"></div>
+      </div>
+
+      <div class="qcm-block">
+        <p><strong>3️⃣ Comment souhaite-t-elle être contactée ?</strong></p>
+        <div class="qcm-options" id="oralQ3">
+          <button class="qcm-btn" onclick="checkOral(3, 'Par email', this)">Par email</button>
+          <button class="qcm-btn" onclick="checkOral(3, 'Par téléphone', this)">Par téléphone</button>
+          <button class="qcm-btn" onclick="checkOral(3, 'Par courrier', this)">Par courrier</button>
+        </div>
+        <div id="oralFeed3"></div>
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(1)">← Lecture</button><button class="btn-primary" onclick="goToModule(3)">🛒 Jeu de rôle magasin →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 3 : JEU DE RÔLE – MAGASIN (DIALOGUE LONG) -->
+  <div id="module3" class="module">
+    <div class="card card-lavender">
+      <span class="badge">🎭 JEU DE RÔLE – RETOUR MAGASIN (35 min)</span>
+      <h3>Retourner un article défectueux</h3>
+      
+      <!-- DIALOGUE PLUS LONG -->
+      <div class="dialogue-box">
+        <div class="dialogue-line"><span class="speaker">🛒 VENDEUR :</span> "Bonjour Monsieur/Madame. Comment puis-je vous aider aujourd'hui ?"</div>
+        <div class="dialogue-line"><span class="speaker">🧑 CLIENT :</span> "Bonjour, je voudrais rapporter cet article, s'il vous plaît. Je l'ai acheté ici mardi dernier."</div>
+        <div class="dialogue-line"><span class="speaker">🛒 VENDEUR :</span> "D'accord. Qu'est-ce qui ne va pas exactement ?"</div>
+        <div class="dialogue-line"><span class="speaker">🧑 CLIENT :</span> "Malheureusement, l'article est défectueux. Je l'ai utilisé seulement deux fois, mais il ne fonctionne plus du tout."</div>
+        <div class="dialogue-line"><span class="speaker">🛒 VENDEUR :</span> "Je comprends votre déception. Est-ce que vous avez encore le ticket de caisse ?"</div>
+        <div class="dialogue-line"><span class="speaker">🧑 CLIENT :</span> "Oui, le voici. Je l'ai gardé précieusement. Par contre, je suis désolé(e), je n'ai plus l'emballage d'origine. Je l'ai jeté par erreur."</div>
+        <div class="dialogue-line"><span class="speaker">🛒 VENDEUR :</span> "Ce n'est pas grave, ne vous inquiétez pas. L'emballage n'est pas obligatoire pour un retour. Je peux vous proposer un échange ou un avoir."</div>
+        <div class="dialogue-line"><span class="speaker">🧑 CLIENT :</span> "Je préférerais un remboursement, si c'est possible. Je n'ai plus confiance en ce produit."</div>
+        <div class="dialogue-line"><span class="speaker">🛒 VENDEUR :</span> "Laissez-moi vérifier dans notre système... Vous avez acheté l'article il y a moins de 14 jours, donc le remboursement est possible."</div>
+        <div class="dialogue-line"><span class="speaker">🧑 CLIENT :</span> "Ah, quel soulagement ! Est-ce que le remboursement sera sur ma carte bancaire ?"</div>
+        <div class="dialogue-line"><span class="speaker">🛒 VENDEUR :</span> "Oui, le montant sera reversé sur votre carte dans un délai de 3 à 5 jours ouvrables. Vous allez recevoir un email de confirmation."</div>
+        <div class="dialogue-line"><span class="speaker">🧑 CLIENT :</span> "Parfait. Je vous remercie beaucoup pour votre aide et votre compréhension."</div>
+        <div class="dialogue-line"><span class="speaker">🛒 VENDEUR :</span> "Avec plaisir ! Je suis désolé pour ce désagrément. N'hésitez pas à revenir si vous avez d'autres questions. Bonne journée !"</div>
+        <div class="dialogue-line"><span class="speaker">🧑 CLIENT :</span> "Merci, bonne journée à vous aussi !"</div>
+      </div>
+
+      <div class="bubble-text" id="randomSituationBox">
+        💬 <strong>Situation actuelle :</strong> Vous avez acheté une lampe de bureau. Elle ne s'allume pas. Vous retournez au magasin avec le ticket de caisse mais sans l'emballage.
+      </div>
+      <button class="btn-primary" style="background: var(--lavender);" onclick="randomSituation()">🎲 Changer la situation (aléatoire)</button>
+
+      <!-- PHRASES À AUTOMATISER – LISTE TRÈS ÉLARGIE -->
+      <h4 style="margin-top: 2rem;">🗣️ Phrases à automatiser pour le DELF A2 (répétez à voix haute)</h4>
+      
+      <div class="expression-category">🔹 SALUER & COMMENCER LA CONVERSATION</div>
+      <div class="expression-list">
+        <span class="expr-chip">Bonjour, je voudrais rapporter cet article.</span>
+        <span class="expr-chip">Excusez-moi, j'ai un problème avec cet achat.</span>
+        <span class="expr-chip">Pouvez-vous m'aider ?</span>
+        <span class="expr-chip">Je suis venu(e) pour retourner un produit.</span>
+      </div>
+
+      <div class="expression-category">🔹 EXPLIQUER LE PROBLÈME</div>
+      <div class="expression-list">
+        <span class="expr-chip">L'article est défectueux, il ne fonctionne pas.</span>
+        <span class="expr-chip">Le produit est cassé depuis hier.</span>
+        <span class="expr-chip">La taille ne correspond pas à ce que j'ai commandé.</span>
+        <span class="expr-chip">La couleur est différente de la photo sur le site.</span>
+        <span class="expr-chip">Il manque des pièces dans le colis.</span>
+        <span class="expr-chip">Je l'ai utilisé seulement deux fois, mais il ne marche déjà plus.</span>
+        <span class="expr-chip">Le délai de livraison a été beaucoup trop long.</span>
+        <span class="expr-chip">Malheureusement, je suis très déçu(e) par cet achat.</span>
+      </div>
+
+      <div class="expression-category">🔹 PARLER DU TICKET & DE L'EMBALLAGE</div>
+      <div class="expression-list">
+        <span class="expr-chip">Voici mon ticket de caisse.</span>
+        <span class="expr-chip">J'ai gardé la facture.</span>
+        <span class="expr-chip">Malheureusement, je n'ai plus l'emballage d'origine.</span>
+        <span class="expr-chip">J'ai perdu le ticket, est-ce que vous pouvez retrouver l'achat dans votre système ?</span>
+        <span class="expr-chip">Je l'ai acheté il y a seulement trois jours.</span>
+      </div>
+
+      <div class="expression-category">🔹 DEMANDER UN REMBOURSEMENT / ÉCHANGE</div>
+      <div class="expression-list">
+        <span class="expr-chip">Je souhaiterais être remboursé(e), s'il vous plaît.</span>
+        <span class="expr-chip">Est-ce que je peux échanger cet article contre un autre ?</span>
+        <span class="expr-chip">Je préfère un avoir si le remboursement n'est pas possible.</span>
+        <span class="expr-chip">Pouvez-vous me faire un échange ?</span>
+        <span class="expr-chip">Est-ce que le remboursement sera sur ma carte bancaire ?</span>
+        <span class="expr-chip">Dans combien de temps vais-je recevoir le remboursement ?</span>
+      </div>
+
+      <div class="expression-category">🔹 RÉPONDRE AU VENDEUR / NÉGOCIER</div>
+      <div class="expression-list">
+        <span class="expr-chip">Je comprends, mais je suis vraiment déçu(e).</span>
+        <span class="expr-chip">D'accord, j'accepte un avoir.</span>
+        <span class="expr-chip">Merci de votre compréhension.</span>
+        <span class="expr-chip">Je suis désolé(e) pour le dérangement.</span>
+        <span class="expr-chip">C'est la première fois que j'ai un problème avec ce magasin.</span>
+        <span class="expr-chip">Je reviendrai si j'ai d'autres questions.</span>
+      </div>
+
+      <div class="expression-category">🔹 REMERCIER & TERMINER</div>
+      <div class="expression-list">
+        <span class="expr-chip">Merci beaucoup pour votre aide.</span>
+        <span class="expr-chip">Je vous remercie de votre professionnalisme.</span>
+        <span class="expr-chip">Bonne journée à vous aussi.</span>
+        <span class="expr-chip">Au revoir et encore merci !</span>
+      </div>
+
+      <div class="grid-2">
+        <div style="background:#F0E6FF; border-radius:24px; padding:1rem;">
+          <strong>🎤 QUESTIONS DU VENDEUR (entraînez-vous à répondre)</strong><br>
+          • Bonjour, comment puis-je vous aider ?<br>
+          • Qu'est-ce qui ne va pas avec cet article ?<br>
+          • Vous avez le ticket de caisse ?<br>
+          • Depuis quand avez-vous acheté ce produit ?<br>
+          • Vous préférez un remboursement, un échange ou un avoir ?<br>
+          • Avez-vous encore l'emballage d'origine ?
+        </div>
+        <div style="background:#E0F7F0; border-radius:24px; padding:1rem;">
+          <strong>💬 RÉPONSES MODÈLES (entraînez-vous)</strong><br>
+          • "L'article ne fonctionne pas du tout."<br>
+          • "Oui, voici mon ticket de caisse."<br>
+          • "Je l'ai acheté mardi dernier, il y a 5 jours."<br>
+          • "Je préfère un remboursement, si possible."<br>
+          • "Non, j'ai jeté l'emballage, désolé(e)."
+        </div>
+      </div>
+
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(2)">← Compréhension orale</button><button class="btn-primary" onclick="goToModule(4)">✍️ Production écrite →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 4 : PRODUCTION ÉCRITE -->
+  <div id="module4" class="module">
+    <div class="card card-white">
+      <span class="badge">✍️ PRODUCTION ÉCRITE – 25 min</span>
+      <h3>Écrire au service client</h3>
+      <p><strong>Consigne :</strong> Vous avez reçu une commande incomplète (lampe de bureau + 2 ampoules). Vous n'avez reçu qu'une seule ampoule. Écrivez un message au service client (70-90 mots). Incluez : description du problème, demande (renvoi ou remboursement), numéro de commande, formule de politesse.</p>
+      <textarea id="writingMsg" rows="5" placeholder="Bonjour, je fais suite à ma commande n°LAMP789..."></textarea>
+      <div id="wordCountMsg">0 mots</div>
+      <button class="btn-outline" onclick="showModelMessage()">📧 Voir un modèle</button>
+      <div id="modelMsg" style="display:none; margin-top:12px; background:#EAF9F0; border-radius:24px; padding:1rem;">
+        ✉️ <strong>Exemple (82 mots) :</strong><br>
+        "Bonjour, je suis déçu(e) car ma commande n°LAMP789 est incomplète. J'avais commandé une lampe de bureau et deux ampoules, mais j'ai reçu UNE SEULE ampoule. Pouvez-vous me renvoyer l'ampoule manquante ? Sinon, je souhaiterais un remboursement partiel. Je joins la facture. Dans l'attente de votre réponse, je vous remercie. Cordialement, Sophie Martin."
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(3)">← Jeu de rôle</button><button class="btn-primary" onclick="goToModule(5)">✅ Auto-évaluation →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 5 : RÉVISION & ERREURS -->
+  <div id="module5" class="module">
+    <div class="card card-sunny">
+      <span class="badge">📌 RÉVISION – Pièges fréquents (15 min)</span>
+      <h3>Ce qu'il faut éviter à l'oral DELF A2</h3>
+      <div class="grid-2">
+        <div style="background:#FFE0E0; border-radius:24px; padding:1rem;">
+          ❌ <strong>Erreurs fréquentes</strong><br>
+          • "Je voudrais *retourner* l'article" → OK mais attention au sens<br>
+          • "Le produit est *cassé*" → un peu vague<br>
+          • "Je veux *mon* argent" → trop familier<br>
+          • "Je suis *content* pour le remboursement" → mal formulé<br>
+          • "Je dois aller *à* pharmacie" → confusion de contexte
+        </div>
+        <div style="background:#DCF5EF; border-radius:24px; padding:1rem;">
+          ✅ <strong>Corrections</strong><br>
+          • "Je voudrais **rapporter** cet article."<br>
+          • "Le produit est **défectueux** / ne fonctionne pas."<br>
+          • "Je souhaite **un remboursement**."<br>
+          • "Je suis **satisfait(e)** du remboursement."<br>
+          • "Je dois aller **au magasin**."
+        </div>
+      </div>
+      <div class="bubble-text">
+        🧠 <strong>Mots clés à retenir :</strong> un remboursement, un avoir, un échange, le ticket de caisse, la facture, un article défectueux, le service client, une commande, la livraison, le délai de rétractation, un avoir, le SAV (service après-vente).
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(4)">← Écrit</button><button class="btn-primary" onclick="goToModule(6)">🏁 Final →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 6 : FINAL -->
+  <div id="module6" class="module">
+    <div class="final-area">
+      <span class="badge" style="background: var(--ocean);">🌟 FÉLICITATIONS !</span>
+      <h3>Prêt(e) pour le DELF A2 – thème Achats & Services</h3>
+      <p style="font-size:1.2rem; margin: 20px 0;">🎯 Votre score : <strong id="finalScoreSpan">0</strong> / 6 points</p>
+      <p>💪 Vous savez décrire un problème de commande, gérer un retour en magasin, réclamer un remboursement et écrire un message au service client.</p>
+      <button class="btn-primary" onclick="restartCourse()">🔄 Recommencer le cours</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentMod = 1;
+  let totalScore = 0;
+  let oralAnswered = { q1: false, q2: false, q3: false };
+  const MAX_SCORE = 6;
+
+  function updateUI() {
+    let percent = Math.floor(((currentMod-1)/6)*100);
+    document.getElementById('progressFill').style.width = percent+'%';
+    document.getElementById('progressPercent').innerText = percent+'%';
+    document.getElementById('headerScore').innerHTML = `🏆 Score: ${totalScore} pts`;
+    if(document.getElementById('finalScoreSpan')) document.getElementById('finalScoreSpan').innerText = totalScore;
+  }
+
+  function addScore() {
+    if(totalScore < MAX_SCORE) totalScore++;
+    updateUI();
+  }
+
+  function checkOral(questionId, correctAnswer, btnElement) {
+    if(questionId === 1 && oralAnswered.q1) return;
+    if(questionId === 2 && oralAnswered.q2) return;
+    if(questionId === 3 && oralAnswered.q3) return;
+
+    let isCorrect = false;
+    if(questionId === 1 && correctAnswer === 'Reçu câbles USB au lieu de chargeurs') isCorrect = true;
+    if(questionId === 2 && correctAnswer === 'Avant vendredi') isCorrect = true;
+    if(questionId === 3 && correctAnswer === 'Par téléphone') isCorrect = true;
+
+    let parent = btnElement.parentNode;
+    let allBtns = parent.querySelectorAll('.qcm-btn');
+    allBtns.forEach(btn => btn.disabled = true);
+    
+    if(isCorrect) {
+      btnElement.classList.add('correct-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '✅ Bonne réponse ! +1 point';
+      if(questionId === 1 && !oralAnswered.q1) { oralAnswered.q1 = true; addScore(); }
+      if(questionId === 2 && !oralAnswered.q2) { oralAnswered.q2 = true; addScore(); }
+      if(questionId === 3 && !oralAnswered.q3) { oralAnswered.q3 = true; addScore(); }
+    } else {
+      btnElement.classList.add('wrong-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '❌ Réécoutez le message.';
+    }
+  }
+
+  function speakShopMessage() {
+    let text = "Bonjour, c’est Madame Legrand. Je vous appelle concernant ma commande numéro A2-891. J’ai reçu le mauvais colis : j’ai commandé deux chargeurs de téléphone, mais vous m’avez envoyé deux câbles USB seulement. J’ai besoin des chargeurs avant vendredi. Pouvez-vous me rappeler au 06 12 34 56 78 pour organiser un échange ? Merci.";
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.9;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function randomSituation() {
+    const situations = [
+      "Vous avez acheté un grille-pain qui ne chauffe pas. Vous retournez au magasin avec le ticket.",
+      "Vous avez commandé un manteau en ligne, mais la taille est trop grande. Vous voulez l'échanger.",
+      "La livraison a pris 3 semaines de retard. Vous écrivez une réclamation.",
+      "Le livreur a laissé le colis sous la pluie, tout est abîmé. Vous demandez un remboursement.",
+      "Vous avez reçu un aspirateur mais il manque une pièce importante. Vous téléphonez au SAV.",
+      "Le smartphone que vous avez acheté ne s'allume plus après une semaine. Vous voulez un échange.",
+      "Vous avez commandé des chaussures en ligne, mais la pointure ne correspond pas."
+    ];
+    let idx = Math.floor(Math.random() * situations.length);
+    let box = document.getElementById('randomSituationBox');
+    if(box) box.innerHTML = `💬 <strong>Situation aléatoire :</strong> ${situations[idx]}`;
+  }
+
+  function toggleAnswer(id) {
+    let el = document.getElementById(id);
+    if(el.style.display === 'none') el.style.display = 'block';
+    else el.style.display = 'none';
+  }
+
+  function showModelMessage() {
+    let model = document.getElementById('modelMsg');
+    if(model.style.display === 'none') model.style.display = 'block';
+    else model.style.display = 'none';
+    if(!window.writingBonus && document.getElementById('writingMsg').value.trim().length > 40) {
+      window.writingBonus = true;
+      if(totalScore + 2 <= MAX_SCORE) totalScore += 2;
+      else totalScore = MAX_SCORE;
+      updateUI();
+      alert("📝 +2 points bonus pour ton message écrit !");
+    }
+  }
+
+  const textareaEl = document.getElementById('writingMsg');
+  if(textareaEl) {
+    textareaEl.addEventListener('input', function() {
+      let words = this.value.trim().split(/\s+/).filter(w => w.length>0).length;
+      document.getElementById('wordCountMsg').innerText = words + " mots";
+    });
+  }
+
+  function goToModule(n) {
+    for(let i=1;i<=6;i++) {
+      let mod = document.getElementById(`module${i}`);
+      if(mod) mod.classList.remove('active-module');
+    }
+    document.getElementById(`module${n}`).classList.add('active-module');
+    currentMod = n;
+    updateUI();
+    updateNavDots();
+  }
+
+  function updateNavDots() {
+    let dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, idx) => {
+      let num = idx+1;
+      dot.classList.remove('active', 'done');
+      if(num === currentMod) dot.classList.add('active');
+      if(num < currentMod) dot.classList.add('done');
+    });
+  }
+
+  function buildNav() {
+    let container = document.getElementById('navDots');
+    container.innerHTML = '';
+    for(let i=1;i<=6;i++) {
+      let dot = document.createElement('div');
+      dot.classList.add('nav-dot');
+      dot.innerText = i;
+      dot.onclick = () => goToModule(i);
+      container.appendChild(dot);
+    }
+    updateNavDots();
+  }
+
+  function restartCourse() {
+    totalScore = 0;
+    oralAnswered = { q1: false, q2: false, q3: false };
+    window.writingBonus = false;
+    document.querySelectorAll('.qcm-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove('correct-choice', 'wrong-choice');
+    });
+    document.querySelectorAll('[id^="oralFeed"]').forEach(el => el.innerHTML = '');
+    if(textareaEl) textareaEl.value = '';
+    document.getElementById('wordCountMsg').innerText = '0 mots';
+    goToModule(1);
+  }
+
+  buildNav();
+  updateUI();
+</script>
+</body>
+</html>
