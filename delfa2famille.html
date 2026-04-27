@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>DELF A2 – Ma famille et moi | Cours complet pour adultes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-soft: #FFF9F0;
+      --rose: #E5989B;
+      --rose-light: #FDE2E4;
+      --sage: #B5C99A;
+      --sage-light: #E9F5DB;
+      --terracotta: #E76F51;
+      --terracotta-light: #FDE2D9;
+      --lavender: #B5838D;
+      --lavender-light: #F4E1E6;
+      --honey: #F4A261;
+      --honey-light: #FEF0E0;
+      --deep-blue: #2A4D69;
+      --error-red: #E63946;
+      --success-green: #6B8F71;
+      --shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+      --radius-xl: 28px;
+    }
+
+    body {
+      background: var(--bg-soft);
+      font-family: 'Inter', sans-serif;
+      color: #2E2C2A;
+      line-height: 1.5;
+    }
+
+    .header-modern {
+      background: linear-gradient(135deg, #2A4D69, #1F3A4A);
+      color: white;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .header-flex {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+    }
+    .logo span {
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+    .progress-area {
+      flex: 1;
+      max-width: 260px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      margin-bottom: 5px;
+    }
+    .progress-bar-bg {
+      background: rgba(255,255,255,0.25);
+      border-radius: 40px;
+      height: 6px;
+    }
+    .progress-fill {
+      background: var(--honey);
+      width: 0%;
+      height: 100%;
+      border-radius: 40px;
+      transition: width 0.4s;
+    }
+    .score-badge {
+      background: var(--rose);
+      padding: 6px 20px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .nav-steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px auto 20px;
+      max-width: 1100px;
+    }
+    .nav-dot {
+      width: 44px;
+      height: 44px;
+      background: #EEDDCC;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #4A3B2C;
+      border: 2px solid transparent;
+    }
+    .nav-dot.active {
+      background: var(--terracotta);
+      color: white;
+      transform: scale(1.05);
+      border-color: var(--honey);
+    }
+    .nav-dot.done {
+      background: var(--sage);
+      color: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    .module {
+      display: none;
+      animation: fadeSlide 0.4s ease;
+    }
+    .module.active-module {
+      display: block;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .card-white {
+      background: white;
+      border-bottom: 8px solid var(--sage);
+    }
+    .card-rose {
+      background: var(--rose-light);
+      border-left: 8px solid var(--rose);
+    }
+    .card-sage {
+      background: var(--sage-light);
+      border-top: 8px solid var(--sage);
+    }
+    .card-terracotta {
+      background: var(--terracotta-light);
+      border-right: 8px solid var(--terracotta);
+    }
+    .card-lavender {
+      background: var(--lavender-light);
+      border-bottom: 8px solid var(--lavender);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--deep-blue);
+      color: white;
+      padding: 4px 16px;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      color: #1F2D3D;
+    }
+    .bubble-text {
+      background: #FDF8F0;
+      padding: 1.3rem;
+      border-radius: 24px;
+      margin: 1rem 0;
+      border: 1px solid #FAD4C0;
+    }
+    .btn-primary {
+      background: var(--terracotta);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--terracotta);
+      padding: 10px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--terracotta);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .qcm-block {
+      background: #FFF5E8;
+      border-radius: 24px;
+      padding: 1.2rem;
+      margin: 1rem 0;
+    }
+    .qcm-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    .qcm-btn {
+      background: white;
+      border: 1px solid #DCB88A;
+      padding: 8px 22px;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.1s;
+      font-weight: 500;
+    }
+    .qcm-btn.correct-choice {
+      background: var(--success-green);
+      color: white;
+      border-color: var(--success-green);
+    }
+    .qcm-btn.wrong-choice {
+      background: var(--error-red);
+      color: white;
+      text-decoration: line-through;
+    }
+    .dialogue-box {
+      background: #1F2D3D;
+      color: #F0F0F0;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin: 1.2rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .speaker {
+      color: var(--honey);
+      font-weight: 700;
+      display: inline-block;
+      min-width: 140px;
+    }
+    .dialogue-line {
+      margin-bottom: 12px;
+    }
+    .expression-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 1rem 0;
+    }
+    .expr-chip {
+      background: white;
+      padding: 6px 18px;
+      border-radius: 40px;
+      border: 1px solid var(--rose);
+      font-size: 0.85rem;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 24px;
+      border: 2px solid var(--sage);
+      padding: 1rem;
+      background: #FFFFF5;
+      font-family: 'Inter', monospace;
+      margin: 10px 0;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .final-area {
+      background: linear-gradient(145deg, #F4E1D3, #EAD5C0);
+      text-align: center;
+      border-radius: 48px;
+      padding: 2.5rem;
+    }
+    .expression-category {
+      margin: 1.5rem 0 0.8rem 0;
+      font-weight: 700;
+      color: var(--deep-blue);
+      border-left: 4px solid var(--rose);
+      padding-left: 12px;
+    }
+    .tip-family {
+      background: #E8F0EA;
+      border-radius: 20px;
+      padding: 12px;
+      margin: 10px 0;
+      font-size: 0.9rem;
+    }
+    @media (max-width: 680px) {
+      .card { padding: 1.2rem; }
+      h3 { font-size: 1.4rem; }
+      .speaker { display: block; margin-bottom: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header-modern">
+  <div class="header-flex">
+    <div class="logo">
+      <h2>👨‍👩‍👧‍👦 DELF A2 · Ma famille et moi</h2>
+      <span>Relations, routines, portraits – Cours complet pour adultes</span>
+    </div>
+    <div class="progress-area">
+      <div class="progress-label"><span>Progression</span><span id="progressPercent">0%</span></div>
+      <div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="score-badge" id="headerScore">🏆 Score: 0 pts</div>
+  </div>
+</header>
+
+<div class="nav-steps" id="navDots"></div>
+
+<div class="container">
+  <!-- MODULE 1 : Lecture compréhension (version adulte) -->
+  <div id="module1" class="module active-module">
+    <div class="card card-white">
+      <span class="badge">📖 COMPRÉHENSION ÉCRITE – 20 min</span>
+      <h3>Une famille moderne et soudée</h3>
+      <div class="bubble-text">
+        <p>📌 <strong>Texte : "Chez les Lefèvre"</strong><br><br>
+        Je m'appelle Valérie, j'ai 42 ans et je suis comptable. Dans ma famille, nous habitons tous dans la même région, ce qui est agréable. Mon mari Christophe, 45 ans, est ingénieur. Nous avons deux enfants : Léa, 18 ans, qui vient d'avoir son bac et va étudier les langues à l'université, et Bastien, 15 ans, un adolescent passionné de guitare et un peu rêveur.<br><br>
+        Mes parents, Jacqueline et Robert, sont à la retraite. Ils habitent à seulement 15 minutes de chez nous. Nous aimons les inviter à dîner chaque vendredi soir. Mon frère, Stéphane, a 39 ans. Il est agent immobilier et il est divorcé. Il a une fille, Manon, 11 ans, que j'adore. Mes deux sœurs, Céline (36 ans) et Aurélie (33 ans), vivent à Lyon. Nous avons un groupe WhatsApp où nous échangeons des photos et des blagues tous les jours.<br><br>
+        Le week-end dernier, nous avons organisé un anniversaire surprise pour les 70 ans de mon père. Toute la famille était là : mes sœurs avec leurs maris, mon frère, les enfants, et même des cousins éloignés. Mon père a pleuré de joie. C'était un moment inoubliable. Pour moi, la famille est un refuge, et je suis fière de nos liens solides.</p>
+      </div>
+      <div class="grid-2">
+        <div><strong>❓ Questions (à répondre à l'oral)</strong><br>
+         1. Quelle est la profession de Valérie et celle de son mari ?<br>
+         2. Quel âge a Léa et que va-t-elle faire après le bac ?<br>
+         3. À quelle fréquence Valérie invite-t-elle ses parents à dîner ?<br>
+         4. Qui est Manon ?<br>
+         5. Quel événement a eu lieu le week-end dernier ?
+        </div>
+        <button class="btn-outline" onclick="toggleAnswer('readingAnswers')">🔍 Voir les réponses</button>
+        <div id="readingAnswers" style="display:none; margin-top:15px; background:#EAF7F0; border-radius:20px; padding:12px;">✅ 1. Valérie est comptable, Christophe est ingénieur. 2. Léa a 18 ans, elle va étudier les langues à l'université. 3. Tous les vendredis soirs. 4. Manon est la fille de son frère Stéphane (sa nièce). 5. L'anniversaire surprise des 70 ans du père de Valérie.</div>
+      </div>
+      <div class="nav-buttons"><button class="btn-primary" onclick="goToModule(2)">🎧 Compréhension orale →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 2 : Compréhension orale (adulte) -->
+  <div id="module2" class="module">
+    <div class="card card-rose">
+      <span class="badge">🎤 COMPRÉHENSION ORALE – 20 min</span>
+      <h3>Radio : Les relations entre adultes dans la famille</h3>
+      <div class="bubble-text">
+        <p>📢 <strong>Script audio (synthèse vocale) :</strong><br>
+        « Journaliste : Aujourd'hui, nous recevons Sylvie, 52 ans, mère de trois enfants. Sylvie, comment gérez-vous les relations avec vos enfants adultes ?<br><br>
+        Sylvie : Mes enfants ont entre 24 et 30 ans. L'aîné, Thomas, est marié et vit en Belgique. Ma fille, Élodie, est kinésithérapeute à Paris, et le plus jeune, Maxime, est encore étudiant. Ce n'est pas toujours facile de les voir peu, mais on essaie d'organiser des visites. Nous avons créé une tradition : une fois par mois, on se fait un appel vidéo en famille, chacun depuis chez soi. Parfois on se dispute pour des questions d'organisation, mais l'important, c'est d'être présent dans les moments difficiles.<br><br>
+        Journaliste : Et vous arrive-t-il d'aider vos parents âgés ?<br><br>
+        Sylvie : Oui, ma mère a 78 ans, elle vit seule depuis le décès de mon père. Je l'appelle tous les jours et je l'emmène faire ses courses chaque mercredi. Mes enfants m'aident aussi : Thomas lui envoie des colis, et Élodie lui rend visite quand elle peut. La solidarité, c'est essentiel dans une famille. »</p>
+        <button class="btn-outline" onclick="speakFamilyMessage()">🔊 Lire à voix haute</button>
+      </div>
+      
+      <div class="qcm-block">
+        <p><strong>1️⃣ Combien d'enfants Sylvie a-t-elle ?</strong></p>
+        <div class="qcm-options" id="oralQ1">
+          <button class="qcm-btn" onclick="checkOral(1, 'Deux enfants', this)">Deux enfants</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'Trois enfants', this)">Trois enfants</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'Quatre enfants', this)">Quatre enfants</button>
+        </div>
+        <div id="oralFeed1" class="feedback-text" style="font-size:0.8rem; margin-top:6px;"></div>
+      </div>
+
+      <div class="qcm-block">
+        <p><strong>2️⃣ Quelle tradition familiale Sylvie a-t-elle créée ?</strong></p>
+        <div class="qcm-options" id="oralQ2">
+          <button class="qcm-btn" onclick="checkOral(2, 'Un dîner tous les dimanches', this)">Un dîner tous les dimanches</button>
+          <button class="qcm-btn" onclick="checkOral(2, 'Un appel vidéo une fois par mois', this)">Un appel vidéo une fois par mois</button>
+          <button class="qcm-btn" onclick="checkOral(2, 'Des vacances ensemble chaque été', this)">Des vacances ensemble chaque été</button>
+        </div>
+        <div id="oralFeed2"></div>
+      </div>
+
+      <div class="qcm-block">
+        <p><strong>3️⃣ Qu'est-ce que Sylvie fait pour sa mère âgée ?</strong></p>
+        <div class="qcm-options" id="oralQ3">
+          <button class="qcm-btn" onclick="checkOral(3, 'Elle l’envoie en maison de retraite', this)">Elle l’envoie en maison de retraite</button>
+          <button class="qcm-btn" onclick="checkOral(3, 'Elle l’appelle tous les jours et l’emmène faire les courses', this)">Elle l’appelle tous les jours et l’emmène faire les courses</button>
+          <button class="qcm-btn" onclick="checkOral(3, 'Elle ne voit jamais sa mère', this)">Elle ne voit jamais sa mère</button>
+        </div>
+        <div id="oralFeed3"></div>
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(1)">← Lecture</button><button class="btn-primary" onclick="goToModule(3)">🗣️ Dialogue mère-fille →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 3 : JEU DE RÔLE – NOUVEAU DIALOGUE entre Jacqueline et Valérie uniquement -->
+  <div id="module3" class="module">
+    <div class="card card-terracotta">
+      <span class="badge">🎭 JEU DE RÔLE – PRÉPARER UN WEEK-END CHEZ LES GRANDS-PARENTS</span>
+      <h3>Dialogue : Mère (Jacqueline) et fille (Valérie)</h3>
+      
+      <div class="dialogue-box">
+        <div class="dialogue-line"><span class="speaker">👵 MAMAN (Jacqueline) :</span> "Nous aimerions que toute la famille vienne passer le week-end prochain. Qu'en pensez-vous ?"</div>
+        <div class="dialogue-line"><span class="speaker">👩 VALÉRIE :</span> "Bonne idée, maman ! Je peux apporter un plat, une tarte salée par exemple. Qu'est-ce que vous prévoyez comme activités ?"</div>
+        <div class="dialogue-line"><span class="speaker">👵 MAMAN (Jacqueline) :</span> "Rien de compliqué. Une promenade dans le village, un bon repas, et le soir on pourra regarder des albums photos."</div>
+        <div class="dialogue-line"><span class="speaker">👩 VALÉRIE :</span> "C'est parfait. Je peux aussi m'occuper du dessert. Est-ce que je prépare un gâteau au citron ou des crêpes ?"</div>
+        <div class="dialogue-line"><span class="speaker">👵 MAMAN (Jacqueline) :</span> "Les enfants adorent tes crêpes. Fais des crêpes. Et surtout, n'oublie pas d'apporter les jeux de société."</div>
+        <div class="dialogue-line"><span class="speaker">👩 VALÉRIE :</span> "D'accord. Je préviens Christophe et les enfants. Est-ce que vous avez besoin d'aide pour le ménage ou les courses ?"</div>
+        <div class="dialogue-line"><span class="speaker">👵 MAMAN (Jacqueline) :</span> "Ce serait gentil de faire les courses avec moi samedi matin. Ensuite, on cuisinera toutes les deux, comme avant."</div>
+        <div class="dialogue-line"><span class="speaker">👩 VALÉRIE :</span> "Avec plaisir, maman. J'ai hâte de passer ce week-end en famille. On se voit vendredi soir ?"</div>
+        <div class="dialogue-line"><span class="speaker">👵 MAMAN (Jacqueline) :</span> "Oui, arrivez quand vous voulez. Je préparerai le thé pour l'après-midi. Merci ma chérie."</div>
+        <div class="dialogue-line"><span class="speaker">👩 VALÉRIE :</span> "Merci à vous. À très bientôt, maman. Je t'embrasse."</div>
+      </div>
+
+      <div class="bubble-text" id="randomSituationBox">
+        💬 <strong>Situation actuelle :</strong> Votre mère a besoin d'aide pour organiser un week-end familial. Vous lui proposez votre aide pour les courses et la cuisine.
+      </div>
+      <button class="btn-primary" style="background: var(--lavender);" onclick="randomSituation()">🎲 Changer la situation (aléatoire)</button>
+
+      <h4 style="margin-top: 2rem;">🗣️ Phrases clés pour parler de sa famille (adulte, A2)</h4>
+      
+      <div class="expression-category">🔹 PRÉSENTER SA FAMILLE</div>
+      <div class="expression-list">
+        <span class="expr-chip">Nous sommes une famille de cinq personnes.</span>
+        <span class="expr-chip">Mon mari travaille dans l'informatique.</span>
+        <span class="expr-chip">Ma fille aînée vient de commencer son premier emploi.</span>
+        <span class="expr-chip">Mes parents sont à la retraite et ils voyagent beaucoup.</span>
+        <span class="expr-chip">J'ai deux sœurs et un frère.</span>
+      </div>
+
+      <div class="expression-category">🔹 PARLER DU CARACTÈRE (adultes)</div>
+      <div class="expression-list">
+        <span class="expr-chip">Mon épouse est très organisée et patiente.</span>
+        <span class="expr-chip">Mon fils est plutôt indépendant et sérieux.</span>
+        <span class="expr-chip">Ma mère est généreuse, parfois un peu têtue.</span>
+        <span class="expr-chip">Mon beau-frère a beaucoup d'humour.</span>
+        <span class="expr-chip">Ma belle-sœur est calme et discrète.</span>
+      </div>
+
+      <div class="expression-category">🔹 ROUTINES FAMILIALES (adulte)</div>
+      <div class="expression-list">
+        <span class="expr-chip">Le soir, nous dînons ensemble vers 19h30.</span>
+        <span class="expr-chip">Le week-end, on fait souvent des balades en forêt.</span>
+        <span class="expr-chip">Nous appelons nos enfants chaque dimanche soir.</span>
+        <span class="expr-chip">Pendant les vacances, nous louons une maison à la montagne.</span>
+        <span class="expr-chip">Ma mère vient garder les enfants le mercredi après-midi.</span>
+      </div>
+
+      <div class="expression-category">🔹 EXPRIMER DES SENTIMENTS</div>
+      <div class="expression-list">
+        <span class="expr-chip">Je suis très attachée à ma famille.</span>
+        <span class="expr-chip">C'est important d'être présent pour ses proches.</span>
+        <span class="expr-chip">Je suis fière de ce que mes enfants deviennent.</span>
+        <span class="expr-chip">Nous traversons des moments difficiles mais nous nous soutenons.</span>
+        <span class="expr-chip">J'ai de la chance d'avoir des parents aussi aimants.</span>
+      </div>
+
+      <div class="expression-category">🔹 PARLER D'OBLIGATIONS / PROJETS</div>
+      <div class="expression-list">
+        <span class="expr-chip">Je dois aider ma mère à faire ses papiers d'impôts.</span>
+        <span class="expr-chip">Nous allons fêter les 50 ans de mon mari le mois prochain.</span>
+        <span class="expr-chip">On aimerait organiser une grande réunion de famille à Noël.</span>
+        <span class="expr-chip">Mon frère va bientôt déménager, il a besoin de nos conseils.</span>
+      </div>
+
+      <div class="grid-2">
+        <div style="background:#F0E6FF; border-radius:24px; padding:1rem;">
+          <strong>🎤 QUESTIONS SUR LA FAMILLE (entraînez-vous)</strong><br>
+          • Décrivez votre famille (conjoint, enfants, parents).<br>
+          • Quel est le caractère de votre frère ou de votre sœur ?<br>
+          • Que faites-vous ensemble le week-end ?<br>
+          • Qui admirez-vous dans votre famille et pourquoi ?<br>
+          • À quelle fréquence voyez-vous vos parents ou vos beaux-parents ?
+        </div>
+        <div style="background:#E0F7F0; border-radius:24px; padding:1rem;">
+          <strong>💬 RÉPONSES MODÈLES</strong><br>
+          "Je suis mariée et j'ai deux adolescents de 14 et 17 ans."<br>
+          "Mon frère est drôle mais parfois un peu impatient."<br>
+          "Le dimanche, on va au marché puis on déjeune ensemble."<br>
+          "J'admire ma mère parce qu'elle est très forte et qu'elle a toujours aidé tout le monde."
+        </div>
+      </div>
+
+      <div class="tip-family">
+        👪 <strong>Astuce DELF A2 :</strong> Pour enrichir votre discours, utilisez les connecteurs : "d'abord", "ensuite", "enfin" ou "par contre", "c'est pourquoi".
+      </div>
+
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(2)">← Compréhension orale</button><button class="btn-primary" onclick="goToModule(4)">✍️ Production écrite →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 4 : PRODUCTION ÉCRITE (adulte) -->
+  <div id="module4" class="module">
+    <div class="card card-sage">
+      <span class="badge">✍️ PRODUCTION ÉCRITE – 25 min</span>
+      <h3>Écrire un message à sa sœur / son frère</h3>
+      <p><strong>Consigne :</strong> Votre mère fête ses 70 ans dans deux semaines. Écrivez un message (60-80 mots) à votre frère ou votre sœur pour : proposer une idée de cadeau commun, organiser la fête (date, lieu, repas), et demander son avis sur les invitations.</p>
+      <textarea id="writingMsg" rows="5" placeholder="Coucou ma sœur, j'ai une idée pour l'anniversaire de maman..."></textarea>
+      <div id="wordCountMsg">0 mots</div>
+      <button class="btn-outline" onclick="showModelMessage()">📧 Voir un modèle</button>
+      <div id="modelMsg" style="display:none; margin-top:12px; background:#EAF9F0; border-radius:24px; padding:1rem;">
+        ✉️ <strong>Exemple (78 mots) :</strong><br>
+        "Coucou Stéphane,<br><br>
+        Pour les 70 ans de maman, et si on lui offrait un week-end dans un spa à deux ? J'ai vu une bonne offre. Je pense organiser la fête le samedi 14 mai à 12h chez moi. Je ferai un rôti et une tarte aux pommes. Il faudrait inviter tante Chantal et oncle Pierre. Qu'en penses-tu ? Est-ce que tu peux t'occuper du gâteau ?<br><br>
+        Dis-moi vite. Bises, Valérie."
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(3)">← Dialogue</button><button class="btn-primary" onclick="goToModule(5)">✅ Révision →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 5 : RÉVISION & ERREURS -->
+  <div id="module5" class="module">
+    <div class="card card-lavender">
+      <span class="badge">📌 RÉVISION – Pièges fréquents (15 min)</span>
+      <h3>Ce qu'il faut éviter en parlant de sa famille</h3>
+      <div class="grid-2">
+        <div style="background:#FFE0E0; border-radius:24px; padding:1rem;">
+          ❌ <strong>Erreurs fréquentes</strong><br>
+          • "Mon père *il est* gentil" (pléonasme)<br>
+          • "Ma sœur *a 35 années*" → confusion an/année<br>
+          • "Je suis *marié avec* mon mari" (redondant)<br>
+          • "Nous *sommes réunis* tous les week-ends" -> oubli du verbe?<br>
+          • "Elle *est* 10 ans plus âgée" (au lieu de "elle a 10 ans de plus")
+        </div>
+        <div style="background:#DCF5EF; border-radius:24px; padding:1rem;">
+          ✅ <strong>Corrections</strong><br>
+          • "Mon père est gentil" ou "Mon père, il est gentil" (familier oral)<br>
+          • "Ma sœur a 35 **ans**"<br>
+          • "Je suis mariée **avec** Paul" ou "Je suis la femme de Paul"<br>
+          • "Nous nous réunissons tous les week-ends"<br>
+          • "Elle a 10 ans de plus que moi"
+        </div>
+      </div>
+      <div class="bubble-text">
+        🧠 <strong>Mots clés à retenir :</strong> la belle-famille, un beau-père, une belle-mère, un demi-frère, une demi-sœur, un enfant unique, un neveu / une nièce, les arrière-grands-parents, la solidarité, l'entraide, un héritage, une réunion de famille.
+      </div>
+      <div class="tip-family">
+        💡 <strong>Pour le DELF, pensez à :</strong><br>
+        • Utilisez le passé composé pour raconter un souvenir récent : "On a fêté l'anniversaire ensemble."<br>
+        • Variez les adjectifs possessifs : mon, ma, mes, son, sa, ses, notre, nos.<br>
+        • N'oubliez pas l'accord : "mes sœurs sont *gentilles*".
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(4)">← Écrit</button><button class="btn-primary" onclick="goToModule(6)">🏁 Final →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 6 : FINAL -->
+  <div id="module6" class="module">
+    <div class="final-area">
+      <span class="badge" style="background: var(--deep-blue);">🌟 FÉLICITATIONS !</span>
+      <h3>Prête pour le DELF A2 – thème Famille</h3>
+      <p style="font-size:1.2rem; margin: 20px 0;">🎯 Votre score : <strong id="finalScoreSpan">0</strong> / 6 points</p>
+      <p>💪 Vous savez présenter les membres de votre famille, décrire les relations adultes (conjoint, enfants, parents âgés), organiser un événement familial et exprimer vos sentiments. Vous êtes prête pour l'examen !</p>
+      <button class="btn-primary" onclick="restartCourse()">🔄 Recommencer le cours</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentMod = 1;
+  let totalScore = 0;
+  let oralAnswered = { q1: false, q2: false, q3: false };
+  const MAX_SCORE = 6;
+
+  function updateUI() {
+    let percent = Math.floor(((currentMod-1)/6)*100);
+    document.getElementById('progressFill').style.width = percent+'%';
+    document.getElementById('progressPercent').innerText = percent+'%';
+    document.getElementById('headerScore').innerHTML = `🏆 Score: ${totalScore} pts`;
+    if(document.getElementById('finalScoreSpan')) document.getElementById('finalScoreSpan').innerText = totalScore;
+  }
+
+  function addScore() {
+    if(totalScore < MAX_SCORE) totalScore++;
+    updateUI();
+  }
+
+  function checkOral(questionId, correctAnswer, btnElement) {
+    if(questionId === 1 && oralAnswered.q1) return;
+    if(questionId === 2 && oralAnswered.q2) return;
+    if(questionId === 3 && oralAnswered.q3) return;
+
+    let isCorrect = false;
+    if(questionId === 1 && correctAnswer === 'Trois enfants') isCorrect = true;
+    if(questionId === 2 && correctAnswer === 'Un appel vidéo une fois par mois') isCorrect = true;
+    if(questionId === 3 && correctAnswer === 'Elle l’appelle tous les jours et l’emmène faire les courses') isCorrect = true;
+
+    let parent = btnElement.parentNode;
+    let allBtns = parent.querySelectorAll('.qcm-btn');
+    allBtns.forEach(btn => btn.disabled = true);
+    
+    if(isCorrect) {
+      btnElement.classList.add('correct-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '✅ Bonne réponse ! +1 point';
+      if(questionId === 1 && !oralAnswered.q1) { oralAnswered.q1 = true; addScore(); }
+      if(questionId === 2 && !oralAnswered.q2) { oralAnswered.q2 = true; addScore(); }
+      if(questionId === 3 && !oralAnswered.q3) { oralAnswered.q3 = true; addScore(); }
+    } else {
+      btnElement.classList.add('wrong-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '❌ Réécoutez le témoignage.';
+    }
+  }
+
+  function speakFamilyMessage() {
+    let text = "Journaliste : Aujourd'hui, nous recevons Sylvie, 52 ans, mère de trois enfants. Sylvie, comment gérez-vous les relations avec vos enfants adultes ? Sylvie : Mes enfants ont entre 24 et 30 ans. Nous avons créé une tradition : une fois par mois, on se fait un appel vidéo en famille. Ma mère a 78 ans, je l'appelle tous les jours et je l'emmène faire ses courses chaque mercredi.";
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.85;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function randomSituation() {
+    const situations = [
+      "Votre belle-mère vient dîner pour la première fois. Vous êtes un peu stressée, vous préparez un menu simple mais élégant.",
+      "Votre enfant de 19 ans hésite entre poursuivre des études ou travailler. Vous lui donnez votre avis avec bienveillance.",
+      "Votre père vient de perdre sa femme (votre mère). Vous organisez une rotation avec vos frères et sœurs pour ne pas le laisser seul.",
+      "Votre sœur habite à l'étranger. Vous lui proposez de faire une visioconférence avec toute la famille pour les vacances.",
+      "Votre cousin a eu un bébé. Vous contactez votre tante pour organiser un cadeau commun."
+    ];
+    let idx = Math.floor(Math.random() * situations.length);
+    let box = document.getElementById('randomSituationBox');
+    if(box) box.innerHTML = `💬 <strong>Situation aléatoire :</strong> ${situations[idx]}`;
+  }
+
+  function toggleAnswer(id) {
+    let el = document.getElementById(id);
+    if(el.style.display === 'none') el.style.display = 'block';
+    else el.style.display = 'none';
+  }
+
+  function showModelMessage() {
+    let model = document.getElementById('modelMsg');
+    if(model.style.display === 'none') model.style.display = 'block';
+    else model.style.display = 'none';
+    if(!window.writingBonus && document.getElementById('writingMsg').value.trim().length > 40) {
+      window.writingBonus = true;
+      if(totalScore + 2 <= MAX_SCORE) totalScore += 2;
+      else totalScore = MAX_SCORE;
+      updateUI();
+      alert("📝 +2 points bonus pour votre message écrit !");
+    }
+  }
+
+  const textareaEl = document.getElementById('writingMsg');
+  if(textareaEl) {
+    textareaEl.addEventListener('input', function() {
+      let words = this.value.trim().split(/\s+/).filter(w => w.length>0).length;
+      document.getElementById('wordCountMsg').innerText = words + " mots";
+    });
+  }
+
+  function goToModule(n) {
+    for(let i=1;i<=6;i++) {
+      let mod = document.getElementById(`module${i}`);
+      if(mod) mod.classList.remove('active-module');
+    }
+    document.getElementById(`module${n}`).classList.add('active-module');
+    currentMod = n;
+    updateUI();
+    updateNavDots();
+  }
+
+  function updateNavDots() {
+    let dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, idx) => {
+      let num = idx+1;
+      dot.classList.remove('active', 'done');
+      if(num === currentMod) dot.classList.add('active');
+      if(num < currentMod) dot.classList.add('done');
+    });
+  }
+
+  function buildNav() {
+    let container = document.getElementById('navDots');
+    container.innerHTML = '';
+    for(let i=1;i<=6;i++) {
+      let dot = document.createElement('div');
+      dot.classList.add('nav-dot');
+      dot.innerText = i;
+      dot.onclick = () => goToModule(i);
+      container.appendChild(dot);
+    }
+    updateNavDots();
+  }
+
+  function restartCourse() {
+    totalScore = 0;
+    oralAnswered = { q1: false, q2: false, q3: false };
+    window.writingBonus = false;
+    document.querySelectorAll('.qcm-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove('correct-choice', 'wrong-choice');
+    });
+    document.querySelectorAll('[id^="oralFeed"]').forEach(el => el.innerHTML = '');
+    if(textareaEl) textareaEl.value = '';
+    document.getElementById('wordCountMsg').innerText = '0 mots';
+    goToModule(1);
+  }
+
+  buildNav();
+  updateUI();
+</script>
+</body>
+</html>
