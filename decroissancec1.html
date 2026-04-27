@@ -1,0 +1,1291 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Décroissance : mythe ou nécessité ? | B2→C1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #1a1a2e;
+  --ink-soft: #3d3d5c;
+  --ink-muted: #7a7a9a;
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --border: #e0ddd4;
+  --accent: #2d6a4f;
+  --accent-light: #d8f3dc;
+  --accent-dark: #1b4332;
+  --warn: #b5451b;
+  --warn-light: #fde8de;
+  --info: #1e4d8c;
+  --info-light: #dbeafe;
+  --gold: #9a6e00;
+  --gold-light: #fef3c7;
+  --tag-b2: #5b21b6;
+  --tag-b2-bg: #ede9fe;
+  --tag-c1: #065f46;
+  --tag-c1-bg: #d1fae5;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.sidebar-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  background: var(--ink);
+  color: white;
+  padding: 2rem 1.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sidebar-brand {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  color: #a0e0b8;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.sidebar-sub {
+  font-size: 0.7rem;
+  color: #7a7a9a;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: #c4c4d4;
+  transition: 0.15s;
+  text-decoration: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+}
+
+.nav-item:hover { background: rgba(255,255,255,0.08); color: white; }
+.nav-item.active { background: rgba(160,224,184,0.15); color: #a0e0b8; }
+
+.nav-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #3d3d5c;
+  flex-shrink: 0;
+  transition: 0.15s;
+}
+.nav-item.active .nav-dot, .nav-item:hover .nav-dot { background: #a0e0b8; }
+
+.nav-section {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: #4a4a6a;
+  margin: 1rem 0 0.3rem 0.7rem;
+}
+
+.progress-bar-wrap {
+  margin-top: auto;
+  padding-top: 1.5rem;
+  border-top: 1px solid #2a2a4a;
+}
+
+.progress-label {
+  font-size: 0.7rem;
+  color: #7a7a9a;
+  margin-bottom: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-bar { height: 4px; background: #2a2a4a; border-radius: 2px; overflow: hidden; }
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #a0e0b8, #52c97a);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+main {
+  padding: 3rem 3rem 4rem;
+  max-width: 820px;
+}
+
+.page-header { margin-bottom: 3rem; }
+
+.level-badges { display: flex; gap: 0.5rem; margin-bottom: 1rem; }
+
+.badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+.badge-b2 { background: var(--tag-b2-bg); color: var(--tag-b2); }
+.badge-c1 { background: var(--tag-c1-bg); color: var(--tag-c1); }
+.badge-de { background: #fef3c7; color: #92400e; }
+
+.page-header h1 {
+  font-family: 'Fraunces', serif;
+  font-size: 2.1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 0.7rem;
+}
+
+.page-header p { color: var(--ink-muted); font-size: 0.9rem; max-width: 520px; }
+
+.section {
+  background: var(--surface);
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  margin-bottom: 2rem;
+  overflow: hidden;
+  scroll-margin-top: 2rem;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.3rem 1.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--ink);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.section-title { font-size: 1rem; font-weight: 600; color: var(--ink); flex: 1; }
+.section-body { padding: 1.8rem; }
+
+.texte-passage {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 12px 12px 0;
+  padding: 1.5rem 1.8rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.93rem;
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.texte-passage p { margin-bottom: 1rem; }
+.texte-passage p:last-child { margin-bottom: 0; }
+.texte-passage strong { color: var(--ink); font-weight: 600; }
+.texte-passage em { font-style: italic; }
+
+.alert {
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+.alert-warn  { background: var(--warn-light);  border-left: 3px solid var(--warn);  color: #7a2a0a; }
+.alert-info  { background: var(--info-light);  border-left: 3px solid var(--info);  color: #0c2d5c; }
+.alert-gold  { background: var(--gold-light);  border-left: 3px solid var(--gold);  color: #5c3e00; }
+.alert-success { background: var(--accent-light); border-left: 3px solid var(--accent); color: var(--accent-dark); }
+
+.alert strong { display: block; margin-bottom: 0.3rem; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em; }
+
+.germanism-box {
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  font-size: 0.87rem;
+}
+
+.germanism-box .g-label {
+  display: inline-flex;
+  align-items: center;
+  background: #ea580c;
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.15rem 0.55rem;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.germanism-box p { color: #7c2d12; line-height: 1.6; }
+.germanism-box .expl { color: #9a3412; margin-top: 0.3rem; font-style: italic; }
+
+.exercise-block { margin-top: 1.5rem; }
+
+.exercise-q {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+}
+
+.exercise-q label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  margin-bottom: 0.5rem;
+}
+
+.exercise-q .level-tag {
+  font-size: 0.65rem;
+  font-weight: 600;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  margin-left: 0.4rem;
+  vertical-align: middle;
+}
+
+.exercise-q input[type="text"],
+.exercise-q textarea {
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.88rem;
+  color: var(--ink);
+  background: white;
+  transition: 0.15s;
+  resize: vertical;
+}
+
+.exercise-q input:focus, .exercise-q textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+}
+
+.error-item {
+  display: grid;
+  grid-template-columns: 1fr 40px 1fr;
+  align-items: start;
+  gap: 0.8rem;
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.88rem;
+}
+
+.error-wrong { color: var(--warn); font-style: italic; }
+.error-arrow { text-align: center; color: var(--ink-muted); font-size: 1.1rem; }
+
+.error-input input {
+  width: 100%;
+  padding: 0.5rem 0.8rem;
+  border-radius: 7px;
+  border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.87rem;
+  color: var(--ink);
+  background: white;
+}
+
+.error-input input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+}
+
+.btn-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--ink);
+  color: white;
+  border: none;
+  padding: 0.55rem 1.2rem;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  transition: 0.15s;
+}
+
+.btn-check:hover { background: var(--ink-soft); }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  color: var(--ink-muted);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1.1rem;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.82rem;
+  cursor: pointer;
+  margin-top: 0.8rem;
+  margin-left: 0.5rem;
+  transition: 0.15s;
+}
+
+.btn-secondary:hover { border-color: var(--ink-muted); color: var(--ink); }
+
+.answer-panel {
+  background: var(--surface2);
+  border-radius: 10px;
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.2rem;
+  margin-top: 0.8rem;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  display: none;
+  color: var(--ink-soft);
+}
+
+.answer-panel.visible { display: block; }
+.answer-panel .correct { color: var(--accent-dark); font-weight: 600; }
+.answer-panel .why {
+  margin-top: 0.5rem;
+  color: var(--ink-muted);
+  font-size: 0.83rem;
+  border-top: 1px solid var(--border);
+  padding-top: 0.5rem;
+}
+.answer-panel .why strong { color: var(--ink-soft); }
+
+/* VOCAB GRID */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+
+.vocab-card {
+  background: var(--surface2);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: 0.15s;
+}
+
+.vocab-card:hover { border-color: var(--border); }
+.vocab-card.revealed { border-color: var(--accent); }
+
+.vocab-fr { font-weight: 600; font-size: 0.9rem; color: var(--ink); }
+.vocab-ex { font-size: 0.78rem; color: var(--ink-muted); margin-top: 0.2rem; font-style: italic; }
+.vocab-de { font-size: 0.82rem; color: var(--tag-b2); margin-top: 0.4rem; display: none; }
+.vocab-note { font-size: 0.75rem; color: var(--ink-muted); margin-top: 0.35rem; display: none; font-style: italic; }
+.vocab-card.revealed .vocab-de   { display: block; }
+.vocab-card.revealed .vocab-note { display: block; }
+.vocab-hint { font-size: 0.7rem; color: var(--ink-muted); margin-top: 0.5rem; }
+.vocab-card.revealed .vocab-hint { display: none; }
+
+/* GRAMMAR 2-col */
+.grammar-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 1rem 0;
+}
+
+.grammar-box { background: var(--surface2); border-radius: 10px; padding: 1rem; }
+.grammar-box .g-head { font-weight: 600; font-size: 0.82rem; color: var(--ink-soft); margin-bottom: 0.5rem; }
+.grammar-box p { font-size: 0.87rem; line-height: 1.6; }
+.grammar-box em { color: var(--accent-dark); font-style: italic; }
+
+/* WRITING */
+.writing-zone textarea {
+  width: 100%;
+  min-height: 180px;
+  padding: 1rem 1.2rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  color: var(--ink);
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.writing-zone textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(45,106,79,0.1);
+}
+
+.writing-checklist { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0.8rem 0; }
+
+.check-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.77rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--ink-muted);
+  cursor: pointer;
+  transition: 0.15s;
+  user-select: none;
+}
+
+.check-tag.done { background: var(--tag-c1-bg); border-color: var(--accent); color: var(--tag-c1); }
+.check-tag .checkmark { font-size: 0.7rem; }
+
+.wc-bar { display: flex; align-items: center; gap: 0.8rem; margin-top: 0.5rem; }
+.wc-text { font-size: 0.78rem; color: var(--ink-muted); }
+.wc-progress { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.wc-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+
+/* AI CHAT */
+.ai-chat-section { background: var(--ink); border-radius: 16px; overflow: hidden; margin-bottom: 2rem; }
+
+.ai-chat-header {
+  padding: 1.2rem 1.8rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.ai-dot { width: 8px; height: 8px; border-radius: 50%; background: #a0e0b8; animation: pulse 2s infinite; }
+
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+
+.ai-chat-title { color: white; font-size: 0.9rem; font-weight: 500; }
+.ai-chat-sub { color: #5a5a7a; font-size: 0.75rem; margin-left: auto; }
+
+.chat-messages {
+  padding: 1.2rem 1.8rem;
+  min-height: 160px;
+  max-height: 320px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.msg { display: flex; gap: 0.6rem; align-items: flex-start; }
+
+.msg-avatar {
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.msg-ai   .msg-avatar { background: rgba(160,224,184,0.15); color: #a0e0b8; }
+.msg-user .msg-avatar { background: rgba(255,255,255,0.08); color: #7a7a9a; }
+
+.msg-bubble {
+  padding: 0.6rem 0.9rem;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  max-width: 86%;
+}
+
+.msg-ai   .msg-bubble { background: rgba(255,255,255,0.06); color: #d0d0e0; }
+.msg-user .msg-bubble { background: rgba(255,255,255,0.04); color: #8080a0; }
+.msg-ai   .msg-bubble em   { color: #a0e0b8; font-style: normal; font-weight: 500; }
+.msg-ai   .msg-bubble code { background: rgba(160,224,184,0.1); color: #a0e0b8; padding: 0.1rem 0.4rem; border-radius: 4px; font-family: monospace; font-size: 0.82rem; }
+
+.chat-input-row {
+  padding: 1rem 1.8rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  gap: 0.6rem;
+}
+
+.chat-input-row input {
+  flex: 1;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  color: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.chat-input-row input::placeholder { color: #4a4a6a; }
+.chat-input-row input:focus { border-color: rgba(160,224,184,0.3); }
+
+.btn-send {
+  background: rgba(160,224,184,0.15);
+  border: 1px solid rgba(160,224,184,0.25);
+  color: #a0e0b8;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.82rem;
+  font-family: 'DM Sans', sans-serif;
+  transition: 0.15s;
+}
+
+.btn-send:hover    { background: rgba(160,224,184,0.22); }
+.btn-send:disabled { opacity: 0.4; cursor: not-allowed; }
+
+.quick-questions {
+  padding: 0 1.8rem 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.quick-q {
+  font-size: 0.75rem;
+  padding: 0.25rem 0.7rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #6a6a8a;
+  cursor: pointer;
+  background: none;
+  font-family: 'DM Sans', sans-serif;
+  transition: 0.15s;
+}
+
+.quick-q:hover { border-color: rgba(160,224,184,0.3); color: #a0e0b8; }
+
+.divider { height: 1px; background: var(--border); margin: 1.2rem 0; }
+hr { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+@media (max-width: 860px) {
+  .sidebar-layout { grid-template-columns: 1fr; }
+  .sidebar { display: none; }
+  main { padding: 2rem 1.5rem 3rem; }
+  .error-item { grid-template-columns: 1fr; }
+  .error-arrow { display: none; }
+  .grammar-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar-layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-brand">Français C1<br>pour germanophones</div>
+  <div class="sidebar-sub">B2 → C1 · Décroissance</div>
+
+  <div class="nav-section">Contenu</div>
+  <a class="nav-item active" href="#intro"><span class="nav-dot"></span>Introduction</a>
+  <a class="nav-item" href="#texte"><span class="nav-dot"></span>Texte & compréhension</a>
+  <a class="nav-item" href="#vocab"><span class="nav-dot"></span>Vocabulaire C1</a>
+  <a class="nav-item" href="#grammaire"><span class="nav-dot"></span>Subjonctif passé</a>
+  <a class="nav-item" href="#ecriture"><span class="nav-dot"></span>Production écrite</a>
+  <a class="nav-item" href="#assistant"><span class="nav-dot"></span>Tuteur IA</a>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span>Progression</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+<div class="page-header" id="intro">
+  <div class="level-badges">
+    <span class="badge badge-b2">Votre niveau : B2</span>
+    <span class="badge badge-c1">Objectif : C1</span>
+    <span class="badge badge-de">Germanophone 🇨🇭</span>
+  </div>
+  <h1>Décroissance : mythe<br>ou nécessité ?</h1>
+  <p>Ce module cible les structures argumentatives et le vocabulaire soutenu attendus au DALF C1. Point de grammaire principal : le <strong>subjonctif passé</strong>. Conçu pour les apprenants germanophones francophones suisses.</p>
+</div>
+
+<!-- ── SECTION 1 ── -->
+<div class="section" id="texte">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">Compréhension écrite — Le paradoxe de la décroissance</div>
+    <span class="badge badge-b2">B2→C1</span>
+  </div>
+  <div class="section-body">
+    <div class="texte-passage">
+      <p>Depuis plusieurs décennies, le modèle de croissance économique infinie dans un monde aux ressources limitées est remis en question par un courant de pensée radical : la décroissance. Loin de prôner un retour à la bougie ou à la calèche, ses défenseurs appellent à une réorganisation profonde de nos priorités : produire moins mais mieux, travailler moins pour partager les emplois, et reconstruire du lien social par-delà la consommation.</p>
+      <p>D'un côté, les arguments en faveur de la décroissance semblent irréfutables sur le plan écologique. Les chiffres sont édifiants : selon le Giec, il serait nécessaire de réduire nos émissions de CO₂ de 43 % d'ici 2030 pour espérer limiter le réchauffement à 1,5 °C. Or, aucune économie mondialisée n'a jamais réussi à découpler totalement sa croissance de son empreinte carbone. Autrement dit, si nous voulons préserver une planète vivable, il faudrait sans doute accepter une forme de prospérité sans croissance, voire une décroissance choisie.</p>
+      <p>Cependant, les détracteurs de ce modèle mettent en garde contre des conséquences sociales potentiellement désastreuses. Que se passerait-il, concrètement, si l'on arrêtait brutalement de produire ? Le chômage exploserait, les retraites ne seraient plus financées, et les pays les plus pauvres, qui ont besoin de croissance pour sortir de la misère, seraient les premières victimes. <strong>Bien que la croissance ait sorti des millions de personnes de la pauvreté au XXe siècle</strong>, il est devenu difficile d'imaginer qu'elle puisse continuer indéfiniment.</p>
+      <p>Plutôt qu'une opposition stérile entre « croissancistes » et « décroissants », certains économistes préconisent un scénario intermédiaire : la <em>post-croissance</em>. Celle-ci consisterait à abandonner le PIB comme unique indicateur de progrès pour lui substituer des indices plus qualitatifs (espérance de vie en bonne santé, taux d'éducation, inégalités, préservation de la biodiversité). Cette approche a le mérite de dépasser le clivage idéologique.</p>
+    </div>
+
+    <div class="alert alert-gold">
+      <strong>Stratégie de lecture C1</strong>
+      Repérez les <em>modalisateurs</em> (sans doute, il serait nécessaire, certains…) et les changements de registre dans l'argumentation. Ils indiquent le degré d'engagement de l'auteur envers sa thèse — et vous devrez les réutiliser à l'écrit.
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-q">
+        <label>1. Pourquoi l'auteur affirme-t-il que la décroissance n'est pas « un retour à la bougie » ? <span class="level-tag badge-b2">B2</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Warum behauptet der Autor, dass Degrowth keine Rückkehr in die Vormoderne bedeutet?</em></div>
+        <input type="text" placeholder="Expliquez avec vos propres mots...">
+      </div>
+      <div class="exercise-q">
+        <label>2. Citez deux arguments avancés par les détracteurs de la décroissance. <span class="level-tag badge-b2">B2</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Nennen Sie zwei Gegenargumente, die im Text erwähnt werden.</em></div>
+        <input type="text" placeholder="1)  2) ...">
+      </div>
+      <div class="exercise-q">
+        <label>3. Reformulez la thèse finale de l'auteur en une phrase (sans copier le texte). <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Formulieren Sie die Hauptthese in einem eigenen Satz um (nicht kopieren!).</em></div>
+        <input type="text" placeholder="Selon l'auteur, l'enjeu ne réside pas dans...">
+      </div>
+      <div class="exercise-q">
+        <label>4. Quel procédé argumentatif l'auteur utilise-t-il en évoquant les détracteurs ? Pourquoi ? <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Welches rhetorische Mittel setzt der Autor ein? (Hinweis: Einräumung / Konzession)</em></div>
+        <input type="text" placeholder="Il utilise une concession pour...">
+      </div>
+      <button class="btn-check" onclick="toggleAnswer('ans-compre')">Voir les pistes de correction</button>
+      <div class="answer-panel" id="ans-compre">
+        <div class="correct">1.</div> Les défenseurs ne veulent pas revenir à la prémodernité, mais réorganiser les priorités : moins produire, partager les emplois, reconstruire du lien social — sans supprimer le progrès.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Die Degrowth-Anhänger wollen nicht in die Vorzeit zurück, sondern Prioritäten neu ordnen: weniger produzieren, Arbeit teilen, soziale Bindungen stärken.</div>
+        <div class="correct" style="margin-top:0.6rem;">2.</div> L'explosion du chômage et l'impossibilité de financer les retraites ; le sort des pays pauvres qui ont besoin de croissance pour sortir de la misère.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Massenarbeitslosigkeit und unbezahlbare Renten; die Lage ärmerer Länder, die Wachstum brauchen.</div>
+        <div class="correct" style="margin-top:0.6rem;">3.</div> Selon l'auteur, l'enjeu n'est pas d'opposer croissance et décroissance, mais de substituer au PIB des indicateurs qualitatifs pour dépasser le clivage idéologique.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Es geht nicht darum, Wachstum und Degrowth gegenüberzustellen, sondern qualitative Indikatoren anstelle des BIP zu setzen.</div>
+        <div class="correct" style="margin-top:0.6rem;">4.</div> Il introduit une <em>concession (concessio)</em> : en accordant un point aux adversaires, il renforce la crédibilité de son raisonnement avant de revenir à sa thèse.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 Er verwendet eine Konzession (Einräumung): Er räumt einen echten Vorteil ein, um glaubwürdiger zu wirken, bevor er zur Hauptthese zurückkehrt.</div>
+        <div class="why"><strong>Conseil C1 :</strong> dans votre production écrite, accordez un point à l'adversaire avant de défendre votre position. C'est une marque d'argumentation nuancée attendue au DALF.<br><span style="color:#5b21b6; font-size:0.8rem;">🇩🇪 <em>Räumen Sie einen Punkt der Gegenseite ein — das zeigt argumentative Reife auf C1-Niveau.</em></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2 : VOCABULAIRE ── -->
+<div class="section" id="vocab">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">Vocabulaire C1 — Débat écologique et économique</div>
+    <span class="badge badge-c1">C1</span>
+  </div>
+  <div class="section-body">
+    <div class="alert alert-info">
+      <strong>Exercice</strong>
+      Cliquez sur chaque carte pour révéler la traduction allemande et les notes avancées. Utilisez ensuite ces mots dans la production écrite.
+    </div>
+
+    <div class="vocab-grid">
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">prôner (v.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: befürworten / propagieren</div>
+        <div class="vocab-ex">« Les écologistes prônent une réduction de la production. »</div>
+        <div class="vocab-de">🇩🇪 Registre soutenu · ≠ recommander (empfehlen, plus neutre) · construction : prôner + inf. ou nom</div>
+        <div class="vocab-note"><em>Die Ökologen befürworten eine Reduktion der Produktion.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">irréfutable (adj.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: unwiderlegbar / unbestreitbar</div>
+        <div class="vocab-ex">« Les preuves du réchauffement sont irréfutables. »</div>
+        <div class="vocab-de">🇩🇪 ≠ évident (offensichtlich) · plus fort : aucune réfutation possible · adverbe : irréfutablement</div>
+        <div class="vocab-note"><em>Die Beweise für die Erderwärmung sind unwiderlegbar.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">édifiant(e) (adj.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: aufschlussreich / ernüchternd</div>
+        <div class="vocab-ex">« Les chiffres sur la fonte des glaces sont édifiants. »</div>
+        <div class="vocab-de">🇩🇪 Souvent ironique ou choquant · ≠ instructif (lehrreich, plus neutre)</div>
+        <div class="vocab-note"><em>Die Zahlen zum Gletscherschmelzen sind ernüchternd / erschütternd.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">découpler (v.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: entkoppeln</div>
+        <div class="vocab-ex">« Il faut découpler la croissance de l'empreinte carbone. »</div>
+        <div class="vocab-de">🇩🇪 Terme économique & écologique clé · construction : découpler A <em>de</em> B</div>
+        <div class="vocab-note"><em>Wachstum vom CO₂-Ausstoß entkoppeln.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">l'empreinte carbone (n.f.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: der CO₂-Fußabdruck</div>
+        <div class="vocab-ex">« Réduire son empreinte carbone est une priorité. »</div>
+        <div class="vocab-de">🇩🇪 Terme incontournable en contexte environnemental C1 · article féminin</div>
+        <div class="vocab-note"><em>Jeden sollte seinen CO₂-Fußabdruck verringern.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">les émissions (n.f.pl.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: die Emissionen / der Ausstoß</div>
+        <div class="vocab-ex">« Baisser nos émissions de 43 % d'ici 2030. »</div>
+        <div class="vocab-de">🇩🇪 Toujours au pluriel · ≠ pollution (die Verschmutzung, plus général)</div>
+        <div class="vocab-note"><em>Treibhausgasemissionen / CO₂-Ausstoß reduzieren.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">un clivage (n.m.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: die Spaltung / die Kluft</div>
+        <div class="vocab-ex">« Le clivage entre pro et anti-croissance paralyse le débat. »</div>
+        <div class="vocab-de">🇩🇪 ≠ différence (Unterschied) · connotation : division profonde et durable</div>
+        <div class="vocab-note"><em>Eine tiefe ideologische Spaltung / gesellschaftliche Kluft.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">substituer (v.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: ersetzen / an die Stelle setzen</div>
+        <div class="vocab-ex">« Substituer la qualité à la quantité. »</div>
+        <div class="vocab-de">🇩🇪 Piège : substituer A <em>à</em> B (nicht <em>par</em> B) · ≠ remplacer (moins formel)</div>
+        <div class="vocab-note"><em>Qualität an die Stelle der Quantität setzen.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">un détracteur/trice (n.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: der Kritiker / der Gegner</div>
+        <div class="vocab-ex">« Les détracteurs craignent une hausse du chômage. »</div>
+        <div class="vocab-de">🇩🇪 Toujours négatif (adversaire déclaré) · ≠ critique (peut être positif)</div>
+        <div class="vocab-note"><em>Scharfe Kritiker / erklärte Gegner der Degrowth-Bewegung.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">la post-croissance (n.f.)</div>
+        <div style="font-size:0.75rem; background:#ede9fe; color:#5b21b6; border-radius:4px; padding:0.15rem 0.5rem; display:inline-block; margin:0.25rem 0;">DE: die Postwachstumswirtschaft</div>
+        <div class="vocab-ex">« La post-croissance abandonne le PIB comme seul indicateur. »</div>
+        <div class="vocab-de">🇩🇪 Ni croissance infinie, ni décroissance radicale · à distinguer de <em>Degrowth</em></div>
+        <div class="vocab-note"><em>Wohlstand ohne Wachstum / Postwachstumsgesellschaft.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:0.4rem; color:var(--ink-soft);">Reformulation soutenue</h3>
+    <p style="font-size:0.82rem; color:var(--ink-muted); margin-bottom:1rem;">Remplacez l'expression entre parenthèses par le terme C1 le plus précis.</p>
+    <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:1rem;">🇩🇪 <em>Ersetzen Sie den Ausdruck in Klammern durch das passende C1-Wort aus den Karten oben.</em></div>
+
+    <div class="exercise-q">
+      <label style="font-weight:700; color:var(--ink); font-size:0.88rem;">Partie A — Verbes et noms en contexte</label>
+      <div style="display:grid; gap:0.6rem; margin-top:0.6rem;">
+        <input type="text" placeholder="1. Les scientifiques alertent sur notre (quantité de CO₂ émise) [CO₂-Fußabdruck]. → notre ___">
+        <input type="text" placeholder="2. Ces chiffres sont (très parlants, presque choquants) [ernüchternd]. → sont ___">
+        <input type="text" placeholder="3. Ce raisonnement est (impossible à contester) [unwiderlegbar]. → est ___">
+        <input type="text" placeholder="4. L'auteur (recommande fortement) [befürwortet] un changement d'indicateurs. → ___">
+        <input type="text" placeholder="5. Le principal (adversaire déclaré) [Gegner] de la décroissance craint le chômage. → Le principal ___ de la décroissance">
+      </div>
+    </div>
+
+    <div class="exercise-q" style="margin-top:0.8rem;">
+      <label style="font-weight:700; color:var(--ink); font-size:0.88rem;">Partie B — Constructions et prépositions (pièges C1)</label>
+      <div style="display:grid; gap:0.6rem; margin-top:0.6rem;">
+        <input type="text" placeholder="6. Il faut (séparer) [entkoppeln] la croissance de la consommation d'énergie. → Il faut ___ la croissance ___ la consommation.">
+        <input type="text" placeholder="7. L'économiste propose de (mettre la qualité à la place de la quantité). → ___ la qualité ___ la quantité.">
+        <input type="text" placeholder="8. Cette (division profonde) [Spaltung] entre pro et anti-croissance paralyse le débat. → Ce ___ paralyse le débat.">
+        <input type="text" placeholder="9. « Il ne faut pas voir la décroissance comme entièrement mauvaise. » → C1 : « Il serait injuste de ___ la décroissance. »">
+        <input type="text" placeholder="10. « Les experts disent qu'il faut changer d'indicateurs. » → C1 : « Les experts ___ un changement d'indicateurs. »">
+      </div>
+    </div>
+
+    <button class="btn-check" onclick="toggleAnswer('ans-vocab')">Voir le corrigé complet</button>
+    <div class="answer-panel" id="ans-vocab">
+      <div style="font-weight:600; color:var(--accent-dark); margin-bottom:0.6rem;">Partie A</div>
+      <div class="correct">1.</div> … notre <em>empreinte carbone</em>.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>der CO₂-Fußabdruck</em> · article féminin : <em>la</em> empreinte</div>
+      <div class="correct" style="margin-top:0.5rem;">2.</div> … sont <em>édifiants</em>.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>aufschlussreich / ernüchternd</em> · connotation de choc ou de surprise négative</div>
+      <div class="correct" style="margin-top:0.5rem;">3.</div> … est <em>irréfutable</em>.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>unwiderlegbar / unbestreitbar</em> · plus fort qu'<em>évident</em></div>
+      <div class="correct" style="margin-top:0.5rem;">4.</div> L'auteur <em>prône</em> un changement d'indicateurs.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>befürworten / propagieren</em> · plus soutenu que <em>recommander</em></div>
+      <div class="correct" style="margin-top:0.5rem;">5.</div> Le principal <em>détracteur</em> de la décroissance.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>der Gegner / der Kritiker</em> · toujours péjoratif, adversaire déclaré</div>
+
+      <div style="font-weight:600; color:var(--accent-dark); margin-top:1rem; margin-bottom:0.6rem;">Partie B</div>
+      <div class="correct">6.</div> Il faut <em>découpler</em> la croissance <em>de</em> la consommation d'énergie.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>entkoppeln</em> · Achtung: découpler A <em>de</em> B (nicht <em>et</em> B)</div>
+      <div class="correct" style="margin-top:0.5rem;">7.</div> <em>Substituer</em> la qualité <em>à</em> la quantité.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>ersetzen</em> · Piège : substituer A <em>à</em> B (nicht <em>par</em> B)</div>
+      <div class="correct" style="margin-top:0.5rem;">8.</div> Ce <em>clivage</em> paralyse le débat.
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>die Spaltung / die Kluft</em> · plus fort que <em>désaccord</em></div>
+      <div class="correct" style="margin-top:0.5rem;">9.</div> « Il serait injuste de <em>diaboliser</em> la décroissance. »
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>verteufeln</em> · très soutenu, connotation forte</div>
+      <div class="correct" style="margin-top:0.5rem;">10.</div> « Les experts <em>préconisent</em> un changement d'indicateurs. »
+      <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.15rem;">🇩🇪 <em>befürworten / empfehlen</em> · plus soutenu que <em>recommander</em></div>
+
+      <div class="why"><strong>Astuce C1 :</strong> apprenez chaque mot avec sa préposition — <em>prôner</em> + inf., <em>découpler</em> A <em>de</em> B, <em>substituer</em> A <em>à</em> B. Les correcteurs du DALF sanctionnent les mauvaises prépositions autant que les mauvais mots.<br><span style="color:#5b21b6; font-size:0.8rem;">🇩🇪 <em>Lernen Sie jedes Verb mit seiner Präposition — falsche Präpositionen werden von Korrektoren genauso bestraft wie falsche Wörter.</em></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3 : GRAMMAIRE ── -->
+<div class="section" id="grammaire">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">Grammaire C1 — Le subjonctif passé (antériorité)</div>
+    <span class="badge badge-c1">C1 essentiel</span>
+  </div>
+  <div class="section-body">
+
+    <div class="alert alert-warn">
+      <strong>La structure clé</strong>
+      Le subjonctif passé exprime une action <em>antérieure</em> à celle de la principale dans une subordonnée au subjonctif.<br>
+      <strong>Formation : que + [avoir/être au subjonctif présent] + [participe passé]</strong>
+      <div style="margin-top:0.8rem; display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; font-size:0.85rem;">
+        <div style="background:rgba(182,69,27,0.08); padding:0.7rem; border-radius:6px;">Subj. présent :<br><em>Je doute qu'il <strong>comprenne</strong>.</em></div>
+        <div style="background:rgba(45,106,79,0.1); padding:0.7rem; border-radius:6px;">Subj. passé :<br><em>Je doute qu'il <strong>ait compris</strong>.</em></div>
+      </div>
+      <div style="margin-top:0.6rem; background:rgba(91,33,182,0.06); padding:0.7rem; border-radius:6px; font-size:0.82rem; color:#5b21b6;">
+        🇩🇪 <em>que j'aie mangé · que tu sois parti(e) · qu'il ait fini · que nous ayons agi · qu'ils soient arrivés</em><br>
+        Im Deutschen gibt es keinen echten Subjonctif — daher bereitet diese Struktur Germanophonen oft Schwierigkeiten.
+      </div>
+    </div>
+
+    <div class="grammar-grid">
+      <div class="grammar-box">
+        <div class="g-head">Cas 1 — Opinion / doute au présent</div>
+        <p>Après un verbe d'opinion au présent :<br><em>Je ne pense pas qu'ils <strong>aient mesuré</strong> l'impact écologique.</em></p>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-top:0.5rem;">🇩🇪 <em>Ich glaube nicht, dass sie das ökologische Ausmaß begriffen haben.</em></div>
+      </div>
+      <div class="grammar-box">
+        <div class="g-head">Cas 2 — bien que / quoique + antériorité</div>
+        <p>Après une conjonction de concession :<br><em>Bien que la croissance <strong>ait sorti</strong> des gens de la pauvreté, elle n'est pas soutenable.</em></p>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-top:0.5rem;">🇩🇪 <em>Obwohl das Wachstum Menschen aus der Armut geführt hat, ist es nicht nachhaltig.</em></div>
+      </div>
+      <div class="grammar-box">
+        <div class="g-head">Cas 3 — sans que (très soutenu)</div>
+        <p>Antériorité imprévue :<br><em>Sans qu'ils <strong>aient eu</strong> le temps de réagir, le réchauffement s'est accéléré.</em></p>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-top:0.5rem;">🇩🇪 <em>Ohne dass sie Zeit hatten zu reagieren, hat sich die Erderwärmung beschleunigt.</em></div>
+      </div>
+      <div class="grammar-box">
+        <div class="g-head">⚠️ Erreur typique des germanophones</div>
+        <p>En allemand, <em>obwohl + Indikativ</em> suffit. En français, après <em>bien que</em> :</p>
+        <p style="margin-top:0.4rem; color:var(--warn);">❌ Bien que la croissance <strong>a sorti</strong> des gens…</p>
+        <p style="color:var(--accent-dark);">✅ Bien que la croissance <strong>ait sorti</strong> des gens…</p>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-top:0.4rem;">🇩🇪 <em>obwohl + Indikativ (DE) ≠ bien que + Subjonctif (FR)</em></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:1rem; color:var(--ink-soft);">Exercice 1 — Mettez au subjonctif passé</h3>
+
+      <div class="exercise-q">
+        <label>1. Je regrette qu'ils (ne pas prendre) ___ la mesure du problème plus tôt.</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Ich bedauere, dass sie das Ausmaß des Problems nicht früher erkannt haben.</em></div>
+        <input type="text" placeholder="Je regrette qu'ils ___">
+      </div>
+      <div class="exercise-q">
+        <label>2. Quoique les gouvernements (annoncer) ___ des mesures, les émissions continuent d'augmenter.</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Obwohl die Regierungen Maßnahmen angekündigt haben, steigen die Emissionen weiter an.</em></div>
+        <input type="text" placeholder="Quoique les gouvernements ___">
+      </div>
+      <div class="exercise-q">
+        <label>3. Sans qu'aucun expert (prévoir) ___ une telle accélération, les records sont battus chaque année.</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Ohne dass irgendein Experte eine solche Beschleunigung vorhergesagt hatte, werden Rekorde gebrochen.</em></div>
+        <input type="text" placeholder="Sans qu'aucun expert ___">
+      </div>
+      <div class="exercise-q">
+        <label>4. Il est peu probable que nous (dépasser) ___ les objectifs de l'accord de Paris.</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Es ist unwahrscheinlich, dass wir die Pariser Klimaziele übertroffen haben.</em></div>
+        <input type="text" placeholder="Il est peu probable que nous ___">
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-subj1')">Voir les corrections</button>
+      <div class="answer-panel" id="ans-subj1">
+        <div class="correct">1.</div> Je regrette qu'ils <em>n'aient pas pris</em> la mesure du problème plus tôt.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>n'aient pas pris</em> = Subjonctif passé négatif von <em>prendre</em></div>
+        <div class="correct" style="margin-top:0.5rem;">2.</div> Quoique les gouvernements <em>aient annoncé</em> des mesures, les émissions continuent.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>aient annoncé</em> = Subjonctif passé von <em>annoncer</em> · <em>quoique</em> = obwohl → immer Subjonctif!</div>
+        <div class="correct" style="margin-top:0.5rem;">3.</div> Sans qu'aucun expert <em>ait prévu</em> une telle accélération…
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>ait prévu</em> = Subjonctif passé von <em>prévoir</em> · <em>sans que</em> = ohne dass → immer Subjonctif!</div>
+        <div class="correct" style="margin-top:0.5rem;">4.</div> Il est peu probable que nous <em>ayons dépassé</em> les objectifs de Paris.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>ayons dépassé</em> = Subjonctif passé von <em>dépasser</em></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="exercise-block">
+      <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:1rem; color:var(--ink-soft);">Exercice 2 — Transformez avec <em>bien que</em> + subjonctif passé</h3>
+
+      <div class="alert alert-info" style="margin-bottom:1rem;">
+        <strong>Modèle</strong>
+        « Les dirigeants ont pris conscience tardivement. Ils agissent aujourd'hui. »<br>
+        → <em>Bien que les dirigeants <strong>aient pris conscience</strong> tardivement, ils agissent aujourd'hui.</em><br>
+        <span style="font-size:0.8rem; color:#5b21b6;">🇩🇪 <em>Obwohl die Führungskräfte spät auf das Problem aufmerksam wurden, handeln sie heute.</em></span>
+      </div>
+
+      <div class="exercise-q">
+        <label>1. « La croissance a sorti des millions de personnes de la pauvreté. Cependant, elle détruit la planète. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Obwohl das Wachstum Millionen aus der Armut geführt hat, zerstört es den Planeten.</em></div>
+        <input type="text" placeholder="Bien que la croissance ___">
+      </div>
+      <div class="exercise-q">
+        <label>2. « Les médias ont largement relayé les alertes du Giec. Pourtant, l'opinion n'a pas changé ses habitudes. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Obwohl die Medien die IPCC-Warnungen weitergegeben haben, hat die Öffentlichkeit ihre Gewohnheiten nicht geändert.</em></div>
+        <input type="text" placeholder="Bien que les médias ___">
+      </div>
+      <div class="exercise-q">
+        <label>3. « Les entreprises ont investi dans le greenwashing. Elles n'ont pas réduit leurs émissions. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Obwohl die Unternehmen in Greenwashing investiert haben, haben sie ihre Emissionen nicht reduziert.</em></div>
+        <input type="text" placeholder="Bien que les entreprises ___">
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-subj2')">Voir les corrections</button>
+      <div class="answer-panel" id="ans-subj2">
+        <div class="correct">1.</div> Bien que la croissance <em>ait sorti</em> des millions de personnes de la pauvreté, elle détruit la planète.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>ait sorti</em> = Subjonctif passé von <em>sortir</em> (auxiliaire avoir, car transitif ici)</div>
+        <div class="correct" style="margin-top:0.5rem;">2.</div> Bien que les médias <em>aient largement relayé</em> les alertes du Giec, l'opinion n'a pas changé ses habitudes.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>aient relayé</em> = Subjonctif passé von <em>relayer</em> · l'adverbe se place entre l'auxiliaire et le participe</div>
+        <div class="correct" style="margin-top:0.5rem;">3.</div> Bien que les entreprises <em>aient investi</em> dans le greenwashing, elles n'ont pas réduit leurs émissions.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>aient investi</em> = Subjonctif passé von <em>investir</em></div>
+        <div class="why"><strong>Moyen mnémotechnique :</strong> <em>bien que, quoique, pour que, à condition que</em> → subjonctif. Toujours. Sans exception.<br><span style="color:#5b21b6; font-size:0.8rem;">🇩🇪 <em>Diese Konjunktionen verlangen IMMER den Subjonctif — anders als im Deutschen (obwohl + Indikativ)!</em></span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="exercise-block">
+      <h3 style="font-size:0.9rem; font-weight:600; margin-bottom:1rem; color:var(--ink-soft);">Exercice 3 — <em>sans que</em> + subjonctif passé <span style="font-size:0.78rem; color:var(--tag-b2); margin-left:0.4rem;">(très soutenu)</span></h3>
+
+      <div class="alert alert-info" style="margin-bottom:1rem;">
+        <strong>Modèle</strong>
+        « Personne n'a réagi à temps. La situation a empiré. »<br>
+        → <em>Sans que personne <strong>ait réagi</strong> à temps, la situation a empiré.</em><br>
+        <span style="font-size:0.8rem; color:#5b21b6;">🇩🇪 <em>Ohne dass jemand rechtzeitig reagiert hatte, hat sich die Lage verschlechtert.</em></span>
+      </div>
+
+      <div class="exercise-q">
+        <label>1. « Aucun gouvernement n'a pris de mesures radicales. Le réchauffement s'est accéléré. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Ohne dass eine Regierung radikale Maßnahmen ergriffen hatte, hat sich die Erwärmung beschleunigt.</em></div>
+        <input type="text" placeholder="Sans qu'aucun gouvernement ___">
+      </div>
+      <div class="exercise-q">
+        <label>2. « Les citoyens n'ont pas vraiment changé leurs habitudes. Les émissions ont continué à augmenter. »</label>
+        <div style="font-size:0.78rem; color:#5b21b6; margin-bottom:0.4rem;">🇩🇪 <em>Ohne dass die Bürger ihre Gewohnheiten wirklich geändert hatten, stiegen die Emissionen weiter.</em></div>
+        <input type="text" placeholder="Sans que les citoyens ___">
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-subj3')">Voir les corrections</button>
+      <div class="answer-panel" id="ans-subj3">
+        <div class="correct">1.</div> Sans qu'aucun gouvernement <em>ait pris</em> de mesures radicales, le réchauffement s'est accéléré.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>ait pris</em> = Subjonctif passé von <em>prendre</em></div>
+        <div class="correct" style="margin-top:0.5rem;">2.</div> Sans que les citoyens <em>aient vraiment changé</em> leurs habitudes, les émissions ont continué à augmenter.
+        <div style="font-size:0.8rem; color:#5b21b6; margin-top:0.2rem;">🇩🇪 <em>aient changé</em> = Subjonctif passé von <em>changer</em> · l'adverbe se place avant le participe passé</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── SECTION 4 : PRODUCTION ÉCRITE ── -->
+<div class="section" id="ecriture">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">Production écrite — Essai argumenté</div>
+    <span class="badge badge-c1">C1 · 250–280 mots</span>
+  </div>
+  <div class="section-body">
+    <div class="alert alert-gold">
+      <strong>Sujet (type DALF C1)</strong>
+      « Pour lutter efficacement contre le dérèglement climatique, les pays riches devraient obligatoirement adopter un modèle de décroissance. »<br>
+      <em>Discutez cette affirmation en vous appuyant sur des arguments nuancés et des exemples précis.</em>
+      <div style="margin-top:0.5rem; font-size:0.82rem; color:#5b21b6;">🇩🇪 <em>„Um den Klimawandel wirksam zu bekämpfen, sollten reiche Länder verpflichtend ein Degrowth-Modell einführen." Diskutieren Sie mit Nuancen.</em></div>
+    </div>
+
+    <p style="font-size:0.85rem; color:var(--ink-muted); margin-bottom:1rem;">Cochez chaque élément au fur et à mesure que vous l'intégrez dans votre texte :</p>
+
+    <div class="writing-checklist">
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Introduction avec problématique</span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 2 connecteurs avancés <span style="font-size:0.65rem; color:#5b21b6;">(cependant, or, par ailleurs…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Concession renforcée <span style="font-size:0.65rem; color:#5b21b6;">(Certes… mais…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> bien que + subjonctif passé <span style="font-size:0.65rem; color:#5b21b6;">(obwohl + Subj.)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> sans que + subjonctif passé <span style="font-size:0.65rem; color:#5b21b6;">(optionnel, très C1+)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 3 mots C1 du vocabulaire <span style="font-size:0.65rem; color:#5b21b6;">(prôner, découpler, clivage…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Tournure impersonnelle <span style="font-size:0.65rem; color:#5b21b6;">(Il serait erroné de… / Il convient de…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Conclusion avec ouverture</span>
+    </div>
+
+    <div class="writing-zone">
+      <textarea id="essay-area" placeholder="Rédigez votre essai ici… (250–280 mots)" oninput="updateWordCount(this)"></textarea>
+    </div>
+
+    <div class="wc-bar">
+      <div class="wc-text" id="wc-text">0 / 250–280 mots</div>
+      <div class="wc-progress"><div class="wc-fill" id="wc-fill" style="width:0%"></div></div>
+    </div>
+
+    <button class="btn-check" onclick="toggleAnswer('ans-essay')">Voir un exemple de production C1 (270 mots)</button>
+    <button class="btn-secondary" onclick="sendEssayToChat()">Faire corriger par le tuteur IA ↗</button>
+
+    <div class="answer-panel" id="ans-essay">
+      <div class="correct">Exemple de production C1 — 270 mots</div>
+      <div style="margin-top:0.6rem; font-style:italic; line-height:1.75; font-size:0.88rem;">
+        Ces dernières années, l'idée d'une décroissance obligatoire dans les pays riches a gagné du terrain face à l'urgence climatique. <em>Faut-il pour autant imposer ce modèle par la contrainte ?</em> Une analyse nuancée s'impose.
+        <br><br>
+        <em>Certes</em>, les chiffres sont <strong>édifiants</strong> : aucun pays n'a réussi à <strong>découpler</strong> totalement sa croissance de son <strong>empreinte carbone</strong>. <em>Bien que la croissance ait sorti</em> des millions de personnes de la pauvreté au XXe siècle, il est devenu <strong>irréfutable</strong> qu'elle épuise les ressources de la planète. <em>Dès lors</em>, <strong>prôner</strong> une réduction volontaire de la production semble cohérent.
+        <br><br>
+        <em>Cependant</em>, imposer la décroissance par la loi se heurterait à un <strong>clivage</strong> social profond. Que faire des salariés dont les emplois disparaîtraient ? <em>Il serait erroné de croire</em> que la transition serait indolore. <em>Par ailleurs</em>, condamner les pays pauvres à la décroissance alors qu'ils ont besoin d'électrifier leurs hôpitaux reviendrait à un privilège hypocrite.
+        <br><br>
+        <em>En définitive</em>, plutôt qu'une décroissance imposée, <em>il conviendrait de lui <strong>substituer</strong></em> un objectif plus acceptable : la <em>post-croissance</em>, c'est-à-dire l'abandon du PIB comme unique indicateur. <em>Sans que les citoyens aient à renoncer</em> à tout confort, cette approche qualitative permettrait de dépasser le clivage idéologique. Le véritable enjeu n'est donc pas <em>si</em> il faut décroître, mais <em>comment</em> organiser démocratiquement cette transition.
+      </div>
+      <div class="why">
+        <strong>Points forts :</strong> problématique en introduction · concession (<em>Certes…</em>) + <em>bien que</em> + subjonctif passé · connecteurs : <em>cependant, par ailleurs, en définitive, dès lors</em> · vocabulaire C1 : <em>édifiants, découpler, empreinte carbone, irréfutable, prôner, clivage, substituer</em> · impersonnelles : <em>il serait erroné de / il conviendrait de</em> · <em>sans que</em> + subjonctif passé.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 5 : TUTEUR IA ── -->
+<div class="ai-chat-section" id="assistant">
+  <div class="ai-chat-header">
+    <div class="ai-dot"></div>
+    <div class="ai-chat-title">Tuteur IA — Posez vos questions en français ou en allemand</div>
+    <div class="ai-chat-sub">Propulsé par Claude</div>
+  </div>
+
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg msg-ai">
+      <div class="msg-avatar">AI</div>
+      <div class="msg-bubble">
+        Bonjour ! Je suis votre tuteur de français. Posez-moi une question sur la grammaire (subjonctif passé, conditionnel…), le vocabulaire de la décroissance, ou faites-moi corriger une phrase ou un paragraphe. Je répondrai toujours en expliquant <em>pourquoi</em> — pas seulement la correction. Vous pouvez aussi écrire en allemand si vous préférez.
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-questions">
+    <button class="quick-q" onclick="sendQuickQ('Quelle est la différence entre le subjonctif présent et le subjonctif passé ?')">Subjonctif présent vs passé</button>
+    <button class="quick-q" onclick="sendQuickQ('Comment utiliser bien que + subjonctif passé ? Donnez un exemple sur la décroissance.')">bien que + subjonctif</button>
+    <button class="quick-q" onclick="sendQuickQ('Quelles erreurs les germanophones font-ils souvent en français C1 ?')">Erreurs germanophones</button>
+    <button class="quick-q" onclick="sendQuickQ('Donnez-moi 5 connecteurs logiques C1 avec leurs équivalents allemands.')">Connecteurs C1 🇩🇪</button>
+    <button class="quick-q" onclick="sendQuickQ('Wie unterscheidet sich « bien que » vom deutschen « obwohl »?')">bien que vs obwohl 🇩🇪</button>
+  </div>
+
+  <div class="chat-input-row">
+    <input type="text" id="chat-input" placeholder="Posez une question ou soumettez une phrase à corriger… (français ou allemand)" onkeydown="if(event.key==='Enter') sendChat()">
+    <button class="btn-send" id="btn-send" onclick="sendChat()">Envoyer</button>
+  </div>
+</div>
+
+<div style="height:1px; background:var(--border); margin:0 0 1.5rem;"></div>
+<div style="font-size:0.78rem; color:var(--ink-muted); text-align:center; padding-bottom:2rem;">
+  Module B2→C1 · Environnement & Décroissance · Pour apprenants germanophones · Préparation DALF C1
+</div>
+
+</main>
+</div>
+
+<script>
+// ── NAV ACTIVE ──
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── TOGGLE ANSWER ──
+function toggleAnswer(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('visible');
+  updateProgress();
+}
+
+// ── VOCAB REVEAL ──
+function revealVocab(card) {
+  card.classList.toggle('revealed');
+  updateProgress();
+}
+
+// ── WORD COUNT ──
+function updateWordCount(ta) {
+  const words = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  document.getElementById('wc-text').textContent = `${words} / 250–280 mots`;
+  const fill = document.getElementById('wc-fill');
+  fill.style.width = Math.min(100, Math.round((words / 280) * 100)) + '%';
+  fill.style.background = words >= 250 && words <= 280 ? '#2d6a4f' : words > 280 ? '#b5451b' : '#2d6a4f';
+}
+
+// ── CHECKLIST ──
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  el.querySelector('.checkmark').textContent = el.classList.contains('done') ? '✓' : '○';
+}
+
+// ── PROGRESS ──
+function updateProgress() {
+  const inputs = document.querySelectorAll('input[type="text"], textarea');
+  let filled = 0;
+  inputs.forEach(inp => { if (inp.value.trim().length > 5) filled++; });
+  const revealed = document.querySelectorAll('.answer-panel.visible').length;
+  const total = inputs.length + 5;
+  const pct = Math.min(100, Math.round(((filled + revealed) / total) * 100));
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+document.querySelectorAll('input[type="text"], textarea').forEach(inp => {
+  inp.addEventListener('input', updateProgress);
+});
+
+// ── SEND ESSAY ──
+function sendEssayToChat() {
+  const essay = document.getElementById('essay-area').value.trim();
+  if (!essay) { alert('Rédigez d\'abord votre texte dans la zone de production écrite !'); return; }
+  const prompt = `Voici ma production écrite pour le DALF C1 sur la décroissance. Merci de la corriger en détail : relevez les erreurs grammaticales (subjonctif passé, germanismes, conditionnel…), évaluez le vocabulaire (niveau C1 ?), la cohérence argumentative, et donnez-moi un niveau estimé (B2/C1). Mon texte :\n\n${essay}`;
+  document.getElementById('chat-input').value = prompt;
+  document.getElementById('assistant').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => sendChat(), 300);
+}
+
+// ── QUICK Q ──
+function sendQuickQ(text) {
+  document.getElementById('chat-input').value = text;
+  sendChat();
+}
+
+// ── AI CHAT ──
+const chatHistory = [];
+
+const SYSTEM_PROMPT = `Tu es un tuteur expert en français langue étrangère, spécialisé dans la préparation au DALF C1 pour apprenants germanophones (notamment suisses-allemands).
+
+Contexte pédagogique : l'environnement, l'économie et la décroissance (Degrowth). Vocabulaire clé : prôner, irréfutable, édifiant, découpler, empreinte carbone, émissions, clivage, substituer, détracteur, post-croissance. Grammaire principale : le subjonctif passé (bien que + subjonctif passé, sans que + subjonctif passé).
+
+Tes réponses doivent :
+1. Toujours expliquer POURQUOI, pas seulement donner la correction.
+2. Faire des parallèles avec l'allemand quand pertinent (ex : "obwohl + Indikativ en allemand, mais bien que + subjonctif en français").
+3. Être concises (max 180 mots sauf si correction détaillée demandée).
+4. Si l'utilisateur écrit en allemand, répondre en français avec une brève note en allemand sur le point-clé.
+5. Pour les corrections de texte : identifier les 3 erreurs les plus importantes d'abord.
+6. Terminer par un conseil pratique court.`;
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const btn   = document.getElementById('btn-send');
+  const text  = input.value.trim();
+  if (!text) return;
+
+  addMsg('user', text);
+  input.value = '';
+  btn.disabled = true;
+  chatHistory.push({ role: 'user', content: text });
+
+  const typingId = addMsg('ai', '…', true);
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+
+    const data  = await res.json();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Désolé, je n\'ai pas pu répondre.';
+
+    removeMsg(typingId);
+    const formatted = reply
+      .replace(/\*\*(.*?)\*\*/g, '<em>$1</em>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+    addMsg('ai', formatted, false, true);
+    chatHistory.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    removeMsg(typingId);
+    addMsg('ai', 'Une erreur s\'est produite. Vérifiez votre connexion et réessayez.');
+  }
+
+  btn.disabled = false;
+}
+
+let msgCounter = 0;
+
+function addMsg(role, content, isTyping = false, isHtml = false) {
+  const id = 'msg-' + (++msgCounter);
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role}`;
+  div.id = id;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = role === 'ai' ? 'AI' : 'Moi';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  if (isHtml) bubble.innerHTML = content;
+  else bubble.textContent = content;
+  if (isTyping) bubble.style.opacity = '0.5';
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return id;
+}
+
+function removeMsg(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+</script>
+</body>
+</html>
