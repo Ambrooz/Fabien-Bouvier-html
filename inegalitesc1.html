@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inégalités & Justice sociale | B2→C1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --ink: #1a1a2e;
+  --ink-soft: #3d3d5c;
+  --ink-muted: #7a7a9a;
+  --bg: #f7f6f2;
+  --surface: #ffffff;
+  --surface2: #f0efe9;
+  --border: #e0ddd4;
+  --accent: #2d6a4f;
+  --accent-light: #d8f3dc;
+  --accent-dark: #1b4332;
+  --warn: #b5451b;
+  --warn-light: #fde8de;
+  --info: #1e4d8c;
+  --info-light: #dbeafe;
+  --gold: #9a6e00;
+  --gold-light: #fef3c7;
+  --tag-b2: #5b21b6;
+  --tag-b2-bg: #ede9fe;
+  --tag-c1: #065f46;
+  --tag-c1-bg: #d1fae5;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+  font-size: 15px;
+}
+
+.sidebar-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  background: var(--ink);
+  color: white;
+  padding: 2rem 1.5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.sidebar-brand { font-family:'Fraunces',serif; font-size:1.05rem; color:#a0e0b8; margin-bottom:0.5rem; line-height:1.3; }
+.sidebar-sub { font-size:0.7rem; color:#7a7a9a; margin-bottom:1.5rem; text-transform:uppercase; letter-spacing:0.08em; }
+.nav-item {
+  display:flex; align-items:center; gap:0.6rem;
+  padding:0.5rem 0.7rem; border-radius:8px; cursor:pointer;
+  font-size:0.82rem; color:#c4c4d4; transition:0.15s;
+  text-decoration:none; border:none; background:none; width:100%; text-align:left;
+}
+.nav-item:hover { background:rgba(255,255,255,0.08); color:white; }
+.nav-item.active { background:rgba(160,224,184,0.15); color:#a0e0b8; }
+.nav-dot { width:6px; height:6px; border-radius:50%; background:#3d3d5c; flex-shrink:0; transition:0.15s; }
+.nav-item.active .nav-dot, .nav-item:hover .nav-dot { background:#a0e0b8; }
+.nav-section { font-size:0.65rem; text-transform:uppercase; letter-spacing:0.1em; color:#4a4a6a; margin:1rem 0 0.3rem 0.7rem; }
+.progress-bar-wrap { margin-top:auto; padding-top:1.5rem; border-top:1px solid #2a2a4a; }
+.progress-label { font-size:0.7rem; color:#7a7a9a; margin-bottom:0.4rem; display:flex; justify-content:space-between; }
+.progress-bar { height:4px; background:#2a2a4a; border-radius:2px; overflow:hidden; }
+.progress-fill { height:100%; background:linear-gradient(90deg,#a0e0b8,#52c97a); border-radius:2px; transition:width 0.4s ease; }
+
+/* ── MAIN ── */
+main { padding:3rem 3rem 4rem; max-width:820px; }
+.page-header { margin-bottom:3rem; }
+.level-badges { display:flex; gap:0.5rem; margin-bottom:1rem; }
+.badge { font-size:0.7rem; font-weight:600; padding:0.2rem 0.7rem; border-radius:20px; letter-spacing:0.05em; }
+.badge-b2 { background:var(--tag-b2-bg); color:var(--tag-b2); }
+.badge-c1 { background:var(--tag-c1-bg); color:var(--tag-c1); }
+.badge-de { background:#fef3c7; color:#92400e; }
+.page-header h1 { font-family:'Fraunces',serif; font-size:2.1rem; font-weight:600; line-height:1.25; color:var(--ink); margin-bottom:0.7rem; }
+.page-header p { color:var(--ink-muted); font-size:0.9rem; max-width:520px; }
+
+/* ── SECTIONS ── */
+.section { background:var(--surface); border-radius:16px; border:1px solid var(--border); margin-bottom:2rem; overflow:hidden; scroll-margin-top:2rem; }
+.section-header { display:flex; align-items:center; gap:0.8rem; padding:1.3rem 1.8rem; border-bottom:1px solid var(--border); }
+.section-num { width:28px; height:28px; border-radius:50%; background:var(--ink); color:white; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:600; flex-shrink:0; }
+.section-title { font-size:1rem; font-weight:600; color:var(--ink); flex:1; }
+.section-body { padding:1.8rem; }
+
+/* ── TEXT PASSAGE ── */
+.texte-passage {
+  background:var(--surface2); border-left:3px solid var(--accent);
+  border-radius:0 12px 12px 0; padding:1.5rem 1.8rem; margin-bottom:1.5rem;
+  font-size:0.93rem; line-height:1.75; color:var(--ink-soft);
+}
+.texte-passage p { margin-bottom:1rem; }
+.texte-passage p:last-child { margin-bottom:0; }
+.texte-passage strong { color:var(--ink); font-weight:600; }
+.texte-passage em { font-style:italic; }
+.texte-passage .gerondif { background:rgba(45,106,79,0.12); border-radius:3px; padding:0 3px; color:var(--accent-dark); font-weight:500; }
+
+/* ── ALERTS ── */
+.alert { border-radius:10px; padding:1rem 1.2rem; margin:1rem 0; font-size:0.88rem; line-height:1.6; }
+.alert-warn  { background:var(--warn-light);  border-left:3px solid var(--warn);  color:#7a2a0a; }
+.alert-info  { background:var(--info-light);  border-left:3px solid var(--info);  color:#0c2d5c; }
+.alert-gold  { background:var(--gold-light);  border-left:3px solid var(--gold);  color:#5c3e00; }
+.alert-success { background:var(--accent-light); border-left:3px solid var(--accent); color:var(--accent-dark); }
+.alert strong { display:block; margin-bottom:0.3rem; font-size:0.8rem; text-transform:uppercase; letter-spacing:0.05em; }
+
+/* ── EXERCISES ── */
+.exercise-block { margin-top:1.5rem; }
+.exercise-q { background:var(--surface2); border-radius:10px; padding:1rem 1.2rem; margin-bottom:0.8rem; }
+.exercise-q label { display:block; font-size:0.85rem; font-weight:500; color:var(--ink-soft); margin-bottom:0.5rem; }
+.exercise-q .level-tag { font-size:0.65rem; font-weight:600; padding:0.1rem 0.5rem; border-radius:4px; margin-left:0.4rem; vertical-align:middle; }
+.exercise-q input[type="text"], .exercise-q textarea {
+  width:100%; padding:0.6rem 0.9rem; border-radius:8px; border:1px solid var(--border);
+  font-family:'DM Sans',sans-serif; font-size:0.88rem; color:var(--ink); background:white; transition:0.15s; resize:vertical;
+}
+.exercise-q input:focus, .exercise-q textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(45,106,79,0.1); }
+
+/* ── TRANSFORM ITEMS ── */
+.transform-item { background:var(--surface2); border-radius:10px; padding:1rem 1.2rem; margin-bottom:0.8rem; }
+.transform-source { font-size:0.87rem; color:var(--ink-soft); margin-bottom:0.6rem; line-height:1.55; }
+.transform-source .actif-label { font-size:0.68rem; font-weight:600; background:var(--tag-b2-bg); color:var(--tag-b2); padding:0.1rem 0.5rem; border-radius:4px; margin-right:0.4rem; }
+.transform-source .passif-label { font-size:0.68rem; font-weight:600; background:var(--tag-c1-bg); color:var(--tag-c1); padding:0.1rem 0.5rem; border-radius:4px; margin-right:0.4rem; }
+.transform-source .de-hint { display:block; font-size:0.78rem; color:#5b21b6; margin-top:0.3rem; }
+.transform-input { display:flex; align-items:center; gap:0.5rem; }
+.transform-arrow { font-size:1.1rem; color:var(--ink-muted); flex-shrink:0; }
+.transform-input input { flex:1; padding:0.55rem 0.85rem; border-radius:8px; border:1px solid var(--border); font-family:'DM Sans',sans-serif; font-size:0.87rem; color:var(--ink); background:white; transition:0.15s; }
+.transform-input input:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(45,106,79,0.1); }
+
+/* ── BUTTONS ── */
+.btn-check {
+  display:inline-flex; align-items:center; gap:0.4rem;
+  background:var(--ink); color:white; border:none;
+  padding:0.55rem 1.2rem; border-radius:8px;
+  font-family:'DM Sans',sans-serif; font-size:0.82rem; font-weight:500;
+  cursor:pointer; margin-top:0.8rem; transition:0.15s;
+}
+.btn-check:hover { background:var(--ink-soft); }
+.btn-secondary {
+  display:inline-flex; align-items:center; gap:0.4rem; background:none;
+  color:var(--ink-muted); border:1px solid var(--border); padding:0.5rem 1.1rem;
+  border-radius:8px; font-family:'DM Sans',sans-serif; font-size:0.82rem;
+  cursor:pointer; margin-top:0.8rem; margin-left:0.5rem; transition:0.15s;
+}
+.btn-secondary:hover { border-color:var(--ink-muted); color:var(--ink); }
+
+/* ── ANSWER PANEL ── */
+.answer-panel {
+  background:var(--surface2); border-radius:10px; border-left:3px solid var(--accent);
+  padding:1rem 1.2rem; margin-top:0.8rem; font-size:0.88rem; line-height:1.65;
+  display:none; color:var(--ink-soft);
+}
+.answer-panel.visible { display:block; }
+.answer-panel .correct { color:var(--accent-dark); font-weight:600; }
+.answer-panel .why { margin-top:0.5rem; color:var(--ink-muted); font-size:0.83rem; border-top:1px solid var(--border); padding-top:0.5rem; }
+.answer-panel .why strong { color:var(--ink-soft); }
+
+/* ── VOCAB GRID ── */
+.vocab-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:0.8rem; margin-top:1rem; }
+.vocab-card { background:var(--surface2); border-radius:10px; padding:0.9rem 1rem; border:1px solid transparent; cursor:pointer; transition:0.15s; }
+.vocab-card:hover { border-color:var(--border); }
+.vocab-card.revealed { border-color:var(--accent); }
+.vocab-fr { font-weight:600; font-size:0.9rem; color:var(--ink); }
+.vocab-ex { font-size:0.78rem; color:var(--ink-muted); margin-top:0.2rem; font-style:italic; }
+.vocab-de { font-size:0.82rem; color:var(--tag-b2); margin-top:0.4rem; display:none; }
+.vocab-note { font-size:0.75rem; color:var(--ink-muted); margin-top:0.35rem; display:none; font-style:italic; }
+.vocab-card.revealed .vocab-de, .vocab-card.revealed .vocab-note { display:block; }
+.vocab-hint { font-size:0.7rem; color:var(--ink-muted); margin-top:0.5rem; }
+.vocab-card.revealed .vocab-hint { display:none; }
+
+/* ── IDIOM TABLE ── */
+.idiom-table { width:100%; border-collapse:collapse; font-size:0.85rem; margin:1rem 0; }
+.idiom-table th { background:var(--ink); color:white; padding:0.6rem 0.9rem; text-align:left; font-weight:600; font-size:0.78rem; letter-spacing:0.03em; }
+.idiom-table th:first-child { border-radius:8px 0 0 0; }
+.idiom-table th:last-child { border-radius:0 8px 0 0; }
+.idiom-table td { padding:0.65rem 0.9rem; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.5; }
+.idiom-table tr:last-child td { border-bottom:none; }
+.idiom-table tr:nth-child(even) td { background:var(--surface2); }
+.idiom-table .expr { font-weight:600; color:var(--ink-soft); }
+.idiom-table .signif { color:var(--ink-soft); }
+.idiom-table .exemple { font-style:italic; color:var(--ink-muted); font-size:0.82rem; }
+.idiom-table .de { color:var(--tag-b2); font-size:0.8rem; }
+
+/* ── BILINGUAL TABLE ── */
+.bilingual-table { width:100%; border-collapse:collapse; font-size:0.86rem; margin:1.2rem 0; }
+.bilingual-table th { background:var(--ink); color:white; padding:0.7rem 1rem; text-align:left; font-weight:600; font-size:0.78rem; letter-spacing:0.03em; }
+.bilingual-table th:first-child { border-radius:8px 0 0 0; }
+.bilingual-table th:last-child { border-radius:0 8px 0 0; }
+.bilingual-table td { padding:0.85rem 1rem; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.65; font-size:0.86rem; }
+.bilingual-table tr:last-child td { border-bottom:none; }
+.bilingual-table tr:nth-child(even) td { background:var(--surface2); }
+.bilingual-table td:first-child { color:var(--ink-soft); }
+.bilingual-table td:last-child { color:#5b21b6; font-size:0.83rem; }
+.bilingual-table em { color:var(--accent-dark); font-style:italic; font-weight:500; }
+.bilingual-table strong { color:var(--ink); }
+
+/* ── GRAMMAR GRID ── */
+.grammar-grid { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:1rem 0; }
+.grammar-box { background:var(--surface2); border-radius:10px; padding:1rem; }
+.grammar-box .g-head { font-weight:600; font-size:0.82rem; color:var(--ink-soft); margin-bottom:0.5rem; }
+.grammar-box p { font-size:0.87rem; line-height:1.6; }
+.grammar-box em { color:var(--accent-dark); font-style:italic; }
+
+/* ── GRAMMAR TABLE ── */
+.grammar-table { width:100%; border-collapse:collapse; font-size:0.84rem; margin:1rem 0; }
+.grammar-table th { background:var(--ink); color:white; padding:0.55rem 0.85rem; text-align:left; font-weight:600; font-size:0.76rem; letter-spacing:0.03em; }
+.grammar-table th:first-child { border-radius:8px 0 0 0; }
+.grammar-table th:last-child { border-radius:0 8px 0 0; }
+.grammar-table td { padding:0.6rem 0.85rem; border-bottom:1px solid var(--border); vertical-align:top; line-height:1.5; }
+.grammar-table tr:last-child td { border-bottom:none; }
+.grammar-table tr:nth-child(even) td { background:var(--surface2); }
+.grammar-table .usage { font-weight:600; color:var(--tag-c1); }
+.grammar-table .fr { color:var(--ink-soft); }
+.grammar-table .fr em { color:var(--accent-dark); font-style:italic; font-weight:600; }
+.grammar-table .de { color:#5b21b6; font-size:0.81rem; }
+
+/* ── WRITING ── */
+.writing-zone textarea {
+  width:100%; min-height:180px; padding:1rem 1.2rem; border-radius:10px;
+  border:1px solid var(--border); font-family:'DM Sans',sans-serif;
+  font-size:0.9rem; color:var(--ink); resize:vertical; line-height:1.7;
+}
+.writing-zone textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(45,106,79,0.1); }
+.writing-checklist { display:flex; flex-wrap:wrap; gap:0.5rem; margin:0.8rem 0; }
+.check-tag {
+  display:inline-flex; align-items:center; gap:0.3rem; font-size:0.77rem;
+  padding:0.25rem 0.7rem; border-radius:20px; border:1px solid var(--border);
+  color:var(--ink-muted); cursor:pointer; transition:0.15s; user-select:none;
+}
+.check-tag.done { background:var(--tag-c1-bg); border-color:var(--accent); color:var(--tag-c1); }
+.check-tag .checkmark { font-size:0.7rem; }
+.wc-bar { display:flex; align-items:center; gap:0.8rem; margin-top:0.5rem; }
+.wc-text { font-size:0.78rem; color:var(--ink-muted); }
+.wc-progress { flex:1; height:3px; background:var(--border); border-radius:2px; overflow:hidden; }
+.wc-fill { height:100%; background:var(--accent); border-radius:2px; transition:width 0.3s; }
+
+/* ── AI CHAT ── */
+.ai-chat-section { background:var(--ink); border-radius:16px; overflow:hidden; margin-bottom:2rem; }
+.ai-chat-header { padding:1.2rem 1.8rem; border-bottom:1px solid rgba(255,255,255,0.08); display:flex; align-items:center; gap:0.8rem; }
+.ai-dot { width:8px; height:8px; border-radius:50%; background:#a0e0b8; animation:pulse 2s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.4; } }
+.ai-chat-title { color:white; font-size:0.9rem; font-weight:500; }
+.ai-chat-sub { color:#5a5a7a; font-size:0.75rem; margin-left:auto; }
+.chat-messages { padding:1.2rem 1.8rem; min-height:160px; max-height:320px; overflow-y:auto; display:flex; flex-direction:column; gap:0.8rem; }
+.msg { display:flex; gap:0.6rem; align-items:flex-start; }
+.msg-avatar { width:26px; height:26px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:600; flex-shrink:0; margin-top:1px; }
+.msg-ai .msg-avatar { background:rgba(160,224,184,0.15); color:#a0e0b8; }
+.msg-user .msg-avatar { background:rgba(255,255,255,0.08); color:#7a7a9a; }
+.msg-bubble { padding:0.6rem 0.9rem; border-radius:10px; font-size:0.85rem; line-height:1.55; max-width:86%; }
+.msg-ai .msg-bubble { background:rgba(255,255,255,0.06); color:#d0d0e0; }
+.msg-user .msg-bubble { background:rgba(255,255,255,0.04); color:#8080a0; }
+.msg-ai .msg-bubble em { color:#a0e0b8; font-style:normal; font-weight:500; }
+.msg-ai .msg-bubble code { background:rgba(160,224,184,0.1); color:#a0e0b8; padding:0.1rem 0.4rem; border-radius:4px; font-family:monospace; font-size:0.82rem; }
+.chat-input-row { padding:1rem 1.8rem; border-top:1px solid rgba(255,255,255,0.06); display:flex; gap:0.6rem; }
+.chat-input-row input { flex:1; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:0.6rem 0.9rem; color:white; font-family:'DM Sans',sans-serif; font-size:0.85rem; outline:none; }
+.chat-input-row input::placeholder { color:#4a4a6a; }
+.chat-input-row input:focus { border-color:rgba(160,224,184,0.3); }
+.btn-send { background:rgba(160,224,184,0.15); border:1px solid rgba(160,224,184,0.25); color:#a0e0b8; padding:0.6rem 1rem; border-radius:8px; cursor:pointer; font-size:0.82rem; font-family:'DM Sans',sans-serif; transition:0.15s; }
+.btn-send:hover { background:rgba(160,224,184,0.22); }
+.btn-send:disabled { opacity:0.4; cursor:not-allowed; }
+.quick-questions { padding:0 1.8rem 1rem; display:flex; flex-wrap:wrap; gap:0.4rem; }
+.quick-q { font-size:0.75rem; padding:0.25rem 0.7rem; border-radius:20px; border:1px solid rgba(255,255,255,0.1); color:#6a6a8a; cursor:pointer; background:none; font-family:'DM Sans',sans-serif; transition:0.15s; }
+.quick-q:hover { border-color:rgba(160,224,184,0.3); color:#a0e0b8; }
+
+.divider { height:1px; background:var(--border); margin:1.2rem 0; }
+.chat-messages::-webkit-scrollbar { width:4px; }
+.chat-messages::-webkit-scrollbar-track { background:transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:2px; }
+
+@media (max-width:860px) {
+  .sidebar-layout { grid-template-columns:1fr; }
+  .sidebar { display:none; }
+  main { padding:2rem 1.5rem 3rem; }
+  .grammar-grid { grid-template-columns:1fr; }
+  .idiom-table, .bilingual-table, .grammar-table { font-size:0.78rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="sidebar-layout">
+
+<!-- ── SIDEBAR ── -->
+<nav class="sidebar">
+  <div class="sidebar-brand">Français C1<br>pour germanophones</div>
+  <div class="sidebar-sub">B2 → C1 · Inégalités</div>
+
+  <div class="nav-section">Contenu</div>
+  <a class="nav-item active" href="#intro"><span class="nav-dot"></span>Introduction</a>
+  <a class="nav-item" href="#texte"><span class="nav-dot"></span>Texte & compréhension</a>
+  <a class="nav-item" href="#vocab"><span class="nav-dot"></span>Vocabulaire C1</a>
+  <a class="nav-item" href="#expressions"><span class="nav-dot"></span>Expressions idiomatiques</a>
+  <a class="nav-item" href="#bilingue"><span class="nav-dot"></span>Texte bilingue</a>
+  <a class="nav-item" href="#grammaire"><span class="nav-dot"></span>Gérondif & part. présent</a>
+  <a class="nav-item" href="#ecriture"><span class="nav-dot"></span>Production écrite</a>
+  <a class="nav-item" href="#assistant"><span class="nav-dot"></span>Tuteur IA</a>
+
+  <div class="progress-bar-wrap">
+    <div class="progress-label">
+      <span>Progression</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+<div class="page-header" id="intro">
+  <div class="level-badges">
+    <span class="badge badge-b2">Votre niveau : B2</span>
+    <span class="badge badge-c1">Objectif : C1</span>
+    <span class="badge badge-de">Germanophone 🇨🇭</span>
+  </div>
+  <h1>Inégalités &amp; justice sociale :<br>jusqu'où accepter l'écart ?</h1>
+  <p>Ce module cible le vocabulaire des inégalités économiques et le nouveau point de grammaire C1 : le <strong>gérondif</strong> (<em>en faisant</em>) et le <strong>participe présent</strong>. Conçu pour la préparation au DALF C1 pour germanophones.</p>
+</div>
+
+<!-- ── SECTION 1 : TEXTE ── -->
+<div class="section" id="texte">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div class="section-title">Compréhension écrite — Le paradoxe des inégalités</div>
+    <span class="badge badge-b2">B2→C1</span>
+  </div>
+  <div class="section-body">
+
+    <div class="alert alert-gold">
+      <strong>Consigne de lecture</strong>
+      Lisez le texte et repérez les structures <em>gérondives</em> (surlignées en vert). Demandez-vous : expriment-elles la <em>manière</em>, la <em>cause</em> ou la <em>simultanéité</em> ?<br>
+      <span style="font-size:0.82rem;color:#5b21b6;">🇩🇪 <em>Achten Sie auf die grün markierten Gerundivkonstruktionen: Drücken sie die Art und Weise, den Grund oder die Gleichzeitigkeit aus?</em></span>
+    </div>
+
+    <div class="texte-passage">
+      <p>Lorsqu'on évoque les inégalités, deux positions s'affrontent. D'un côté, les défenseurs du libéralisme économique estiment que l'inégalité des revenus est non seulement inévitable, mais nécessaire : elle stimule la compétition, récompense le mérite et encourage l'innovation. Selon cette vision, <span class="gerondif">en cherchant à tout égaliser</span>, on tue la dynamique capitaliste et l'on pénalise les plus talentueux.</p>
+      <p>Cependant, les chiffres sont éloquents. Selon Oxfam, les 1&nbsp;% les plus riches possèdent désormais près de la moitié de la richesse mondiale. Une telle concentration <strong>frôle l'absurde</strong> et <strong>met à mal</strong> la cohésion sociale. Les économistes Thomas Piketty ou Joseph Stiglitz <strong>mettent en garde</strong> : au-delà d'un certain seuil, l'hyper-inégalité <strong>freine</strong> la croissance, <strong>nourrit</strong> la défiance politique et <strong>génère</strong> des tensions violentes. <strong>Sans que les gouvernements aient réagi à temps</strong>, des mouvements comme les Gilets jaunes ont surgi spontanément.</p>
+      <p><strong>Plutôt que de diaboliser</strong> les riches ou de <strong>prôner</strong> un égalitarisme absolu, certains experts <strong>préconisent</strong> une voie médiane : réduire les écarts les plus criants par une fiscalité plus progressive, sans pour autant <strong>étouffer</strong> l'initiative privée. <span class="gerondif">En réformant</span> l'impôt sur les successions ou <span class="gerondif">en instaurant</span> un revenu maximum, on pourrait <strong>concilier</strong> justice sociale et efficacité économique.</p>
+      <p>Mais <strong>encore faudrait-il</strong> que les citoyens acceptent ces réformes et que les élites renoncent à certains privilèges. <strong>À condition que la pression populaire s'intensifie</strong>, le rapport de force pourrait s'inverser.</p>
+    </div>
+
+    <div class="alert alert-info">
+      <strong>Stratégie de lecture C1</strong>
+      Repérez les structures <em>gérondives</em> (<em>en cherchant, en réformant, en instaurant</em>), l'usage du conditionnel passé et les tournures impersonnelles (<em>encore faudrait-il que</em>). Ce sont des marqueurs de registre soutenu attendus au DALF.<br>
+      <span style="font-size:0.82rem;color:#5b21b6;">🇩🇪 <em>Gerundivkonstruktionen, Konditional und unpersönliche Wendungen sind Merkmale des gehobenen Registers auf C1-Niveau.</em></span>
+    </div>
+
+    <div class="exercise-block">
+      <div class="exercise-q">
+        <label>1. Quel est l'argument principal des défenseurs du libéralisme concernant les inégalités ? <span class="level-tag badge-b2">B2</span></label>
+        <div style="font-size:0.78rem;color:#5b21b6;margin-bottom:0.4rem;">🇩🇪 <em>Was ist das Hauptargument der Liberalen für Ungleichheit?</em></div>
+        <input type="text" placeholder="Selon les libéraux, l'inégalité est nécessaire car...">
+      </div>
+      <div class="exercise-q">
+        <label>2. Citez deux conséquences négatives de l'hyper-inégalité mentionnées dans le texte. <span class="level-tag badge-b2">B2</span></label>
+        <div style="font-size:0.78rem;color:#5b21b6;margin-bottom:0.4rem;">🇩🇪 <em>Nennen Sie zwei negative Folgen extremer Ungleichheit laut Text.</em></div>
+        <input type="text" placeholder="1)  2) ...">
+      </div>
+      <div class="exercise-q">
+        <label>3. Reformulez la thèse de l'auteur en une phrase nuancée. <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem;color:#5b21b6;margin-bottom:0.4rem;">🇩🇪 <em>Formulieren Sie die Hauptthese des Autors in einem eigenen Satz um.</em></div>
+        <input type="text" placeholder="Selon l'auteur, il ne s'agit pas de... mais de...">
+      </div>
+      <div class="exercise-q">
+        <label>4. Quelle est la fonction rhétorique du « plutôt que de diaboliser » ? Expliquez. <span class="level-tag badge-c1">C1</span></label>
+        <div style="font-size:0.78rem;color:#5b21b6;margin-bottom:0.4rem;">🇩🇈 <em>Welche rhetorische Funktion hat „plutôt que de diaboliser"? (Hinweis: Konzession / Einräumung)</em></div>
+        <input type="text" placeholder="Il s'agit d'une concession préventive qui...">
+      </div>
+      <button class="btn-check" onclick="toggleAnswer('ans-compre')">Voir les pistes de correction</button>
+      <div class="answer-panel" id="ans-compre">
+        <div class="correct">1.</div> L'inégalité stimule la compétition, récompense le mérite et encourage l'innovation. L'égalitarisme absolu tuerait cette dynamique et pénaliserait les plus talentueux.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>Ungleichheit fördert Wettbewerb, belohnt Verdienst und regt Innovation an.</em></div>
+        <div class="correct" style="margin-top:0.6rem;">2.</div> L'hyper-inégalité freine la croissance et nourrit la défiance politique (on peut aussi citer : génère des tensions violentes, érode la cohésion sociale).
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>Extreme Ungleichheit bremst das Wachstum und nährt politisches Misstrauen.</em></div>
+        <div class="correct" style="margin-top:0.6rem;">3.</div> Selon l'auteur, il ne s'agit ni de diaboliser les riches ni d'imposer un égalitarisme absolu, mais de réduire les écarts excessifs par une fiscalité progressive qui concilie justice et efficacité.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>Weder Dämonisierung der Reichen noch absoluter Egalitarismus — sondern ein Mittelweg durch progressive Besteuerung.</em></div>
+        <div class="correct" style="margin-top:0.6rem;">4.</div> Il s'agit d'une <em>concession préventive</em> : l'auteur écarte une objection caricaturale (l'égalitarisme absurde) avant de défendre sa position nuancée, ce qui renforce sa crédibilité.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>Präventive Konzession: Der Autor räumt ein, dass er keine Extreme befürwortet, bevor er seine nuancierte These verteidigt — das stärkt seine Glaubwürdigkeit.</em></div>
+        <div class="why"><strong>Conseil C1 :</strong> La concession préventive (<em>plutôt que de… / loin de…</em>) est un outil rhétorique puissant : elle désarme l'adversaire avant même qu'il ait parlé.<br>
+        <span style="color:#5b21b6;font-size:0.8rem;">🇩🇪 <em>Die präventive Konzession ist ein starkes rhetorisches Mittel auf C1-Niveau.</em></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2 : VOCABULAIRE ── -->
+<div class="section" id="vocab">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div class="section-title">Vocabulaire C1 — Les inégalités et la justice sociale</div>
+    <span class="badge badge-c1">C1</span>
+  </div>
+  <div class="section-body">
+
+    <div class="alert alert-info">
+      <strong>Exercice</strong>
+      Cliquez sur chaque carte pour révéler la traduction allemande et les notes avancées. Réutilisez ce lexique dans la production écrite.
+    </div>
+
+    <div class="vocab-grid">
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">une inégalité (n.f.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: die Ungleichheit</div>
+        <div class="vocab-ex">« Les inégalités se sont creusées depuis 30 ans. »</div>
+        <div class="vocab-de">🇩🇪 Différence de revenus, de chances ou de traitement · toujours féminin · souvent au pluriel dans ce contexte</div>
+        <div class="vocab-note"><em>Die Ungleichheiten haben sich in den letzten 30 Jahren vertieft.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">équitable (adj.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: gerecht / fair</div>
+        <div class="vocab-ex">« Un impôt équitable ≠ un impôt identique pour tous. »</div>
+        <div class="vocab-de">🇩🇪 ≠ égal (gleich) · équitable = juste selon les situations · adverbe : équitablement</div>
+        <div class="vocab-note"><em>Eine gerechte Steuer ist nicht dasselbe wie eine für alle gleiche Steuer.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">le seuil (n.m.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: die Schwelle / der Grenzwert</div>
+        <div class="vocab-ex">« Au-delà d'un certain seuil, l'utilité marginale est nulle. »</div>
+        <div class="vocab-de">🇩🇪 Niveau à partir duquel un phénomène change · construction : au-delà d'un seuil / en deçà d'un seuil</div>
+        <div class="vocab-note"><em>Jenseits einer bestimmten Schwelle ist der Grenznutzen null.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">creuser (les écarts) (v.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: die Kluft vertiefen</div>
+        <div class="vocab-ex">« La mondialisation a creusé les écarts. »</div>
+        <div class="vocab-de">🇩🇪 ≠ augmenter (erhöhen, plus neutre) · creuser implique une image de fosse · ≠ combler les écarts (die Kluft schließen)</div>
+        <div class="vocab-note"><em>Die Globalisierung hat die Kluft vertieft.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">la fiscalité (n.f.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: die Besteuerung / das Steuersystem</div>
+        <div class="vocab-ex">« Une fiscalité progressive taxe davantage les hauts revenus. »</div>
+        <div class="vocab-de">🇩🇪 Ensemble des impôts et taxes · ≠ impôt (eine einzelne Steuer) · adjectif clé : progressive / allégée / alourdie</div>
+        <div class="vocab-note"><em>Eine progressive Besteuerung belastet hohe Einkommen stärker.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">progressif/ve (adj.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: progressiv (Steuer)</div>
+        <div class="vocab-ex">« L'impôt progressif augmente avec le revenu. »</div>
+        <div class="vocab-de">🇩🇪 En économie : taux croissant avec la base · ≠ progressif au sens de « graduel » (schrittweise)</div>
+        <div class="vocab-note"><em>Die Progressivsteuer nimmt mit dem Einkommen zu.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">concilier (A et B) (v.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: vereinbaren / unter einen Hut bringen</div>
+        <div class="vocab-ex">« Peut-on concilier croissance et justice sociale ? »</div>
+        <div class="vocab-de">🇩🇪 Rendre compatibles deux choses apparemment opposées · construction : concilier A <em>et</em> B (nicht <em>avec</em> B)</div>
+        <div class="vocab-note"><em>Lässt sich Wachstum mit sozialer Gerechtigkeit vereinbaren?</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">étouffer (v.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: ersticken / unterdrücken</div>
+        <div class="vocab-ex">« Trop d'impôts risquent d'étouffer l'initiative privée. »</div>
+        <div class="vocab-de">🇩🇪 Sens figuré : empêcher de se développer · image forte : comme étouffer un feu · ≠ limiter (begrenzen, moins fort)</div>
+        <div class="vocab-note"><em>Zu hohe Steuern könnten die Privatinitiative ersticken.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">un privilège (n.m.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: das Privileg</div>
+        <div class="vocab-ex">« Les privilèges fiscaux des ultra-riches sont contestés. »</div>
+        <div class="vocab-de">🇩🇪 Avantage accordé à un groupe restreint, souvent injuste · pluriel très fréquent dans ce contexte</div>
+        <div class="vocab-note"><em>Die Steuervorteile der Ultra-Reichen werden in Frage gestellt.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+      <div class="vocab-card" onclick="revealVocab(this)">
+        <div class="vocab-fr">le rapport de force (n.m.)</div>
+        <div style="font-size:0.75rem;background:#ede9fe;color:#5b21b6;border-radius:4px;padding:0.15rem 0.5rem;display:inline-block;margin:0.25rem 0;">DE: das Kräfteverhältnis</div>
+        <div class="vocab-ex">« Le rapport de force s'est inversé en faveur des salariés. »</div>
+        <div class="vocab-de">🇩🇪 Equilibre ou déséquilibre de puissance entre adversaires · ≠ rapport (Verhältnis, seul, moins précis)</div>
+        <div class="vocab-note"><em>Das Kräfteverhältnis hat sich zugunsten der Arbeitnehmer verschoben.</em></div>
+        <div class="vocab-hint">➜ Cliquer pour traduction & notes</div>
+      </div>
+
+    </div>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.9rem;font-weight:600;margin-bottom:0.5rem;color:var(--ink-soft);">Exercice — Complétez avec le mot C1 qui convient</h3>
+    <div style="font-size:0.78rem;color:#5b21b6;margin-bottom:1rem;">🇩🇪 <em>Ergänzen Sie mit dem passenden C1-Wort aus den Karten.</em></div>
+
+    <div class="exercise-q">
+      <div style="display:grid;gap:0.6rem;">
+        <input type="text" placeholder="1. Un système fiscal ___ taxe davantage les revenus élevés. [progressiv]">
+        <input type="text" placeholder="2. Il est difficile de ___ efficacité économique et réduction des inégalités. [vereinbaren]">
+        <input type="text" placeholder="3. Les ___ de revenus se sont ___ depuis les années 1980. [Kluft / vertieft]">
+        <input type="text" placeholder="4. Le ___ entre le capital et le travail est défavorable aux salariés. [Kräfteverhältnis]">
+        <input type="text" placeholder="5. Au-delà d'un certain ___, un revenu supplémentaire n'améliore plus le bonheur. [Schwelle]">
+      </div>
+    </div>
+    <button class="btn-check" onclick="toggleAnswer('ans-vocab-ex')">Voir les corrections</button>
+    <div class="answer-panel" id="ans-vocab-ex">
+      <div class="correct">1.</div> Un système fiscal <em>progressif</em> taxe davantage les revenus élevés.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>progressiv</em> · en économie : taux croissant avec la base imposable</div>
+      <div class="correct" style="margin-top:0.5rem;">2.</div> Il est difficile de <em>concilier</em> efficacité économique et réduction des inégalités.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>vereinbaren</em> · construction : concilier A <em>et</em> B</div>
+      <div class="correct" style="margin-top:0.5rem;">3.</div> Les <em>écarts</em> de revenus se sont <em>creusés</em> depuis les années 1980.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>die Kluft / die Abstände</em> · creuser = vertiefen · participe passé accordé : creusés (masc. plur.)</div>
+      <div class="correct" style="margin-top:0.5rem;">4.</div> Le <em>rapport de force</em> entre le capital et le travail est défavorable aux salariés.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>das Kräfteverhältnis</em> · expression figée, toujours avec <em>de force</em></div>
+      <div class="correct" style="margin-top:0.5rem;">5.</div> Au-delà d'un certain <em>seuil</em>, un revenu supplémentaire n'améliore plus le bonheur.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>die Schwelle</em> · construction : au-delà / en deçà d'un seuil</div>
+      <div class="why"><strong>Astuce C1 :</strong> Ces 10 mots couvrent l'essentiel du débat sur les inégalités au DALF. Apprenez-les avec leur construction : <em>creuser</em> + les écarts, <em>concilier</em> A <em>et</em> B, <em>au-delà d'un seuil</em>.<br>
+      <span style="color:#5b21b6;font-size:0.8rem;">🇩🇪 <em>Lernen Sie jedes Wort mit seiner typischen Konstruktion — das sind die häufigsten Fehler.</em></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3 : EXPRESSIONS IDIOMATIQUES ── -->
+<div class="section" id="expressions">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div class="section-title">Expressions idiomatiques C1 — Parler des inégalités avec des images</div>
+    <span class="badge badge-c1">C1</span>
+  </div>
+  <div class="section-body">
+
+    <div class="alert alert-info">
+      <strong>Pourquoi les expressions idiomatiques ?</strong>
+      Au DALF C1, les correcteurs valorisent les candidats qui « parlent en images ». Ces expressions renforcent l'impact argumentatif et montrent une maîtrise stylistique.<br>
+      <span style="font-size:0.82rem;color:#5b21b6;">🇩🇪 <em>DALF-Korrektoren belohnen idiomatische Ausdrücke — sie zeigen echte Sprachkompetenz, keine bloße Grammatikbeherrschung.</em></span>
+    </div>
+
+    <table class="idiom-table">
+      <thead>
+        <tr>
+          <th>Expression</th>
+          <th>Signification</th>
+          <th>Exemple en contexte</th>
+          <th>Traduction 🇩🇪</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="expr">creuser l'écart</td>
+          <td class="signif">Augmenter la différence entre deux groupes.</td>
+          <td class="exemple">« La crise sanitaire a creusé l'écart entre précaires et privilégiés. »</td>
+          <td class="de"><em>die Kluft vertiefen</em></td>
+        </tr>
+        <tr>
+          <td class="expr">avoir le vent en poupe</td>
+          <td class="signif">Être favorisé, connaître le succès.</td>
+          <td class="exemple">« Les ultra-riches ont le vent en poupe dans ce système. »</td>
+          <td class="de"><em>Rückenwind haben</em></td>
+        </tr>
+        <tr>
+          <td class="expr">payer les pots cassés</td>
+          <td class="signif">Subir les conséquences d'une décision prise par d'autres.</td>
+          <td class="exemple">« Ce sont toujours les plus pauvres qui paient les pots cassés. »</td>
+          <td class="de"><em>die Zeche zahlen / der Dumme sein</em></td>
+        </tr>
+        <tr>
+          <td class="expr">mettre à mal</td>
+          <td class="signif">Affaiblir, endommager gravement.</td>
+          <td class="exemple">« L'hyper-inégalité met à mal la cohésion sociale. »</td>
+          <td class="de"><em>untergraben / in Mitleidenschaft ziehen</em></td>
+        </tr>
+        <tr>
+          <td class="expr">frôler l'absurde</td>
+          <td class="signif">Être presque ridicule tant c'est excessif.</td>
+          <td class="exemple">« Que 1 % possède la moitié des richesses frôle l'absurde. »</td>
+          <td class="de"><em>an Absurdität grenzen</em></td>
+        </tr>
+        <tr>
+          <td class="expr">nourrir (un sentiment)</td>
+          <td class="signif">Alimenter, renforcer un sentiment négatif.</td>
+          <td class="exemple">« L'injustice nourrit la colère populaire. »</td>
+          <td class="de"><em>nähren / schüren</em></td>
+        </tr>
+        <tr>
+          <td class="expr">rester sur sa faim</td>
+          <td class="signif">Ne pas être satisfait, attendre davantage.</td>
+          <td class="exemple">« Les promesses des candidats nous ont laissés sur notre faim. »</td>
+          <td class="de"><em>unbefriedigt bleiben</em></td>
+        </tr>
+        <tr>
+          <td class="expr">jeter de l'huile sur le feu</td>
+          <td class="signif">Aggraver un conflit déjà tendu.</td>
+          <td class="exemple">« Ces discours populistes jettent de l'huile sur le feu. »</td>
+          <td class="de"><em>Öl ins Feuer gießen</em></td>
+        </tr>
+        <tr>
+          <td class="expr">mettre son grain de sel</td>
+          <td class="signif">Donner son avis, souvent sans qu'on le demande.</td>
+          <td class="exemple">« Chaque expert met son grain de sel dans le débat. »</td>
+          <td class="de"><em>seinen Senf dazugeben</em></td>
+        </tr>
+        <tr>
+          <td class="expr">à tout bout de champ</td>
+          <td class="signif">Très fréquemment, sans cesse.</td>
+          <td class="exemple">« On parle d'égalité à tout bout de champ, mais rien ne change. »</td>
+          <td class="de"><em>ständig / bei jeder Gelegenheit</em></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="divider"></div>
+    <h3 style="font-size:0.9rem;font-weight:600;margin-bottom:0.5rem;color:var(--ink-soft);">Exercice — Quelle expression convient ?</h3>
+    <div style="font-size:0.78rem;color:#5b21b6;margin-bottom:1rem;">🇩🇪 <em>Welcher idiomatische Ausdruck passt? Wählen Sie aus der Tabelle oben.</em></div>
+
+    <div class="exercise-q">
+      <div style="display:grid;gap:0.6rem;">
+        <input type="text" placeholder="1. Les discours démagogiques aggravent les tensions sociales : ils ___. [Öl ins Feuer gießen]">
+        <input type="text" placeholder="2. En période de crise, ce sont toujours les précaires qui ___. [die Zeche zahlen]">
+        <input type="text" placeholder="3. La loi adoptée était si timide que les syndicats ___. [unbefriedigt]">
+        <input type="text" placeholder="4. Le fait qu'un seul individu possède autant que des millions ___ [an Absurdität grenzen]">
+        <input type="text" placeholder="5. L'injustice sociale ___ le ressentiment des classes populaires. [nähren / schüren]">
+      </div>
+    </div>
+    <button class="btn-check" onclick="toggleAnswer('ans-idiom')">Voir les corrections</button>
+    <div class="answer-panel" id="ans-idiom">
+      <div class="correct">1.</div> Ils <em>jettent de l'huile sur le feu</em>.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>Öl ins Feuer gießen</em> · s'emploie avec des sujets qui aggravent un conflit</div>
+      <div class="correct" style="margin-top:0.5rem;">2.</div> Ce sont toujours les précaires qui <em>paient les pots cassés</em>.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>die Zeche zahlen</em> · toujours au pluriel : les pots cassés</div>
+      <div class="correct" style="margin-top:0.5rem;">3.</div> Les syndicats <em>sont restés sur leur faim</em>.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>unbefriedigt bleiben</em> · accord : <em>restés</em> ou <em>restées</em> selon le genre</div>
+      <div class="correct" style="margin-top:0.5rem;">4.</div> …<em>frôle l'absurde</em>.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>an Absurdität grenzen</em> · sujet : une situation, un fait</div>
+      <div class="correct" style="margin-top:0.5rem;">5.</div> L'injustice sociale <em>nourrit</em> le ressentiment des classes populaires.
+      <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.15rem;">🇩🇪 <em>nähren / schüren</em> · nourrir + nom de sentiment négatif</div>
+      <div class="why"><strong>Conseil C1 :</strong> N'utilisez qu'une ou deux expressions idiomatiques par essai — elles perdent de leur force si elles sont trop nombreuses. Choisissez-les au moment stratégique (introduction ou conclusion).<br>
+      <span style="color:#5b21b6;font-size:0.8rem;">🇩🇪 <em>Verwenden Sie nur 1-2 idiomatische Ausdrücke pro Aufsatz — strategisch platziert, wirken sie stärker.</em></span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 4 : TEXTE BILINGUE ── -->
+<div class="section" id="bilingue">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div class="section-title">Texte modèle C1 bilingue — Réemploi du vocabulaire</div>
+    <span class="badge badge-c1">C1 · modèle</span>
+  </div>
+  <div class="section-body">
+
+    <div class="alert alert-gold">
+      <strong>Comment utiliser ce texte</strong>
+      Lisez d'abord la version française sans regarder l'allemand. Repérez les mots C1 et les expressions idiomatiques. La colonne allemande vous aide à vérifier votre compréhension — pas à traduire mot à mot.<br>
+      <span style="font-size:0.82rem;color:#5b21b6;">🇩🇪 <em>Lesen Sie zuerst die französische Version, ohne das Deutsche anzusehen. Die deutsche Spalte dient der Verständniskontrolle — nicht als wörtliche Übersetzung.</em></span>
+    </div>
+
+    <p style="font-size:0.85rem;font-weight:600;color:var(--ink);margin-bottom:0.8rem;">Faut-il plafonner les revenus pour sauver la démocratie ?</p>
+
+    <table class="bilingual-table">
+      <thead>
+        <tr>
+          <th>🇫🇷 Français (C1)</th>
+          <th>🇩🇪 Deutsch (Übersetzung)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Les chiffres sont sans appel : les <em>inégalités</em> n'ont jamais été aussi <em>creusées</em> depuis un siècle. L'écart entre les 1&nbsp;% les plus riches et le reste de la population <em>frôle l'absurde</em>. Cette situation <em>met à mal</em> la confiance dans les institutions et <em>nourrit</em> le populisme. Ce sont toujours les classes populaires qui <em>paient les pots cassés</em> des crises successives.</td>
+          <td>Die Zahlen sprechen für sich: Die <em>Ungleichheiten</em> wurden noch nie so stark <em>vertieft</em> wie seit einem Jahrhundert. Die Kluft zwischen den reichsten 1&nbsp;% und dem Rest der Bevölkerung <em>grenzt an Absurdität</em>. Diese Situation <em>untergräbt</em> das Vertrauen in die Institutionen und <em>nährt</em> den Populismus. Die unteren Schichten sind es immer, die <em>die Zeche zahlen</em> für aufeinanderfolgende Krisen.</td>
+        </tr>
+        <tr>
+          <td>Faut-il pour autant <strong>diaboliser</strong> les riches ou <strong>étouffer</strong> toute initiative privée ? Appelons un chat un chat : une <em>fiscalité</em> trop lourde risquerait de <em>jeter de l'huile sur le feu</em> en faisant fuir les capitaux. Plutôt que de <em>rester sur notre faim</em> avec des réformettes, certains économistes <strong>préconisent</strong> un impôt <em>progressif</em> sur les successions. <em><strong>En taxant</strong></em> davantage les transmissions les plus élevées, on pourrait <strong>concilier</strong> justice sociale et efficacité.</td>
+          <td>Muss man deshalb die Reichen <strong>verteufeln</strong> oder jede private Initiative <strong>ersticken</strong>? Nennen wir die Dinge beim Namen: Eine zu hohe <em>Besteuerung</em> würde <em>Öl ins Feuer gießen</em>, indem sie Kapital vertreibt. Anstatt <em>unbefriedigt zu bleiben</em> mit kleinen Reformen, <strong>befürworten</strong> einige Ökonomen eine <em>progressive</em> Erbschaftssteuer. <em><strong>Indem man</strong></em> die höchsten Übertragungen stärker besteuert, könnte man soziale Gerechtigkeit und Effizienz <strong>vereinbaren</strong>.</td>
+        </tr>
+        <tr>
+          <td><strong>Encore faudrait-il</strong> que les plus riches acceptent de contribuer davantage. <strong>À condition que le rapport de force évolue</strong>, les <em>privilèges</em> pourront être réduits. <strong>Sans que les classes moyennes aient le sentiment d'être sacrifiées</strong>, aucune réforme ne sera viable.</td>
+          <td><strong>Allerdings müsste</strong> man die Reichsten dazu bringen, mehr beizutragen. <strong>Unter der Bedingung, dass sich das Kräfteverhältnis ändert</strong>, können die <em>Privilegien</em> abgebaut werden. <strong>Ohne dass die Mittelschichten das Gefühl hätten, geopfert zu werden</strong>, wird keine Reform tragfähig sein.</td>
+        </tr>
+        <tr>
+          <td>Alors, le plafonnement des revenus est-il la solution ? <strong>Chacun met son grain de sel</strong> dans le débat. Mais une chose est sûre : <em>avoir le vent en poupe</em> pour les ultra-riches pendant que les autres régressent n'est pas une fatalité. Le politique peut agir — <strong>encore faut-il</strong> qu'il en ait la volonté.</td>
+          <td>Ist die Einkommensbegrenzung also die Lösung? <strong>Jeder gibt seinen Senf dazu</strong> in der Debatte. Aber eines ist sicher: Dass die Ultra-Reichen <em>Rückenwind haben</em>, während die anderen zurückfallen, ist kein unvermeidbares Schicksal. Die Politik kann handeln — <strong>allerdings müsste</strong> sie den Willen dazu haben.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="alert alert-success">
+      <strong>Ce que ce texte démontre</strong>
+      Mots C1 : <em>inégalités creusées, fiscalité progressive, concilier, étouffer, privilèges, rapport de force, préconiser, diaboliser</em> · Expressions idiomatiques : <em>frôle l'absurde, met à mal, nourrit, paient les pots cassés, vent en poupe, huile sur le feu, grain de sel, sur leur faim</em> · Gérondifs : <em>en taxant</em> · Structures C1 : <em>encore faudrait-il que, sans que… aient, à condition que</em>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 5 : GRAMMAIRE ── -->
+<div class="section" id="grammaire">
+  <div class="section-header">
+    <div class="section-num">5</div>
+    <div class="section-title">Grammaire C1 — Le gérondif & le participe présent</div>
+    <span class="badge badge-c1">C1 essentiel</span>
+  </div>
+  <div class="section-body">
+
+    <div class="alert alert-warn">
+      <strong>Formation — Rappel</strong>
+      <strong>Gérondif : <em>en</em> + participe présent</strong><br>
+      Participe présent = radical de la 1ère personne du pluriel (nous) + <em>-ant</em><br>
+      Exemples : <em>faire → fais<strong>ant</strong> → en faisant</em> · <em>réformer → réform<strong>ant</strong> → en réformant</em> · <em>avoir → ay<strong>ant</strong></em> · <em>être → ét<strong>ant</strong></em> · <em>savoir → sach<strong>ant</strong></em>
+      <div style="margin-top:0.7rem;font-size:0.82rem;background:rgba(181,69,27,0.07);padding:0.7rem;border-radius:6px;">
+        🇩🇪 <em>Français : en + participe présent · Allemand : indem + phrase conjuguée / durch + Verbalsubstantiv</em><br>
+        <em>En travaillant (FR) = indem man arbeitet / durch Arbeiten (DE)</em>
+      </div>
+    </div>
+
+    <h3 style="font-size:0.9rem;font-weight:600;margin:1.2rem 0 0.6rem;color:var(--ink-soft);">5.1 — Les trois emplois du gérondif</h3>
+
+    <table class="grammar-table">
+      <thead>
+        <tr><th>Emploi</th><th>Exemple (FR)</th><th>Traduction 🇩🇪</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="usage">Manière</td>
+          <td class="fr">C'est <em>en instaurant</em> un impôt progressif qu'on réduit les inégalités.</td>
+          <td class="de"><em>Durch die Einführung / Indem man eine progressive Steuer einführt…</em></td>
+        </tr>
+        <tr>
+          <td class="usage">Cause</td>
+          <td class="fr"><em>En refusant</em> de taxer les riches, on aggrave les inégalités.</td>
+          <td class="de"><em>Dadurch, dass man es ablehnt, die Reichen zu besteuern / Indem man sich weigert…</em></td>
+        </tr>
+        <tr>
+          <td class="usage">Simultanéité</td>
+          <td class="fr">Il s'est enrichi <em>en dormant</em> (ironique).</td>
+          <td class="de"><em>Während er schlief / Er bereicherte sich, ohne etwas zu tun.</em></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3 style="font-size:0.9rem;font-weight:600;margin:1.2rem 0 0.6rem;color:var(--ink-soft);">5.2 — Le participe présent seul (sans <em>en</em>)</h3>
+
+    <div class="grammar-grid">
+      <div class="grammar-box">
+        <div class="g-head">Remplace une relative active</div>
+        <p>Forme littéraire et dense :<br><em>Les citoyens <strong>réclamant</strong> plus d'égalité sont nombreux.</em><br>= <em>Les citoyens <strong>qui réclament</strong> plus d'égalité…</em></p>
+        <div style="font-size:0.78rem;color:#5b21b6;margin-top:0.5rem;">🇩🇪 <em>Bürger, die mehr Gleichheit fordern, sind zahlreich.</em></div>
+      </div>
+      <div class="grammar-box">
+        <div class="g-head">Exprime la cause (registre soutenu)</div>
+        <p>Après une virgule, il peut marquer la cause :<br><em><strong>Ne supportant</strong> plus les inégalités, ils ont manifesté.</em><br>= <em>Parce qu'ils ne supportaient plus…</em></p>
+        <div style="font-size:0.78rem;color:#5b21b6;margin-top:0.5rem;">🇩🇪 <em>Da sie die Ungleichheiten nicht mehr ertragen konnten, demonstrierten sie.</em></div>
+      </div>
+    </div>
+
+    <div class="alert alert-warn" style="margin-top:1rem;">
+      <strong>⚠️ Différence clé avec l'allemand</strong>
+      <table style="width:100%;font-size:0.84rem;margin-top:0.6rem;border-collapse:collapse;">
+        <tr style="background:rgba(181,69,27,0.06);">
+          <td style="padding:0.5rem 0.8rem;font-weight:600;color:#7a2a0a;">Français ✅</td>
+          <td style="padding:0.5rem 0.8rem;font-weight:600;color:#5b21b6;">Allemand 🇩🇪</td>
+          <td style="padding:0.5rem 0.8rem;font-weight:600;color:var(--warn);">Piège ❌</td>
+        </tr>
+        <tr>
+          <td style="padding:0.5rem 0.8rem;font-style:italic;color:#1b4332;">C'est <em>en travaillant</em> dur qu'il réussit.</td>
+          <td style="padding:0.5rem 0.8rem;color:#5b21b6;font-style:italic;"><em>Indem er hart arbeitet, gelingt es ihm.</em></td>
+          <td style="padding:0.5rem 0.8rem;color:var(--warn);font-style:italic;">~~Travaillant dur, il réussit~~ (calque DE )</td>
+        </tr>
+        <tr style="background:rgba(181,69,27,0.04);">
+          <td style="padding:0.5rem 0.8rem;font-style:italic;color:#1b4332;"><em>En taxant</em> les riches, on réduit les écarts.</td>
+          <td style="padding:0.5rem 0.8rem;color:#5b21b6;font-style:italic;"><em>Indem man die Reichen besteuert…</em></td>
+          <td style="padding:0.5rem 0.8rem;color:var(--warn);font-style:italic;">~~Taxant les riches, on réduit~~</td>
+        </tr>
+      </table>
+      <div style="margin-top:0.6rem;font-size:0.83rem;">Le participe présent seul (<em>travaillant, taxant</em>) en début de phrase est acceptable seulement dans un registre très littéraire et avec un sujet clairement identifié. En contexte argumentatif C1, préférez le gérondif (<em>en + p.p.</em>).</div>
+    </div>
+
+    <!-- EX 1 -->
+    <div class="exercise-block">
+      <h3 style="font-size:0.9rem;font-weight:600;margin-bottom:0.6rem;color:var(--ink-soft);">Exercice 1 — Transformez en utilisant le gérondif (<em>en + participe présent</em>)</h3>
+      <div class="alert alert-info" style="margin-bottom:1rem;">
+        <strong>Modèle</strong>
+        « On réduit les inégalités. On instaure un impôt plus juste. »<br>
+        → <em>C'est <strong>en instaurant</strong> un impôt plus juste qu'on réduit les inégalités.</em><br>
+        <span style="font-size:0.8rem;color:#5b21b6;">🇩🇪 <em>Indem man eine gerechtere Steuer einführt, verringert man die Ungleichheiten.</em></span>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          « On peut concilier efficacité et justice. On ne diabolise ni les riches ni les pauvres. »
+          <span class="de-hint">🇩🇪 <em>Man kann Effizienz und Gerechtigkeit vereinbaren, indem man weder Reiche noch Arme verteufelt.</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="On peut concilier efficacité et justice en ne ___">
+        </div>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          « Les gouvernements ont aggravé la crise. Ils ont protégé les banques avant les citoyens. »
+          <span class="de-hint">🇩🇪 <em>Die Regierungen haben die Krise verschlimmert, indem sie die Banken vor den Bürgern schützten.</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="Les gouvernements ont aggravé la crise en ___">
+        </div>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          « Le rapport de force s'inverse. Les citoyens se mobilisent massivement. »
+          <span class="de-hint">🇩🇪 <em>Das Kräfteverhältnis verschiebt sich, indem sich die Bürger massiv mobilisieren.</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="Le rapport de force s'inverse en ___">
+        </div>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          « On pourrait réduire les inégalités. On taxe davantage les super-riches. »
+          <span class="de-hint">🇩🇪 <em>Man könnte die Ungleichheiten verringern, indem man die Super-Reichen stärker besteuert.</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="C'est en ___ qu'on pourrait réduire les inégalités.">
+        </div>
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-ex1')">Voir les corrections</button>
+      <div class="answer-panel" id="ans-ex1">
+        <div class="correct">1.</div> On peut concilier efficacité et justice <em>en ne diabolisant</em> ni les riches ni les pauvres.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>en ne + gérondif</em> = Verneinung des Gerundivs · jamais <em>en pas</em>!</div>
+        <div class="correct" style="margin-top:0.5rem;">2.</div> Les gouvernements ont aggravé la crise <em>en protégeant</em> les banques avant les citoyens.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>indem sie die Banken schützten</em> · le sujet du gérondif = sujet de la principale</div>
+        <div class="correct" style="margin-top:0.5rem;">3.</div> Le rapport de force s'inverse <em>en se mobilisant</em> massivement (les citoyens).
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>indem sich die Bürger massiv mobilisieren</em> · attention : le sujet doit être le même dans les deux propositions</div>
+        <div class="correct" style="margin-top:0.5rem;">4.</div> C'est <em>en taxant</em> davantage les super-riches qu'on pourrait réduire les inégalités.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>Indem man die Super-Reichen stärker besteuert</em> · structure mise en relief : <em>c'est en… que</em></div>
+        <div class="why"><strong>Règle d'or :</strong> Le sujet du gérondif DOIT être le même que celui de la proposition principale. <em>*En travaillant dur, la prime fut obtenue</em> est faux (le gérondif ne peut pas référer à un sujet passif).<br>
+        <span style="color:#5b21b6;font-size:0.8rem;">🇩🇪 <em>Das Subjekt des Gerundivs muss dasselbe sein wie das der Hauptsatzes — häufiger Fehler bei Germanophonen!</em></span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- EX 2 -->
+    <div class="exercise-block">
+      <h3 style="font-size:0.9rem;font-weight:600;margin-bottom:0.6rem;color:var(--ink-soft);">Exercice 2 — Remplacez la relative par un participe présent</h3>
+      <div class="alert alert-info" style="margin-bottom:1rem;">
+        <strong>Modèle</strong>
+        « Les citoyens <em>qui réclament</em> plus d'égalité sont de plus en plus nombreux. »<br>
+        → <em>Les citoyens <strong>réclamant</strong> plus d'égalité sont de plus en plus nombreux.</em><br>
+        <span style="font-size:0.8rem;color:#5b21b6;">🇩🇪 <em>Bürger, mehr Gleichheit fordernd / die mehr Gleichheit fordern, werden immer zahlreicher.</em></span>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          <span class="actif-label">RELATIVE → PART. PRÉSENT</span>
+          « Les experts <em>qui préconisent</em> une fiscalité progressive gagnent du terrain. »
+          <span class="de-hint">🇩🇪 <em>Experten, die eine progressive Besteuerung befürworten, gewinnen an Boden.</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="Les experts ___ une fiscalité progressive gagnent du terrain.">
+        </div>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          <span class="actif-label">RELATIVE → PART. PRÉSENT</span>
+          « Le parti <em>qui défend</em> les privilèges des riches a perdu les élections. »
+          <span class="de-hint">🇩🇪 <em>Die Partei, die die Privilegien der Reichen verteidigt, hat die Wahlen verloren.</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="Le parti ___ les privilèges des riches a perdu les élections.">
+        </div>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          <span class="actif-label">RELATIVE → PART. PRÉSENT</span>
+          « Les mouvements sociaux <em>qui émergent</em> spontanément reflètent une colère profonde. »
+          <span class="de-hint">🇩🇪 <em>Soziale Bewegungen, die spontan entstehen, spiegeln einen tiefen Zorn wider.</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="Les mouvements sociaux ___ spontanément reflètent une colère profonde.">
+        </div>
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-ex2')">Voir les corrections</button>
+      <div class="answer-panel" id="ans-ex2">
+        <div class="correct">1.</div> Les experts <em>préconisant</em> une fiscalité progressive gagnent du terrain.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>Experten, eine progressive Besteuerung befürwortend</em> · registre soutenu/littéraire · jamais d'accord</div>
+        <div class="correct" style="margin-top:0.5rem;">2.</div> Le parti <em>défendant</em> les privilèges des riches a perdu les élections.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>Die Partei, die Privilegien der Reichen verteidigend</em> · le participe présent est invariable!</div>
+        <div class="correct" style="margin-top:0.5rem;">3.</div> Les mouvements sociaux <em>émergeant</em> spontanément reflètent une colère profonde.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>spontan entstehend</em> · invariable · se place directement après le nom qu'il qualifie</div>
+        <div class="why"><strong>Attention :</strong> Le participe présent est INVARIABLE (pas d'accord en genre ou nombre). C'est différent de l'adjectif verbal qui, lui, s'accorde.<br>
+        <em>Des militants <strong>réclamant</strong> justice</em> (p.p. = invariable) vs <em>Une situation <strong>réclamante</strong></em> ≠ <em>Une situation <strong>alarmante</strong></em> (adj. verbal = accordé).<br>
+        <span style="color:#5b21b6;font-size:0.8rem;">🇩🇪 <em>Das Partizip Präsens ist IMMER unveränderlich — kein Genus, kein Numerus!</em></span></div>
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- EX 3 -->
+    <div class="exercise-block">
+      <h3 style="font-size:0.9rem;font-weight:600;margin-bottom:0.6rem;color:var(--ink-soft);">Exercice 3 — Traduisez de l'allemand en français (gérondif) 🇩🇪→🇫🇷</h3>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          🇩🇪 <em>Indem man die Superreichen höher besteuert, könnte man die Kluft verringern.</em>
+          <span class="de-hint">Utilisez le gérondif et la structure <em>c'est en… que</em></span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="C'est en ___ qu'on pourrait réduire l'écart.">
+        </div>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          🇩🇪 <em>Er hat sein Vermögen vermehrt, indem er in Aktien investiert hat.</em>
+          <span class="de-hint">Utilisez le gérondif (simultanéité)</span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="Il a augmenté sa fortune en ___">
+        </div>
+      </div>
+
+      <div class="transform-item">
+        <div class="transform-source">
+          🇩🇪 <em>Indem sie sich weigern, die Reichen zu besteuern, schüren die Regierenden den Zorn der Bevölkerung.</em>
+          <span class="de-hint">Utilisez le gérondif (cause) + le vocabulaire C1 (<em>nourrir</em>)</span>
+        </div>
+        <div class="transform-input">
+          <span class="transform-arrow">→</span>
+          <input type="text" placeholder="En ___, les gouvernants ___ la colère de la population.">
+        </div>
+      </div>
+
+      <button class="btn-check" onclick="toggleAnswer('ans-ex3')">Voir les corrections</button>
+      <div class="answer-panel" id="ans-ex3">
+        <div class="correct">1.</div> C'est <em>en taxant</em> davantage les super-riches qu'on pourrait réduire l'écart.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>taxer</em> = besteuern · la structure <em>c'est en… que</em> ajoute une mise en relief très C1</div>
+        <div class="correct" style="margin-top:0.5rem;">2.</div> Il a augmenté sa fortune <em>en investissant</em> dans des actions.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇈 <em>investir → investissant</em> · radical : nous investiss- → investissant</div>
+        <div class="correct" style="margin-top:0.5rem;">3.</div> <em>En refusant</em> de taxer les riches, les gouvernants <em>nourrissent</em> la colère de la population.
+        <div style="font-size:0.8rem;color:#5b21b6;margin-top:0.2rem;">🇩🇪 <em>refuser → refusant</em> · <em>nourrir</em> = schüren / nähren · vocabulaire C1 intégré</div>
+        <div class="why"><strong>Astuce traduction :</strong> <em>Indem</em> en allemand se traduit presque toujours par le gérondif en français. Si l'action est simultanée et que les sujets sont identiques, le gérondif est la solution élégante.<br>
+        <span style="color:#5b21b6;font-size:0.8rem;">🇩🇪 <em>Deutsches „indem" → fast immer Gerundiv im Französischen. Gleiche Subjekte sind die Voraussetzung.</em></span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── SECTION 6 : PRODUCTION ÉCRITE ── -->
+<div class="section" id="ecriture">
+  <div class="section-header">
+    <div class="section-num">6</div>
+    <div class="section-title">Production écrite — Essai argumenté</div>
+    <span class="badge badge-c1">C1 · 250–280 mots</span>
+  </div>
+  <div class="section-body">
+
+    <div class="alert alert-gold">
+      <strong>Sujet (type DALF C1)</strong>
+      « Pour réduire efficacement les inégalités, les États devraient instaurer un revenu maximum (plafonnement des hauts revenus). »<br>
+      <em>Discutez cette affirmation en vous appuyant sur des arguments nuancés et des exemples précis.</em>
+      <div style="margin-top:0.5rem;font-size:0.82rem;color:#5b21b6;">🇩🇪 <em>„Um die Ungleichheiten wirksam zu bekämpfen, sollten Staaten ein Höchsteinkommen einführen." Diskutieren Sie mit Nuancen.</em></div>
+    </div>
+
+    <p style="font-size:0.85rem;color:var(--ink-muted);margin-bottom:1rem;">Cochez chaque élément au fur et à mesure :</p>
+
+    <div class="writing-checklist">
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Introduction problématisée</span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 2 connecteurs avancés <span style="font-size:0.65rem;color:#5b21b6;">(cependant, or, par ailleurs, dès lors…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Concession (<em>Certes… mais…</em>) <span style="font-size:0.65rem;color:#5b21b6;">(Einräumung)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 1 gérondif <span style="font-size:0.65rem;color:#5b21b6;">(en faisant, en taxant…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 1 participe présent <span style="font-size:0.65rem;color:#5b21b6;">(les experts préconisant…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 3 termes C1 du vocabulaire <span style="font-size:0.65rem;color:#5b21b6;">(fiscalité, concilier, seuil…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> 1 expression idiomatique <span style="font-size:0.65rem;color:#5b21b6;">(pots cassés, vent en poupe…)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Tournure impersonnelle <span style="font-size:0.65rem;color:#5b21b6;">(il serait erroné de / encore faudrait-il que)</span></span>
+      <span class="check-tag" onclick="toggleCheck(this)"><span class="checkmark">○</span> Conclusion avec ouverture</span>
+    </div>
+
+    <div class="writing-zone">
+      <textarea id="essay-area" placeholder="Rédigez votre essai ici… (250–280 mots)" oninput="updateWordCount(this)"></textarea>
+    </div>
+
+    <div class="wc-bar">
+      <div class="wc-text" id="wc-text">0 / 250–280 mots</div>
+      <div class="wc-progress"><div class="wc-fill" id="wc-fill" style="width:0%"></div></div>
+    </div>
+
+    <button class="btn-check" onclick="toggleAnswer('ans-essay')">Voir un exemple de production C1 (278 mots)</button>
+    <button class="btn-secondary" onclick="sendEssayToChat()">Faire corriger par le tuteur IA ↗</button>
+
+    <div class="answer-panel" id="ans-essay">
+      <div class="correct">Exemple de production C1 — 278 mots</div>
+      <div style="margin-top:0.6rem;font-style:italic;line-height:1.8;font-size:0.88rem;">
+        Face à la montée des inégalités, l'idée d'un revenu maximum fait son chemin. <em>Faut-il pour autant plafonner les hauts revenus par la loi ?</em> Une analyse nuancée s'impose.
+        <br><br>
+        <em>Certes</em>, les chiffres sont <strong>édifiants</strong> : selon Oxfam, les 1&nbsp;% les plus riches possèdent près de la moitié des richesses mondiales, ce qui <strong>frôle l'absurde</strong> et <strong>met à mal</strong> la cohésion sociale. <em><strong>En instaurant</strong></em> un revenu maximum, on enverrait un signal politique fort. <em>Par ailleurs</em>, les économistes <strong>préconisant</strong> cette mesure soulignent que l'argent ainsi redistribué pourrait financer des services publics essentiels.
+        <br><br>
+        <em>Cependant</em>, plafonner les revenus se heurterait à des obstacles pratiques considérables. Les ultra-riches <strong>ayant le vent en poupe</strong> dans la mondialisation actuelle pourraient délocaliser leurs capitaux. <em>Il serait erroné de croire</em> qu'une mesure isolée suffirait à <strong>concilier</strong> justice sociale et efficacité économique. <em>Or</em>, c'est toujours au même seuil de la population que revient de <strong>payer les pots cassés</strong> des politiques mal conçues.
+        <br><br>
+        <em>En définitive</em>, plutôt qu'un plafonnement rigide, <em>il conviendrait d'agir</em> sur plusieurs leviers : une <strong>fiscalité</strong> <strong>progressivement</strong> plus lourde sur les très hauts revenus, la lutte contre l'évasion fiscale, et le renforcement des services publics. <em><strong>En repensant</strong></em> le <strong>rapport de force</strong> entre capital et travail, on pourrait réduire les <strong>écarts</strong> sans <strong>étouffer</strong> l'initiative privée. <em>Encore faudrait-il</em> que la volonté politique suive — là est le vrai défi.
+      </div>
+      <div class="why">
+        <strong>Points forts :</strong> problématique · concession (<em>Certes…</em>) · gérondifs : <em>en instaurant, en repensant</em> · participes présents : <em>préconisant, ayant</em> · connecteurs : <em>certes, par ailleurs, cependant, or, en définitive</em> · vocabulaire : <em>édifiants, frôle l'absurde, met à mal, préconisent, concilier, fiscalité progressive, rapport de force, écarts, étouffer</em> · idiomatiques : <em>vent en poupe, payer les pots cassés</em> · impersonnelles : <em>il serait erroné de, il conviendrait d'agir, encore faudrait-il</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 7 : TUTEUR IA ── -->
+<div class="ai-chat-section" id="assistant">
+  <div class="ai-chat-header">
+    <div class="ai-dot"></div>
+    <div class="ai-chat-title">Tuteur IA — Posez vos questions en français ou en allemand</div>
+    <div class="ai-chat-sub">Propulsé par Claude</div>
+  </div>
+
+  <div class="chat-messages" id="chat-messages">
+    <div class="msg msg-ai">
+      <div class="msg-avatar">AI</div>
+      <div class="msg-bubble">
+        Bonjour ! Je suis votre tuteur. Posez-moi une question sur le gérondif, le participe présent, le vocabulaire des inégalités, ou soumettez une phrase à corriger. J'explique toujours <em>pourquoi</em> — pas seulement la correction. Vous pouvez écrire en français ou en allemand.
+      </div>
+    </div>
+  </div>
+
+  <div class="quick-questions">
+    <button class="quick-q" onclick="sendQuickQ('Quelle est la différence entre le gérondif et le participe présent ? Donnez un exemple sur les inégalités.')">Gérondif vs participe présent</button>
+    <button class="quick-q" onclick="sendQuickQ('Comment traduire « indem » allemand en français ? Donnez 3 exemples.')">indem → gérondif 🇩🇪</button>
+    <button class="quick-q" onclick="sendQuickQ('Quelles sont les erreurs typiques des germanophones avec le gérondif français ?')">Erreurs germanophones</button>
+    <button class="quick-q" onclick="sendQuickQ('Donnez-moi 5 connecteurs logiques C1 pour argumenter avec leurs équivalents allemands.')">Connecteurs C1 🇩🇪</button>
+    <button class="quick-q" onclick="sendQuickQ('Corriger : « En voulant réduire les inégalités, des mesures ont été prises par le gouvernement. »')">Corriger une phrase</button>
+  </div>
+
+  <div class="chat-input-row">
+    <input type="text" id="chat-input" placeholder="Question sur le gérondif, les inégalités, correction d'une phrase… (français ou allemand)" onkeydown="if(event.key==='Enter') sendChat()">
+    <button class="btn-send" id="btn-send" onclick="sendChat()">Envoyer</button>
+  </div>
+</div>
+
+<div style="height:1px;background:var(--border);margin:0 0 1.5rem;"></div>
+<div style="font-size:0.78rem;color:var(--ink-muted);text-align:center;padding-bottom:2rem;">
+  Module B2→C1 · Inégalités &amp; Justice sociale · Gérondif &amp; Participe présent · Pour apprenants germanophones · Préparation DALF C1
+</div>
+
+</main>
+</div>
+
+<script>
+// ── NAV ACTIVE ──
+document.querySelectorAll('.nav-item').forEach(item => {
+  item.addEventListener('click', function() {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    this.classList.add('active');
+  });
+});
+
+// ── TOGGLE ANSWER ──
+function toggleAnswer(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('visible');
+  updateProgress();
+}
+
+// ── VOCAB REVEAL ──
+function revealVocab(card) {
+  card.classList.toggle('revealed');
+  updateProgress();
+}
+
+// ── WORD COUNT ──
+function updateWordCount(ta) {
+  const words = ta.value.trim() === '' ? 0 : ta.value.trim().split(/\s+/).length;
+  document.getElementById('wc-text').textContent = `${words} / 250–280 mots`;
+  const fill = document.getElementById('wc-fill');
+  const pct = Math.min(100, Math.round((words / 280) * 100));
+  fill.style.width = pct + '%';
+  fill.style.background = words >= 250 && words <= 280 ? '#2d6a4f' : words > 280 ? '#b5451b' : '#2d6a4f';
+}
+
+// ── CHECKLIST ──
+function toggleCheck(el) {
+  el.classList.toggle('done');
+  el.querySelector('.checkmark').textContent = el.classList.contains('done') ? '✓' : '○';
+}
+
+// ── PROGRESS ──
+function updateProgress() {
+  const inputs = document.querySelectorAll('input[type="text"], textarea');
+  let filled = 0;
+  inputs.forEach(inp => { if (inp.value.trim().length > 3) filled++; });
+  const revealed = document.querySelectorAll('.answer-panel.visible').length;
+  const vocabRevealed = document.querySelectorAll('.vocab-card.revealed').length;
+  const total = inputs.length + 6 + 5;
+  const pct = Math.min(100, Math.round(((filled + revealed + vocabRevealed) / total) * 100));
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+}
+
+document.querySelectorAll('input[type="text"], textarea').forEach(inp => {
+  inp.addEventListener('input', updateProgress);
+});
+
+// ── SEND ESSAY ──
+function sendEssayToChat() {
+  const essay = document.getElementById('essay-area').value.trim();
+  if (!essay) { alert('Rédigez d\'abord votre texte dans la zone de production écrite !'); return; }
+  const prompt = `Voici ma production écrite pour le DALF C1 sur les inégalités et le revenu maximum. Merci de la corriger en détail : relevez les erreurs de gérondif et de participe présent (sujet identique ?, formation correcte ?), évaluez le vocabulaire (niveau C1 ?), les expressions idiomatiques, la cohérence argumentative, et donnez-moi un niveau estimé (B2/C1). Mon texte :\n\n${essay}`;
+  document.getElementById('chat-input').value = prompt;
+  document.getElementById('assistant').scrollIntoView({ behavior: 'smooth' });
+  setTimeout(() => sendChat(), 300);
+}
+
+// ── QUICK Q ──
+function sendQuickQ(text) {
+  document.getElementById('chat-input').value = text;
+  sendChat();
+}
+
+// ── AI CHAT ──
+const chatHistory = [];
+
+const SYSTEM_PROMPT = `Tu es un tuteur expert en français langue étrangère, spécialisé dans la préparation au DALF C1 pour apprenants germanophones (notamment suisses-allemands).
+
+Contexte pédagogique : les inégalités économiques et la justice sociale. Vocabulaire clé : inégalité, équitable, seuil, creuser les écarts, fiscalité, progressif, concilier, étouffer, privilège, rapport de force. Expressions idiomatiques : creuser l'écart, avoir le vent en poupe, payer les pots cassés, mettre à mal, frôler l'absurde, nourrir un sentiment, rester sur sa faim, jeter de l'huile sur le feu. Grammaire principale : le gérondif (en + participe présent) et le participe présent.
+
+Tes réponses doivent :
+1. Toujours expliquer POURQUOI, pas seulement donner la correction.
+2. Faire des parallèles avec l'allemand quand pertinent (ex : "indem + phrase conjuguée en allemand → gérondif en français ; le participe présent est invariable en français, contrairement à l'adjectif verbal").
+3. Être concises (max 180 mots sauf correction détaillée demandée).
+4. Si l'utilisateur écrit en allemand, répondre en français avec une brève note en allemand sur le point-clé.
+5. Pour les corrections : identifier les 3 erreurs les plus importantes en priorité (surtout : sujet identique pour le gérondif, formation correcte du participe présent, invariabilité).
+6. Terminer par un conseil pratique court.
+7. Pour le gérondif : toujours vérifier que le sujet du gérondif = sujet de la principale.`;
+
+async function sendChat() {
+  const input = document.getElementById('chat-input');
+  const btn   = document.getElementById('btn-send');
+  const text  = input.value.trim();
+  if (!text) return;
+
+  addMsg('user', text);
+  input.value = '';
+  btn.disabled = true;
+  chatHistory.push({ role: 'user', content: text });
+
+  const typingId = addMsg('ai', '…', true);
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 1000,
+        system: SYSTEM_PROMPT,
+        messages: chatHistory
+      })
+    });
+
+    const data  = await res.json();
+    const reply = data.content?.find(b => b.type === 'text')?.text || 'Désolé, je n\'ai pas pu répondre.';
+
+    removeMsg(typingId);
+    const formatted = reply
+      .replace(/\*\*(.*?)\*\*/g, '<em>$1</em>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+    addMsg('ai', formatted, false, true);
+    chatHistory.push({ role: 'assistant', content: reply });
+  } catch(e) {
+    removeMsg(typingId);
+    addMsg('ai', 'Une erreur s\'est produite. Vérifiez votre connexion et réessayez.');
+  }
+
+  btn.disabled = false;
+}
+
+let msgCounter = 0;
+
+function addMsg(role, content, isTyping = false, isHtml = false) {
+  const id = 'msg-' + (++msgCounter);
+  const container = document.getElementById('chat-messages');
+  const div = document.createElement('div');
+  div.className = `msg msg-${role}`;
+  div.id = id;
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = role === 'ai' ? 'AI' : 'Moi';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  if (isHtml) bubble.innerHTML = content;
+  else bubble.textContent = content;
+  if (isTyping) bubble.style.opacity = '0.5';
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+  return id;
+}
+
+function removeMsg(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+</script>
+</body>
+</html>
