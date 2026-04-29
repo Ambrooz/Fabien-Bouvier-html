@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Français A2-B1 · Réceptionniste d'hôtel · Voyage & galères</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-cream: #FFFBF5;
+      --coral: #FF6B5C;
+      --coral-light: #FFE4E0;
+      --mint: #4CBFA6;
+      --mint-light: #DCF5EF;
+      --sunny: #F9C74F;
+      --sunny-light: #FEF3D6;
+      --lavender: #9B5DE5;
+      --lavender-light: #F0E6FF;
+      --ocean: #2D7A8C;
+      --peach: #FFB86B;
+      --error-red: #E63946;
+      --success-green: #2A9D8F;
+      --shadow: 0 20px 30px -12px rgba(0,0,0,0.1);
+      --radius-xl: 28px;
+    }
+
+    body {
+      background: var(--bg-cream);
+      font-family: 'Inter', sans-serif;
+      color: #2D2B28;
+      line-height: 1.5;
+    }
+
+    .header-modern {
+      background: linear-gradient(135deg, #1A3A4A, #0E2A38);
+      color: white;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .header-flex {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .logo h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+    }
+    .logo span {
+      font-size: 0.7rem;
+      opacity: 0.8;
+    }
+    .progress-area {
+      flex: 1;
+      max-width: 260px;
+    }
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      margin-bottom: 5px;
+    }
+    .progress-bar-bg {
+      background: rgba(255,255,255,0.25);
+      border-radius: 40px;
+      height: 6px;
+    }
+    .progress-fill {
+      background: var(--sunny);
+      width: 0%;
+      height: 100%;
+      border-radius: 40px;
+      transition: width 0.4s;
+    }
+    .score-badge {
+      background: var(--coral);
+      padding: 6px 20px;
+      border-radius: 60px;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .nav-steps {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 28px auto 20px;
+      max-width: 1100px;
+    }
+    .nav-dot {
+      width: 44px;
+      height: 44px;
+      background: #EFE4D8;
+      border-radius: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s;
+      color: #5A4A3A;
+      border: 2px solid transparent;
+    }
+    .nav-dot.active {
+      background: var(--coral);
+      color: white;
+      transform: scale(1.05);
+      border-color: var(--sunny);
+    }
+    .nav-dot.done {
+      background: var(--mint);
+      color: white;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto 3rem;
+      padding: 0 1.5rem;
+    }
+
+    .module {
+      display: none;
+      animation: fadeSlide 0.4s ease;
+    }
+    .module.active-module {
+      display: block;
+    }
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(12px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    .card {
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .card-white {
+      background: white;
+      border-bottom: 8px solid var(--coral);
+    }
+    .card-mint {
+      background: var(--mint-light);
+      border-left: 8px solid var(--mint);
+    }
+    .card-sunny {
+      background: var(--sunny-light);
+      border-top: 8px solid var(--sunny);
+    }
+    .card-lavender {
+      background: var(--lavender-light);
+      border-right: 8px solid var(--lavender);
+    }
+    .badge {
+      display: inline-block;
+      background: var(--ocean);
+      color: white;
+      padding: 4px 16px;
+      border-radius: 60px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      margin-bottom: 0.8rem;
+      color: #1F2D3D;
+    }
+    .bubble-text {
+      background: #FDF8F0;
+      padding: 1.3rem;
+      border-radius: 24px;
+      margin: 1rem 0;
+      border: 1px solid #FFDFB5;
+    }
+    .btn-primary {
+      background: var(--coral);
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-outline {
+      background: transparent;
+      border: 2px solid var(--coral);
+      padding: 10px 28px;
+      border-radius: 60px;
+      font-weight: 600;
+      cursor: pointer;
+      color: var(--coral);
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .dialogue-box {
+      background: #1F2D3D;
+      color: #F0F0F0;
+      border-radius: 28px;
+      padding: 1.5rem;
+      margin: 1.2rem 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    .speaker {
+      color: var(--sunny);
+      font-weight: 700;
+      display: inline-block;
+      min-width: 140px;
+    }
+    .dialogue-line {
+      margin-bottom: 12px;
+    }
+    .reception-card {
+      background: #FFF2E6;
+      border-radius: 24px;
+      padding: 1.5rem;
+      margin-top: 1rem;
+      border-left: 6px solid var(--ocean);
+    }
+    .micro-task {
+      background: white;
+      padding: 1rem;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      margin: 1rem 0;
+    }
+    textarea {
+      width: 100%;
+      border-radius: 20px;
+      border: 2px solid var(--peach);
+      padding: 1rem;
+      font-family: 'Inter', monospace;
+    }
+    .nav-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .final-area {
+      background: linear-gradient(145deg, #FFE8D6, #FFDAB9);
+      text-align: center;
+      border-radius: 48px;
+      padding: 2.5rem;
+    }
+    @media (max-width: 680px) {
+      .card { padding: 1.2rem; }
+      h3 { font-size: 1.4rem; }
+      .speaker { display: block; margin-bottom: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="header-modern">
+  <div class="header-flex">
+    <div class="logo">
+      <h2>🏨 Réceptionniste · Hôtel Bordeaux Centre</h2>
+      <span>Niveau A2-B1 · Gérer les imprévus des clients</span>
+    </div>
+    <div class="progress-area">
+      <div class="progress-label"><span>Progression</span><span id="progressPercent">0%</span></div>
+      <div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+    <div class="score-badge" id="headerScore">⭐ Compétences: 0 pts</div>
+  </div>
+</header>
+
+<div class="nav-steps" id="navDots"></div>
+
+<div class="container">
+  <!-- MODULE 1 : CONTEXTE & TEXTE -->
+  <div id="module1" class="module active-module">
+    <div class="card card-white">
+      <span class="badge">📖 SITUATION PRO · 20 min</span>
+      <h3>📌 Bordeaux, entre pluie et galères</h3>
+      <div class="bubble-text">
+        <p><strong>🧑‍💼 Votre poste :</strong> Vous êtes réceptionniste à l’hôtel <strong>Le Splendid</strong>, Bordeaux centre. Un client arrive à l’accueil, mécontent. Il a vécu plusieurs problèmes pendant son séjour : voiture de location en panne dimanche, retard énorme, fatigue... Il vous raconte son histoire et attend des solutions ou un geste commercial.</p>
+        <p><strong>📄 Texte lu par le client :</strong><br>
+        « Bonjour, je suis à l’hôtel depuis hier. Franchement, ce voyage est une catastrophe. Ma voiture de location est tombée en panne hier, un dimanche. Tous les garages étaient fermés. J’ai attendu trois heures un dépanneur. Résultat : j’ai raté la visite des plages et je suis arrivé ici à 23h épuisé. En plus, il a plu tout l’après-midi. Le petit-déjeuner ce matin : pas de jus d’orange, les croissants étaient secs. Je suis très déçu. Je souhaite qu’on me fasse un geste. »
+        </p>
+      </div>
+      <div class="grid-2">
+        <div><strong>❓ Compréhension (à l'oral) – répondez en jeu de rôle</strong><br>
+         1. Quels problèmes le client a-t-il eus avec sa voiture ?<br>
+         2. Pourquoi n’a-t-il pas pu réparer tout de suite ?<br>
+         3. Qu’est-ce qu’il a raté ?<br>
+         4. Quels sont ses reproches sur le petit-déjeuner ?<br>
+         5. Que demande-t-il à la fin ?
+        </div>
+        <button class="btn-outline" onclick="toggleAnswer('readingAnswers')">🔍 Voir les réponses types</button>
+        <div id="readingAnswers" style="display:none; margin-top:15px; background:#EAF7F0; border-radius:20px; padding:12px;">✅ 1. La voiture est tombée en panne. 2. C'était dimanche, tous les garages fermés. 3. Il a raté la visite des plages. 4. Pas de jus d'orange, croissants secs. 5. Il demande un geste commercial.</div>
+      </div>
+      <div class="nav-buttons"><button class="btn-primary" onclick="goToModule(2)">🎧 Écouter la réclamation →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 2 : COMPRÉHENSION ORALE – message du client -->
+  <div id="module2" class="module">
+    <div class="card card-mint">
+      <span class="badge">🎧 COMPRÉHENSION ORALE · 20 min</span>
+      <h3>Message vocal du client à la réception</h3>
+      <div class="bubble-text">
+        <p>📢 <strong>Message laissé sur le répondeur de l’hôtel :</strong><br>
+        « Bonjour, ici Paul Garnier, chambre 214. Je voulais signaler que ma voiture de location est tombée en panne hier sur la route du bassin d’Arcachon. Impossible d’avoir un dépanneur avant 18h. Donc j’ai raté la journée. Je suis très mécontent car j’avais réservé ce séjour pour me reposer. Je trouve que l’hôtel aurait pu au moins proposer un geste. Je souhaite parler au responsable. Merci. »</p>
+        <button class="btn-outline" onclick="speakComplaint()">🔊 Lire le message à voix haute</button>
+      </div>
+      
+      <div class="micro-task">
+        <p><strong>❓ 1 – Quel est le principal problème signalé ?</strong></p>
+        <div class="qcm-options" id="oralQ1" style="display:flex; gap:12px; flex-wrap:wrap;">
+          <button class="qcm-btn" onclick="checkOral(1, 'panne')">Panne de voiture</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'panne')">Chambre sale</button>
+          <button class="qcm-btn" onclick="checkOral(1, 'panne')">Petit-déjeuner cher</button>
+        </div>
+        <div id="oralFeed1" style="font-size:0.8rem; margin-top:6px;"></div>
+      </div>
+
+      <div class="micro-task">
+        <p><strong>❓ 2 – Pourquoi ne peut-il pas réparer la voiture tout de suite ?</strong></p>
+        <div class="qcm-options" id="oralQ2">
+          <button class="qcm-btn" onclick="checkOral(2, 'dimanche')">Parce que c'est dimanche (garages fermés)</button>
+          <button class="qcm-btn" onclick="checkOral(2, 'dimanche')">Parce qu'il n'a pas d'argent</button>
+          <button class="qcm-btn" onclick="checkOral(2, 'dimanche')">Parce qu'il a perdu ses clés</button>
+        </div>
+        <div id="oralFeed2"></div>
+      </div>
+
+      <div class="micro-task">
+        <p><strong>❓ 3 – Que demande Paul Garnier à la fin ?</strong></p>
+        <div class="qcm-options" id="oralQ3">
+          <button class="qcm-btn" onclick="checkOral(3, 'responsable')">Parler au responsable</button>
+          <button class="qcm-btn" onclick="checkOral(3, 'responsable')">Un remboursement immédiat</button>
+          <button class="qcm-btn" onclick="checkOral(3, 'responsable')">Une nouvelle voiture</button>
+        </div>
+        <div id="oralFeed3"></div>
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(1)">← Contexte</button><button class="btn-primary" onclick="goToModule(3)">👔 Votre rôle : réceptionniste →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 3 : JEU DE RÔLE IMMERSIF - RÉCEPTIONNISTE VS CLIENT -->
+  <div id="module3" class="module">
+    <div class="card card-lavender">
+      <span class="badge">🎭 JEU DE RÔLE · 35 min · Dans la peau du réceptionniste</span>
+      <h3>🤵 Gérer une réclamation difficile</h3>
+      
+      <div class="dialogue-box">
+        <div class="dialogue-line"><span class="speaker">🧑‍💼 VOUS (Réceptionniste) :</span> "Bonjour Monsieur Garnier, comment allez-vous ? J’ai pris connaissance de votre message."</div>
+        <div class="dialogue-line"><span class="speaker">😤 CLIENT :</span> "Pas très bien. Votre hôtel n’est pas à la hauteur. J’ai perdu une journée entière à cause de la voiture."</div>
+        <div class="dialogue-line"><span class="speaker">🧑‍💼 VOUS :</span> "Je suis sincèrement désolé pour cette panne. Je comprends votre frustration. Que puis-je faire pour arranger la situation ?"</div>
+        <div class="dialogue-line"><span class="speaker">😤 CLIENT :</span> "Je veux un geste commercial. Une nuit gratuite ou au moins un dîner offert."</div>
+        <div class="dialogue-line"><span class="speaker">🧑‍💼 VOUS :</span> "Laissez-moi voir. Je ne peux pas vous offrir une nuit complète, mais je peux vous offrir le dîner ce soir au restaurant de l’hôtel, et deux verres de vin."</div>
+        <div class="dialogue-line"><span class="speaker">😐 CLIENT :</span> "Hmm… et pour le petit-déjeuner de demain ?"</div>
+        <div class="dialogue-line"><span class="speaker">🧑‍💼 VOUS :</span> "Je rajoute le petit-déjeuner offert demain matin. Cela vous convient-il ?"</div>
+        <div class="dialogue-line"><span class="speaker">😊 CLIENT :</span> "D’accord, j’accepte. Et merci pour votre écoute."</div>
+        <div class="dialogue-line"><span class="speaker">🧑‍💼 VOUS :</span> "Parfait. Je vous souhaite une bonne fin de séjour."</div>
+      </div>
+
+      <div class="reception-card">
+        <strong>🎲 VOTRE MISSION – improvisation guidée :</strong><br>
+        Le client arrive au comptoir. Il est en colère. Utilisez les phrases suivantes pour l’apaiser et proposer une solution.
+        <div class="micro-task" style="margin-top:12px;">
+          <p><strong>🔹 Formules utiles (réceptionniste) :</strong><br>
+          • « Je suis navré d’apprendre cela. »<br>
+          • « Je comprends que vous soyez mécontent. »<br>
+          • « Laissez-moi vérifier ce que je peux faire. »<br>
+          • « Souhaitez‑vous un dîner ou un départ plus tard ? »<br>
+          • « Je vous propose un geste commercial : … »<br>
+          • « Au nom de l’hôtel, toutes nos excuses. »
+          </p>
+        </div>
+        <button class="btn-primary" style="background: var(--ocean);" onclick="randomClientRequest()">💬 Nouvelle demande client (aléatoire)</button>
+        <div id="randomSituationBox" style="margin-top: 1rem; background: #FFF2E0; border-radius: 20px; padding: 12px;">
+          💡 <strong>Défi actuel :</strong> Le client dit : « Je veux voir le directeur immédiatement et une réduction de 50 % ! »
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div style="background:#E8F0FE; border-radius:24px; padding:1rem;">
+          <strong>📢 Entraînez-vous : répondez aux phrases du client</strong><br>
+          • « C’est inadmissible, je n’ai pas dormi à cause du bruit. » → <em>... (votre réponse)</em><br>
+          • « Le petit-déjeuner était froid. » → <em>...</em><br>
+          • « Je vais mettre un avis négatif. » → <em>...</em>
+        </div>
+        <div style="background:#E0F7F0; border-radius:24px; padding:1rem;">
+          <strong>✅ Exemples de réponses professionnelles</strong><br>
+          « Je vous prie de m’excuser. Je vais faire mon possible. »<br>
+          « Je comprends votre mécontentement, je vous offre un café de dédommagement. »<br>
+          « Nous prenons vos remarques très au sérieux. »
+        </div>
+      </div>
+
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(2)">← Compréhension orale</button><button class="btn-primary" onclick="goToModule(4)">✍️ Écrire une trace écrite →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 4 : PRODUCTION ÉCRITE – EMAIL PRO -->
+  <div id="module4" class="module">
+    <div class="card card-white">
+      <span class="badge">✍️ PRODUCTION ÉCRITE · 25 min</span>
+      <h3>Écrire un email au client après son départ</h3>
+      <p><strong>Consigne professionnelle :</strong> Vous êtes réceptionniste. Après le geste commercial (dîner offert + petit-déjeuner), écrivez un email au client <strong>Paul Garnier</strong> pour vous excuser à nouveau, lui rappeler la solution proposée et lui souhaiter un bon retour. (70‑100 mots)</p>
+      <textarea id="emailMsg" rows="6" placeholder="Objet : Retour sur votre séjour / Bonjour Monsieur Garnier,..."></textarea>
+      <div id="wordCountMsg">0 mots</div>
+      <button class="btn-outline" onclick="showModelEmail()">📧 Voir un modèle professionnel</button>
+      <div id="modelMsg" style="display:none; margin-top:12px; background:#EAF9F0; border-radius:24px; padding:1rem;">
+        ✉️ <strong>Modèle (92 mots) :</strong><br>
+        « Bonjour Monsieur Garnier, <br><br>
+        Je fais suite à la panne de votre voiture de location survenue dimanche. Au nom de tout l’hôtel, je vous présente nos excuses sincères pour la gêne occasionnée. Comme convenu, nous vous avons offert le dîner d’hier soir ainsi que le petit-déjeuner de ce matin. Nous espérons que ces gestes vous ont apporté un peu de réconfort. <br>
+        Nous restons à votre disposition et vous souhaitons un excellent retour à la maison. <br>
+        Bien cordialement,<br>
+        Lucas, réceptionniste. »
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(3)">← Jeu de rôle</button><button class="btn-primary" onclick="goToModule(5)">📚 Révisions →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 5 : LEXIQUE PRO & ERREURS -->
+  <div id="module5" class="module">
+    <div class="card card-sunny">
+      <span class="badge">📌 RÉVISION · Pièges DELF A2-B1</span>
+      <h3>Les 6 erreurs fréquentes d’un réceptionniste</h3>
+      <div class="grid-2">
+        <div style="background:#FFE0E0; border-radius:24px; padding:1rem;">
+          ❌ <strong>À éviter</strong><br>
+          • "Je suis désolé si vous avez eu problème" (construction bancale)<br>
+          • "Je peux rien faire" (double négation orale)<br>
+          • "Il a tombé en panne" → ✘<br>
+          • "J’ai prise en compte" (accord incorrect)<br>
+          • "Faire un geste commercial" utilisé sans article<br>
+          • Manquer d’excuses formelles.
+        </div>
+        <div style="background:#DCF5EF; border-radius:24px; padding:1rem;">
+          ✅ <strong>Corrections & alternatives</strong><br>
+          • "Je suis désolé que vous ayez eu ce problème."<br>
+          • "Malheureusement, je ne peux pas faire de remboursement, mais ..."<br>
+          • "La voiture **est tombée** en panne."<br>
+          • "J’ai **bien** pris en compte votre message."<br>
+          • "Je vous propose **un geste commercial**."<br>
+          • "Veuillez accepter toutes nos excuses."
+        </div>
+      </div>
+      <div class="bubble-text">
+        🧠 <strong>Vocabulaire clé :</strong> une réclamation, un dédommagement, le dépanneur, une panne, les excuses, le responsable, un geste commercial, le petit-déjeuner continental, le service après-vente, un avis en ligne.
+      </div>
+      <div class="nav-buttons"><button class="btn-outline" onclick="goToModule(4)">← Production écrite</button><button class="btn-primary" onclick="goToModule(6)">🏁 Attestation finale →</button></div>
+    </div>
+  </div>
+
+  <!-- MODULE 6 : FINAL CERTIFICAT -->
+  <div id="module6" class="module">
+    <div class="final-area">
+      <span class="badge" style="background: var(--ocean);">🏅 FÉLICITATIONS</span>
+      <h3>Vous gérez les clients mécontents !</h3>
+      <p style="font-size:1.2rem; margin: 20px 0;">⭐ Compétences acquises : <strong id="finalScoreSpan">0</strong> / 6 points</p>
+      <p>✔️ Comprendre une plainte écrite et orale <br>
+         ✔️ Jouer le rôle du réceptionniste avec des formules professionnelles<br>
+         ✔️ Écrire un email d’excuses adapté au niveau A2-B1<br>
+         ✔️ Éviter les erreurs fréquentes en contexte pro</p>
+      <button class="btn-primary" onclick="restartCourse()">🔄 Recommencer le scénario</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let currentMod = 1;
+  let totalScore = 0;
+  let oralAnswered = { q1: false, q2: false, q3: false };
+  const MAX_SCORE = 6;
+
+  function updateUI() {
+    let percent = Math.floor(((currentMod-1)/6)*100);
+    document.getElementById('progressFill').style.width = percent+'%';
+    document.getElementById('progressPercent').innerText = percent+'%';
+    document.getElementById('headerScore').innerHTML = `⭐ Compétences: ${totalScore} pts`;
+    if(document.getElementById('finalScoreSpan')) document.getElementById('finalScoreSpan').innerText = totalScore;
+  }
+
+  function addScore() {
+    if(totalScore < MAX_SCORE) totalScore++;
+    updateUI();
+  }
+
+  function checkOral(questionId, correctKey, btnElement) {
+    if(questionId === 1 && oralAnswered.q1) return;
+    if(questionId === 2 && oralAnswered.q2) return;
+    if(questionId === 3 && oralAnswered.q3) return;
+
+    let isCorrect = false;
+    if(questionId === 1 && correctKey === 'panne') isCorrect = true;
+    if(questionId === 2 && correctKey === 'dimanche') isCorrect = true;
+    if(questionId === 3 && correctKey === 'responsable') isCorrect = true;
+
+    let parent = btnElement.parentNode;
+    let allBtns = parent.querySelectorAll('.qcm-btn');
+    allBtns.forEach(btn => btn.disabled = true);
+    
+    if(isCorrect) {
+      btnElement.classList.add('correct-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '✅ Bonne réponse +1 compétence';
+      if(questionId === 1 && !oralAnswered.q1) { oralAnswered.q1 = true; addScore(); }
+      if(questionId === 2 && !oralAnswered.q2) { oralAnswered.q2 = true; addScore(); }
+      if(questionId === 3 && !oralAnswered.q3) { oralAnswered.q3 = true; addScore(); }
+    } else {
+      btnElement.classList.add('wrong-choice');
+      document.getElementById(`oralFeed${questionId}`).innerHTML = '❌ Réécoutez le message client.';
+    }
+  }
+
+  function speakComplaint() {
+    let text = "Bonjour, ici Paul Garnier, chambre 214. Je voulais signaler que ma voiture de location est tombée en panne hier sur la route du bassin d’Arcachon. Impossible d’avoir un dépanneur avant 18h. Donc j’ai raté la journée. Je suis très mécontent. Je souhaite parler au responsable.";
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.85;
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(utterance);
+  }
+
+  function randomClientRequest() {
+    const situations = [
+      "Le client dit : « Je n’ai pas eu d’eau chaude ce matin, c’est scandaleux ! »",
+      "Le client : « Le personnel de l’hôtel a été impoli avec moi à la piscine. »",
+      "Le client : « Vous avez perdu ma réservation de taxi, j’ai raté mon train. »",
+      "Le client : « La climatisation fait un bruit horrible, je n’ai pas dormi. »",
+      "Le client : « Je veux une chambre supérieure sans supplément immédiatement ! »"
+    ];
+    let idx = Math.floor(Math.random() * situations.length);
+    let box = document.getElementById('randomSituationBox');
+    if(box) box.innerHTML = `💬 <strong>Nouvelle réclamation :</strong> ${situations[idx]}<br><span style="font-size:0.8rem;">→ À vous de répondre en tant que réceptionniste (à voix haute).</span>`;
+  }
+
+  function toggleAnswer(id) {
+    let el = document.getElementById(id);
+    if(el.style.display === 'none') el.style.display = 'block';
+    else el.style.display = 'none';
+  }
+
+  function showModelEmail() {
+    let model = document.getElementById('modelMsg');
+    if(model.style.display === 'none') model.style.display = 'block';
+    else model.style.display = 'none';
+    if(!window.emailBonus && document.getElementById('emailMsg').value.trim().length > 50) {
+      window.emailBonus = true;
+      if(totalScore + 2 <= MAX_SCORE) totalScore += 2;
+      else totalScore = MAX_SCORE;
+      updateUI();
+      alert("📧 +2 points pour votre email professionnel !");
+    }
+  }
+
+  const textareaEl = document.getElementById('emailMsg');
+  if(textareaEl) {
+    textareaEl.addEventListener('input', function() {
+      let words = this.value.trim().split(/\s+/).filter(w => w.length>0).length;
+      document.getElementById('wordCountMsg').innerText = words + " mots";
+    });
+  }
+
+  function goToModule(n) {
+    for(let i=1;i<=6;i++) {
+      let mod = document.getElementById(`module${i}`);
+      if(mod) mod.classList.remove('active-module');
+    }
+    document.getElementById(`module${n}`).classList.add('active-module');
+    currentMod = n;
+    updateUI();
+    updateNavDots();
+  }
+
+  function updateNavDots() {
+    let dots = document.querySelectorAll('.nav-dot');
+    dots.forEach((dot, idx) => {
+      let num = idx+1;
+      dot.classList.remove('active', 'done');
+      if(num === currentMod) dot.classList.add('active');
+      if(num < currentMod) dot.classList.add('done');
+    });
+  }
+
+  function buildNav() {
+    let container = document.getElementById('navDots');
+    container.innerHTML = '';
+    for(let i=1;i<=6;i++) {
+      let dot = document.createElement('div');
+      dot.classList.add('nav-dot');
+      dot.innerText = i;
+      dot.onclick = () => goToModule(i);
+      container.appendChild(dot);
+    }
+    updateNavDots();
+  }
+
+  function restartCourse() {
+    totalScore = 0;
+    oralAnswered = { q1: false, q2: false, q3: false };
+    window.emailBonus = false;
+    document.querySelectorAll('.qcm-btn').forEach(btn => {
+      btn.disabled = false;
+      btn.classList.remove('correct-choice', 'wrong-choice');
+    });
+    document.querySelectorAll('[id^="oralFeed"]').forEach(el => el.innerHTML = '');
+    if(textareaEl) textareaEl.value = '';
+    document.getElementById('wordCountMsg').innerText = '0 mots';
+    goToModule(1);
+  }
+
+  buildNav();
+  updateUI();
+</script>
+</body>
+</html>
