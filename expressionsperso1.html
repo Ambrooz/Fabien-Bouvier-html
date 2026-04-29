@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expressions idiomatiques françaises B1 · B2 · C1 (examens)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #fef9ef 0%, #fff5e6 100%);
+            font-family: 'Quicksand', sans-serif;
+            color: #2c2418;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+
+        /* header créatif */
+        .hero {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .badge {
+            display: inline-block;
+            background: rgba(216, 97, 50, 0.12);
+            padding: 4px 18px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #d86132;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #B95F2C, #8B3C1C);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+        .sub {
+            color: #6b5a48;
+            max-width: 600px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        /* navigation par niveau avec couleurs vives */
+        .nav-levels {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0 2rem;
+        }
+        .level-btn {
+            border: none;
+            background: white;
+            padding: 0.6rem 1.6rem;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            font-family: 'Quicksand', sans-serif;
+        }
+        .level-btn[data-level="B1"] { border-left: 4px solid #3a9b7e; color: #2c6b58; }
+        .level-btn[data-level="B2"] { border-left: 4px solid #e2a41c; color: #b47c0c; }
+        .level-btn[data-level="C1"] { border-left: 4px solid #c15177; color: #9e355b; }
+        .level-btn.active {
+            background: #1e1a16;
+            color: white;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.1);
+        }
+        .level-btn.active[data-level="B1"] { background: #3a9b7e; border-left-color: #1e6e56; }
+        .level-btn.active[data-level="B2"] { background: #e2a41c; border-left-color: #b87d0b; }
+        .level-btn.active[data-level="C1"] { background: #c15177; border-left-color: #932b52; }
+
+        /* sections */
+        .level-section {
+            display: none;
+            animation: fadeSlide 0.3s ease;
+        }
+        .level-section.active {
+            display: block;
+        }
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(8px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        /* grille d'expressions */
+        .expressions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+        .card {
+            background: white;
+            border-radius: 28px;
+            padding: 1.2rem 1.3rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.03);
+            transition: all 0.2s;
+            border: 1px solid #f1e1cf;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: #d9c2ab;
+            box-shadow: 0 16px 24px rgba(0,0,0,0.05);
+        }
+        .expr-fr {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #2c2418;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        .tag-sens {
+            font-size: 0.7rem;
+            background: #f2e1d2;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-weight: 600;
+            color: #b45a2e;
+        }
+        .meaning {
+            font-weight: 600;
+            color: #c55a2c;
+            font-size: 0.9rem;
+            margin: 8px 0 6px;
+        }
+        .desc {
+            font-size: 0.85rem;
+            color: #5e4d3a;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        .de {
+            font-size: 0.75rem;
+            background: #f7efe6;
+            padding: 5px 10px;
+            border-radius: 20px;
+            display: inline-block;
+            margin: 6px 0;
+        }
+        .example {
+            font-style: italic;
+            font-size: 0.8rem;
+            background: #fff9f2;
+            padding: 8px 10px;
+            border-radius: 16px;
+            margin-top: 8px;
+            border-left: 3px solid #e2a41c;
+        }
+
+        /* zone exercices colorée */
+        .exercises-area {
+            background: #fffcf7;
+            border-radius: 36px;
+            padding: 1.8rem;
+            margin-top: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.04);
+            border: 1px solid #f1e0cf;
+        }
+        .ex-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.7rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2f2a24;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        .ex-sub {
+            color: #96785c;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+        }
+
+        /* quiz & trous */
+        .quiz-block, .fill-blanks-block, .drag-drop-block {
+            background: white;
+            border-radius: 24px;
+            padding: 1.3rem;
+            margin-bottom: 1.8rem;
+            border: 1px solid #ecdccb;
+        }
+        .quiz-question {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 12px;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 15px 0;
+        }
+        .opt {
+            background: #fef3e8;
+            padding: 6px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.1s;
+            font-weight: 500;
+        }
+        .opt.selected {
+            background: #d86132;
+            color: white;
+        }
+        .feedback {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 6px 0;
+        }
+        button {
+            background: #d86132;
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 8px 22px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: 'Quicksand', sans-serif;
+            transition: 0.2s;
+        }
+        button:hover {
+            background: #b64b21;
+        }
+        .blank-input {
+            border: 2px solid #efdbc9;
+            border-radius: 28px;
+            padding: 6px 15px;
+            font-size: 0.9rem;
+            width: 200px;
+            margin: 0 5px;
+            font-family: monospace;
+        }
+        .match-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff6ed;
+            margin: 8px 0;
+            padding: 8px 12px;
+            border-radius: 28px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .dropzone {
+            background: #ecdfd1;
+            border-radius: 28px;
+            padding: 6px 12px;
+            min-width: 160px;
+            text-align: center;
+        }
+        .drag-word {
+            background: #def0e8;
+            padding: 6px 12px;
+            border-radius: 40px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 5px;
+            font-weight: 500;
+        }
+        .correct-drag {
+            background: #96c0b0;
+            color: white;
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.7rem;
+            color: #ac9a85;
+        }
+        @media (max-width: 650px) {
+            .expressions-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <div class="badge">🇫🇷 · expressions authentiques</div>
+        <h1>Idiomes français <br>B1 → C1 (examens)</h1>
+        <div class="sub">Maîtrisez les tournures idiomatiques par niveau thématique • exercices interactifs</div>
+    </div>
+
+    <div class="nav-levels">
+        <button class="level-btn active" data-level="B1" onclick="showLevel('B1')">🌱 NIVEAU B1 – Vie quotidienne</button>
+        <button class="level-btn" data-level="B2" onclick="showLevel('B2')">🌟 NIVEAU B2 – Nuances & débats</button>
+        <button class="level-btn" data-level="C1" onclick="showLevel('C1')">🎓 NIVEAU C1 – Examens (Éco, Écolo, Éducation)</button>
+    </div>
+
+    <!-- ###################### B1 ###################### -->
+    <div id="level-B1" class="level-section active">
+        <div class="expressions-grid" id="b1Cards"></div>
+    </div>
+
+    <!-- ###################### B2 ###################### -->
+    <div id="level-B2" class="level-section">
+        <div class="expressions-grid" id="b2Cards"></div>
+    </div>
+
+    <!-- ###################### C1 (thèmes examens) ###################### -->
+    <div id="level-C1" class="level-section">
+        <div class="expressions-grid" id="c1Cards"></div>
+    </div>
+
+    <!-- ZONE EXERCICES COMMUNE MAIS CONTENU DYNAMIQUE PAR NIVEAU -->
+    <div class="exercises-area" id="exercisePanel">
+        <div class="ex-title">📚 Entraînement intensif</div>
+        <div class="ex-sub">Testez vos connaissances avec des exercices variés sur le niveau actif</div>
+        
+        <!-- QCM -->
+        <div class="quiz-block" id="quizBlock">
+            <div class="quiz-question" id="qcmQuestion">Chargement...</div>
+            <div class="options" id="qcmOptions"></div>
+            <button id="checkQcm">Valider la réponse</button>
+            <div class="feedback" id="qcmFeedback"></div>
+        </div>
+
+        <!-- EXERCICE À TROUS -->
+        <div class="fill-blanks-block" id="fillBlanksBlock">
+            <div class="quiz-question">✏️ Complétez l'expression avec le bon mot</div>
+            <div id="blankQuestion"></div>
+            <input type="text" id="blankAnswer" class="blank-input" placeholder="votre réponse">
+            <button id="checkBlank">Vérifier</button>
+            <div class="feedback" id="blankFeedback"></div>
+        </div>
+
+        <!-- DRAG & DROP simplifié (associer expression et définition) -->
+        <div class="drag-drop-block" id="dragBlock">
+            <div class="quiz-question">🔁 Associez chaque expression à sa définition (glisser / cliquer)</div>
+            <div id="dragArea"></div>
+            <button id="checkDrag">Vérifier les associations</button>
+            <div class="feedback" id="dragFeedback"></div>
+        </div>
+    </div>
+    <footer>💡 Niveau C1 spécial examens : expressions sur Économie, Écologie, Éducation, Société | Entraînez-vous pour le DALF C1</footer>
+</div>
+
+<script>
+    // ===================== BASE DE DONNÉES =====================
+    const expressions = {
+        B1: [
+            { fr: "avoir le coup de foudre", meaning: "tomber amoureux soudainement", desc: "Ressentir une attirance immédiate.", de: "sich sofort verlieben", example: "Ils se sont rencontrés et ça a été le coup de foudre." },
+            { fr: "être au courant", meaning: "être informé", desc: "Avoir connaissance de quelque chose.", de: "Bescheid wissen", example: "Tu es au courant de la nouvelle ?" },
+            { fr: "faire la grasse matinée", meaning: "dormir tard", desc: "Se lever tard volontairement.", de: "ausschlafen", example: "Le dimanche, je fais la grasse matinée." },
+            { fr: "poser un lapin", meaning: "ne pas venir à un rendez-vous", desc: "Ne pas se présenter sans prévenir.", de: "jemanden versetzen", example: "Il m’a posé un lapin au cinéma." },
+            { fr: "coûter les yeux de la tête", meaning: "être très cher", desc: "Coûter une somme énorme.", de: "ein Vermögen kosten", example: "Cette voiture coûte les yeux de la tête." },
+            { fr: "avoir la flemme", meaning: "être paresseux", desc: "Manquer de motivation.", de: "keinen Bock haben", example: "J’ai la flemme de sortir ce soir." }
+        ],
+        B2: [
+            { fr: "jeter de l’huile sur le feu", meaning: "aggraver un conflit", desc: "Rendre une dispute plus intense.", de: "Öl ins Feuer gießen", example: "Ses paroles ont jeté de l’huile sur le feu." },
+            { fr: "être au bout du rouleau", meaning: "être épuisé", desc: "Avoir épuisé toutes ses forces.", de: "am Ende sein", example: "Après ces semaines, je suis au bout du rouleau." },
+            { fr: "manger sur le pouce", meaning: "manger rapidement", desc: "Prendre un repas rapide sur place.", de: "im Stehen essen", example: "À midi, je mange souvent sur le pouce." },
+            { fr: "mettre son grain de sel", meaning: "donner son avis non sollicité", desc: "Intervenir dans une conversation inutilement.", de: "seinen Senf dazugeben", example: "Il met toujours son grain de sel." },
+            { fr: "faire des économies de bouts de chandelle", meaning: "économiser sur des détails insignifiants", desc: "Économiser sur des petites choses au détriment de l'essentiel.", de: "am falschen Ende sparen", example: "Ne fais pas des économies de bouts de chandelle sur la qualité." }
+        ],
+        C1: [   // Thématiques EXAMENS : économie, écologie, éducation, société
+            { fr: "avoir le vent en poupe", meaning: "être en pleine réussite", desc: "Rencontrer le succès, être favorisé (économie/business).", de: "vollen Auftrieb haben", example: "Cette start-up a le vent en poupe dans le secteur des énergies vertes.", theme: "économie" },
+            { fr: "serrer la ceinture", meaning: "réduire ses dépenses", desc: "Faire des économies forcées, contexte de crise.", de: "den Gürtel enger schnallen", example: "Avec l'inflation, les ménages doivent serrer la ceinture.", theme: "économie" },
+            { fr: "tirer le diable par la queue", meaning: "vivre pauvrement", desc: "Avoir du mal à joindre les deux bouts.", de: "sich gerade so über Wasser halten", example: "Les petites entreprises tirent le diable par la queue.", theme: "économie" },
+            { fr: "mettre la charrue avant les bœufs", meaning: "aller trop vite, inverser l’ordre logique", desc: "Commencer par la fin dans un projet.", de: "den zweiten Schritt vor dem ersten tun", example: "Vouloir créer une usine sans étude préalable, c'est mettre la charrue avant les bœufs.", theme: "éducation/gestion" },
+            { fr: "faire la part belle à", meaning: "accorder une grande importance", desc: "Donner une place privilégiée à quelque chose.", de: "eine große Rolle spielen lassen", example: "Ce gouvernement fait la part belle aux énergies renouvelables.", theme: "écologie" },
+            { fr: "être hors sol", meaning: "déconnecté de la réalité", desc: "Se dit d'un discours ou d'une politique irréaliste.", de: "realitätsfern", example: "Ces réformes éducatives sont hors sol, loin des préoccupations des enseignants.", theme: "éducation" },
+            { fr: "avoir une empreinte (carbone) lourde", meaning: "avoir un impact écologique important", desc: "Polluer beaucoup, concept clé en écologie.", de: "einen hohen ökologischen Fußabdruck haben", example: "Le secteur de la mode a une empreinte carbone lourde.", theme: "écologie" },
+            { fr: "lavage vert (greenwashing)", meaning: "discours écologique trompeur", desc: "Marketing abusif sur l’écologie.", de: "Greenwashing", example: "Certaines entreprises pratiquent le lavage vert sans actions réelles.", theme: "écologie" },
+            { fr: "noyer le poisson", meaning: "éluder la question", desc: "Esquiver un sujet inconfortable (débat politique/éducatif).", de: "ausweichen", example: "Le ministre a noyé le poisson sur le budget de l'éducation.", theme: "société" },
+            { fr: "ne pas avoir de leçons à recevoir", meaning: "refuser les critiques", desc: "Se sentir supérieur, ne pas accepter les conseils.", de: "keine Belehrungen nötig haben", example: "Sur le sujet de l'écologie, il pense ne pas avoir de leçons à recevoir.", theme: "éducation" },
+            { fr: "l’arbre qui cache la forêt", meaning: "se concentrer sur un détail sans voir l'ensemble", desc: "Perdre de vue la problématique globale.", de: "den Wald vor lauter Bäumen nicht sehen", example: "Réduire seulement les émissions de CO2 sans changer le modèle, c'est l'arbre qui cache la forêt.", theme: "écologie/économie" },
+            { fr: "un serpent de mer", meaning: "un problème récurrent jamais résolu", desc: "Sujet qui revient cycliquement dans l’actualité.", de: "ein Dauerbrenner", example: "La réforme des retraites est un serpent de mer en France.", theme: "société" },
+            { fr: "prendre le virage (vert)", meaning: "s'orienter vers un nouveau modèle", desc: "Transition vers quelque chose de durable.", de: "die Weichen stellen für", example: "L'industrie automobile prend le virage vert.", theme: "écologie" },
+            { fr: "tirer sur l’ambulance", meaning: "frapper quelqu’un déjà affaibli", desc: "Critiquer une personne ou entité en difficulté.", de: "auf jemanden eintreten, der am Boden liegt", example: "Certains médias tirent sur l’ambulance en période de crise économique.", theme: "société" }
+        ]
+    };
+
+    // 1) RENDER CARDS
+    function renderCards(level, containerId) {
+        const container = document.getElementById(containerId);
+        const data = expressions[level];
+        if (!container) return;
+        container.innerHTML = data.map(exp => `
+            <div class="card">
+                <div class="expr-fr">
+                    <span>“${exp.fr}”</span>
+                    <span class="tag-sens">${exp.meaning}</span>
+                </div>
+                <div class="meaning">💡 ${exp.meaning}</div>
+                <div class="desc">${exp.desc}</div>
+                <div class="de">🇩🇪 ${exp.de}</div>
+                <div class="example">${exp.example}</div>
+                ${exp.theme ? `<div style="font-size:0.7rem; margin-top:8px; background:#faf0e4; display:inline-block; padding:2px 10px; border-radius:30px;">🎯 ${exp.theme}</div>` : ''}
+            </div>
+        `).join('');
+    }
+
+    renderCards('B1', 'b1Cards');
+    renderCards('B2', 'b2Cards');
+    renderCards('C1', 'c1Cards');
+
+    // VARIABLES GLOBALES POUR EXOS
+    let currentLevel = 'B1';
+    let currentQuizBank = [];
+    let currentBlankExpr = null;
+    let dragPairs = []; // { expression, definition, userMatch, definitionList }
+
+    // INIT / MAJ EXERCICES en fonction du niveau
+    function updateExercisesForLevel(level) {
+        currentLevel = level;
+        const data = expressions[level];
+        // QCM : on pioche 4 expressions au hasard
+        const shuffled = [...data];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        currentQuizBank = shuffled.slice(0, 5);
+        askNewQuestion(0);
+
+        // EXERCICE TROU : on prend une expression du niveau
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const exprObj = data[randomIndex];
+        currentBlankExpr = exprObj;
+        const phraseTrou = exprObj.example.replace(exprObj.fr, '__________');
+        document.getElementById('blankQuestion').innerHTML = `<div style="background:#fef0e4; padding:12px; border-radius:20px;">${phraseTrou}<br><br>❓ Quelle est l'expression manquante ?</div>`;
+        document.getElementById('blankAnswer').value = '';
+        document.getElementById('blankFeedback').innerHTML = '';
+        
+        // EXERCICE DRAG & DROP (associer 5 expressions)
+        buildDragDrop(level);
+    }
+
+    // QCM index
+    let currentQcmIndex = 0;
+    let currentQcmQuestion = null;
+    function askNewQuestion(index) {
+        if (index >= currentQuizBank.length) {
+            document.getElementById('qcmQuestion').innerHTML = "🎉 Félicitations ! Quiz terminé pour ce niveau.";
+            document.getElementById('qcmOptions').innerHTML = '';
+            document.getElementById('qcmFeedback').innerHTML = "Bravo, vous avez fait toutes les questions !";
+            return;
+        }
+        const q = currentQuizBank[index];
+        currentQcmQuestion = q;
+        const options = [q.meaning];
+        // ajouter autres sens
+        const otherMeanings = expressions[currentLevel].filter(e => e.fr !== q.fr).map(e => e.meaning);
+        const distinct = [...new Set([...options, ...otherMeanings])].slice(0, 4);
+        while(distinct.length < 4) distinct.push("autre sens");
+        const finalOpts = distinct.sort(() => 0.5 - Math.random());
+        document.getElementById('qcmQuestion').innerHTML = `❓ Que signifie : <strong>"${q.fr}"</strong> ? (${index+1}/${currentQuizBank.length})`;
+        const optsDiv = document.getElementById('qcmOptions');
+        optsDiv.innerHTML = '';
+        finalOpts.forEach(opt => {
+            const optDiv = document.createElement('div');
+            optDiv.className = 'opt';
+            optDiv.innerText = opt;
+            optDiv.onclick = () => {
+                document.querySelectorAll('#qcmOptions .opt').forEach(o => o.classList.remove('selected'));
+                optDiv.classList.add('selected');
+                optDiv.dataset.value = opt;
+            };
+            optsDiv.appendChild(optDiv);
+        });
+        document.getElementById('qcmFeedback').innerHTML = '';
+    }
+
+    document.getElementById('checkQcm').onclick = () => {
+        if (!currentQcmQuestion) return;
+        const selected = document.querySelector('#qcmOptions .opt.selected');
+        if (!selected) {
+            document.getElementById('qcmFeedback').innerHTML = 'Veuillez sélectionner une réponse.';
+            return;
+        }
+        const answer = selected.innerText;
+        if (answer === currentQcmQuestion.meaning) {
+            document.getElementById('qcmFeedback').innerHTML = '✅ Correct ! ' + currentQcmQuestion.example;
+            currentQcmIndex++;
+            askNewQuestion(currentQcmIndex);
+        } else {
+            document.getElementById('qcmFeedback').innerHTML = `❌ Incorrect. La bonne réponse était : "${currentQcmQuestion.meaning}". Exemple : ${currentQcmQuestion.example}`;
+        }
+    };
+
+    // vérification blank
+    document.getElementById('checkBlank').onclick = () => {
+        const userAnswer = document.getElementById('blankAnswer').value.trim().toLowerCase();
+        if (!currentBlankExpr) return;
+        const expected = currentBlankExpr.fr.toLowerCase();
+        if (userAnswer === expected) {
+            document.getElementById('blankFeedback').innerHTML = '✔️ Bonne réponse ! 🎉';
+            document.getElementById('blankFeedback').style.color = '#2b7a4b';
+        } else {
+            document.getElementById('blankFeedback').innerHTML = `❌ Pas tout à fait. L'expression correcte était : "${currentBlankExpr.fr}". Ex: ${currentBlankExpr.example}`;
+            document.getElementById('blankFeedback').style.color = '#c55a2c';
+        }
+    };
+
+    // build drag & drop (associer définitions)
+    function buildDragDrop(level) {
+        const data = expressions[level];
+        const subset = [...data].sort(() => 0.5 - Math.random()).slice(0, 5);
+        dragPairs = subset.map(exp => ({
+            expression: exp.fr,
+            definition: exp.meaning,
+            userMatch: null,
+            defOptions: subset.map(e => e.meaning).filter((v,i,arr)=>arr.indexOf(v)===i)
+        }));
+        renderDragInterface();
+    }
+
+    function renderDragInterface() {
+        const dragContainer = document.getElementById('dragArea');
+        if (!dragContainer) return;
+        let html = `<div style="display: flex; flex-direction: column; gap: 12px;">`;
+        dragPairs.forEach((pair, idx) => {
+            html += `
+                <div class="match-row">
+                    <span style="font-weight:700; width:180px;">${pair.expression}</span>
+                    <select id="dragSelect_${idx}" style="padding:6px; border-radius:30px; background:white; border:1px solid #e0cfbe;">
+                        <option value="">-- Choisir définition --</option>
+                        ${pair.defOptions.map(def => `<option value="${def.replace(/"/g, '&quot;')}" ${pair.userMatch === def ? 'selected' : ''}>${def}</option>`).join('')}
+                    </select>
+                </div>
+            `;
+        });
+        html += `</div>`;
+        dragContainer.innerHTML = html;
+        dragPairs.forEach((_, idx) => {
+            const selectEl = document.getElementById(`dragSelect_${idx}`);
+            if (selectEl) {
+                selectEl.addEventListener('change', (e) => {
+                    dragPairs[idx].userMatch = e.target.value;
+                });
+            }
+        });
+    }
+
+    document.getElementById('checkDrag').onclick = () => {
+        let correctCount = 0;
+        dragPairs.forEach(pair => {
+            if (pair.userMatch && pair.userMatch === pair.definition) correctCount++;
+        });
+        const total = dragPairs.length;
+        let msg = `${correctCount}/${total} associations correctes. `;
+        if (correctCount === total) msg += "🏆 Parfait ! Vous maîtrisez ces associations.";
+        else if (correctCount >= total-1) msg += "Presque parfait !";
+        else msg += "Relisez les cartes des expressions.";
+        document.getElementById('dragFeedback').innerHTML = msg;
+    };
+
+    // CHANGEMENT DE NIVEAU
+    window.showLevel = function(level) {
+        currentLevel = level;
+        document.querySelectorAll('.level-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(`level-${level}`).classList.add('active');
+        document.querySelectorAll('.level-btn').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = Array.from(document.querySelectorAll('.level-btn')).find(btn => btn.getAttribute('data-level') === level);
+        if (activeBtn) activeBtn.classList.add('active');
+        // reset QCM index
+        currentQcmIndex = 0;
+        const data = expressions[level];
+        const shuffled = [...data];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        currentQuizBank = shuffled.slice(0, 5);
+        askNewQuestion(0);
+        
+        // renouveler trou
+        const randomIndex = Math.floor(Math.random() * data.length);
+        currentBlankExpr = data[randomIndex];
+        const phraseTrou = currentBlankExpr.example.replace(currentBlankExpr.fr, '__________');
+        document.getElementById('blankQuestion').innerHTML = `<div style="background:#fef0e4; padding:12px; border-radius:20px;">${phraseTrou}<br><br>❓ Quelle est l'expression manquante ?</div>`;
+        document.getElementById('blankAnswer').value = '';
+        document.getElementById('blankFeedback').innerHTML = '';
+        
+        // drag drop
+        buildDragDrop(level);
+    };
+
+    // Initialisation par défaut (B1)
+    updateExercisesForLevel('B1');
+</script>
+</body>
+</html>
