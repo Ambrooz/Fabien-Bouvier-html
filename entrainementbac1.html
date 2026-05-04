@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Bac Français | Maîtrise des procédés & analyse linéaire</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-page: #f8fafc;
+            --bg-card: #ffffff;
+            --border-light: #e2e8f0;
+            --border-med: #cbd5e1;
+            --text-main: #0f172a;
+            --text-soft: #334155;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-dark: #4338ca;
+            --primary-light: #eef2ff;
+            --success: #10b981;
+            --success-bg: #ecfdf5;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --danger-bg: #fef2f2;
+            --radius-card: 1rem;
+            --radius-sm: 0.5rem;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05);
+            --transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-bottom: 3rem;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .hero {
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .hero-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 1rem 0;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-badge {
+            width: 2.25rem;
+            height: 2.25rem;
+            background: var(--primary-light);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 0.15rem;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-light);
+            padding: 0 0.25rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+        }
+
+        .tab {
+            padding: 0.75rem 1.25rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: transparent;
+            border: none;
+            color: var(--text-soft);
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+            white-space: nowrap;
+        }
+
+        .tab:hover {
+            background: var(--primary-light);
+            color: var(--primary);
+        }
+
+        .tab.on {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            background: transparent;
+        }
+
+        .pane {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .pane.on {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-modern {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .badge-cat {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            font-weight: 500;
+            display: inline-block;
+        }
+
+        .cat-figure { background: #eef2ff; color: #4338ca; }
+        .cat-style { background: #e0f2fe; color: #0369a1; }
+        .cat-son { background: #ffedd5; color: #b45309; }
+        .cat-register { background: #fce7f3; color: #be185d; }
+
+        .grid-procedes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .procede-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            transition: var(--transition);
+        }
+
+        .procede-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .effet-flou {
+            filter: blur(4px);
+            transition: filter 0.2s ease;
+            cursor: pointer;
+            background: #f1f5f9;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        .effet-flou:hover {
+            filter: blur(0);
+            background: var(--primary-light);
+        }
+
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .match-col {
+            background: var(--bg-card);
+            border-radius: var(--radius-card);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .match-header {
+            padding: 0.75rem 1rem;
+            background: #f1f5f9;
+            font-weight: 600;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .mitem {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-light);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .mitem:hover {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+        }
+
+        .mitem.sel {
+            background: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+
+        .mitem.ok {
+            background: var(--success-bg);
+            color: var(--success);
+            text-decoration: line-through;
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .qopt {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 1rem;
+            margin: 0.5rem 0;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .qopt:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+        }
+
+        .qopt.ok {
+            background: var(--success-bg);
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        .qopt.bad {
+            background: var(--danger-bg);
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .corr-box {
+            background: var(--primary-light);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--radius-sm);
+            padding: 1rem;
+            margin-top: 1rem;
+            display: none;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
+        .corr-box.show {
+            display: block;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-med);
+            border-radius: var(--radius-sm);
+            font-family: inherit;
+            font-size: 0.85rem;
+            resize: vertical;
+            transition: var(--transition);
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .btn {
+            background: white;
+            border: 1px solid var(--border-med);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-weight: 500;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: scale(0.97);
+        }
+
+        .btn-outline {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-light);
+        }
+
+        .score-pill {
+            background: #e2e8f0;
+            padding: 0.25rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .quote-block {
+            background: #fefce8;
+            border-left: 4px solid #eab308;
+            padding: 1rem;
+            font-style: italic;
+            border-radius: 0.5rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .lin-poem {
+            background: #fef9f0;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ffe6c7;
+        }
+
+        .lin-line {
+            font-family: 'Georgia', serif;
+            margin: 0.3rem 0;
+        }
+
+        hr {
+            margin: 1rem 0;
+            border: none;
+            border-top: 1px solid var(--border-light);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+
+        .flex-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+<div class="hero">
+    <div class="container">
+        <div class="hero-inner">
+            <div class="logo-area">
+                <div class="logo-badge">📖</div>
+                <div>
+                    <div class="title">Bac Français · Réussite assurée</div>
+                    <div class="sub">Procédés littéraires & analyse linéaire (P.C.E.)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tabs container" id="tabsContainer"></div>
+</div>
+
+<div class="container" id="panesContainer"></div>
+<footer>✨ Entraînement interactif — méthode progressive pour briller à l'écrit du bac ✨</footer>
+
+<script>
+    // --------------------------------------------------------------
+    // DONNÉES ENRICHIES
+    // --------------------------------------------------------------
+    const fiches = [
+        { n: "Métaphore", c: "figure", d: "Comparaison implicite sans outil comparatif", e: "« Cette femme est un volcan. »", effet: "→ suscite une image forte et frappante, ancre une qualité de manière définitive." },
+        { n: "Comparaison", c: "figure", d: "Rapprochement via comme, tel, ainsi que...", e: "« Il pleure comme la pluie. »", effet: "→ rend l'abstrait concret, crée une connivence sensible avec le lecteur." },
+        { n: "Personnification", c: "figure", d: "Attributs humains à un inanimé/animal", e: "« La forêt murmure. »", effet: "→ anime la nature, provoque empathie ou angoisse." },
+        { n: "Hyperbole", c: "figure", d: "Exagération pour amplifier", e: "« Je meurs de faim. »", effet: "→ intensifie le sentiment, produit un effet comique ou pathétique." },
+        { n: "Litote", c: "figure", d: "Dire moins pour suggérer plus", e: "« Va, je ne te hais point. »", effet: "→ crée une pudeur élégante, amplifie l'émotion par la retenue." },
+        { n: "Oxymore", c: "figure", d: "Deux termes contradictoires", e: "« Cette obscure clarté. »", effet: "→ exprime une vérité complexe, plonge le lecteur dans le paradoxe." },
+        { n: "Antithèse", c: "figure", d: "Opposition d'idées", e: "« Partir c'est mourir un peu. »", effet: "→ structure le discours, met en lumière un conflit irréductible." },
+        { n: "Anaphore", c: "style", d: "Répétition en début de vers/phrase", e: "« Rome, l'unique... Rome enfin... »", effet: "→ martèle une obsession, crée un effet incantatoire." },
+        { n: "Accumulation", c: "style", d: "Énumération en série", e: "« Faux, bavards, hypocrites… »", effet: "→ donne une impression d'abondance, de saturation accablante." },
+        { n: "Gradation", c: "style", d: "Progression croissante/décroissante", e: "« un souffle, un cri, un hurlement. »", effet: "→ crée un mouvement dramatique, amplifie l'émotion crescendo." },
+        { n: "Chiasme", c: "style", d: "Structure A B / B A", e: "« Manger pour vivre et non vivre pour manger. »", effet: "→ donne un effet miroir, une symétrie qui frappe l'esprit." },
+        { n: "Allitération", c: "son", d: "Répétition consonne", e: "« Serpents qui sifflent… »", effet: "→ produit une harmonie imitative, suggère une atmosphère." },
+        { n: "Assonance", c: "son", d: "Répétition voyelle", e: "« Les sanglots longs / des violons »", effet: "→ crée une musicalité mélancolique ou douce." },
+        { n: "Ironie", c: "register", d: "Dire le contraire pour critiquer", e: "« Quelle belle idée ! »", effet: "→ provoque un sourire critique, dénonce en sous-entendu." }
+    ];
+
+    const matchSet1 = [
+        { p: "Métaphore", d: "Comparaison implicite, sans outil comme/tel" },
+        { p: "Hyperbole", d: "Exagération volontaire pour amplifier l'intensité" },
+        { p: "Litote", d: "Dire peu pour signifier beaucoup (souvent par négation)" },
+        { p: "Anaphore", d: "Répétition d'un même terme en début de phrase/vers" },
+        { p: "Oxymore", d: "Deux mots contradictoires accolés" },
+        { p: "Allitération", d: "Répétition d'une consonne" },
+        { p: "Gradation", d: "Suite classée par intensité croissante" },
+        { p: "Personnification", d: "Attribuer des traits humains à un objet/animal" }
+    ];
+
+    const matchSet2 = [
+        { p: "Antithèse", d: "Opposition de deux idées contraires" },
+        { p: "Accumulation", d: "Énumération serrée d'éléments similaires" },
+        { p: "Chiasme", d: "Renversement symétrique A B / B A" },
+        { p: "Assonance", d: "Répétition d'un son vocalique" },
+        { p: "Ironie", d: "Dire l'inverse de sa pensée pour railler" },
+        { p: "Apostrophe", d: "Interpellation directe d'une personne/idée" },
+        { p: "Allégorie", d: "Abstraction représentée en image concrète" },
+        { p: "Euphémisme", d: "Atténuer une réalité choquante" }
+    ];
+
+    // QCM enrichi (12 questions)
+    const qcmData = [
+        { q: "« Pour qui sont ces serpents qui sifflent sur vos têtes ? »", hl: "sifflent", opts: ["Métaphore", "Allitération", "Anaphore", "Hyperbole"], ans: 1, expl: "Allitération en 's' : elle imite le sifflement des serpents et installe une atmosphère de menace et de danger immédiat." },
+        { q: "« Cette obscure clarté qui tombe des étoiles »", hl: "obscure clarté", opts: ["Antithèse", "Oxymore", "Comparaison", "Litote"], ans: 1, expl: "Oxymore : l'union des contraires traduit la magie paradoxale d'une lumière nocturne, mystérieuse et envoûtante." },
+        { q: "« Rome, l'unique objet de mon ressentiment ! Rome enfin que je hais… »", hl: "Rome", opts: ["Apostrophe", "Anaphore", "Accumulation", "Gradation"], ans: 1, expl: "Anaphore martiale : la répétition de 'Rome' traduit l'obsession destructrice du personnage de Camille, exaltant sa colère." },
+        { q: "« Va, je ne te hais point. » (Le Cid)", hl: "je ne te hais point", opts: ["Euphémisme", "Litote", "Ironie", "Hyperbole"], ans: 1, expl: "Litote élégante : Chimène nie sa haine pour exprimer avec pudeur un amour encore brûlant, plus fort que tout ressentiment." },
+        { q: "« Il faut manger pour vivre et non vivre pour manger. »", hl: "manger/vivre", opts: ["Antithèse", "Chiasme", "Anaphore", "Gradation"], ans: 1, expl: "Chiasme parfait : la structure en miroir (manger/vivre → vivre/manger) élève la maxime à une vérité universelle et implacable." },
+        { q: "« Les sanglots longs / Des violons / De l'automne » (Verlaine)", hl: "sanglots/violons/automne", opts: ["Allitération", "Assonance", "Enjambement", "Comparaison"], ans: 1, expl: "Assonance en 'on' : cette harmonie vocalique mime la plainte, confondant le son et le sens dans une mélancolie automnale." },
+        { q: "« Je suis la plaie et le couteau ! » (Baudelaire)", hl: "plaie et couteau", opts: ["Comparaison", "Oxymore", "Antithèse", "Métaphore"], ans: 2, expl: "Antithèse radicale : le poète se fait à la fois bourreau et victime, exprimant une autodestruction intérieure propre au spleen baudelairien." },
+        { q: "« Mon chat, sur le carreau, / Cherchant quelque lumière, / Allonge sa patte blanche »", hl: "chat / patte blanche", opts: ["Métaphore", "Personnification", "Allégorie", "Hyperbole"], ans: 1, expl: "Personnification discrète : le chat devient un double mélancolique, son geste évoque une quête existentielle absurde." },
+        { q: "« Ô temps, suspends ton vol ! » (Lamartine)", hl: "Ô temps", opts: ["Anaphore", "Apostrophe", "Litote", "Gradation"], ans: 1, expl: "Apostrophe lyrique : le poète interpelle directement le temps, personnifié, pour tenter d'arrêter la fuite inexorable des jours." },
+        { q: "« C'était une bête, une bête humaine qui reniflait, qui cherchait, qui prenait. » (Zola)", hl: "bête / reniflait, cherchait, prenait", opts: ["Métaphore + accumulation", "Comparaison + anaphore", "Oxymore + gradation", "Allégorie"], ans: 0, expl: "Métaphore animale et accumulation ternaire : Zola déshumanise le personnage pour mieux révéler l'instinct primaire, typique du naturalisme." },
+        { q: "« La mer est ton miroir ; tu contemples ton âme / Dans le roulis infini de sa lame. »", hl: "miroir / âme / roulis", opts: ["Métaphore filée", "Comparaison filée", "Allégorie marine", "Antithèse"], ans: 0, expl: "Métaphore filée : la mer devient le reflet de l'âme, chaque lame évoquant les tourments intérieurs du poète romantique." },
+        { q: "« Un bruit sourd, puis un cri, puis un fracas de tonnerre. »", hl: "bruit, cri, fracas", opts: ["Accumulation", "Gradation croissante", "Hyperbole", "Anaphore"], ans: 1, expl: "Gradation ascendante : l'intensité sonore s'amplifie pour plonger le lecteur dans une catastrophe imminente, effet de suspense dramatique." }
+    ];
+
+    const pceData = [
+        { titre: "Baudelaire — L'Albatros", txt: "« Le Poète est semblable au prince des nuées / Qui hante la tempête… Ses ailes de géant l'empêchent de marcher. »", corr: "**Procédés** : Comparaison (« semblable au ») + métaphore filée de l'albatros-poète + antithèse ciel/sol. **Effet** : L'antithèse finale (ailes de géant / empêchent de marcher) illustre tragiquement la condition du poète, sublime dans l'Idéal mais ridicule dans le monde réel. Baudelaire plonge le lecteur dans le paradoxe de l'artiste maudit." },
+        { titre: "La Fontaine — Le Corbeau et le Renard", txt: "« Apprenez que tout flatteur / Vit aux dépens de celui qui l'écoute. »", corr: "**Procédés** : Apostrophe (« Apprenez ») + présent de vérité générale. **Effet** : La Fontaine interpelle directement le lecteur, transformant la fable en leçon morale universelle. La portée didactique frappe l'esprit : chacun reconnaît le danger de la flatterie." }
+    ];
+
+    // ANALYSE VERLAINE
+    const linVerlaine = {
+        poem: [
+            { n: "v.1", t: "Les sanglots longs" }, { n: "v.2", t: "Des violons" }, { n: "v.3", t: "De l'automne" },
+            { n: "v.4", t: "Blessent mon cœur" }, { n: "v.5", t: "D'une langueur" }, { n: "v.6", t: "Monotone." },
+            { n: "v.7", t: "Tout suffocant" }, { n: "v.8", t: "Et blême, quand" }, { n: "v.9", t: "Sonne l'heure," },
+            { n: "v.10", t: "Je me souviens" }, { n: "v.11", t: "Des jours anciens" }, { n: "v.12", t: "Et je pleure ;" }
+        ],
+        intro: "Verlaine, « Chanson d'automne » (Poèmes saturniens, 1866) : poème élégiaque en deux mouvements – d'abord la nature plaintive (v.1-6), puis l'effondrement du moi lyrique (v.7-12).",
+        qs: [
+            { q: "Quel champ lexical domine dans les vers 1 à 6 ? Justifiez.", r: "**Champ lexical de la douleur mêlé à la musique** : « sanglots », « blessent », « langueur » → l'automne devient une partition mélancolique. Verlaine fait de la nature un instrument qui exprime la souffrance du poète. **Effet** : le lecteur perçoit l'émotion avant même qu'elle ne soit nommée, immersion sensorielle." },
+            { q: "Identifiez le procédé sonore aux vers 1-3 et expliquez son effet sur le lecteur.", r: "**Assonance en « on »** (« sangl**o**ts », « vi**o**l**o**ns », « aut**o**mne »). Cette répétition vocalique produit une musicalité plaintive et lancinante, comme une plainte qui ne finit pas. **Effet** : le lecteur est enveloppé dans une atmosphère de langueur, le son épouse le sens – c'est l'essence du symbolisme verlainien." },
+            { q: "« Et je pleure » (v.12) : analysez cette chute vertigineuse.", r: "Chute lapidaire en monosyllabe : « pleure » rompt la musicalité pour aboutir à la larme nue. **Procédés** : litote (pas d'explication) et ellipse. **Effet** : la douleur devient universelle, sans cause précise – pure mélancolie romantique. Le lecteur est frappé par cette simplicité qui concentre toute la détresse du poème." }
+        ]
+    };
+
+    // ANALYSE BAUDELAIRE (supplément)
+    const linBaudelaire = {
+        poem: [
+            { n: "v.1", t: "Quand le ciel bas et lourd pèse comme un couvercle" },
+            { n: "v.2", t: "Sur l'esprit gémissant en proie aux longs ennuis," },
+            { n: "v.3", t: "Et que de l'horizon embrassant tout le cercle" },
+            { n: "v.4", t: "Il nous verse un jour noir plus triste que les nuits ;" },
+            { n: "v.5", t: "Quand la terre est changée en un cachot humide," },
+            { n: "v.6", t: "Où l'Espérance, comme une chauve-souris," },
+            { n: "v.7", t: "S'en va battant les murs de son aile timide" },
+            { n: "v.8", t: "Et se cognant la tête à des plafonds pourris ;" }
+        ],
+        intro: "Baudelaire, « Spleen » (Les Fleurs du mal, 1857) : ce poème dépeint l'oppression morale du spleen. En deux mouvements – d'abord l'étouffement cosmique (v.1-4), puis la métaphore de la prison intérieure (v.5-8).",
+        qs: [
+            { q: "Quelle figure de style structure le premier quatrain ? Expliquez l'effet produit.", r: "**Comparaison filée** : « le ciel bas et lourd pèse **comme un couvercle** ». Le ciel est comparé à un couvercle de cercueil. **Effet** : écrasement physique et psychique. Le lecteur ressent une claustrophobie immédiate, une oppression sans issue – c'est l'incipit du spleen, monde sans échappatoire." },
+            { q: "« Il nous verse un jour noir plus triste que les nuits » : quelle antithèse et quel registre ?", r: "**Antithèse** : « jour noir » (oxymore) + « plus triste que les nuits ». Normalement le jour apporte la lumière, ici il est plus lugubre que l'obscurité. **Registre élégiaque et fantastique** : le monde est inversé, toute joie est absente. Le lecteur bascule dans une atmosphère cauchemardesque où les repères s'effondrent." },
+            { q: "Analysez la métaphore de l'Espérance (v.6-8). Quelle image de l'espoir Baudelaire donne-t-il ?", r: "**Métaphore filée** : l'Espérance comparée à une « chauve-souris » dans un « cachot humide ». La chauve-souris, créature aveugle et nocturne, se heurte aux murs. **Effet** : l'espoir n'est plus une vertu lumineuse mais un réflexe pathétique, ridicule et vain. Le lecteur saisit l'horreur de la condition spléenétique : même l'espérance devient souffrance." }
+        ]
+    };
+
+    // --------------------------------------------------------------
+    // LOGIQUE APPLICATIVE
+    // --------------------------------------------------------------
+    let activeTab = 0;
+    const tabs = ["📚 Fiches", "🧩 Associer 1", "🧩 Associer 2", "🎯 QCM (12)", "✍️ P.C.E.", "🍂 Verlaine", "🌑 Baudelaire"];
+    let matchStates = { 1: null, 2: null };
+    let qcmSelections = {};
+
+    function initMatch(id, data) {
+        const leftDiv = document.getElementById(`matchLeft${id}`);
+        const rightDiv = document.getElementById(`matchRight${id}`);
+        if (!leftDiv) return;
+        const shuffledLeft = [...data].sort(() => Math.random() - 0.5);
+        const shuffledRight = [...data].sort(() => Math.random() - 0.5);
+        leftDiv.innerHTML = "";
+        rightDiv.innerHTML = "";
+        const state = { data, selected: null, done: [] };
+        shuffledLeft.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "mitem";
+            div.textContent = item.p;
+            div.dataset.procede = item.p;
+            div.onclick = () => onPickLeft(id, item.p, div);
+            leftDiv.appendChild(div);
+        });
+        shuffledRight.forEach(item => {
+            const div = document.createElement("div");
+            div.className = "mitem";
+            div.textContent = item.d;
+            div.dataset.def = item.p;
+            div.onclick = () => onPickRight(id, item.p, div);
+            rightDiv.appendChild(div);
+        });
+        matchStates[id] = state;
+        updateMatchScore(id);
+    }
+
+    function onPickLeft(id, procede, el) {
+        if (matchStates[id].done.includes(procede)) return;
+        document.querySelectorAll(`#matchLeft${id} .mitem`).forEach(e => e.classList.remove("sel"));
+        el.classList.add("sel");
+        matchStates[id].selected = procede;
+    }
+
+    function onPickRight(id, procede, el) {
+        const state = matchStates[id];
+        if (!state.selected) return;
+        if (state.done.includes(state.selected)) return;
+        if (state.selected === procede) {
+            el.classList.add("ok");
+            const leftEl = [...document.querySelectorAll(`#matchLeft${id} .mitem`)].find(e => e.dataset.procede === procede);
+            if (leftEl) leftEl.classList.add("ok");
+            document.querySelector(`#matchLeft${id} .mitem.sel`)?.classList.remove("sel");
+            state.done.push(procede);
+            state.selected = null;
+            updateMatchScore(id);
+        } else {
+            el.classList.add("bad");
+            setTimeout(() => el.classList.remove("bad"), 600);
+        }
+    }
+
+    function updateMatchScore(id) {
+        const total = matchStates[id].data.length;
+        const done = matchStates[id].done.length;
+        const span = document.getElementById(`scoreMatch${id}`);
+        if (span) span.innerText = `${done}/${total}`;
+        if (done === total) {
+            const box = document.getElementById(`corrMatch${id}`);
+            if (box) {
+                box.innerHTML = `<p>✅ Parfait ! Voici le récapitulatif complet pour le bac :</p><ul>${matchStates[id].data.map(m => `<li><strong>${m.p}</strong> → ${m.d}</li>`).join('')}</ul>`;
+                box.classList.add("show");
+            }
+        }
+    }
+
+    function resetMatch(id, data) { initMatch(id, data); }
+    function checkQCM() {
+        let score = 0;
+        qcmData.forEach((q, idx) => {
+            const selected = qcmSelections[idx];
+            const correct = q.ans;
+            for (let o = 0; o < q.opts.length; o++) {
+                const optDiv = document.getElementById(`qopt_${idx}_${o}`);
+                if (optDiv) {
+                    optDiv.classList.remove("ok", "bad");
+                    if (o === correct) optDiv.classList.add("ok");
+                    else if (o === selected && selected !== correct) optDiv.classList.add("bad");
+                }
+            }
+            const explDiv = document.getElementById(`qcm_expl_${idx}`);
+            if (explDiv) explDiv.classList.add("show");
+            if (selected === correct) score++;
+        });
+        document.getElementById("qcmScoreDisplay").innerText = `${score}/${qcmData.length}`;
+    }
+
+    function buildUI() {
+        const tabsContainer = document.getElementById("tabsContainer");
+        const panesContainer = document.getElementById("panesContainer");
+        tabsContainer.innerHTML = "";
+        panesContainer.innerHTML = "";
+
+        tabs.forEach((tabName, idx) => {
+            const btn = document.createElement("button");
+            btn.className = `tab ${idx === activeTab ? "on" : ""}`;
+            btn.innerText = tabName;
+            btn.onclick = () => {
+                activeTab = idx;
+                document.querySelectorAll(".tab").forEach((t, i) => t.classList.toggle("on", i === idx));
+                document.querySelectorAll(".pane").forEach((p, i) => p.classList.toggle("on", i === idx));
+                window.scrollTo({ top: 0, behavior: "smooth" });
+            };
+            tabsContainer.appendChild(btn);
+
+            const pane = document.createElement("div");
+            pane.className = `pane ${idx === activeTab ? "on" : ""}`;
+            pane.id = `pane_${idx}`;
+            panesContainer.appendChild(pane);
+            renderPane(pane, idx);
+        });
+    }
+
+    function renderPane(pane, idx) {
+        if (idx === 0) { // Fiches
+            pane.innerHTML = `<div class="card-modern"><h2>📚 Les procédés essentiels (avec effet flouté)</h2><p>Survolez l'effet pour le révéler : technique P.C.E. (Procédé → Citation → Effet)</p><div class="grid-procedes" id="fichesGrid"></div></div>`;
+            const grid = pane.querySelector("#fichesGrid");
+            fiches.forEach(f => {
+                const card = document.createElement("div");
+                card.className = "procede-card";
+                card.innerHTML = `<div><strong style="font-size:1rem;">${f.n}</strong> <span class="badge-cat cat-${f.c}">${f.c}</span></div>
+                                  <div style="font-size:0.85rem; margin:6px 0;">${f.d}</div>
+                                  <div style="font-size:0.8rem; background: #f1f5f9; padding: 4px 8px; border-radius: 12px;">📌 ${f.e}</div>
+                                  <div class="effet-flou">🎭 ${f.effet}</div>`;
+                grid.appendChild(card);
+            });
+        }
+        else if (idx === 1) {
+            pane.innerHTML = `<div class="card-modern"><h3>🧩 Associer (série 1)</h3><div class="match-grid"><div class="match-col"><div class="match-header">📌 Procédés</div><div id="matchLeft1"></div></div><div class="match-col"><div class="match-header">📖 Définitions</div><div id="matchRight1"></div></div></div><div class="flex-row"><button class="btn btn-primary" onclick="resetMatch(1, matchSet1)">⟳ Recommencer</button><span class="score-pill" id="scoreMatch1">0/0</span></div><div id="corrMatch1" class="corr-box"></div></div>`;
+            initMatch(1, matchSet1);
+        }
+        else if (idx === 2) {
+            pane.innerHTML = `<div class="card-modern"><h3>🧩 Associer (série 2)</h3><div class="match-grid"><div class="match-col"><div class="match-header">📌 Procédés</div><div id="matchLeft2"></div></div><div class="match-col"><div class="match-header">📖 Définitions</div><div id="matchRight2"></div></div></div><div class="flex-row"><button class="btn btn-primary" onclick="resetMatch(2, matchSet2)">⟳ Recommencer</button><span class="score-pill" id="scoreMatch2">0/0</span></div><div id="corrMatch2" class="corr-box"></div></div>`;
+            initMatch(2, matchSet2);
+        }
+        else if (idx === 3) {
+            let html = `<div class="card-modern"><h3>🎯 QCM — Identifiez le procédé (12 extraits)</h3><div id="qcmList"></div><div class="flex-row" style="margin-top:1rem;"><button class="btn btn-primary" onclick="checkQCM()">Vérifier mes réponses</button><span class="score-pill" id="qcmScoreDisplay">0/${qcmData.length}</span></div></div>`;
+            pane.innerHTML = html;
+            const container = pane.querySelector("#qcmList");
+            qcmData.forEach((q, i) => {
+                const block = document.createElement("div");
+                block.className = "card-modern";
+                block.innerHTML = `<div class="quote-block">${q.q}</div><div id="qcmOpts${i}"></div><div id="qcm_expl_${i}" class="corr-box"><p>${q.expl}</p></div>`;
+                const optsDiv = block.querySelector(`#qcmOpts${i}`);
+                q.opts.forEach((opt, j) => {
+                    const optDiv = document.createElement("div");
+                    optDiv.className = "qopt";
+                    optDiv.id = `qopt_${i}_${j}`;
+                    optDiv.innerHTML = `<span>${opt}</span>`;
+                    optDiv.onclick = () => {
+                        qcmSelections[i] = j;
+                        document.querySelectorAll(`#qcmOpts${i} .qopt`).forEach(el => el.classList.remove("ok", "bad"));
+                    };
+                    optsDiv.appendChild(optDiv);
+                });
+                container.appendChild(block);
+            });
+        }
+        else if (idx === 4) {
+            let html = `<div class="card-modern"><h3>✍️ Méthode P.C.E. (analyse guidée)</h3><div id="pceExercises"></div></div>`;
+            pane.innerHTML = html;
+            const pceDiv = pane.querySelector("#pceExercises");
+            pceData.forEach((ex, idxEx) => {
+                const div = document.createElement("div");
+                div.className = "card-modern";
+                div.innerHTML = `<strong>${ex.titre}</strong><div class="quote-block">${ex.txt}</div>
+                <textarea id="pceText${idxEx}" rows="3" placeholder="Rédigez votre analyse (procédé(s) → citation → effet sur le lecteur)..."></textarea>
+                <div style="margin-top:0.5rem;"><button class="btn btn-outline" onclick="document.getElementById('pceCorr${idxEx}').classList.toggle('show')">📘 Voir correction type bac</button></div>
+                <div id="pceCorr${idxEx}" class="corr-box"><p>${ex.corr}</p></div>`;
+                pceDiv.appendChild(div);
+            });
+        }
+        else if (idx === 5) { // Verlaine
+            let html = `<div class="card-modern"><h3>🍂 Verlaine — « Chanson d'automne »</h3><div class="lin-poem" id="poemVerlaine"></div><div id="linVerlaineQuestions"></div></div>`;
+            pane.innerHTML = html;
+            const poemDiv = pane.querySelector("#poemVerlaine");
+            linVerlaine.poem.forEach(line => {
+                if (line.t) poemDiv.innerHTML += `<div class="lin-line"><span style="color:#92400e;">${line.n}</span> ${line.t}</div>`;
+                else poemDiv.innerHTML += `<hr style="margin:0.3rem 0;">`;
+            });
+            const qDiv = pane.querySelector("#linVerlaineQuestions");
+            const introCard = document.createElement("div");
+            introCard.className = "card-modern";
+            introCard.innerHTML = `<strong>🎤 Introduction suggérée</strong><textarea id="introVerlaine" rows="2" placeholder="Rédigez l'introduction..."></textarea><button class="btn btn-outline" style="margin-top:0.5rem;" onclick="document.getElementById('corrIntroVerlaine').classList.toggle('show')">📖 Correction bac</button><div id="corrIntroVerlaine" class="corr-box"><p>${linVerlaine.intro}</p></div>`;
+            qDiv.appendChild(introCard);
+            linVerlaine.qs.forEach((q, idxq) => {
+                const card = document.createElement("div");
+                card.className = "card-modern";
+                card.innerHTML = `<strong>❓ ${q.q}</strong><textarea id="linVerResp${idxq}" rows="3" placeholder="Votre réponse développée..."></textarea><button class="btn btn-outline" style="margin-top:0.5rem;" onclick="document.getElementById('linVerCorr${idxq}').classList.toggle('show')">📘 Voir correction type bac</button><div id="linVerCorr${idxq}" class="corr-box"><p>${q.r}</p></div>`;
+                qDiv.appendChild(card);
+            });
+        }
+        else if (idx === 6) { // Baudelaire supplément
+            let html = `<div class="card-modern"><h3>🌑 Baudelaire — « Spleen » (Les Fleurs du mal)</h3><div class="lin-poem" id="poemBaudelaire"></div><div id="linBaudelaireQuestions"></div></div>`;
+            pane.innerHTML = html;
+            const poemDiv = pane.querySelector("#poemBaudelaire");
+            linBaudelaire.poem.forEach(line => {
+                poemDiv.innerHTML += `<div class="lin-line">${line.t}</div>`;
+            });
+            const qDiv = pane.querySelector("#linBaudelaireQuestions");
+            const introCard = document.createElement("div");
+            introCard.className = "card-modern";
+            introCard.innerHTML = `<strong>🎤 Introduction attendue au bac</strong><textarea id="introBaud" rows="2" placeholder="Votre introduction..."></textarea><button class="btn btn-outline" onclick="document.getElementById('corrIntroBaud').classList.toggle('show')">📖 Correction modèle</button><div id="corrIntroBaud" class="corr-box"><p>${linBaudelaire.intro}</p></div>`;
+            qDiv.appendChild(introCard);
+            linBaudelaire.qs.forEach((q, idxq) => {
+                const card = document.createElement("div");
+                card.className = "card-modern";
+                card.innerHTML = `<strong>❓ ${q.q}</strong><textarea rows="3" placeholder="Analyse détaillée..."></textarea><button class="btn btn-outline" onclick="document.getElementById('linBaudCorr${idxq}').classList.toggle('show')">📘 Correction complète</button><div id="linBaudCorr${idxq}" class="corr-box"><p>${q.r}</p></div>`;
+                qDiv.appendChild(card);
+            });
+        }
+    }
+
+    window.resetMatch = resetMatch;
+    window.checkQCM = checkQCM;
+    window.matchSet1 = matchSet1;
+    window.matchSet2 = matchSet2;
+    buildUI();
+</script>
+</body>
+</html>
