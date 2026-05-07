@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Jacques Cartier - Cours A2+ avec exercices</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(145deg, #e0eafc 0%, #cfdef3 100%);
+      min-height: 100vh;
+      padding: 24px 20px;
+      color: #1a2c3e;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap');
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      background: rgba(255,255,255,0.96);
+      border-radius: 2rem;
+      padding: 30px 40px;
+      margin-bottom: 32px;
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.25);
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .portrait {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid white;
+      box-shadow: 0 20px 30px -12px rgba(0,0,0,0.3);
+    }
+
+    .hero-content h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, #2c3e66, #4a6fa5);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
+    }
+
+    .badge {
+      background: linear-gradient(115deg, #667eea, #7c5e9e);
+      color: white;
+      padding: 6px 18px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      margin: 10px 10px 0 0;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      background: white;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    .tab.active {
+      background: linear-gradient(95deg, #3b5e9b, #5b3b8c);
+      color: white;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.97);
+      border-radius: 2rem;
+      padding: 32px;
+      margin-bottom: 28px;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+    }
+
+    .card h2 {
+      font-size: 1.8rem;
+      margin-bottom: 1.5rem;
+      border-left: 6px solid #4a6fa5;
+      padding-left: 18px;
+    }
+
+    .story-text {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      background: #fefef7;
+      padding: 20px;
+      border-radius: 24px;
+    }
+
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 16px;
+    }
+
+    .vocab-card {
+      background: #f0f4fa;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      border-left: 5px solid #5b8cbe;
+    }
+
+    .vocab-term {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #1e4a76;
+    }
+
+    .grammar-box {
+      background: #fef7e0;
+      border-radius: 24px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .mini-exercise {
+      background: white;
+      border-radius: 20px;
+      padding: 18px;
+      margin-top: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .mini-exercise p {
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .mini-option {
+      background: #eef2fa;
+      padding: 8px 16px;
+      margin: 8px 0;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: 0.1s;
+      display: inline-block;
+      margin-right: 12px;
+    }
+
+    .mini-option:hover {
+      background: #d9e2f0;
+    }
+
+    .mini-feedback {
+      margin-top: 10px;
+      font-size: 0.9rem;
+    }
+
+    .exercise-item {
+      background: white;
+      margin: 20px 0;
+      padding: 18px;
+      border-radius: 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 16px;
+      border: 1px solid #ccc;
+      font-family: inherit;
+    }
+
+    .check-btn {
+      background: #2c5f8a;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 40px;
+      margin-top: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .feedback {
+      margin-top: 12px;
+      font-weight: 500;
+      padding: 8px;
+      border-radius: 14px;
+      background: #e9ecef;
+    }
+
+    .quiz-option {
+      background: #eef2fa;
+      padding: 10px 16px;
+      margin: 8px 0;
+      border-radius: 60px;
+      cursor: pointer;
+      transition: 0.1s;
+      font-weight: 500;
+    }
+
+    .quiz-option.selected-correct {
+      background: #c8e6d9;
+      border: 1px solid #2e7d64;
+    }
+
+    .quiz-option.selected-incorrect {
+      background: #ffdbd8;
+      text-decoration: line-through;
+    }
+
+    .answers-section {
+      background: #f1f6fc;
+      border-radius: 28px;
+      padding: 24px;
+      margin-top: 40px;
+    }
+
+    .answers-section h3 {
+      color: #2c5282;
+      margin-bottom: 16px;
+    }
+
+    .correction-item {
+      margin: 12px 0;
+      padding: 12px;
+      background: white;
+      border-radius: 18px;
+    }
+
+    .progress-container {
+      background: #dbe4ed;
+      border-radius: 40px;
+      height: 10px;
+      margin: 15px 0;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #4a6fa5;
+      border-radius: 40px;
+      transition: width 0.3s;
+    }
+
+    .medaillon-img {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      overflow: hidden;
+    }
+
+    .portrait-container {
+      position: relative;
+      flex-shrink: 0;
+    }
+
+    .medaillon-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @media (max-width: 700px) {
+      .hero { flex-direction: column; text-align: center; }
+      .card h2 { font-size: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <div class="portrait-container">
+      <img class="portrait" src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/Jacques_Cartier_1851-1852_%28cropped%29.jpg/360px-Jacques_Cartier_1851-1852_%28cropped%29.jpg" alt="Jacques Cartier">
+      <!-- MÉDAILLON AVEC UNE VRAIE IMAGE DE JACQUES CARTIER (gravure) -->
+      <div class="medaillon-img">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Jacques_Cartier_par_Fran%C3%A7ois_Riss.jpg/200px-Jacques_Cartier_par_Fran%C3%A7ois_Riss.jpg" alt="Jacques Cartier portrait">
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1>⚓ Jacques Cartier <span style="font-size: 1.3rem;">explorateur français</span></h1>
+      <div><span class="badge">📘 Niveau A2+</span><span class="badge">🌍 Histoire & français</span></div>
+      <p style="margin-top: 12px;">Un cours simple pour apprendre le français et découvrir l’aventure de Jacques Cartier au Canada.</p>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="0">📖 Récit (A2+)</button>
+    <button class="tab" data-tab="1">📚 Vocabulaire + traduction</button>
+    <button class="tab" data-tab="2">🎓 Grammaire + mini-exercices</button>
+    <button class="tab" data-tab="3">✏️ Exercices & quiz</button>
+  </div>
+
+  <!-- Panneau 1 : Histoire simplifiée -->
+  <div id="panel-0" class="content-panel active">
+    <div class="card">
+      <h2>📜 Jacques Cartier : le voyageur du fleuve</h2>
+      <div class="story-text">
+        <p>Jacques Cartier est un marin français. Il est né en 1491 à Saint-Malo, une ville près de la mer. En 1534, le roi de France, François Ier, lui demande de chercher de nouvelles terres et un passage vers l’Asie. Cartier accepte et prépare deux bateaux.</p>
+        <p><strong>Avant de partir</strong>, il prend des cartes, de la nourriture et des marins courageux. <strong>Après 20 jours sur l’océan</strong>, il arrive près de Terre-Neuve (au Canada). Il explore le golfe du Saint-Laurent. Il rencontre des Amérindiens (les Iroquoiens). Ils échangent des fourrures contre des couteaux et des tissus.</p>
+        <p>En 1535, Cartier fait un deuxième voyage. Il remonte un grand <strong>fleuve</strong> : le Saint-Laurent. Il arrive à Hochelaga (aujourd’hui Montréal). L’hiver est très froid. Des marins tombent malades (scorbut). Les Amérindiens aident les Français avec une boisson faite avec des feuilles d’arbre.</p>
+        <p>Jacques Cartier rapporte des cartes et des histoires en France. Grâce à lui, les Français commencent à connaître le Canada. Aujourd’hui, on se souvient de Cartier comme un grand explorateur.</p>
+        <p style="background: #e2eafc; padding: 10px; border-radius: 16px; margin-top: 15px;">💡 <strong>Le mot « Canada »</strong> vient du mot iroquoien <em>kanata</em> qui signifie « village ».</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panneau 2 : vocabulaire avec traduction anglaise -->
+  <div id="panel-1" class="content-panel">
+    <div class="card">
+      <h2>📖 Vocabulaire essentiel (français → anglais)</h2>
+      <div class="vocab-grid">
+        <div class="vocab-card"><span class="vocab-term">🌊 un explorateur</span><br>explorer <br> <em style="color:#2c5282;">english: explorer</em></div>
+        <div class="vocab-card"><span class="vocab-term">🚢 un navire</span><br>ship <br><em>english: ship / vessel</em></div>
+        <div class="vocab-card"><span class="vocab-term">🧭 une boussole</span><br>compass <br><em>english: compass</em></div>
+        <div class="vocab-card"><span class="vocab-term">🌊 un fleuve</span><br>river that flows into the sea <br><em>english: large river</em></div>
+        <div class="vocab-card"><span class="vocab-term">⚓ un équipage</span><br>crew <br><em>english: crew</em></div>
+        <div class="vocab-card"><span class="vocab-term">🏹 un autochtone / Amérindien</span><br>Indigenous person <br><em>english: native american</em></div>
+        <div class="vocab-card"><span class="vocab-term">🧣 une fourrure</span><br>fur <br><em>english: fur</em></div>
+        <div class="vocab-card"><span class="vocab-term">🗺️ une carte (géographique)</span><br>map <br><em>english: map</em></div>
+        <div class="vocab-card"><span class="vocab-term">🤒 le scorbut</span><br>scurvy (illness) <br><em>english: scurvy</em></div>
+        <div class="vocab-card"><span class="vocab-term">⏰ en avance / à l'heure / en retard</span><br>early / on time / late</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panneau 3 : Grammaire + mini-exercices intégrés -->
+  <div id="panel-2" class="content-panel">
+    <div class="card">
+      <h2>🎓 Grammaire : situer dans le temps</h2>
+      
+      <div class="grammar-box">
+        <h3>📌 Avant de / Après</h3>
+        <p><strong>Avant de</strong> + verbe (infinitif) → action qui arrive en premier.</p>
+        <p><em>Exemple : Avant de partir, Cartier vérifie son bateau.</em></p>
+        <p><strong>Après</strong> + nom / <strong>Après avoir</strong> + participe passé → action qui arrive ensuite.</p>
+        <p><em>Exemple : Après la tempête, les marins réparent le navire.</em></p>
+        
+        <!-- Mini exercice 1 -->
+        <div class="mini-exercise">
+          <p>🧠 Mini exercice : Choisis la bonne réponse.</p>
+          <p>« ___________ traverser l'océan, Cartier aperçoit la terre. »</p>
+          <div>
+            <span class="mini-option" data-mini="1" data-correct="Après avoir">Après avoir</span>
+            <span class="mini-option" data-mini="1" data-correct="Avant de">Avant de</span>
+          </div>
+          <div class="mini-feedback" id="miniFeed1"></div>
+        </div>
+        
+        <div class="mini-exercise">
+          <p>🧠 Mini exercice : Complète mentalement.</p>
+          <p>« ___________ de manger, les marins lavent leurs mains. »</p>
+          <div>
+            <span class="mini-option" data-mini="2" data-correct="Avant">Avant</span>
+            <span class="mini-option" data-mini="2" data-correct="Après">Après</span>
+          </div>
+          <div class="mini-feedback" id="miniFeed2"></div>
+        </div>
+      </div>
+
+      <div class="grammar-box">
+        <h3>⏰ En avance / À l'heure / En retard</h3>
+        <p><strong>En avance</strong> = plus tôt que prévu → <em>Il se lève en avance.</em></p>
+        <p><strong>À l'heure</strong> = exactement au moment prévu → <em>Le capitaine arrive à l'heure.</em></p>
+        <p><strong>En retard</strong> = après le moment prévu → <em>Le navire est en retard.</em></p>
+        
+        <div class="mini-exercise">
+          <p>🧠 Mini exercice : Choisis l'expression correcte.</p>
+          <p>« Le bateau arrive 10 minutes avant l'heure prévue, il est _________. »</p>
+          <div>
+            <span class="mini-option" data-mini="3" data-correct="en avance">en avance</span>
+            <span class="mini-option" data-mini="3" data-correct="à l'heure">à l'heure</span>
+            <span class="mini-option" data-mini="3" data-correct="en retard">en retard</span>
+          </div>
+          <div class="mini-feedback" id="miniFeed3"></div>
+        </div>
+        
+        <div class="mini-exercise">
+          <p>🧠 Mini exercice : « Le capitaine est exactement à midi pile, il est _________. »</p>
+          <div>
+            <span class="mini-option" data-mini="4" data-correct="à l'heure">à l'heure</span>
+            <span class="mini-option" data-mini="4" data-correct="en avance">en avance</span>
+          </div>
+          <div class="mini-feedback" id="miniFeed4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Panneau 4 : EXERCICES (sans réponses visibles) + quiz final -->
+  <div id="panel-3" class="content-panel">
+    <div class="card">
+      <h2>✏️ Entraîne-toi !</h2>
+      <div class="progress-container"><div id="progressFill" class="progress-fill"></div></div>
+      <p id="progressText" style="font-size:0.85rem; text-align:right; margin-bottom: 16px;">📊 0%</p>
+
+      <!-- Exercice 1 : texte à trous (avant de / après) -->
+      <div class="exercise-item" id="ex1">
+        <p><strong>Exercice 1</strong> – Complète avec <em>« avant de »</em> ou <em>« après »</em>.</p>
+        <p>1. ___________ commencer le voyage, Cartier prie à l'église.</p>
+        <input type="text" id="q1" placeholder="Ta réponse">
+        <p>2. ___________ traverser l'océan, l'équipage aperçoit la terre.</p>
+        <input type="text" id="q2" placeholder="Ta réponse">
+        <p>3. Il rencontre les autochtones ___________ il explore le golfe.</p>
+        <input type="text" id="q3" placeholder="Ta réponse">
+        <button class="check-btn" data-ex="1">Vérifier (auto-correction)</button>
+        <div class="feedback" id="feed1"></div>
+      </div>
+
+      <!-- Exercice 2 : en avance / à l'heure / en retard -->
+      <div class="exercise-item" id="ex2">
+        <p><strong>Exercice 2</strong> – Choisis la bonne expression : en avance, à l'heure, en retard.</p>
+        <p>4. Les marins arrivent 20 minutes avant le travail : ils sont _________.</p>
+        <input type="text" id="q4" placeholder="Réponse">
+        <p>5. Le bateau arrive exactement à 15h00, comme prévu : il est _________.</p>
+        <input type="text" id="q5" placeholder="Réponse">
+        <p>6. À cause du brouillard, le capitaine arrive une heure après l'heure prévue : il est _________.</p>
+        <input type="text" id="q6" placeholder="Réponse">
+        <button class="check-btn" data-ex="2">Vérifier</button>
+        <div class="feedback" id="feed2"></div>
+      </div>
+
+      <!-- QUIZ FINAL -->
+      <div class="exercise-item" id="quizFinal">
+        <h3>🏆 Quiz final – Jacques Cartier</h3>
+        <p><strong>7.</strong> En quelle année Jacques Cartier réalise-t-il son premier voyage ?</p>
+        <div class="quiz-option" data-quiz="7" data-correct="1534">a) 1492</div>
+        <div class="quiz-option" data-quiz="7" data-correct="1534">b) 1534</div>
+        <div class="quiz-option" data-quiz="7" data-correct="1534">c) 1608</div>
+        
+        <p><strong>8.</strong> Quel fleuve Cartier a-t-il remonté jusqu'à Hochelaga (Montréal) ?</p>
+        <div class="quiz-option" data-quiz="8" data-correct="Saint-Laurent">a) Mississippi</div>
+        <div class="quiz-option" data-quiz="8" data-correct="Saint-Laurent">b) Saint-Laurent</div>
+        <div class="quiz-option" data-quiz="8" data-correct="Saint-Laurent">c) Amazone</div>
+
+        <p><strong>9.</strong> « Avant de découvrir le Canada, Cartier... » quelle phrase est correcte ?</p>
+        <div class="quiz-option" data-quiz="9" data-correct="a navigué sur l'Atlantique">a) a navigué sur l'Atlantique.</div>
+        <div class="quiz-option" data-quiz="9" data-correct="a navigué sur l'Atlantique">b) rentre en France directement.</div>
+        <div class="quiz-option" data-quiz="9" data-correct="a navigué sur l'Atlantique">c) il construit un fort.</div>
+
+        <p><strong>10.</strong> Si un bateau arrive exactement à l’heure prévue, on dit qu’il est :</p>
+        <div class="quiz-option" data-quiz="10" data-correct="à l'heure">a) en avance</div>
+        <div class="quiz-option" data-quiz="10" data-correct="à l'heure">b) à l'heure</div>
+        <div class="quiz-option" data-quiz="10" data-correct="à l'heure">c) en retard</div>
+        
+        <button id="checkQuizBtn" class="check-btn" style="background:#496a8a;">Vérifier mes réponses du quiz</button>
+        <div class="feedback" id="quizFeedback"></div>
+      </div>
+      
+      <!-- SECTION RÉPONSES CACHÉES À LA FIN -->
+      <div class="answers-section">
+        <h3>🔐 Corrigés des exercices (clique pour révéler)</h3>
+        <button id="revealCorrectionsBtn" class="check-btn" style="background:#3d5a73;">📖 Montrer toutes les réponses</button>
+        <div id="correctionsContainer" style="margin-top: 20px; display: none;">
+          <div class="correction-item"><strong>Exercice 1 :</strong><br>1. Avant de<br>2. Après avoir traversé / Après avoir<br>3. après (exemple : après avoir exploré le golfe)</div>
+          <div class="correction-item"><strong>Exercice 2 :</strong><br>4. en avance <br>5. à l'heure <br>6. en retard</div>
+          <div class="correction-item"><strong>Quiz final :</strong><br>7. 1534<br>8. Saint-Laurent<br>9. a navigué sur l'Atlantique<br>10. à l'heure</div>
+          <div class="correction-item"><strong>Mini exercices (Grammaire) :</strong><br>1. Après avoir &nbsp; 2. Avant &nbsp; 3. en avance &nbsp; 4. à l'heure</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Gestion des onglets
+  const tabs = document.querySelectorAll('.tab');
+  const panels = [document.getElementById('panel-0'), document.getElementById('panel-1'), document.getElementById('panel-2'), document.getElementById('panel-3')];
+  function activateTab(idx) {
+    panels.forEach((p,i)=> { if(i===idx) p.classList.add('active'); else p.classList.remove('active'); });
+    tabs.forEach((t,i)=> { if(i===idx) t.classList.add('active'); else t.classList.remove('active'); });
+  }
+  tabs.forEach((tab,idx)=> { tab.addEventListener('click',()=> activateTab(idx)); });
+
+  // === MINI EXERCICES DE GRAMMAIRE ===
+  const miniOptions = document.querySelectorAll('.mini-option');
+  miniOptions.forEach(opt => {
+    opt.addEventListener('click', function() {
+      const miniId = this.getAttribute('data-mini');
+      const correct = this.getAttribute('data-correct');
+      const parentDiv = this.closest('.mini-exercise');
+      const feedDiv = parentDiv.querySelector('.mini-feedback');
+      const allOpts = parentDiv.querySelectorAll('.mini-option');
+      // Désactiver les autres clics
+      allOpts.forEach(o => o.style.pointerEvents = 'none');
+      if(this.innerText.includes(correct) || correct.includes(this.innerText.trim())) {
+        this.style.background = "#c8e6d9";
+        feedDiv.innerHTML = "✅ Bonne réponse !";
+        feedDiv.style.color = "#2f6b47";
+      } else {
+        this.style.background = "#ffdbd8";
+        feedDiv.innerHTML = `❌ Oups ! La bonne réponse était : "${correct}".`;
+        feedDiv.style.color = "#9b2c1d";
+        // Surligner la bonne réponse
+        allOpts.forEach(o => {
+          if(o.getAttribute('data-correct') === correct && o !== this) {
+            o.style.background = "#c8e6d9";
+          }
+        });
+      }
+    });
+  });
+
+  // Suivi progression barre
+  function updateProgressBar() {
+    let total = 10;
+    let filled = 0;
+    for(let i=1;i<=6;i++) {
+      let val = document.getElementById('q'+i)?.value.trim();
+      if(val && val.length>0) filled+=0.5;
+    }
+    for(let q=7; q<=10; q++) {
+      let selected = false;
+      document.querySelectorAll(`.quiz-option[data-quiz="${q}"]`).forEach(opt => {
+        if(opt.classList.contains('selected-correct') || opt.classList.contains('selected-incorrect')) selected=true;
+      });
+      if(selected) filled+=1;
+    }
+    let percent = Math.min(100, (filled / 10) * 100);
+    let progressFill = document.getElementById('progressFill');
+    if(progressFill) progressFill.style.width = percent+'%';
+    let progressText = document.getElementById('progressText');
+    if(progressText) progressText.innerText = `📊 ${Math.floor(percent)}% complété`;
+  }
+
+  // Vérification exercices 1 et 2
+  document.querySelectorAll('.check-btn[data-ex]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      let ex = btn.getAttribute('data-ex');
+      if(ex === '1') {
+        let a1 = document.getElementById('q1').value.trim().toLowerCase();
+        let a2 = document.getElementById('q2').value.trim().toLowerCase();
+        let a3 = document.getElementById('q3').value.trim().toLowerCase();
+        let feed = document.getElementById('feed1');
+        let ok1 = (a1 === 'avant de');
+        let ok2 = (a2 === 'après avoir' || a2 === 'apres avoir' || a2 === 'après avoir traversé');
+        let ok3 = (a3 === 'après' || a3 === 'apres');
+        feed.innerHTML = `🔍 Résultat : 1. ${ok1 ? '✅' : '❌ (Avant de)'} &nbsp; 2. ${ok2 ? '✅' : '❌ (Après avoir)'} &nbsp; 3. ${ok3 ? '✅' : '❌ (après)'}`;
+        if(ok1 && ok2 && ok3) feed.style.background = "#c8e6d9"; else feed.style.background = "#ffefc0";
+      } else if(ex === '2') {
+        let a4 = document.getElementById('q4').value.trim().toLowerCase();
+        let a5 = document.getElementById('q5').value.trim().toLowerCase();
+        let a6 = document.getElementById('q6').value.trim().toLowerCase();
+        let feed = document.getElementById('feed2');
+        let correct4 = (a4 === 'en avance');
+        let correct5 = (a5 === 'à l\'heure' || a5 === "a l'heure");
+        let correct6 = (a6 === 'en retard');
+        feed.innerHTML = `🔍 Résultat : 4. ${correct4 ? '✅' : '❌ (en avance)'} &nbsp; 5. ${correct5 ? '✅' : '❌ (à l\'heure)'} &nbsp; 6. ${correct6 ? '✅' : '❌ (en retard)'}`;
+      }
+      updateProgressBar();
+    });
+  });
+
+  // Quiz final : sélection
+  const allQuizOptions = document.querySelectorAll('.quiz-option');
+  allQuizOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+      const questionNum = opt.getAttribute('data-quiz');
+      const correctAnswer = opt.getAttribute('data-correct');
+      const parentOptions = document.querySelectorAll(`.quiz-option[data-quiz="${questionNum}"]`);
+      parentOptions.forEach(opt2 => {
+        opt2.classList.remove('selected-correct', 'selected-incorrect');
+      });
+      if(opt.innerText.includes(correctAnswer) || opt.getAttribute('data-correct') === correctAnswer) {
+        opt.classList.add('selected-correct');
+      } else {
+        opt.classList.add('selected-incorrect');
+        parentOptions.forEach(opt2 => {
+          if(opt2.innerText.includes(correctAnswer) || opt2.getAttribute('data-correct') === correctAnswer) {
+            opt2.classList.add('selected-correct');
+          }
+        });
+      }
+      updateProgressBar();
+    });
+  });
+
+  document.getElementById('checkQuizBtn').addEventListener('click', () => {
+    let feedQuiz = document.getElementById('quizFeedback');
+    let score = 0;
+    for(let q=7; q<=10; q++) {
+      let selectedOption = document.querySelector(`.quiz-option[data-quiz="${q}"].selected-correct`);
+      if(selectedOption) score++;
+    }
+    feedQuiz.innerHTML = `🎯 Résultat Quiz : ${score}/4. ${score===4 ? 'Parfait ! 👏' : 'Regarde les corrections plus bas.'}`;
+    feedQuiz.style.background = "#d9e6f5";
+    updateProgressBar();
+  });
+
+  const revealBtn = document.getElementById('revealCorrectionsBtn');
+  const correctionsDiv = document.getElementById('correctionsContainer');
+  revealBtn.addEventListener('click', () => {
+    if(correctionsDiv.style.display === 'none' || getComputedStyle(correctionsDiv).display === 'none') {
+      correctionsDiv.style.display = 'block';
+      revealBtn.textContent = '🙈 Cacher les réponses';
+    } else {
+      correctionsDiv.style.display = 'none';
+      revealBtn.textContent = '📖 Montrer toutes les réponses';
+    }
+  });
+  
+  updateProgressBar();
+  activateTab(0);
+</script>
+<style>
+  .content-panel { display: none; }
+  .content-panel.active { display: block; animation: fade 0.3s; }
+  @keyframes fade { from { opacity:0;} to { opacity:1; } }
+  .quiz-option { transition: 0.1s; }
+  .selected-correct { background: #b8e0c2; border-left: 5px solid #1e6f3f; }
+  .selected-incorrect { background: #f9cfcd; text-decoration: line-through; }
+  .answers-section { background: #eef3fc; }
+  input { font-size: 1rem; }
+  .medaillon-img {
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: white;
+    border: 3px solid white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .portrait-container {
+    position: relative;
+  }
+</style>
+</body>
+</html>
