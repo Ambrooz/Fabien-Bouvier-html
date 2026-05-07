@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Foot & Argot – Leçon A2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&family=Newsreader:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --vert:    #1d5c2e;
+      --vert-clair: #2e7d40;
+      --gazon:   #27a148;
+      --jaune:   #f5c518;
+      --jaune-pale: #fff8d6;
+      --orange:  #e8641a;
+      --fond:    #f5f0e8;
+      --encre:   #1a1a1a;
+      --gris-doux: #e8e2d6;
+      --blanc:   #ffffff;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--fond);
+      font-family: 'Newsreader', Georgia, serif;
+      color: var(--encre);
+      min-height: 100vh;
+    }
+
+    /* ===== EN-TÊTE ===== */
+    header {
+      background: var(--vert);
+      padding: 2.5rem 1.5rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        rgba(255,255,255,0.03) 0px, rgba(255,255,255,0.03) 60px,
+        transparent 60px, transparent 120px
+      );
+    }
+    header h1 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      color: var(--jaune);
+      line-height: 1;
+      position: relative;
+    }
+    header p {
+      color: rgba(255,255,255,0.75);
+      font-size: 1rem;
+      margin-top: 0.6rem;
+      font-style: italic;
+      position: relative;
+    }
+    .niveau-badge {
+      display: inline-block;
+      background: var(--jaune);
+      color: var(--vert);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 100px;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ===== LAYOUT ===== */
+    main {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem 4rem;
+    }
+
+    /* ===== RÉCIT ===== */
+    .recit {
+      background: var(--vert);
+      color: rgba(255,255,255,0.92);
+      border-radius: 1.2rem;
+      padding: 1.8rem 2rem;
+      margin: 2rem 0;
+      font-size: 1.05rem;
+      line-height: 1.75;
+      position: relative;
+    }
+    .recit::before {
+      content: '«';
+      position: absolute;
+      top: -0.5rem; left: 1.2rem;
+      font-size: 5rem;
+      color: var(--jaune);
+      opacity: 0.35;
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .recit em {
+      color: var(--jaune);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .recit .note-vocab {
+      margin-top: 1.2rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      font-style: italic;
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      margin: 2.5rem 0 0;
+    }
+    .section-titre {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+    .section-num {
+      background: var(--vert);
+      color: var(--jaune);
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 0.9rem;
+      width: 2.2rem; height: 2.2rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .section-titre h2 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--vert);
+    }
+
+    /* ===== CARTES ===== */
+    .carte {
+      background: var(--blanc);
+      border-radius: 1rem;
+      padding: 1.4rem 1.6rem;
+      border: 2px solid var(--gris-doux);
+      margin-bottom: 1rem;
+    }
+    .carte p, .carte li {
+      font-size: 0.97rem;
+      line-height: 1.6;
+    }
+
+    /* ===== MOTS D'ARGOT ===== */
+    .argot-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.8rem 0;
+    }
+    .mot-argot {
+      background: var(--jaune-pale);
+      border: 2px solid var(--jaune);
+      border-radius: 100px;
+      padding: 0.3rem 0.9rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--vert);
+    }
+    .mot-argot span {
+      color: #666;
+      font-weight: 400;
+      font-family: 'Newsreader', serif;
+      font-style: italic;
+    }
+
+    .bloc-argot {
+      background: #fff4e0;
+      border-left: 5px solid var(--orange);
+      border-radius: 0 0.8rem 0.8rem 0;
+      padding: 0.8rem 1.1rem;
+      margin: 0.8rem 0;
+      font-size: 0.92rem;
+    }
+
+    /* ===== EXOS ===== */
+    .exo-label {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--vert-clair);
+      margin-bottom: 0.4rem;
+    }
+
+    .champ-ligne {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+      margin: 0.6rem 0;
+    }
+    .champ-ligne input {
+      flex: 1;
+      padding: 0.65rem 1rem;
+      border-radius: 0.6rem;
+      border: 2px solid var(--gris-doux);
+      font-family: 'Newsreader', serif;
+      font-size: 0.95rem;
+      background: var(--fond);
+      transition: border-color 0.2s;
+    }
+    .champ-ligne input:focus {
+      outline: none;
+      border-color: var(--gazon);
+    }
+
+    textarea {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border-radius: 0.6rem;
+      border: 2px solid var(--gris-doux);
+      font-family: 'Newsreader', serif;
+      font-size: 0.95rem;
+      background: var(--fond);
+      resize: vertical;
+      margin: 0.6rem 0;
+      transition: border-color 0.2s;
+    }
+    textarea:focus { outline: none; border-color: var(--gazon); }
+
+    input[type=text]:not(.champ-ligne input) {
+      width: 100%;
+      padding: 0.65rem 1rem;
+      border-radius: 0.6rem;
+      border: 2px solid var(--gris-doux);
+      font-family: 'Newsreader', serif;
+      font-size: 0.95rem;
+      background: var(--fond);
+      margin: 0.5rem 0;
+      transition: border-color 0.2s;
+    }
+    input[type=text]:not(.champ-ligne input):focus {
+      outline: none;
+      border-color: var(--gazon);
+    }
+
+    /* ===== BOUTONS ===== */
+    .btn {
+      background: var(--vert);
+      color: var(--jaune);
+      border: none;
+      padding: 0.6rem 1.3rem;
+      border-radius: 0.6rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background 0.18s, transform 0.1s;
+      white-space: nowrap;
+    }
+    .btn:hover { background: var(--vert-clair); transform: translateY(-1px); }
+    .btn:active { transform: translateY(0); }
+
+    .btn-sm {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.82rem;
+    }
+    .btn-orange {
+      background: var(--orange);
+      color: #fff;
+    }
+    .btn-orange:hover { background: #c9561a; }
+
+    /* ===== FEEDBACK ===== */
+    .feedback {
+      display: none;
+      padding: 0.6rem 1rem;
+      border-radius: 0.6rem;
+      font-size: 0.88rem;
+      margin-top: 0.5rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 600;
+    }
+    .feedback.ok  { background: #e8f5e9; color: #1b5e20; border: 1px solid #a5d6a7; }
+    .feedback.non { background: #fce4ec; color: #880e4f; border: 1px solid #f48fb1; }
+
+    /* ===== GRILLE GRAMMAIRE ===== */
+    .gram-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.8rem;
+      margin: 1rem 0;
+    }
+    .gram-case {
+      background: var(--jaune-pale);
+      border-radius: 0.8rem;
+      padding: 0.9rem 1rem;
+    }
+    .gram-case label {
+      display: block;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--vert);
+      margin-bottom: 0.4rem;
+    }
+    .gram-case input {
+      width: 100%;
+      padding: 0.5rem 0.8rem;
+      border-radius: 0.5rem;
+      border: 2px solid #e0d4a0;
+      font-family: 'Newsreader', serif;
+      font-size: 0.93rem;
+      background: var(--blanc);
+    }
+    .gram-case input:focus { outline: none; border-color: var(--gazon); }
+
+    /* ===== DIALOGUE ===== */
+    .dialogue {
+      background: var(--fond);
+      border-radius: 0.8rem;
+      padding: 1rem 1.2rem;
+      margin: 0.8rem 0;
+    }
+    .bulle {
+      display: flex;
+      gap: 0.7rem;
+      margin-bottom: 0.6rem;
+      align-items: flex-start;
+    }
+    .bulle-nom {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      font-size: 0.82rem;
+      color: var(--vert);
+      min-width: 60px;
+    }
+    .bulle-texte {
+      background: var(--blanc);
+      border-radius: 0.6rem;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.93rem;
+      flex: 1;
+      border: 1px solid var(--gris-doux);
+    }
+
+    /* ===== JEU RAPIDE ===== */
+    .jeu-item {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--gris-doux);
+    }
+    .jeu-item:last-child { border-bottom: none; }
+    .jeu-question { flex: 1; font-size: 0.95rem; }
+    .jeu-reponse {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-weight: 700;
+      color: var(--vert-clair);
+      font-size: 0.92rem;
+      min-width: 160px;
+      text-align: right;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .jeu-reponse.visible { opacity: 1; }
+
+    /* ===== RAPPEL ===== */
+    .rappel {
+      background: var(--vert);
+      color: rgba(255,255,255,0.9);
+      border-radius: 1rem;
+      padding: 1.2rem 1.6rem;
+      margin: 2.5rem 0;
+      font-size: 0.93rem;
+    }
+    .rappel strong { color: var(--jaune); }
+
+    /* ===== SÉPARATEUR ===== */
+    .sep {
+      height: 2px;
+      background: linear-gradient(90deg, var(--gazon), var(--jaune), transparent);
+      margin: 2rem 0;
+      border: none;
+    }
+
+    /* ===== MODÈLE ===== */
+    .modele {
+      background: #e8f5e9;
+      border-left: 4px solid var(--gazon);
+      border-radius: 0 0.6rem 0.6rem 0;
+      padding: 0.7rem 1rem;
+      margin: 0.7rem 0;
+      font-style: italic;
+      font-size: 0.93rem;
+      color: #1b5e20;
+    }
+
+    /* ===== PIED ===== */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 0.85rem;
+      color: #888;
+    }
+
+    @media (max-width: 600px) {
+      .champ-ligne { flex-direction: column; align-items: stretch; }
+      .jeu-reponse { min-width: 110px; font-size: 0.82rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="niveau-badge">Niveau A2 – Objectif B1</div>
+  <h1>⚽ Allez les gars !</h1>
+  <p>Foot, argot du vestiaire & grammaire vivante</p>
+</header>
+
+<main>
+
+  <!-- RÉCIT A2 -->
+  <div class="recit">
+    <p>Le soir du match, le stade était <em>blindé</em>. Tout le monde criait, c'était <em>de ouf</em>. Moi, j'étais remplaçant au début — j'étais <em>stressé</em> mais pas <em>mort de trouille</em> non plus. Quand le coach m'a appelé à la mi-temps, j'ai couru comme un fou. Le terrain était <em>nul</em>, l'herbe glissante, mais on a donné tout ce qu'on avait. À la fin, j'ai mis un but. Pas un chef-d'œuvre, mais ça comptait. On a fini nul, 1-1. Dans le vestiaire, tout le monde était <em>crevé</em> mais content. Le coach nous a dit qu'on avait bien bossé. Et moi, j'ai pensé : c'est ça le foot — <em>se battre jusqu'au bout</em>, même quand c'est dur.</p>
+    <div class="note-vocab">📚 Vocabulaire utilisé : blindé (plein), de ouf (incroyable), stressé, crevé (épuisé), nul (mauvais), bosser (travailler), se battre jusqu'au bout</div>
+  </div>
+
+  <!-- SECTION 1 : ÉCHAUFFEMENT -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">1</div>
+      <h2>🔥 Échauffement – Parler naturel</h2>
+    </div>
+    <div class="carte">
+      <p><strong>Réponds à ces questions :</strong></p>
+      <ul style="margin: 0.8rem 0 0.8rem 1.2rem; line-height: 2;">
+        <li>T'as joué au foot cette semaine ?</li>
+        <li>T'étais en forme ou t'étais crevé ?</li>
+        <li>Le dernier match, ça a donné quoi ?</li>
+      </ul>
+      <div class="argot-grid">
+        <div class="mot-argot">être à la bourre <span>= être en retard</span></div>
+        <div class="mot-argot">crevé <span>= très fatigué</span></div>
+        <div class="mot-argot">en forme <span>= ça va bien</span></div>
+      </div>
+      <div class="exo-label">Ton tour :</div>
+      <textarea id="echauffement" rows="2" placeholder="Ex : J'étais à la bourre à l'entraînement, j'ai raté le bus. J'étais complètement crevé mais content d'être là."></textarea>
+      <button class="btn" onclick="validerEchauffement()">Envoyer</button>
+      <div class="feedback" id="fbEchauffement"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 2 : ARGOT FOOT -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">2</div>
+      <h2>⚽ Les mots du foot en argot</h2>
+    </div>
+    <div class="carte">
+      <div class="argot-grid">
+        <div class="mot-argot">un match de ouf <span>= un match incroyable</span></div>
+        <div class="mot-argot">on s'est fait écraser <span>= on a perdu lourdement</span></div>
+        <div class="mot-argot">on les a détruits <span>= on a gagné facilement</span></div>
+        <div class="mot-argot">se rater <span>= rater un tir</span></div>
+        <div class="mot-argot">un nul <span>= un match nul</span></div>
+        <div class="mot-argot">l'arbi <span>= l'arbitre</span></div>
+        <div class="mot-argot">les crampons <span>= les chaussures de foot</span></div>
+      </div>
+
+      <hr class="sep" style="margin: 1rem 0;">
+
+      <div class="exo-label">Mini exercice – transforme en argot :</div>
+      <p style="font-size:0.93rem; margin-bottom:0.5rem;">➡️ "On a perdu 3-0" → </p>
+      <div class="champ-ligne">
+        <input type="text" id="transformMatch" placeholder="ta version argotique…">
+        <button class="btn btn-sm" onclick="checkTransformMatch()">Vérifier</button>
+      </div>
+      <div class="feedback" id="fbTransformMatch"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 3 : GRAMMAIRE -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">3</div>
+      <h2>🧠 Grammaire – Passé, présent, futur</h2>
+    </div>
+
+    <!-- Passé composé -->
+    <div class="carte">
+      <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1rem; color:var(--vert); margin-bottom:0.8rem;">✅ Passé composé (avec avoir)</h3>
+      <p style="font-size:0.9rem; color:#555; margin-bottom:0.8rem;">Pour parler d'une action précise dans le passé.</p>
+      <div class="gram-grid">
+        <div class="gram-case">
+          <label>J'ai marqué…</label>
+          <input type="text" placeholder="Ex : J'ai marqué un but à la fin.">
+        </div>
+        <div class="gram-case">
+          <label>J'ai joué…</label>
+          <input type="text" placeholder="J'ai joué 90 minutes.">
+        </div>
+        <div class="gram-case">
+          <label>On a gagné…</label>
+          <input type="text" placeholder="On a gagné 2-1.">
+        </div>
+      </div>
+
+      <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1rem; color:var(--vert); margin: 1.2rem 0 0.8rem;">🚶 Passé composé avec ÊTRE (verbes de mouvement)</h3>
+      <div class="bloc-argot">💡 <strong>À retenir :</strong> Je suis arrivé / allé / parti / rentré / venu… On dit <em>je suis</em>, pas <em>j'ai</em>.</div>
+      <div class="gram-grid">
+        <div class="gram-case">
+          <label>Je suis arrivé(e)…</label>
+          <input type="text" placeholder="Je suis arrivé en retard.">
+        </div>
+        <div class="gram-case">
+          <label>Je suis allé(e)…</label>
+          <input type="text" placeholder="Je suis allé au stade.">
+        </div>
+        <div class="gram-case">
+          <label>Je suis rentré(e)…</label>
+          <input type="text" placeholder="Je suis rentré tard.">
+        </div>
+      </div>
+      <button class="btn" style="margin-top:0.8rem;" onclick="checkPCetre()">Vérifier mes phrases</button>
+      <div class="feedback" id="fbPCetre"></div>
+    </div>
+
+    <!-- Imparfait vs PC -->
+    <div class="carte">
+      <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1rem; color:var(--vert); margin-bottom:0.8rem;">🆚 Imparfait vs Passé composé</h3>
+      <div class="argot-grid" style="margin-bottom:0.8rem;">
+        <div class="mot-argot" style="background:#e8f5e9; border-color:#a5d6a7;">Imparfait <span>= habitude ou état</span></div>
+        <div class="mot-argot" style="background:#e3f2fd; border-color:#90caf9; color:#0d47a1;">Passé composé <span>= action précise</span></div>
+      </div>
+      <div class="modele">
+        Avant, je <strong>jouais</strong> attaquant (habitude).
+        Mais hier, j'<strong>ai joué</strong> défenseur (action précise).
+      </div>
+      <div class="exo-label">À toi – une habitude + une action précise :</div>
+      <textarea id="impParfaitExo" rows="2" placeholder="Avant, je… (imparfait). Mais hier / la semaine dernière, j'ai… (passé composé)."></textarea>
+      <button class="btn" onclick="checkImpParfait()">Vérifier</button>
+      <div class="feedback" id="fbImpParfait"></div>
+    </div>
+
+    <!-- Futur -->
+    <div class="carte">
+      <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1rem; color:var(--vert); margin-bottom:0.8rem;">🔮 Futur – projets et envies</h3>
+      <div class="bloc-argot">💡 Deux façons de parler du futur :<br>
+        → <strong>futur proche</strong> : je vais m'entraîner (prévu)<br>
+        → <strong>futur simple</strong> : je jouerai titulaire (moins sûr)
+      </div>
+      <input type="text" id="futur1" placeholder="Ex : Je vais m'entraîner tous les matins cette semaine.">
+      <input type="text" id="futur2" placeholder="Ex : J'espère que je jouerai titulaire au prochain match.">
+      <button class="btn" onclick="checkFutur()">Vérifier</button>
+      <div class="feedback" id="fbFutur"></div>
+    </div>
+
+    <!-- Synthèse -->
+    <div class="carte">
+      <h3 style="font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:1rem; color:var(--vert); margin-bottom:0.8rem;">📘 Exercice de synthèse – conjugue</h3>
+      <p style="font-size:0.94rem; line-height:1.7;">Quand j'étais jeune, je ______ <em>(pratiquer – imparfait)</em> le foot tous les week-ends. La semaine dernière, je ______ <em>(réussir – passé composé)</em> un triplé. Demain, je ______ <em>(s'entraîner – futur proche)</em> deux heures.</p>
+      <input type="text" id="mixTemps" placeholder="pratiquais / ai réussi / vais m'entraîner">
+      <button class="btn" onclick="checkMix()">Corriger</button>
+      <div class="feedback" id="fbMix"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 4 : VESTIAIRE -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">4</div>
+      <h2>💬 Situation vestiaire</h2>
+    </div>
+    <div class="carte">
+      <div class="dialogue">
+        <div class="bulle">
+          <div class="bulle-nom">Karim :</div>
+          <div class="bulle-texte">Alors, ça a donné quoi ce soir ?</div>
+        </div>
+        <div class="bulle">
+          <div class="bulle-nom">Toi :</div>
+          <div class="bulle-texte" style="background:var(--jaune-pale); border-color:#e0d4a0; font-style:italic; color:#555;">???</div>
+        </div>
+      </div>
+      <div class="bloc-argot">
+        💡 Utilise au moins : un mot d'argot, le passé composé, une émotion.
+        <br>Ex : <em>« Franchement, c'était un match de ouf. J'ai marqué mais on a fini nuls. J'étais crevé mais content. »</em>
+      </div>
+      <textarea id="dialogVestiaire" rows="3" placeholder="Réponds à Karim comme si t'étais dans le vestiaire…"></textarea>
+      <button class="btn" onclick="validerVestiaire()">Envoyer au vestiaire 📨</button>
+      <div class="feedback" id="fbVestiaire"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 5 : ARGOT QUOTIDIEN -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">5</div>
+      <h2>💰 Argot du quotidien</h2>
+    </div>
+    <div class="carte">
+      <div class="argot-grid">
+        <div class="mot-argot">la thune <span>= argent</span></div>
+        <div class="mot-argot">100 balles <span>= 100 euros</span></div>
+        <div class="mot-argot">ça coûte une blinde <span>= c'est très cher</span></div>
+        <div class="mot-argot">une caisse <span>= voiture</span></div>
+        <div class="mot-argot">bosser <span>= travailler</span></div>
+        <div class="mot-argot">un mec / une meuf <span>= un homme / une femme</span></div>
+      </div>
+
+      <hr class="sep" style="margin:1rem 0;">
+
+      <div class="exo-label">Transforme en argot :</div>
+
+      <p style="font-size:0.93rem; margin: 0.5rem 0 0.2rem;">➡️ "Je suis très fatigué"</p>
+      <div class="champ-ligne">
+        <input type="text" id="argotFatigue" placeholder="">
+        <button class="btn btn-sm" onclick="checkArgot('argotFatigue','crevé','fbArgotFatigue','Je suis crevé')">✔</button>
+      </div>
+      <div class="feedback" id="fbArgotFatigue"></div>
+
+      <p style="font-size:0.93rem; margin: 0.5rem 0 0.2rem;">➡️ "C'est très cher"</p>
+      <div class="champ-ligne">
+        <input type="text" id="argotCher" placeholder="">
+        <button class="btn btn-sm" onclick="checkArgot('argotCher','blinde','fbArgotCher','Ça coûte une blinde !')">✔</button>
+      </div>
+      <div class="feedback" id="fbArgotCher"></div>
+
+      <p style="font-size:0.93rem; margin: 0.5rem 0 0.2rem;">➡️ "Je suis en retard"</p>
+      <div class="champ-ligne">
+        <input type="text" id="argotRetard" placeholder="">
+        <button class="btn btn-sm" onclick="checkArgot('argotRetard','bourre','fbArgotRetard','Je suis à la bourre !')">✔</button>
+      </div>
+      <div class="feedback" id="fbArgotRetard"></div>
+    </div>
+  </div>
+
+  <!-- SECTION 6 : PRODUCTION FINALE -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">6</div>
+      <h2>🎯 Production finale</h2>
+    </div>
+    <div class="carte">
+      <p style="font-size:0.95rem; margin-bottom:0.8rem;"><strong>Raconte ton dernier match ou ta semaine de sport.</strong></p>
+      <div class="argot-grid" style="margin-bottom:0.8rem;">
+        <div class="mot-argot" style="background:#e8f5e9; border-color:#a5d6a7;">✅ 1 phrase au passé composé</div>
+        <div class="mot-argot" style="background:#e3f2fd; border-color:#90caf9; color:#0d47a1;">✅ 1 phrase à l'imparfait</div>
+        <div class="mot-argot" style="background:#fff8d6; border-color:#f5c518; color:#1d5c2e;">✅ 1 phrase au futur</div>
+        <div class="mot-argot" style="background:#fff4e0; border-color:var(--orange); color:var(--orange);">✅ 2 mots d'argot min.</div>
+      </div>
+      <div class="modele">
+        Hier, j'ai joué un match de ouf. On a gagné 2-0. Avant le match, j'étais stressé. Demain je vais m'entraîner plus tôt. J'étais crevé à la fin mais c'était bien.
+      </div>
+      <textarea id="productionFinale" rows="5" placeholder="Écris ici (5-8 phrases)…"></textarea>
+      <button class="btn" onclick="checkProduction()">🏆 Valider ma production</button>
+      <div class="feedback" id="fbProduction"></div>
+    </div>
+  </div>
+
+  <!-- JEU RAPIDE -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">7</div>
+      <h2>🧩 Jeu rapide – argot flash</h2>
+    </div>
+    <div class="carte">
+      <div class="jeu-item">
+        <div class="jeu-question">"Je suis très fatigué"</div>
+        <div class="jeu-reponse" id="gr1">Je suis crevé 💤</div>
+        <button class="btn btn-sm btn-orange" onclick="revealJeu('gr1')">Réponse</button>
+      </div>
+      <div class="jeu-item">
+        <div class="jeu-question">"C'est très cher"</div>
+        <div class="jeu-reponse" id="gr2">Ça coûte une blinde 💸</div>
+        <button class="btn btn-sm btn-orange" onclick="revealJeu('gr2')">Réponse</button>
+      </div>
+      <div class="jeu-item">
+        <div class="jeu-question">"Je suis en retard"</div>
+        <div class="jeu-reponse" id="gr3">Je suis à la bourre ⏰</div>
+        <button class="btn btn-sm btn-orange" onclick="revealJeu('gr3')">Réponse</button>
+      </div>
+      <div class="jeu-item">
+        <div class="jeu-question">"On a perdu 4-0"</div>
+        <div class="jeu-reponse" id="gr4">On s'est fait écraser 😬</div>
+        <button class="btn btn-sm btn-orange" onclick="revealJeu('gr4')">Réponse</button>
+      </div>
+      <div class="jeu-item">
+        <div class="jeu-question">"C'était fantastique"</div>
+        <div class="jeu-reponse" id="gr5">C'était de ouf ! 🤯</div>
+        <button class="btn btn-sm btn-orange" onclick="revealJeu('gr5')">Réponse</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAPPEL -->
+  <div class="rappel">
+    ⚠️ <strong>À retenir :</strong> L'argot, c'est pour l'oral — entre potes, au vestiaire, sur le terrain. Pas pour les examens écrits ni les emails sérieux. Mais en classe ou en conversation, c'est parfait !
+  </div>
+
+  <!-- DEVOIR -->
+  <div class="section">
+    <div class="section-titre">
+      <div class="section-num">8</div>
+      <h2>📝 Devoir maison – "Ma semaine de foot"</h2>
+    </div>
+    <div class="carte">
+      <p style="font-size:0.93rem; margin-bottom:0.8rem;">Écris 8 à 10 phrases. Parle d'un entraînement, d'un match, d'une émotion. Utilise les 3 temps et au moins 3 mots d'argot.</p>
+      <textarea id="devoirSemaine" rows="5" placeholder="Ma semaine de foot…"></textarea>
+      <button class="btn" onclick="saveDevoir()">💾 Enregistrer mon devoir</button>
+      <div class="feedback" id="fbDevoir"></div>
+    </div>
+  </div>
+
+</main>
+
+<footer>⚽ Allez les gars — Leçon A2 · vestiaire & grammaire</footer>
+
+<script>
+  function fb(id, msg, ok) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.className = 'feedback ' + (ok ? 'ok' : 'non');
+    el.style.display = 'block';
+    setTimeout(() => { el.style.display = 'none'; }, 4000);
+  }
+
+  function validerEchauffement() {
+    const v = document.getElementById('echauffement').value.trim();
+    if (v.length > 8) fb('fbEchauffement', '✅ Bien ! Tu parles naturellement.', true);
+    else fb('fbEchauffement', '❌ Écris au moins une phrase complète.', false);
+  }
+
+  function checkTransformMatch() {
+    const v = document.getElementById('transformMatch').value.toLowerCase();
+    if (v.includes('écraser') || v.includes('écrasé') || v.includes('rincés') || v.includes('détruits'))
+      fb('fbTransformMatch', '✅ Super ! Ex : "On s\'est fait écraser 3-0"', true);
+    else
+      fb('fbTransformMatch', '❌ Essaie : "On s\'est fait écraser 3-0"', false);
+  }
+
+  function checkPCetre() {
+    fb('fbPCetre', '✅ Bien joué ! Passé composé avec avoir et avec être — les deux maîtrisés.', true);
+  }
+
+  function checkImpParfait() {
+    const t = document.getElementById('impParfaitExo').value;
+    const hasImp = /(ais|ait|aient|jouais|étais|faisais|allais|finissais)/i.test(t);
+    const hasPC  = /(ai |as |a |avons |ont |suis |est )|(ai joué|ai marqué|suis allé|ai gagné)/i.test(t);
+    if (hasImp && hasPC)
+      fb('fbImpParfait', '🎉 Parfait ! Habitude (imparfait) + action précise (passé composé).', true);
+    else if (!hasImp)
+      fb('fbImpParfait', '📌 Il manque l\'imparfait. Ex : "Avant, je jouais…"', false);
+    else
+      fb('fbImpParfait', '📌 Il manque le passé composé. Ex : "Hier, j\'ai joué…"', false);
+  }
+
+  function checkFutur() {
+    const f1 = document.getElementById('futur1').value;
+    const f2 = document.getElementById('futur2').value;
+    const ok1 = /vais|erai|eras|era/i.test(f1);
+    const ok2 = /espère|pense|vais|erai|eras/i.test(f2);
+    if (ok1 && ok2)
+      fb('fbFutur', '🔮 Très bien ! Tu maîtrises le futur proche et simple.', true);
+    else
+      fb('fbFutur', '💡 Utilise "je vais…" ou "je jouerai…" et "j\'espère que…"', false);
+  }
+
+  function checkMix() {
+    const m = document.getElementById('mixTemps').value.toLowerCase();
+    const okImp = m.includes('pratiquais');
+    const okPC  = m.includes('réussi');
+    const okFut = m.includes('vais') || m.includes('entraînerai');
+    if (okImp && okPC && okFut)
+      fb('fbMix', '✅ Parfait ! pratiquais / ai réussi / vais m\'entraîner', true);
+    else
+      fb('fbMix', `❌ Réponse : "pratiquais / ai réussi / vais m'entraîner"${!okImp?' — imparfait?':''}${!okPC?' — passé composé?':''}${!okFut?' — futur?':''}`, false);
+  }
+
+  function validerVestiaire() {
+    const t = document.getElementById('dialogVestiaire').value.trim();
+    if (t.length > 10)
+      fb('fbVestiaire', '💬 Bien ! Ambiance vestiaire assurée. 👊', true);
+    else
+      fb('fbVestiaire', '❌ Écris une vraie réponse avec au moins un mot d\'argot.', false);
+  }
+
+  function checkArgot(inputId, motCle, fbId, correct) {
+    const v = document.getElementById(inputId).value.toLowerCase();
+    if (v.includes(motCle))
+      fb(fbId, '✔️ ' + correct, true);
+    else
+      fb(fbId, '❌ Réponse : ' + correct, false);
+  }
+
+  function checkProduction() {
+    const p = document.getElementById('productionFinale').value;
+    const hasPC  = /(ai |avons |ont |suis arrivé|ai joué|ai marqué|a gagné|suis allé)/i.test(p);
+    const hasImp = /(ais|ait|aient|étais|jouais|faisais)/i.test(p);
+    const hasFut = /(vais|irai|jouerai|serai|entraînerai)/i.test(p);
+    const argots = ['crevé','de ouf','à la bourre','blinde','thune','écraser','détruits','nul','stressé','bosser'];
+    const count  = argots.filter(w => p.toLowerCase().includes(w)).length;
+
+    if (hasPC && hasImp && hasFut && count >= 2)
+      fb('fbProduction', '🏆 Excellent ! Les 3 temps + l\'argot — production validée !', true);
+    else {
+      let msg = '❌ Il manque : ';
+      if (!hasPC)  msg += 'passé composé ';
+      if (!hasImp) msg += 'imparfait ';
+      if (!hasFut) msg += 'futur ';
+      if (count < 2) msg += '(au moins 2 mots d\'argot)';
+      fb('fbProduction', msg, false);
+    }
+  }
+
+  function revealJeu(id) {
+    document.getElementById(id).classList.add('visible');
+  }
+
+  function saveDevoir() {
+    const d = document.getElementById('devoirSemaine').value.trim();
+    if (d.length > 40)
+      fb('fbDevoir', '📋 Devoir enregistré ! N\'oublie pas les 3 temps et 3 mots d\'argot.', true);
+    else
+      fb('fbDevoir', '❌ Développe ton texte (8-10 phrases).', false);
+  }
+</script>
+</body>
+</html>
