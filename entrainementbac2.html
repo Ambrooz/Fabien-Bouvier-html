@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bac Français — Entraînement QCM & PCE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,400;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --bg:          #f7f4ef;
+  --paper:       #ffffff;
+  --ink:         #1a1714;
+  --ink-soft:    #3d3833;
+  --ink-muted:   #7a7168;
+  --rule:        #e4ddd3;
+
+  --accent:      #2d5a8e;       /* deep blue — littéraire */
+  --accent-pale: #eaf1f9;
+  --accent-mid:  #b8d0e8;
+
+  --gold:        #a0622a;
+  --gold-pale:   #fdf3e7;
+  --gold-mid:    #e8c89a;
+
+  --green:       #256c47;
+  --green-pale:  #e8f6ee;
+  --green-mid:   #9fd5b8;
+
+  --red:         #9b2c2c;
+  --red-pale:    #fde8e8;
+
+  --purple:      #5b3a8e;
+  --purple-pale: #f0ebfa;
+  --purple-mid:  #c5aee8;
+
+  --shadow-sm:   0 1px 4px rgba(0,0,0,.06);
+  --shadow-md:   0 4px 16px rgba(0,0,0,.09);
+  --shadow-lg:   0 8px 32px rgba(0,0,0,.12);
+}
+
+/* ═══════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Lato', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* ═══════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════ */
+.site-header {
+  background: var(--accent);
+  color: white;
+  text-align: center;
+  padding: 3.5rem 2rem 3rem;
+  position: relative;
+  overflow: hidden;
+}
+.site-header::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 18px,
+    rgba(255,255,255,.03) 18px,
+    rgba(255,255,255,.03) 36px
+  );
+  pointer-events: none;
+}
+.badge {
+  display: inline-block;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.3);
+  border-radius: 2rem;
+  padding: .3rem 1rem;
+  margin-bottom: 1.25rem;
+  color: rgba(255,255,255,.9);
+}
+.site-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.9rem, 5vw, 3rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: .5rem;
+}
+.site-header h1 em { font-style: italic; opacity: .85; }
+.site-header p {
+  font-size: 1rem;
+  color: rgba(255,255,255,.75);
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+/* score widget */
+.score-bar {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.2);
+  border-radius: 2rem;
+  padding: .55rem 1.4rem;
+  margin-top: 1.5rem;
+  font-size: .95rem;
+  font-weight: 700;
+  color: white;
+}
+.score-val { font-size: 1.35rem; }
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+.site-nav {
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  padding: .65rem 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem 1.2rem;
+  justify-content: center;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: var(--shadow-sm);
+}
+.site-nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: .82rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  padding: .25rem 0;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.site-nav a:hover { color: var(--accent); border-color: var(--accent-mid); }
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+═══════════════════════════════════════════ */
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 6rem;
+}
+
+section { margin-bottom: 4rem; scroll-margin-top: 4.5rem; }
+
+.section-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: .6rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+}
+.section-eyebrow::before, .section-eyebrow::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.55rem;
+  color: var(--ink);
+  margin-bottom: 1.25rem;
+  padding-bottom: .5rem;
+  border-bottom: 2px solid var(--rule);
+}
+
+/* ═══════════════════════════════════════════
+   CALLOUT / RECAP
+═══════════════════════════════════════════ */
+.callout {
+  display: flex;
+  gap: .9rem;
+  padding: 1rem 1.25rem;
+  border-radius: .4rem;
+  margin-bottom: 1.5rem;
+  font-size: .93rem;
+  line-height: 1.65;
+}
+.callout-blue   { background: var(--accent-pale); border-left: 3px solid var(--accent); }
+.callout-gold   { background: var(--gold-pale);   border-left: 3px solid var(--gold); }
+.callout-purple { background: var(--purple-pale);  border-left: 3px solid var(--purple); }
+.callout-green  { background: var(--green-pale);   border-left: 3px solid var(--green); }
+.callout-icon   { font-size: 1.25rem; flex-shrink: 0; line-height: 1.5; }
+.callout strong { color: var(--accent); }
+.callout-gold strong { color: var(--gold); }
+.callout-purple strong { color: var(--purple); }
+
+/* ═══════════════════════════════════════════
+   EXERCISE CARD
+═══════════════════════════════════════════ */
+.exo {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: .6rem;
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .25s;
+}
+.exo:hover { box-shadow: var(--shadow-md); }
+
+.exo-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+.exo-num {
+  flex-shrink: 0;
+  width: 2.2rem; height: 2.2rem;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .8rem;
+  font-weight: 700;
+}
+.num-blue   { background: var(--accent-pale); color: var(--accent); border: 1.5px solid var(--accent-mid); }
+.num-gold   { background: var(--gold-pale);   color: var(--gold);   border: 1.5px solid var(--gold-mid); }
+.num-purple { background: var(--purple-pale);  color: var(--purple);  border: 1.5px solid var(--purple-mid); }
+
+.exo-title { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; line-height: 1.3; }
+.exo-type  { font-size: .72rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-muted); margin-top: .1rem; }
+
+/* texte littéraire */
+.literary-text {
+  background: var(--bg);
+  border-left: 3px solid var(--rule);
+  border-radius: 0 .4rem .4rem 0;
+  padding: 1rem 1.25rem;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: .97rem;
+  line-height: 1.85;
+  color: var(--ink-soft);
+  margin-bottom: 1.25rem;
+}
+.literary-text cite {
+  display: block;
+  font-style: normal;
+  font-family: 'Lato', sans-serif;
+  font-size: .8rem;
+  color: var(--ink-muted);
+  margin-top: .5rem;
+}
+
+/* ═══════════════════════════════════════════
+   QCM
+═══════════════════════════════════════════ */
+.qcm-question { font-weight: 700; margin-bottom: .75rem; color: var(--ink); }
+
+.options { display: flex; flex-direction: column; gap: .5rem; }
+
+.opt {
+  display: flex;
+  align-items: flex-start;
+  gap: .75rem;
+  padding: .7rem 1rem;
+  border: 1.5px solid var(--rule);
+  border-radius: .4rem;
+  cursor: pointer;
+  font-size: .94rem;
+  line-height: 1.55;
+  transition: border-color .15s, background .15s;
+  user-select: none;
+  background: var(--bg);
+}
+.opt:hover { border-color: var(--accent-mid); background: var(--accent-pale); }
+.opt input[type=radio] { display: none; }
+
+.opt-letter {
+  flex-shrink: 0;
+  width: 1.6rem; height: 1.6rem;
+  border: 1.5px solid var(--rule);
+  border-radius: .25rem;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--ink-muted);
+  background: white;
+  transition: all .15s;
+}
+
+.opt.selected { border-color: var(--accent); background: var(--accent-pale); }
+.opt.selected .opt-letter { background: var(--accent); color: white; border-color: var(--accent); }
+
+.opt.correct  { border-color: var(--green); background: var(--green-pale); }
+.opt.correct  .opt-letter { background: var(--green); color: white; border-color: var(--green); }
+
+.opt.wrong    { border-color: var(--red); background: var(--red-pale); }
+.opt.wrong    .opt-letter { background: var(--red); color: white; border-color: var(--red); }
+
+/* ═══════════════════════════════════════════
+   PCE TABLE
+═══════════════════════════════════════════ */
+.pce-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border: 1.5px solid var(--rule);
+  border-radius: .4rem;
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+.pce-header {
+  background: var(--accent);
+  color: white;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .55rem .75rem;
+  text-align: center;
+}
+.pce-header:nth-child(2) { background: var(--purple); }
+.pce-header:nth-child(3) { background: var(--gold); }
+
+.pce-cell {
+  border-top: 1px solid var(--rule);
+  padding: .55rem .75rem;
+  text-align: center;
+}
+.pce-cell:not(:last-child) { border-right: 1px solid var(--rule); }
+
+/* PCE input cells */
+.pce-input {
+  width: 100%;
+  font-family: 'Lato', sans-serif;
+  font-size: .88rem;
+  border: 1.5px solid var(--rule);
+  border-radius: .3rem;
+  padding: .35rem .55rem;
+  background: var(--bg);
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+  resize: vertical;
+  min-height: 2.4rem;
+}
+.pce-input:focus { border-color: var(--accent); }
+.pce-input.ok    { border-color: var(--green); background: var(--green-pale); }
+.pce-input.err   { border-color: var(--red);   background: var(--red-pale); }
+
+/* ═══════════════════════════════════════════
+   FEEDBACK & EXPLANATION
+═══════════════════════════════════════════ */
+.feedback {
+  margin-top: .85rem;
+  padding: .75rem 1rem;
+  border-radius: .4rem;
+  font-size: .9rem;
+  display: none;
+  line-height: 1.6;
+}
+.feedback.show { display: block; }
+.fb-ok   { background: var(--green-pale); color: var(--green);   border-left: 3px solid var(--green); }
+.fb-err  { background: var(--red-pale);   color: var(--red);     border-left: 3px solid var(--red); }
+.fb-part { background: var(--gold-pale);  color: var(--gold);    border-left: 3px solid var(--gold); }
+
+.explication {
+  margin-top: .6rem;
+  display: none;
+  font-size: .88rem;
+  color: var(--ink-soft);
+  background: var(--bg);
+  border-radius: .4rem;
+  padding: .7rem 1rem;
+  line-height: 1.65;
+}
+.explication.show { display: block; }
+.explication strong { color: var(--accent); }
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+═══════════════════════════════════════════ */
+.btn-row { display: flex; gap: .6rem; flex-wrap: wrap; margin-top: 1.1rem; }
+
+.btn {
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  font-size: .85rem;
+  padding: .5rem 1.3rem;
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+  transition: background .15s, transform .1s;
+  letter-spacing: .02em;
+}
+.btn:active { transform: scale(.97); }
+.btn-check  { background: var(--accent);  color: white; }
+.btn-check:hover  { background: #1e4070; }
+.btn-reset  { background: var(--bg); color: var(--ink-soft); border: 1.5px solid var(--rule); }
+.btn-reset:hover  { background: var(--rule); }
+.btn-explain { background: var(--purple-pale); color: var(--purple); border: 1.5px solid var(--purple-mid); }
+.btn-explain:hover { background: var(--purple-mid); color: white; }
+
+/* ═══════════════════════════════════════════
+   ANSWER TOGGLE
+═══════════════════════════════════════════ */
+.ans-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  font-size: .82rem;
+  font-weight: 700;
+  color: var(--gold);
+  background: none;
+  border: 1.5px solid var(--gold-mid);
+  border-radius: 2rem;
+  padding: .35rem 1rem;
+  cursor: pointer;
+  transition: background .2s;
+  font-family: 'Lato', sans-serif;
+}
+.ans-toggle:hover { background: var(--gold-pale); }
+.ans-toggle .arr  { transition: transform .3s; display: inline-block; }
+
+.ans-body {
+  display: none;
+  margin-top: .75rem;
+  background: var(--gold-pale);
+  border: 1px solid var(--gold-mid);
+  border-radius: .4rem;
+  padding: .9rem 1.1rem;
+  font-size: .9rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+.ans-body.open { display: block; }
+.ans-body strong { color: var(--gold); }
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════ */
+.progress-wrap {
+  background: var(--rule);
+  border-radius: 2rem;
+  height: 6px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--purple));
+  border-radius: 2rem;
+  transition: width .4s ease;
+}
+
+/* ═══════════════════════════════════════════
+   SUMMARY
+═══════════════════════════════════════════ */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.25rem;
+}
+.summary-card {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-top: 3px solid var(--accent);
+  border-radius: .4rem;
+  padding: 1rem;
+  text-align: center;
+}
+.summary-card.gold-top  { border-top-color: var(--gold); }
+.summary-card.green-top { border-top-color: var(--green); }
+.summary-card.purple-top{ border-top-color: var(--purple); }
+.summary-val { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: var(--accent); }
+.summary-card.gold-top   .summary-val { color: var(--gold); }
+.summary-card.green-top  .summary-val { color: var(--green); }
+.summary-card.purple-top .summary-val { color: var(--purple); }
+.summary-label { font-size: .8rem; color: var(--ink-muted); margin-top: .25rem; font-weight: 700; letter-spacing: .04em; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  text-align: center;
+  padding: 2rem;
+  color: var(--ink-muted);
+  font-size: .83rem;
+  border-top: 1px solid var(--rule);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════ */
+@media (max-width: 600px) {
+  main { padding: 2rem 1rem 4rem; }
+  .pce-grid { grid-template-columns: 1fr; }
+  .pce-header:not(:first-child) { display: none; }
+  .pce-cell { border-right: none !important; }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════ HEADER ════════════════ -->
+<header class="site-header">
+  <div class="badge">📖 Bac Français · Terminale</div>
+  <h1>Procédés littéraires<br><em>&amp; Analyse P.C.E.</em></h1>
+  <p>Entraînement interactif — QCM et exercices P.C.E. pour maîtriser l'analyse de texte</p>
+  <div class="score-bar">
+    🎯 Score global : <span class="score-val" id="globalScore">0</span> / <span id="globalTotal">0</span> pts
+  </div>
+</header>
+
+<!-- ════════════════ NAV ════════════════ -->
+<nav class="site-nav">
+  <a href="#rappel">Rappel PCE</a>
+  <a href="#qcm1">QCM — Procédés</a>
+  <a href="#qcm2">QCM — Effets</a>
+  <a href="#pce1">PCE 1 — Poésie</a>
+  <a href="#pce2">PCE 2 — Roman</a>
+  <a href="#pce3">PCE 3 — Théâtre</a>
+  <a href="#qcm3">QCM — Analyse</a>
+  <a href="#bilan">Bilan</a>
+</nav>
+
+<!-- ════════════════ MAIN ════════════════ -->
+<main>
+
+<!-- ── RAPPEL PCE ── -->
+<section id="rappel">
+  <div class="section-eyebrow">Méthode</div>
+  <h2>🗝️ La méthode P.C.E. en un coup d'œil</h2>
+
+  <div class="callout callout-blue">
+    <div class="callout-icon">📌</div>
+    <div>
+      <strong>P.C.E. = Procédé · Citation · Effet</strong><br>
+      Pour chaque figure ou procédé repéré, vous devez : <strong>(1) nommer</strong> le procédé, <strong>(2) citer</strong> le texte précisément, <strong>(3) expliquer l'effet</strong> produit sur le lecteur / le sens du texte.
+    </div>
+  </div>
+
+  <div class="callout callout-gold">
+    <div class="callout-icon">⚠️</div>
+    <div>
+      <strong>L'erreur la plus fréquente :</strong> nommer le procédé sans expliquer son effet sur le sens ou le lecteur. L'effet doit toujours être <em>lié au contexte du texte</em> — évitez les formulations vagues comme « ça crée une belle image ».
+    </div>
+  </div>
+
+  <div class="callout callout-purple">
+    <div class="callout-icon">🎯</div>
+    <div>
+      <strong>Procédés incontournables :</strong> métaphore · comparaison · personnification · anaphore · gradation · hyperbole · oxymore · antithèse · chiasme · allitération · assonance · enjambement · champ lexical · polysémie · ironie · périphrase.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+   QCM 1 — IDENTIFIER LE PROCÉDÉ
+═══════════════════════════════════════ -->
+<section id="qcm1">
+  <div class="section-eyebrow">QCM — Série 1</div>
+  <h2>📝 Identifier le procédé littéraire</h2>
+
+  <div class="progress-wrap"><div class="progress-bar" id="prog1" style="width:0%"></div></div>
+
+  <!-- Q1 -->
+  <div class="exo" id="exo-q1">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q1</div>
+      <div>
+        <div class="exo-title">Quel procédé est utilisé dans ce vers ?</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Le vent berce les arbres comme une mère berce son enfant. »
+      <cite>— Exemple d'analyse</cite>
+    </div>
+    <div class="qcm-question">Ce vers contient principalement :</div>
+    <div class="options" id="opts-q1">
+      <label class="opt" onclick="selectOpt(this,'q1')"><input type="radio" name="q1" value="A"><div class="opt-letter">A</div> Une métaphore</label>
+      <label class="opt" onclick="selectOpt(this,'q1')"><input type="radio" name="q1" value="B"><div class="opt-letter">B</div> Une comparaison</label>
+      <label class="opt" onclick="selectOpt(this,'q1')"><input type="radio" name="q1" value="C"><div class="opt-letter">C</div> Une personnification</label>
+      <label class="opt" onclick="selectOpt(this,'q1')"><input type="radio" name="q1" value="D"><div class="opt-letter">D</div> Une hyperbole</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q1','B',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q1')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q1')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q1"></div>
+    <div class="explication" id="expl-q1">
+      <strong>Comparaison</strong> : on compare deux éléments à l'aide d'un outil comparatif explicite — ici <em>« comme »</em>. La métaphore, elle, supprimerait l'outil comparatif (ex. « Le vent, mère des arbres, les berce »). L'effet ici : associer la nature à la douceur et à la protection maternelle.
+    </div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="exo" id="exo-q2">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q2</div>
+      <div>
+        <div class="exo-title">Quel procédé domine dans cet extrait ?</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Je vivais, je mourais, je souffrais, je riais — tout à la fois, sans raison, sans répit. »
+      <cite>— Exemple d'analyse</cite>
+    </div>
+    <div class="qcm-question">Ce passage illustre principalement :</div>
+    <div class="options" id="opts-q2">
+      <label class="opt" onclick="selectOpt(this,'q2')"><input type="radio" name="q2" value="A"><div class="opt-letter">A</div> Une gradation ascendante</label>
+      <label class="opt" onclick="selectOpt(this,'q2')"><input type="radio" name="q2" value="B"><div class="opt-letter">B</div> Une anaphore</label>
+      <label class="opt" onclick="selectOpt(this,'q2')"><input type="radio" name="q2" value="C"><div class="opt-letter">C</div> Un oxymore</label>
+      <label class="opt" onclick="selectOpt(this,'q2')"><input type="radio" name="q2" value="D"><div class="opt-letter">D</div> Une antithèse</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q2','B',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q2')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q2')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q2"></div>
+    <div class="explication" id="expl-q2">
+      <strong>Anaphore</strong> : répétition d'un élément en <em>début</em> de proposition — ici « je » + verbe, répété quatre fois. Cela crée un rythme martelé, insistant sur la multiplicité des états vécus simultanément par le narrateur. L'antithèse (« vivais / mourais », « souffrais / riais ») est également présente, mais le procédé <em>structurant</em> dominant est l'anaphore.
+    </div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="exo" id="exo-q3">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q3</div>
+      <div>
+        <div class="exo-title">Identifiez le procédé dans ce vers de Rimbaud</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Ô Saisons, ô Châteaux ! »
+      <cite>— Arthur Rimbaud, <em>Une saison en enfer</em></cite>
+    </div>
+    <div class="qcm-question">Le « ô » devant « Saisons » et « Châteaux » est :</div>
+    <div class="options" id="opts-q3">
+      <label class="opt" onclick="selectOpt(this,'q3')"><input type="radio" name="q3" value="A"><div class="opt-letter">A</div> Une interjection banale</label>
+      <label class="opt" onclick="selectOpt(this,'q3')"><input type="radio" name="q3" value="B"><div class="opt-letter">B</div> Une apostrophe lyrique (invocation)</label>
+      <label class="opt" onclick="selectOpt(this,'q3')"><input type="radio" name="q3" value="C"><div class="opt-letter">C</div> Une anaphore</label>
+      <label class="opt" onclick="selectOpt(this,'q3')"><input type="radio" name="q3" value="D"><div class="opt-letter">D</div> Un chiasme</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q3','B',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q3')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q3')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q3"></div>
+    <div class="explication" id="expl-q3">
+      <strong>Apostrophe lyrique (invocation)</strong> : le poète s'adresse directement à des entités abstraites ou des objets inanimés (ici les Saisons et les Châteaux) comme s'ils pouvaient l'entendre. L'interjection « Ô » marque cet élan lyrique. L'effet : élever l'ordinaire au rang de l'idéal et exprimer une nostalgie intense.
+    </div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="exo" id="exo-q4">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q4</div>
+      <div>
+        <div class="exo-title">Procédé sonore dans ce vers de Verlaine</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Les sanglots longs / Des violons / De l'automne »
+      <cite>— Paul Verlaine, <em>Chanson d'automne</em></cite>
+    </div>
+    <div class="qcm-question">La répétition du son [ɔ̃] (« longs », « violons », « automne ») est :</div>
+    <div class="options" id="opts-q4">
+      <label class="opt" onclick="selectOpt(this,'q4')"><input type="radio" name="q4" value="A"><div class="opt-letter">A</div> Une allitération</label>
+      <label class="opt" onclick="selectOpt(this,'q4')"><input type="radio" name="q4" value="B"><div class="opt-letter">B</div> Une assonance</label>
+      <label class="opt" onclick="selectOpt(this,'q4')"><input type="radio" name="q4" value="C"><div class="opt-letter">C</div> Un enjambement</label>
+      <label class="opt" onclick="selectOpt(this,'q4')"><input type="radio" name="q4" value="D"><div class="opt-letter">D</div> Une synesthésie</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q4','B',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q4')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q4')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q4"></div>
+    <div class="explication" id="expl-q4">
+      <strong>Assonance</strong> : répétition d'une même <em>voyelle</em> accentuée dans des mots proches. Ici la voyelle nasale [ɔ̃] crée une plainte sonore, un gémissement qui mime musicalement la mélancolie automnale. L'allitération, elle, concerne la répétition de <em>consonnes</em>.
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════
+   QCM 2 — EFFETS ET INTENTIONS
+═══════════════════════════════════════ -->
+<section id="qcm2">
+  <div class="section-eyebrow">QCM — Série 2</div>
+  <h2>💡 Comprendre l'effet des procédés</h2>
+
+  <div class="progress-wrap"><div class="progress-bar" id="prog2" style="width:0%"></div></div>
+
+  <!-- Q5 -->
+  <div class="exo" id="exo-q5">
+    <div class="exo-header">
+      <div class="exo-num num-gold">Q5</div>
+      <div>
+        <div class="exo-title">Quel est l'effet de cette hyperbole ?</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Je l'ai attendu des siècles. »
+      <cite>— Exemple d'analyse</cite>
+    </div>
+    <div class="qcm-question">L'hyperbole « des siècles » vise à :</div>
+    <div class="options" id="opts-q5">
+      <label class="opt" onclick="selectOpt(this,'q5')"><input type="radio" name="q5" value="A"><div class="opt-letter">A</div> Donner une information temporelle précise</label>
+      <label class="opt" onclick="selectOpt(this,'q5')"><input type="radio" name="q5" value="B"><div class="opt-letter">B</div> Exprimer une frustration ou une impatience intense par l'exagération</label>
+      <label class="opt" onclick="selectOpt(this,'q5')"><input type="radio" name="q5" value="C"><div class="opt-letter">C</div> Créer une comparaison entre deux époques</label>
+      <label class="opt" onclick="selectOpt(this,'q5')"><input type="radio" name="q5" value="D"><div class="opt-letter">D</div> Introduire un registre épique</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q5','B',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q5')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q5')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q5"></div>
+    <div class="explication" id="expl-q5">
+      L'<strong>hyperbole</strong> amplifie la réalité pour mieux exprimer une émotion subjective. Ici, « des siècles » traduit le ressenti du locuteur : une attente perçue comme interminable. L'exagération est au service de l'expression d'un état intérieur, pas d'une description objective.
+    </div>
+  </div>
+
+  <!-- Q6 -->
+  <div class="exo" id="exo-q6">
+    <div class="exo-header">
+      <div class="exo-num num-gold">Q6</div>
+      <div>
+        <div class="exo-title">Effet de la personnification ci-dessous</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « La nuit avançait à pas de loup, étouffant le bruit du monde. »
+      <cite>— Exemple d'analyse</cite>
+    </div>
+    <div class="qcm-question">Attribuer des actions humaines à « la nuit » produit comme effet :</div>
+    <div class="options" id="opts-q6">
+      <label class="opt" onclick="selectOpt(this,'q6')"><input type="radio" name="q6" value="A"><div class="opt-letter">A</div> Rendre la nuit menaçante et vivante, créant une atmosphère de mystère</label>
+      <label class="opt" onclick="selectOpt(this,'q6')"><input type="radio" name="q6" value="B"><div class="opt-letter">B</div> Alléger la description et la rendre comique</label>
+      <label class="opt" onclick="selectOpt(this,'q6')"><input type="radio" name="q6" value="C"><div class="opt-letter">C</div> Insister sur la durée du temps qui passe</label>
+      <label class="opt" onclick="selectOpt(this,'q6')"><input type="radio" name="q6" value="D"><div class="opt-letter">D</div> Créer un registre épique héroïque</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q6','A',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q6')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q6')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q6"></div>
+    <div class="explication" id="expl-q6">
+      La <strong>personnification</strong> prête à un élément non humain (la nuit) des comportements propres à l'être humain ou à l'animal (« à pas de loup », « étouffant »). L'effet : la nuit devient un personnage actif, presque menaçant. Elle installe une atmosphère inquiète et immersive.
+    </div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="exo" id="exo-q7">
+    <div class="exo-header">
+      <div class="exo-num num-gold">Q7</div>
+      <div>
+        <div class="exo-title">Pourquoi l'oxymore crée-t-il un effet particulier ?</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Cette obscure clarté qui tombe des étoiles. »
+      <cite>— Pierre Corneille, <em>Le Cid</em></cite>
+    </div>
+    <div class="qcm-question">L'association de « obscure » et « clarté » vise à :</div>
+    <div class="options" id="opts-q7">
+      <label class="opt" onclick="selectOpt(this,'q7')"><input type="radio" name="q7" value="A"><div class="opt-letter">A</div> Traduire une contradiction du réel (une lumière faible mais perceptible dans l'obscurité)</label>
+      <label class="opt" onclick="selectOpt(this,'q7')"><input type="radio" name="q7" value="B"><div class="opt-letter">B</div> Créer une erreur volontaire pour attirer l'attention</label>
+      <label class="opt" onclick="selectOpt(this,'q7')"><input type="radio" name="q7" value="C"><div class="opt-letter">C</div> Insister sur le fait que la nuit est totale</label>
+      <label class="opt" onclick="selectOpt(this,'q7')"><input type="radio" name="q7" value="D"><div class="opt-letter">D</div> Décrire le lever du soleil</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q7','A',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q7')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q7')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q7"></div>
+    <div class="explication" id="expl-q7">
+      L'<strong>oxymore</strong> unit deux termes contradictoires en un même syntagme. Ici, la lumière stellaire est réelle mais faible, donc à la fois présente (clarté) et insuffisante (obscure). Corneille traduit une ambiguïté concrète du réel nocturne et crée un effet de paradoxe poétique frappant.
+    </div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="exo" id="exo-q8">
+    <div class="exo-header">
+      <div class="exo-num num-gold">Q8</div>
+      <div>
+        <div class="exo-title">Effet de la gradation dans cet extrait</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Il frémit, pâlit, trembla, s'effondra. »
+      <cite>— Exemple d'analyse</cite>
+    </div>
+    <div class="qcm-question">La suite de verbes en intensité croissante crée :</div>
+    <div class="options" id="opts-q8">
+      <label class="opt" onclick="selectOpt(this,'q8')"><input type="radio" name="q8" value="A"><div class="opt-letter">A</div> Un effet de surprise comique</label>
+      <label class="opt" onclick="selectOpt(this,'q8')"><input type="radio" name="q8" value="B"><div class="opt-letter">B</div> Un ralentissement de l'action pour mieux la décrire</label>
+      <label class="opt" onclick="selectOpt(this,'q8')"><input type="radio" name="q8" value="C"><div class="opt-letter">C</div> Une montée en intensité dramatique menant inévitablement au point culminant</label>
+      <label class="opt" onclick="selectOpt(this,'q8')"><input type="radio" name="q8" value="D"><div class="opt-letter">D</div> Une répétition à but purement musical</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q8','C',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q8')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q8')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q8"></div>
+    <div class="explication" id="expl-q8">
+      La <strong>gradation ascendante</strong> dispose les termes par ordre d'intensité croissante. Chaque verbe est plus fort que le précédent : frémir → pâlir → trembler → s'effondrer. L'effet : le lecteur est emporté dans une accélération dramatique qui rend la chute du personnage inévitable et spectaculaire.
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════
+   PCE 1 — POÉSIE
+═══════════════════════════════════════ -->
+<section id="pce1">
+  <div class="section-eyebrow">Exercice PCE — 1</div>
+  <h2>🌿 PCE sur un texte poétique</h2>
+
+  <div class="exo">
+    <div class="exo-header">
+      <div class="exo-num num-purple">P1</div>
+      <div>
+        <div class="exo-title">Complétez le tableau PCE pour cet extrait de Baudelaire</div>
+        <div class="exo-type">PCE · 3 points (1 pt par colonne complète)</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « La Nature est un temple où de vivants piliers<br>
+      Laissent parfois sortir de confuses paroles ;<br>
+      L'Homme y passe à travers des forêts de symboles<br>
+      Qui l'observent avec des regards familiers. »
+      <cite>— Charles Baudelaire, « Correspondances », <em>Les Fleurs du Mal</em>, 1857</cite>
+    </div>
+
+    <p style="margin-bottom:.9rem; font-size:.92rem; color:var(--ink-soft);">Remplissez le tableau pour <strong>deux</strong> procédés identifiés dans l'extrait.</p>
+
+    <!-- Ligne 1 -->
+    <div class="pce-grid" style="margin-bottom:.5rem;">
+      <div class="pce-header">🔵 Procédé</div>
+      <div class="pce-header">🟣 Citation exacte</div>
+      <div class="pce-header">🟡 Effet produit</div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce1_p1" placeholder="Ex. : métaphore…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce1_c1" placeholder="Copiez le passage exact…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce1_e1" placeholder="Expliquez l'effet sur le sens…" rows="2"></textarea></div>
+    </div>
+    <!-- Ligne 2 -->
+    <div class="pce-grid">
+      <div class="pce-header">🔵 Procédé</div>
+      <div class="pce-header">🟣 Citation exacte</div>
+      <div class="pce-header">🟡 Effet produit</div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce1_p2" placeholder="Ex. : personnification…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce1_c2" placeholder="Copiez le passage exact…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce1_e2" placeholder="Expliquez l'effet sur le sens…" rows="2"></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="ans-toggle" onclick="toggleAns('ans-pce1', this)">
+        <span class="arr">▶</span> Voir un corrigé-modèle
+      </button>
+    </div>
+    <div class="ans-body" id="ans-pce1">
+      <p style="margin-bottom:.7rem;"><strong>Procédé 1 — Métaphore filée</strong><br>
+      Citation : <em>« La Nature est un temple où de vivants piliers / Laissent parfois sortir de confuses paroles »</em><br>
+      Effet : La Nature est assimilée à un espace sacré (un temple) dont les éléments naturels (les arbres = « piliers ») communiquent avec l'homme. Cela instaure une dimension mystique et spirituelle : la nature est langage divin.</p>
+      <p><strong>Procédé 2 — Personnification</strong><br>
+      Citation : <em>« des forêts de symboles / Qui l'observent avec des regards familiers »</em><br>
+      Effet : Les symboles (éléments de la nature) observent l'homme à la manière de présences vivantes et bienveillantes. Cela traduit la théorie des correspondances : le monde naturel est animé, il nous parle et nous reconnaît.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+   PCE 2 — ROMAN
+═══════════════════════════════════════ -->
+<section id="pce2">
+  <div class="section-eyebrow">Exercice PCE — 2</div>
+  <h2>📚 PCE sur un texte romanesque</h2>
+
+  <div class="exo">
+    <div class="exo-header">
+      <div class="exo-num num-purple">P2</div>
+      <div>
+        <div class="exo-title">Analysez cet extrait de Flaubert avec la méthode PCE</div>
+        <div class="exo-type">PCE · 3 points</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Elle aurait voulu vivre dans quelque vieux manoir, comme ces châtelaines au long corsage qui, sous le trèfle des ogives, passaient leurs jours à regarder venir du fond de la campagne un cavalier à plume blanche qui galope sur un cheval noir. »
+      <cite>— Gustave Flaubert, <em>Madame Bovary</em>, 1857</cite>
+    </div>
+
+    <p style="margin-bottom:.9rem; font-size:.92rem; color:var(--ink-soft);">Identifiez <strong>deux</strong> procédés et rédigez votre analyse PCE.</p>
+
+    <div class="pce-grid" style="margin-bottom:.5rem;">
+      <div class="pce-header">🔵 Procédé</div>
+      <div class="pce-header">🟣 Citation exacte</div>
+      <div class="pce-header">🟡 Effet produit</div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce2_p1" placeholder="Nommez le procédé…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce2_c1" placeholder="Citation…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce2_e1" placeholder="Effet sur le personnage / le lecteur…" rows="2"></textarea></div>
+    </div>
+    <div class="pce-grid">
+      <div class="pce-header">🔵 Procédé</div>
+      <div class="pce-header">🟣 Citation exacte</div>
+      <div class="pce-header">🟡 Effet produit</div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce2_p2" placeholder="Nommez le procédé…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce2_c2" placeholder="Citation…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce2_e2" placeholder="Effet sur le personnage / le lecteur…" rows="2"></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="ans-toggle" onclick="toggleAns('ans-pce2', this)">
+        <span class="arr">▶</span> Voir un corrigé-modèle
+      </button>
+    </div>
+    <div class="ans-body" id="ans-pce2">
+      <p style="margin-bottom:.7rem;"><strong>Procédé 1 — Conditionnel du rêve / discours indirect libre</strong><br>
+      Citation : <em>« Elle aurait voulu vivre… »</em><br>
+      Effet : Le conditionnel passé plonge le lecteur dans l'imaginaire d'Emma. Flaubert adopte son point de vue intérieur (discours indirect libre) pour montrer un rêve inatteignable, soulignant son inadaptation au réel.</p>
+      <p><strong>Procédé 2 — Comparaison / tableau romantique stéréotypé</strong><br>
+      Citation : <em>« comme ces châtelaines au long corsage… un cavalier à plume blanche qui galope sur un cheval noir »</em><br>
+      Effet : Le « comme » introduit une comparaison entre Emma et les héroïnes de romans. L'image du cavalier est délibérément stéréotypée (romantisme de pacotille), ce qui traduit l'ironie de Flaubert : Emma rêve en clichés, signe de sa vulnérabilité et de son aliénation par la littérature romantique.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+   PCE 3 — THÉÂTRE
+═══════════════════════════════════════ -->
+<section id="pce3">
+  <div class="section-eyebrow">Exercice PCE — 3</div>
+  <h2>🎭 PCE sur un texte théâtral</h2>
+
+  <div class="exo">
+    <div class="exo-header">
+      <div class="exo-num num-purple">P3</div>
+      <div>
+        <div class="exo-title">Analysez cette tirade de Phèdre</div>
+        <div class="exo-type">PCE · 3 points</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « C'est Vénus tout entière à sa proie attachée.<br>
+      Je reconnus Vénus et ses feux redoutables,<br>
+      D'un sang qu'elle poursuit tourments inévitables ! »
+      <cite>— Jean Racine, <em>Phèdre</em>, Acte I, scène 3, 1677</cite>
+    </div>
+
+    <p style="margin-bottom:.9rem; font-size:.92rem; color:var(--ink-soft);">Identifiez <strong>deux</strong> procédés et complétez le PCE.</p>
+
+    <div class="pce-grid" style="margin-bottom:.5rem;">
+      <div class="pce-header">🔵 Procédé</div>
+      <div class="pce-header">🟣 Citation exacte</div>
+      <div class="pce-header">🟡 Effet produit</div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce3_p1" placeholder="Nommez le procédé…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce3_c1" placeholder="Citation…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce3_e1" placeholder="Effet…" rows="2"></textarea></div>
+    </div>
+    <div class="pce-grid">
+      <div class="pce-header">🔵 Procédé</div>
+      <div class="pce-header">🟣 Citation exacte</div>
+      <div class="pce-header">🟡 Effet produit</div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce3_p2" placeholder="Nommez le procédé…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce3_c2" placeholder="Citation…" rows="2"></textarea></div>
+      <div class="pce-cell"><textarea class="pce-input" id="pce3_e2" placeholder="Effet…" rows="2"></textarea></div>
+    </div>
+
+    <div class="btn-row">
+      <button class="ans-toggle" onclick="toggleAns('ans-pce3', this)">
+        <span class="arr">▶</span> Voir un corrigé-modèle
+      </button>
+    </div>
+    <div class="ans-body" id="ans-pce3">
+      <p style="margin-bottom:.7rem;"><strong>Procédé 1 — Métaphore / allégorie mythologique</strong><br>
+      Citation : <em>« C'est Vénus tout entière à sa proie attachée »</em><br>
+      Effet : Vénus (déesse de l'amour) est la métaphore de la passion qui possède Phèdre. L'image de la « proie » animalise la victime et divinise la force amoureuse, rendant Phèdre impuissante et excusant sa faute : elle est la proie d'une force supérieure.</p>
+      <p><strong>Procédé 2 — Champ lexical de la fatalité et de la souffrance</strong><br>
+      Citation : <em>« feux redoutables », « tourments inévitables »</em><br>
+      Effet : Les adjectifs « redoutables » et « inévitables » soulignent le caractère fatal et inéluctable de la passion. Le champ lexical de la souffrance (« feux », « tourments ») inscrit Phèdre dans le registre tragique : la passion est condamnation, et la mort est déjà inscrite dans le destin du personnage.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════
+   QCM 3 — ANALYSE EN CONTEXTE
+═══════════════════════════════════════ -->
+<section id="qcm3">
+  <div class="section-eyebrow">QCM — Série 3</div>
+  <h2>🔍 Analyse en contexte — niveau avancé</h2>
+
+  <div class="progress-wrap"><div class="progress-bar" id="prog3" style="width:0%"></div></div>
+
+  <!-- Q9 -->
+  <div class="exo" id="exo-q9">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q9</div>
+      <div>
+        <div class="exo-title">Registre dominant dans cet extrait</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Je suis Andromaque ! Où fuyez-vous ? Arrêtez !<br>
+      Seigneur, pitié ! Mon fils vous tend les bras — il pleure ! »
+      <cite>— Exemple d'analyse tragique</cite>
+    </div>
+    <div class="qcm-question">Le registre dominant de ce passage est :</div>
+    <div class="options" id="opts-q9">
+      <label class="opt" onclick="selectOpt(this,'q9')"><input type="radio" name="q9" value="A"><div class="opt-letter">A</div> Le registre comique</label>
+      <label class="opt" onclick="selectOpt(this,'q9')"><input type="radio" name="q9" value="B"><div class="opt-letter">B</div> Le registre épique</label>
+      <label class="opt" onclick="selectOpt(this,'q9')"><input type="radio" name="q9" value="C"><div class="opt-letter">C</div> Le registre pathétique</label>
+      <label class="opt" onclick="selectOpt(this,'q9')"><input type="radio" name="q9" value="D"><div class="opt-letter">D</div> Le registre satirique</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q9','C',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q9')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q9')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q9"></div>
+    <div class="explication" id="expl-q9">
+      Le <strong>registre pathétique</strong> vise à susciter la pitié du lecteur/spectateur par la représentation de la souffrance. Ici : les exclamations désespérées, l'image de l'enfant en larmes qui tend les bras, l'impuissance totale du personnage. L'épique valoriserait l'héroïsme guerrier ; le comique provoquerait le rire.
+    </div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="exo" id="exo-q10">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q10</div>
+      <div>
+        <div class="exo-title">Point de vue narratif</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Il ne savait pas encore qu'à ce moment précis, dans la pièce d'à côté, sa vie basculait pour toujours. »
+      <cite>— Exemple d'analyse</cite>
+    </div>
+    <div class="qcm-question">Ce passage est narré selon :</div>
+    <div class="options" id="opts-q10">
+      <label class="opt" onclick="selectOpt(this,'q10')"><input type="radio" name="q10" value="A"><div class="opt-letter">A</div> Le point de vue interne (focalisé sur un personnage)</label>
+      <label class="opt" onclick="selectOpt(this,'q10')"><input type="radio" name="q10" value="B"><div class="opt-letter">B</div> Le point de vue omniscient (narrateur sait tout)</label>
+      <label class="opt" onclick="selectOpt(this,'q10')"><input type="radio" name="q10" value="C"><div class="opt-letter">C</div> Le point de vue externe (observation neutre)</label>
+      <label class="opt" onclick="selectOpt(this,'q10')"><input type="radio" name="q10" value="D"><div class="opt-letter">D</div> Le point de vue subjectif du personnage principal</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q10','B',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q10')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q10')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q10"></div>
+    <div class="explication" id="expl-q10">
+      Le <strong>point de vue omniscient</strong> (focalisation zéro) est celui d'un narrateur qui en sait <em>plus</em> que les personnages. Ici, le narrateur nous informe que « sa vie basculait » alors que le personnage l'ignore (« il ne savait pas encore »). C'est l'ironie dramatique : le lecteur voit ce que le héros ne voit pas.
+    </div>
+  </div>
+
+  <!-- Q11 -->
+  <div class="exo" id="exo-q11">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q11</div>
+      <div>
+        <div class="exo-title">Identifier la figure dans cet extrait de Hugo</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Waterloo ! Waterloo ! Waterloo ! morne plaine ! »
+      <cite>— Victor Hugo, <em>Les Châtiments</em>, 1853</cite>
+    </div>
+    <div class="qcm-question">La triple répétition de « Waterloo » est :</div>
+    <div class="options" id="opts-q11">
+      <label class="opt" onclick="selectOpt(this,'q11')"><input type="radio" name="q11" value="A"><div class="opt-letter">A</div> Un pléonasme</label>
+      <label class="opt" onclick="selectOpt(this,'q11')"><input type="radio" name="q11" value="B"><div class="opt-letter">B</div> Une épiphore</label>
+      <label class="opt" onclick="selectOpt(this,'q11')"><input type="radio" name="q11" value="C"><div class="opt-letter">C</div> Une anaphore</label>
+      <label class="opt" onclick="selectOpt(this,'q11')"><input type="radio" name="q11" value="D"><div class="opt-letter">D</div> Une épopée</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q11','C',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q11')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q11')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q11"></div>
+    <div class="explication" id="expl-q11">
+      <strong>Anaphore</strong> : répétition d'un même terme en <em>début</em> de vers ou de groupe. Ici « Waterloo » est martelé trois fois en ouverture du vers, comme un coup de cloche funèbre. L'effet : l'insistance crée une pesanteur solennelle, le nom devient un cri de deuil, un symbole de la défaite nationale.
+    </div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="exo" id="exo-q12">
+    <div class="exo-header">
+      <div class="exo-num num-blue">Q12</div>
+      <div>
+        <div class="exo-title">Ironie dans ce passage</div>
+        <div class="exo-type">QCM · 1 point</div>
+      </div>
+    </div>
+    <div class="literary-text">
+      « Candide, chassé du paradis terrestre, marcha longtemps sans savoir où il allait, pleurant, levant les yeux au ciel, les tournant souvent vers le plus beau des châteaux. »
+      <cite>— Voltaire, <em>Candide</em>, ch. 1, 1759</cite>
+    </div>
+    <div class="qcm-question">L'appel du château qualifié de « plus beau » est ironique car :</div>
+    <div class="options" id="opts-q12">
+      <label class="opt" onclick="selectOpt(this,'q12')"><input type="radio" name="q12" value="A"><div class="opt-letter">A</div> Le château est effectivement splendide</label>
+      <label class="opt" onclick="selectOpt(this,'q12')"><input type="radio" name="q12" value="B"><div class="opt-letter">B</div> Le château est en réalité modeste ; Voltaire moque l'illusion de Candide</label>
+      <label class="opt" onclick="selectOpt(this,'q12')"><input type="radio" name="q12" value="C"><div class="opt-letter">C</div> Candide n'a jamais vu de château</label>
+      <label class="opt" onclick="selectOpt(this,'q12')"><input type="radio" name="q12" value="D"><div class="opt-letter">D</div> Le château symbolise la liberté</label>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-check" onclick="checkQCM('q12','B',1)">Valider ✓</button>
+      <button class="btn btn-reset" onclick="resetQCM('q12')">↺</button>
+      <button class="btn btn-explain" onclick="toggleExpl('expl-q12')">Explication</button>
+    </div>
+    <div class="feedback" id="fb-q12"></div>
+    <div class="explication" id="expl-q12">
+      Voltaire use de l'<strong>ironie</strong> dès le premier chapitre : le baron de Thunder-ten-tronckh habite en réalité un manoir fort ordinaire, mais le candide Pangloss et les habitants le perçoivent comme le paradis. L'adjectif « plus beau » révèle la naïveté de Candide que Voltaire raille pour mieux critiquer l'optimisme philosophique béat.
+    </div>
+  </div>
+
+</section>
+
+<!-- ═══════════════════════════════════════
+   BILAN
+═══════════════════════════════════════ -->
+<section id="bilan">
+  <div class="section-eyebrow">Bilan</div>
+  <h2>📊 Tableau de bord</h2>
+
+  <div class="summary-grid">
+    <div class="summary-card">
+      <div class="summary-val" id="sumTotal">0</div>
+      <div class="summary-label">Points QCM obtenus</div>
+    </div>
+    <div class="summary-card gold-top">
+      <div class="summary-val">3</div>
+      <div class="summary-label">Exercices PCE à corriger</div>
+    </div>
+    <div class="summary-card green-top">
+      <div class="summary-val" id="sumPct">—</div>
+      <div class="summary-label">Taux de réussite QCM</div>
+    </div>
+    <div class="summary-card purple-top">
+      <div class="summary-val">12</div>
+      <div class="summary-label">Questions QCM au total</div>
+    </div>
+  </div>
+
+  <div class="callout callout-green" style="margin-top:1.75rem;">
+    <div class="callout-icon">🎯</div>
+    <div>
+      <strong>Objectif bac :</strong> maîtrisez les 8 QCM en moins de 10 minutes, puis entraînez-vous à rédiger vos PCE <em>sans consulter le corrigé</em>. Une bonne réponse PCE contient toujours : un procédé <strong>nommé précisément</strong>, une citation <strong>entre guillemets</strong>, et un effet <strong>lié au sens du texte</strong>.
+    </div>
+  </div>
+
+  <div class="callout callout-purple" style="margin-top:1rem;">
+    <div class="callout-icon">📖</div>
+    <div>
+      <strong>Pour aller plus loin :</strong> reprenez les extraits de ce document et entraînez-vous à rédiger un <em>paragraphe d'analyse linéaire</em> complet pour chaque passage, en enchaînant 2 à 3 PCE liés par des connecteurs logiques.
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Bac Français — Procédés littéraires &amp; Méthode P.C.E. · Entraînement interactif
+</footer>
+
+<!-- ═══════════════════════════════════════
+   JAVASCRIPT
+═══════════════════════════════════════ -->
+<script>
+// ── ÉTAT GLOBAL ──
+const state = {
+  answers: {},   // { q1: 'B', q2: 'A', ... }
+  correct: {},   // { q1: true, q2: false, ... }
+  points: 0,
+  total: 0
+};
+
+const correctAnswers = {
+  q1:'B', q2:'B', q3:'B', q4:'B',
+  q5:'B', q6:'A', q7:'A', q8:'C',
+  q9:'C', q10:'B', q11:'C', q12:'B'
+};
+
+// ── SÉLECTION D'OPTION ──
+function selectOpt(el, qid) {
+  const parent = document.getElementById('opts-' + qid);
+  if (!parent) return;
+  // Ne pas changer si déjà corrigé
+  if (parent.querySelector('.correct') || parent.querySelector('.wrong')) return;
+  parent.querySelectorAll('.opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  state.answers[qid] = el.querySelector('input').value;
+}
+
+// ── VÉRIFICATION QCM ──
+function checkQCM(qid, correct, pts) {
+  const parent = document.getElementById('opts-' + qid);
+  const fb = document.getElementById('fb-' + qid);
+  if (!parent || !fb) return;
+
+  const selected = state.answers[qid];
+  if (!selected) {
+    fb.className = 'feedback show fb-err';
+    fb.textContent = '⚠️ Veuillez sélectionner une réponse.';
+    return;
+  }
+
+  // Déjà corrigé ?
+  if (state.correct[qid] !== undefined) return;
+
+  const isOk = selected === correct;
+  state.correct[qid] = isOk;
+
+  parent.querySelectorAll('.opt').forEach(opt => {
+    const val = opt.querySelector('input').value;
+    if (val === correct) opt.classList.add('correct');
+    else if (val === selected && !isOk) opt.classList.add('wrong');
+    opt.style.pointerEvents = 'none';
+  });
+
+  if (isOk) {
+    state.points += pts;
+    fb.className = 'feedback show fb-ok';
+    fb.textContent = '✅ Bonne réponse ! +' + pts + ' point' + (pts > 1 ? 's' : '') + '.';
+  } else {
+    fb.className = 'feedback show fb-err';
+    fb.textContent = '❌ Mauvaise réponse. La bonne réponse est indiquée en vert. Cliquez sur « Explication » pour comprendre.';
+  }
+
+  updateScore();
+  updateProgress();
+}
+
+// ── RESET QCM ──
+function resetQCM(qid) {
+  const parent = document.getElementById('opts-' + qid);
+  const fb = document.getElementById('fb-' + qid);
+  const expl = document.getElementById('expl-' + qid);
+  if (!parent) return;
+
+  if (state.correct[qid]) state.points -= 1;
+  delete state.correct[qid];
+  delete state.answers[qid];
+
+  parent.querySelectorAll('.opt').forEach(opt => {
+    opt.classList.remove('selected','correct','wrong');
+    opt.style.pointerEvents = '';
+    opt.querySelector('input').checked = false;
+  });
+  if (fb) { fb.className = 'feedback'; fb.textContent = ''; }
+  if (expl) { expl.className = 'explication'; }
+
+  updateScore();
+  updateProgress();
+}
+
+// ── TOGGLE EXPLICATION ──
+function toggleExpl(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.classList.toggle('show');
+}
+
+// ── TOGGLE CORRIGÉ PCE ──
+function toggleAns(id, btn) {
+  const body = document.getElementById(id);
+  if (!body) return;
+  const open = body.classList.contains('open');
+  body.classList.toggle('open', !open);
+  const arr = btn.querySelector('.arr');
+  if (arr) arr.style.transform = open ? '' : 'rotate(90deg)';
+  btn.querySelector('.arr').nextSibling.textContent = open ? ' Voir un corrigé-modèle' : ' Masquer le corrigé';
+}
+
+// ── SCORE ──
+function updateScore() {
+  document.getElementById('globalScore').textContent = state.points;
+  document.getElementById('globalTotal').textContent = Object.keys(correctAnswers).length;
+  document.getElementById('sumTotal').textContent = state.points;
+  const answered = Object.keys(state.correct).length;
+  const pct = answered ? Math.round((state.points / answered) * 100) + ' %' : '—';
+  document.getElementById('sumPct').textContent = pct;
+}
+
+// ── PROGRESS BARS (par série) ──
+const series = {
+  prog1: ['q1','q2','q3','q4'],
+  prog2: ['q5','q6','q7','q8'],
+  prog3: ['q9','q10','q11','q12']
+};
+
+function updateProgress() {
+  for (const [barId, qs] of Object.entries(series)) {
+    const answered = qs.filter(q => state.correct[q] !== undefined).length;
+    const bar = document.getElementById(barId);
+    if (bar) bar.style.width = (answered / qs.length * 100) + '%';
+  }
+}
+</script>
+</body>
+</html>
