@@ -1,0 +1,320 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --mustard:#D4A017;--orange70:#E8651A;--avocado:#5A7A3A;--brown70:#8B4513;
+    --cream:#FDF6E3;--rust:#C0392B;--gold:#F0B429;--olive:#6B7A3A;
+    --warm:#FAF0D7;--text:#2C1810;--muted:#6B4226;
+  }
+  body{background:var(--cream);color:var(--text);font-family:'Georgia',serif}
+  .container{max-width:680px;margin:0 auto;padding:0 0 2rem}
+  
+  /* HEADER */
+  .hero{background:linear-gradient(135deg,#8B4513 0%,#D4A017 40%,#E8651A 70%,#C0392B 100%);padding:2rem 1.5rem;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,0.05) 10px,rgba(255,255,255,0.05) 20px)}
+  .hero h1{font-family:'Playfair Display',Georgia,serif;font-size:2.2rem;color:#FDF6E3;font-weight:700;text-shadow:2px 2px 4px rgba(0,0,0,0.3);letter-spacing:1px}
+  .hero p{color:#FAF0D7;font-size:0.95rem;margin-top:0.5rem;opacity:0.9}
+  .decade-badge{display:inline-block;background:#FDF6E3;color:#8B4513;font-size:1.5rem;font-weight:700;padding:0.3rem 1rem;border-radius:4px;margin-bottom:0.8rem;font-family:'Playfair Display',Georgia,serif}
+
+  /* TABS */
+  .tabs{display:flex;background:#2C1810;border-bottom:3px solid var(--mustard)}
+  .tab{flex:1;padding:0.8rem 0.5rem;text-align:center;cursor:pointer;color:#FAF0D7;font-size:0.85rem;font-weight:500;border:none;background:none;transition:background 0.2s}
+  .tab.active{background:var(--mustard);color:#2C1810}
+  .tab:hover:not(.active){background:rgba(212,160,23,0.2)}
+
+  /* CONTENT */
+  .panel{display:none;padding:1.5rem;background:var(--warm)}
+  .panel.active{display:block}
+
+  /* TEXTE PANEL */
+  .intro-text{font-size:1rem;line-height:1.85;color:var(--text)}
+  .intro-text p{margin-bottom:1rem}
+  .vocab-box{background:white;border:2px solid var(--mustard);border-radius:8px;padding:1rem 1.2rem;margin-top:1.2rem}
+  .vocab-box h3{font-family:'Playfair Display',Georgia,serif;color:var(--orange70);font-size:1rem;margin-bottom:0.7rem;border-bottom:1px solid var(--gold);padding-bottom:0.4rem}
+  .vocab-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.35rem 1rem}
+  .vocab-item{font-size:0.83rem;line-height:1.5}
+  .vocab-fr{font-weight:600;color:var(--brown70)}
+  .vocab-en{color:#555;font-style:italic}
+  mark{background:rgba(212,160,23,0.3);padding:0 2px;border-radius:2px}
+
+  /* FRESQUE PANEL */
+  .timeline{position:relative;padding-left:2rem}
+  .timeline::before{content:'';position:absolute;left:0.7rem;top:0;bottom:0;width:3px;background:linear-gradient(to bottom,var(--mustard),var(--orange70),var(--rust))}
+  .tl-event{position:relative;margin-bottom:1.3rem;background:white;border-radius:8px;padding:0.9rem 1rem;border-left:4px solid var(--mustard);box-shadow:0 1px 4px rgba(0,0,0,0.07)}
+  .tl-event:nth-child(even){border-left-color:var(--orange70)}
+  .tl-event:nth-child(3n){border-left-color:var(--avocado)}
+  .tl-event::before{content:attr(data-year);position:absolute;left:-2.8rem;top:50%;transform:translateY(-50%);background:var(--mustard);color:#2C1810;font-size:0.72rem;font-weight:700;padding:2px 5px;border-radius:3px;white-space:nowrap}
+  .tl-event:nth-child(even)::before{background:var(--orange70);color:white}
+  .tl-event:nth-child(3n)::before{background:var(--avocado);color:white}
+  .tl-title{font-family:'Playfair Display',Georgia,serif;font-size:0.95rem;color:var(--brown70);font-weight:700}
+  .tl-desc{font-size:0.83rem;color:var(--muted);margin-top:0.3rem;line-height:1.5}
+  .tl-category{display:inline-block;font-size:0.7rem;padding:1px 7px;border-radius:10px;margin-bottom:0.3rem;font-weight:600;letter-spacing:0.5px}
+  .cat-pol{background:#FAEBD7;color:#8B4513}
+  .cat-soc{background:#E8F5E9;color:#2E7D32}
+  .cat-cul{background:#EDE7F6;color:#4527A0}
+  .cat-mod{background:#FCE4EC;color:#880E4F}
+  .cat-eco{background:#E3F2FD;color:#0D47A1}
+
+  /* QUIZ PANEL */
+  .quiz-intro{text-align:center;padding:1rem 0 1.5rem;border-bottom:2px dashed var(--mustard)}
+  .quiz-intro p{color:var(--muted);font-size:0.9rem;margin-top:0.4rem}
+  .q-counter{font-size:0.8rem;color:var(--muted);margin-bottom:0.4rem}
+  .question-card{background:white;border-radius:8px;padding:1.2rem;margin-top:1rem;border-top:4px solid var(--mustard);box-shadow:0 1px 4px rgba(0,0,0,0.06)}
+  .q-text{font-size:0.95rem;font-weight:600;color:var(--text);margin-bottom:0.8rem;line-height:1.5}
+  .options{display:grid;gap:0.5rem}
+  .opt-btn{width:100%;text-align:left;padding:0.6rem 0.9rem;border:1.5px solid #ddd;border-radius:6px;cursor:pointer;font-size:0.85rem;background:white;color:var(--text);transition:all 0.15s;font-family:inherit}
+  .opt-btn:hover:not(:disabled){border-color:var(--mustard);background:#FFF9E6}
+  .opt-btn.correct{background:#E8F5E9;border-color:#4CAF50;color:#1B5E20}
+  .opt-btn.wrong{background:#FFEBEE;border-color:#F44336;color:#B71C1C}
+  .opt-btn.reveal-correct{background:#E8F5E9;border-color:#4CAF50;color:#1B5E20}
+  .feedback{font-size:0.83rem;margin-top:0.7rem;padding:0.5rem 0.8rem;border-radius:5px;line-height:1.4}
+  .feedback.ok{background:#E8F5E9;color:#2E7D32}
+  .feedback.ko{background:#FFEBEE;color:#C62828}
+  .nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:1rem;gap:0.5rem}
+  .nav-btn{padding:0.55rem 1.2rem;background:var(--brown70);color:white;border:none;border-radius:6px;cursor:pointer;font-size:0.85rem;font-family:inherit}
+  .nav-btn:hover{background:var(--orange70)}
+  .nav-btn:disabled{opacity:0.35;cursor:default}
+  .progress{flex:1;height:6px;background:#e0d5c5;border-radius:3px;overflow:hidden}
+  .progress-fill{height:100%;background:linear-gradient(to right,var(--mustard),var(--orange70));border-radius:3px;transition:width 0.3s}
+  .score-panel{text-align:center;padding:2rem 1rem}
+  .score-num{font-family:'Playfair Display',Georgia,serif;font-size:3rem;color:var(--orange70);font-weight:700}
+  .score-label{font-size:0.9rem;color:var(--muted);margin-top:0.3rem}
+  .score-msg{margin:1rem 0;font-size:1rem;color:var(--text);line-height:1.6}
+  .restart-btn{padding:0.7rem 2rem;background:var(--mustard);color:#2C1810;border:none;border-radius:6px;font-size:0.95rem;font-weight:600;cursor:pointer;font-family:inherit}
+  .restart-btn:hover{background:var(--orange70);color:white}
+
+  .section-label{font-family:'Playfair Display',Georgia,serif;font-size:1.1rem;color:var(--brown70);margin-bottom:1rem;padding-bottom:0.4rem;border-bottom:2px solid var(--gold)}
+</style>
+
+<div class="container">
+  <div class="hero">
+    <div class="decade-badge">1970 — 1979</div>
+    <h1>La France des Seventies</h1>
+    <p>Texte C1 · Fresque historique · Quiz de 15 questions</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('texte',this)">📖 Texte C1</button>
+    <button class="tab" onclick="showTab('fresque',this)">🕰️ Fresque</button>
+    <button class="tab" onclick="showTab('quiz',this)">🎯 Quiz</button>
+  </div>
+
+  <!-- TEXTE PANEL -->
+  <div id="panel-texte" class="panel active">
+    <p class="section-label">La France des années 1970</p>
+    <div class="intro-text">
+      <p>Les années 1970 constituent une décennie charnière pour la France, marquée par de profondes <mark>mutations</mark> économiques, politiques et sociétales. Le début de la décennie s'inscrit encore dans l'élan du boom d'après-guerre, les <mark>Trente Glorieuses</mark>, mais le choc pétrolier de 1973 vient brutalement remettre en cause l'illusion d'une croissance éternelle.</p>
+      <p>Sur le plan politique, la France connaît une succession de figures marquantes. Georges Pompidou, successeur du général de Gaulle, décède en exercice en avril 1974, ouvrant une élection présidentielle mémorable. Valéry Giscard d'Estaing l'emporte de justesse face à François Mitterrand, inaugurant une présidence réformatrice. Son premier ministre Raymond Barre, économiste réputé, tente de lutter contre l'<mark>inflation galopante</mark> et le chômage montant.</p>
+      <p>Sur le plan sociétal, cette décennie est celle de la libéralisation des mœurs. En 1975, la loi Veil légalise l'interruption volontaire de grossesse (IVG), au terme d'un débat parlementaire houleux. La même année, la loi Haby instaure le collège unique. En 1972, le premier mouvement Gay Pride français voit le jour à Paris, témoignant d'une <mark>émancipation</mark> progressive des minorités.</p>
+      <p>La culture connaît un bouillonnement sans précédent. Michel Foucault, Roland Barthes et Jacques Derrida façonnent la pensée française à l'échelle mondiale. Le cinéma vit l'heure de la Nouvelle Vague tardive, tandis que la télévision, avec l'ORTF puis TF1, FR3 et Antenne 2 nées de l'éclatement de l'ORTF en 1974, entre dans tous les foyers.</p>
+      <p>Du côté des modes, la décennie signe le triomphe du pantalon à pattes d'éléphant, des couleurs vives — orange, brun, olive, moutarde — et des matières synthétiques. Yves Saint Laurent impose le tailleur-pantalon féminin, symbole de l'<mark>émancipation</mark> de la femme. La disco débarque en France avec des artistes comme Sheila, et la chanson française reste dominée par des figures telles que Jacques Brel, Georges Brassens et Joe Dassin.</p>
+    </div>
+
+    <div class="vocab-box">
+      <h3>Vocabulaire clé / Key vocabulary</h3>
+      <div class="vocab-grid">
+        <div class="vocab-item"><span class="vocab-fr">charnière</span><br><span class="vocab-en">pivotal, turning point</span></div>
+        <div class="vocab-item"><span class="vocab-fr">mutations (f.pl.)</span><br><span class="vocab-en">transformations, changes</span></div>
+        <div class="vocab-item"><span class="vocab-fr">Trente Glorieuses</span><br><span class="vocab-en">post-war economic boom (1945–75)</span></div>
+        <div class="vocab-item"><span class="vocab-fr">choc pétrolier</span><br><span class="vocab-en">oil shock / crisis</span></div>
+        <div class="vocab-item"><span class="vocab-fr">inflation galopante</span><br><span class="vocab-en">rampant / galloping inflation</span></div>
+        <div class="vocab-item"><span class="vocab-fr">libéralisation des mœurs</span><br><span class="vocab-en">liberalisation of morals/customs</span></div>
+        <div class="vocab-item"><span class="vocab-fr">IVG (interruption volontaire de grossesse)</span><br><span class="vocab-en">voluntary termination of pregnancy</span></div>
+        <div class="vocab-item"><span class="vocab-fr">houleux/euse</span><br><span class="vocab-en">stormy, heated (debate)</span></div>
+        <div class="vocab-item"><span class="vocab-fr">bouillonnement (m.)</span><br><span class="vocab-en">ferment, bubbling activity</span></div>
+        <div class="vocab-item"><span class="vocab-fr">émancipation (f.)</span><br><span class="vocab-en">emancipation, liberation</span></div>
+        <div class="vocab-item"><span class="vocab-fr">pattes d'éléphant</span><br><span class="vocab-en">flared / bell-bottom trousers</span></div>
+        <div class="vocab-item"><span class="vocab-fr">tailleur-pantalon (m.)</span><br><span class="vocab-en">trouser suit</span></div>
+        <div class="vocab-item"><span class="vocab-fr">éclatement (m.)</span><br><span class="vocab-en">break-up, splitting apart</span></div>
+        <div class="vocab-item"><span class="vocab-fr">foyer (m.)</span><br><span class="vocab-en">home, household</span></div>
+        <div class="vocab-item"><span class="vocab-fr">en exercice</span><br><span class="vocab-en">in office / whilst serving</span></div>
+        <div class="vocab-item"><span class="vocab-fr">sans précédent</span><br><span class="vocab-en">unprecedented</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FRESQUE PANEL -->
+  <div id="panel-fresque" class="panel">
+    <p class="section-label">Fresque chronologique 1970–1979</p>
+    <div class="timeline">
+      <div class="tl-event" data-year="1970">
+        <span class="tl-category cat-pol">Politique</span>
+        <div class="tl-title">Mort du Général de Gaulle</div>
+        <div class="tl-desc">Le 9 novembre 1970, Charles de Gaulle décède à Colombey-les-Deux-Églises. La France perd son père fondateur de la V<sup>e</sup> République. Pompidou, déjà Président, poursuit son mandat.</div>
+      </div>
+      <div class="tl-event" data-year="1971">
+        <span class="tl-category cat-soc">Société</span>
+        <div class="tl-title">Manifeste des 343</div>
+        <div class="tl-desc">En avril, 343 femmes dont Simone de Beauvoir et Catherine Deneuve signent publiquement qu'elles ont avorté illégalement, réclamant la légalisation de l'avortement.</div>
+      </div>
+      <div class="tl-event" data-year="1972">
+        <span class="tl-category cat-soc">Société</span>
+        <div class="tl-title">Premier défilé homosexuel à Paris</div>
+        <div class="tl-desc">Le mouvement de libération homosexuel prend de l'ampleur en France. Naissance du FHAR (Front Homosexuel d'Action Révolutionnaire) et premières manifestations publiques.</div>
+      </div>
+      <div class="tl-event" data-year="1973">
+        <span class="tl-category cat-eco">Économie</span>
+        <div class="tl-title">Premier choc pétrolier</div>
+        <div class="tl-desc">L'embargo de l'OPEP quadruple le prix du pétrole. La France, très dépendante des hydrocarbures, entre dans une période de stagflation. Fin des Trente Glorieuses.</div>
+      </div>
+      <div class="tl-event" data-year="1974">
+        <span class="tl-category cat-pol">Politique</span>
+        <div class="tl-title">Élection de Giscard d'Estaing</div>
+        <div class="tl-desc">Après la mort de Pompidou en avril, Valéry Giscard d'Estaing est élu président avec 50,8% des voix, battant Mitterrand. Il est le plus jeune président de la V<sup>e</sup> République. L'ORTF est éclatée en 3 chaînes.</div>
+      </div>
+      <div class="tl-event" data-year="1975">
+        <span class="tl-category cat-soc">Société</span>
+        <div class="tl-title">Loi Veil — légalisation de l'IVG</div>
+        <div class="tl-desc">La ministre de la Santé Simone Veil défend la loi autorisant l'avortement devant une Assemblée majoritairement hostile. La loi est adoptée le 17 janvier. Symbole fort d'émancipation féminine.</div>
+      </div>
+      <div class="tl-event" data-year="1975">
+        <span class="tl-category cat-cul">Culture</span>
+        <div class="tl-title">Loi Haby — collège unique</div>
+        <div class="tl-desc">La réforme du ministre René Haby instaure un collège commun pour tous les élèves, quelle que soit leur origine sociale, démocratisant l'accès à l'enseignement secondaire.</div>
+      </div>
+      <div class="tl-event" data-year="1976">
+        <span class="tl-category cat-pol">Politique</span>
+        <div class="tl-title">Raymond Barre Premier ministre</div>
+        <div class="tl-desc">Giscard nomme l'économiste Raymond Barre à Matignon. Il mène une politique de rigueur pour lutter contre l'inflation et restaurer l'équilibre budgétaire.</div>
+      </div>
+      <div class="tl-event" data-year="1977">
+        <span class="tl-category cat-mod">Mode & Culture</span>
+        <div class="tl-title">Le disco et les boîtes de nuit</div>
+        <div class="tl-desc">La vague disco déferle sur la France. Le Palace ouvre à Paris. Sheila enregistre "Spacer", les pantalons à pattes d'éléphant et les plateformes envahissent les rues. Naissance du look "pailleté".</div>
+      </div>
+      <div class="tl-event" data-year="1978">
+        <span class="tl-category cat-eco">Économie</span>
+        <div class="tl-title">Second choc pétrolier (prémices)</div>
+        <div class="tl-desc">La révolution iranienne de 1979 annonce un nouveau choc. Le chômage en France dépasse le million de personnes. La question sociale devient centrale dans le débat politique.</div>
+      </div>
+      <div class="tl-event" data-year="1979">
+        <span class="tl-category cat-cul">Culture</span>
+        <div class="tl-title">Le punk et la nouvelle vague</div>
+        <div class="tl-desc">En réaction au disco, le punk et la new wave émergent. Téléphone, Marquis de Sade et Noir Désir se forment. Le rock français trouve enfin sa voix propre, distincte du modèle anglo-saxon.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ PANEL -->
+  <div id="panel-quiz" class="panel">
+    <div class="quiz-intro">
+      <p class="section-label" style="border:none;margin:0">Quiz — Les années 70 en France</p>
+      <p>15 questions · culture générale niveau C1</p>
+    </div>
+    <div id="quiz-body"></div>
+  </div>
+</div>
+
+<script>
+function showTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-'+id).classList.add('active');
+  el.classList.add('active');
+}
+
+const questions = [
+  {q:"Quel événement économique majeur met fin aux Trente Glorieuses en 1973 ?", opts:["La crise bancaire de Paris","Le premier choc pétrolier","La grève générale des mineurs","La dévaluation du franc"], ans:1, expl:"L'embargo de l'OPEP en 1973 quadruple le prix du pétrole, plongeant la France dans une période de stagflation et signant la fin de la croissance d'après-guerre."},
+  {q:"Qui défend la loi sur la légalisation de l'IVG en 1975 ?", opts:["Yvette Roudy","Françoise Giroud","Simone Veil","Édith Cresson"], ans:2, expl:"Simone Veil, ministre de la Santé, défend courageusement cette loi devant une Assemblée majoritairement hostile. La loi est adoptée le 17 janvier 1975."},
+  {q:"Quelle élection présidentielle Giscard d'Estaing remporte-t-il de justesse en 1974 ?", opts:["Face à Jacques Chaban-Delmas","Face à François Mitterrand","Face à Michel Rocard","Face à Raymond Barre"], ans:1, expl:"Valéry Giscard d'Estaing bat François Mitterrand avec seulement 50,8% des suffrages exprimés lors du second tour de 1974."},
+  {q:"Quel mouvement littéraire et intellectuel est notamment représenté par Michel Foucault et Roland Barthes dans les années 70 ?", opts:["Le surréalisme tardif","Le structuralisme et la déconstruction","Le nouveau roman","L'existentialisme"], ans:1, expl:"Foucault, Barthes et Derrida représentent la pensée structuraliste et post-structuraliste (déconstruction), qui influence la philosophie mondiale dans les années 70."},
+  {q:"Que devient l'ORTF en 1974 ?", opts:["Elle fusionne avec Europe 1","Elle est privatisée et vendue","Elle est éclatée en trois chaînes indépendantes","Elle est supprimée par décret"], ans:2, expl:"Giscard décide en 1974 de démanteler l'ORTF, donnant naissance à TF1, Antenne 2 (A2) et FR3, ainsi qu'à Radio France."},
+  {q:"Quel document signé en 1971 réclame la légalisation de l'avortement en France ?", opts:["Le Manifeste des 343","La Déclaration des droits de la femme","La pétition des mille","La lettre ouverte du MLF"], ans:0, expl:"Le Manifeste des 343, paru dans Le Nouvel Observateur en avril 1971, est signé par 343 femmes qui déclarent publiquement avoir avorté illégalement."},
+  {q:"Quelle tendance vestimentaire emblématique des années 70 désigne des pantalons très évasés à partir du genou ?", opts:["Le jean slim","Le pantalon à pinces","Les pattes d'éléphant","Le sarouel"], ans:2, expl:"Les pantalons à pattes d'éléphant (ou flares) avec leur forme évasée en bas sont l'un des symboles mode les plus iconiques des années 70."},
+  {q:"Quel styliste impose le tailleur-pantalon féminin comme symbole d'émancipation dans les années 70 ?", opts:["Pierre Cardin","Hubert de Givenchy","Coco Chanel","Yves Saint Laurent"], ans:3, expl:"Yves Saint Laurent démocratise le tailleur-pantalon pour femme (Le Smoking), qui devient un symbole de l'émancipation féminine dans les années 70."},
+  {q:"Georges Pompidou décède en cours de mandat en quelle année ?", opts:["1972","1973","1974","1975"], ans:2, expl:"Georges Pompidou décède le 2 avril 1974 d'une maladie de Waldenström. Sa mort en cours de mandat entraîne l'élection présidentielle anticipée remportée par Giscard."},
+  {q:"Quelle réforme du ministre René Haby, adoptée en 1975, démocratise l'enseignement secondaire ?", opts:["La création du baccalauréat professionnel","L'instauration du collège unique","La mixité obligatoire dans les lycées","La suppression des classes préparatoires"], ans:1, expl:"La loi Haby de 1975 crée le collège unique pour tous les élèves de 11 à 15 ans, quel que soit leur niveau ou leur milieu social, dans un objectif d'égalité des chances."},
+  {q:"Quelle discothèque parisienne ouverte en 1978 devient le symbole de la scène disco-clubbing française ?", opts:["Le Bataclan","Le Palace","La Cigale","Le Rex Club"], ans:1, expl:"Le Palace, ouvert en 1978 rue du Faubourg-Montmartre, devient le temple parisien du disco et de la nuit branchée, accueillant Grace Jones, Karl Lagerfeld et Mick Jagger."},
+  {q:"Qui est le Premier ministre nommé par Giscard en 1976 pour mener une politique économique de rigueur ?", opts:["Jacques Chirac","Michel Poniatowski","Raymond Barre","Maurice Couve de Murville"], ans:2, expl:"Raymond Barre, économiste et professeur, est nommé Premier ministre en août 1976. Il conduit un plan d'austérité pour lutter contre l'inflation et le déficit budgétaire."},
+  {q:"Quelle artiste française enregistre 'Spacer' et incarne la fusion disco dans les années 70 ?", opts:["Dalida","France Gall","Mireille Mathieu","Sheila"], ans:3, expl:"Sheila, chanteuse yéyé reconvertie au disco, enregistre 'Spacer' en 1979 avec Nile Rodgers et Bernard Edwards de Chic, un hit planétaire."},
+  {q:"Quel groupe de rock français se forme à la fin des années 70 et devient emblématique du rock francophone ?", opts:["Indochine","Téléphone","Les Négresses Vertes","Noir Désir"], ans:1, expl:"Téléphone, formé en 1976, est le premier groupe de rock français à atteindre un succès populaire massif, avec des albums comme 'Au Cœur de la nuit' (1977)."},
+  {q:"Parmi ces couleurs, lesquelles sont les plus caractéristiques de l'esthétique des années 70 en France ?", opts:["Noir, blanc et gris","Bleu, blanc, rouge vif","Moutarde, brun, orange et olive","Rose pastel, menthe et lavande"], ans:2, expl:"Les intérieurs et les modes des années 70 sont dominés par une palette chaude et terreuse : moutarde, brun, rouille, orange et vert olive, en réaction aux couleurs pastelles des 60s."}
+];
+
+let current = 0, score = 0, answered = new Array(questions.length).fill(false);
+
+function renderQuestion() {
+  const qb = document.getElementById('quiz-body');
+  if (current >= questions.length) {
+    showScore(); return;
+  }
+  const q = questions[current];
+  const pct = Math.round((current / questions.length) * 100);
+  qb.innerHTML = `
+    <div style="display:flex;align-items:center;gap:0.7rem;margin-top:1rem">
+      <div class="progress"><div class="progress-fill" style="width:${pct}%"></div></div>
+      <span class="q-counter">${current+1}/15</span>
+    </div>
+    <div class="question-card">
+      <div class="q-text">${q.q}</div>
+      <div class="options">
+        ${q.opts.map((o,i)=>`<button class="opt-btn" onclick="choose(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}
+      </div>
+      <div id="feedback"></div>
+    </div>
+    <div class="nav-row">
+      <button class="nav-btn" onclick="prev()" ${current===0?'disabled':''}>← Précédent</button>
+      <button class="nav-btn" id="next-btn" onclick="next()" ${current===questions.length-1?'':''}>${current===questions.length-1?'Voir le score':'Suivant →'}</button>
+    </div>`;
+  if (answered[current]) restoreState();
+}
+
+function choose(idx) {
+  if (answered[current]) return;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((b,i) => {
+    b.disabled = true;
+    if (i === q.ans) b.classList.add('reveal-correct');
+    if (i === idx && idx !== q.ans) b.classList.add('wrong');
+    if (i === idx && idx === q.ans) { b.classList.remove('reveal-correct'); b.classList.add('correct'); }
+  });
+  const ok = idx === q.ans;
+  if (ok && !answered[current]) score++;
+  answered[current] = idx;
+  document.getElementById('feedback').innerHTML = `<div class="feedback ${ok?'ok':'ko'}">${ok?'✓ Bravo ! ':'✗ Incorrect. '}${q.expl}</div>`;
+}
+
+function restoreState() {
+  const idx = answered[current];
+  if (idx === false) return;
+  const q = questions[current];
+  const btns = document.querySelectorAll('.opt-btn');
+  btns.forEach((b,i) => {
+    b.disabled = true;
+    if (i === q.ans) b.classList.add('reveal-correct');
+    if (i === idx && idx !== q.ans) b.classList.add('wrong');
+    if (i === idx && idx === q.ans) { b.classList.remove('reveal-correct'); b.classList.add('correct'); }
+  });
+  const ok = idx === q.ans;
+  document.getElementById('feedback').innerHTML = `<div class="feedback ${ok?'ok':'ko'}">${ok?'✓ Bravo ! ':'✗ Incorrect. '}${q.expl}</div>`;
+}
+
+function next() { if (current < questions.length - 1) { current++; renderQuestion(); } else showScore(); }
+function prev() { if (current > 0) { current--; renderQuestion(); } }
+
+function showScore() {
+  const pct = Math.round((score/questions.length)*100);
+  let msg = '';
+  if (pct >= 80) msg = "Excellent ! Vous maîtrisez parfaitement cette période de l'histoire française. Un vrai expert des Trente Piteuses !";
+  else if (pct >= 60) msg = "Très bien ! Votre connaissance des années 70 en France est solide. Quelques révisions de la fresque chronologique consolideront vos lacunes.";
+  else if (pct >= 40) msg = "Pas mal ! Vous avez les grandes lignes. Relisez le texte C1 et la fresque pour affiner votre maîtrise de cette décennie charnière.";
+  else msg = "Courage ! Les années 70 regorgent d'événements passionnants. Commencez par le texte et la fresque, puis revenez relever le défi !";
+  document.getElementById('quiz-body').innerHTML = `
+    <div class="score-panel">
+      <div class="score-num">${score}/15</div>
+      <div class="score-label">${pct}% de bonnes réponses</div>
+      <div class="score-msg">${msg}</div>
+      <button class="restart-btn" onclick="restartQuiz()">↺ Recommencer</button>
+    </div>`;
+}
+
+function restartQuiz() {
+  current = 0; score = 0;
+  answered = new Array(questions.length).fill(false);
+  renderQuestion();
+}
+
+renderQuestion();
+</script>
