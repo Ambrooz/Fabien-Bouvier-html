@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zidane – Séance 2 : Le Village des Étoiles</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #0f1b2d;
+  --night-mid: #1a2d47;
+  --night-soft: #243651;
+  --star: #f7c948;
+  --star-light: #fff9e3;
+  --star-mid: #f0b830;
+  --coral: #e8604c;
+  --coral-light: #fdf0ee;
+  --mint: #3dbfa0;
+  --mint-light: #e8faf5;
+  --lavender: #7c6fcd;
+  --lavender-light: #f0eeff;
+  --sky: #4fa8d5;
+  --sky-light: #e8f4fb;
+  --ink: #1c2333;
+  --ink-soft: #3d4a60;
+  --muted: #6b7a99;
+  --white: #ffffff;
+  --bg: #f4f7ff;
+  --radius: 20px;
+  --shadow: 0 4px 24px rgba(15,27,45,0.12);
+  --shadow-sm: 0 2px 8px rgba(15,27,45,0.07);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  font-family: 'Nunito', sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  background: linear-gradient(160deg, #0f1b2d 0%, #1a2d47 50%, #0d2640 100%);
+  padding: 40px 24px 56px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.stars-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(247,201,72,0.8) 0%, transparent 100%),
+    radial-gradient(1px 1px at 80% 10%, rgba(247,201,72,0.6) 0%, transparent 100%),
+    radial-gradient(2px 2px at 50% 60%, rgba(255,255,255,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 10% 70%, rgba(247,201,72,0.7) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(2px 2px at 35% 15%, rgba(247,201,72,0.9) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 50%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 40%, rgba(247,201,72,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 85%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(2px 2px at 85% 35%, rgba(247,201,72,0.7) 0%, transparent 100%);
+}
+@keyframes twinkle {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+.stars-bg { animation: twinkle 4s ease-in-out infinite; }
+
+.seance-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(247,201,72,0.15);
+  color: var(--star);
+  border: 1px solid rgba(247,201,72,0.35);
+  border-radius: 40px;
+  padding: 7px 18px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 18px;
+  position: relative;
+}
+.seance-badge::before {
+  content: '';
+  width: 7px; height: 7px;
+  background: var(--star);
+  border-radius: 50%;
+  display: inline-block;
+  animation: twinkle 1.5s ease-in-out infinite;
+}
+.hero h1 {
+  font-size: clamp(1.7rem, 4.5vw, 2.6rem);
+  font-weight: 900;
+  color: #fff;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  position: relative;
+}
+.hero h1 em {
+  color: var(--star);
+  font-style: normal;
+  text-shadow: 0 0 20px rgba(247,201,72,0.5);
+}
+.hero-sub {
+  color: #8ab4d4;
+  font-size: 0.95rem;
+  max-width: 480px;
+  margin: 0 auto 6px;
+  line-height: 1.5;
+  position: relative;
+}
+.hero-icon { font-size: 3.5rem; display: block; margin-bottom: 14px; position: relative; }
+
+/* Rappel séance 1 */
+.recap-strip {
+  background: rgba(63,191,160,0.12);
+  border: 1px solid rgba(63,191,160,0.3);
+  border-radius: 14px;
+  padding: 10px 18px;
+  margin: 14px auto 0;
+  max-width: 480px;
+  font-size: 0.82rem;
+  color: #7de8cc;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ─── TABS ─── */
+.tabs-nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: -22px auto 28px;
+  position: relative;
+  z-index: 10;
+  padding: 0 16px;
+  max-width: 760px;
+}
+.tab-btn {
+  background: white;
+  border: none;
+  border-radius: 40px;
+  padding: 10px 18px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.87rem;
+  font-weight: 800;
+  color: var(--ink-soft);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(15,27,45,0.15); }
+.tab-btn.active { background: var(--night-mid); color: white; }
+
+/* ─── WRAP ─── */
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ─── SECTIONS ─── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── PROGRESS ─── */
+.progress-wrap {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px 22px;
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.progress-label { font-weight: 800; font-size: 0.88rem; color: var(--lavender); white-space: nowrap; }
+.progress-bar-bg {
+  flex: 1; height: 12px;
+  background: #e5e9f5;
+  border-radius: 10px; overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--lavender), var(--mint));
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.5s cubic-bezier(.4,0,.2,1);
+}
+.progress-score { font-weight: 900; font-size: 1rem; color: var(--lavender); min-width: 44px; text-align: right; }
+
+/* ─── STORY ─── */
+.story-wrap {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.story-header {
+  background: linear-gradient(90deg, var(--night), var(--night-mid));
+  color: white;
+  padding: 14px 22px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: flex; align-items: center; gap: 10px;
+}
+.story-body { padding: 20px 22px; }
+
+.sentence-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 13px 0;
+  border-bottom: 1px solid #f0f2f8;
+}
+.sentence-row:last-child { border-bottom: none; }
+.s-num {
+  background: var(--star-light);
+  color: var(--star-mid);
+  border: 2px solid var(--star-mid);
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 900; font-size: 0.78rem;
+  flex-shrink: 0; margin-top: 3px;
+}
+.s-content { flex: 1; }
+.s-text {
+  font-size: 1.12rem;
+  line-height: 1.65;
+  font-weight: 700;
+  color: var(--ink);
+}
+/* Highlighted complex sounds */
+.snd { background: #fff3c4; color: #7a5000; border-bottom: 2.5px solid var(--star-mid); padding: 0 2px; border-radius: 4px; font-weight: 900; }
+.snd-blue { background: #dff0fb; color: #1a5a80; border-bottom: 2.5px solid var(--sky); padding: 0 2px; border-radius: 4px; font-weight: 900; }
+.snd-mint { background: #d6f5ec; color: #1a6b55; border-bottom: 2.5px solid var(--mint); padding: 0 2px; border-radius: 4px; font-weight: 900; }
+.snd-lav  { background: #edeaff; color: #4a3a9e; border-bottom: 2.5px solid var(--lavender); padding: 0 2px; border-radius: 4px; font-weight: 900; }
+
+.ar-toggle {
+  background: none;
+  border: 1.5px solid #dde4f0;
+  border-radius: 30px;
+  padding: 5px 12px;
+  font-size: 0.77rem;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Nunito', sans-serif;
+  flex-shrink: 0; margin-top: 4px;
+  transition: all 0.15s;
+}
+.ar-toggle:hover { border-color: var(--star-mid); color: var(--star-mid); }
+.ar-popup {
+  display: none;
+  background: #fffdf0;
+  border: 1px solid #f0e0a0;
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin-top: 7px;
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.08rem;
+  direction: rtl;
+  color: #5a4000;
+  line-height: 1.7;
+}
+.ar-popup.show { display: block; }
+
+/* Sound legend */
+.sound-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 14px 20px;
+  background: #fafbff;
+  border-top: 1px solid #eef0f8;
+}
+.legend-item {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 0.8rem; font-weight: 700; color: var(--ink-soft);
+}
+.legend-dot {
+  width: 14px; height: 5px; border-radius: 3px;
+}
+
+/* ─── VOCAB ─── */
+.vocab-section {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 22px;
+}
+.section-header {
+  padding: 14px 22px;
+  font-weight: 800;
+  font-size: 0.95rem;
+  display: flex; align-items: center; gap: 10px;
+  color: white;
+}
+.hdr-night { background: linear-gradient(90deg, var(--night), var(--night-mid)); }
+.hdr-star  { background: linear-gradient(90deg, #b08010, var(--star-mid)); }
+.hdr-mint  { background: linear-gradient(90deg, #1a7a60, var(--mint)); }
+.hdr-coral { background: linear-gradient(90deg, #b03828, var(--coral)); }
+.hdr-lav   { background: linear-gradient(90deg, #5040a0, var(--lavender)); }
+.hdr-sky   { background: linear-gradient(90deg, #1a6090, var(--sky)); }
+
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+.vocab-card {
+  background: var(--bg);
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  cursor: default;
+}
+.vocab-card:hover { border-color: var(--star-mid); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(247,201,72,0.18); }
+.v-fr { font-size: 0.98rem; font-weight: 900; color: var(--ink); margin-bottom: 5px; }
+.v-sound {
+  font-size: 0.7rem; font-weight: 800;
+  border-radius: 20px; padding: 2px 8px;
+  display: inline-block; margin-bottom: 6px;
+}
+.sound-tag-y  { background: #fff3c4; color: #7a5000; }
+.sound-tag-b  { background: var(--sky-light); color: #1a5a80; }
+.sound-tag-m  { background: var(--mint-light); color: #1a6b55; }
+.sound-tag-l  { background: var(--lavender-light); color: #4a3a9e; }
+.v-ar {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.08rem; color: #1a5040;
+  direction: rtl; display: block;
+  background: var(--mint-light);
+  border-radius: 10px; padding: 4px 8px;
+}
+
+/* ─── EXERCISE ─── */
+.exercise-block {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 22px;
+  overflow: hidden;
+}
+.ex-tip {
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 20px;
+  font-size: 0.85rem; color: var(--night-mid);
+  background: var(--sky-light);
+  border-left: 4px solid var(--sky);
+  margin: 0 18px 16px;
+  border-radius: 0 10px 10px 0;
+}
+.ex-tip-ar {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 0.88rem; direction: rtl; color: #1a5040;
+  margin-top: 3px; display: block;
+}
+
+.q-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0f2f8;
+}
+.q-item:last-child { border-bottom: none; }
+.q-label {
+  font-size: 1rem; font-weight: 700; color: var(--ink);
+  margin-bottom: 8px; display: flex; align-items: flex-start; gap: 8px; line-height: 1.55;
+}
+.qn {
+  background: var(--star-light); color: var(--star-mid);
+  border: 2px solid var(--star-mid);
+  border-radius: 50%; width: 26px; height: 26px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 0.78rem; font-weight: 900; flex-shrink: 0;
+}
+.q-ar-hint {
+  font-family: 'Noto Naskh Arabic', serif;
+  direction: rtl; font-size: 0.87rem; color: var(--muted);
+  margin-bottom: 8px; padding: 6px 12px;
+  background: var(--star-light); border-radius: 10px; display: block;
+}
+
+.q-input {
+  width: 100%; padding: 11px 16px;
+  font-size: 1rem; font-family: 'Nunito', sans-serif;
+  border: 2px solid #dde3ee; border-radius: 12px;
+  background: #fafbfd; color: var(--ink);
+  transition: all 0.15s; margin-bottom: 10px;
+}
+.q-input:focus {
+  border-color: var(--lavender);
+  background: white; outline: none;
+  box-shadow: 0 0 0 3px rgba(124,111,205,0.15);
+}
+.q-textarea {
+  width: 100%; padding: 11px 16px;
+  font-size: 1rem; font-family: 'Nunito', sans-serif;
+  border: 2px solid #dde3ee; border-radius: 12px;
+  background: #fafbfd; color: var(--ink);
+  transition: all 0.15s; resize: vertical; min-height: 85px;
+  margin-bottom: 10px;
+}
+.q-textarea:focus {
+  border-color: var(--lavender); background: white; outline: none;
+  box-shadow: 0 0 0 3px rgba(124,111,205,0.15);
+}
+
+.btn-check {
+  background: var(--night-mid); color: white;
+  border: none; border-radius: 10px;
+  padding: 9px 18px;
+  font-family: 'Nunito', sans-serif; font-size: 0.87rem; font-weight: 800;
+  cursor: pointer; transition: all 0.15s;
+}
+.btn-check:hover { background: var(--night); transform: translateY(-1px); }
+.btn-reveal {
+  background: var(--bg); color: var(--ink-soft);
+  border: 1.5px solid #dde3ee; border-radius: 10px;
+  padding: 9px 18px;
+  font-family: 'Nunito', sans-serif; font-size: 0.87rem; font-weight: 800;
+  cursor: pointer; margin-left: 8px; transition: all 0.15s;
+}
+.btn-reveal:hover { background: #e8eaf5; }
+
+.feedback-box {
+  border-radius: 12px; padding: 11px 16px;
+  margin-top: 10px; font-size: 0.92rem; font-weight: 700;
+  display: none; line-height: 1.5;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct  { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+.feedback-box.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+.feedback-box.neutral  { background: var(--sky-light); color: #1a4a6b; border-left: 4px solid var(--sky); }
+
+/* VF */
+.vf-options { display: flex; gap: 10px; margin: 10px 0; }
+.vf-btn {
+  flex: 1; padding: 12px; border-radius: 12px;
+  border: 2px solid #dde3ee; background: #fafbfd;
+  font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800;
+  cursor: pointer; transition: all 0.15s; color: var(--ink-soft);
+}
+.vf-btn:hover { border-color: var(--lavender); color: var(--lavender); background: var(--lavender-light); }
+.vf-btn.sel-v { background: #d1fae5; border-color: #10b981; color: #065f46; }
+.vf-btn.sel-f { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+/* ─── SONS COMPLEXES ─── */
+.sound-card {
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin: 0 18px 14px;
+}
+.sc-night { background: var(--night); border: 2px solid var(--night-mid); }
+.sc-star  { background: var(--star-light); border: 2px solid #e8c040; }
+.sc-mint  { background: var(--mint-light); border: 2px solid #50c8a8; }
+.sc-lav   { background: var(--lavender-light); border: 2px solid #9080d8; }
+
+.sound-card-title {
+  font-weight: 900; font-size: 1.05rem; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sc-night .sound-card-title { color: white; }
+.sc-star  .sound-card-title { color: #7a5000; }
+.sc-mint  .sound-card-title { color: #1a6b55; }
+.sc-lav   .sound-card-title { color: #4a3a9e; }
+
+.sound-examples { display: flex; flex-wrap: wrap; gap: 8px; }
+.sound-ex {
+  background: white;
+  border-radius: 30px; padding: 6px 14px;
+  font-weight: 800; font-size: 0.93rem; color: var(--ink);
+  border: 1.5px solid rgba(0,0,0,0.1);
+}
+.sound-ex b { color: var(--coral); }
+.sc-night .sound-ex { background: rgba(255,255,255,0.12); color: white; border-color: rgba(255,255,255,0.2); }
+.sc-night .sound-ex b { color: var(--star); }
+
+.sc-note {
+  margin-top: 10px; font-size: 0.83rem; line-height: 1.55;
+}
+.sc-night .sc-note { color: #8ab4d4; }
+.sc-star  .sc-note { color: #7a5000; }
+.sc-mint  .sc-note { color: #1a6b55; }
+.sc-lav   .sc-note { color: #4a3a9e; }
+
+.sc-note-ar {
+  font-family: 'Noto Naskh Arabic', serif;
+  direction: rtl; display: block; margin-top: 4px; font-size: 0.88rem;
+}
+
+/* ─── FLASH ─── */
+.flash-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 10px;
+  padding: 18px;
+}
+.flash-word {
+  background: linear-gradient(135deg, var(--night-soft), var(--night));
+  border: 2px solid rgba(247,201,72,0.3);
+  border-radius: 14px; padding: 14px 10px;
+  font-size: 1rem; font-weight: 900; color: #8ab4d4;
+  cursor: pointer; transition: all 0.2s;
+  text-align: center; user-select: none;
+  line-height: 1.3;
+}
+.flash-word .fw-ar {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 0.88rem; direction: rtl; color: rgba(255,255,255,0.4);
+  display: block; margin-top: 4px;
+}
+.flash-word:hover { border-color: var(--star-mid); color: var(--star); transform: translateY(-2px); }
+.flash-word.revealed {
+  background: linear-gradient(135deg, #1a6b55, #0d4035);
+  border-color: var(--mint);
+  color: white;
+}
+.flash-word.revealed .fw-ar { color: rgba(255,255,255,0.7); }
+
+/* ─── DICTEE ─── */
+.word-bank {
+  display: flex; flex-wrap: wrap; gap: 8px;
+  margin-bottom: 14px;
+}
+.word-chip {
+  background: var(--night-soft); color: white;
+  border-radius: 30px; padding: 7px 16px;
+  font-weight: 800; font-size: 0.92rem;
+  user-select: none; cursor: default;
+}
+.word-chip.used { background: #b0b8cc; text-decoration: line-through; }
+
+/* ─── MATCHING ─── */
+.match-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 18px 18px;
+}
+.match-col { display: flex; flex-direction: column; gap: 8px; }
+.match-fr {
+  background: var(--night-soft); color: white;
+  border-radius: 12px; padding: 11px 14px;
+  font-weight: 800; font-size: 0.95rem;
+  display: flex; align-items: center; gap: 8px;
+}
+.match-num {
+  background: var(--star); color: var(--night);
+  width: 22px; height: 22px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 900; flex-shrink: 0;
+}
+.match-ar {
+  background: var(--mint-light); color: #1a5040;
+  border-radius: 12px; padding: 11px 14px;
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1rem; direction: rtl; font-weight: 700;
+  display: flex; align-items: center; justify-content: flex-end; gap: 8px;
+  border: 2px solid transparent; cursor: pointer; transition: all 0.15s;
+}
+.match-ar:hover { border-color: var(--mint); }
+.match-ar.selected { border-color: var(--night); background: var(--sky-light); }
+.match-ar.correct-match { background: #d1fae5; border-color: #10b981; }
+.match-ar.wrong-match { background: #fee2e2; border-color: #ef4444; }
+
+/* Score stars */
+.stars-score {
+  text-align: center;
+  padding: 16px;
+  font-size: 2rem;
+  letter-spacing: 4px;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center; padding: 28px 20px;
+  color: var(--muted); font-size: 0.85rem; margin-top: 10px;
+}
+.footer strong { color: var(--night-mid); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 520px) {
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+  .s-text { font-size: 1rem; }
+  .match-grid { grid-template-columns: 1fr; }
+  .flash-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="stars-bg"></div>
+  <span class="hero-icon">🌟🏘️✨</span>
+  <div class="seance-badge">Séance 2 – Suite de l'aventure</div>
+  <h1>Zidane découvre<br>le <em>Village des Étoiles</em></h1>
+  <p class="hero-sub" style="position:relative">Nouveaux sons · Vocabulaire · Compréhension · Exercices</p>
+  <div class="recap-strip">
+    <span>📖</span>
+    <span>Séance 1 : forêt magique · grenouille · sons <strong>gn / ille / aille / œu / ç</strong></span>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('histoire',this)">📖 Histoire</button>
+  <button class="tab-btn" onclick="showTab('sons',this)">🔊 Nouveaux sons</button>
+  <button class="tab-btn" onclick="showTab('vocab',this)">📚 Vocabulaire</button>
+  <button class="tab-btn" onclick="showTab('exercices',this)">✏️ Exercices</button>
+  <button class="tab-btn" onclick="showTab('flash',this)">⚡ Flash</button>
+</div>
+
+<div class="wrap">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <span class="progress-label">🏆 Progression</span>
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="pfill"></div></div>
+    <span class="progress-score" id="pscore">0 / 0</span>
+  </div>
+
+  <!-- ══════════════════ HISTOIRE ══════════════════ -->
+  <div class="section active" id="sec-histoire">
+    <div class="story-wrap">
+      <div class="story-header">
+        📖 Lis chaque phrase. Les sons soulignés sont les <strong>nouveaux sons</strong> de cette séance.
+      </div>
+      <div class="story-body">
+
+        <div class="sentence-row">
+          <div class="s-num">1</div>
+          <div class="s-content">
+            <div class="s-text">🌟 Le l<span class="snd">en</span>dem<span class="snd">ain</span>, Zid<span class="snd">an</span>e se réveille dans un <span class="snd-mint">ch</span>amp doré. Il voit un village au loin.</div>
+            <div class="ar-popup" id="ar1">في اليوم التالي، يصحو زيدان في حقلٍ ذهبي. يرى قريةً في البُعد.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar1',this)">🇸🇦 عربي</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">2</div>
+          <div class="s-content">
+            <div class="s-text">🏘️ Il <span class="snd-lav">ch</span>emine vers le village. Sur le <span class="snd">ch</span>emin, un <span class="snd-blue">éléph</span><span class="snd-blue">ant</span> rose lui sourit.</div>
+            <div class="ar-popup" id="ar2">يسير نحو القرية. على الطريق، يبتسم له فيلٌ ورديّ.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar2',this)">🇸🇦 عربي</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">3</div>
+          <div class="s-content">
+            <div class="s-text">🐘 « B<span class="snd-blue">on</span>j<span class="snd">our</span> ! Je m'appelle Sim<span class="snd-blue">on</span>. Je suis le gard<span class="snd-blue">i</span><span class="snd-blue">en</span> du village », dit l'éléphan<span class="snd">t</span>.</div>
+            <div class="ar-popup" id="ar3">«صباح الخير! اسمي سيمون. أنا حارس القرية»، يقول الفيل.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar3',this)">🇸🇦 عربي</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">4</div>
+          <div class="s-content">
+            <div class="s-text">🌈 Zidane entre dans le village. Les mais<span class="snd-mint">on</span>s s<span class="snd">ont</span> peintes en toutes les couleurs. C'est magnifique !</div>
+            <div class="ar-popup" id="ar4">يدخل زيدان القرية. البيوت مطلية بكل الألوان. إنها رائعة!</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar4',this)">🇸🇦 عربي</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">5</div>
+          <div class="s-content">
+            <div class="s-text">🦁 Un li<span class="snd-lav">on</span> bl<span class="snd">anc</span> apporte un <span class="snd-mint">ch</span>apeau et un l<span class="snd-blue">iv</span>re à Zidane. « Ces cadeaux s<span class="snd">ont</span> pour toi ! »</div>
+            <div class="ar-popup" id="ar5">يُحضر أسدٌ أبيض قبعةً وكتاباً لزيدان. «هذه الهدايا لك!»</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar5',this)">🇸🇦 عربي</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">6</div>
+          <div class="s-content">
+            <div class="s-text">📖 Zidane ouvre le livre. Il est plein de mots et de <span class="snd-mint">ph</span>otos superbes. Ch<span class="snd">aque</span> page r<span class="snd-blue">ac</span>onte une hist<span class="snd">oire</span>.</div>
+            <div class="ar-popup" id="ar6">يفتح زيدان الكتاب. إنه مليءٌ بالكلمات والصور الرائعة. كل صفحة تحكي قصة.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar6',this)">🇸🇦 عربي</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">7</div>
+          <div class="s-content">
+            <div class="s-text">✨ « Lis ch<span class="snd">aque</span> jour et tu dev<span class="snd-blue">i</span><span class="snd-blue">end</span>ras très fort ! » dit Sim<span class="snd-blue">on</span>. Zidane sourit et dit <span class="snd">merci</span>.</div>
+            <div class="ar-popup" id="ar7">«اقرأ كل يوم وستصبح قوياً جداً!» يقول سيمون. يبتسم زيدان ويقول شكراً.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar7',this)">🇸🇦 عربي</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">8</div>
+          <div class="s-content">
+            <div class="s-text">🌙 Le soir, Zidane reg<span class="snd-mint">ard</span>e les étoiles. Il p<span class="snd-lav">ens</span>e : « Dem<span class="snd">ain</span>, je lirai <span class="snd">enc</span>ore. Je suis cap<span class="snd">able</span> ! »</div>
+            <div class="ar-popup" id="ar8">في المساء، ينظر زيدان إلى النجوم. يفكر: «غداً، سأقرأ مجدداً. أنا قادر!»</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar8',this)">🇸🇦 عربي</button>
+        </div>
+
+      </div>
+      <!-- Legend -->
+      <div class="sound-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#f7c948"></div> an/en/am/em</div>
+        <div class="legend-dot" style="background:#4fa8d5; width:14px; height:5px; border-radius:3px;"></div>
+        <div class="legend-item"><div class="legend-dot" style="background:#4fa8d5"></div> on/om/ien</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#3dbfa0"></div> ch</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#7c6fcd"></div> ph</div>
+      </div>
+    </div>
+
+    <!-- Conseil lecture -->
+    <div class="exercise-block">
+      <div class="section-header hdr-night">💡 Conseils pour cette séance – نصائح لهذه الجلسة</div>
+      <div style="padding: 16px 20px; display:flex; flex-direction:column; gap:12px;">
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:1.3rem">🎨</span>
+          <div>
+            <div style="font-weight:800; color:var(--night-mid)">Regarde la couleur des sons soulignés : chaque couleur = un son</div>
+            <div style="font-family:'Noto Naskh Arabic'; direction:rtl; font-size:0.9rem; color:#1a5040; margin-top:3px;">انظر لألوان الأصوات المُسطَّرة: كل لون = صوت مختلف</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:1.3rem">🔁</span>
+          <div>
+            <div style="font-weight:800; color:var(--night-mid)">Si tu bloques sur un son, va d'abord dans l'onglet « Nouveaux sons »</div>
+            <div style="font-family:'Noto Naskh Arabic'; direction:rtl; font-size:0.9rem; color:#1a5040; margin-top:3px;">إذا صعُب عليك صوتٌ ما، اذهب أولاً إلى قسم «الأصوات الجديدة»</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:1.3rem">✅</span>
+          <div>
+            <div style="font-weight:800; color:var(--night-mid)">Rappel séance 1 : tu connais déjà gn, ille, aille, œu, ç. Bravo !</div>
+            <div style="font-family:'Noto Naskh Arabic'; direction:rtl; font-size:0.9rem; color:#1a5040; margin-top:3px;">تذكّر من الجلسة الأولى: تعرف الأصوات gn ، ille ، aille ، œu ، ç. رائع!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ NOUVEAUX SONS ══════════════════ -->
+  <div class="section" id="sec-sons">
+    <div class="exercise-block">
+      <div class="section-header hdr-night">🔊 Les nouveaux sons de la séance 2 – الأصوات الجديدة</div>
+      <div style="height:16px"></div>
+
+      <!-- Son 1 : an/en/am/em -->
+      <div class="sound-card sc-star">
+        <div class="sound-card-title">🌟 Son [ɑ̃] → an / en / am / em</div>
+        <div class="sound-examples">
+          <div class="sound-ex"><b>an</b>s</div>
+          <div class="sound-ex">l<b>en</b>demain</div>
+          <div class="sound-ex">Zid<b>an</b>e</div>
+          <div class="sound-ex">bl<b>an</b>c</div>
+          <div class="sound-ex">enc<b>ore</b></div>
+          <div class="sound-ex">t<b>em</b>ps</div>
+          <div class="sound-ex">ch<b>am</b>p</div>
+        </div>
+        <div class="sc-note">
+          ➜ « an », « en », « am », « em » = toujours le même son nasal [ɑ̃]<br>
+          <span class="sc-note-ar">«an» و«en» و«am» و«em» = نفس الصوت الأنفي دائماً، مثل «أان» بدون نطق النون بوضوح</span>
+        </div>
+      </div>
+
+      <!-- Son 2 : on/om -->
+      <div class="sound-card sc-night">
+        <div class="sound-card-title">🌙 Son [ɔ̃] → on / om</div>
+        <div class="sound-examples">
+          <div class="sound-ex">bienf<b>on</b>d</div>
+          <div class="sound-ex">mais<b>on</b></div>
+          <div class="sound-ex">Si<b>m</b><b>on</b></div>
+          <div class="sound-ex">s<b>on</b>t</div>
+          <div class="sound-ex">li<b>on</b></div>
+          <div class="sound-ex">c<b>om</b>pter</div>
+        </div>
+        <div class="sc-note">
+          ➜ « on » et « om » = son nasal [ɔ̃], comme un « o » tenu dans le nez<br>
+          <span class="sc-note-ar">«on» و«om» = صوت أنفي مثل «أون» بدون نطق النون بوضوح</span>
+        </div>
+      </div>
+
+      <!-- Son 3 : in/ain/ein -->
+      <div class="sound-card sc-lav">
+        <div class="sound-card-title">💜 Son [ɛ̃] → in / ain / ein / ien</div>
+        <div class="sound-examples">
+          <div class="sound-ex">dem<b>ain</b></div>
+          <div class="sound-ex">gard<b>ien</b></div>
+          <div class="sound-ex">b<b>ien</b></div>
+          <div class="sound-ex">ch<b>em</b><b>in</b></div>
+          <div class="sound-ex">s<b>ain</b>t</div>
+          <div class="sound-ex">p<b>ein</b>t</div>
+        </div>
+        <div class="sc-note">
+          ➜ « in », « ain », « ein », « ien » = même son nasal [ɛ̃]. Très courant en français !<br>
+          <span class="sc-note-ar">«in» و«ain» و«ein» و«ien» = نفس الصوت الأنفي [ɛ̃]. شائعٌ جداً في الفرنسية!</span>
+        </div>
+      </div>
+
+      <!-- Son 4 : ch -->
+      <div class="sound-card sc-mint">
+        <div class="sound-card-title">🍃 Son [ʃ] → ch (= « ch » arabe : ش)</div>
+        <div class="sound-examples">
+          <div class="sound-ex"><b>ch</b>emin</div>
+          <div class="sound-ex"><b>ch</b>apeau</div>
+          <div class="sound-ex"><b>ch</b>aque</div>
+          <div class="sound-ex"><b>ch</b>amp</div>
+          <div class="sound-ex">mar<b>ch</b>er</div>
+          <div class="sound-ex"><b>ch</b>at</div>
+        </div>
+        <div class="sc-note">
+          ➜ « ch » = toujours [ʃ], comme « ش » en arabe. Jamais [k] sauf dans des mots d'origine grecque.<br>
+          <span class="sc-note-ar">«ch» = دائماً مثل «ش» في العربية. لا تُنطق «ك» إلا في كلمات يونانية الأصل نادرة.</span>
+        </div>
+      </div>
+
+      <!-- Son 5 : ph -->
+      <div class="sound-card sc-star">
+        <div class="sound-card-title">📸 Son [f] → ph (= son « f »)</div>
+        <div class="sound-examples">
+          <div class="sound-ex"><b>ph</b>oto</div>
+          <div class="sound-ex">élé<b>ph</b>ant</div>
+          <div class="sound-ex"><b>ph</b>one</div>
+          <div class="sound-ex">al<b>ph</b>abet</div>
+          <div class="sound-ex"><b>ph</b>rase</div>
+        </div>
+        <div class="sc-note">
+          ➜ « ph » = son [f], exactement comme la lettre « f ». Un seul son, deux lettres !<br>
+          <span class="sc-note-ar">«ph» = صوت [f] تماماً مثل حرف «f». صوتٌ واحد وحرفان!</span>
+        </div>
+      </div>
+
+      <!-- Petit exercice sons -->
+      <div style="padding: 0 18px 18px;">
+        <div style="background: var(--night); border-radius:16px; padding:18px 20px; margin-bottom:0;">
+          <div style="font-weight:900; color:var(--star); font-size:1rem; margin-bottom:12px;">🎯 Mini-test : Quel son est dans ce mot ?</div>
+          <div class="q-item" style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+            <div class="q-label" style="color:white; margin-bottom:8px;">
+              <span style="background:var(--star); color:var(--night); border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:900; flex-shrink:0;">1</span>
+              <span>Le mot <strong style="color:var(--star)">« maison »</strong> contient quel son nasal ?</span>
+            </div>
+            <input class="q-input" id="ms1" placeholder="an / on / in ?">
+            <button class="btn-check" onclick="checkAnswer('ms1','fb-ms1','on','✅ Exact ! mais<strong>on</strong> → son [ɔ̃] comme dans lion, Simon.')">✓</button>
+            <button class="btn-reveal" onclick="reveal('fb-ms1','<strong>on</strong> → le son [ɔ̃] nasal')">Voir</button>
+            <div class="feedback-box" id="fb-ms1"></div>
+          </div>
+          <div class="q-item" style="padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.1);">
+            <div class="q-label" style="color:white; margin-bottom:8px;">
+              <span style="background:var(--star); color:var(--night); border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:900; flex-shrink:0;">2</span>
+              <span>Le mot <strong style="color:var(--star)">« demain »</strong> contient quel son nasal ?</span>
+            </div>
+            <input class="q-input" id="ms2" placeholder="an / on / in ?">
+            <button class="btn-check" onclick="checkAnswer('ms2','fb-ms2','in','✅ Bravo ! dem<strong>ain</strong> → son [ɛ̃] comme dans chemin, bien.')">✓</button>
+            <button class="btn-reveal" onclick="reveal('fb-ms2','<strong>in/ain</strong> → le son [ɛ̃] nasal')">Voir</button>
+            <div class="feedback-box" id="fb-ms2"></div>
+          </div>
+          <div class="q-item" style="padding:10px 0;">
+            <div class="q-label" style="color:white; margin-bottom:8px;">
+              <span style="background:var(--star); color:var(--night); border-radius:50%; width:24px; height:24px; display:inline-flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:900; flex-shrink:0;">3</span>
+              <span>Le mot <strong style="color:var(--star)">« éléphant »</strong> → « ph » se prononce comme quelle lettre ?</span>
+            </div>
+            <input class="q-input" id="ms3" placeholder="p ou f ?">
+            <button class="btn-check" onclick="checkAnswer('ms3','fb-ms3','f','✅ Parfait ! «ph» = son [f]. élé<strong>f</strong>ant !')">✓</button>
+            <button class="btn-reveal" onclick="reveal('fb-ms3','«ph» = <strong>f</strong>. Toujours !')">Voir</button>
+            <div class="feedback-box" id="fb-ms3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ VOCABULAIRE ══════════════════ -->
+  <div class="section" id="sec-vocab">
+    <div class="vocab-section">
+      <div class="section-header hdr-night">📚 Nouveaux mots de la séance 2 – الكلمات الجديدة</div>
+      <div class="vocab-grid">
+        <div class="vocab-card">
+          <div class="v-fr">le lendemain</div>
+          <div class="v-sound sound-tag-y">son : en [ɑ̃]</div>
+          <span class="v-ar">اليوم التالي</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">le chemin</div>
+          <div class="v-sound sound-tag-m">son : ch [ʃ]</div>
+          <span class="v-ar">الطريق</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">le chapeau</div>
+          <div class="v-sound sound-tag-m">son : ch [ʃ]</div>
+          <span class="v-ar">القبعة</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">la maison</div>
+          <div class="v-sound sound-tag-b">son : on [ɔ̃]</div>
+          <span class="v-ar">البيت</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">l'éléphant</div>
+          <div class="v-sound sound-tag-l">ph = [f]</div>
+          <span class="v-ar">الفيل</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">la photo</div>
+          <div class="v-sound sound-tag-l">ph = [f]</div>
+          <span class="v-ar">الصورة</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">le gardien</div>
+          <div class="v-sound sound-tag-b">son : ien [jɛ̃]</div>
+          <span class="v-ar">الحارس</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">blanc / blanche</div>
+          <div class="v-sound sound-tag-y">son : an [ɑ̃]</div>
+          <span class="v-ar">أبيض / بيضاء</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">chaque</div>
+          <div class="v-sound sound-tag-m">son : ch [ʃ]</div>
+          <span class="v-ar">كل / كل واحد</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">capable</div>
+          <div class="v-sound sound-tag-y">mot irrégulier</div>
+          <span class="v-ar">قادر</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">demain</div>
+          <div class="v-sound sound-tag-l">son : ain [ɛ̃]</div>
+          <span class="v-ar">غداً</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">encore</div>
+          <div class="v-sound sound-tag-y">son : en [ɑ̃]</div>
+          <span class="v-ar">مجدداً / لا يزال</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Matching game -->
+    <div class="exercise-block">
+      <div class="section-header hdr-mint">🎮 Jeu : Associe le mot à sa traduction arabe</div>
+      <div style="padding:14px 18px 6px; font-size:0.85rem; color:var(--muted);">
+        Clique sur un mot français, puis sur sa traduction arabe.
+        <span style="font-family:'Noto Naskh Arabic'; direction:rtl; display:block; margin-top:3px; color:#1a5040;">انقر على كلمة فرنسية ثم على ترجمتها العربية.</span>
+      </div>
+      <div class="match-grid">
+        <div class="match-col" id="fr-col">
+          <div class="match-fr" data-id="1"><div class="match-num">1</div>le chemin</div>
+          <div class="match-fr" data-id="2"><div class="match-num">2</div>demain</div>
+          <div class="match-fr" data-id="3"><div class="match-num">3</div>la maison</div>
+          <div class="match-fr" data-id="4"><div class="match-num">4</div>chaque</div>
+          <div class="match-fr" data-id="5"><div class="match-num">5</div>capable</div>
+        </div>
+        <div class="match-col" id="ar-col">
+          <div class="match-ar" data-id="3" onclick="matchSelect(this)">البيت</div>
+          <div class="match-ar" data-id="5" onclick="matchSelect(this)">قادر</div>
+          <div class="match-ar" data-id="1" onclick="matchSelect(this)">الطريق</div>
+          <div class="match-ar" data-id="4" onclick="matchSelect(this)">كل / كل واحد</div>
+          <div class="match-ar" data-id="2" onclick="matchSelect(this)">غداً</div>
+        </div>
+      </div>
+      <div style="text-align:center; padding:0 18px 16px;">
+        <button class="btn-check" onclick="checkMatching()">✓ Vérifier les associations</button>
+        <div class="feedback-box" id="fb-match" style="margin-top:12px; text-align:left;"></div>
+        <div class="stars-score" id="match-stars" style="display:none"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════ EXERCICES ══════════════════ -->
+  <div class="section" id="sec-exercices">
+
+    <!-- Ex 1 : Compléter -->
+    <div class="exercise-block">
+      <div class="section-header hdr-lav" style="background: linear-gradient(90deg, #5040a0, var(--lavender));">
+        <span>✏️</span> Exercice 1 – Complète les phrases
+      </div>
+      <div class="ex-tip">
+        <span>💡</span>
+        <span>Les réponses sont dans l'histoire. Relis si tu ne sais pas !<br>
+        <span class="ex-tip-ar">الإجابات موجودة في القصة. أعد القراءة إذا لم تتذكر!</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">1</span><span>Zidane se réveille dans un ________ doré.</span></div>
+        <span class="q-ar-hint">يصحو زيدان في ________ ذهبي.</span>
+        <input class="q-input" id="e1q1" placeholder="Quel endroit dehors ?">
+        <button class="btn-check" onclick="checkAnswer('e1q1','fb-e1q1','champ','🌾 Exact ! <strong>champ</strong> = حقل. «ch» = son [ʃ] !')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-e1q1','<strong>champ</strong> (حقل) – «ch» fait le son [ʃ]')">Voir réponse</button>
+        <div class="feedback-box" id="fb-e1q1"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">2</span><span>Le gardien du village s'appelle ________.</span></div>
+        <span class="q-ar-hint">اسم حارس القرية هو ________.</span>
+        <input class="q-input" id="e1q2" placeholder="Un prénom ...">
+        <button class="btn-check" onclick="checkAnswer('e1q2','fb-e1q2','simon','🐘 Bravo ! C\'est <strong>Simon</strong>. «on» = son [ɔ̃] !')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-e1q2','<strong>Simon</strong> – son «on» = [ɔ̃]')">Voir réponse</button>
+        <div class="feedback-box" id="fb-e1q2"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">3</span><span>Le lion blanc apporte un chapeau et un ________ à Zidane.</span></div>
+        <span class="q-ar-hint">يُحضر الأسد قبعةً و ________ لزيدان.</span>
+        <input class="q-input" id="e1q3" placeholder="Quel objet de lecture ?">
+        <button class="btn-check" onclick="checkAnswer('e1q3','fb-e1q3','livre','📖 Super ! <strong>livre</strong> = كتاب')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-e1q3','<strong>livre</strong> (كتاب)')">Voir réponse</button>
+        <div class="feedback-box" id="fb-e1q3"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">4</span><span>Les maisons du village sont peintes en toutes les ________.</span></div>
+        <span class="q-ar-hint">البيوت مطلية بكل الـ ________.</span>
+        <input class="q-input" id="e1q4" placeholder="De quoi a l'arc-en-ciel ?">
+        <button class="btn-check" onclick="checkAnswer('e1q4','fb-e1q4','couleurs','🌈 Parfait ! <strong>couleurs</strong> = ألوان')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-e1q4','<strong>couleurs</strong> (ألوان)')">Voir réponse</button>
+        <div class="feedback-box" id="fb-e1q4"></div>
+      </div>
+
+    </div>
+
+    <!-- Ex 2 : Vrai / Faux -->
+    <div class="exercise-block">
+      <div class="section-header hdr-coral" style="background:linear-gradient(90deg,#b03828,var(--coral));">
+        <span>🧠</span> Exercice 2 – Vrai ou Faux ?
+      </div>
+      <div class="ex-tip">
+        <span>🔎</span>
+        <span>Cherche bien dans l'histoire avant de répondre.<br>
+        <span class="ex-tip-ar">ابحث جيداً في القصة قبل الإجابة.</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">1</span><span>L'éléphant rencontré par Zidane est de couleur bleue.</span></div>
+        <div class="vf-options">
+          <button class="vf-btn" onclick="selVF(this,'vf21','vrai')">✅ Vrai</button>
+          <button class="vf-btn" onclick="selVF(this,'vf21','faux')">❌ Faux</button>
+        </div>
+        <button class="btn-check" onclick="checkVF2('vf21','faux','fb-vf21','❌ FAUX ! L\'éléphant est <strong>rose</strong>, pas bleu.')">✓ Vérifier</button>
+        <div class="feedback-box" id="fb-vf21"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">2</span><span>Simon est le gardien du village.</span></div>
+        <div class="vf-options">
+          <button class="vf-btn" onclick="selVF(this,'vf22','vrai')">✅ Vrai</button>
+          <button class="vf-btn" onclick="selVF(this,'vf22','faux')">❌ Faux</button>
+        </div>
+        <button class="btn-check" onclick="checkVF2('vf22','vrai','fb-vf22','✅ VRAI ! Simon dit bien : « Je suis le gardien du village ».')">✓ Vérifier</button>
+        <div class="feedback-box" id="fb-vf22"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">3</span><span>À la fin, Zidane dit qu'il ne lira plus jamais.</span></div>
+        <div class="vf-options">
+          <button class="vf-btn" onclick="selVF(this,'vf23','vrai')">✅ Vrai</button>
+          <button class="vf-btn" onclick="selVF(this,'vf23','faux')">❌ Faux</button>
+        </div>
+        <button class="btn-check" onclick="checkVF2('vf23','faux','fb-vf23','❌ FAUX ! Zidane dit : « Demain, je lirai encore. Je suis capable ! » 💪')">✓ Vérifier</button>
+        <div class="feedback-box" id="fb-vf23"></div>
+      </div>
+
+    </div>
+
+    <!-- Ex 3 : Sons nasaux -->
+    <div class="exercise-block">
+      <div class="section-header hdr-star">
+        <span>🔊</span> Exercice 3 – Classe les sons nasaux
+      </div>
+      <div class="ex-tip">
+        <span>👂</span>
+        <span>Lis le mot à voix haute. Écris s'il fait le son <strong>[ɑ̃]</strong> (an/en), <strong>[ɔ̃]</strong> (on), ou <strong>[ɛ̃]</strong> (in/ain).<br>
+        <span class="ex-tip-ar">اقرأ الكلمة بصوت عالٍ. اكتب إذا كانت تحتوي على صوت (an) أو (on) أو (in).</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">1</span><span>Le mot <strong>« champion »</strong> → combien de sons nasaux ? Lesquels ?</span></div>
+        <input class="q-input" id="sn1" placeholder="Ex : an + on">
+        <button class="btn-check" onclick="checkNasal('sn1','fb-sn1','an + on','champ<strong>i</strong><strong>on</strong> : champ = [ɑ̃] et -ion = [ɔ̃]. Deux sons nasaux !')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-sn1','<strong>an + on</strong> : ch<strong>am</strong>pion → [ɑ̃] et champi<strong>on</strong> → [ɔ̃]')">Voir</button>
+        <div class="feedback-box" id="fb-sn1"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">2</span><span>Le mot <strong>« lendemain »</strong> → quels sons nasaux ?</span></div>
+        <input class="q-input" id="sn2" placeholder="Ex : en + ain">
+        <button class="btn-check" onclick="checkNasal('sn2','fb-sn2','en + ain','<strong>l-en-de-m-ain</strong> : «en» → [ɑ̃] et «ain» → [ɛ̃]. Deux sons nasaux !')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-sn2','<strong>en + ain</strong> : l<strong>en</strong>dem<strong>ain</strong>')">Voir</button>
+        <div class="feedback-box" id="fb-sn2"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">3</span><span>Le mot <strong>« maison »</strong> → quel son nasal ?</span></div>
+        <input class="q-input" id="sn3" placeholder="an, on ou in ?">
+        <button class="btn-check" onclick="checkAnswer('sn3','fb-sn3','on','🏠 Exact ! mais<strong>on</strong> → son [ɔ̃]')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-sn3','<strong>on</strong> : mais<strong>on</strong> → [ɔ̃]')">Voir</button>
+        <div class="feedback-box" id="fb-sn3"></div>
+      </div>
+
+    </div>
+
+    <!-- Ex 4 : Orthographe ch/ph -->
+    <div class="exercise-block">
+      <div class="section-header hdr-mint">
+        <span>✍️</span> Exercice 4 – ch ou ph ? Complète le mot
+      </div>
+      <div class="ex-tip">
+        <span>💡</span>
+        <span>Rappel : <strong>ch = [ʃ]</strong> (comme ش) · <strong>ph = [f]</strong> (comme f)<br>
+        <span class="ex-tip-ar">تذكّر: ch = [ش] · ph = [f]</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">1</span><span>L'élé___ant est rose. (<em>ch</em> ou <em>ph</em> ?)</span></div>
+        <input class="q-input" id="cp1" placeholder="ch ou ph ?">
+        <button class="btn-check" onclick="checkAnswer('cp1','fb-cp1','ph','✅ Élé<strong>ph</strong>ant ! «ph» = son [f]')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-cp1','<strong>ph</strong> → élé<strong>ph</strong>ant (son [f])')">Voir</button>
+        <div class="feedback-box" id="fb-cp1"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">2</span><span>Zidane marche sur le ___emin. (<em>ch</em> ou <em>ph</em> ?)</span></div>
+        <input class="q-input" id="cp2" placeholder="ch ou ph ?">
+        <button class="btn-check" onclick="checkAnswer('cp2','fb-cp2','ch','✅ <strong>Ch</strong>emin ! «ch» = son [ʃ] comme ش')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-cp2','<strong>ch</strong> → <strong>ch</strong>emin (son [ʃ])')">Voir</button>
+        <div class="feedback-box" id="fb-cp2"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">3</span><span>Il prend une ___oto avec son chapeau. (<em>ch</em> ou <em>ph</em> ?)</span></div>
+        <input class="q-input" id="cp3" placeholder="ch ou ph ?">
+        <button class="btn-check" onclick="checkAnswer('cp3','fb-cp3','ph','✅ <strong>Ph</strong>oto ! «ph» = son [f]')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-cp3','<strong>ph</strong> → <strong>ph</strong>oto (son [f])')">Voir</button>
+        <div class="feedback-box" id="fb-cp3"></div>
+      </div>
+
+    </div>
+
+    <!-- Ex 5 : Production écrite -->
+    <div class="exercise-block">
+      <div class="section-header hdr-night">
+        <span>🖊️</span> Exercice 5 – Écris 2 phrases sur Zidane
+      </div>
+      <div class="ex-tip">
+        <span>🌟</span>
+        <span>Utilise les mots de cette séance. Pas besoin d'être parfait !<br>
+        <span class="ex-tip-ar">استخدم كلمات هذه الجلسة. لا حاجة للكمال!</span></span>
+      </div>
+      <div class="q-item">
+        <p style="font-weight:700; font-size:0.95rem; margin-bottom:6px; color:var(--ink);">
+          ✍️ Décris Zidane dans le Village des Étoiles. Essaie d'utiliser : <strong style="color:var(--lavender)">chemin / maison / chapeau / demain</strong>.
+        </p>
+        <textarea class="q-textarea" id="prod1" placeholder="Exemple : Zidane marche sur le chemin. Il voit une belle maison..."></textarea>
+        <button class="btn-reveal" onclick="reveal('fb-prod1','💡 Exemple : «Zidane marche sur le chemin du village. Il porte un chapeau. Les maisons sont belles. Demain, il reviendra !»<br><br>✅ Si tu as utilisé 2 mots de la liste et fait 2 phrases : c\'est une belle réussite !')">Voir un exemple</button>
+        <div class="feedback-box neutral" id="fb-prod1"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══════════════════ FLASH ══════════════════ -->
+  <div class="section" id="sec-flash">
+    <div class="exercise-block">
+      <div class="section-header hdr-night">⚡ Lecture flash – Mots de la séance 2</div>
+      <div style="padding:12px 18px 6px; font-size:0.85rem; color:var(--muted);">
+        Lis chaque mot à voix haute en <strong>2 secondes</strong>. Clique quand tu l'as lu !
+        <span style="font-family:'Noto Naskh Arabic'; direction:rtl; display:block; margin-top:3px; color:#1a5040;">اقرأ كل كلمة بصوت عالٍ في ثانيتين. انقر حين تنتهي!</span>
+      </div>
+      <div class="flash-grid">
+        <div class="flash-word" onclick="fReveal(this)">lendemain<span class="fw-ar">اليوم التالي</span></div>
+        <div class="flash-word" onclick="fReveal(this)">chemin<span class="fw-ar">الطريق</span></div>
+        <div class="flash-word" onclick="fReveal(this)">chapeau<span class="fw-ar">القبعة</span></div>
+        <div class="flash-word" onclick="fReveal(this)">maison<span class="fw-ar">البيت</span></div>
+        <div class="flash-word" onclick="fReveal(this)">éléphant<span class="fw-ar">الفيل</span></div>
+        <div class="flash-word" onclick="fReveal(this)">photo<span class="fw-ar">الصورة</span></div>
+        <div class="flash-word" onclick="fReveal(this)">demain<span class="fw-ar">غداً</span></div>
+        <div class="flash-word" onclick="fReveal(this)">capable<span class="fw-ar">قادر</span></div>
+        <div class="flash-word" onclick="fReveal(this)">chaque<span class="fw-ar">كل</span></div>
+        <div class="flash-word" onclick="fReveal(this)">encore<span class="fw-ar">مجدداً</span></div>
+        <div class="flash-word" onclick="fReveal(this)">blanc<span class="fw-ar">أبيض</span></div>
+        <div class="flash-word" onclick="fReveal(this)">gardien<span class="fw-ar">الحارس</span></div>
+      </div>
+      <div style="text-align:center; padding:0 18px 16px;">
+        <div style="background:var(--night); border-radius:14px; padding:14px; display:inline-block; min-width:200px;">
+          <div style="color:var(--star); font-weight:800; font-size:0.88rem; margin-bottom:4px;">Score lecture flash</div>
+          <div style="color:white; font-size:2rem; font-weight:900;" id="fscore">0 / 12</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Révision séance 1 -->
+    <div class="exercise-block">
+      <div class="section-header hdr-mint">🔄 Révision séance 1 – Sons déjà appris</div>
+      <div style="padding:16px 18px; display:flex; flex-direction:column; gap:12px;">
+        <p style="font-size:0.9rem; color:var(--ink-soft); font-weight:700;">Rappelle-toi ces sons de la séance 1. Donne un exemple pour chacun :</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+          <div style="background:var(--bg); border-radius:12px; padding:12px;">
+            <div style="font-weight:900; color:var(--night-mid); margin-bottom:6px;">Son <span style="background:#fff3c4; padding:2px 8px; border-radius:6px;">gn</span></div>
+            <input class="q-input" id="rev1" placeholder="Ex : montagne" style="margin-bottom:6px;">
+            <button class="btn-check" style="font-size:0.78rem; padding:6px 12px;" onclick="revCheck('rev1','fb-rev1',['montagne','champignon','ligne','signe','vigne'])">✓</button>
+            <div class="feedback-box" id="fb-rev1" style="font-size:0.82rem;"></div>
+          </div>
+          <div style="background:var(--bg); border-radius:12px; padding:12px;">
+            <div style="font-weight:900; color:var(--night-mid); margin-bottom:6px;">Son <span style="background:#fff3c4; padding:2px 8px; border-radius:6px;">ille/aille</span></div>
+            <input class="q-input" id="rev2" placeholder="Ex : grenouille" style="margin-bottom:6px;">
+            <button class="btn-check" style="font-size:0.78rem; padding:6px 12px;" onclick="revCheck('rev2','fb-rev2',['grenouille','feuille','paille','soleil','oreille','bataille'])">✓</button>
+            <div class="feedback-box" id="fb-rev2" style="font-size:0.82rem;"></div>
+          </div>
+          <div style="background:var(--bg); border-radius:12px; padding:12px;">
+            <div style="font-weight:900; color:var(--night-mid); margin-bottom:6px;">Son <span style="background:#fff3c4; padding:2px 8px; border-radius:6px;">œu/eu</span></div>
+            <input class="q-input" id="rev3" placeholder="Ex : nœud" style="margin-bottom:6px;">
+            <button class="btn-check" style="font-size:0.78rem; padding:6px 12px;" onclick="revCheck('rev3','fb-rev3',['noeud','nœud','sœur','soeur','peur','jeu','feu','peu'])">✓</button>
+            <div class="feedback-box" id="fb-rev3" style="font-size:0.82rem;"></div>
+          </div>
+          <div style="background:var(--bg); border-radius:12px; padding:12px;">
+            <div style="font-weight:900; color:var(--night-mid); margin-bottom:6px;">Son <span style="background:#fff3c4; padding:2px 8px; border-radius:6px;">ç</span></div>
+            <input class="q-input" id="rev4" placeholder="Ex : garçon" style="margin-bottom:6px;">
+            <button class="btn-check" style="font-size:0.78rem; padding:6px 12px;" onclick="revCheck('rev4','fb-rev4',['garçon','garcon','leçon','lecon','français','francais','ça','ca'])">✓</button>
+            <div class="feedback-box" id="fb-rev4" style="font-size:0.82rem;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div><!-- /wrap -->
+
+<!-- FOOTER -->
+<div class="footer">
+  🌟 Séance 2 terminée, <strong>Zidane</strong> ! Tu apprends les sons [ɑ̃] [ɔ̃] [ɛ̃], ch et ph. 💪<br>
+  <span style="font-family:'Noto Naskh Arabic'; font-size:1rem; direction:rtl; display:block; margin-top:6px; color:#1a5040;">انتهت الجلسة الثانية! تعلمت أصواتاً جديدة. أحسنت يا زيدان ⭐</span>
+</div>
+
+<script>
+// ── Tabs ──
+function showTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Arabic toggle ──
+function toggleAr(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '🔼 Cacher' : '🇸🇦 عربي';
+}
+
+// ── Progress ──
+let tot = 0, cor = 0;
+function updateP(ok) {
+  tot++; if (ok) cor++;
+  const pct = tot > 0 ? Math.round(cor / tot * 100) : 0;
+  document.getElementById('pfill').style.width = pct + '%';
+  document.getElementById('pscore').textContent = cor + ' / ' + tot;
+}
+
+// ── Normalize ──
+function norm(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim(); }
+
+// ── Check text ──
+function checkAnswer(inputId, fbId, correct, successMsg) {
+  const val = document.getElementById(inputId).value;
+  const fb = document.getElementById(fbId);
+  if (!val.trim()) { fb.innerHTML = '✏️ Écris ta réponse !'; fb.className = 'feedback-box neutral show'; return; }
+  if (norm(val) === norm(correct)) {
+    fb.innerHTML = successMsg; fb.className = 'feedback-box correct show'; updateP(true);
+  } else {
+    fb.innerHTML = `❌ Tu as écrit : «${val}». Relis bien l'histoire ou clique sur Voir réponse.`;
+    fb.className = 'feedback-box incorrect show'; updateP(false);
+  }
+}
+
+// ── Reveal ──
+function reveal(fbId, msg) {
+  const fb = document.getElementById(fbId);
+  fb.innerHTML = '📖 ' + msg; fb.className = 'feedback-box neutral show';
+}
+
+// ── VF ──
+const vfSel = {};
+function selVF(btn, group, value) {
+  document.querySelectorAll(`[onclick*="'${group}'"]`).forEach(b => b.classList.remove('sel-v','sel-f'));
+  vfSel[group] = value;
+  btn.classList.add(value === 'vrai' ? 'sel-v' : 'sel-f');
+}
+function checkVF2(group, correct, fbId, msg) {
+  const fb = document.getElementById(fbId);
+  const sel = vfSel[group];
+  if (!sel) { fb.innerHTML = '⚠️ Clique sur Vrai ou Faux !'; fb.className = 'feedback-box neutral show'; return; }
+  if (sel === correct) { fb.innerHTML = msg; fb.className = 'feedback-box correct show'; updateP(true); }
+  else { fb.innerHTML = msg; fb.className = 'feedback-box incorrect show'; updateP(false); }
+}
+
+// ── Nasal check (flexible) ──
+function checkNasal(inputId, fbId, correct, successMsg) {
+  const val = document.getElementById(inputId).value;
+  const fb = document.getElementById(fbId);
+  if (!val.trim()) { fb.innerHTML = '✏️ Écris ta réponse !'; fb.className = 'feedback-box neutral show'; return; }
+  const nv = norm(val).replace(/\s/g,'').replace(/\+/g,'+');
+  const nc = norm(correct).replace(/\s/g,'').replace(/\+/g,'+');
+  // check if both parts present regardless of order
+  const parts = nc.split('+');
+  const allFound = parts.every(p => nv.includes(p));
+  if (allFound) { fb.innerHTML = successMsg; fb.className = 'feedback-box correct show'; updateP(true); }
+  else { fb.innerHTML = `❌ Pas tout à fait. Relis le mot et écoute les sons nasaux.`; fb.className = 'feedback-box incorrect show'; updateP(false); }
+}
+
+// ── ch/ph check ──
+// (reuses checkAnswer)
+
+// ── Matching ──
+let matchSelected = null;
+const matchPairs = { '1':'1', '2':'2', '3':'3', '4':'4', '5':'5' };
+function matchSelect(el) {
+  document.querySelectorAll('.match-ar').forEach(e => e.classList.remove('selected'));
+  matchSelected = el;
+  el.classList.add('selected');
+}
+function checkMatching() {
+  const arItems = document.querySelectorAll('.match-ar');
+  const frItems = document.querySelectorAll('.match-fr');
+  let score = 0;
+  arItems.forEach(ar => {
+    ar.classList.remove('correct-match','wrong-match','selected');
+  });
+  // For this demo, we check if each ar item's data-id matches its fr counterpart
+  // We need user to have selected pairs – simplified: auto-check all as placed
+  let total = arItems.length;
+  let correct = 0;
+  arItems.forEach(ar => {
+    // Find its position in the list (index) and compare to fr at same index
+    const arId = ar.dataset.id;
+    const arIdx = Array.from(ar.parentNode.children).indexOf(ar);
+    const frAtIdx = frItems[arIdx];
+    if (frAtIdx && frAtIdx.dataset.id === arId) {
+      ar.classList.add('correct-match'); correct++;
+    } else {
+      ar.classList.add('wrong-match');
+    }
+  });
+  const fb = document.getElementById('fb-match');
+  const stars = document.getElementById('match-stars');
+  if (correct === total) {
+    fb.innerHTML = '🎉 Parfait ! Toutes les associations sont correctes !'; fb.className = 'feedback-box correct show';
+    stars.textContent = '⭐⭐⭐'; stars.style.display = 'block'; updateP(true);
+  } else {
+    fb.innerHTML = `${correct}/${total} correctes. Les mots en rouge sont faux – relis le vocabulaire !`;
+    fb.className = 'feedback-box incorrect show';
+    const s = correct >= 3 ? '⭐⭐' : '⭐'; stars.textContent = s; stars.style.display = 'block';
+    updateP(false);
+  }
+}
+
+// ── Flash ──
+let fCount = 0;
+function fReveal(el) {
+  if (!el.classList.contains('revealed')) {
+    el.classList.add('revealed'); fCount++;
+    document.getElementById('fscore').textContent = fCount + ' / 12';
+  }
+}
+
+// ── Revision check ──
+function revCheck(inputId, fbId, validList) {
+  const val = norm(document.getElementById(inputId).value);
+  const fb = document.getElementById(fbId);
+  if (!val) { fb.innerHTML = '✏️ Écris un exemple !'; fb.className = 'feedback-box neutral show'; return; }
+  if (validList.some(w => norm(w) === val || val.includes(norm(w)))) {
+    fb.innerHTML = '✅ Bien joué !'; fb.className = 'feedback-box correct show'; updateP(true);
+  } else {
+    fb.innerHTML = '🤔 Cherche encore – relis la séance 1.'; fb.className = 'feedback-box incorrect show'; updateP(false);
+  }
+}
+
+console.log('Séance 2 prête pour Zidane ! 🌟');
+</script>
+</body>
+</html>
