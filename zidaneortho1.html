@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>L'Aventure de Zidane – Cours FLS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #f5e6c8;
+  --sand-light: #fdf6e9;
+  --sand-mid: #e8d5a3;
+  --teal: #1a6b6b;
+  --teal-light: #e6f5f5;
+  --teal-mid: #2d9b9b;
+  --orange: #e07b2d;
+  --orange-light: #fef0e2;
+  --gold: #c9971a;
+  --gold-light: #fef9e3;
+  --forest: #2d6a4f;
+  --forest-light: #e8f5ef;
+  --ink: #1c2233;
+  --ink-soft: #3d4a60;
+  --muted: #6b7a99;
+  --white: #ffffff;
+  --radius: 20px;
+  --shadow: 0 4px 24px rgba(28,34,51,0.10);
+  --shadow-sm: 0 2px 8px rgba(28,34,51,0.07);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--sand-light);
+  font-family: 'Baloo 2', sans-serif;
+  color: var(--ink);
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+
+/* ─── HEADER ─── */
+.hero {
+  background: linear-gradient(135deg, #1a6b6b 0%, #0d4040 60%, #1c2233 100%);
+  padding: 36px 24px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.13);
+  color: #b8e6e6;
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 40px;
+  padding: 6px 18px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.hero h1 {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.2;
+  margin-bottom: 10px;
+}
+.hero h1 em {
+  color: #7ee8a2;
+  font-style: normal;
+}
+.hero-sub {
+  color: #acd6d6;
+  font-size: 0.95rem;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+.hero-forest {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 12px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+}
+
+/* ─── LAYOUT ─── */
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ─── TABS NAV ─── */
+.tabs-nav {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: -22px auto 28px;
+  position: relative;
+  z-index: 10;
+  padding: 0 16px;
+  max-width: 760px;
+}
+.tab-btn {
+  background: white;
+  border: none;
+  border-radius: 40px;
+  padding: 10px 20px;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--ink-soft);
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.tab-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(28,34,51,0.13); }
+.tab-btn.active { background: var(--teal); color: white; }
+
+/* ─── SECTIONS ─── */
+.section { display: none; }
+.section.active { display: block; }
+
+/* ─── STORY CARD ─── */
+.story-wrap {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.story-header {
+  background: linear-gradient(90deg, var(--forest), #1a8a5a);
+  color: white;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+  font-size: 1rem;
+}
+.story-body {
+  padding: 22px 24px;
+}
+
+/* Sentence cards with audio-friendly large type */
+.sentence-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.sentence-row:last-child { border-bottom: none; }
+.s-num {
+  background: var(--teal-light);
+  color: var(--teal);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.8rem;
+  flex-shrink: 0;
+  margin-top: 3px;
+}
+.s-text {
+  font-size: 1.15rem;
+  line-height: 1.6;
+  font-weight: 600;
+  color: var(--ink);
+  flex: 1;
+}
+.s-text strong {
+  color: var(--teal);
+  background: var(--teal-light);
+  padding: 1px 6px;
+  border-radius: 8px;
+}
+/* Arabic translation toggle */
+.ar-toggle {
+  background: none;
+  border: 1px solid var(--sand-mid);
+  border-radius: 30px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: 'Baloo 2', sans-serif;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.ar-toggle:hover { border-color: var(--orange); color: var(--orange); }
+.ar-popup {
+  display: none;
+  background: #fffaf0;
+  border: 1px solid var(--sand-mid);
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin-top: 6px;
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.1rem;
+  direction: rtl;
+  color: var(--forest);
+}
+.ar-popup.show { display: block; }
+
+/* Sound highlight */
+.sound-chip {
+  display: inline-block;
+  background: #fef3c7;
+  color: #92400e;
+  border-radius: 6px;
+  padding: 0px 4px;
+  font-weight: 800;
+  font-size: 1.1em;
+  border-bottom: 2px solid #f59e0b;
+}
+
+/* ─── VOCAB GRID ─── */
+.vocab-section {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.vocab-header {
+  background: linear-gradient(90deg, var(--orange), #c05e1a);
+  color: white;
+  padding: 14px 22px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  padding: 18px;
+}
+.vocab-card {
+  background: var(--sand-light);
+  border-radius: 14px;
+  padding: 14px 12px;
+  text-align: center;
+  border: 2px solid transparent;
+  transition: all 0.2s;
+  cursor: default;
+}
+.vocab-card:hover {
+  border-color: var(--orange);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(224,123,45,0.15);
+}
+.v-fr {
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.v-sound {
+  font-size: 0.72rem;
+  color: var(--orange);
+  font-weight: 600;
+  margin-bottom: 6px;
+  background: var(--orange-light);
+  border-radius: 20px;
+  padding: 2px 8px;
+  display: inline-block;
+}
+.v-ar {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 1.1rem;
+  color: var(--forest);
+  direction: rtl;
+  display: block;
+  background: var(--forest-light);
+  border-radius: 10px;
+  padding: 4px 8px;
+}
+
+/* ─── EXERCISE ─── */
+.exercise-block {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+.ex-header {
+  padding: 14px 22px;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ex-header.green { background: linear-gradient(90deg, #2d6a4f, #1a8a5a); color: white; }
+.ex-header.teal  { background: linear-gradient(90deg, var(--teal), #0d5555); color: white; }
+.ex-header.gold  { background: linear-gradient(90deg, #b07d10, #d4a820); color: white; }
+.ex-header.purple { background: linear-gradient(90deg, #5b3fa0, #7c55c7); color: white; }
+
+.ex-num {
+  background: rgba(255,255,255,0.25);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+.ex-tip {
+  background: var(--teal-light);
+  border-left: 4px solid var(--teal-mid);
+  padding: 10px 16px;
+  margin: 0 18px 16px;
+  border-radius: 0 10px 10px 0;
+  font-size: 0.85rem;
+  color: var(--teal);
+  display: flex;
+  gap: 8px;
+}
+.ex-tip-ar {
+  font-family: 'Noto Naskh Arabic', serif;
+  font-size: 0.9rem;
+  direction: rtl;
+  color: var(--forest);
+}
+.q-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid #f0f4f8;
+}
+.q-item:last-child { border-bottom: none; }
+.q-label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  line-height: 1.5;
+}
+.q-label .qn {
+  background: var(--gold-light);
+  color: var(--gold);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  border: 2px solid var(--gold);
+}
+.q-ar-hint {
+  font-family: 'Noto Naskh Arabic', serif;
+  direction: rtl;
+  font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 8px;
+  padding: 6px 12px;
+  background: var(--gold-light);
+  border-radius: 10px;
+  display: block;
+}
+
+/* Input */
+.q-input {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: 'Baloo 2', sans-serif;
+  border: 2px solid #dde3ee;
+  border-radius: 12px;
+  background: #fafbfd;
+  color: var(--ink);
+  transition: all 0.15s;
+  margin-bottom: 10px;
+}
+.q-input:focus {
+  border-color: var(--teal-mid);
+  background: white;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45,155,155,0.15);
+}
+.q-textarea {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-family: 'Baloo 2', sans-serif;
+  border: 2px solid #dde3ee;
+  border-radius: 12px;
+  background: #fafbfd;
+  color: var(--ink);
+  transition: all 0.15s;
+  resize: vertical;
+  min-height: 80px;
+  margin-bottom: 10px;
+}
+.q-textarea:focus {
+  border-color: var(--teal-mid);
+  background: white;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(45,155,155,0.15);
+}
+
+/* Buttons */
+.btn-check {
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-check:hover { background: #0d4040; transform: translateY(-1px); }
+.btn-reveal {
+  background: var(--sand);
+  color: var(--ink-soft);
+  border: 1px solid var(--sand-mid);
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 0.15s;
+}
+.btn-reveal:hover { background: var(--sand-mid); }
+
+/* Feedback */
+.feedback-box {
+  border-radius: 12px;
+  padding: 12px 16px;
+  margin-top: 10px;
+  font-size: 0.92rem;
+  font-weight: 600;
+  display: none;
+  line-height: 1.5;
+}
+.feedback-box.show { display: block; }
+.feedback-box.correct { background: #d1fae5; color: #065f46; border-left: 4px solid #10b981; }
+.feedback-box.incorrect { background: #fee2e2; color: #991b1b; border-left: 4px solid #ef4444; }
+.feedback-box.neutral { background: var(--teal-light); color: var(--teal); border-left: 4px solid var(--teal-mid); }
+
+/* VF Radio */
+.vf-options {
+  display: flex;
+  gap: 12px;
+  margin: 10px 0;
+}
+.vf-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 2px solid #dde3ee;
+  background: #fafbfd;
+  font-family: 'Baloo 2', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: var(--ink-soft);
+}
+.vf-btn:hover { border-color: var(--teal-mid); color: var(--teal); background: var(--teal-light); }
+.vf-btn.selected-v { background: #d1fae5; border-color: #10b981; color: #065f46; }
+.vf-btn.selected-f { background: #fee2e2; border-color: #ef4444; color: #991b1b; }
+
+/* ─── PHONICS SECTION ─── */
+.sound-card {
+  background: var(--gold-light);
+  border: 2px solid #f0d070;
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin: 0 18px 14px;
+}
+.sound-card-title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  color: #7a5a00;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.sound-examples {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.sound-ex {
+  background: white;
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--ink);
+  border: 1px solid #e8d070;
+}
+.sound-ex span {
+  color: var(--orange);
+  font-weight: 900;
+  background: #fff0cc;
+  padding: 0 3px;
+  border-radius: 4px;
+}
+
+/* Flash words */
+.flash-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 18px;
+}
+.flash-word {
+  background: linear-gradient(135deg, var(--teal-light), #d0f0f0);
+  border: 2px solid var(--teal-mid);
+  border-radius: 40px;
+  padding: 10px 22px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--teal);
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+}
+.flash-word:hover {
+  background: var(--teal);
+  color: white;
+  transform: scale(1.05);
+}
+.flash-word.revealed { background: var(--teal); color: white; }
+
+/* ─── PROGRESS BAR ─── */
+.progress-wrap {
+  background: white;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 22px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.progress-label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--teal);
+  white-space: nowrap;
+}
+.progress-bar-bg {
+  flex: 1;
+  height: 12px;
+  background: #e5e9f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--teal-mid), #7ee8a2);
+  border-radius: 10px;
+  width: 0%;
+  transition: width 0.4s ease;
+}
+.progress-score {
+  font-weight: 800;
+  font-size: 1rem;
+  color: var(--teal);
+  min-width: 40px;
+  text-align: right;
+}
+
+/* ─── FOOTER ─── */
+.footer {
+  text-align: center;
+  padding: 28px 20px;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 10px;
+}
+.footer strong { color: var(--teal); }
+
+/* ─── MOBILE ─── */
+@media (max-width: 520px) {
+  .vocab-grid { grid-template-columns: repeat(2, 1fr); }
+  .s-text { font-size: 1rem; }
+  .vf-options { gap: 8px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <span class="hero-forest">🌲🐸🌟</span>
+  <div class="hero-badge">✨ Cours FLS – Niveau découverte – Séance personnalisée</div>
+  <h1>L'aventure de <em>Zidane</em><br>dans la forêt magique</h1>
+  <p class="hero-sub">Lecture · Sons complexes · Vocabulaire · Compréhension<br>Exercices adaptés à ton niveau 💪</p>
+</div>
+
+<!-- TABS -->
+<div class="tabs-nav" id="tabs-nav">
+  <button class="tab-btn active" onclick="showTab('lecture', this)">📖 Histoire</button>
+  <button class="tab-btn" onclick="showTab('vocab', this)">📚 Vocabulaire</button>
+  <button class="tab-btn" onclick="showTab('sons', this)">🔊 Sons</button>
+  <button class="tab-btn" onclick="showTab('exercices', this)">✏️ Exercices</button>
+  <button class="tab-btn" onclick="showTab('flash', this)">⚡ Lecture flash</button>
+</div>
+
+<div class="wrap">
+
+  <!-- PROGRESS -->
+  <div class="progress-wrap">
+    <span class="progress-label">🏆 Ta progression</span>
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progress-fill"></div>
+    </div>
+    <span class="progress-score" id="progress-score">0 / 0</span>
+  </div>
+
+  <!-- ─── SECTION LECTURE ─── -->
+  <div class="section active" id="sec-lecture">
+    <div class="story-wrap">
+      <div class="story-header">📖 Lis chaque phrase lentement. Clique sur 🇸🇦 pour voir la traduction arabe.</div>
+      <div class="story-body">
+
+        <div class="sentence-row">
+          <div class="s-num">1</div>
+          <div style="flex:1">
+            <div class="s-text">🌳 Zidane se promène dans une <strong>for<span class="sound-chip">ê</span>t</strong> immense. Soudain, il voit une <strong>gre<span class="sound-chip">nouille</span></strong> bizarre.</div>
+            <div class="ar-popup" id="ar1">زيدان يتمشى في غابةٍ شاسعة. فجأةً، يرى ضِفدعاً غريباً.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar1', this)">🇸🇦 Traduction</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">2</div>
+          <div style="flex:1">
+            <div class="s-text">🍃 La grenouille a une <strong>fe<span class="sound-chip">uille</span></strong> dorée sur la tête. C'est magique !</div>
+            <div class="ar-popup" id="ar2">الضفدع عليه ورقةٌ ذهبية على رأسه. إنه أمرٌ سحري!</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar2', this)">🇸🇦 Traduction</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">3</div>
+          <div style="flex:1">
+            <div class="s-text">🐸 « <strong>Su<span class="sound-chip">is</span>-moi !</strong> » coasse la grenouille. Zidane la suit jusqu'à un <strong>champi<span class="sound-chip">gnon</span></strong> géant.</div>
+            <div class="ar-popup" id="ar3">«اتبعني!» ينعق الضفدع. يتبعه زيدان حتى يصل إلى فطرٍ عملاق.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar3', this)">🇸🇦 Traduction</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">4</div>
+          <div style="flex:1">
+            <div class="s-text">⛰️ Derrière le champignon, il découvre une <strong>monta<span class="sound-chip">gne</span></strong> secrète. Elle est très haute !</div>
+            <div class="ar-popup" id="ar4">خلف الفطر، يكتشف جبلاً سرياً. إنه شاهقٌ جداً!</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar4', this)">🇸🇦 Traduction</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">5</div>
+          <div style="flex:1">
+            <div class="s-text">⭐ Au sommet, il y a un <strong>n<span class="sound-chip">œ</span>ud</strong> magique attaché à une <strong>pa<span class="sound-chip">ille</span></strong> en or. Zidane le touche !</div>
+            <div class="ar-popup" id="ar5">في القمة، توجد عقدةٌ سحرية مربوطة بقشةٍ ذهبية. يلمسها زيدان!</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar5', this)">🇸🇦 Traduction</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">6</div>
+          <div style="flex:1">
+            <div class="s-text">✨ Tout devient <strong>lumineux</strong> ! Un petit <strong>gar<span class="sound-chip">çon</span></strong> apparaît avec une <strong>ba<span class="sound-chip">lle</span></strong> étincelante.</div>
+            <div class="ar-popup" id="ar6">يصبح كل شيء مضيئاً! يظهر ولدٌ صغير بيده كرةٌ لامعة.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar6', this)">🇸🇦 Traduction</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">7</div>
+          <div style="flex:1">
+            <div class="s-text">🎉 « Bravo, tu as trouvé le chemin des mots ! » dit le garçon. Zidane est très <strong>fier</strong>.</div>
+            <div class="ar-popup" id="ar7">«أحسنت، لقد وجدت طريق الكلمات!» يقول الولد. زيدان فخورٌ جداً.</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar7', this)">🇸🇦 Traduction</button>
+        </div>
+
+        <div class="sentence-row">
+          <div class="s-num">8</div>
+          <div style="flex:1">
+            <div class="s-text">📚 Zidane rentre chez lui. <strong>Aujourd'hui</strong>, il a <strong>beaucoup</strong> lu et compris. C'est une belle victoire !</div>
+            <div class="ar-popup" id="ar8">يعود زيدان إلى بيته. اليوم، قرأ كثيراً وفهم. هذا نصرٌ جميل!</div>
+          </div>
+          <button class="ar-toggle" onclick="toggleAr('ar8', this)">🇸🇦 Traduction</button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Reading tip -->
+    <div class="exercise-block">
+      <div class="ex-header teal">
+        <div class="ex-num">💡</div>
+        Conseils de lecture – نصائح للقراءة
+      </div>
+      <div style="padding: 16px 20px; display: flex; flex-direction: column; gap: 12px;">
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:1.4rem">🐢</span>
+          <div>
+            <div style="font-weight:700; color:var(--teal)">Lis lentement, un mot à la fois</div>
+            <div class="ex-tip-ar">اقرأ ببطء، كلمةً كلمة</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:1.4rem">🖍️</span>
+          <div>
+            <div style="font-weight:700; color:var(--teal)">Regarde les syllabes en jaune : c'est les sons difficiles</div>
+            <div class="ex-tip-ar">انظر إلى المقاطع باللون الأصفر: هي الأصوات الصعبة</div>
+          </div>
+        </div>
+        <div style="display:flex; gap:12px; align-items:flex-start;">
+          <span style="font-size:1.4rem">🔄</span>
+          <div>
+            <div style="font-weight:700; color:var(--teal)">Relis chaque phrase 2 fois avant de passer à la suivante</div>
+            <div class="ex-tip-ar">أعد قراءة كل جملة مرتين قبل الانتقال إلى التالية</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION VOCAB ─── -->
+  <div class="section" id="sec-vocab">
+    <div class="vocab-section">
+      <div class="vocab-header">📚 Mots importants de l'histoire – الكلمات المهمة</div>
+      <div class="vocab-grid">
+        <div class="vocab-card">
+          <div class="v-fr">la grenouille</div>
+          <div class="v-sound">son : -ouille [uj]</div>
+          <span class="v-ar">الضِّفْدَع</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">la feuille</div>
+          <div class="v-sound">son : -euille [œj]</div>
+          <span class="v-ar">الوَرَقَة</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">le champignon</div>
+          <div class="v-sound">son : -gn [ɲ]</div>
+          <span class="v-ar">الفُطْر</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">la montagne</div>
+          <div class="v-sound">son : -gn [ɲ]</div>
+          <span class="v-ar">الجَبَل</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">le nœud</div>
+          <div class="v-sound">son : œu [ø]</div>
+          <span class="v-ar">العُقْدَة</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">la paille</div>
+          <div class="v-sound">son : -aille [aj]</div>
+          <span class="v-ar">القَشَّة</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">la balle</div>
+          <div class="v-sound">attention : 2 × l</div>
+          <span class="v-ar">الكُرَة</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">le garçon</div>
+          <div class="v-sound">attention : ç</div>
+          <span class="v-ar">الوَلَد</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">aujourd'hui</div>
+          <div class="v-sound">mot irrégulier</div>
+          <span class="v-ar">اليَوْم</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">beaucoup</div>
+          <div class="v-sound">mot irrégulier</div>
+          <span class="v-ar">كَثِيراً</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">la forêt</div>
+          <div class="v-sound">accent : ê</div>
+          <span class="v-ar">الغَابَة</span>
+        </div>
+        <div class="vocab-card">
+          <div class="v-fr">soudain</div>
+          <div class="v-sound">mot irrégulier</div>
+          <span class="v-ar">فَجْأَةً</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mots difficiles focus -->
+    <div class="exercise-block">
+      <div class="ex-header gold">
+        <div class="ex-num">⚠️</div>
+        Mots souvent difficiles – كلمات صعبة في الكتابة
+      </div>
+      <div style="padding: 16px 20px;">
+        <div style="display: flex; flex-wrap: wrap; gap: 12px;">
+          <div style="background:#fff8e1; border:2px solid #f0d070; border-radius:14px; padding:12px 16px; flex:1; min-width:200px;">
+            <div style="font-weight:800; font-size:1rem; color:#7a5a00; margin-bottom:6px;">aujourd'hui</div>
+            <div style="font-size:0.85rem; color:#5a4000; line-height:1.5;">➜ au-jour-d'hui (4 parties)<br><span class="ex-tip-ar">اليَوْم – تُكتب بشرطة علوية</span></div>
+          </div>
+          <div style="background:#fff8e1; border:2px solid #f0d070; border-radius:14px; padding:12px 16px; flex:1; min-width:200px;">
+            <div style="font-weight:800; font-size:1rem; color:#7a5a00; margin-bottom:6px;">beaucoup</div>
+            <div style="font-size:0.85rem; color:#5a4000; line-height:1.5;">➜ beau-coup (-eau + -oup)<br><span class="ex-tip-ar">كَثِيراً – لا تُكتب كما تُلفظ</span></div>
+          </div>
+          <div style="background:#fff8e1; border:2px solid #f0d070; border-radius:14px; padding:12px 16px; flex:1; min-width:200px;">
+            <div style="font-weight:800; font-size:1rem; color:#7a5a00; margin-bottom:6px;">garçon / balle</div>
+            <div style="font-size:0.85rem; color:#5a4000; line-height:1.5;">➜ ç (cédille) / ll (deux l)<br><span class="ex-tip-ar">ولد / كرة – انتبه للحروف الخاصة</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SECTION SONS ─── -->
+  <div class="section" id="sec-sons">
+    <div class="exercise-block">
+      <div class="ex-header gold">
+        <div class="ex-num">🔊</div>
+        Les sons complexes du français – الأصوات الصعبة
+      </div>
+      <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 14px;">
+
+        <div class="sound-card">
+          <div class="sound-card-title">🌿 Le son « gn » → [ɲ] – comme en arabe « نيا »</div>
+          <div class="sound-examples">
+            <div class="sound-ex">champi<span>gn</span>on</div>
+            <div class="sound-ex">monta<span>gn</span>e</div>
+            <div class="sound-ex">li<span>gn</span>e</div>
+            <div class="sound-ex">si<span>gn</span>e</div>
+            <div class="sound-ex">vi<span>gn</span>e</div>
+          </div>
+          <div style="margin-top:10px; font-size:0.85rem; color:#7a5a00;">
+            ➜ « gn » ne se prononce PAS [g+n]. C'est un seul son doux : [ɲ]<br>
+            <span style="font-family:'Noto Naskh Arabic'; direction:rtl; display:block; margin-top:4px;">«gn» لا تُنطق [g+n] – إنها صوتٌ واحد ناعم</span>
+          </div>
+        </div>
+
+        <div class="sound-card">
+          <div class="sound-card-title">🍂 Les sons « ille / aille / ouille » → [j]</div>
+          <div class="sound-examples">
+            <div class="sound-ex">fe<span>uille</span></div>
+            <div class="sound-ex">gre<span>nouille</span></div>
+            <div class="sound-ex">pa<span>ille</span></div>
+            <div class="sound-ex">so<span>leil</span></div>
+            <div class="sound-ex">ore<span>ille</span></div>
+          </div>
+          <div style="margin-top:10px; font-size:0.85rem; color:#7a5a00;">
+            ➜ Ces combinaisons font toutes un son « y » mouillé<br>
+            <span style="font-family:'Noto Naskh Arabic'; direction:rtl; display:block; margin-top:4px;">هذه التركيبات كلها تعطي صوت «ي» الناعم</span>
+          </div>
+        </div>
+
+        <div class="sound-card">
+          <div class="sound-card-title">🔵 Le son « œu / eu » → [ø] ou [œ]</div>
+          <div class="sound-examples">
+            <div class="sound-ex">n<span>œu</span>d</div>
+            <div class="sound-ex">s<span>œ</span>ur</div>
+            <div class="sound-ex">p<span>eu</span>r</div>
+            <div class="sound-ex">f<span>eu</span></div>
+            <div class="sound-ex">j<span>eu</span></div>
+          </div>
+          <div style="margin-top:10px; font-size:0.85rem; color:#7a5a00;">
+            ➜ Un son qui n'existe pas en arabe – écoute et répète plusieurs fois !<br>
+            <span style="font-family:'Noto Naskh Arabic'; direction:rtl; display:block; margin-top:4px;">صوتٌ لا وجود له في العربية – استمع وكرر عدة مرات!</span>
+          </div>
+        </div>
+
+        <div class="sound-card">
+          <div class="sound-card-title">✏️ La cédille « ç » → son [s]</div>
+          <div class="sound-examples">
+            <div class="sound-ex">gar<span>ç</span>on</div>
+            <div class="sound-ex">le<span>ç</span>on</div>
+            <div class="sound-ex">fran<span>ç</span>ais</div>
+            <div class="sound-ex"><span>ç</span>a</div>
+          </div>
+          <div style="margin-top:10px; font-size:0.85rem; color:#7a5a00;">
+            ➜ « ç » = toujours le son [s], jamais [k]<br>
+            <span style="font-family:'Noto Naskh Arabic'; direction:rtl; display:block; margin-top:4px;">«ç» دائماً صوت [s]، وليس [k]</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Son exercise -->
+    <div class="exercise-block">
+      <div class="ex-header green">
+        <div class="ex-num">🎯</div>
+        Exercice – Trouve l'intrus sonore
+      </div>
+      <div class="ex-tip">
+        <span>💡</span>
+        <span>Lis les mots à voix haute. Lequel n'a pas le même son que les autres ?<br>
+        <span class="ex-tip-ar">اقرأ الكلمات بصوت عالٍ. أيها لا يشارك نفس الصوت؟</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label">
+          <span class="qn">1</span>
+          <span>🔊 <strong>feuille &nbsp;·&nbsp; paille &nbsp;·&nbsp; soleil &nbsp;·&nbsp; bateau</strong><br><small style="color:var(--muted)">Quel mot n'a PAS le son « ille » ?</small></span>
+        </div>
+        <input class="q-input" id="son1" placeholder="Écris le mot intrus ici ...">
+        <button class="btn-check" onclick="checkAnswer('son1', 'fb-son1', 'bateau', '⛵ Exact ! <strong>bateau</strong> fait le son [o], pas le son « ille ».')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-son1', 'La bonne réponse est <strong>bateau</strong> [o] – les autres font tous le son « ille/eil ».')">Voir réponse</button>
+        <div class="feedback-box" id="fb-son1"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label">
+          <span class="qn">2</span>
+          <span>🔊 <strong>montagne &nbsp;·&nbsp; champignon &nbsp;·&nbsp; ligne &nbsp;·&nbsp; voiture</strong><br><small style="color:var(--muted)">Quel mot n'a PAS le son « gn » [ɲ] ?</small></span>
+        </div>
+        <input class="q-input" id="son2" placeholder="Ton mot intrus ...">
+        <button class="btn-check" onclick="checkAnswer('son2', 'fb-son2', 'voiture', '🚗 Bravo ! <strong>voiture</strong> n\'a pas le son « gn ».')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-son2', 'La bonne réponse est <strong>voiture</strong> – montagne, champignon, ligne ont tous le son [ɲ].')">Voir réponse</button>
+        <div class="feedback-box" id="fb-son2"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label">
+          <span class="qn">3</span>
+          <span>🔊 <strong>nœud &nbsp;·&nbsp; sœur &nbsp;·&nbsp; peur &nbsp;·&nbsp; balle</strong><br><small style="color:var(--muted)">Quel mot n'a PAS le son « eu/œu » ?</small></span>
+        </div>
+        <input class="q-input" id="son3" placeholder="L'intrus est ...">
+        <button class="btn-check" onclick="checkAnswer('son3', 'fb-son3', 'balle', '🏀 Parfait ! <strong>balle</strong> fait le son [al], pas le son « eu ».')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-son3', 'La bonne réponse est <strong>balle</strong> – nœud, sœur et peur font tous le son [œ/ø].')">Voir réponse</button>
+        <div class="feedback-box" id="fb-son3"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── SECTION EXERCICES ─── -->
+  <div class="section" id="sec-exercices">
+
+    <!-- Ex 1 : Compléter -->
+    <div class="exercise-block">
+      <div class="ex-header green">
+        <div class="ex-num">1</div>
+        Complète les phrases de l'histoire
+      </div>
+      <div class="ex-tip">
+        <span>💡</span>
+        <span>Les mots sont cachés dans l'histoire. Relis si tu ne sais pas !<br>
+        <span class="ex-tip-ar">الكلمات مخفية في القصة. أعد القراءة إذا لم تتذكر!</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">1</span><span>Zidane voit une ________ bizarre avec une feuille dorée.</span></div>
+        <span class="q-ar-hint">زيدان يرى ________ غريباً ذو ورقة ذهبية.</span>
+        <input class="q-input" id="ex1q1" placeholder="Quel animal ?">
+        <button class="btn-check" onclick="checkAnswer('ex1q1','fb-ex1q1','grenouille','🐸 Oui ! <strong>grenouille</strong> = ضفدع')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-ex1q1','La bonne réponse : <strong>grenouille</strong> (ضفدع)')">Voir réponse</button>
+        <div class="feedback-box" id="fb-ex1q1"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">2</span><span>Derrière le ________ géant, Zidane découvre une montagne.</span></div>
+        <span class="q-ar-hint">خلف الـ ________ العملاق، يكتشف زيدان جبلاً.</span>
+        <input class="q-input" id="ex1q2" placeholder="Quel objet de la forêt ?">
+        <button class="btn-check" onclick="checkAnswer('ex1q2','fb-ex1q2','champignon','🍄 Super ! <strong>champignon</strong> = فطر')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-ex1q2','La bonne réponse : <strong>champignon</strong> (فطر)')">Voir réponse</button>
+        <div class="feedback-box" id="fb-ex1q2"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">3</span><span>Au sommet de la ________, il y a un nœud magique.</span></div>
+        <span class="q-ar-hint">في قمة الـ ________، توجد عقدة سحرية.</span>
+        <input class="q-input" id="ex1q3" placeholder="Qu'est-ce qu'on monte ?">
+        <button class="btn-check" onclick="checkAnswer('ex1q3','fb-ex1q3','montagne','⛰️ Très bien ! <strong>montagne</strong> = جبل')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-ex1q3','La bonne réponse : <strong>montagne</strong> (جبل)')">Voir réponse</button>
+        <div class="feedback-box" id="fb-ex1q3"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">4</span><span>Zidane rencontre un petit ________ qui porte une balle.</span></div>
+        <span class="q-ar-hint">يلتقي زيدان بـ ________ صغير يحمل كرة.</span>
+        <input class="q-input" id="ex1q4" placeholder="Qui apparaît ?">
+        <button class="btn-check" onclick="checkAnswer('ex1q4','fb-ex1q4','garçon','🧒 Bravo ! <strong>garçon</strong> = ولد. N\'oublie pas la cédille !')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-ex1q4','La bonne réponse : <strong>garçon</strong> (ولد) – attention au ç !')">Voir réponse</button>
+        <div class="feedback-box" id="fb-ex1q4"></div>
+      </div>
+    </div>
+
+    <!-- Ex 2 : Vrai / Faux -->
+    <div class="exercise-block">
+      <div class="ex-header teal">
+        <div class="ex-num">2</div>
+        Vrai ou Faux ? Comprends-tu l'histoire ?
+      </div>
+      <div class="ex-tip">
+        <span>🧠</span>
+        <span>Relis l'histoire si tu hésites.<br>
+        <span class="ex-tip-ar">أعد قراءة القصة إذا ترددت.</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">1</span><span>La grenouille a une paille en argent sur la tête.</span></div>
+        <div class="vf-options">
+          <button class="vf-btn" onclick="selectVF(this, 'vf1', 'vrai')">✅ Vrai</button>
+          <button class="vf-btn" onclick="selectVF(this, 'vf1', 'faux')">❌ Faux</button>
+        </div>
+        <button class="btn-check" onclick="checkVF('vf1','faux','fb-vf1','❌ FAUX. La grenouille a une <strong>feuille dorée</strong>, pas une paille en argent ! La paille en or est au nœud.')">✓ Vérifier</button>
+        <div class="feedback-box" id="fb-vf1"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">2</span><span>La grenouille dit « Suis-moi ! » à Zidane.</span></div>
+        <div class="vf-options">
+          <button class="vf-btn" onclick="selectVF(this, 'vf2', 'vrai')">✅ Vrai</button>
+          <button class="vf-btn" onclick="selectVF(this, 'vf2', 'faux')">❌ Faux</button>
+        </div>
+        <button class="btn-check" onclick="checkVF('vf2','vrai','fb-vf2','✅ VRAI ! La grenouille dit exactement « Suis-moi ! » et Zidane la suit.')">✓ Vérifier</button>
+        <div class="feedback-box" id="fb-vf2"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">3</span><span>À la fin, Zidane est triste parce qu'il n'a pas compris.</span></div>
+        <div class="vf-options">
+          <button class="vf-btn" onclick="selectVF(this, 'vf3', 'vrai')">✅ Vrai</button>
+          <button class="vf-btn" onclick="selectVF(this, 'vf3', 'faux')">❌ Faux</button>
+        </div>
+        <button class="btn-check" onclick="checkVF('vf3','faux','fb-vf3','❌ FAUX ! Zidane est <strong>fier et content</strong>. Il a beaucoup lu et compris. 🎉')">✓ Vérifier</button>
+        <div class="feedback-box" id="fb-vf3"></div>
+      </div>
+
+    </div>
+
+    <!-- Ex 3 : Orthographe -->
+    <div class="exercise-block">
+      <div class="ex-header gold">
+        <div class="ex-num">3</div>
+        Orthographe – Choisis le bon mot
+      </div>
+      <div class="ex-tip">
+        <span>✏️</span>
+        <span>Recopie le mot correctement écrit. Attention aux pièges !<br>
+        <span class="ex-tip-ar">انسخ الكلمة المكتوبة بشكل صحيح. انتبه للأخطاء الشائعة!</span></span>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">1</span><span>Le <em>garchon</em> ou le <em>garçon</em> ? Recopie le mot correct.</span></div>
+        <span class="q-ar-hint">أيهما صحيح؟ انسخ الكلمة الصحيحة.</span>
+        <input class="q-input" id="orth1" placeholder="garçon ou garchon ?">
+        <button class="btn-check" onclick="checkAnswer('orth1','fb-orth1','garçon','✅ Bien ! <strong>garçon</strong> avec ç (cédille). Jamais « garchon » !')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-orth1','<strong>garçon</strong> – le ç fait le son [s]')">Voir réponse</button>
+        <div class="feedback-box" id="fb-orth1"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">2</span><span>La <em>bale</em> ou la <em>balle</em> ? Recopie le mot correct.</span></div>
+        <span class="q-ar-hint">أيهما صحيح؟</span>
+        <input class="q-input" id="orth2" placeholder="bale ou balle ?">
+        <button class="btn-check" onclick="checkAnswer('orth2','fb-orth2','balle','🏀 Parfait ! <strong>balle</strong> avec deux l. Une seule l changerait le sens !')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-orth2','<strong>balle</strong> – deux l, comme dans salle, alle...')">Voir réponse</button>
+        <div class="feedback-box" id="fb-orth2"></div>
+      </div>
+
+      <div class="q-item">
+        <div class="q-label"><span class="qn">3</span><span><em>Bocoup</em> ou <em>beaucoup</em> ? Écris le mot correct.</span></div>
+        <span class="q-ar-hint">أيهما صحيح؟</span>
+        <input class="q-input" id="orth3" placeholder="Écris le mot correct ...">
+        <button class="btn-check" onclick="checkAnswer('orth3','fb-orth3','beaucoup','✅ Excellent ! <strong>beaucoup</strong> = beau + coup (attention au -eau- et au -p final silencieux)')">✓ Vérifier</button>
+        <button class="btn-reveal" onclick="reveal('fb-orth3','<strong>beaucoup</strong> – beau-coup, le p final ne se prononce pas')">Voir réponse</button>
+        <div class="feedback-box" id="fb-orth3"></div>
+      </div>
+
+    </div>
+
+    <!-- Ex 4 : Production écrite -->
+    <div class="exercise-block">
+      <div class="ex-header purple">
+        <div class="ex-num">4</div>
+        Décris une image avec tes mots
+      </div>
+      <div class="ex-tip">
+        <span>🎨</span>
+        <span>Pas besoin d'être parfait. Écris ce que tu vois avec les mots de l'histoire.<br>
+        <span class="ex-tip-ar">لا حاجة للكمال. اكتب ما تراه بكلمات القصة.</span></span>
+      </div>
+      <div class="q-item">
+        <p style="font-size:1rem; font-weight:600; margin-bottom:8px;">🖼️ Imagine : <em>« Un garçon marche dans une forêt. Il voit une grenouille verte. »</em></p>
+        <p style="font-size:0.88rem; color:var(--muted); margin-bottom:10px;">Décris la scène avec 2 ou 3 phrases simples. Tu peux utiliser les mots du vocabulaire !</p>
+        <textarea class="q-textarea" id="prod1" placeholder="Exemple : Le garçon est dans la forêt. La grenouille est verte. Elle est petite..."></textarea>
+        <button class="btn-reveal" onclick="reveal('fb-prod1','💡 Exemple de bonne réponse :<br>« Le garçon marche dans la grande forêt. Il voit une grenouille verte. La grenouille est bizarree. Le garçon est surpris. »<br><br>✅ Si ta réponse parle du garçon, de la forêt et de la grenouille : c\'est bien !')">Voir un exemple</button>
+        <div class="feedback-box neutral" id="fb-prod1"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── SECTION FLASH ─── -->
+  <div class="section" id="sec-flash">
+    <div class="exercise-block">
+      <div class="ex-header teal">
+        <div class="ex-num">⚡</div>
+        Lecture flash – Mots à reconnaître rapidement
+      </div>
+      <div class="ex-tip">
+        <span>⏱️</span>
+        <span>Regarde chaque mot <strong>2 secondes</strong> et lis-le à voix haute. Clique pour mémoriser !<br>
+        <span class="ex-tip-ar">انظر لكل كلمة ثانيتين فقط، واقرأها بصوت عالٍ. انقر لتحفظها!</span></span>
+      </div>
+      <div class="flash-row" id="flashRow">
+        <div class="flash-word" onclick="flashReveal(this)">aujourd'hui</div>
+        <div class="flash-word" onclick="flashReveal(this)">beaucoup</div>
+        <div class="flash-word" onclick="flashReveal(this)">toujours</div>
+        <div class="flash-word" onclick="flashReveal(this)">ensuite</div>
+        <div class="flash-word" onclick="flashReveal(this)">soudain</div>
+        <div class="flash-word" onclick="flashReveal(this)">maintenant</div>
+        <div class="flash-word" onclick="flashReveal(this)">monsieur</div>
+        <div class="flash-word" onclick="flashReveal(this)">forêt</div>
+        <div class="flash-word" onclick="flashReveal(this)">grenouille</div>
+        <div class="flash-word" onclick="flashReveal(this)">champignon</div>
+      </div>
+      <div style="padding: 0 18px 16px; text-align:center; font-size:0.88rem; color:var(--muted);">
+        Clique sur chaque mot quand tu l'as lu correctement ✓
+      </div>
+
+      <!-- Flash score -->
+      <div style="margin: 0 18px 18px; background: var(--teal-light); border-radius: 12px; padding: 14px 16px; text-align:center;">
+        <div style="font-weight:700; color: var(--teal); font-size:1rem; margin-bottom:6px;">🏅 Score lecture flash</div>
+        <div style="font-size:1.8rem; font-weight:800; color: var(--teal);" id="flash-score">0 / 10</div>
+        <div style="font-size:0.82rem; color:var(--muted); margin-top:4px;">Clique sur les mots lus à voix haute</div>
+      </div>
+    </div>
+
+    <!-- Arabic irregular words -->
+    <div class="exercise-block">
+      <div class="ex-header gold">
+        <div class="ex-num">📌</div>
+        Mots irréguliers – حفظ بصري (mémorisation visuelle)
+      </div>
+      <div style="padding: 16px 18px; display: flex; flex-direction: column; gap: 14px;">
+        <p style="font-size:0.9rem; color:var(--ink-soft);">Ces mots ne s'écrivent pas comme ils se prononcent. Il faut les <strong>mémoriser visuellement</strong>.</p>
+        <p style="font-family:'Noto Naskh Arabic'; direction:rtl; color:var(--forest); font-size:0.95rem;">هذه الكلمات لا تُكتب كما تُلفظ. يجب حفظها بصرياً.</p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:4px;">
+          <div style="background:white; border:2px solid var(--sand-mid); border-radius:12px; padding:12px; text-align:center;">
+            <div style="font-size:1.2rem; font-weight:800; color:var(--teal)">aujourd'hui</div>
+            <div style="font-size:0.8rem; color:var(--muted)">[o-zhoor-dwee]</div>
+            <div style="font-family:'Noto Naskh Arabic'; font-size:0.95rem; color:var(--forest); margin-top:4px;">اليوم</div>
+          </div>
+          <div style="background:white; border:2px solid var(--sand-mid); border-radius:12px; padding:12px; text-align:center;">
+            <div style="font-size:1.2rem; font-weight:800; color:var(--teal)">beaucoup</div>
+            <div style="font-size:0.8rem; color:var(--muted)">[bo-koo]</div>
+            <div style="font-family:'Noto Naskh Arabic'; font-size:0.95rem; color:var(--forest); margin-top:4px;">كثيراً</div>
+          </div>
+          <div style="background:white; border:2px solid var(--sand-mid); border-radius:12px; padding:12px; text-align:center;">
+            <div style="font-size:1.2rem; font-weight:800; color:var(--teal)">monsieur</div>
+            <div style="font-size:0.8rem; color:var(--muted)">[muh-syuh]</div>
+            <div style="font-family:'Noto Naskh Arabic'; font-size:0.95rem; color:var(--forest); margin-top:4px;">سيد / السيد</div>
+          </div>
+          <div style="background:white; border:2px solid var(--sand-mid); border-radius:12px; padding:12px; text-align:center;">
+            <div style="font-size:1.2rem; font-weight:800; color:var(--teal)">toujours</div>
+            <div style="font-size:0.8rem; color:var(--muted)">[too-zhoor]</div>
+            <div style="font-family:'Noto Naskh Arabic'; font-size:0.95rem; color:var(--forest); margin-top:4px;">دائماً</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  🌟 Félicitations <strong>Zidane</strong> ! Chaque séance te rapproche un peu plus des mots.<br>
+  <span style="font-family:'Noto Naskh Arabic'; font-size:1rem; direction:rtl; display:block; margin-top:6px;">مبروك يا زيدان! كل جلسة تقربك أكثر من الكلمات ⭐</span>
+</div>
+
+<script>
+// ─── Tab switching ───
+function showTab(tabId, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + tabId).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── Arabic toggle ───
+function toggleAr(id, btn) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+  btn.textContent = el.classList.contains('show') ? '🔼 Cacher' : '🇸🇦 Traduction';
+}
+
+// ─── Flash words ───
+let flashCount = 0;
+function flashReveal(el) {
+  if (!el.classList.contains('revealed')) {
+    el.classList.add('revealed');
+    flashCount++;
+    document.getElementById('flash-score').textContent = flashCount + ' / 10';
+  }
+}
+
+// ─── VF selection ───
+const vfSelections = {};
+function selectVF(btn, group, value) {
+  document.querySelectorAll(`[onclick*="'${group}'"]`).forEach(b => {
+    b.classList.remove('selected-v', 'selected-f');
+  });
+  vfSelections[group] = value;
+  btn.classList.add(value === 'vrai' ? 'selected-v' : 'selected-f');
+}
+
+// ─── Check VF ───
+function checkVF(group, correct, fbId, msg) {
+  const fb = document.getElementById(fbId);
+  const selected = vfSelections[group];
+  if (!selected) {
+    fb.innerHTML = '⚠️ Clique sur Vrai ou Faux avant de vérifier !';
+    fb.className = 'feedback-box neutral show';
+    return;
+  }
+  if (selected === correct) {
+    fb.innerHTML = msg;
+    fb.className = 'feedback-box correct show';
+    updateProgress(true);
+  } else {
+    fb.innerHTML = msg;
+    fb.className = 'feedback-box incorrect show';
+    updateProgress(false);
+  }
+}
+
+// ─── Check text answer ───
+function checkAnswer(inputId, fbId, correct, successMsg) {
+  const input = document.getElementById(inputId);
+  const fb = document.getElementById(fbId);
+  const val = input.value.trim().toLowerCase().replace(/['']/g, "'");
+  const cor = correct.toLowerCase();
+
+  if (!val) {
+    fb.innerHTML = '✏️ Écris ta réponse avant de vérifier !';
+    fb.className = 'feedback-box neutral show';
+    return;
+  }
+
+  // Flexible match: accept without accents
+  const normalize = s => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  if (normalize(val) === normalize(cor)) {
+    fb.innerHTML = successMsg;
+    fb.className = 'feedback-box correct show';
+    updateProgress(true);
+  } else {
+    fb.innerHTML = `❌ Pas tout à fait. Tu as écrit : « ${input.value} ». <br>👉 Relis bien l'histoire ou clique sur « Voir réponse ».`;
+    fb.className = 'feedback-box incorrect show';
+    updateProgress(false);
+  }
+}
+
+// ─── Reveal answer ───
+function reveal(fbId, msg) {
+  const fb = document.getElementById(fbId);
+  fb.innerHTML = '📖 ' + msg;
+  fb.className = 'feedback-box neutral show';
+}
+
+// ─── Progress tracking ───
+let totalAnswered = 0, totalCorrect = 0;
+function updateProgress(isCorrect) {
+  totalAnswered++;
+  if (isCorrect) totalCorrect++;
+  const pct = totalAnswered > 0 ? Math.round((totalCorrect / totalAnswered) * 100) : 0;
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-score').textContent = totalCorrect + ' / ' + totalAnswered;
+}
+
+console.log('Cours prêt pour Zidane ! 🌟');
+</script>
+</body>
+</html>
