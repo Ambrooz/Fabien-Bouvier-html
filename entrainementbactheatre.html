@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bac Français · Théâtre</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Mono:wght@400;500&family=Bebas+Neue&display=swap');
+
+:root {
+  --ink: #0e0c0a;
+  --parch: #f5efe3;
+  --parch2: #ede4d3;
+  --gold: #c8922a;
+  --gold-lt: #e8c06a;
+  --crimson: #8b1a2b;
+  --forest: #1e3d2f;
+  --forest-lt: #2e5a40;
+  --slate: #2a3040;
+  --mist: #f8f3ea;
+  --border: #d6c9b3;
+  --shadow: rgba(14,12,10,0.12);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  background: var(--parch);
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 18px;
+  line-height: 1.65;
+  min-height: 100vh;
+}
+
+/* Curtain BG */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:-1;
+  background:
+    radial-gradient(ellipse 60% 40% at 10% 20%, rgba(139,26,43,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 90% 80%, rgba(30,61,47,0.07) 0%, transparent 60%),
+    var(--parch);
+}
+
+/* ──── HEADER ──── */
+header {
+  background: var(--forest);
+  color: var(--parch);
+  text-align: center;
+  padding: 3.5rem 2rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content:'';
+  position:absolute; inset:0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 40px,
+    rgba(200,146,42,0.07) 40px,
+    rgba(200,146,42,0.07) 41px
+  );
+}
+.header-inner { position:relative; }
+.stage-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  margin-bottom: 1rem;
+  display: block;
+}
+header h1 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 6rem);
+  letter-spacing: 0.05em;
+  color: var(--parch);
+  line-height: 0.9;
+  margin-bottom: 0.5rem;
+}
+header h1 span { color: var(--gold-lt); }
+.header-sub {
+  font-style: italic;
+  font-size: 1.1rem;
+  color: rgba(245,239,227,0.75);
+  margin-top: 0.8rem;
+}
+.curtain-deco {
+  display: flex; justify-content: center; gap: 1rem;
+  margin-top: 1.5rem;
+}
+.curtain-deco span {
+  display:inline-block;
+  width: 3px; height: 60px;
+  background: linear-gradient(to bottom, var(--gold), transparent);
+  border-radius: 2px;
+  animation: curtainDrop 1.2s ease-out both;
+}
+.curtain-deco span:nth-child(1) { animation-delay: 0s; }
+.curtain-deco span:nth-child(2) { animation-delay: 0.1s; height: 80px; }
+.curtain-deco span:nth-child(3) { animation-delay: 0.2s; }
+.curtain-deco span:nth-child(4) { animation-delay: 0.15s; height: 80px; }
+.curtain-deco span:nth-child(5) { animation-delay: 0.05s; }
+@keyframes curtainDrop {
+  from { transform: scaleY(0); transform-origin: top; opacity:0; }
+  to { transform: scaleY(1); opacity:1; }
+}
+
+/* ──── NAV TABS ──── */
+.nav-tabs {
+  display: flex; flex-wrap: wrap;
+  background: var(--slate);
+  border-bottom: 3px solid var(--gold);
+  position: sticky; top: 0; z-index: 100;
+}
+.tab-btn {
+  background: none; border: none;
+  color: rgba(245,239,227,0.6);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.9rem 1.4rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -3px;
+}
+.tab-btn:hover { color: var(--gold-lt); }
+.tab-btn.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+  background: rgba(200,146,42,0.08);
+}
+
+/* ──── CONTENT SECTIONS ──── */
+.tab-section { display: none; padding: 2.5rem 1.5rem; max-width: 1200px; margin: 0 auto; }
+.tab-section.active { display: block; }
+
+h2 {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.4rem;
+  letter-spacing: 0.06em;
+  color: var(--forest);
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 0.4rem;
+  margin-bottom: 1.8rem;
+}
+h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--crimson);
+  margin: 1.5rem 0 0.8rem;
+}
+
+/* ──── VOCAB GRID ──── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.2rem;
+}
+.vcard {
+  background: var(--mist);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  border-left: 4px solid var(--gold);
+  padding: 1.1rem 1.2rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.vcard:hover { transform: translateY(-3px); box-shadow: 0 8px 24px var(--shadow); }
+.vcard-term {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  color: var(--forest);
+  margin-bottom: 0.3rem;
+}
+.vcard-cat {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.5rem;
+}
+.vcard-def { font-size: 0.95rem; color: #3a2e22; margin-bottom: 0.6rem; }
+.vcard-ex {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--crimson);
+  background: rgba(139,26,43,0.06);
+  padding: 0.3rem 0.6rem;
+  border-radius: 2px;
+  margin-bottom: 0.7rem;
+}
+.reveal-btn {
+  background: var(--ink);
+  color: var(--ink);
+  border: none; cursor: pointer;
+  padding: 0.35rem 0.9rem;
+  border-radius: 2px;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  transition: all 0.25s;
+  width: 100%;
+  text-align: left;
+}
+.reveal-btn:hover { background: var(--gold); color: white; }
+.reveal-btn.shown {
+  background: var(--forest);
+  color: var(--parch);
+  cursor: default;
+}
+
+/* ──── QCM ──── */
+.qcm-set {
+  display: flex; flex-direction: column; gap: 1.2rem;
+}
+.qblock {
+  background: var(--mist);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.2rem 1.4rem;
+}
+.qblock-text {
+  font-size: 1.05rem;
+  font-weight: 600;
+  margin-bottom: 0.9rem;
+  color: var(--slate);
+}
+.qblock-opts {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  margin-bottom: 0.6rem;
+}
+.qopt {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 2px;
+  padding: 0.35rem 1rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.qopt:hover { border-color: var(--gold); color: var(--gold); }
+.qopt.correct { background: var(--forest); color: white; border-color: var(--forest); }
+.qopt.wrong { background: var(--crimson); color: white; border-color: var(--crimson); }
+.qfeedback {
+  font-size: 0.9rem;
+  color: var(--forest);
+  border-left: 3px solid var(--gold);
+  padding-left: 0.8rem;
+  margin-top: 0.5rem;
+  display: none;
+  font-style: italic;
+}
+.qfeedback.show { display: block; }
+
+/* ──── ANALYSE LINÉAIRE ──── */
+.analyse-card {
+  background: var(--mist);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  margin-bottom: 2rem;
+  overflow: hidden;
+}
+.analyse-header {
+  background: var(--slate);
+  color: var(--parch);
+  padding: 1rem 1.4rem;
+  display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+}
+.analyse-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.4rem;
+  letter-spacing: 0.05em;
+  color: var(--gold-lt);
+}
+.analyse-meta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: rgba(245,239,227,0.55);
+  text-transform: uppercase;
+}
+.analyse-body { padding: 1.4rem; }
+.citation-block {
+  border-left: 4px solid var(--crimson);
+  background: rgba(139,26,43,0.04);
+  padding: 1rem 1.2rem;
+  margin: 0.8rem 0 1.2rem;
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.05rem;
+  line-height: 1.9;
+}
+.consigne {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  color: var(--gold);
+  margin-bottom: 0.8rem;
+  border: 1px solid var(--gold);
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 1px;
+}
+.corrige-btn {
+  background: var(--crimson);
+  color: white;
+  border: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.2rem;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.2s;
+  margin-top: 0.8rem;
+}
+.corrige-btn:hover { background: #6a0f1e; }
+.corrige-answer {
+  background: var(--ink);
+  color: var(--ink);
+  border-radius: 2px;
+  padding: 0;
+  margin-top: 0.8rem;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s;
+}
+.corrige-answer.open {
+  color: var(--parch);
+  padding: 1.2rem;
+  max-height: 600px;
+}
+.pce-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1rem;
+  margin: 0.6rem 0;
+  align-items: baseline;
+}
+.pce-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  white-space: nowrap;
+}
+.pce-content { font-size: 0.95rem; }
+
+/* ──── MATCH GAME ──── */
+.match-container {
+  display: flex; flex-direction: column; gap: 0.6rem;
+}
+.match-row-item {
+  display: flex; align-items: center; gap: 0.8rem; flex-wrap: wrap;
+}
+.match-def {
+  flex: 1; font-size: 0.95rem; color: var(--slate);
+  min-width: 200px;
+}
+.match-select {
+  border: 1.5px solid var(--border);
+  border-radius: 2px;
+  background: white;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  padding: 0.3rem 0.6rem;
+  color: var(--ink);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+.match-check-btn {
+  background: var(--forest);
+  color: white;
+  border: none;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.55rem 1.4rem;
+  cursor: pointer;
+  border-radius: 2px;
+  margin-top: 1rem;
+  transition: background 0.2s;
+}
+.match-check-btn:hover { background: var(--forest-lt); }
+.match-score {
+  margin-top: 0.8rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.85rem;
+  color: var(--forest);
+  border-left: 3px solid var(--gold);
+  padding-left: 0.8rem;
+  display: none;
+}
+.match-score.show { display: block; }
+.match-score .correct-sel { background: rgba(30,61,47,0.12); }
+.match-score .wrong-sel { background: rgba(139,26,43,0.1); }
+
+/* ──── STICHOMYTHIE GAME ──── */
+.stich-game {
+  background: var(--mist);
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  padding: 1.4rem;
+}
+.stich-exchange {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1rem;
+  margin-bottom: 1.4rem;
+  line-height: 2;
+}
+.stich-line { margin: 0.3rem 0; display: flex; align-items: baseline; gap: 0.7rem; }
+.stich-who {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+  width: 100px;
+  flex-shrink: 0;
+}
+.stich-text { font-style: italic; }
+.stich-q {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 1rem;
+  margin: 0.7rem 0;
+}
+.stich-q p { font-weight: 600; margin-bottom: 0.6rem; font-size: 0.95rem; }
+.stich-opts { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.stich-opt {
+  background: var(--parch2);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 0.3rem 0.9rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.stich-opt:hover { background: var(--gold); color: white; }
+.stich-fb { font-style: italic; font-size: 0.9rem; margin-top: 0.5rem; display: none; }
+.stich-fb.show { display: block; }
+
+/* ──── PROGRESS BAR ──── */
+.score-bar-wrap { background: var(--parch2); border-radius: 2px; height: 6px; margin: 0.6rem 0; }
+.score-bar { background: var(--gold); height: 100%; border-radius: 2px; transition: width 0.5s ease; }
+
+/* ──── METHODE ──── */
+.method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+.method-card {
+  background: white;
+  border-radius: 3px;
+  border-top: 4px solid var(--forest);
+  padding: 1.2rem;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+.method-card:nth-child(2) { border-top-color: var(--gold); }
+.method-card:nth-child(3) { border-top-color: var(--crimson); }
+.method-card:nth-child(4) { border-top-color: var(--slate); }
+.method-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3rem;
+  line-height: 1;
+  color: rgba(0,0,0,0.06);
+  margin-bottom: 0.3rem;
+}
+.method-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.05em; color: var(--slate); margin-bottom: 0.5rem; }
+.method-body { font-size: 0.9rem; line-height: 1.6; color: #3a3020; }
+
+/* ──── QUIZ SCORE PANEL ──── */
+.score-panel {
+  background: var(--forest);
+  color: var(--parch);
+  border-radius: 3px;
+  padding: 1rem 1.4rem;
+  display: flex; align-items: center; gap: 1.5rem; flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+.score-panel-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.5rem;
+  line-height: 1;
+  color: var(--gold-lt);
+}
+.score-panel-label { font-family: 'DM Mono', monospace; font-size: 0.75rem; letter-spacing: 0.1em; color: rgba(245,239,227,0.6); }
+
+/* ──── FICHE RECAPITULATIVE ──── */
+.fiche-table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.92rem; }
+.fiche-table th {
+  background: var(--slate);
+  color: var(--gold-lt);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.6rem 0.9rem;
+  text-align: left;
+}
+.fiche-table td {
+  padding: 0.6rem 0.9rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.fiche-table tr:nth-child(even) td { background: rgba(0,0,0,0.02); }
+.fiche-table tr:hover td { background: rgba(200,146,42,0.06); }
+
+/* ──── FOOTER ──── */
+footer {
+  background: var(--ink);
+  color: rgba(245,239,227,0.4);
+  text-align: center;
+  padding: 1.5rem;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+}
+
+/* ──── MISC ──── */
+.tag {
+  display: inline-block;
+  background: rgba(200,146,42,0.12);
+  color: var(--gold);
+  border: 1px solid rgba(200,146,42,0.3);
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  padding: 0.15rem 0.6rem;
+  border-radius: 1px;
+  text-transform: uppercase;
+  margin: 0 0.2rem 0.2rem 0;
+}
+.tag.tragic { background: rgba(139,26,43,0.1); color: var(--crimson); border-color: rgba(139,26,43,0.3); }
+.tag.comic { background: rgba(30,61,47,0.1); color: var(--forest); border-color: rgba(30,61,47,0.3); }
+.divider { height: 1px; background: linear-gradient(to right, transparent, var(--border), transparent); margin: 2rem 0; }
+.intro-text { font-size: 1rem; color: #5a4a35; font-style: italic; margin-bottom: 1.5rem; max-width: 700px; }
+
+@media (max-width: 600px) {
+  .tab-btn { font-size: 0.62rem; padding: 0.7rem 0.7rem; }
+  .pce-row { grid-template-columns: 1fr; }
+  .analyse-header { flex-direction: column; gap: 0.3rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="stage-badge">Baccalauréat Général · Français · Objet d'étude</span>
+    <h1>🎭 <span>Théâtre</span></h1>
+    <p class="header-sub">Vocabulaire spécifique · Analyse linéaire · Méthode P.C.E. · Exercices interactifs</p>
+    <p style="font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;color:var(--gold-lt);margin-top:1rem;">
+      Racine · Molière · Corneille · Beckett · Hugo
+    </p>
+    <div class="curtain-deco">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+  </div>
+</header>
+
+<nav class="nav-tabs">
+  <button class="tab-btn active" onclick="showTab('vocab')">Vocabulaire</button>
+  <button class="tab-btn" onclick="showTab('qcm')">QCM</button>
+  <button class="tab-btn" onclick="showTab('associations')">Associations</button>
+  <button class="tab-btn" onclick="showTab('analyse')">Analyses P.C.E.</button>
+  <button class="tab-btn" onclick="showTab('stich')">Stichomythie</button>
+  <button class="tab-btn" onclick="showTab('methode')">Méthode</button>
+  <button class="tab-btn" onclick="showTab('fiche')">Fiche récap</button>
+</nav>
+
+<!-- ═══════════════ VOCABULAIRE ═══════════════ -->
+<section class="tab-section active" id="tab-vocab">
+  <h2>Vocabulaire spécifique</h2>
+  <p class="intro-text">Cliquez sur le bouton de chaque terme pour révéler sa fonction dramatique. Indispensable pour l'analyse linéaire et l'oral.</p>
+
+  <h3>Structure dramatique</h3>
+  <div class="vocab-grid" id="vocab-structure"></div>
+
+  <div class="divider"></div>
+
+  <h3>Types de répliques & paroles</h3>
+  <div class="vocab-grid" id="vocab-repliques"></div>
+
+  <div class="divider"></div>
+
+  <h3>Genres & registres théâtraux</h3>
+  <div class="vocab-grid" id="vocab-genres"></div>
+
+  <div class="divider"></div>
+
+  <h3>Procédés scéniques & effets</h3>
+  <div class="vocab-grid" id="vocab-procedes"></div>
+</section>
+
+<!-- ═══════════════ QCM ═══════════════ -->
+<section class="tab-section" id="tab-qcm">
+  <h2>QCM · 20 questions</h2>
+  <p class="intro-text">Testez vos connaissances du vocabulaire théâtral. Chaque erreur est expliquée.</p>
+  <div class="score-panel">
+    <div>
+      <div class="score-panel-num" id="qcm-score-num">0</div>
+      <div class="score-panel-label">/ <span id="qcm-total">20</span> bonnes réponses</div>
+    </div>
+    <div style="flex:1">
+      <div class="score-bar-wrap"><div class="score-bar" id="qcm-bar" style="width:0%"></div></div>
+    </div>
+    <button onclick="resetQCM()" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.2);color:white;font-family:'DM Mono',monospace;font-size:0.7rem;padding:0.4rem 1rem;cursor:pointer;border-radius:2px;letter-spacing:0.08em;">↺ RESET</button>
+  </div>
+  <div class="qcm-set" id="qcm-container"></div>
+</section>
+
+<!-- ═══════════════ ASSOCIATIONS ═══════════════ -->
+<section class="tab-section" id="tab-associations">
+  <h2>Exercices d'association</h2>
+  <p class="intro-text">Associez chaque terme à sa définition. Trois séries de difficulté croissante.</p>
+
+  <h3>Série 1 — Structure & paroles <span class="tag">débutant</span></h3>
+  <div class="match-container" id="match-s1"></div>
+  <button class="match-check-btn" onclick="checkMatch('s1')">Vérifier série 1</button>
+  <div class="match-score" id="score-s1"></div>
+
+  <div class="divider"></div>
+
+  <h3>Série 2 — Genres & registres <span class="tag">intermédiaire</span></h3>
+  <div class="match-container" id="match-s2"></div>
+  <button class="match-check-btn" onclick="checkMatch('s2')">Vérifier série 2</button>
+  <div class="match-score" id="score-s2"></div>
+
+  <div class="divider"></div>
+
+  <h3>Série 3 — Procédés avancés <span class="tag">avancé</span></h3>
+  <div class="match-container" id="match-s3"></div>
+  <button class="match-check-btn" onclick="checkMatch('s3')">Vérifier série 3</button>
+  <div class="match-score" id="score-s3"></div>
+</section>
+
+<!-- ═══════════════ ANALYSE LINEAIRE ═══════════════ -->
+<section class="tab-section" id="tab-analyse">
+  <h2>Analyses linéaires P.C.E.</h2>
+  <p class="intro-text">Huit extraits d'œuvres au programme. Identifiez les procédés, puis révélez le corrigé complet.</p>
+  <div id="analyses-container"></div>
+</section>
+
+<!-- ═══════════════ STICHOMYTHIE ═══════════════ -->
+<section class="tab-section" id="tab-stich">
+  <h2>Jeu : Identifier les procédés</h2>
+  <p class="intro-text">Lisez l'échange et répondez aux questions sur les procédés de la stichomythie et des dialogues rapides.</p>
+  <div id="stich-container"></div>
+</section>
+
+<!-- ═══════════════ METHODE ═══════════════ -->
+<section class="tab-section" id="tab-methode">
+  <h2>Méthode complète</h2>
+  <div class="method-grid">
+    <div class="method-card">
+      <div class="method-num">01</div>
+      <div class="method-title">Situer l'extrait</div>
+      <div class="method-body">Indiquez l'acte, la scène, le genre (tragédie/comédie), l'auteur, l'époque. Précisez le moment dans l'intrigue : exposition, nœud, péripétie, dénouement.</div>
+    </div>
+    <div class="method-card">
+      <div class="method-num">02</div>
+      <div class="method-title">Formuler l'axe</div>
+      <div class="method-body">Dégagez un mouvement général en 2-3 parties : ex. « De la déclaration à la rupture : l'oscillation des sentiments ». L'axe guide l'ensemble du commentaire.</div>
+    </div>
+    <div class="method-card">
+      <div class="method-num">03</div>
+      <div class="method-title">Appliquer P.C.E.</div>
+      <div class="method-body"><strong>P</strong>rocédé → nommez précisément (métaphore, litote, stichomythie…). <strong>C</strong>itation → relevez exactement. <strong>E</strong>ffet → reliez au registre, au genre, à l'intention de l'auteur.</div>
+    </div>
+    <div class="method-card">
+      <div class="method-num">04</div>
+      <div class="method-title">Intégrer le théâtre</div>
+      <div class="method-body">Toujours mobiliser : double énonciation, didascalies, type de réplique (tirade, aparté, stichomythie), catharsis, ironie dramatique. Ce sont les marques spécifiques du théâtre.</div>
+    </div>
+  </div>
+
+  <h3>Formules-clés pour l'oral</h3>
+  <div style="background:var(--mist);border:1px solid var(--border);border-radius:3px;padding:1.2rem;font-size:0.95rem;line-height:2;">
+    <p>→ « Cette tirade révèle la contradiction intérieure du personnage, soulignée par… »</p>
+    <p>→ « L'aparté crée une complicité entre le personnage et le spectateur : effet d'ironie dramatique. »</p>
+    <p>→ « La stichomythie traduit l'affrontement, le rythme haché mime la tension dramatique. »</p>
+    <p>→ « La double énonciation permet à l'auteur de… tout en montrant que… »</p>
+    <p>→ « Le dénouement catartique libère la tension accumulée depuis l'acte X. »</p>
+    <p>→ « Le registre pathétique suscite la pitié aristotélicienne, condition de la catharsis. »</p>
+    <p>→ « Le quiproquo génère une ironie dramatique : le spectateur sait ce que le personnage ignore. »</p>
+  </div>
+</section>
+
+<!-- ═══════════════ FICHE RECAPITULATIVE ═══════════════ -->
+<section class="tab-section" id="tab-fiche">
+  <h2>Fiche récapitulative</h2>
+  <p class="intro-text">Tableau de synthèse à imprimer ou à apprendre par cœur avant l'épreuve.</p>
+  <table class="fiche-table">
+    <thead>
+      <tr><th>Terme</th><th>Définition essentielle</th><th>Effet / Fonction</th><th>Œuvre exemple</th></tr>
+    </thead>
+    <tbody id="fiche-tbody"></tbody>
+  </table>
+</section>
+
+<footer>
+  🎭 Bac Français — Théâtre · Vocabulaire, Analyses & Exercices interactifs · Méthode P.C.E.
+</footer>
+
+<script>
+// ═══════ DATA ═══════
+
+const VOCAB = {
+  structure: [
+    { term:"L'acte", cat:"Structure", def:"Grande division de la pièce, contenant plusieurs scènes.", ex:"Phèdre, acte I, scène 3.", effet:"Rythme le spectacle, crée des entractes. Marque l'évolution de l'intrigue et les changements de lieu ou de temps dans les règles classiques." },
+    { term:"La scène", cat:"Structure", def:"Subdivision d'un acte ; change à chaque entrée ou sortie d'un personnage.", ex:"Le Cid, acte II, scène 1.", effet:"Chaque scène apporte une tension, un retournement ou une information nouvelle. Unité fondamentale de l'action dramatique." },
+    { term:"L'exposition", cat:"Structure", def:"Première partie de la pièce qui présente les personnages, le contexte et les enjeux.", ex:"Phèdre I,1 : Hippolyte annonce son départ.", effet:"Installe le cadre et la fatalité dès les premiers vers. Le spectateur entre immédiatement dans l'univers tragique ou comique." },
+    { term:"Le nœud", cat:"Structure", def:"Moment où les conflits deviennent irréductibles, tension maximale.", ex:"Le Cid : le duel entre Rodrigue et don Gormas.", effet:"Crée la crise dramatique qui conduit inéluctablement au dénouement. Tient le spectateur en haleine." },
+    { term:"Le dénouement", cat:"Structure", def:"Résolution finale des conflits ; peut être heureux (comédie) ou fatal (tragédie).", ex:"Phèdre : mort de Phèdre, révélation de la vérité.", effet:"Libère la catharsis. En tragédie, confirme la fatalité ; en comédie, rétablit l'ordre social par mariages ou réconciliations." },
+    { term:"La péripétie", cat:"Structure", def:"Événement imprévu qui modifie le cours de l'action.", ex:"L'arrivée de Thésée dans Phèdre (acte III).", effet:"Relance l'action, multiplie les retournements, maintient l'intérêt du spectateur." },
+  ],
+  repliques: [
+    { term:"La tirade", cat:"Réplique", def:"Longue réplique prononcée sans interruption par un personnage.", ex:"Tirade de Phèdre avouant sa passion à Œnone.", effet:"Dévoile les sentiments profonds ou l'argumentation d'un personnage. Ralentit l'action pour approfondir la psychologie. Registre souvent lyrique ou pathétique." },
+    { term:"L'aparté", cat:"Réplique", def:"Paroles dites au public, sans être entendues des autres personnages.", ex:"Apartés d'Orgon cachés sous la table dans Tartuffe IV,5.", effet:"Crée une complicité entre personnage et spectateur. Produit une ironie dramatique : le public sait ce que les autres ignorent." },
+    { term:"Le monologue", cat:"Réplique", def:"Discours d'un personnage seul en scène, face à lui-même ou au public.", ex:"Monologue de Figaro (Le Mariage de Figaro, V,3).", effet:"Révèle la vie intérieure. Peut être délibératif (hésitation), lyrique (plainte) ou satirique (critique sociale)." },
+    { term:"La stichomythie", cat:"Réplique", def:"Dialogue rapide en répliques très courtes, souvent vers à vers.", ex:"L'affrontement Hermione / Oreste dans Andromaque.", effet:"Mime visuellement l'affrontement ou la progression d'une tension. Rythme haché = conflit irréductible. Caractéristique de la tragédie classique." },
+    { term:"La réplique", cat:"Réplique", def:"Unité minimale du dialogue théâtral ; prise de parole d'un personnage.", ex:"— Va, je ne te hais point. — (Chimène, Le Cid)", effet:"La longueur et le ton d'une réplique révèlent le rapport de force entre personnages." },
+    { term:"Les didascalies", cat:"Réplique", def:"Indications scéniques de l'auteur sur le jeu, le décor, les gestes, le ton.", ex:"(Il se jette à ses genoux, éperdu.)", effet:"Orientent la mise en scène et enrichissent la lecture. Peuvent être absentes (Racine) ou très développées (Beckett)." },
+  ],
+  genres: [
+    { term:"La tragédie", cat:"Genre", def:"Genre sérieux mettant en scène des personnages illustres face à un destin fatal.", ex:"Phèdre (Racine, 1677), Andromaque.", effet:"Suscite la pitié et la terreur pour provoquer la catharsis. Le héros est voué à la chute malgré (ou à cause de) ses qualités." },
+    { term:"La comédie", cat:"Genre", def:"Genre visant à faire rire et à critiquer les travers humains.", ex:"Tartuffe, L'Avare, Le Bourgeois gentilhomme.", effet:"Corrige les vices par le rire. Molière : castigat ridendo mores (corriger les mœurs en riant)." },
+    { term:"La tragi-comédie", cat:"Genre", def:"Genre mixte mêlant éléments tragiques et comiques, dénouement heureux.", ex:"Le Cid (Corneille, 1637) — controversé.", effet:"Reflète la complexité des situations humaines. Le dilemme héroïque (honneur vs amour) trouve une issue acceptable." },
+    { term:"La farce", cat:"Genre", def:"Comédie populaire exagérée, fondée sur le comique de gestes et de situations.", ex:"Les Fourberies de Scapin, certaines scènes de Molière.", effet:"Divertit par l'outrance, l'absurde, les coups de bâton. Comique physique et mécanique selon Bergson." },
+    { term:"La catharsis", cat:"Genre", def:"Purgation des passions (peur et pitié) provoquée par le spectacle tragique.", ex:"La mort d'Hippolyte et les aveux de Phèdre.", effet:"Concept aristotélicien : le spectateur ressort libéré de ses passions après avoir vécu l'émotion par procuration." },
+    { term:"Le drame romantique", cat:"Genre", def:"Genre du XIXe s. mélangeant tragique, comique et lyrisme ; refus des unités.", ex:"Hernani (Hugo, 1830) — bataille d'Hernani.", effet:"Libère le théâtre des contraintes classiques. Le héros romantique, sublime et grotesque, incarne les contradictions humaines." },
+  ],
+  procedes: [
+    { term:"Double énonciation", cat:"Procédé", def:"Le discours théâtral s'adresse simultanément aux autres personnages et au public.", ex:"Tout monologue, tout aparté.", effet:"Le spectateur devient témoin privilégié, avec une connaissance supérieure aux personnages. Effet de connivence ou d'ironie." },
+    { term:"Ironie dramatique", cat:"Procédé", def:"Le spectateur sait quelque chose qu'un personnage ignore, créant une tension.", ex:"Œdipe-Roi : le spectateur sait qu'Œdipe est le meurtrier.", effet:"Crée une angoisse anticipatrice, une pitié accrue. Le spectateur souffre de voir le personnage marcher vers sa perte." },
+    { term:"Quiproquo", cat:"Procédé", def:"Malentendu comique ou dramatique : un personnage prend un autre pour qui il n'est pas.", ex:"Les Fourberies de Scapin ; Tartuffe.", effet:"Comique de situation en comédie (rires, tensions). En tragédie, peut conduire à une catastrophe irréversible." },
+    { term:"Coup de théâtre", cat:"Procédé", def:"Événement soudain et imprévu qui renverse radicalement la situation.", ex:"L'arrivée de Thésée dans Phèdre quand on le croyait mort.", effet:"Surprend, relance l'action, montre la fragilité des certitudes humaines. Procédé de climax ou de retournement." },
+    { term:"Registre pathétique", cat:"Procédé", def:"Ensemble des procédés visant à susciter compassion et émotion violente.", ex:"Andromaque suppliant Pyrrhus pour son fils.", effet:"Provoque la pitié du spectateur. Procédés : exclamations, apostrophes, images de souffrance, rythme brisé." },
+    { term:"Le comique", cat:"Procédé", def:"Ensemble des ressorts du rire : mots, gestes, situation, caractère, répétition.", ex:"Harpagon (caractère), le sac de Scapin (geste).", effet:"4 types : comique de mots (calembour), de geste (chute), de situation (quiproquo), de caractère (Avarice d'Harpagon)." },
+  ]
+};
+
+const QCM_DATA = [
+  { q:"Dans une pièce, une longue réplique sans interruption s'appelle :", opts:["Stichomythie","Tirade","Aparté","Monologue"], a:"Tirade", exp:"La tirade est longue et adressée à d'autres personnages. Le monologue est dit seul en scène." },
+  { q:"Quel terme désigne un malentendu entre personnages ?", opts:["Coup de théâtre","Quiproquo","Didascalie","Catharsis"], a:"Quiproquo", exp:"Le quiproquo (du latin quid pro quo) est source de comique ou de tension dramatique." },
+  { q:"« Il se jette à ses genoux, éperdu. » — Ce type d'indication est une :", opts:["Tirade","Aparté","Didascalie","Réplique"], a:"Didascalie", exp:"Les didascalies décrivent gestes, décors, intonations. Absentes chez Racine, très présentes chez Beckett." },
+  { q:"La purgation des passions par la pitié et la peur se nomme :", opts:["Catharsis","Double énonciation","Registre comique","Nœud"], a:"Catharsis", exp:"Concept aristotélicien central à la tragédie classique (Poétique d'Aristote)." },
+  { q:"Lequel de ces personnages est un héros tragique de Racine ?", opts:["Tartuffe","Harpagon","Phèdre","Scapin"], a:"Phèdre", exp:"Phèdre est le personnage éponyme de la tragédie de Racine (1677). Les autres sont des personnages comiques de Molière." },
+  { q:"La stichomythie se caractérise par :", opts:["Des répliques très longues","Des apartés successifs","Des répliques très courtes en alternance","L'absence de dialogue"], a:"Des répliques très courtes en alternance", exp:"Stichomythie = du grec stichos (vers) + mythos (parole). Chaque personnage réplique en un seul vers ou une courte phrase." },
+  { q:"Quel est le dénouement d'une comédie classique selon la convention ?", opts:["La mort des personnages principaux","Un mariage ou une réconciliation","L'exil du héros","Un silence final"], a:"Un mariage ou une réconciliation", exp:"La comédie classique se clôt sur le rétablissement de l'ordre social : mariage, réconciliation, révélation d'identité." },
+  { q:"L'aparté crée principalement :", opts:["Un effet de surprise entre personnages","Une complicité avec le spectateur","Un ralentissement de l'action","Un registre pathétique"], a:"Une complicité avec le spectateur", exp:"L'aparté crée une ironie dramatique : le spectateur sait ce que les autres personnages ignorent." },
+  { q:"La double énonciation signifie que :", opts:["Deux personnages parlent simultanément","Le discours s'adresse aux personnages ET au public","L'auteur parle en son nom propre","Un personnage se contredit"], a:"Le discours s'adresse aux personnages ET au public", exp:"Toute réplique de théâtre a deux destinataires : l'interlocuteur fictif sur scène et le spectateur réel dans la salle." },
+  { q:"Quel auteur a écrit Tartuffe ?", opts:["Racine","Corneille","Hugo","Molière"], a:"Molière", exp:"Tartuffe ou l'Imposteur, Molière, 1664. Comédie satirisant l'hypocrisie dévote." },
+  { q:"Le Cid est classé parmi :", opts:["Les tragédies","Les comédies","Les farces","Les tragi-comédies"], a:"Les tragi-comédies", exp:"Corneille le classe lui-même en tragi-comédie (1637). La Querelle du Cid porte en partie sur ce classement générique." },
+  { q:"L'ironie dramatique consiste en :", opts:["Un personnage qui rit méchamment","Le spectateur sait ce qu'un personnage ignore","Deux répliques contradictoires","Un événement inattendu"], a:"Le spectateur sait ce qu'un personnage ignore", exp:"L'ironie dramatique crée une angoisse : le spectateur voit le personnage marcher vers sa perte sans pouvoir l'en empêcher." },
+  { q:"En attendant Godot de Beckett appartient à :", opts:["La comédie classique","Le théâtre de l'absurde","La tragédie racinienne","Le drame romantique"], a:"Le théâtre de l'absurde", exp:"Beckett (1953) : attente absurde, langage qui tourne en rond, absence de sens apparent. Ionesco également." },
+  { q:"Hernani de Victor Hugo (1830) a provoqué :", opts:["La querelle du Cid","La bataille d'Hernani","La querelle des Anciens et des Modernes","La censure du théâtre"], a:"La bataille d'Hernani", exp:"Affrontement entre classiques et romantiques lors de la première. Hugo défend le drame romantique contre les règles classiques." },
+  { q:"Le comique de caractère consiste en :", opts:["Des chutes et des coups","Un défaut dominant qui rend un personnage ridicule","Un jeu de mots","Une situation absurde"], a:"Un défaut dominant qui rend un personnage ridicule", exp:"Bergson (Le Rire) : le comique de caractère peint un vice mécanique, rigide. Ex. Harpagon = Avarice absolue." },
+  { q:"Les trois unités du théâtre classique sont :", opts:["Acte, scène, réplique","Action, temps, lieu","Tragédie, comédie, farce","Exposition, nœud, dénouement"], a:"Action, temps, lieu", exp:"Règle des trois unités : une action principale, 24h maximum, un seul lieu. Codifiée au XVIIe siècle." },
+  { q:"Dans Phèdre, quel personnage révèle la passion de Phèdre à Hippolyte ?", opts:["Aricie","Théramène","Œnone","Thésée"], a:"Œnone", exp:"Œnone, confidente et nourrice de Phèdre, révèle (calomnieusement) à Thésée qu'Hippolyte aurait séduit Phèdre." },
+  { q:"Le registre pathétique vise principalement à :", opts:["Faire rire","Susciter la pitié et l'émotion","Informer le spectateur","Faire réfléchir rationnellement"], a:"Susciter la pitié et l'émotion", exp:"Pathos (grec) = souffrance, émotion. Procédés : exclamations, apostrophes, hyperboles de la douleur, images de larmes." },
+  { q:"La farce se caractérise principalement par :", opts:["La subtilité psychologique","Le comique de gestes exagéré et l'absurde","Le vers alexandrin","Les unités classiques"], a:"Le comique de gestes exagéré et l'absurde", exp:"La farce (ex. La Farce de Maître Pathelin, XVe) use de coups, d'accélérations, de travestissements. Comique populaire et physique." },
+  { q:"Castigat ridendo mores signifie :", opts:["Le rire est un péché","Corriger les mœurs en riant","Rire pour ne pas pleurer","La comédie plaît aux mœurs"], a:"Corriger les mœurs en riant", exp:"Devise de la comédie (attribuée à Santeul). Molière s'en réclame : le théâtre a une fonction morale et sociale." },
+];
+
+const MATCHES = {
+  s1: {
+    defs: ["Longue réplique prononcée sans interruption", "Paroles dites au public sans être entendues des autres", "Indication scénique sur le jeu ou le décor", "Dialogue rapide en répliques très courtes", "Malentendu entre personnages", "Résolution finale de la pièce"],
+    answers: ["Tirade", "Aparté", "Didascalie", "Stichomythie", "Quiproquo", "Dénouement"],
+    opts: ["Tirade", "Aparté", "Didascalie", "Stichomythie", "Quiproquo", "Dénouement"]
+  },
+  s2: {
+    defs: ["Purgation des passions par la pitié et la peur", "Genre où un destin fatal frappe des personnages illustres", "Genre visant à faire rire et corriger les mœurs", "Parole adressée aux personnages ET aux spectateurs", "Événement soudain renversant la situation", "Connaissance du spectateur supérieure à celle d'un personnage"],
+    answers: ["Catharsis", "Tragédie", "Comédie", "Double énonciation", "Coup de théâtre", "Ironie dramatique"],
+    opts: ["Catharsis", "Tragédie", "Comédie", "Double énonciation", "Coup de théâtre", "Ironie dramatique"]
+  },
+  s3: {
+    defs: ["Discours d'un personnage seul en scène", "Genre mêlant tragique et comique à dénouement heureux", "Comédie populaire exagérée basée sur le comique physique", "Moment où les conflits deviennent irréductibles", "Défaut dominant qui rend un personnage mécanique et ridicule", "Genre du XIXe s. rejetant les règles classiques"],
+    answers: ["Monologue", "Tragi-comédie", "Farce", "Nœud dramatique", "Comique de caractère", "Drame romantique"],
+    opts: ["Monologue", "Tragi-comédie", "Farce", "Nœud dramatique", "Comique de caractère", "Drame romantique"]
+  }
+};
+
+const ANALYSES = [
+  {
+    title: "Phèdre, I,3", author: "Jean Racine", date: "1677", genre: "Tragédie", tags: ["tragic","pathétique","tirade"],
+    citation: `« C'est Vénus tout entière à sa proie attachée ;\nJe reconnus Vénus et ses feux redoutables,\nD'un sang qu'elle poursuit tourments inévitables ! »`,
+    consigne: "Identifiez deux procédés + rattachez au vocabulaire théâtral (tirade, registre tragique). Rédigez l'effet pour chaque procédé.",
+    corrige: [
+      { proc:"Métaphore filée / allégorie de la prédation", cit:"« Vénus tout entière à sa proie attachée »", effet:"Phèdre est réduite à l'état de proie impuissante : la passion est force prédatrice, divine et irrésistible. Registre tragique : le spectateur ressent la terreur aristotélicienne." },
+      { proc:"Champ lexical de la fatalité", cit:"« feux redoutables, tourments inévitables »", effet:"L'adjectif 'inévitables' cristallise la fatalité : aucune issue n'est possible. La tirade met en scène la souffrance intime de Phèdre, suscitant la pitié (catharsis)." },
+      { proc:"Personnification de Vénus", cit:"« Vénus tout entière »", effet:"La déesse incarne la passion dévorante. La double énonciation permet au spectateur de comprendre la cause divine du mal, dépassant la simple psychologie." }
+    ]
+  },
+  {
+    title: "Le Cid, III,4", author: "Pierre Corneille", date: "1637", genre: "Tragi-comédie", tags: ["litote","dilemme"],
+    citation: `« Va, je ne te hais point. »\n— Chimène à Rodrigue`,
+    consigne: "Analysez ce procédé précis et son effet sur le spectateur en employant le vocabulaire tragique.",
+    corrige: [
+      { proc:"Litote", cit:"« je ne te hais point »", effet:"La litote dit moins pour signifier plus : la négation de la haine exprime un amour brûlant que Chimène ne peut avouer. Élégance et pudeur héroïques typiques de Corneille." },
+      { proc:"Dilemme cornélien / registre tragique", cit:"Toute la scène III,4", effet:"Honneur contre amour : Chimène doit poursuivre Rodrigue pour venger son père qu'il a tué, mais elle l'aime. La litote est le condensé parfait de ce déchirement. Le spectateur ressent la catharsis de la contradiction héroïque." },
+    ]
+  },
+  {
+    title: "Andromaque, III,8", author: "Jean Racine", date: "1667", genre: "Tragédie", tags: ["tragic","pathétique","apostrophe"],
+    citation: `« Seigneur, pitié pour elle ! Mon fils vous tend les bras.\nVoyez ses pleurs, sa grâce, et pour nous tous, hélas !
+Que ferez-vous, Seigneur ? Que dira la Grèce entière ? »`,
+    consigne: "Identifiez le registre dominant, au moins deux procédés, et précisez le rôle de la double énonciation.",
+    corrige: [
+      { proc:"Registre pathétique — apostrophe et exclamation", cit:"« Seigneur, pitié pour elle ! »", effet:"L'apostrophe directe interpelle Pyrrhus et le spectateur simultanément. Les exclamations mimiquent l'urgence désespérée d'Andromaque." },
+      { proc:"Personnification + image de l'innocence", cit:"« Mon fils vous tend les bras »", effet:"Le geste de l'enfant (didascalie implicite) est le plus efficace appel à la pitié. Le spectateur est pris à partie : refuser, c'est être monstrueux." },
+      { proc:"Double énonciation — ironie dramatique", cit:"Toute la tirade", effet:"Andromaque s'adresse à Pyrrhus, mais aussi au public qui connaît le destin d'Astyanax. Cette double adresse décuple la pitié aristotélicienne et l'effet cathartique." }
+    ]
+  },
+  {
+    title: "Tartuffe, IV,5", author: "Molière", date: "1664", genre: "Comédie", tags: ["comic","aparté","ironie"],
+    citation: `TARTUFFE — Votre âme est, sans doute, éperdue\n  De ce doux sentiment qui vous a confondue,\nELMIRE (à Orgon, caché) — Que tardez-vous ? que faites-vous encore ?\nORGON (de sous la table) — Mon Dieu ! je crois, vraiment, que c'est pour de bon. »`,
+    consigne: "Analysez les effets comiques en lien avec l'aparté et l'ironie dramatique.",
+    corrige: [
+      { proc:"Aparté + ironie dramatique", cit:"Orgon caché sous la table", effet:"Le spectateur sait depuis le début qu'Orgon espionne. L'aparté d'Elmire (« Que tardez-vous ? ») crée une complicité : trois niveaux de conscience (Tartuffe dupé, Orgon qui découvre, spectateur complice)." },
+      { proc:"Comique de situation", cit:"« Mon Dieu ! je crois, vraiment, que c'est pour de bon. »", effet:"L'aveu tardif d'Orgon est comique : sa naïveté est poussée à l'extrême. La répétition de la scène (Elmire lui ayant pourtant expliqué) renforce le comique de caractère (obstination)." },
+      { proc:"Registre comique / critique des mœurs", cit:"Toute la scène IV,5", effet:"Molière dénonce l'hypocrisie dévote par le rire. Le spectateur voit en Orgon la figure du mari crédule, en Tartuffe l'imposteur. Satire sociale au cœur de la comédie." }
+    ]
+  },
+  {
+    title: "En attendant Godot, Acte I", author: "Samuel Beckett", date: "1953", genre: "Théâtre de l'absurde", tags: ["absurde","répétition"],
+    citation: `VLADIMIR — Qu'est-ce qu'on fait maintenant ?\nESTRAGON — On attend.\nVLADIMIR — Oui, mais en attendant ?\nESTRAGON — On attend Godot.\nVLADIMIR — C'est vrai.`,
+    consigne: "Analysez la stichomythie et ses effets dans ce contexte particulier. Reliez au genre théâtral.",
+    corrige: [
+      { proc:"Stichomythie de l'absurde", cit:"Échange bref Vladimir / Estragon", effet:"La stichomythie classique mime un conflit ou une tension. Ici, elle mime le vide : les répliques courtes ne font que tourner en rond, illustrant l'absurdité de l'attente." },
+      { proc:"Répétition / circularité", cit:"« On attend. » / « On attend Godot. »", effet:"La répétition des mots crée une logique fermée : l'attente est justifiée par elle-même. Beckett déconstruit le théâtre traditionnel (pas de nœud, pas de dénouement)." },
+      { proc:"Registre absurde — anti-catharsis", cit:"Toute la pièce", effet:"Contrairement à la catharsis racinienne, Beckett refuse toute libération. Le spectateur sort avec le malaise de l'incertitude, non purgé mais questionné sur le sens de l'existence." }
+    ]
+  },
+  {
+    title: "Hernani, III,4", author: "Victor Hugo", date: "1830", genre: "Drame romantique", tags: ["romantique","lyrique"],
+    citation: `« Quand tu n'aurais que l'âge de mes fils,\nJe te hais, Hernani ! Pourtant je t'aime. »`,
+    consigne: "Analysez la contradiction du discours. Reliez au genre du drame romantique et à ses enjeux.",
+    corrige: [
+      { proc:"Antithèse / oxymore implicite", cit:"« Je te hais… pourtant je t'aime »", effet:"La contradiction frontale reflète le déchirement du héros romantique, être d'excès, sublime et maudit. L'antithèse structure toute la rhétorique hugolienne." },
+      { proc:"Drame romantique — rejet des unités", cit:"Hernani, III,4", effet:"Hugo mêle tragique et lyrique, refuse la bienséance classique. La passion violente, mise en scène frontalement, est caractéristique du drame romantique (cf. Préface de Cromwell, 1827)." }
+    ]
+  },
+  {
+    title: "L'Avare, IV,7", author: "Molière", date: "1668", genre: "Comédie", tags: ["comic","monologue","comique de caractère"],
+    citation: `« Au voleur ! au voleur ! à l'assassin ! au meurtrier !\nJustice, juste Ciel ! Je suis perdu, je suis assassiné ;\non m'a coupé la gorge, on m'a dérobé mon argent. »`,
+    consigne: "Analysez le monologue d'Harpagon. Précisez le type de comique, les procédés rhétoriques et l'effet sur le spectateur.",
+    corrige: [
+      { proc:"Comique de caractère — l'Avarice absolue", cit:"Tout le monologue IV,7", effet:"Harpagon confond assassinat et vol d'argent : pour lui, perdre sa cassette = mourir. Le comique naît de la démesure du vice qui dévore l'humanité du personnage." },
+      { proc:"Accumulation / gradation", cit:"« au voleur ! au meurtrier ! à l'assassin ! »", effet:"La liste ascendante de crimes pour un simple vol crée le comique d'exagération. Harpagon se victimise à l'excès, rendant le registre pathétique lui-même comique." },
+      { proc:"Monologue — double énonciation", cit:"Apostrophe au public : « N'y a-t-il personne… ? »", effet:"Harpagon interroge le public directement. Molière transforme la scène en dialogue acteur / salle, complicité maximale avec le spectateur qui se retrouve accusé." }
+    ]
+  },
+  {
+    title: "Phèdre, II,5", author: "Jean Racine", date: "1677", genre: "Tragédie", tags: ["tragic","aveu","litote"],
+    citation: `« C'est toi qui l'as nommé.\nSonge à Thésée : il est ton père, et tu le trahis.\nUn père ! Et toi, qu'es-tu ?... »\n— Phèdre interrompant Hippolyte`,
+    consigne: "Analysez la scène d'aveu (II,5). Comment la structure de la réplique révèle-t-elle la progression de la passion ?",
+    corrige: [
+      { proc:"Interruption / aposiopèse", cit:"« Et toi, qu'es-tu ?... »", effet:"La suspension (aposiopèse) marque le trouble de Phèdre : elle ne peut achever sa phrase, la passion l'emporte sur la raison. Procédé typiquement tragique de la conscience déchirée." },
+      { proc:"Apostrophe et glissement de l'aveu", cit:"« Songe à Thésée : il est ton père »", effet:"Phèdre évoque d'abord Thésée comme obstacle, mais la formulation révèle qu'elle s'adresse à Hippolyte en tant qu'objet de désir. L'aveu se fait par détour, ce qui redouble la honte tragique." },
+      { proc:"Stichomythie avant l'aveu", cit:"Échanges rapides Phèdre / Hippolyte, II,5", effet:"La stichomythie précède l'aveu : la tension du dialogue rapide mime la montée irrépressible de la passion. Quand Phèdre cède, la stichomythie éclate en tirade — rupture formelle qui marque la rupture psychologique." }
+    ]
+  }
+];
+
+const STICH_EXERCISES = [
+  {
+    title: "Andromaque, IV,5 — Affrontement Hermione / Oreste",
+    exchange: [
+      { who:"HERMIONE", text:"« Vous êtes obéi. Retournez dans Épire ; et moi, pour vous punir, je reste en cette ville. »" },
+      { who:"ORESTE", text:"« Ingrate ! c'est donc là le prix de mes services ? »" },
+      { who:"HERMIONE", text:"« Allez, servez encore la gloire qui m'outrage. »" },
+      { who:"ORESTE", text:"« Puis-je vivre, grands dieux ! et puis-je vous survivre ? »" },
+    ],
+    questions: [
+      { q:"Quel type de dialogue théâtral observe-t-on ici ?", opts:["Tirade","Monologue","Stichomythie","Aparté"], a:"Stichomythie", exp:"Les répliques sont courtes et alternées : affrontement verbal rapide = stichomythie. Le rythme haché mime l'opposition irréductible." },
+      { q:"Quel registre domine dans la réplique d'Oreste ?", opts:["Comique","Pathétique","Satirique","Didactique"], a:"Pathétique", exp:"L'exclamation « Ingrate ! », la question rhétorique (« puis-je vivre ? ») relèvent du registre pathétique : plainte, désespoir, appel à la pitié." },
+      { q:"La réplique d'Hermione « Allez, servez encore... » contient :", opts:["Une litote","Une antiphrase ironique","Un aparté","Une catharsis"], a:"Une antiphrase ironique", exp:"Elle dit 'servez' alors qu'elle rejette Oreste : l'antiphrase ironique (dire le contraire de ce qu'on pense) accentue la cruauté d'Hermione." },
+    ]
+  },
+  {
+    title: "Tartuffe, I,1 — Dialogue Cléante / Orgon",
+    exchange: [
+      { who:"ORGON", text:"« Le pauvre homme ! »" },
+      { who:"CLÉANTE", text:"« Mais enfin, Monsieur, de quoi souffre-t-il ? »" },
+      { who:"ORGON", text:"« Le pauvre homme ! »" },
+      { who:"CLÉANTE", text:"« En êtes-vous encore là ? »" },
+    ],
+    questions: [
+      { q:"Quel procédé comique domine dans la répétition d'Orgon ?", opts:["Comique de mots","Comique de répétition / caractère","Coup de théâtre","Didascalie"], a:"Comique de répétition / caractère", exp:"La répétition obsessionnelle de « Le pauvre homme ! » révèle le comique de caractère : Orgon est sous l'emprise totale de Tartuffe. Molière illustre la fascination aveugle." },
+      { q:"Cléante joue ici le rôle de :", opts:["Protagoniste","Antagoniste","Confident / raisonneur","Farceur"], a:"Confident / raisonneur", exp:"Le raisonneur (ici Cléante) représente la voix de la raison face à la folie du personnage principal. Rôle classique de la comédie moraliste." },
+      { q:"Quelle fonction dramatique a cette scène d'exposition ?", opts:["Dénouement","Présenter le conflit central par le comique","Coup de théâtre","Aparté du public"], a:"Présenter le conflit central par le comique", exp:"Dès I,1, Molière montre l'aveuglement d'Orgon sur Tartuffe, posant l'enjeu comique et moral de toute la pièce. L'exposition est ici déjà comique." }
+    ]
+  },
+  {
+    title: "En attendant Godot — Dialogue Vladimir / Estragon",
+    exchange: [
+      { who:"VLADIMIR", text:"« Qu'est-ce qu'on fait maintenant ? »" },
+      { who:"ESTRAGON", text:"« On attend. »" },
+      { who:"VLADIMIR", text:"« Oui, mais en attendant ? »" },
+      { who:"ESTRAGON", text:"« On attend Godot. »" },
+    ],
+    questions: [
+      { q:"Quel genre théâtral cet extrait illustre-t-il ?", opts:["Tragédie classique","Comédie de mœurs","Théâtre de l'absurde","Drame romantique"], a:"Théâtre de l'absurde", exp:"Beckett (1953) : absence de sens, circularité du langage, attente sans objet. Caractéristiques du théâtre de l'absurde (Ionesco également)." },
+      { q:"La structure de ce dialogue est :", opts:["Une tirade","Une stichomythie absurde","Un monologue partagé","Une didascalie"], a:"Une stichomythie absurde", exp:"La stichomythie classique mime l'affrontement. Ici, elle mime le vide : les répliques courtes tournent en rond, illustrant l'absurdité de l'existence." },
+      { q:"Quelle est l'effet de la tautologie « On attend Godot » ?", opts:["Elle informe le spectateur","Elle crée une logique circulaire sans issue","Elle marque le dénouement","Elle relance l'action"], a:"Elle crée une logique circulaire sans issue", exp:"La réponse justifie l'attente par l'attente elle-même. Beckett déconstruit la causalité dramatique : pas d'action, pas de sens, pas de dénouement — anti-théâtre." }
+    ]
+  }
+];
+
+const FICHE_DATA = [
+  ["Acte","Grande division de la pièce","Structure le rythme dramatique","Phèdre, acte I"],
+  ["Scène","Subdivision d'un acte (entrée/sortie)","Unité d'action, change la tension","Le Cid, scène 4"],
+  ["Exposition","Début : perso., contexte, enjeux","Installe l'univers, la fatalité","Phèdre I,1"],
+  ["Nœud","Conflits irréductibles, tension max.","Crée la crise dramatique","Le Cid : le duel"],
+  ["Dénouement","Résolution finale","Catharsis (trag.) ou mariage (com.)","Phèdre : mort"],
+  ["Péripétie","Événement imprévu modifiant l'action","Relance, surprise","Arrivée Thésée"],
+  ["Tirade","Longue réplique sans interruption","Révèle psychologie, lyrique","Phèdre / Vendôme"],
+  ["Aparté","Dit au public, caché aux persos","Ironie dramatique, complicité","Tartuffe IV,5"],
+  ["Monologue","Personnage seul, face à lui-même","Introspection, délibération","Figaro V,3"],
+  ["Stichomythie","Répliques très courtes alternées","Affrontement, tension","Hermione / Oreste"],
+  ["Didascalie","Indication de jeu/décor de l'auteur","Oriente la mise en scène","(Il pleure.)"],
+  ["Double énonciation","S'adresse aux persos ET au public","Connivence, ironie","Tout le théâtre"],
+  ["Ironie dramatique","Spectateur > personnage","Angoisse, pitié","Phèdre / Œdipe"],
+  ["Quiproquo","Malentendu entre personnages","Comique ou dramatique","Tartuffe / Scapin"],
+  ["Coup de théâtre","Événement inattendu renversant","Surprise, climax","Thésée dans Phèdre"],
+  ["Catharsis","Purgation des passions","Libère peur et pitié","Fin de Phèdre"],
+  ["Tragédie","Destin fatal de héros illustres","Pitié + terreur → catharsis","Phèdre, Andromaque"],
+  ["Comédie","Rire et critique des mœurs","Corriger les vices par le rire","Tartuffe, L'Avare"],
+  ["Tragi-comédie","Mélange tragique/comique, fin heureuse","Dilemme héroïque","Le Cid"],
+  ["Farce","Comique physique et exagéré","Divertissement populaire","Scapin"],
+  ["Catharsis","Purge des passions du spectateur","Libération émotionnelle","Fin de toute tragédie"],
+  ["Drame romantique","XIXe, rejet des unités, mélange genres","Sublime + grotesque","Hernani (Hugo)"],
+  ["Théâtre de l'absurde","Absence de sens, circularité","Malaise existentiel","En att. Godot"],
+  ["Registre pathétique","Suscite la pitié, l'émotion","Apitoiement, catharsis","Andromaque III,8"],
+  ["Comique de caractère","Défaut mécanique ridicule","Rire + critique morale","Harpagon"],
+];
+
+// ═══════ RENDERING ═══════
+
+let qcmScore = 0;
+let qcmAnswered = new Set();
+
+function buildVocabSection(id, data) {
+  const container = document.getElementById(id);
+  if (!container) return;
+  container.innerHTML = data.map((v, i) => `
+    <div class="vcard">
+      <div class="vcard-term">${v.term}</div>
+      <div class="vcard-cat">${v.cat}</div>
+      <div class="vcard-def">${v.def}</div>
+      <div class="vcard-ex">${v.ex}</div>
+      <button class="reveal-btn" onclick="revealVocab(this, ${JSON.stringify(v.effet)})">▶ Fonction dramatique</button>
+    </div>
+  `).join('');
+}
+
+function revealVocab(btn, text) {
+  if (btn.classList.contains('shown')) return;
+  btn.textContent = text;
+  btn.classList.add('shown');
+}
+
+function buildQCM() {
+  const container = document.getElementById('qcm-container');
+  document.getElementById('qcm-total').textContent = QCM_DATA.length;
+  container.innerHTML = QCM_DATA.map((q, i) => `
+    <div class="qblock" id="qblock-${i}">
+      <div class="qblock-text">❓ ${i+1}. ${q.q}</div>
+      <div class="qblock-opts">
+        ${q.opts.map(opt => `<button class="qopt" onclick="answerQCM(${i}, '${opt.replace(/'/g,"\\'")}', this)">${opt}</button>`).join('')}
+      </div>
+      <div class="qfeedback" id="qfb-${i}"></div>
+    </div>
+  `).join('');
+}
+
+function answerQCM(idx, answer, btn) {
+  if (qcmAnswered.has(idx)) return;
+  qcmAnswered.add(idx);
+  const q = QCM_DATA[idx];
+  const fb = document.getElementById(`qfb-${idx}`);
+  const opts = document.querySelectorAll(`#qblock-${idx} .qopt`);
+  opts.forEach(o => {
+    o.disabled = true;
+    if (o.textContent === q.a) o.classList.add('correct');
+    else if (o === btn) o.classList.add('wrong');
+  });
+  if (answer === q.a) {
+    qcmScore++;
+    fb.textContent = `✅ Exact ! ${q.exp}`;
+  } else {
+    fb.textContent = `❌ Faux. Réponse : ${q.a}. ${q.exp}`;
+  }
+  fb.classList.add('show');
+  updateQCMScore();
+}
+
+function updateQCMScore() {
+  document.getElementById('qcm-score-num').textContent = qcmScore;
+  document.getElementById('qcm-bar').style.width = (qcmScore / QCM_DATA.length * 100) + '%';
+}
+
+function resetQCM() {
+  qcmScore = 0;
+  qcmAnswered.clear();
+  buildQCM();
+  updateQCMScore();
+}
+
+function buildMatches() {
+  ['s1','s2','s3'].forEach(setKey => {
+    const data = MATCHES[setKey];
+    const container = document.getElementById(`match-${setKey}`);
+    container.innerHTML = data.defs.map((def, i) => `
+      <div class="match-row-item">
+        <div class="match-def">${def}</div>
+        <select class="match-select" id="sel-${setKey}-${i}">
+          <option value="">— choisir —</option>
+          ${data.opts.map(o => `<option value="${o}">${o}</option>`).join('')}
+        </select>
+      </div>
+    `).join('');
+  });
+}
+
+function checkMatch(setKey) {
+  const data = MATCHES[setKey];
+  let correct = 0;
+  const lines = data.defs.map((def, i) => {
+    const sel = document.getElementById(`sel-${setKey}-${i}`);
+    const isCorrect = sel.value === data.answers[i];
+    if (isCorrect) correct++;
+    return `<span class="${isCorrect ? 'correct-sel' : 'wrong-sel'}" style="display:block;padding:2px 8px;margin:2px 0;border-radius:2px;">${isCorrect ? '✅' : '❌'} ${def} → <strong>${data.answers[i]}</strong>${!isCorrect ? ` (vous avez choisi : ${sel.value || '—'})` : ''}</span>`;
+  }).join('');
+  const scoreDiv = document.getElementById(`score-${setKey}`);
+  scoreDiv.innerHTML = `<strong>${correct}/${data.defs.length}</strong> correctes.<br><br>${lines}`;
+  scoreDiv.classList.add('show');
+}
+
+function buildAnalyses() {
+  const container = document.getElementById('analyses-container');
+  container.innerHTML = ANALYSES.map((a, i) => `
+    <div class="analyse-card">
+      <div class="analyse-header">
+        <div class="analyse-title">${a.title}</div>
+        <div class="analyse-meta">${a.author} · ${a.date} · ${a.genre}</div>
+        <div>${a.tags.map(t => `<span class="tag ${t}">${t}</span>`).join('')}</div>
+      </div>
+      <div class="analyse-body">
+        <div class="citation-block">${a.citation.replace(/\n/g,'<br>')}</div>
+        <div class="consigne">✏ CONSIGNE</div>
+        <p style="font-size:0.95rem;margin-bottom:0.8rem;">${a.consigne}</p>
+        <button class="corrige-btn" onclick="toggleCorrige('corr-${i}', this)">▶ Afficher le corrigé P.C.E.</button>
+        <div class="corrige-answer" id="corr-${i}">
+          ${a.corrige.map(c => `
+            <div style="margin-bottom:1rem;padding-bottom:1rem;border-bottom:1px solid rgba(255,255,255,0.1);">
+              <div class="pce-row">
+                <div class="pce-label">P — Procédé</div><div class="pce-content">${c.proc}</div>
+                <div class="pce-label">C — Citation</div><div class="pce-content" style="font-style:italic;">${c.cit}</div>
+                <div class="pce-label">E — Effet</div><div class="pce-content">${c.effet}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function toggleCorrige(id, btn) {
+  const div = document.getElementById(id);
+  div.classList.toggle('open');
+  btn.textContent = div.classList.contains('open') ? '▼ Masquer le corrigé' : '▶ Afficher le corrigé P.C.E.';
+}
+
+function buildStich() {
+  const container = document.getElementById('stich-container');
+  container.innerHTML = STICH_EXERCISES.map((ex, ei) => `
+    <div class="stich-game" style="margin-bottom:2rem;">
+      <h3>${ex.title}</h3>
+      <div class="stich-exchange">
+        ${ex.exchange.map(line => `<div class="stich-line"><span class="stich-who">${line.who}</span><span class="stich-text">${line.text}</span></div>`).join('')}
+      </div>
+      ${ex.questions.map((q, qi) => `
+        <div class="stich-q">
+          <p>${qi+1}. ${q.q}</p>
+          <div class="stich-opts">
+            ${q.opts.map(opt => `<button class="stich-opt" onclick="answerStich(this, '${opt.replace(/'/g,"\\'")}', '${q.a.replace(/'/g,"\\'")}', 'stich-fb-${ei}-${qi}', '${q.exp.replace(/'/g,"\\'")}')">${opt}</button>`).join('')}
+          </div>
+          <div class="stich-fb" id="stich-fb-${ei}-${qi}"></div>
+        </div>
+      `).join('')}
+    </div>
+  `).join('');
+}
+
+function answerStich(btn, answer, correct, fbId, exp) {
+  const parent = btn.closest('.stich-q');
+  if (parent.dataset.answered) return;
+  parent.dataset.answered = '1';
+  parent.querySelectorAll('.stich-opt').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === correct) b.style.background = 'var(--forest)', b.style.color = 'white';
+    else if (b === btn) b.style.background = 'var(--crimson)', b.style.color = 'white';
+  });
+  const fb = document.getElementById(fbId);
+  fb.textContent = (answer === correct ? '✅ ' : '❌ Réponse : ' + correct + '. ') + exp;
+  fb.classList.add('show');
+  fb.style.color = answer === correct ? 'var(--forest)' : 'var(--crimson)';
+}
+
+function buildFiche() {
+  const tbody = document.getElementById('fiche-tbody');
+  tbody.innerHTML = FICHE_DATA.map(row => `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`).join('');
+}
+
+// ═══════ TABS ═══════
+
+function showTab(id) {
+  document.querySelectorAll('.tab-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ═══════ INIT ═══════
+
+buildVocabSection('vocab-structure', VOCAB.structure);
+buildVocabSection('vocab-repliques', VOCAB.repliques);
+buildVocabSection('vocab-genres', VOCAB.genres);
+buildVocabSection('vocab-procedes', VOCAB.procedes);
+buildQCM();
+buildMatches();
+buildAnalyses();
+buildStich();
+buildFiche();
+</script>
+</body>
+</html>
