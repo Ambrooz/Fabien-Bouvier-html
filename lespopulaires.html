@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLE C1 – La loi des populaires</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf8f2;
+    --warm-white: #fff9f4;
+    --orange: #e07b39;
+    --orange-light: #f5a96a;
+    --orange-pale: #fdebd5;
+    --teal: #2a7d6f;
+    --teal-light: #e0f0ed;
+    --navy: #1e2d40;
+    --grey: #6b7280;
+    --grey-light: #f3f4f6;
+    --green: #2d6a4f;
+    --green-light: #d8f3dc;
+    --red-light: #fde8e8;
+    --red: #c0392b;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', sans-serif;
+    background: var(--cream);
+    color: var(--navy);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  /* HEADER */
+  header {
+    background: var(--navy);
+    color: white;
+    padding: 36px 40px 28px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: var(--orange);
+    opacity: 0.15;
+  }
+  .header-tag {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--orange-light);
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  header h1 em {
+    color: var(--orange-light);
+    font-style: italic;
+  }
+  .header-meta {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #a0aec0;
+    display: flex; gap: 20px; flex-wrap: wrap;
+  }
+  .badge {
+    display: inline-block;
+    background: var(--orange);
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 3px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+
+  /* LAYOUT */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+  }
+
+  /* SECTION CARD */
+  .card {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(30,45,64,0.07);
+    overflow: hidden;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 28px;
+    border-bottom: 1px solid #f0ece6;
+  }
+  .card-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .icon-orange { background: var(--orange-pale); }
+  .icon-teal   { background: var(--teal-light); }
+  .icon-green  { background: var(--green-light); }
+  .icon-navy   { background: #e8edf3; }
+
+  .card-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .card-header .card-time {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--grey);
+    white-space: nowrap;
+  }
+
+  .card-body {
+    padding: 28px;
+  }
+
+  /* TEXTE */
+  .article-text {
+    font-size: 15.5px;
+    line-height: 1.85;
+    color: #2d3748;
+    border-left: 4px solid var(--orange);
+    padding-left: 20px;
+    background: var(--orange-pale);
+    border-radius: 0 8px 8px 0;
+    padding: 20px 20px 20px 24px;
+  }
+  .article-text p + p { margin-top: 14px; }
+  .article-source {
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--grey);
+    font-style: italic;
+    text-align: right;
+  }
+
+  /* VOCAB TABLE */
+  .vocab-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14.5px;
+  }
+  .vocab-table thead tr {
+    background: var(--teal);
+    color: white;
+  }
+  .vocab-table th {
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    font-size: 13px;
+  }
+  .vocab-table tbody tr:nth-child(even) { background: var(--teal-light); }
+  .vocab-table tbody tr:nth-child(odd)  { background: white; }
+  .vocab-table td {
+    padding: 9px 14px;
+    vertical-align: top;
+    border-bottom: 1px solid #e8f4f2;
+  }
+  .vocab-table td:first-child { font-weight: 600; color: var(--teal); }
+  .vocab-table td:nth-child(2) { color: #444; font-style: italic; }
+  .vocab-table td:last-child { color: #555; }
+
+  /* GRAMMAR */
+  .grammar-box {
+    background: #eef6f4;
+    border: 2px solid var(--teal);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+  }
+  .grammar-box h3 {
+    font-family: 'Playfair Display', serif;
+    color: var(--teal);
+    font-size: 1.05rem;
+    margin-bottom: 10px;
+  }
+  .grammar-box p, .grammar-box li {
+    font-size: 14.5px;
+    color: #2d3748;
+  }
+  .grammar-box ul { padding-left: 20px; }
+  .grammar-box li { margin-bottom: 6px; }
+  .grammar-box .formula {
+    background: white;
+    border: 1px dashed var(--teal);
+    border-radius: 8px;
+    padding: 10px 16px;
+    margin: 12px 0;
+    font-family: monospace;
+    font-size: 14px;
+    color: var(--navy);
+    text-align: center;
+  }
+  .example-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+  }
+  .example-box {
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    line-height: 1.6;
+  }
+  .ex-actif  { background: #fff3cd; border-left: 3px solid #f0a500; }
+  .ex-passif { background: var(--green-light); border-left: 3px solid var(--green); }
+  .ex-label  { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 5px; color: var(--grey); }
+
+  /* EXERCISES */
+  .exercise-section { display: flex; flex-direction: column; gap: 28px; }
+
+  .exercise-block {
+    border: 1px solid #e8edf3;
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .exercise-title {
+    background: var(--navy);
+    color: white;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .exercise-title .ex-num {
+    background: var(--orange);
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .exercise-content { padding: 20px; background: white; }
+
+  /* GAP FILL */
+  .sentence {
+    margin: 10px 0;
+    font-size: 15px;
+    line-height: 2;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+  .sentence label { margin-right: 4px; color: var(--grey); font-size: 13px; }
+
+  input[type="text"] {
+    border: none;
+    border-bottom: 2px solid var(--orange-light);
+    outline: none;
+    font-size: 14.5px;
+    padding: 2px 6px;
+    width: 180px;
+    background: var(--orange-pale);
+    border-radius: 4px 4px 0 0;
+    transition: border-color 0.2s;
+    font-family: 'Source Sans 3', sans-serif;
+  }
+  input[type="text"]:focus {
+    border-bottom-color: var(--orange);
+    background: #fef5ea;
+  }
+  input[type="text"].correct { border-bottom-color: var(--green); background: var(--green-light); }
+  input[type="text"].wrong   { border-bottom-color: var(--red);   background: var(--red-light); }
+
+  .answer-reveal {
+    display: none;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--green);
+    font-weight: 600;
+    padding: 4px 10px;
+    background: var(--green-light);
+    border-radius: 4px;
+  }
+  .answer-reveal.show { display: inline-block; }
+
+  /* REWRITE */
+  .rewrite-item {
+    margin: 14px 0;
+    padding: 14px 16px;
+    background: var(--grey-light);
+    border-radius: 8px;
+    font-size: 14.5px;
+  }
+  .rewrite-item .source {
+    margin-bottom: 8px;
+    color: var(--navy);
+  }
+  .rewrite-item textarea {
+    width: 100%;
+    border: 1px solid #dce0e6;
+    border-radius: 6px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: 'Source Sans 3', sans-serif;
+    resize: vertical;
+    min-height: 56px;
+    background: white;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .rewrite-item textarea:focus { border-color: var(--orange); }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Source Sans 3', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-primary { background: var(--orange); color: white; }
+  .btn-primary:hover { background: #c96a28; }
+  .btn-outline { background: white; color: var(--teal); border: 2px solid var(--teal); }
+  .btn-outline:hover { background: var(--teal-light); }
+  .btn-sm { padding: 6px 14px; font-size: 13px; }
+
+  .btn-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+
+  /* ANSWER BLOCK */
+  .hidden-answer {
+    display: none;
+    margin-top: 12px;
+    padding: 14px 16px;
+    background: var(--green-light);
+    border-left: 4px solid var(--green);
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: #1a4731;
+  }
+  .hidden-answer.show { display: block; }
+  .hidden-answer strong { color: var(--green); }
+
+  /* SCORE */
+  #score-display {
+    display: none;
+    margin-top: 16px;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+  }
+  #score-display.show { display: block; }
+
+  /* PRODUCTION */
+  .production-area {
+    background: var(--grey-light);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .production-area textarea {
+    width: 100%;
+    min-height: 160px;
+    border: 1px solid #dce0e6;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 14.5px;
+    font-family: 'Source Sans 3', sans-serif;
+    resize: vertical;
+    outline: none;
+    background: white;
+    transition: border-color 0.2s;
+    line-height: 1.7;
+  }
+  .production-area textarea:focus { border-color: var(--teal); }
+  .word-count {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--grey);
+    text-align: right;
+  }
+  .production-tips {
+    margin-top: 14px;
+    display: none;
+    padding: 14px;
+    background: white;
+    border: 1px dashed var(--teal);
+    border-radius: 8px;
+    font-size: 13.5px;
+    color: #2d3748;
+  }
+  .production-tips.show { display: block; }
+  .production-tips ul { padding-left: 18px; }
+  .production-tips li { margin-bottom: 5px; }
+
+  /* TIMER */
+  .timer-bar {
+    background: #e2e8f0;
+    border-radius: 6px;
+    height: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .timer-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--teal), var(--orange));
+    border-radius: 6px;
+    transition: width 1s linear;
+  }
+  .timer-text {
+    text-align: right;
+    font-size: 13px;
+    color: var(--grey);
+    margin-top: -20px;
+    margin-bottom: 14px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy);
+    color: #a0aec0;
+    text-align: center;
+    padding: 20px;
+    font-size: 13px;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid #e8edf3;
+    margin: 18px 0;
+  }
+
+  @media (max-width: 600px) {
+    header { padding: 24px 20px; }
+    header h1 { font-size: 1.6rem; }
+    .card-body { padding: 18px; }
+    .example-row { grid-template-columns: 1fr; }
+    input[type="text"] { width: 130px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-tag">Cours de FLE · Niveau <span class="badge">C1</span></div>
+  <h1>La loi des <em>« populaires »</em></h1>
+  <div class="header-meta">
+    <span>⏱ Durée : 60 minutes</span>
+    <span>📰 Source : Le Monde, 2018</span>
+    <span>🎯 Compétences : expression orale &amp; écrite</span>
+  </div>
+</header>
+
+<main>
+
+  <!-- TIMER -->
+  <div>
+    <div class="timer-bar"><div class="timer-bar-inner" id="timer-bar" style="width:100%"></div></div>
+    <div class="timer-text" id="timer-text">60:00</div>
+  </div>
+
+  <!-- 1. TEXTE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-orange">📰</div>
+      <h2>Texte adapté</h2>
+      <span class="card-time">~10 min</span>
+    </div>
+    <div class="card-body">
+      <div class="article-text">
+        <p>Au collège, il existe une hiérarchie sociale invisible mais bien réelle : au sommet se trouvent les « populaires », ces adolescents craints et admirés qui font régner leur loi sur leurs camarades. Leur statut est assorti de codes stricts : ils sont physiquement en avance sur leur âge, toujours vêtus à la dernière mode, et pratiquent des activités sociales qui les distinguent des autres.</p>
+        <p>Ces élèves sont perçus par leurs pairs comme des meneurs dont l'autorité est fondée non sur la gentillesse, mais sur la crainte qu'ils inspirent. Ils obtiennent ce pouvoir en méprisent ostensiblement ceux qu'ils considèrent comme inférieurs — surnommés « bolos », « paumés » ou « intellos » — et en cultivant une attitude d'insolence vis-à-vis des adultes.</p>
+        <p>Ce phénomène est amplifié par les réseaux sociaux, où le nombre d'abonnés Instagram ou les messages reçus sur WhatsApp deviennent des indicateurs publics de popularité. Les élèves qui sont exclus dans la cour de récréation se retrouvent également marginalisés dans le monde virtuel, ce qui crée un cercle vicieux dont il est difficile de sortir.</p>
+        <p>Selon la psycho-praticienne Emmanuelle Piquet, ce « syndrome de popularité » touche même des élèves qui n'ont pas de problème réel d'intégration : ils sont paralysés à l'idée d'en avoir un. Face à ce phénomène, enseignants et parents sont appelés à intervenir — mais leurs propres angoisses sur le « capital social » de leurs enfants risquent parfois d'alimenter ce qu'ils cherchent à combattre.</p>
+      </div>
+      <p class="article-source">D'après Le Monde, 21 septembre 2018 — adapté pour le niveau C1</p>
+    </div>
+  </div>
+
+  <!-- 2. VOCABULAIRE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-teal">📚</div>
+      <h2>Vocabulaire clé · Schlüsselwörter</h2>
+      <span class="card-time">~10 min</span>
+    </div>
+    <div class="card-body">
+      <table class="vocab-table">
+        <thead>
+          <tr>
+            <th>Français</th>
+            <th>Sens / contexte</th>
+            <th>Deutsch</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>un paria</td><td>personne rejetée par le groupe</td><td>ein Ausgestoßener / ein Geächteter</td></tr>
+          <tr><td>une caste</td><td>groupe social hiérarchisé</td><td>eine Kaste / ein Stand</td></tr>
+          <tr><td>trôner</td><td>occuper la place dominante</td><td>thronen / an der Spitze stehen</td></tr>
+          <tr><td>prévaloir</td><td>dominer, être la règle</td><td>vorherrschen / überwiegen</td></tr>
+          <tr><td>tétanisé(e)</td><td>paralysé(e) par la peur</td><td>gelähmt / starr vor Angst</td></tr>
+          <tr><td>mépriser</td><td>traiter avec dédain</td><td>verachten / geringschätzen</td></tr>
+          <tr><td>ostensiblement</td><td>de façon bien visible</td><td>offensichtlich / demonstrativ</td></tr>
+          <tr><td>asseoir sa notoriété</td><td>établir, consolider sa réputation</td><td>seinen Ruf festigen</td></tr>
+          <tr><td>incidemment</td><td>par hasard, accessoirement</td><td>beiläufig / zufälligerweise</td></tr>
+          <tr><td>enrayer</td><td>stopper, freiner un processus</td><td>aufhalten / bremsen</td></tr>
+          <tr><td>la relégation</td><td>exclusion, mise à l'écart</td><td>die Ausgrenzung / die Verbannung</td></tr>
+          <tr><td>ostraciser</td><td>exclure du groupe</td><td>ächten / ausschließen</td></tr>
+          <tr><td>une injonction</td><td>un ordre, une pression sociale</td><td>eine Anweisung / ein Zwang</td></tr>
+          <tr><td>susciter</td><td>provoquer, créer</td><td>hervorrufen / auslösen</td></tr>
+          <tr><td>d'emblée</td><td>immédiatement, dès le départ</td><td>sofort / von Anfang an</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- 3. GRAMMAIRE -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-green">✏️</div>
+      <h2>Point de grammaire : La voix passive</h2>
+      <span class="card-time">~15 min</span>
+    </div>
+    <div class="card-body">
+      <div class="grammar-box">
+        <h3>Pourquoi la voix passive ?</h3>
+        <p>Dans les textes journalistiques et sociologiques (comme cet article), la voix passive est très fréquente. Elle permet de mettre l'accent sur <strong>ce qui est subi</strong> plutôt que sur celui qui agit — ce qui est particulièrement adapté pour parler de victimes d'exclusion.</p>
+        <div class="formula">être (conjugué) + participe passé [+ par + agent (facultatif)]</div>
+        <ul>
+          <li>Le participe passé <strong>s'accorde</strong> avec le sujet.</li>
+          <li>L'agent peut être omis si l'on ne sait pas qui agit, ou si c'est évident.</li>
+          <li>Tous les temps sont possibles : présent, passé composé, imparfait, futur…</li>
+        </ul>
+      </div>
+
+      <div class="example-row">
+        <div class="example-box ex-actif">
+          <div class="ex-label">🔵 Voix active</div>
+          Les populaires <em>excluent</em> les « paumés ».<br>
+          Le groupe <em>a étiqueté</em> cet élève « victime ».<br>
+          Les réseaux sociaux <em>amplifient</em> le phénomène.
+        </div>
+        <div class="example-box ex-passif">
+          <div class="ex-label">🟢 Voix passive</div>
+          Les « paumés » <em>sont exclus</em> par les populaires.<br>
+          Cet élève <em>a été étiqueté</em> « victime ».<br>
+          Le phénomène <em>est amplifié</em> par les réseaux sociaux.
+        </div>
+      </div>
+
+      <hr class="divider">
+      <p style="font-size:14px; color: var(--grey); margin-bottom: 10px;"><strong>💡 Attention :</strong> Le verbe <em>être</em> au passé peut créer une ambiguïté avec l'état (passif d'état) vs. l'action (passif d'action). Comparez :</p>
+      <div class="example-row">
+        <div class="example-box ex-actif">
+          <div class="ex-label">État (résultat)</div>
+          La porte <em>est fermée</em>. (= elle est dans cet état)
+        </div>
+        <div class="example-box ex-passif">
+          <div class="ex-label">Action (passif)</div>
+          La porte <em>a été fermée</em> par le prof. (= quelqu'un l'a fermée)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. EXERCICES -->
+  <div class="card">
+    <div class="card-header">
+      <div class="card-icon icon-navy">🎯</div>
+      <h2>Exercices</h2>
+      <span class="card-time">~25 min</span>
+    </div>
+    <div class="card-body exercise-section">
+
+      <!-- Ex 1 : Vocabulaire lacunes -->
+      <div class="exercise-block">
+        <div class="exercise-title">
+          <span class="ex-num">1</span>
+          Complétez les phrases avec le mot juste (vocabulaire du texte)
+        </div>
+        <div class="exercise-content">
+          <p style="font-size:13px; color:var(--grey); margin-bottom:14px;">Tapez votre réponse, puis cliquez sur « Vérifier » pour voir si elle est correcte.</p>
+
+          <div class="sentence">
+            <span>a) Les élèves qui ne respectent pas les codes des populaires risquent d'être traités comme de véritables</span>
+            <input type="text" id="q1a" placeholder="…">
+            <span>du groupe.</span>
+          </div>
+          <div class="answer-reveal" id="ans1a">✅ parias</div>
+
+          <div class="sentence">
+            <span>b) Au sommet de la hiérarchie scolaire,</span>
+            <input type="text" id="q1b" placeholder="…">
+            <span>les « populaires », craints de tous.</span>
+          </div>
+          <div class="answer-reveal" id="ans1b">✅ trônent</div>
+
+          <div class="sentence">
+            <span>c) Même des élèves sans problème réel sont</span>
+            <input type="text" id="q1c" placeholder="…">
+            <span>à l'idée d'être rejetés.</span>
+          </div>
+          <div class="answer-reveal" id="ans1c">✅ tétanisés / tétanisées</div>
+
+          <div class="sentence">
+            <span>d) Les directeurs d'établissement cherchent à</span>
+            <input type="text" id="q1d" placeholder="…">
+            <span>le processus de harcèlement.</span>
+          </div>
+          <div class="answer-reveal" id="ans1d">✅ enrayer</div>
+
+          <div class="sentence">
+            <span>e) Les populaires ignorent les autres</span>
+            <input type="text" id="q1e" placeholder="…">
+            <span>, sans même chercher à les blesser verbalement.</span>
+          </div>
+          <div class="answer-reveal" id="ans1e">✅ ostensiblement</div>
+
+          <div class="btn-row">
+            <button class="btn btn-primary btn-sm" onclick="checkVocab()">Vérifier mes réponses</button>
+            <button class="btn btn-outline btn-sm" onclick="revealAllVocab()">Voir toutes les réponses</button>
+          </div>
+          <div id="score-display"></div>
+        </div>
+      </div>
+
+      <!-- Ex 2 : Transformation passive -->
+      <div class="exercise-block">
+        <div class="exercise-title">
+          <span class="ex-num">2</span>
+          Transformez à la voix passive (écrivez dans les cases)
+        </div>
+        <div class="exercise-content">
+          <p style="font-size:13px; color:var(--grey); margin-bottom:14px;">Réécrivez chaque phrase en mettant le verbe à la voix passive. Cliquez sur « Voir la réponse » pour vérifier.</p>
+
+          <div class="rewrite-item">
+            <div class="source">🔵 <strong>a)</strong> Les populaires excluent souvent les élèves timides.</div>
+            <textarea id="rw1" placeholder="Les élèves timides sont souvent…"></textarea>
+            <div class="btn-row">
+              <button class="btn btn-outline btn-sm" onclick="toggleAnswer('ra1')">Voir la réponse</button>
+            </div>
+            <div class="hidden-answer" id="ra1"><strong>✅</strong> Les élèves timides sont souvent exclus par les populaires.</div>
+          </div>
+
+          <div class="rewrite-item">
+            <div class="source">🔵 <strong>b)</strong> Les réseaux sociaux ont amplifié ce phénomène d'exclusion.</div>
+            <textarea id="rw2" placeholder="Ce phénomène d'exclusion a été…"></textarea>
+            <div class="btn-row">
+              <button class="btn btn-outline btn-sm" onclick="toggleAnswer('ra2')">Voir la réponse</button>
+            </div>
+            <div class="hidden-answer" id="ra2"><strong>✅</strong> Ce phénomène d'exclusion a été amplifié par les réseaux sociaux.</div>
+          </div>
+
+          <div class="rewrite-item">
+            <div class="source">🔵 <strong>c)</strong> Le groupe avait étiqueté cet élève « victime » dès la rentrée.</div>
+            <textarea id="rw3" placeholder="Cet élève avait été…"></textarea>
+            <div class="btn-row">
+              <button class="btn btn-outline btn-sm" onclick="toggleAnswer('ra3')">Voir la réponse</button>
+            </div>
+            <div class="hidden-answer" id="ra3"><strong>✅</strong> Cet élève avait été étiqueté « victime » dès la rentrée (par le groupe).</div>
+          </div>
+
+          <div class="rewrite-item">
+            <div class="source">🔵 <strong>d)</strong> On voit ce type de comportement dans de nombreux établissements.</div>
+            <textarea id="rw4" placeholder="Ce type de comportement est…"></textarea>
+            <div class="btn-row">
+              <button class="btn btn-outline btn-sm" onclick="toggleAnswer('ra4')">Voir la réponse</button>
+            </div>
+            <div class="hidden-answer" id="ra4"><strong>✅</strong> Ce type de comportement est vu dans de nombreux établissements. <br><em>(ou mieux : Ce type de comportement est observé dans de nombreux établissements.)</em></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ex 3 : Production écrite guidée -->
+      <div class="exercise-block">
+        <div class="exercise-title">
+          <span class="ex-num">3</span>
+          Production écrite guidée (niveau C1)
+        </div>
+        <div class="exercise-content">
+          <p style="font-size:14.5px; margin-bottom: 14px;">
+            <strong>Consigne :</strong> Rédigez un court article (~150 mots) pour le <em>Journal des Parents</em> afin d'alerter sur les dangers des hiérarchies sociales au collège et de proposer au moins deux solutions concrètes.<br>
+            <span style="font-size:13px; color:var(--grey);">Utilisez au moins <strong>3 mots du vocabulaire</strong> de cette leçon et <strong>une phrase à la voix passive</strong>.</span>
+          </p>
+          <div class="production-area">
+            <textarea id="prod-text" placeholder="Rédigez votre article ici…" oninput="countWords()"></textarea>
+            <div class="word-count" id="word-count">0 mot(s)</div>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-outline btn-sm" onclick="toggleTips()">💡 Afficher les conseils de rédaction</button>
+          </div>
+          <div class="production-tips" id="prod-tips">
+            <strong>Conseils pour un article de niveau C1 :</strong>
+            <ul>
+              <li>Commencez par une accroche : une question rhétorique ou un constat frappant.</li>
+              <li>Structurez en 3 parties : problème → conséquences → solutions.</li>
+              <li>Utilisez des connecteurs logiques variés : <em>en outre, néanmoins, c'est pourquoi, ainsi</em>…</li>
+              <li>Employez la voix passive pour mettre en avant les victimes (ex. : <em>« Ces élèves sont souvent ignorés… »</em>).</li>
+              <li>Terminez par un appel à l'action ou une phrase d'ouverture.</li>
+              <li>Exemples de connecteurs utiles : <em>d'une part / d'autre part, par ailleurs, en revanche, il convient de, il s'avère que…</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  Préparation au DELF C1 · Cours de FLE · Document pédagogique — d'après <em>Le Monde</em>, 2018
+</footer>
+
+<script>
+  // --- TIMER (60 min) ---
+  let totalSeconds = 60 * 60;
+  const timerBar = document.getElementById('timer-bar');
+  const timerText = document.getElementById('timer-text');
+  const interval = setInterval(() => {
+    totalSeconds--;
+    if (totalSeconds < 0) { clearInterval(interval); return; }
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    timerText.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+    timerBar.style.width = (totalSeconds / 3600 * 100) + '%';
+    if (totalSeconds < 600) timerBar.style.background = 'var(--orange)';
+    if (totalSeconds < 300) timerBar.style.background = 'var(--red)';
+  }, 1000);
+
+  // --- VOCAB CHECK ---
+  const answers = {
+    q1a: ['paria', 'parias'],
+    q1b: ['trônent'],
+    q1c: ['tétanisés', 'tétanisées', 'tétanisé', 'tétanisée'],
+    q1d: ['enrayer'],
+    q1e: ['ostensiblement']
+  };
+
+  function normalize(str) {
+    return str.trim().toLowerCase()
+      .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  }
+
+  function checkVocab() {
+    let correct = 0; let total = Object.keys(answers).length;
+    for (const [id, acceptable] of Object.entries(answers)) {
+      const input = document.getElementById(id);
+      const val = normalize(input.value);
+      const ok = acceptable.some(a => normalize(a) === val);
+      input.classList.remove('correct', 'wrong');
+      input.classList.add(ok ? 'correct' : 'wrong');
+      if (ok) correct++;
+      const ans = document.getElementById('ans' + id.replace('q',''));
+      if (ok) { ans.classList.add('show'); } else { ans.classList.remove('show'); }
+    }
+    const sd = document.getElementById('score-display');
+    sd.classList.add('show');
+    const pct = Math.round(correct / total * 100);
+    if (pct === 100) {
+      sd.style.background = 'var(--green-light)'; sd.style.color = 'var(--green)';
+      sd.textContent = `🎉 Parfait ! ${correct}/${total} — Excellent travail !`;
+    } else if (pct >= 60) {
+      sd.style.background = '#fff3cd'; sd.style.color = '#8a6300';
+      sd.textContent = `👍 ${correct}/${total} — Bien ! Revoyez les erreurs.`;
+    } else {
+      sd.style.background = 'var(--red-light)'; sd.style.color = 'var(--red)';
+      sd.textContent = `💪 ${correct}/${total} — Continuez ! Consultez le tableau de vocabulaire.`;
+    }
+  }
+
+  function revealAllVocab() {
+    for (const id of Object.keys(answers)) {
+      const ans = document.getElementById('ans' + id.replace('q',''));
+      ans.classList.add('show');
+    }
+  }
+
+  // --- TOGGLE ANSWERS ---
+  function toggleAnswer(id) {
+    const el = document.getElementById(id);
+    el.classList.toggle('show');
+  }
+
+  // --- WORD COUNT ---
+  function countWords() {
+    const text = document.getElementById('prod-text').value.trim();
+    const count = text === '' ? 0 : text.split(/\s+/).length;
+    const wc = document.getElementById('word-count');
+    wc.textContent = `${count} mot(s)`;
+    wc.style.color = count >= 130 && count <= 170 ? 'var(--green)' : 'var(--grey)';
+  }
+
+  // --- TIPS ---
+  function toggleTips() {
+    document.getElementById('prod-tips').classList.toggle('show');
+  }
+</script>
+</body>
+</html>
