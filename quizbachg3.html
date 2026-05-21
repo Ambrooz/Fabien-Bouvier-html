@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Quiz Bac Pro - Relations internationales : notions & couleurs</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Poppins', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f0ff 0%, #e9eff9 100%);
+            padding: 2rem 1rem;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER ÉCLATANT */
+        .hero {
+            background: linear-gradient(115deg, #0f2b3d 0%, #1b4a6e 100%);
+            padding: 2.2rem 2rem;
+            border-radius: 60px;
+            color: white;
+            text-align: center;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 0 #0a2a3b;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+        .badge-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+        }
+        .badge {
+            background: #ffd966;
+            color: #1e3c4a;
+            padding: 8px 18px;
+            border-radius: 80px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        /* NOTIONS CLÉS - CARTES COULEURS */
+        .notions-section {
+            background: rgba(255,255,240,0.7);
+            border-radius: 48px;
+            padding: 1.6rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(2px);
+        }
+        .notions-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, #b91c1c, #f97316, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .notions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.2rem;
+        }
+        .notion-card {
+            background: white;
+            border-radius: 28px;
+            padding: 1rem 1.2rem;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+            transition: all 0.2s;
+            border-left: 8px solid;
+            font-weight: 500;
+        }
+        .notion-card strong {
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .notion-card p {
+            font-size: 0.85rem;
+            color: #2d3e50;
+            line-height: 1.4;
+        }
+        .color-bipolaire { border-left-color: #dc2626; background: #fff5f5; }
+        .color-unipolaire { border-left-color: #2563eb; background: #eff6ff; }
+        .color-multipolaire { border-left-color: #16a34a; background: #f0fdf4; }
+        .color-dissuasion { border-left-color: #9333ea; background: #faf5ff; }
+        .color-terrorisme { border-left-color: #e11d48; background: #fff1f3; }
+
+        /* QUIZ STYLES */
+        .quiz-wrapper {
+            background: white;
+            border-radius: 48px;
+            padding: 1.6rem 1.8rem;
+            margin-bottom: 2.2rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+            transition: 0.2s;
+        }
+        .quiz-title {
+            font-size: 1.8rem;
+            font-weight: 800;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            border-bottom: 4px solid #facc15;
+            padding-bottom: 0.6rem;
+            margin-bottom: 1.8rem;
+        }
+        .quiz-title h2 {
+            background: linear-gradient(135deg, #1f4e79, #0f2b3d);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .count {
+            background: #f1f5f9;
+            padding: 0.25rem 1rem;
+            border-radius: 60px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            color: #0f3b5c;
+        }
+
+        .q-card {
+            background: #ffffff;
+            border-radius: 32px;
+            margin-bottom: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            border: 1px solid #eef2ff;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+        .q-text {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            gap: 12px;
+        }
+        .q-num {
+            background: #334155;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 28px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            flex-shrink: 0;
+        }
+        .btn-reveal {
+            background: #eef2ff;
+            border: none;
+            padding: 0.45rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #1e293b;
+            cursor: pointer;
+            transition: 0.1s;
+            margin-top: 0.4rem;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+        }
+        .btn-reveal:hover {
+            background: #fde047;
+            transform: scale(0.96);
+        }
+        .answer-area {
+            margin-top: 1rem;
+            padding: 0.8rem 1rem;
+            border-radius: 28px;
+            background: #fefce8;
+            border-left: 6px solid #eab308;
+            display: none;
+            font-size: 0.95rem;
+        }
+        .answer-area.show {
+            display: block;
+        }
+        .check {
+            color: #2b9348;
+            font-weight: 700;
+            display: inline-block;
+            background: #e6f4ea;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            margin-bottom: 6px;
+            font-size: 0.75rem;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.8rem;
+            color: #3b5c7a;
+        }
+        @media (max-width: 700px) {
+            .quiz-wrapper { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🌎 Le jeu des puissances <br> dans les relations internationales</h1>
+        <p>Bac Pro Histoire-Géo · Quiz + NOTIONS CLÉS visuelles</p>
+        <div class="badge-group">
+            <span class="badge">🧊 Guerre froide</span>
+            <span class="badge">🦅 Hyperpuissance US</span>
+            <span class="badge">🌍 Multipolarité</span>
+            <span class="badge">🇪🇺 Défis européens</span>
+            <span class="badge">☢️ Nucléaire & Terrorisme</span>
+        </div>
+    </div>
+
+    <!-- ========== NOTIONS CLÉS ILLUSTRÉES ========== -->
+    <div class="notions-section">
+        <div class="notions-title">🎯 NOTIONS FONDAMENTALES (à maîtriser absolument)</div>
+        <div class="notions-grid">
+            <div class="notion-card color-bipolaire"><strong>🔹 Bipolarité</strong><p>Monde divisé en deux blocs (USA/URSS) de 1947 à 1991. Affrontement Est-Ouest.</p></div>
+            <div class="notion-card color-unipolaire"><strong>🔸 Hyperpuissance</strong><p>Années 1990 : domination totale des États-Unis (militaire, éco, culturelle).</p></div>
+            <div class="notion-card color-multipolaire"><strong>🔹 Multipolarité</strong><p>Plusieurs pôles de puissance : USA, Chine, UE, Russie, BRICS.</p></div>
+            <div class="notion-card color-dissuasion"><strong>🔸 Dissuasion nucléaire</strong><p>Destruction mutuelle assurée (MAD) évite la guerre directe (Cuba 1962).</p></div>
+            <div class="notion-card color-terrorisme"><strong>🔹 Terrorisme international</strong><p>Acteurs non-étatiques (Al-Qaïda, Daech) → menace asymétrique post-11/09.</p></div>
+            <div class="notion-card"><strong>🔸 Containment</strong><p>Endiguement du communisme (doctrine Truman, 1947).</p></div>
+            <div class="notion-card"><strong>🔹 Rideau de fer</strong><p>Frontière idéologique et physique divisant l'Europe (Churchill).</p></div>
+            <div class="notion-card"><strong>🔸 Soft power</strong><p>Influence par la culture, les médias, le sport (Hollywood, séries).</p></div>
+            <div class="notion-card"><strong>🔹 Prolifération nucléaire</strong><p>Diffusion des armes atomiques à Corée du Nord, Iran → tensions.</p></div>
+            <div class="notion-card"><strong>🔸 BRICS</strong><p>Brésil, Russie, Inde, Chine, Afrique du Sud (40% pop. mondiale).</p></div>
+        </div>
+    </div>
+
+    <!-- ========== QUIZ 1 : GUERRE FROIDE + NOTIONS ========== -->
+    <div class="quiz-wrapper">
+        <div class="quiz-title"><h2>❄️ QUIZ 1 · Guerre froide (1947-1991) - notions essentielles</h2><span class="count">12 QCM/Réponses</span></div>
+        <div id="gfColorQuiz"></div>
+    </div>
+
+    <!-- ========== QUIZ 2 : HYPERPUISSANCE & MULTIPOLARITÉ ========== -->
+    <div class="quiz-wrapper">
+        <div class="quiz-title"><h2>🦅 QUIZ 2 · Hyperpuissance US, 11/09 et émergents</h2><span class="count">14 questions</span></div>
+        <div id="hyperQuiz"></div>
+    </div>
+
+    <!-- ========== QUIZ 3 : CONSTRUCTION EUROPÉENNE + DÉFIS ========== -->
+    <div class="quiz-wrapper">
+        <div class="quiz-title"><h2>🇪🇺 QUIZ 3 · Europe, ONU et défis contemporains</h2><span class="count">12 questions</span></div>
+        <div id="europeQuiz"></div>
+    </div>
+
+    <!-- ========== QUIZ 4 : DATES + GRANDES ÉTAPES (couleurs) ========== -->
+    <div class="quiz-wrapper">
+        <div class="quiz-title"><h2>📅 QUIZ 4 · Chronologie & étapes majeures</h2><span class="count">12 dates repères</span></div>
+        <div id="chronoQuiz"></div>
+    </div>
+
+    <!-- ========== QUIZ 5 : ORGANISATIONS INTERNATIONALES & TRAITÉS ========== -->
+    <div class="quiz-wrapper">
+        <div class="quiz-title"><h2>🏛️ QUIZ 5 · Institutions, alliances et traités</h2><span class="count">10 questions</span></div>
+        <div id="institutionsQuiz"></div>
+    </div>
+
+    <!-- ========== QUIZ SUP : CRISES & CONFLITS RÉGIONAUX (nouveau) ========== -->
+    <div class="quiz-wrapper">
+        <div class="quiz-title"><h2>🔥 QUIZ 6 · Conflits régionaux & crises depuis 1991</h2><span class="count">10 questions</span></div>
+        <div id="crisesQuiz"></div>
+    </div>
+
+    <footer>
+        🎨 <strong>Quiz + couleurs + notions clés</strong> – Préparez le Bac Pro en s’amusant ! <br>
+        👉 Cliquez sur chaque bouton pour révéler la réponse détaillée et retenir l'essentiel.
+    </footer>
+</div>
+
+<script>
+    // --- Fonction générique pour créer les quiz ---
+    function buildQuiz(questionsArray, containerId) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        let html = '';
+        questionsArray.forEach((item, idx) => {
+            const uniqueId = `${containerId}_ans_${idx}`;
+            html += `
+                <div class="q-card">
+                    <div class="q-text">
+                        <span class="q-num">${idx+1}</span>
+                        <span>${item.question}</span>
+                    </div>
+                    <button class="btn-reveal" data-target="${uniqueId}">📖 Voir la réponse</button>
+                    <div id="${uniqueId}" class="answer-area">
+                        <span class="check">✔️ Réponse</span><br> ${item.reponse}
+                    </div>
+                </div>
+            `;
+        });
+        container.innerHTML = html;
+
+        // Gestionnaires d'événements
+        const btns = container.querySelectorAll('.btn-reveal');
+        btns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const targetId = btn.getAttribute('data-target');
+                const answerDiv = document.getElementById(targetId);
+                if (answerDiv) {
+                    answerDiv.classList.toggle('show');
+                }
+            });
+        });
+    }
+
+    // -------------------- BASE DE DONNÉES ÉTOFFÉE --------------------
+    // QUIZ 1 : Guerre froide
+    const quizGuerreFroide = [
+        { question: "En quelle année la doctrine Truman est-elle proclamée ?", reponse: "📅 1947 : doctrine du containment (endiguement du communisme)." },
+        { question: "Que signifie « rideau de fer » ?", reponse: "🧱 Expression de Churchill : frontière idéologique et physique séparant l'Europe capitaliste de l'Europe communiste." },
+        { question: "Quel événement marque le début de la guerre de Corée (date) ?", reponse: "🗓️ 25 juin 1950 – invasion du Sud par la Corée du Nord communiste." },
+        { question: "Pourquoi le mur de Berlin a-t-il été construit en 1961 ?", reponse: "🚧 Pour empêcher la fuite des Allemands de l'Est vers l'Ouest (RFA)." },
+        { question: "Quelle crise de 1962 a failli déclencher une guerre nucléaire ?", reponse: "🇨🇺🚀 Crise des missiles de Cuba (13 jours de tension entre USA & URSS)." },
+        { question: "Citez deux traités de limitation des armements nucléaires (années 1960/70).", reponse: "📜 TNP (1968), SALT I (1972), SALT II – désarmement progressif." },
+        { question: "Quel dirigeant soviétique lance la Perestroïka et la Glasnost ?", reponse: "🇷🇺 Mikhaïl Gorbatchev (1985) – restructuration et transparence." },
+        { question: "Date de la chute du mur de Berlin.", reponse: "🎉 9 novembre 1989 – symbole de la fin de la bipolarité." },
+        { question: "En quelle année l'URSS disparaît-elle ?", reponse: "🔻 1991 : dislocation en 15 républiques indépendantes." },
+        { question: "Qu'est-ce que la doctrine Jdanov (1947) ?", reponse: "⚔️ Division du monde en deux camps : impérialiste (USA) vs anti-impérialiste (URSS)." },
+        { question: "Que signifie l'OTAN ?", reponse: "🤝 Organisation du traité de l'Atlantique Nord (alliance militaire occidentale, 1949)." },
+        { question: "Quel conflit périphérique oppose les USA à l'URSS en Afghanistan ?", reponse: "⛰️ Guerre d'Afghanistan (1979-1989) – enlisement soviétique." }
+    ];
+
+    // QUIZ 2 : Hyperpuissance & 11 septembre + Multipolarité
+    const hyperQuiz = [
+        { question: "Pourquoi qualifie-t-on les années 1990 d'hyperpuissance américaine ?", reponse: "🦅 USA unique superpuissance : militaire, économique (40% PIB mondial), culturelle (Hollywood, Internet)." },
+        { question: "Quel président américain évoque le « nouvel ordre mondial » en 1990 ?", reponse: "👔 George H.W. Bush (guerre du Golfe, coalition ONU)." },
+        { question: "Date des attentats du 11 septembre 2001.", reponse: "✈️🗽 11 septembre 2001 – Al-Qaïda (Oussama Ben Laden)." },
+        { question: "Quelles sont les deux interventions majeures de la « guerre contre le terrorisme » ?", reponse: "🇦🇫 Afghanistan (2001-2021) et 🇮🇶 Irak (2003)." },
+        { question: "Citez trois pays des BRICS.", reponse: "🇧🇷 Brésil, 🇷🇺 Russie, 🇮🇳 Inde, 🇨🇳 Chine, 🇿🇦 Afrique du Sud." },
+        { question: "Qu'est-ce que la multipolarité ?", reponse: "🌐 Plusieurs centres de puissance (USA, Chine, UE, Russie) qui s’influencent mutuellement." },
+        { question: "Pourquoi la Chine est-elle considérée comme une puissance montante ?", reponse: "📈 Croissance économique record (2e PIB mondial), modernisation militaire (210 Md$ de budget en 2016)." },
+        { question: "Quel est l'objectif de l'Organisation de Coopération de Shanghai (OCS) créée en 2001 ?", reponse: "🤝 Contrebalancer l'influence occidentale, sécurité régionale (Chine, Russie, Asie centrale)." },
+        { question: "Que signifie « conflit asymétrique » ?", reponse: "⚔️ Guerres opposant une armée régulière à des groupes armés non étatiques (terrorisme, guérilla)." },
+        { question: "En quelle année la Russie annexe-t-elle la Crimée ?", reponse: "2014 – crise ukrainienne, sanctions occidentales." },
+        { question: "Quel est le poids démographique des BRICS ?", reponse: "👥 Environ 40% de la population mondiale." },
+        { question: "Quelles sont les limites de la puissance américaine après 2003 ?", reponse: "💥 Enlisement en Irak et Afghanistan, contestation croissante du multilatéralisme." },
+        { question: "Qu'est-ce que la prolifération nucléaire ?", reponse: "☢️ Diffusion des armes nucléaires à des États comme la Corée du Nord (essai 2006) et l'Iran." },
+        { question: "Quel groupe terroriste a revendiqué les attentats du 11 septembre ?", reponse: "💣 Al-Qaïda, dirigée par Oussama Ben Laden." }
+    ];
+
+    // QUIZ 3 Europe, ONU, défis
+    const europeQuiz = [
+        { question: "Quel traité a créé l'Union européenne en 1992 ?", reponse: "📜 Traité de Maastricht – citoyenneté européenne, monnaie unique." },
+        { question: "Année de mise en circulation de l'euro.", reponse: "💶 2002 (billets et pièces) – 19 pays, 340 millions d'utilisateurs." },
+        { question: "Qu'est-ce que le Brexit ?", reponse: "🇬🇧 Sortie du Royaume-Uni de l'UE (référendum 2016, effective 2020)." },
+        { question: "Quel défi migratoire frappe l'Europe en 2015 ?", reponse: "🚤 Crise migratoire : des centaines de milliers de réfugiés syriens, afghans." },
+        { question: "Comment s'appelle l'accord qui régit l'ONU ?", reponse: "📖 Charte des Nations Unies (1945)." },
+        { question: "Quels sont les 5 membres permanents du Conseil de sécurité ?", reponse: "🇺🇸 USA, 🇬🇧 RU, 🇫🇷 France, 🇷🇺 Russie, 🇨🇳 Chine (droit de veto)." },
+        { question: "Quel conflit majeur éclate en Europe en 2022 ?", reponse: "🔴 Invasion de l'Ukraine par la Russie (ravive les tensions Est-Ouest)." },
+        { question: "Citez deux missions de l'UE sur la scène internationale.", reponse: "🕊️ Maintien de la paix (Balkans, Afrique), premier donateur d'aide humanitaire." },
+        { question: "Que signifie « soft power » européen ?", reponse: "🎓 Influence par le commerce, les valeurs démocratiques, l'aide au développement." },
+        { question: "Quel est le rôle du droit de veto à l'ONU ?", reponse: "🚫 Un membre permanent peut bloquer toute résolution du Conseil de sécurité." },
+        { question: "Pourquoi l'élargissement de l'OTAN est-il contesté par Moscou ?", reponse: "⚠️ Encerclement stratégique : anciens pays du pacte de Varsovie intègrent l’OTAN." },
+        { question: "Quelle crise économique révèle les fragilités de l'euro ?", reponse: "📉 Crise de la dette souveraine (Grèce, 2008-2012)." }
+    ];
+
+    // QUIZ 4 Chronologie
+    const chronoQuiz = [
+        { question: "1945 → création de...", reponse: "🏛️ Organisation des Nations Unies (ONU)." },
+        { question: "1947 → doctrines qui lancent la Guerre froide.", reponse: "Truman (containment) et Jdanov (deux camps)." },
+        { question: "1949 → deux Allemagnes.", reponse: "RFA (Ouest) et RDA (Est)." },
+        { question: "1957 → traité fondateur de la CEE.", reponse: "Traité de Rome." },
+        { question: "1961 → construction du mur de Berlin.", reponse: "Division concrète de la ville." },
+        { question: "1991 → fin de l'URSS.", reponse: "Fin de la bipolarité, début de l'hyperpuissance américaine." },
+        { question: "1992 → traité de Maastricht.", reponse: "Naissance de l'Union européenne." },
+        { question: "2001 → attentats du 11 septembre.", reponse: "Choc terroriste et guerre contre le terrorisme." },
+        { question: "2002 → mise en circulation de l'euro.", reponse: "Monnaie unique européenne." },
+        { question: "2014 → annexion de la Crimée.", reponse: "Retour des tensions Est-Ouest." },
+        { question: "2020 → départ du Royaume-Uni de l'UE.", reponse: "Brexit effectif." },
+        { question: "2022 → invasion russe de l'Ukraine.", reponse: "Guerre de haute intensité en Europe." }
+    ];
+
+    // QUIZ 5 institutions / traités
+    const institutionsQuiz = [
+        { question: "Qu'est-ce que le Plan Marshall (1947) ?", reponse: "💰 Aide économique américaine massive pour reconstruire l'Europe et endiguer le communisme." },
+        { question: "À quoi sert le Pacte de Varsovie (1955) ?", reponse: "Alliance militaire du bloc de l'Est dirigée par l'URSS." },
+        { question: "Que signifie l'acronyme FMI ?", reponse: "Fonds monétaire international – assure la stabilité financière mondiale." },
+        { question: "Quel est le rôle de l'OTAN depuis 1991 ?", reponse: "Élargie à l'Est, maintien de la sécurité collective, interventions (ex-Yougoslavie, Afghanistan)." },
+        { question: "Citez deux organisations régionales asiatiques.", reponse: "ASEAN, OCS (Organisation de coopération de Shanghai)." },
+        { question: "Quel traité de 1968 limite la prolifération nucléaire ?", reponse: "TNP (Traité de non-prolifération nucléaire)." },
+        { question: "Qu'est-ce que l'OMC ?", reponse: "🌍 Organisation mondiale du commerce – régule le commerce international." },
+        { question: "Que signifie « G7 » ?", reponse: "Groupe des 7 pays les plus industrialisés (USA, Canada, Japon, Allemagne, France, Italie, Royaume-Uni)." },
+        { question: "Pourquoi parle-t-on de « multilatéralisme » ?", reponse: "Coopération entre plusieurs pays via des institutions (ONU, UE, OTAN)." },
+        { question: "Quel accord sur le nucléaire iranien est signé en 2015 ?", reponse: "JCPOA (Plan d'action global commun)." }
+    ];
+
+    // QUIZ 6 : Conflits régionaux / crises supplémentaires
+    const crisesQuiz = [
+        { question: "Quelles guerres d'ex-Yougoslavie éclatent après 1991 ?", reponse: "Bosnie-Herzégovine (1992-1995), Kosovo (1998-1999) – nettoyage ethnique." },
+        { question: "Quel conflit éclate en Syrie en 2011 ?", reponse: "Guerre civile syrienne, avec ingérences russes, américaines, turques." },
+        { question: "Pourquoi la Corée du Nord représente une menace nucléaire ?", reponse: "🇰🇵 Essais nucléaires depuis 2006, missiles balistiques malgré sanctions." },
+        { question: "Quel est le rôle des « printemps arabes » (2011) ?", reponse: "Soulèvements populaires contre les régimes autoritaires (Tunisie, Égypte, Libye, Syrie)." },
+        { question: "En quelle année l'État islamique (Daech) proclame son califat ?", reponse: "2014 – terrorisme djihadiste, prise de Mossoul." },
+        { question: "Où se situe la guerre civile libyenne après 2011 ?", reponse: "Libye – instabilité, rivalités entre milices et ingérences étrangères." },
+        { question: "Quel pays d'Afrique des Grands Lacs connaît des conflits récurrents ?", reponse: "République démocratique du Congo (guerres civiles, ressources minières)." },
+        { question: "Quel est l'impact du réchauffement climatique sur les conflits internationaux ?", reponse: "🌡️ Raréfaction des ressources, migrations, tensions géopolitiques." },
+        { question: "Citez une puissance régionale émergente en Amérique latine.", reponse: "Brésil (membre des BRICS, rôle au sein du Mercosur)." },
+        { question: "Quel est l'objectif de la « Route de la Soie » chinoise ?", reponse: "🚆 Projet d'infrastructures mondial (Nouvelles routes de la soie) pour accroître l'influence chinoise." }
+    ];
+
+    // LANCEMENT DE TOUS LES QUIZ
+    buildQuiz(quizGuerreFroide, "gfColorQuiz");
+    buildQuiz(hyperQuiz, "hyperQuiz");
+    buildQuiz(europeQuiz, "europeQuiz");
+    buildQuiz(chronoQuiz, "chronoQuiz");
+    buildQuiz(institutionsQuiz, "institutionsQuiz");
+    buildQuiz(crisesQuiz, "crisesQuiz");
+</script>
+</body>
+</html>

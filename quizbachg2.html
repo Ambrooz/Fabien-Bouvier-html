@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>✅ BAC PRO - Quiz Géant : Histoire (1945→) + EMC (Démocratie, Laïcité, Bioéthique)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f4fe 0%, #e6edf7 100%);
+            padding: 2rem 1.5rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* HEADER ARC-EN-CIEL */
+        .hero {
+            background: linear-gradient(120deg, #0f2b4d, #1b4a6e, #1f6d5a);
+            border-radius: 2.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            color: white;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            background: linear-gradient(135deg, #FFD166, #F4A261, #F9C74F);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: none;
+            margin-bottom: 0.5rem;
+        }
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        .badge-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1.2rem 0 0;
+        }
+        .badge-skill {
+            background: #ffd966cc;
+            backdrop-filter: blur(4px);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #1e2a3a;
+        }
+
+        /* sections thématiques */
+        .section {
+            border-radius: 2rem;
+            margin-bottom: 2.8rem;
+            overflow: hidden;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.2);
+            transition: transform 0.2s ease;
+        }
+
+        .section-header {
+            padding: 1rem 2rem;
+            font-size: 1.7rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            color: white;
+        }
+
+        .histoire-header { background: linear-gradient(95deg, #003049, #2a6f8f); border-bottom: 5px solid #f77f00; }
+        .emc-header { background: linear-gradient(95deg, #1b4332, #2d6a4f); border-bottom: 5px solid #f9c74f; }
+
+        .notions-cles {
+            background: #fef9e8;
+            margin: 1.5rem 2rem;
+            padding: 1rem 1.5rem;
+            border-radius: 1.8rem;
+            border-left: 12px solid #f4a261;
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+        .notions-cles h3 {
+            color: #b75814;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+            margin-bottom: 0.6rem;
+        }
+        .notions-cles .grid-notions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 6px;
+        }
+        .pill-notion {
+            background: #f3e1be;
+            padding: 5px 14px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #5a3e1b;
+        }
+
+        .quiz-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.8rem;
+            padding: 1.8rem 2rem 2rem 2rem;
+        }
+
+        .quiz-card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.2rem;
+            transition: 0.2s;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 8px 18px rgba(0,0,0,0.05);
+        }
+        .quiz-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.2);
+            border-color: #cbd5e1;
+        }
+
+        .q-title {
+            font-weight: 800;
+            font-size: 1rem;
+            background: #edf2f7;
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 30px;
+            margin-bottom: 12px;
+            color: #2c3e66;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1.05rem;
+            background: #fafcff;
+            padding: 0.7rem;
+            border-radius: 1.2rem;
+            margin-bottom: 1rem;
+            color: #0f172a;
+            line-height: 1.4;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 0.7rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #f8fafc;
+            padding: 0.6rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.1s;
+            border: 1px solid #e2e8f0;
+        }
+        .option:hover {
+            background: #eef2ff;
+            border-color: #94a3b8;
+        }
+        input[type="radio"] {
+            accent-color: #2563eb;
+            width: 18px;
+            height: 18px;
+            margin: 0;
+            cursor: pointer;
+        }
+        .option label {
+            flex: 1;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 10px 12px;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+        .feedback-correct {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 6px solid #10b981;
+        }
+        .feedback-wrong {
+            background: #ffe4e2;
+            color: #991b1b;
+            border-left: 6px solid #f97316;
+        }
+        .feedback-neutral {
+            background: #f1f5f9;
+            color: #334155;
+        }
+
+        .reset-btn {
+            background: #e2e8f0;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: 0.1s;
+        }
+        .reset-btn:hover {
+            background: #cbd5e6;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            color: #2c3e50;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            border-radius: 3rem;
+            padding: 1rem;
+        }
+        @media (max-width: 780px) {
+            body { padding: 1rem; }
+            .quiz-grid { padding: 1rem; }
+            .section-header { font-size: 1.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>🎯 VIVRE EN FRANCE EN DÉMOCRATIE (1945 →)</h1>
+        <p>Quiz + Notions clés + couleurs • Prépare-toi au Bac Pro Histoire-Géo & EMC</p>
+        <div class="badge-group">
+            <span class="badge-skill">🏛️ IVe / Ve Rép.</span>
+            <span class="badge-skill">📈 Trente Glorieuses</span>
+            <span class="badge-skill">⚖️ Laïcité & Libertés</span>
+            <span class="badge-skill">🗳️ Cohabitation</span>
+            <span class="badge-skill">🧬 Bioéthique</span>
+        </div>
+    </div>
+
+    <!-- SECTION HISTOIRE (16 quiz) -->
+    <div class="section">
+        <div class="section-header histoire-header">
+            <span>📜 HISTOIRE – Thème 2 | Vivre en France en démocratie</span>
+            <span style="font-size:0.9rem;">🇫🇷 1945 – Aujourd'hui</span>
+        </div>
+        <div class="notions-cles">
+            <h3>📌 NOTIONS CLÉS À MAÎTRISER (Histoire)</h3>
+            <div class="grid-notions">
+                <span class="pill-notion">🏛️ IVe République (1946-58)</span>
+                <span class="pill-notion">🦅 Ve République (1958)</span>
+                <span class="pill-notion">📈 Trente Glorieuses</span>
+                <span class="pill-notion">🔄 Cohabitation</span>
+                <span class="pill-notion">🌍 État-providence (Sécu 1945)</span>
+                <span class="pill-notion">🇪🇺 Construction européenne (CECA, Maastricht)</span>
+                <span class="pill-notion">⚡ Mai 68 / Gilets Jaunes</span>
+                <span class="pill-notion">💶 Euro (2002)</span>
+                <span class="pill-notion">⚖️ Loi Veil (IVG) / Mariage pour tous</span>
+            </div>
+        </div>
+        <div id="historyGrid" class="quiz-grid"></div>
+    </div>
+
+    <!-- SECTION EMC (16 quiz) -->
+    <div class="section">
+        <div class="section-header emc-header">
+            <span>⚖️ EMC – S'engager, démocratie, défis de société</span>
+            <span>🗣️ Liberté • Laïcité • Médias • Bioéthique</span>
+        </div>
+        <div class="notions-cles">
+            <h3>📌 NOTIONS CLÉS EMC</h3>
+            <div class="grid-notions">
+                <span class="pill-notion">🔹 Démocratie représentative</span>
+                <span class="pill-notion">🔹 Laïcité (loi 1905)</span>
+                <span class="pill-notion">🔹 Séparation des pouvoirs</span>
+                <span class="pill-notion">🔹 Liberté d'expression & limites</span>
+                <span class="pill-notion">🔹 Fake news / Esprit critique</span>
+                <span class="pill-notion">🔹 Bioéthique (PMA, OGM, fin de vie)</span>
+                <span class="pill-notion">🔹 Principe de précaution</span>
+                <span class="pill-notion">🔹 Conseil constitutionnel</span>
+            </div>
+        </div>
+        <div id="emcGrid" class="quiz-grid"></div>
+    </div>
+    <footer>💡 32 questions interactives • Les bonnes réponses sont réparties aléatoirement entre A, B, C, D ! Révise efficacement.</footer>
+</div>
+
+<script>
+    // ==================== 16 QUESTIONS HISTOIRE (réponses réparties aléatoirement entre A, B, C, D) ====================
+    // Chaque objet contient : texte, un tableau de 4 options, et l'index correct (0,1,2 ou 3) varié.
+    const historyQuestions = [
+        { text: "Quelle période économique est surnommée les « Trente Glorieuses » ?", options: ["1940-1970", "1945-1973", "1958-1988", "1973-2003"], correct: 1, explanation: "1945-1973 : croissance exceptionnelle, plein emploi, développement de l'État-providence." },
+        { text: "Qui est le fondateur de la Ve République et son premier président ?", options: ["François Mitterrand", "Georges Pompidou", "Charles de Gaulle", "Jacques Chirac"], correct: 2, explanation: "De Gaulle → Constitution 1958, élu président en 1959, démissionne en 1969." },
+        { text: "Que signifie la cohabitation sous la Ve République ?", options: ["Président et 1er ministre du même parti", "Alliance avec l'Allemagne", "Collaboration entre syndicats", "Président et 1er ministre d'opposition politique"], correct: 3, explanation: "Ex: Mitterrand (PS) / Chirac (RPR) 1986-1988." },
+        { text: "Quelle grande loi sur les droits des femmes est adoptée en 1975 sous Giscard ?", options: ["Parité politique", "Congé parental", "Égalité salariale", "IVG (loi Veil)"], correct: 3, explanation: "Loi Veil (Simone Veil) légalise l'IVG, combat féministe majeur." },
+        { text: "La France adopte le suffrage universel direct pour l'élection du président en :", options: ["1962", "1958", "1981", "1965"], correct: 0, explanation: "Référendum 1962 → le président est élu au suffrage universel direct (avant collège électoral)." },
+        { text: "Quel président a instauré le quinquennat (mandat de 5 ans) ?", options: ["Sarkozy", "Chirac", "Mitterrand", "Hollande"], correct: 1, explanation: "Référendum 2000 sous Chirac : réduction du mandat de 7 à 5 ans." },
+        { text: "La Sécurité sociale, créée en 1945, est un pilier de :", options: ["L'État-providence", "La monarchie républicaine", "Le libéralisme économique", "La guerre froide"], correct: 0, explanation: "État-providence : protection sociale contre les risques (maladie, vieillesse, famille)." },
+        { text: "Quel événement social de 1968 a paralysé la France ?", options: ["Grève des mineurs", "Printemps silencieux", "Jours de colère", "Mai 68 (grèves étudiantes et générales)"], correct: 3, explanation: "Mai 68 : crise sociale, 10 millions de grévistes, accords de Grenelle." },
+        { text: "La France dit « Non » à la Constitution européenne lors du référendum de :", options: ["2005", "2002", "2007", "1992"], correct: 0, explanation: "29 mai 2005 : rejet à 54,7 % → défiance envers l'Europe." },
+        { text: "Quel président a légalisé le mariage pour tous en 2013 ?", options: ["Sarkozy", "Macron", "Hollande", "Chirac"], correct: 2, explanation: "Loi Taubira (2013) : mariage et adoption pour les couples de même sexe." },
+        { text: "Quelle crise marque la fin des Trente Glorieuses ?", options: ["Crise des subprimes", "Krach de 1929", "Crise de la dette 2010", "Choc pétrolier 1973"], correct: 3, explanation: "Choc pétrolier : flambée du pétrole, stagflation, chômage de masse." },
+        { text: "Les lois de décentralisation (1982) ont été voulues par :", options: ["De Gaulle", "Giscard", "Mitterrand (lois Defferre)", "Pompidou"], correct: 2, explanation: "Lois Defferre 1982 : transfert de compétences aux régions/départements." },
+        { text: "Quel président a affronté le mouvement des Gilets Jaunes (2018-2019) ?", options: ["Hollande", "Macron", "Sarkozy", "Chirac"], correct: 1, explanation: "Emmanuel Macron : crise des Gilets Jaunes contre la taxe carbone et la fiscalité." },
+        { text: "Le traité de Maastricht (1992) crée :", options: ["L'euro uniquement", "La CECA", "L'espace Schengen", "L'Union européenne"], correct: 3, explanation: "Traité de Maastricht : Union européenne, citoyenneté européenne et prépare l'euro." },
+        { text: "La loi sur la parité (2000) impose :", options: ["Quota dans les entreprises", "Égalité salariale stricte", "Égal accès hommes-femmes aux mandats électifs", "Congé paternité"], correct: 2, explanation: "Loi sur la parité : listes alternées aux élections pour plus de femmes en politique." },
+        { text: "Quel président a aboli la peine de mort en 1981 ?", options: ["Giscard", "Mitterrand", "Chirac", "Pompidou"], correct: 1, explanation: "Robert Badinter (garde des Sceaux) → loi du 9 octobre 1981." }
+    ];
+
+    // ==================== 16 QUESTIONS EMC (réponses aléatoires ABCD) ====================
+    const emcQuestions = [
+        { text: "Quels sont les trois pouvoirs dans une démocratie ?", options: ["Présidentiel, fédéral, cantonal", "Royal, législatif, militaire", "Législatif, exécutif, judiciaire", "Parlementaire, religieux, civil"], correct: 2, explanation: "Montesquieu : séparation des pouvoirs pour éviter l'arbitraire." },
+        { text: "Que garantit la loi de 1905 en France ?", options: ["La religion d'État", "La liberté d'expression totale", "La laïcité (neutralité de l'État, liberté de conscience)", "L'athéisme obligatoire"], correct: 2, explanation: "Loi de séparation des Églises et de l'État → laïcité." },
+        { text: "La liberté d'expression est-elle illimitée en France ?", options: ["Oui, absolument", "Uniquement pour les journalistes", "Seulement à l'écrit", "Non, elle a des limites (racisme, injure, diffamation)"], correct: 3, explanation: "Limites : provocation à la haine, calomnie, atteinte à la vie privée." },
+        { text: "Comment appelle-t-on une information volontairement fausse diffusée pour manipuler ?", options: ["Propagande officielle", "Fake news", "Canular légal", "Rumeur"], correct: 1, explanation: "Fake news → nuire au débat démocratique, désinformation." },
+        { text: "Qu'est-ce que le principe de précaution ?", options: ["Interdire toute innovation", "Privilégier le progrès coûte que coûte", "Agir face à un risque grave même sans certitude scientifique", "Attendre la preuve absolue"], correct: 2, explanation: "Inscrit dans la Charte de l'environnement (2005)." },
+        { text: "Que signifie OGM ?", options: ["Office des Grandes Marées", "Organisme Génétiquement Modifié", "Observation Génétique Mondiale", "Organisation Génétique Médicale"], correct: 1, explanation: "Modification du génome d'un organisme (ex: maïs résistant aux insectes)." },
+        { text: "Quel est le rôle du Conseil constitutionnel ?", options: ["Juger les criminels", "Vérifier la conformité des lois à la Constitution", "Gouverner en cas de crise", "Écrire les projets de loi"], correct: 1, explanation: "Contrôle la constitutionnalité des lois avant leur promulgation." },
+        { text: "Dans l'espace public, la laïcité implique pour les agents publics :", options: ["Liberté totale d'afficher leur religion", "Neutralité stricte", "Porter des signes religieux visibles", "Obligation d'être croyant"], correct: 1, explanation: "Les fonctionnaires doivent respecter une neutralité religieuse dans l'exercice de leurs fonctions." },
+        { text: "Quel événement a renforcé le débat sur la bioéthique concernant la fin de vie ?", options: ["Crise des OGM", "Affaire Vincent Lambert", "Scandale du sang contaminé", "Pandémie Covid"], correct: 1, explanation: "Fin de vie, sédation, euthanasie : débats sur la loi Claeys-Leonetti." },
+        { text: "Le Parlement européen est élu au suffrage universel direct :", options: ["Faux, désigné par les gouvernements", "Vrai (tous les 5 ans)", "Seulement par les chefs d'État", "Indirect par les conseils régionaux"], correct: 1, explanation: "Vrai : depuis 1979, les citoyens votent pour leurs députés européens." },
+        { text: "Quelle loi de 2004 concerne la laïcité à l'école ?", options: ["Création d'un cours de religion", "Interdiction des signes religieux ostensibles dans les écoles publiques", "Suppression des écoles privées", "Interdiction du voile dans l'espace public"], correct: 1, explanation: "Loi 2004 : signes religieux « ostensibles » interdits pour les élèves (croix, kippa, voile)." },
+        { text: "Le droit de vote des femmes en France date de :", options: ["1944", "1958", "1946", "1962"], correct: 0, explanation: "Ordonnance du 21 avril 1944 (GPRF de Gaulle) → premières élections 1945." },
+        { text: "Qu'est-ce que la démocratie participative ?", options: ["Seulement voter tous les 5 ans", "Participation citoyenne (budgets participatifs, référendums d'initiative)", "Dictature éclairée", "Gouvernement sans élections"], correct: 1, explanation: "Implique les citoyens dans les décisions locales (conseils de quartier, débats publics)." },
+        { text: "Les fake news peuvent être combattues par :", options: ["Les partager massivement", "La censure totale", "L'esprit critique, vérification des sources", "Fermer les réseaux sociaux"], correct: 2, explanation: "Vérifier la source, croiser l'info, utiliser fact-checking." },
+        { text: "La PMA (Procréation médicalement assistée) a été élargie à toutes les femmes en France en :", options: ["2013", "2005", "2021 (loi bioéthique)", "2017"], correct: 2, explanation: "Loi bioéthique 2021 : accès à la PMA pour les couples de femmes et femmes seules." },
+        { text: "La charte de l'environnement (2005) introduit dans le bloc de constitutionnalité :", options: ["Le droit à la pollution", "L'obligation de croissance", "La souveraineté industrielle", "Le principe de précaution"], correct: 3, explanation: "Principe de précaution → valeur constitutionnelle." }
+    ];
+
+    // Fonction générique pour afficher les quiz avec correction aléatoire (déjà intégrée dans les données)
+    function buildQuizGrid(containerId, questionsArray, prefix) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = '';
+        questionsArray.forEach((q, idx) => {
+            const card = document.createElement('div');
+            card.className = 'quiz-card';
+            const qName = `${prefix}_q${idx}`;
+            // Affichage des options avec lettres A, B, C, D dynamique
+            const optionLetters = ['A', 'B', 'C', 'D'];
+            card.innerHTML = `
+                <div class="q-title">📌 Question ${idx+1}/${questionsArray.length}</div>
+                <div class="question-text">${q.text}</div>
+                <div class="options" id="opt-${qName}">
+                    ${q.options.map((opt, optIdx) => `
+                        <div class="option" data-opt-index="${optIdx}">
+                            <input type="radio" name="${qName}" value="${optIdx}" id="${qName}_${optIdx}">
+                            <label for="${qName}_${optIdx}"><strong>${optionLetters[optIdx]}.</strong> ${opt}</label>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="feedback feedback-neutral" id="fb-${qName}">💡 Choisis une réponse (A, B, C ou D)</div>
+                <button class="reset-btn" data-reset="${qName}">⟳ Réessayer</button>
+            `;
+            container.appendChild(card);
+
+            const radios = card.querySelectorAll(`input[name="${qName}"]`);
+            const feedbackDiv = card.querySelector(`#fb-${qName}`);
+            const resetBtn = card.querySelector(`.reset-btn`);
+            let answered = false;
+
+            function clearState() {
+                radios.forEach(r => r.checked = false);
+                answered = false;
+                feedbackDiv.innerHTML = "📌 Sélectionne une option (A, B, C ou D)";
+                feedbackDiv.className = "feedback feedback-neutral";
+            }
+
+            function evaluate(selectedVal) {
+                const isOk = (selectedVal == q.correct);
+                const correctLetter = String.fromCharCode(65 + q.correct); // A=65
+                const correctText = q.options[q.correct];
+                if (isOk) {
+                    feedbackDiv.innerHTML = `✅ EXACT ! (${correctLetter}) ${q.explanation}`;
+                    feedbackDiv.className = "feedback feedback-correct";
+                } else {
+                    feedbackDiv.innerHTML = `❌ FAUX. La bonne réponse était : ${correctLetter}. ${correctText}<br>📖 ${q.explanation}`;
+                    feedbackDiv.className = "feedback feedback-wrong";
+                }
+                answered = true;
+            }
+
+            function handleRadioChange(e) {
+                if (answered) {
+                    feedbackDiv.innerHTML = "🔁 Utilise 'Réessayer' pour refaire la question.";
+                    feedbackDiv.className = "feedback feedback-neutral";
+                    return;
+                }
+                const selectedRadio = e.target.closest('input[type="radio"]');
+                if (selectedRadio && selectedRadio.checked) {
+                    const val = parseInt(selectedRadio.value);
+                    evaluate(val);
+                }
+            }
+
+            radios.forEach(radio => radio.addEventListener('change', handleRadioChange));
+            resetBtn.addEventListener('click', clearState);
+        });
+    }
+
+    buildQuizGrid('historyGrid', historyQuestions, 'hist');
+    buildQuizGrid('emcGrid', emcQuestions, 'emc');
+</script>
+</body>
+</html>

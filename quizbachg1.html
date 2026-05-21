@@ -1,0 +1,466 @@
+Voici une version améliorée avec **l'ordre aléatoire des réponses** à chaque chargement, plus de questions sur les **énergies, enjeux et conflits**, et des couleurs encore plus vives.
+```html
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Géo Bac Pro - Quiz Aléatoires : Risques, Ressources, Énergies & Conflits</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #eef2f9 0%, #d9e4f0 100%);
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            padding: 24px 20px;
+            color: #1f2f3e;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .main-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .main-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(120deg, #003d5b, #2c7da0, #61a5c2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            text-shadow: 2px 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .badge-odd {
+            background: #1e6091;
+            color: white;
+            display: inline-block;
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+
+        .double-theme {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .card {
+            flex: 1;
+            min-width: 340px;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card-header {
+            padding: 22px 24px;
+            color: white;
+        }
+
+        .risk-header {
+            background: linear-gradient(130deg, #bc3900, #e25e3a);
+        }
+
+        .resource-header {
+            background: linear-gradient(130deg, #1f7a5a, #2e9b6e);
+        }
+
+        .odd-header {
+            background: linear-gradient(130deg, #ffb347, #ff8c42, #f38b1c);
+        }
+
+        .card-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 6px;
+        }
+
+        .card-header p {
+            opacity: 0.9;
+            font-size: 0.85rem;
+        }
+
+        .recap-box {
+            background: #fef7e0;
+            border-left: 8px solid #f4a261;
+            margin: 18px 20px 12px 20px;
+            padding: 14px 18px;
+            border-radius: 24px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+        }
+
+        .quiz-zone {
+            padding: 8px 20px 28px 20px;
+        }
+
+        .quiz-item {
+            background: #fafdff;
+            border-radius: 1.6rem;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.4rem;
+            border: 1px solid #dfecf5;
+            transition: all 0.1s;
+        }
+
+        .q-title {
+            font-weight: 800;
+            font-size: 1rem;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #d4e3f0;
+            padding: 4px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #1f5e7c;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .option-btn {
+            background: white;
+            border: 2px solid #cbdde9;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 500;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #1f4868;
+        }
+
+        .option-btn:hover {
+            background: #e3f0f7;
+            border-color: #3c9bc4;
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 20px;
+            display: none;
+            font-size: 0.85rem;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feedback.correct {
+            background: #dff3e2;
+            color: #116b3c;
+            display: flex;
+            border-left: 5px solid #2b8c48;
+        }
+
+        .feedback.wrong {
+            background: #ffe4e2;
+            color: #bc3900;
+            display: flex;
+            border-left: 5px solid #e65c4f;
+        }
+
+        .open-block {
+            margin-top: 12px;
+        }
+
+        textarea {
+            width: 100%;
+            border-radius: 20px;
+            border: 1px solid #bed3e6;
+            padding: 12px;
+            font-family: inherit;
+            resize: vertical;
+            background: #fffdf7;
+        }
+
+        .check-btn {
+            background: #2c7da0;
+            border: none;
+            color: white;
+            padding: 6px 20px;
+            border-radius: 40px;
+            margin-top: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .sample-answer {
+            margin-top: 14px;
+            background: #eef4fa;
+            padding: 12px;
+            border-radius: 1.2rem;
+            font-size: 0.85rem;
+            display: none;
+            border-left: 4px solid #f4a261;
+        }
+
+        .odd-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin: 12px 0;
+        }
+
+        .odd-chip {
+            background: #ffeed9;
+            padding: 5px 12px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #b4621a;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 45px;
+            font-size: 0.8rem;
+            color: #4a627a;
+        }
+
+        @media (max-width: 800px) {
+            .card {
+                min-width: 280px;
+            }
+            .option-btn {
+                padding: 5px 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="main-header">
+        <h1>⚡ BAC PRO GÉOGRAPHIE · QUIZ INTERACTIFS</h1>
+        <p style="font-weight:500;">Risques · Ressources · Énergies · Conflits · ODD (réponses aléatoires !)</p>
+        <div class="badge-odd">🎯 17 ODD · Agenda 2030 · Aléas, pétrole, gaz, tensions géopolitiques</div>
+    </div>
+
+    <div class="double-theme">
+        <!-- ========== CARTE 1 : RISQUES + ÉNERGIES/CONFLITS ========== -->
+        <div class="card">
+            <div class="card-header risk-header">
+                <h2>🌊 SOCIÉTÉS & RISQUES</h2>
+                <p>Anticiper · Vulnérabilité · Résilience · Risques énergétiques</p>
+            </div>
+            <div class="recap-box">
+                <strong>📌 NOTIONS CLÉS :</strong> Aléa / Risque / Catastrophe / Vulnérabilité / Résilience / Risque systémique. <br>
+                <strong>🔋 ÉNERGIES & CONFLITS :</strong> Dépendance gazière (Russie/UE), pétrole au Moyen-Orient, oléoducs, détroit d’Ormuz, crise énergétique.
+            </div>
+            <div class="quiz-zone" id="riskQuizZone"></div>
+        </div>
+
+        <!-- ========== CARTE 2 : RESSOURCES, ENJEUX PÉTROLE GAZ, CONFLITS ========== -->
+        <div class="card">
+            <div class="card-header resource-header">
+                <h2>⚡ RESSOURCES & CONFLITS</h2>
+                <p>Pétrole · Gaz · Terres rares · Eau · Guerres de ressources</p>
+            </div>
+            <div class="recap-box">
+                <strong>💡 ENJEUX MAJEURS :</strong> 100M barils/jour, 3% eau douce, monopole chinois terres rares (85%).<br>
+                <strong>⚔️ Tensions :</strong> Détroit d'Ormuz, gaz russe, barrage du Nil, conflits au Moyen-Orient pour le contrôle pétrolier.
+            </div>
+            <div class="quiz-zone" id="resourceQuizZone"></div>
+        </div>
+    </div>
+
+    <!-- ========== CARTE ODD ========== -->
+    <div class="card" style="margin-top: 30px;">
+        <div class="card-header odd-header">
+            <h2>🌱 OBJECTIFS DE DÉVELOPPEMENT DURABLE (ODD)</h2>
+            <p>Adoptés par l'ONU en 2015 · 17 objectifs universels</p>
+        </div>
+        <div class="recap-box">
+            🌟 Les ODD : éradiquer pauvreté, protéger la planète, prospérité. ODD 6 (eau), ODD 7 (énergie propre), ODD 13 (climat), ODD 12 (consommation responsable).
+        </div>
+        <div class="quiz-zone" id="oddQuizZone"></div>
+    </div>
+    <footer>📌 Les réponses sont mélangées aléatoirement à chaque chargement ! Entraînez-vous au Bac Pro.</footer>
+</div>
+
+<script>
+    // ---------- DÉFINITION DES QUESTIONS (avec correction et mauvaises réponses) ----------
+    // Thème Risques (plus énergie / conflits liés aux risques)
+    const riskQuestions = [
+        { text: "Un séisme dans une zone inhabitée est appelé :", correct: "Un aléa", wrongs: ["Un risque majeur", "Une catastrophe"] },
+        { text: "Qu'est-ce que la résilience d'une société ?", correct: "La capacité à se reconstruire après une catastrophe", wrongs: ["Éviter tout aléa", "La richesse économique uniquement"] },
+        { text: "Pourquoi le séisme de 2010 en Haïti a-t-il fait plus de 200 000 morts ?", correct: "Forte vulnérabilité (constructions fragiles, pauvreté)", wrongs: ["Aléa exceptionnel", "Absence de prévision météo"] },
+        { text: "Comment le changement climatique affecte-t-il les risques ?", correct: "Il amplifie les risques naturels (tempêtes, sécheresses, montée des eaux)", wrongs: ["Il supprime les risques technologiques", "Il n'a aucun impact"] },
+        { text: "Qui élabore les Plans de Prévention des Risques (PPR) en France ?", correct: "L'État et les collectivités locales", wrongs: ["Les ONG internationales", "Les citoyens seuls"] },
+        { text: "Le Covid-19 est un risque systémique car :", correct: "Il a touché santé, économie, éducation et relations sociales en cascade", wrongs: ["Il n'a concerné que la Chine", "C'est un risque purement naturel"] },
+        { text: "Quel événement illustre un risque à la fois naturel et technologique ?", correct: "Fukushima 2011 (séisme + tsunami + accident nucléaire)", wrongs: ["Sécheresse à Madagascar", "Pandémie de grippe"] },
+        { text: "La guerre en Ukraine (2022) a montré la dépendance européenne à quelle ressource ?", correct: "Gaz russe (énergie fossile)", wrongs: ["Charbon polonais", "Uranium canadien"] },
+        { text: "Le détroit d'Ormuz est stratégique car :", correct: "Il permet le transit d'une grande partie du pétrole mondial (Moyen-Orient)", wrongs: ["C'est une zone de pêche protégée", "Il est utilisé pour les câbles internet"] }
+    ];
+
+    // Thème Ressources : pétrole, gaz, conflits, énergies, eau
+    const resourceQuestions = [
+        { text: "Quel est le pourcentage d'eau douce sur Terre ?", correct: "3%", wrongs: ["25%", "50%"] },
+        { text: "Que signifie le 'jour du dépassement' ?", correct: "La date où l'humanité a consommé toutes les ressources annuelles de la Terre", wrongs: ["La fin des énergies fossiles", "La date de la COP"] },
+        { text: "Quel pays produit 85% des terres rares mondiales ?", correct: "Chine", wrongs: ["États-Unis", "Australie"] },
+        { text: "Le Grand Barrage de la Renaissance (Éthiopie) crée des tensions avec quels pays ?", correct: "Égypte et Soudan (contrôle du Nil)", wrongs: ["Kenya et Tanzanie", "Maroc et Algérie"] },
+        { text: "Consommation mondiale quotidienne de pétrole (environ) :", correct: "100 millions de barils", wrongs: ["10 millions de barils", "500 millions de barils"] },
+        { text: "Combien de personnes n'ont pas accès à l'eau potable sécurisée ?", correct: "2 milliards", wrongs: ["500 millions", "5 milliards"] },
+        { text: "Quelle est la principale ressource énergétique fossile utilisée pour le transport dans le monde ?", correct: "Le pétrole", wrongs: ["Le charbon", "L'uranium"] },
+        { text: "Pourquoi les pays occidentaux sont-ils dépendants des terres rares ?", correct: "Indispensables aux technologies modernes (smartphones, éoliennes, voitures électriques)", wrongs: ["Pour la production alimentaire", "Pour la construction de routes"] },
+        { text: "Quel conflit récent a révélé la dépendance énergétique de l'Europe vis-à-vis de la Russie ?", correct: "La guerre en Ukraine (2022) et la crise du gaz", wrongs: ["La guerre du Golfe (1991)", "La guerre du Kosovo"] },
+        { text: "Quel pays est le premier producteur de pétrole au monde ?", correct: "États-Unis (devant Arabie Saoudite)", wrongs: ["Russie", "Canada"] },
+        { text: "Quel est l'un des principaux points de passage stratégiques pour les pétroliers ?", correct: "Le détroit d'Ormuz", wrongs: ["Le canal de Suez uniquement", "Le cap Horn"] },
+        { text: "Les énergies fossiles représentent environ quel pourcentage de la consommation mondiale d'énergie ?", correct: "80%", wrongs: ["40%", "95%"] }
+    ];
+
+    // ODD questions
+    const oddQuestions = [
+        { text: "Quel ODD concerne la lutte contre le changement climatique ?", correct: "ODD 13", wrongs: ["ODD 1 (pauvreté)", "ODD 5 (égalité genre)"] },
+        { text: "L'ODD 6 vise à garantir :", correct: "L'accès à l'eau potable et à l'assainissement pour tous", wrongs: ["La construction de centrales nucléaires", "L'élimination du pétrole"] },
+        { text: "Quel ODD promeut les énergies renouvelables ?", correct: "ODD 7 (énergie propre)", wrongs: ["ODD 15 (vie terrestre)", "ODD 2 (faim zéro)"] },
+        { text: "L'Îlot Fertile à Paris est un exemple d'application de quel ODD ?", correct: "ODD 11 (villes et communautés durables)", wrongs: ["ODD 14 (vie aquatique)", "ODD 8 (travail décent)"] },
+        { text: "L'ODD 12 correspond à :", correct: "Production et consommation responsables", wrongs: ["Industrie spatiale", "Énergies fossiles illimitées"] },
+        { text: "Quel ODD vise à réduire les inégalités entre les pays ?", correct: "ODD 10 (inégalités réduites)", wrongs: ["ODD 9 (industrie innovation)", "ODD 17 (partenariats)"] }
+    ];
+
+    // Fonction pour mélanger les options d'une question (aléatoire)
+    function shuffleOptions(questionObj) {
+        let allOptions = [questionObj.correct, ...questionObj.wrongs];
+        for (let i = allOptions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allOptions[i], allOptions[j]] = [allOptions[j], allOptions[i]];
+        }
+        return {
+            text: questionObj.text,
+            correctAnswer: questionObj.correct,
+            options: allOptions
+        };
+    }
+
+    // Générer HTML d'un quiz
+    function renderQuiz(containerId, questionsArray, prefix) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = '';
+        questionsArray.forEach((q, idx) => {
+            const shuffled = shuffleOptions(q);
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'quiz-item';
+            questionDiv.innerHTML = `
+                <div class="q-title"><span class="tag">🎯 QUESTION ${idx+1}</span> ${shuffled.text}</div>
+                <div class="options" id="${prefix}-options-${idx}"></div>
+                <div class="feedback" id="${prefix}-fb-${idx}"></div>
+            `;
+            container.appendChild(questionDiv);
+            const optionsContainer = questionDiv.querySelector(`.options`);
+            shuffled.options.forEach(opt => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.addEventListener('click', (e) => {
+                    const isCorrect = (opt === shuffled.correctAnswer);
+                    const fbDiv = questionDiv.querySelector(`.feedback`);
+                    if (isCorrect) {
+                        fbDiv.innerHTML = `✅ Bravo ! ${shuffled.correctAnswer} est la bonne réponse.`;
+                        fbDiv.className = 'feedback correct';
+                    } else {
+                        fbDiv.innerHTML = `❌ Non. La bonne réponse était : ${shuffled.correctAnswer}.`;
+                        fbDiv.className = 'feedback wrong';
+                    }
+                    // Désactiver les boutons après réponse (optionnel mais plus propre)
+                    const allBtns = questionDiv.querySelectorAll('.option-btn');
+                    allBtns.forEach(b => b.style.opacity = '0.6');
+                    btn.style.opacity = '1';
+                });
+                optionsContainer.appendChild(btn);
+            });
+        });
+    }
+
+    // Ajouter quelques questions ouvertes (énergies, enjeux) dans chaque thème
+    function addOpenEndedQuestions() {
+        // Risques - question ouverte sur les conflits énergétiques
+        const riskZone = document.getElementById('riskQuizZone');
+        const openRiskDiv = document.createElement('div');
+        openRiskDiv.className = 'quiz-item';
+        openRiskDiv.innerHTML = `
+            <div class="q-title"><span class="tag">✏️ RÉDACTION ENERGIE/CONFLITS</span> Expliquez en quoi la guerre en Ukraine (2022) a révélé la dépendance énergétique de l'Europe. Quel risque cela a-t-il créé ?</div>
+            <div class="open-block"><textarea id="openRiskEnergy" rows="3" placeholder="Votre analyse..."></textarea><button class="check-btn" id="showRiskEnergyCorr">📘 Voir corrigé</button><div class="sample-answer" id="correctionRiskEnergy"><strong>✅ Corrigé :</strong> La guerre en Ukraine a montré la forte dépendance européenne au gaz russe (environ 40% du gaz importé avant 2022). Cela a provoqué une crise énergétique, une flambée des prix et un risque de pénurie. Les pays ont dû diversifier leurs fournisseurs (gaz naturel liquéfié, énergies renouvelables). Cet événement illustre le risque géopolitique lié aux ressources fossiles.</div></div>
+        `;
+        riskZone.appendChild(openRiskDiv);
+
+        // Ressources - question ouverte sur les conflits pétroliers et le Moyen-Orient
+        const resZone = document.getElementById('resourceQuizZone');
+        const openResDiv = document.createElement('div');
+        openResDiv.className = 'quiz-item';
+        openResDiv.innerHTML = `
+            <div class="q-title"><span class="tag">🛢️ ANALYSE GÉOPOLITIQUE</span> Pourquoi le pétrole est-il une source de conflits au Moyen-Orient ? Donnez un exemple de conflit ou de tension lié à cette ressource.</div>
+            <div class="open-block"><textarea id="openPetrolConflict" rows="3" placeholder="Votre réponse..."></textarea><button class="check-btn" id="showPetrolCorr">📖 Voir corrigé</button><div class="sample-answer" id="correctionPetrol"><strong>✅ Éléments de réponse :</strong> Le pétrole est stratégique (transports, industrie). Sa répartition inégale au Moyen-Orient (golfe Persique) crée des rivalités. Exemples : guerre du Golfe (1990-1991) après l'invasion du Koweït ; tensions autour du détroit d'Ormuz ; le pétrole finance des puissances régionales (Arabie Saoudite, Iran). Les inégalités de richesses pétrolières alimentent aussi des conflits internes.</div></div>
+        `;
+        resZone.appendChild(openResDiv);
+        
+        // gestion des boutons "afficher corrigé"
+        document.getElementById('showRiskEnergyCorr')?.addEventListener('click', () => {
+            let el = document.getElementById('correctionRiskEnergy');
+            el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+        });
+        document.getElementById('showPetrolCorr')?.addEventListener('click', () => {
+            let el = document.getElementById('correctionPetrol');
+            el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+        });
+    }
+
+    // Ajouter question ouverte ODD sur énergie propre et conflits
+    function addOddOpenEnded() {
+        const oddZone = document.getElementById('oddQuizZone');
+        const oddOpen = document.createElement('div');
+        oddOpen.className = 'quiz-item';
+        oddOpen.innerHTML = `
+            <div class="q-title"><span class="tag">🌍 ODD & ENERGIE</span> En quoi les ODD (notamment ODD 7 et ODD 13) peuvent-ils réduire les tensions liées aux ressources énergétiques ?</div>
+            <div class="open-block"><textarea id="oddEnergyEssay" rows="2" placeholder="Votre réflexion..."></textarea><button class="check-btn" id="showOddEnergy">💡 Voir piste de réponse</button><div class="sample-answer" id="correctionOddEnergy"><strong>🎯 Piste :</strong> L'ODD 7 (énergie propre) encourage le développement des énergies renouvelables (solaire, éolien) pour diminuer la dépendance aux énergies fossiles importées, source de conflits. L'ODD 13 (climat) pousse à réduire les émissions de CO₂ et à coopérer internationalement. Moins de dépendance pétrolière/gazière = moins de tensions géopolitiques (ex: dépendance au gaz russe).</div></div>
+        `;
+        oddZone.appendChild(oddOpen);
+        document.getElementById('showOddEnergy')?.addEventListener('click', () => {
+            let el = document.getElementById('correctionOddEnergy');
+            el.style.display = (el.style.display === 'none' || el.style.display === '') ? 'block' : 'none';
+        });
+    }
+
+    // initialisation des quiz avec ordre aléatoire des réponses
+    renderQuiz('riskQuizZone', riskQuestions, 'risk');
+    renderQuiz('resourceQuizZone', resourceQuestions, 'res');
+    renderQuiz('oddQuizZone', oddQuestions, 'odd');
+    addOpenEndedQuestions();
+    addOddOpenEnded();
+
+    // Ajout d'un petit rappel visuel sur l'aléatoire
+    const style = document.createElement('style');
+    style.textContent = `.option-btn { transition: 0.1s; } .feedback { animation: fadeIn 0.2s; } @keyframes fadeIn { from { opacity:0; } to { opacity:1; } }`;
+    document.head.appendChild(style);
+</script>
+</body>
+</html>
+```
