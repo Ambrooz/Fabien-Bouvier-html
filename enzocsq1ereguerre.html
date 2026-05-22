@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>1918 · Recompositions Géopolitiques · FLE B1-B2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:        #f7f2e9;
+      --bg2:       #efe8d8;
+      --surface:   #ffffff;
+      --surface2:  #fdf8f0;
+      --border:    #ddd0b0;
+      --ink:       #1e1a10;
+      --ink2:      #4a3f28;
+      --ochre:     #b8720a;
+      --ochre-lt:  #fff3d0;
+      --ochre-mid: #fde4a0;
+      --forest:    #2a5218;
+      --forest-lt: #e4f0d8;
+      --forest-mid:#b8d8a0;
+      --moss:      #4e7830;
+      --blood:     #8b1e1e;
+      --blood-lt:  #fde8e8;
+      --blue:      #1c3f6e;
+      --blue-lt:   #deeaf8;
+      --purple:    #5a2080;
+      --purple-lt: #efe0f8;
+      --teal:      #1a6060;
+      --teal-lt:   #d8f0ee;
+      --rose:      #a02050;
+      --rose-lt:   #fce8f0;
+      --pc-color:  #1c3f6e;
+      --pc-lt:     #deeaf8;
+      --pc-mid:    #b0cce8;
+      --imp-color: #8b1e1e;
+      --imp-lt:    #fde8e8;
+      --imp-mid:   #f0b8b8;
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      background: var(--bg);
+      font-family: 'Source Serif 4', Georgia, serif;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #2a5218 0%, #1c3f6e 50%, #5a2080 100%);
+      color: white;
+      padding: 3rem 2rem 2.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '1918';
+      position: absolute;
+      font-family: 'Playfair Display', serif;
+      font-size: 16rem; font-weight: 900;
+      color: rgba(255,255,255,0.05);
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      pointer-events: none;
+      letter-spacing: -0.05em;
+    }
+    .hero-eyebrow {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem; letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.9rem, 5vw, 3.8rem);
+      font-weight: 900; line-height: 1.08;
+      margin-bottom: 0.6rem;
+    }
+    .hero h1 em { color: #fde4a0; font-style: italic; }
+    .hero-sub {
+      font-size: 0.97rem;
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+      max-width: 560px; margin: 0 auto 1.5rem;
+      line-height: 1.6;
+    }
+    .badges { display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap; }
+    .badge {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 0.28rem 0.85rem;
+      border-radius: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== TABS ===== */
+    .tab-nav {
+      background: white;
+      border-bottom: 2px solid var(--border);
+      display: flex;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      position: sticky; top:0; z-index:100;
+    }
+    .tab-btn {
+      flex: 1;
+      background: transparent; border: none;
+      color: var(--ink2);
+      padding: 1rem 0.5rem;
+      cursor: pointer;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      font-weight: 700;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s;
+    }
+    .tab-btn:hover { color: var(--ochre); background: var(--ochre-lt); }
+    .tab-btn.active { color: var(--forest); border-bottom-color: var(--forest); background: var(--forest-lt); }
+
+    /* ===== LAYOUT ===== */
+    .page { display:none; background: var(--bg); min-height: 80vh; }
+    .page.active { display:block; }
+    .content { max-width: 860px; margin:0 auto; padding: 2rem 1.4rem 5rem; }
+
+    /* ===== SECTION HEADERS ===== */
+    .sec-label {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--ochre);
+      background: var(--ochre-lt);
+      border: 1px solid var(--ochre-mid);
+      padding: 0.25rem 0.8rem;
+      border-radius: 2rem;
+      margin-bottom: 0.6rem;
+    }
+    .sec-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      color: var(--ink);
+      margin-bottom: 0.3rem;
+      line-height: 1.2;
+    }
+    .sec-sub {
+      color: var(--ink2);
+      font-style: italic;
+      font-size: 0.93rem;
+      margin-bottom: 1.8rem;
+      line-height: 1.5;
+    }
+
+    /* ===== CARD BASE ===== */
+    .card {
+      background: var(--surface);
+      border-radius: 1.1rem;
+      border: 1.5px solid var(--border);
+      margin: 1.2rem 0;
+      overflow: hidden;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+    }
+    .card-top {
+      display:flex; align-items:center; gap:0.75rem;
+      padding: 1rem 1.5rem;
+      border-bottom: 1.5px solid var(--border);
+    }
+    .card-top.green  { background: var(--forest-lt); border-bottom-color: var(--forest-mid); }
+    .card-top.ochre  { background: var(--ochre-lt);  border-bottom-color: var(--ochre-mid); }
+    .card-top.blue   { background: var(--blue-lt);   border-bottom-color: #b0cce8; }
+    .card-top.blood  { background: var(--blood-lt);  border-bottom-color: #f0b8b8; }
+    .card-top.purple { background: var(--purple-lt); border-bottom-color: #d0b0e8; }
+    .card-top.teal   { background: var(--teal-lt);   border-bottom-color: #90d0cc; }
+    .card-icon {
+      width: 38px; height: 38px; border-radius: 0.6rem;
+      display:flex; align-items:center; justify-content:center;
+      font-size: 1.15rem; flex-shrink:0;
+    }
+    .ci-green  { background: var(--forest); }
+    .ci-ochre  { background: var(--ochre); }
+    .ci-blue   { background: var(--blue); }
+    .ci-blood  { background: var(--blood); }
+    .ci-purple { background: var(--purple); }
+    .ci-teal   { background: var(--teal); }
+    .card-title { font-family:'Playfair Display',serif; font-size:1.1rem; font-weight:700; color:var(--ink); }
+    .card-lbl { font-family:'JetBrains Mono',monospace; font-size:0.62rem; color:var(--ink2); letter-spacing:0.15em; margin-top:0.1rem; }
+    .card-body { padding: 1.4rem 1.5rem; }
+
+    /* ===== RÉCIT ===== */
+    .recit {
+      background: var(--surface2);
+      border-radius: 1.1rem;
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      margin: 1.2rem 0;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+    }
+    .recit-hdr {
+      background: linear-gradient(90deg, var(--forest), #1c3f6e);
+      color: white; padding: 0.9rem 1.5rem;
+      display:flex; align-items:center; gap:0.7rem;
+    }
+    .recit-hdr-t { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; }
+    .recit-hdr-s { font-size:0.78rem; opacity:0.75; font-style:italic; margin-top:0.1rem; }
+    .recit-body {
+      padding: 1.6rem 1.8rem;
+      font-size: 1.04rem; line-height: 2.1;
+      color: var(--ink);
+      background: #fffef8;
+    }
+    .recit-body p { margin-bottom: 1.1rem; }
+    .recit-body p:last-child { margin-bottom:0; }
+    /* PC = blue, IMP = red to match new grammar explanation */
+    .pc  { background:#deeaf8; border-bottom:2px solid var(--blue); border-radius:3px; padding:0 2px; font-weight:600; color:#1c3f6e; }
+    .imp { background:#fde8e8; border-bottom:2px solid var(--blood); border-radius:3px; padding:0 2px; font-weight:600; color:#6b1212; }
+    .recit-legend {
+      padding: 0.7rem 1.6rem; background: var(--bg2);
+      display:flex; gap:2rem; font-size:0.82rem; flex-wrap:wrap;
+      border-top:1px solid var(--border);
+    }
+    .leg { display:flex; align-items:center; gap:0.45rem; }
+    .ld { width:18px; height:8px; border-radius:2px; }
+    .ld-pc  { background:#deeaf8; border-bottom:2px solid var(--blue); }
+    .ld-imp { background:#fde8e8; border-bottom:2px solid var(--blood); }
+
+    /* ===== GRAMMAIRE — NOUVELLE EXPLICATION ===== */
+    .gram-duo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin: 1.2rem 0;
+    }
+    @media(max-width:640px){ .gram-duo { grid-template-columns:1fr; } }
+
+    .gram-block {
+      border-radius: 1rem; padding: 1.4rem 1.5rem;
+      border: 2.5px solid;
+    }
+    .gram-block.pc-block  { background: var(--pc-lt);  border-color: var(--pc-mid); }
+    .gram-block.imp-block { background: var(--imp-lt); border-color: var(--imp-mid); }
+
+    .gram-block-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; font-weight: 900;
+      margin-bottom: 0.4rem;
+      display:flex; align-items:center; gap:0.5rem;
+    }
+    .pc-block  .gram-block-title { color: var(--pc-color); }
+    .imp-block .gram-block-title { color: var(--imp-color); }
+
+    .gram-subtitle {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.65rem; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+      padding-bottom: 0.6rem;
+      border-bottom: 1.5px solid;
+    }
+    .pc-block  .gram-subtitle { color: var(--pc-color);  border-color: var(--pc-mid); }
+    .imp-block .gram-subtitle { color: var(--imp-color); border-color: var(--imp-mid); }
+
+    .gram-formation {
+      border-radius: 0.65rem;
+      padding: 0.75rem 1rem;
+      margin-bottom: 0.9rem;
+      font-size: 0.88rem;
+      line-height: 1.65;
+    }
+    .pc-block  .gram-formation { background: rgba(255,255,255,0.8); border-left:3px solid var(--pc-color); }
+    .imp-block .gram-formation { background: rgba(255,255,255,0.8); border-left:3px solid var(--imp-color); }
+
+    .gram-formation strong { display:block; margin-bottom:0.3rem; font-size:0.78rem; letter-spacing:0.08em; text-transform:uppercase; }
+    .pc-block  .gram-formation strong { color: var(--pc-color); }
+    .imp-block .gram-formation strong { color: var(--imp-color); }
+
+    .gram-formation .formula {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--ink);
+    }
+    .gram-formation .ex-mini {
+      font-style: italic; color: var(--ink2); font-size: 0.84rem;
+      margin-top:0.35rem; padding-top:0.35rem;
+      border-top:1px solid rgba(0,0,0,0.08);
+    }
+    .gram-formation .ex-mini span { display:block; margin-bottom:0.2rem; }
+
+    .gram-uses-title {
+      font-size: 0.78rem; font-weight: 700; letter-spacing:0.06em;
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .pc-block  .gram-uses-title { color: var(--pc-color); }
+    .imp-block .gram-uses-title { color: var(--imp-color); }
+
+    .gram-use {
+      display:flex; align-items:flex-start; gap:0.5rem;
+      padding:0.4rem 0.5rem; margin-bottom:0.3rem;
+      border-radius:0.45rem;
+      font-size:0.88rem; line-height:1.5;
+    }
+    .pc-block  .gram-use { background: rgba(255,255,255,0.6); }
+    .imp-block .gram-use { background: rgba(255,255,255,0.6); }
+    .use-dot {
+      width:7px; height:7px; border-radius:50%; margin-top:0.42rem; flex-shrink:0;
+    }
+    .pc-block  .use-dot { background: var(--pc-color); }
+    .imp-block .use-dot { background: var(--imp-color); }
+
+    /* ASTUCE BOX */
+    .astuce-box {
+      background: linear-gradient(135deg, #1c3f6e12, #8b1e1e0d);
+      border: 2px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.3rem 1.5rem;
+      margin: 1.2rem 0;
+      position: relative;
+    }
+    .astuce-tag {
+      display:inline-block;
+      background: var(--ochre);
+      color: white;
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.65rem; letter-spacing:0.2em;
+      padding:0.2rem 0.75rem; border-radius:2rem;
+      margin-bottom:0.8rem;
+      font-weight:600;
+    }
+    .astuce-slogan {
+      display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;
+      margin-bottom:1rem;
+    }
+    @media(max-width:540px){ .astuce-slogan { grid-template-columns:1fr; } }
+    .slogan-item {
+      padding:0.8rem 1rem; border-radius:0.7rem;
+      font-size:0.9rem; line-height:1.5;
+    }
+    .slogan-item.imp-s { background: var(--imp-lt); border:1.5px solid var(--imp-mid); }
+    .slogan-item.pc-s  { background: var(--pc-lt);  border:1.5px solid var(--pc-mid); }
+    .slogan-big {
+      font-family:'Playfair Display',serif;
+      font-size:1rem; font-weight:700; margin-bottom:0.2rem;
+    }
+    .slogan-item.imp-s .slogan-big { color: var(--imp-color); }
+    .slogan-item.pc-s  .slogan-big { color: var(--pc-color); }
+    .slogan-item small { font-size:0.82rem; color:var(--ink2); font-style:italic; }
+
+    .astuce-exemple {
+      background: white; border-radius:0.65rem;
+      border: 1.5px solid var(--border);
+      padding:0.85rem 1.1rem;
+      font-size:0.92rem; line-height:1.8;
+    }
+    .astuce-exemple .ae-label {
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.6rem; letter-spacing:0.18em; color:var(--teal);
+      font-weight:700; margin-bottom:0.4rem; display:block;
+      text-transform:uppercase;
+    }
+
+    /* MARQUEURS TABLE */
+    .marqueurs-duo {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 0.8rem; margin: 1rem 0;
+    }
+    @media(max-width:580px){ .marqueurs-duo { grid-template-columns:1fr; } }
+    .mq-box { border-radius:0.8rem; padding:1rem 1.1rem; border:1.5px solid; }
+    .mq-box.imp-m { background:var(--imp-lt); border-color:var(--imp-mid); }
+    .mq-box.pc-m  { background:var(--pc-lt);  border-color:var(--pc-mid); }
+    .mq-title { font-family:'Playfair Display',serif; font-weight:700; margin-bottom:0.5rem; font-size:0.95rem; }
+    .imp-m .mq-title { color:var(--imp-color); }
+    .pc-m  .mq-title { color:var(--pc-color); }
+    .mq-tags { display:flex; flex-wrap:wrap; gap:0.35rem; }
+    .mq-tag {
+      padding:0.2rem 0.65rem; border-radius:2rem;
+      font-size:0.8rem; font-style:italic;
+    }
+    .imp-m .mq-tag { background:white; color:var(--imp-color); border:1px solid var(--imp-mid); }
+    .pc-m  .mq-tag { background:white; color:var(--pc-color);  border:1px solid var(--pc-mid); }
+
+    /* ===== Q COMPREH ===== */
+    .q-btn {
+      display:inline-flex; align-items:center; gap:0.4rem;
+      background:var(--bg2); border:1.5px solid var(--border);
+      border-radius:2rem; padding:0.4rem 1rem;
+      cursor:pointer;
+      font-family:'Source Serif 4',serif; font-size:0.87rem;
+      color:var(--ochre); margin-top:0.6rem; transition:all 0.12s;
+    }
+    .q-btn:hover { background:var(--ochre-lt); border-color:var(--ochre-mid); }
+    .q-ans {
+      display:none;
+      background: var(--forest-lt); border-left:4px solid var(--moss);
+      border-radius:0 0.7rem 0.7rem 0;
+      padding:0.8rem 1.1rem; margin-top:0.6rem;
+      color:var(--forest); font-weight:500; font-size:0.91rem;
+      animation: fadeIn 0.18s ease;
+    }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(-3px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ===== VOCAB ===== */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px,1fr));
+      gap: 0.65rem; margin: 1rem 0;
+    }
+    .vcard {
+      background: var(--surface);
+      border-radius: 0.8rem; border:1.5px solid var(--border);
+      padding:0.85rem 1rem;
+      cursor:pointer; transition:all 0.12s;
+      user-select:none;
+    }
+    .vcard:hover { border-color:var(--ochre); transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,0.1); }
+    .vcard.on { border-color:var(--moss); background:var(--forest-lt); }
+    .ven { font-weight:700; color:var(--ink); font-size:0.93rem; }
+    .vctx { font-size:0.76rem; color:var(--ink2); font-style:italic; margin-top:0.15rem; }
+    .vtog { font-family:'JetBrains Mono',monospace; font-size:0.68rem; color:var(--ochre); margin-top:0.3rem; display:block; }
+    .vfr { display:none; font-weight:700; color:var(--forest); font-size:0.9rem; margin-top:0.3rem; }
+    .vcard.on .vfr { display:block; }
+    .vcard.on .vtog { color:var(--moss); }
+
+    /* flashcard */
+    .flash-wrap { perspective:1000px; max-width:380px; margin:1.8rem auto 1rem; }
+    .flashcard {
+      width:100%; height:175px; position:relative;
+      transform-style:preserve-3d;
+      transition:transform 0.45s cubic-bezier(.4,0,.2,1);
+      cursor:pointer;
+    }
+    .flashcard.flipped { transform:rotateY(180deg); }
+    .fc-face {
+      position:absolute; width:100%; height:100%;
+      backface-visibility:hidden; border-radius:1rem;
+      display:flex; flex-direction:column; align-items:center;
+      justify-content:center; padding:1.2rem; text-align:center;
+      border:2px solid var(--border);
+    }
+    .fc-front { background:linear-gradient(135deg, var(--pc-lt), var(--forest-lt)); }
+    .fc-back  { background:linear-gradient(135deg, var(--ochre-lt), var(--imp-lt)); transform:rotateY(180deg); }
+    .fc-word { font-family:'Playfair Display',serif; font-size:1.5rem; font-weight:700; color:var(--ink); margin-bottom:0.4rem; }
+    .fc-hint { font-size:0.82rem; color:var(--ink2); font-style:italic; }
+    .flash-prog { text-align:center; font-family:'JetBrains Mono',monospace; font-size:0.72rem; color:var(--ink2); margin-bottom:0.4rem; }
+    .flash-ctrl { display:flex; gap:0.7rem; justify-content:center; margin:0.8rem 0; }
+    .fbtn {
+      background:var(--surface); border:1.5px solid var(--border);
+      border-radius:2rem; padding:0.45rem 1.1rem;
+      cursor:pointer; font-family:'Source Serif 4',serif; font-size:0.88rem;
+      color:var(--ink2); transition:all 0.12s;
+    }
+    .fbtn:hover { border-color:var(--ochre); color:var(--ochre); background:var(--ochre-lt); }
+
+    /* ===== EXERCICES ===== */
+    .dots-row { display:flex; gap:0.45rem; flex-wrap:wrap; margin-bottom:1.3rem; }
+    .dot { width:10px; height:10px; border-radius:50%; background:var(--bg2); border:1.5px solid var(--border); transition:all 0.2s; }
+    .dot.ok  { background:var(--moss); border-color:var(--forest); }
+    .dot.nok { background:var(--blood); border-color:#a02020; }
+    .dot.half{ background:var(--ochre); border-color:#9a5800; }
+
+    .exo-card {
+      background:var(--surface); border-radius:0.9rem;
+      border:1.5px solid var(--border);
+      padding:1.1rem 1.3rem; margin:0.85rem 0;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+      border-left:4px solid var(--border);
+      transition:border-left-color 0.2s;
+    }
+    .exo-card.ok   { border-left-color:var(--moss); background:var(--forest-lt); }
+    .exo-card.nok  { border-left-color:var(--blood); background:var(--blood-lt); }
+    .exo-card.half { border-left-color:var(--ochre); background:var(--ochre-lt); }
+
+    .exo-num { font-family:'JetBrains Mono',monospace; font-size:0.63rem; color:var(--ochre); letter-spacing:0.12em; margin-bottom:0.4rem; }
+    .exo-phrase { font-size:0.97rem; line-height:2; color:var(--ink); display:flex; flex-wrap:wrap; align-items:baseline; gap:0.4rem; }
+    .exo-inp {
+      font-family:'JetBrains Mono',monospace; font-size:0.88rem;
+      padding:0.28rem 0.65rem; border-radius:0.5rem;
+      border:2px solid var(--border); background:var(--surface2);
+      color:var(--ink); width:160px; transition:all 0.13s;
+    }
+    .exo-inp:focus { outline:none; border-color:var(--ochre); background:var(--ochre-lt); }
+    .exo-inp.ok  { border-color:var(--moss);  background:var(--forest-lt); color:var(--forest); }
+    .exo-inp.nok { border-color:var(--blood); background:var(--blood-lt); }
+    .inf-hint { font-size:0.72rem; color:var(--ink2); font-style:italic; font-family:'JetBrains Mono',monospace; }
+    .exo-fb {
+      margin-top:0.55rem; font-size:0.85rem; padding:0.45rem 0.75rem;
+      border-radius:0.55rem; display:none;
+    }
+    .efb-ok  { display:block; background:rgba(80,160,60,0.12); color:var(--forest); }
+    .efb-nok { display:block; background:rgba(139,30,30,0.1);  color:var(--blood); }
+    .efb-half{ display:block; background:rgba(180,110,0,0.1);  color:#7a4a00; }
+
+    /* ===== TEXTE À TROUS ===== */
+    .trou-card {
+      background: var(--surface);
+      border-radius: 1.1rem;
+      border: 1.5px solid var(--border);
+      overflow: hidden;
+      margin: 1.2rem 0;
+      box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+    }
+    .trou-hdr {
+      background: linear-gradient(90deg, #1c3f6e, #5a2080);
+      color: white; padding: 0.9rem 1.5rem;
+      display:flex; align-items:center; gap:0.7rem;
+    }
+    .trou-hdr-t { font-family:'Playfair Display',serif; font-size:1rem; font-weight:700; }
+    .trou-hdr-s { font-size:0.78rem; opacity:0.75; font-style:italic; margin-top:0.1rem; }
+    .trou-body {
+      padding: 1.6rem 1.8rem;
+      font-size: 1rem; line-height: 2.4;
+      color: var(--ink);
+      background: #fffef8;
+    }
+    .trou-inp {
+      font-family:'JetBrains Mono',monospace; font-size:0.86rem;
+      padding:0.2rem 0.6rem; border-radius:0.4rem;
+      border:2px solid var(--border); background:var(--surface2);
+      color:var(--ink); width:150px;
+      transition:all 0.13s;
+      display:inline-block; vertical-align:baseline;
+      margin: 0 0.2rem;
+    }
+    .trou-inp:focus { outline:none; border-color:var(--pc-color); background:var(--pc-lt); }
+    .trou-inp.ok  { border-color:var(--moss);  background:var(--forest-lt); color:var(--forest); }
+    .trou-inp.nok { border-color:var(--blood); background:var(--blood-lt); }
+    .trou-hint { font-size:0.72rem; color:var(--ink2); font-style:italic; display:inline; margin-right:0.3rem; }
+    .trou-controls {
+      padding: 1rem 1.8rem;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      display:flex; gap:0.7rem; flex-wrap:wrap;
+    }
+    .trou-score {
+      padding:0.7rem 1.2rem; background: var(--surface);
+      border-top:1px solid var(--border);
+      font-size:0.88rem; color:var(--ink2);
+      display:none;
+    }
+    .trou-score strong { color:var(--forest); }
+
+    /* ===== BUTTONS ===== */
+    .btn-row { display:flex; gap:0.7rem; flex-wrap:wrap; margin:1.3rem 0; }
+    .btn {
+      border:none; padding:0.6rem 1.3rem; border-radius:2rem;
+      font-family:'Source Serif 4',serif; font-size:0.9rem;
+      cursor:pointer; transition:all 0.14s; font-weight:600;
+    }
+    .btn-g  { background:var(--forest); color:white; }
+    .btn-g:hover  { background:var(--moss); }
+    .btn-o  { background:var(--ochre-lt); color:var(--ochre); border:1.5px solid var(--ochre-mid); }
+    .btn-o:hover  { background:var(--ochre-mid); }
+    .btn-r  { background:var(--blood-lt);  color:var(--blood);  border:1.5px solid #f0b8b8; }
+    .btn-r:hover  { background:#fad0d0; }
+    .btn-b  { background:var(--pc-lt); color:var(--pc-color); border:1.5px solid var(--pc-mid); }
+    .btn-b:hover  { background:var(--pc-mid); }
+
+    .score-box {
+      background:var(--surface); border:1.5px solid var(--border);
+      border-radius:0.9rem; padding:1.1rem 1.4rem;
+      margin-top:1.2rem; display:none;
+      box-shadow:0 2px 8px rgba(0,0,0,0.06);
+    }
+    .score-n { font-family:'Playfair Display',serif; font-size:2.2rem; font-weight:900; color:var(--forest); }
+    .score-l { font-size:0.87rem; color:var(--ink2); margin-top:0.1rem; }
+    .score-msg { font-style:italic; color:var(--ink2); font-size:0.9rem; margin-top:0.4rem; }
+
+    /* ===== QCM ===== */
+    .qblock {
+      background:var(--surface); border-radius:0.9rem;
+      border:1.5px solid var(--border);
+      padding:1.2rem 1.4rem; margin:0.9rem 0;
+      box-shadow:0 2px 8px rgba(0,0,0,0.05);
+    }
+    .qtext { font-size:0.98rem; font-weight:600; color:var(--ink); margin-bottom:0.75rem; line-height:1.5; }
+    .qopts { display:flex; flex-direction:column; gap:0.45rem; }
+    .qopt {
+      padding:0.55rem 0.95rem; border-radius:0.6rem;
+      border:1.5px solid var(--border); background:var(--surface2);
+      cursor:pointer; font-size:0.93rem; color:var(--ink);
+      transition:all 0.11s;
+    }
+    .qopt:hover:not(.locked) { border-color:var(--ochre); background:var(--ochre-lt); }
+    .qopt.correct { background:var(--forest-lt); border-color:var(--forest-mid); color:var(--forest); font-weight:600; }
+    .qopt.wrong   { background:var(--blood-lt);  border-color:#f0b8b8; color:var(--blood); text-decoration:line-through; }
+    .qexpl {
+      display:none; margin-top:0.7rem; padding:0.65rem 0.9rem;
+      background:var(--bg2); border-radius:0.6rem;
+      font-size:0.86rem; color:var(--ink2); font-style:italic;
+      border-left:3px solid var(--ochre);
+    }
+
+    /* ===== HISTOIRE CARDS ===== */
+    .hcard {
+      background: var(--surface);
+      border-radius: 1rem; overflow:hidden;
+      border: 1.5px solid var(--border);
+      margin: 1rem 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+    .hcard-hdr {
+      padding: 0.85rem 1.4rem;
+      display:flex; align-items:center; gap:0.7rem;
+      font-family:'Playfair Display',serif;
+      font-size:1.05rem; font-weight:700; color:white;
+    }
+    .hh-green { background: linear-gradient(90deg, #2a5218, #3a7020); }
+    .hh-red   { background: linear-gradient(90deg, #7a1818, #a03030); }
+    .hh-blue  { background: linear-gradient(90deg, #1c3f6e, #2c5898); }
+    .hh-ochre { background: linear-gradient(90deg, #7a4a00, #a06010); }
+    .hcard-body { padding:1.2rem 1.4rem; font-size:0.95rem; line-height:1.7; color:var(--ink); }
+    .hcard-body p { margin-bottom:0.7rem; }
+    .hcard-body p:last-child { margin-bottom:0; }
+
+    /* ===== NOTIONS ===== */
+    .notion {
+      background:var(--surface); border-radius:0.8rem;
+      border:1.5px solid var(--border);
+      padding:0.9rem 1.2rem; margin:0.7rem 0;
+      box-shadow:0 2px 6px rgba(0,0,0,0.04);
+    }
+    .notion-t { font-family:'Playfair Display',serif; font-weight:700; color:var(--ink); margin-bottom:0.3rem; }
+    .notion-b { font-size:0.91rem; color:var(--ink2); line-height:1.55; }
+
+    .footer {
+      text-align:center; color:var(--ink2); opacity:0.45;
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.67rem; letter-spacing:0.15em; padding:2rem;
+    }
+
+    @media(max-width:600px){
+      .content { padding:1rem 0.9rem 4rem; }
+      .recit-body { padding:1.2rem 1rem; }
+      .trou-body { padding:1.2rem 1rem; }
+      .exo-inp { width:128px; }
+      .trou-inp { width:120px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">FLE · Niveau B1–B2 · Histoire</div>
+  <h1>1918 : <em>recompositions</em> géopolitiques</h1>
+  <p class="hero-sub">Traités de paix, Société des Nations, mandats coloniaux<br>et maîtrise du passé composé / imparfait</p>
+  <div class="badges">
+    <span class="badge">📖 Lecture annotée</span>
+    <span class="badge">🔵 PC / 🔴 Imparfait</span>
+    <span class="badge">📚 Vocabulaire B2</span>
+    <span class="badge">🏛️ Histoire géopolitique</span>
+    <span class="badge">✍️ Exercices interactifs</span>
+    <span class="badge">🎯 QCM</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showPage('p1')">📖 Lecture & Langue</button>
+  <button class="tab-btn" onclick="showPage('p2')">✍️ Exercices & Histoire</button>
+</nav>
+
+<!-- ===================== PAGE 1 ===================== -->
+<div class="page active" id="p1">
+<div class="content">
+
+  <!-- RÉCIT -->
+  <div class="sec-label">📜 Texte authentique niveau B2</div>
+  <h2 class="sec-title">Émile après l'armistice</h2>
+  <p class="sec-sub">Lisez en repérant les couleurs : <strong style="color:var(--pc-color)">🔵 passé composé</strong> (action, événement) · <strong style="color:var(--imp-color)">🔴 imparfait</strong> (décor, état, habitude)</p>
+
+  <div class="recit">
+    <div class="recit-hdr">
+      <span style="font-size:1.3rem;">📜</span>
+      <div>
+        <div class="recit-hdr-t">Un basculement mondial — novembre 1918</div>
+        <div class="recit-hdr-s">Récit fictif à visée historique · Est de la France</div>
+      </div>
+    </div>
+    <div class="recit-body">
+      <p>Le <strong>11 novembre 1918</strong>, les cloches <span class="pc">ont retenti</span>. Émile <span class="imp">venait d'avoir</span> quatorze ans. Dans son <strong>hameau</strong> dévasté de l'Est, il <span class="imp">observait</span> les <strong>poilus</strong> revenus du <strong>front</strong> : beaucoup <span class="imp">étaient</span> <strong>mutilés</strong>, d'autres <span class="imp">souffraient</span> de <strong>traumatismes</strong> invisibles. <span class="imp">Quotidiennement</span>, sa mère <span class="imp">consultait</span> les listes funèbres affichées à la mairie.</p>
+
+      <p>En 1919, l'écho du <strong>traité de Versailles</strong> <span class="pc">a bouleversé</span> le village. L'Allemagne <span class="imp">était</span> <strong>humiliée</strong> : on lui <span class="imp">infligeait</span> des <strong>réparations</strong> colossales. Émile <span class="pc">a surpris</span> une conversation entre adultes au sujet de la <strong>Société des Nations</strong>, censée <strong>prévenir</strong> tout nouveau conflit. « Plus jamais ça », <span class="imp">murmurait</span> le maire, le regard rivé sur une mappemonde. Pourtant, les <strong>empires coloniaux</strong> <span class="imp">paraissaient</span> plus étendus qu'avant : la France et la Grande-Bretagne <span class="pc">avaient accru</span> leur emprise en Afrique et au Moyen-Orient via les <strong>mandats</strong>.</p>
+
+      <p>Émile <span class="imp">deviendrait</span> plus tard <strong>facteur</strong>, mais il n'<span class="imp">oublierait</span> jamais : la paix <span class="imp">demeurait</span> fragile, et les <strong>séquelles</strong> de la guerre <span class="imp">allaient</span> sceller le destin du XXᵉ siècle.</p>
+    </div>
+    <div class="recit-legend">
+      <div class="leg"><div class="ld ld-pc"></div><span style="color:var(--pc-color);font-weight:700;">🔵 Passé composé</span> — action, événement, fait daté</div>
+      <div class="leg"><div class="ld ld-imp"></div><span style="color:var(--imp-color);font-weight:700;">🔴 Imparfait</span> — décor, état, habitude, action en cours</div>
+    </div>
+  </div>
+
+  <!-- COMPRÉHENSION -->
+  <div class="card">
+    <div class="card-top green">
+      <div class="card-icon ci-green">💬</div>
+      <div><div class="card-title">Questions de compréhension</div><div class="card-lbl">Cliquez pour révéler la réponse</div></div>
+    </div>
+    <div class="card-body">
+      <button class="q-btn" onclick="toggleQ(this)">❓ Quel âge avait Émile le 11 novembre 1918 ?</button>
+      <div class="q-ans">✅ Émile venait d'avoir quatorze ans.</div>
+      <br>
+      <button class="q-btn" onclick="toggleQ(this)">❓ Que murmurait le maire ? Que révèle cette réaction ?</button>
+      <div class="q-ans">✅ Il murmurait « Plus jamais ça » — il exprimait l'espoir collectif que la guerre ne se répèterait pas, tout en pressentant la fragilité de la paix.</div>
+      <br>
+      <button class="q-btn" onclick="toggleQ(this)">❓ Comment les empires coloniaux évoluent-ils après 1918 ?</button>
+      <div class="q-ans">✅ Paradoxalement, ils s'étendent encore : la France et le Royaume-Uni récupèrent les colonies allemandes sous forme de mandats de la SDN en Afrique et au Moyen-Orient.</div>
+    </div>
+  </div>
+
+  <!-- ========== GRAMMAIRE ========== -->
+  <div style="margin-top:2.2rem;">
+    <div class="sec-label">⏳ Point de langue — niveau B2</div>
+    <h2 class="sec-title">Passé composé vs Imparfait</h2>
+    <p class="sec-sub">Formation, utilisations et marqueurs temporels — avec exemples</p>
+  </div>
+
+  <!-- DUO DE COLONNES -->
+  <div class="gram-duo">
+
+    <!-- PASSÉ COMPOSÉ -->
+    <div class="gram-block pc-block">
+      <div class="gram-block-title">🔵 Le Passé Composé</div>
+      <div class="gram-subtitle">Actions terminées · Événements</div>
+
+      <div class="gram-formation">
+        <strong>Formation</strong>
+        <div class="formula">AVOIR ou ÊTRE (présent) + PARTICIPE PASSÉ</div>
+        <div class="ex-mini">
+          <span>• Elle <strong>a pris</strong> le métro. <em>(action ponctuelle)</em></span>
+          <span>• Ils <strong>ont signé</strong> un accord. <em>(événement terminé)</em></span>
+          <span>• Je <strong>suis arrivé(e)</strong> à 9h. <em>(moment précis)</em></span>
+        </div>
+      </div>
+
+      <div class="gram-uses-title">Utilisations</div>
+      <div class="gram-use"><div class="use-dot"></div><span>Actions <strong>ponctuelles et terminées</strong></span></div>
+      <div class="gram-use"><div class="use-dot"></div><span>Événements qui <strong>se succèdent</strong></span></div>
+      <div class="gram-use"><div class="use-dot"></div><span>Actions avec une <strong>durée précise</strong></span></div>
+    </div>
+
+    <!-- IMPARFAIT -->
+    <div class="gram-block imp-block">
+      <div class="gram-block-title">🔴 L'Imparfait</div>
+      <div class="gram-subtitle">Descriptions · Habitudes · Actions en cours</div>
+
+      <div class="gram-formation">
+        <strong>Formation</strong>
+        <div class="formula">Radical « nous » (présent) + -ais, -ais, -ait, -ions, -iez, -aient</div>
+        <div class="ex-mini">
+          <span>• Il <strong>faisait</strong> nuit. <em>(description)</em></span>
+          <span>• Elle <strong>portait</strong> un tailleur noir. <em>(description)</em></span>
+          <span>• Elle <strong>travaillait</strong> 70h/semaine. <em>(habitude passée)</em></span>
+        </div>
+      </div>
+
+      <div class="gram-uses-title">Utilisations</div>
+      <div class="gram-use"><div class="use-dot"></div><span><strong>Descriptions</strong> dans le passé (météo, personnes, lieux)</span></div>
+      <div class="gram-use"><div class="use-dot"></div><span><strong>États d'esprit</strong> et émotions</span></div>
+      <div class="gram-use"><div class="use-dot"></div><span>Actions <strong>en cours</strong> (non terminées)</span></div>
+      <div class="gram-use"><div class="use-dot"></div><span><strong>Habitudes</strong> dans le passé</span></div>
+      <div class="gram-use"><div class="use-dot"></div><span><strong>Contexte</strong> ou arrière-plan</span></div>
+    </div>
+  </div>
+
+  <!-- ASTUCE -->
+  <div class="astuce-box">
+    <div class="astuce-tag">⚠️ ASTUCE CLÉ</div>
+    <div class="astuce-slogan">
+      <div class="slogan-item imp-s">
+        <div class="slogan-big">🔴 IMPARFAIT = le décor</div>
+        <small>What was happening, what things were like<br>→ la scène, l'atmosphère, le contexte</small>
+      </div>
+      <div class="slogan-item pc-s">
+        <div class="slogan-big">🔵 PASSÉ COMPOSÉ = l'action</div>
+        <small>What happened, what someone did<br>→ l'événement principal, ce qui se passe</small>
+      </div>
+    </div>
+    <div class="astuce-exemple">
+      <span class="ae-label">Exemples combinés — décor + action</span>
+      <div style="margin-bottom:0.6rem;">Il <span class="imp" style="font-size:0.93rem;">faisait nuit</span> <em>(décor)</em> quand elle <span class="pc" style="font-size:0.93rem;">est sortie</span> <em>(action)</em>.</div>
+      <div style="margin-bottom:0.6rem;">Elle <span class="imp" style="font-size:0.93rem;">portait</span> un tailleur noir <em>(description)</em> et elle <span class="imp" style="font-size:0.93rem;">se sentait</span> confiante <em>(état)</em> quand elle <span class="pc" style="font-size:0.93rem;">est arrivée</span> <em>(action)</em>.</div>
+      <div>Tandis que les civils <span class="imp" style="font-size:0.93rem;">souffraient</span> <em>(contexte)</em>, l'armistice <span class="pc" style="font-size:0.93rem;">a été proclamé</span> <em>(événement)</em>.</div>
+    </div>
+  </div>
+
+  <!-- MARQUEURS -->
+  <div class="card">
+    <div class="card-top ochre">
+      <div class="card-icon ci-ochre">🔍</div>
+      <div><div class="card-title">Mots indicateurs</div><div class="card-lbl">Indices dans la phrase</div></div>
+    </div>
+    <div class="card-body">
+      <div class="marqueurs-duo">
+        <div class="mq-box imp-m">
+          <div class="mq-title">🔴 → Imparfait</div>
+          <div class="mq-tags">
+            <span class="mq-tag">tous les jours / chaque jour</span>
+            <span class="mq-tag">toujours, souvent, parfois</span>
+            <span class="mq-tag">le lundi, le week-end</span>
+            <span class="mq-tag">quand j'étais…</span>
+            <span class="mq-tag">à l'époque</span>
+            <span class="mq-tag">pendant que…</span>
+            <span class="mq-tag">autrefois</span>
+            <span class="mq-tag">en ce temps-là</span>
+            <span class="mq-tag">tandis que</span>
+            <span class="mq-tag">généralement</span>
+          </div>
+        </div>
+        <div class="mq-box pc-m">
+          <div class="mq-title">🔵 → Passé composé</div>
+          <div class="mq-tags">
+            <span class="mq-tag">hier</span>
+            <span class="mq-tag">soudain, tout à coup</span>
+            <span class="mq-tag">d'abord, ensuite, puis, enfin</span>
+            <span class="mq-tag">à 9 heures, ce matin</span>
+            <span class="mq-tag">un jour</span>
+            <span class="mq-tag">pendant trois heures (durée précise)</span>
+            <span class="mq-tag">le [date]</span>
+            <span class="mq-tag">en [année]</span>
+            <span class="mq-tag">aussitôt</span>
+            <span class="mq-tag">une fois</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VOCABULAIRE -->
+  <div style="margin-top:2.2rem;">
+    <div class="sec-label">📚 Vocabulaire B1–B2</div>
+    <h2 class="sec-title">Mots du récit</h2>
+    <p class="sec-sub">Cliquez sur une carte pour révéler la traduction.</p>
+  </div>
+
+  <div style="display:flex; gap:0.6rem; flex-wrap:wrap; margin-bottom:1rem;">
+    <button class="btn btn-g" onclick="revealAll()">Révéler tout</button>
+    <button class="btn btn-o" onclick="hideAll()">Masquer tout</button>
+  </div>
+
+  <div class="vocab-grid" id="vocab-grid"></div>
+
+  <div style="margin-top:2rem;">
+    <div class="flash-prog" id="fp">Carte 1 / 18</div>
+    <div class="flash-wrap">
+      <div class="flashcard" id="fc" onclick="flipCard()">
+        <div class="fc-face fc-front">
+          <div class="fc-word" id="fc-en">—</div>
+          <div class="fc-hint">🔄 cliquez pour voir la traduction</div>
+        </div>
+        <div class="fc-face fc-back">
+          <div class="fc-word" id="fc-fr">—</div>
+          <div class="fc-hint">cliquez pour retourner</div>
+        </div>
+      </div>
+    </div>
+    <div class="flash-ctrl">
+      <button class="fbtn" onclick="flashPrev()">← Précédent</button>
+      <button class="fbtn" onclick="flipCard()">🔄 Retourner</button>
+      <button class="fbtn" onclick="flashNext()">Suivant →</button>
+    </div>
+  </div>
+
+</div><!-- /content -->
+</div><!-- /p1 -->
+
+<!-- ===================== PAGE 2 ===================== -->
+<div class="page" id="p2">
+<div class="content">
+
+  <!-- EXERCICES PHRASES ISOLÉES -->
+  <div class="sec-label">✍️ Exercice 1 — Phrases isolées</div>
+  <h2 class="sec-title">Conjuguez au bon temps</h2>
+  <p class="sec-sub">Choisissez passé composé ou imparfait selon le contexte. Appuyez sur Entrée pour valider chaque phrase.</p>
+
+  <div class="dots-row" id="dots"></div>
+  <div id="exo-list"></div>
+
+  <div class="btn-row">
+    <button class="btn btn-g" onclick="checkAll()">🔍 Vérifier tout</button>
+    <button class="btn btn-o" onclick="showAnswers()">📖 Corrections</button>
+    <button class="btn btn-r" onclick="resetExos()">↺ Recommencer</button>
+  </div>
+  <div class="score-box" id="score-box">
+    <div class="score-n" id="score-n">0/12</div>
+    <div class="score-l">réponses correctes</div>
+    <div class="score-msg" id="score-msg"></div>
+  </div>
+
+  <!-- TEXTE À TROUS -->
+  <div style="margin-top:2.5rem;">
+    <div class="sec-label">✍️ Exercice 2 — Texte à trous</div>
+    <h2 class="sec-title">Le rapport au consulat</h2>
+    <p class="sec-sub">Complétez le texte en conjuguant chaque verbe entre parenthèses au passé composé ou à l'imparfait.</p>
+  </div>
+
+  <div class="trou-card">
+    <div class="trou-hdr">
+      <span style="font-size:1.3rem;">🏛️</span>
+      <div>
+        <div class="trou-hdr-t">Mission diplomatique — Paris, 1919</div>
+        <div class="trou-hdr-s">Conjuguez les verbes entre parenthèses · PC ou Imparfait</div>
+      </div>
+    </div>
+    <div class="trou-body" id="trou-body">
+      <!-- Injected by JS -->
+    </div>
+    <div class="trou-controls">
+      <button class="btn btn-g" onclick="checkTrou()">🔍 Vérifier le texte</button>
+      <button class="btn btn-b" onclick="showTrou()">📖 Voir les corrections</button>
+      <button class="btn btn-r" onclick="resetTrou()">↺ Recommencer</button>
+    </div>
+    <div class="trou-score" id="trou-score"></div>
+  </div>
+
+  <!-- HISTOIRE -->
+  <div style="margin-top:2.5rem;">
+    <div class="sec-label">🏛️ Contenu historique</div>
+    <h2 class="sec-title">Recompositions géopolitiques 1919–1920</h2>
+    <p class="sec-sub">Cliquez sur les questions pour révéler les réponses.</p>
+  </div>
+
+  <div class="hcard">
+    <div class="hcard-hdr hh-red">📜 Le traité de Versailles — 28 juin 1919</div>
+    <div class="hcard-body">
+      <p>Signé dans la galerie des Glaces, le traité impose à l'Allemagne la <strong>clause de culpabilité de guerre</strong> (article 231), des réparations financières vertigineuses (132 milliards de marks-or), la réduction de son armée à 100 000 hommes et la perte de 13 % de son territoire ainsi que de toutes ses colonies. Ce diktat nourrit un profond ressentiment nationaliste.</p>
+      <button class="q-btn" onclick="toggleQ(this)">❓ Quelles sont les trois sanctions majeures ?</button>
+      <div class="q-ans">✅ 1. Responsabilité exclusive de la guerre (art. 231). 2. Réparations colossales. 3. Perte de 13 % du territoire et de toutes les colonies.</div>
+      <button class="q-btn" onclick="toggleQ(this)" style="margin-left:0.5rem;">❓ Pourquoi parle-t-on d'un « diktat » ?</button>
+      <div class="q-ans">✅ L'Allemagne n'a pas pu négocier les conditions — le traité lui a été imposé par les vainqueurs. Elle n'a eu que le choix de signer ou de reprendre la guerre.</div>
+    </div>
+  </div>
+
+  <div class="hcard">
+    <div class="hcard-hdr hh-blue">🕊️ La Société des Nations (SDN, 1920)</div>
+    <div class="hcard-body">
+      <p>Créée à l'initiative du président américain Woodrow Wilson (ses « 14 points »), son siège est à Genève. Elle vise à résoudre les conflits par la diplomatie. Paradoxalement, les États-Unis n'en font jamais partie — le Sénat refuse la ratification. Sans armée propre, elle est impuissante face aux crises des années 1930. Elle sera remplacée par l'ONU en 1946.</p>
+      <button class="q-btn" onclick="toggleQ(this)">❓ Pourquoi la SDN a-t-elle échoué ?</button>
+      <div class="q-ans">✅ Deux raisons structurelles : (1) absence de force militaire propre = aucun pouvoir coercitif réel ; (2) les États-Unis ne l'ont jamais rejointe, ce qui limitait sa crédibilité diplomatique mondiale.</div>
+    </div>
+  </div>
+
+  <div class="hcard">
+    <div class="hcard-hdr hh-green">🏰 Effondrement des empires multiethniques</div>
+    <div class="hcard-body">
+      <p>Trois grands empires disparaissent : austro-hongrois, ottoman et allemand. De nouvelles nations émergent en Europe centrale : <em>Tchécoslovaquie, Yougoslavie, Pologne, Autriche, Hongrie</em>. Au Proche-Orient, France et Royaume-Uni reçoivent des mandats SDN. Ces découpages arbitraires engendrent des conflits durables.</p>
+      <button class="q-btn" onclick="toggleQ(this)">❓ Cite deux États créés après 1918 en Europe centrale.</button>
+      <div class="q-ans">✅ Tchécoslovaquie et Yougoslavie (ou Pologne, Hongrie, Autriche). Tous naissent de la dislocation des empires.</div>
+    </div>
+  </div>
+
+  <div class="hcard">
+    <div class="hcard-hdr hh-ochre">🌍 Redistribution des colonies allemandes</div>
+    <div class="hcard-body">
+      <p>L'Allemagne perd le Togo, le Cameroun, l'Afrique orientale allemande et le Sud-Ouest africain. Ces territoires deviennent des mandats SDN confiés à la France, au Royaume-Uni, à la Belgique et à l'Afrique du Sud. Les empires coloniaux français et britannique atteignent leur apogée territoriale.</p>
+      <button class="q-btn" onclick="toggleQ(this)">❓ Sous quel statut les colonies sont-elles placées ?</button>
+      <div class="q-ans">✅ Mandats de la Société des Nations — administrés par les puissances victorieuses au nom de la SDN (en théorie pour préparer l'indépendance, en pratique une forme de colonisation légalisée).</div>
+    </div>
+  </div>
+
+  <!-- QCM -->
+  <div style="margin-top:2.5rem;">
+    <div class="sec-label">🎯 Quiz</div>
+    <h2 class="sec-title">Testez vos connaissances</h2>
+    <p class="sec-sub">Histoire et grammaire · Choisissez la bonne réponse.</p>
+  </div>
+
+  <div id="qcm-list"></div>
+  <div class="btn-row">
+    <button class="btn btn-g" onclick="scoreQCM()">🎯 Voir le score</button>
+    <button class="btn btn-r" onclick="resetQCM()">↺ Réinitialiser</button>
+  </div>
+  <div class="score-box" id="qcm-score">
+    <div class="score-n" id="qcm-n">0/10</div>
+    <div class="score-l">bonnes réponses au quiz</div>
+  </div>
+
+  <!-- NOTIONS -->
+  <div style="margin-top:2.5rem;">
+    <div class="sec-label">📌 Bilan</div>
+    <h2 class="sec-title">Notions clés à retenir</h2>
+  </div>
+
+  <div class="notion" style="border-left:4px solid var(--blood);">
+    <div class="notion-t">💀 Bilan humain sans précédent</div>
+    <div class="notion-b">≈ 10 millions de morts militaires, millions de mutilés et de traumatisés. Les « gueules cassées » marquent profondément la société française.</div>
+  </div>
+  <div class="notion" style="border-left:4px solid var(--ochre);">
+    <div class="notion-t">📜 Traité de Versailles (1919)</div>
+    <div class="notion-b">Humiliation de l'Allemagne : responsabilité de la guerre, réparations, pertes territoriales. Ce diktat est souvent considéré comme l'une des causes de la montée du nazisme.</div>
+  </div>
+  <div class="notion" style="border-left:4px solid var(--forest);">
+    <div class="notion-t">🗺️ Nouvelle carte européenne</div>
+    <div class="notion-b">Dislocation des empires austro-hongrois, ottoman et allemand. Émergence de nouveaux États-nations selon le principe des nationalités de Wilson.</div>
+  </div>
+  <div class="notion" style="border-left:4px solid var(--blue);">
+    <div class="notion-t">🕊️ Société des Nations (SDN, 1920)</div>
+    <div class="notion-b">Ancêtre de l'ONU — première organisation internationale pour la paix. Échec structurel : pas d'armée + absence des États-Unis → impuissance dans les années 1930.</div>
+  </div>
+  <div class="notion" style="border-left:4px solid var(--pc-color);">
+    <div class="notion-t">🔵 Passé composé</div>
+    <div class="notion-b"><strong>Formation :</strong> avoir/être (présent) + participe passé.<br><strong>Usage :</strong> action terminée, événement daté, succession de faits.</div>
+  </div>
+  <div class="notion" style="border-left:4px solid var(--imp-color);">
+    <div class="notion-t">🔴 Imparfait</div>
+    <div class="notion-b"><strong>Formation :</strong> radical « nous » + -ais/-ais/-ait/-ions/-iez/-aient.<br><strong>Usage :</strong> décor, description, habitude, état, action en cours → « le décor de la scène ».</div>
+  </div>
+
+</div><!-- /content -->
+</div><!-- /p2 -->
+
+<div class="footer">FLE · HISTOIRE B1–B2 · Conséquences de la Grande Guerre · 1918–1920</div>
+
+<script>
+// ===== TABS =====
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.tab-btn')[id === 'p1' ? 0 : 1].classList.add('active');
+}
+
+function toggleQ(btn) {
+  const r = btn.nextElementSibling;
+  if (r) r.style.display = r.style.display === 'block' ? 'none' : 'block';
+}
+
+// ===== VOCAB =====
+const vocab = [
+  { en:"devastated hamlet",       fr:"hameau dévasté",           ctx:"village détruit par la guerre" },
+  { en:"front line / battlefield",fr:"le front",                 ctx:"zone de combat" },
+  { en:"wounded / mutilated",     fr:"mutilés / blessés",        ctx:"victimes militaires" },
+  { en:"trauma / shell shock",    fr:"traumatisme",              ctx:"blessure psychologique" },
+  { en:"daily, on a daily basis", fr:"quotidiennement",          ctx:"adverbe de fréquence" },
+  { en:"humiliated (country)",    fr:"humiliée",                 ctx:"l'Allemagne après Versailles" },
+  { en:"colossal reparations",    fr:"réparations colossales",   ctx:"dommages de guerre imposés" },
+  { en:"League of Nations",       fr:"Société des Nations (SDN)",ctx:"organisation internationale 1920" },
+  { en:"colonial empires",        fr:"empires coloniaux",        ctx:"France, Royaume-Uni, etc." },
+  { en:"mandate system",          fr:"mandats (SDN)",            ctx:"gestion des ex-colonies" },
+  { en:"aftermath / lasting effects",fr:"séquelles",             ctx:"effets durables de la guerre" },
+  { en:"war guilt clause",        fr:"clause de culpabilité",    ctx:"article 231, traité de Versailles" },
+  { en:"to prevent a conflict",   fr:"prévenir un conflit",      ctx:"mission de la SDN" },
+  { en:"arbitration / diplomacy", fr:"arbitrage / diplomatie",   ctx:"résolution pacifique des conflits" },
+  { en:"collapse of empires",     fr:"dislocation des empires",  ctx:"fin des grandes puissances impériales" },
+  { en:"commemorations",          fr:"commémorations",           ctx:"11 novembre, devoir de mémoire" },
+  { en:"disfigured veterans",     fr:"gueules cassées",          ctx:"soldats mutilés du visage" },
+  { en:"armistice",               fr:"armistice",                ctx:"cessez-le-feu du 11 novembre 1918" }
+];
+
+function buildVocab() {
+  const g = document.getElementById('vocab-grid');
+  g.innerHTML = '';
+  vocab.forEach((v, i) => {
+    const d = document.createElement('div');
+    d.className = 'vcard'; d.dataset.i = i;
+    d.innerHTML = `<div class="ven">${v.en}</div><div class="vctx">${v.ctx}</div><span class="vtog" id="vt-${i}">🔒 cliquer pour révéler</span><div class="vfr" id="vf-${i}">→ ${v.fr}</div>`;
+    d.addEventListener('click', () => {
+      const on = d.classList.toggle('on');
+      document.getElementById(`vt-${i}`).textContent = on ? '✅ cliquer pour masquer' : '🔒 cliquer pour révéler';
+    });
+    g.appendChild(d);
+  });
+  updateFlash();
+}
+function revealAll() { vocab.forEach((_,i) => { document.querySelector(`.vcard[data-i="${i}"]`).classList.add('on'); document.getElementById(`vt-${i}`).textContent='✅ cliquer pour masquer'; }); }
+function hideAll()   { vocab.forEach((_,i) => { document.querySelector(`.vcard[data-i="${i}"]`).classList.remove('on'); document.getElementById(`vt-${i}`).textContent='🔒 cliquer pour révéler'; }); }
+
+// Flash
+let fi = 0, ff = false;
+function updateFlash() {
+  document.getElementById('fc-en').textContent = vocab[fi].en;
+  document.getElementById('fc-fr').textContent = vocab[fi].fr;
+  document.getElementById('fp').textContent = `Carte ${fi+1} / ${vocab.length}`;
+  document.getElementById('fc').classList.remove('flipped'); ff = false;
+}
+function flipCard() { ff = !ff; document.getElementById('fc').classList.toggle('flipped', ff); }
+function flashNext() { fi=(fi+1)%vocab.length; updateFlash(); }
+function flashPrev() { fi=(fi-1+vocab.length)%vocab.length; updateFlash(); }
+
+// ===== EXERCICES PHRASES ISOLÉES =====
+const exos = [
+  {
+    parts: ["Hier, je", {v:"aller", hint:"(aller)"}, "chez mon ami pour parler de mon projet."],
+    answers: ["suis allé(e)"]
+  },
+  {
+    parts: ["Quand j'", {v:"arriver", hint:"(arriver)"}, ", il", {v:"être", hint:"(être)"}, "10 heures du matin."],
+    answers: ["suis arrivé(e)", "était"]
+  },
+  {
+    parts: ["Mon professeur", {v:"porter", hint:"(porter)"}, "un costume gris et il", {v:"avoir", hint:"(avoir)"}, "l'air sympathique."],
+    answers: ["portait", "avait"]
+  },
+  {
+    parts: ["Je lui", {v:"expliquer", hint:"(expliquer)"}, "que je", {v:"vouloir", hint:"(vouloir)"}, "ouvrir une école de langues à Paris."],
+    answers: ["ai expliqué", "voulais"]
+  },
+  {
+    parts: ["Chaque matin pendant la guerre, sa mère", {v:"consulter", hint:"(consulter)"}, "les listes affichées à la mairie."],
+    answers: ["consultait"]
+  },
+  {
+    parts: ["Le 11 novembre 1918, les cloches", {v:"retentir", hint:"(retentir)"}, "dans tout le village."],
+    answers: ["ont retenti"]
+  },
+  {
+    parts: ["Les soldats", {v:"attendre", hint:"(attendre)"}, "depuis des heures quand l'officier", {v:"annoncer", hint:"(annoncer)"}, "la nouvelle."],
+    answers: ["attendaient", "a annoncé"]
+  },
+  {
+    parts: ["Soudain, un télégramme", {v:"arriver", hint:"(arriver)"}, "au bureau du maire."],
+    answers: ["est arrivé"]
+  },
+  {
+    parts: ["D'habitude, les délégués", {v:"se réunir", hint:"(se réunir)"}, "le mardi matin à Genève."],
+    answers: ["se réunissaient"]
+  },
+  {
+    parts: ["En 1919, le traité de Versailles", {v:"être signé", hint:"(être signé)"}, "dans la galerie des Glaces."],
+    answers: ["a été signé"]
+  }
+];
+
+function norm(s) {
+  return s.trim().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/['']/g,"'")
+    .replace(/\(e\)/g,'').replace(/[()]/g,'');
+}
+function normAns(s) {
+  // also strip optional (e) from answers for comparison
+  return norm(s).replace(/\(e\)/g,'');
+}
+
+function buildExos() {
+  const list = document.getElementById('exo-list');
+  const dots = document.getElementById('dots');
+  list.innerHTML = ''; dots.innerHTML = '';
+  exos.forEach((ex, i) => {
+    dots.innerHTML += `<div class="dot" id="d-${i}"></div>`;
+    const card = document.createElement('div');
+    card.className = 'exo-card'; card.id = `ec-${i}`;
+
+    // Build phrase HTML
+    let phraseHTML = '';
+    let inputCount = 0;
+    ex.parts.forEach(part => {
+      if (typeof part === 'string') {
+        phraseHTML += `<span>${part}</span>`;
+      } else {
+        phraseHTML += `<span><input type="text" class="exo-inp" id="ei-${i}-${inputCount}" autocomplete="off" spellcheck="false" onkeydown="if(event.key==='Enter')checkSingle(${i})"><div class="inf-hint">${part.hint}</div></span>`;
+        inputCount++;
+      }
+    });
+
+    card.innerHTML = `<div class="exo-num">PHRASE ${i+1} / ${exos.length}</div>
+      <div class="exo-phrase" id="ep-${i}">${phraseHTML}</div>
+      <button onclick="checkSingle(${i})" style="margin-top:0.6rem; background:var(--forest); color:white; border:none; padding:0.35rem 0.9rem; border-radius:2rem; cursor:pointer; font-size:0.82rem; font-weight:600;">✓ Vérifier</button>
+      <div class="exo-fb" id="ef-${i}"></div>`;
+    list.appendChild(card);
+  });
+}
+
+function checkSingle(i) {
+  const ex = exos[i];
+  const fb = document.getElementById(`ef-${i}`);
+  const card = document.getElementById(`ec-${i}`);
+  const dot = document.getElementById(`d-${i}`);
+  let correct = 0;
+  ex.answers.forEach((ans, j) => {
+    const inp = document.getElementById(`ei-${i}-${j}`);
+    if (!inp) return;
+    const ok = normAns(inp.value) === normAns(ans);
+    inp.className = 'exo-inp' + (ok ? ' ok' : ' nok');
+    if (ok) correct++;
+  });
+  const total = ex.answers.length;
+  const cls = correct === total ? 'ok' : (correct === 0 ? 'nok' : 'half');
+  card.className = 'exo-card ' + cls;
+  dot.className  = 'dot ' + cls;
+  fb.className   = 'exo-fb efb-' + cls;
+  const ansStr = ex.answers.map(a => `<strong>${a}</strong>`).join(' / ');
+  if (cls === 'ok')   fb.innerHTML = `✅ Parfait ! ${ansStr}`;
+  else if (cls==='half') fb.innerHTML = `⚠️ Partiel — attendu : ${ansStr}`;
+  else fb.innerHTML = `❌ Attendu : ${ansStr}`;
+}
+
+function checkAll() {
+  let total=0, max=0;
+  exos.forEach((ex,i) => {
+    checkSingle(i);
+    ex.answers.forEach((ans,j) => {
+      max++;
+      const inp = document.getElementById(`ei-${i}-${j}`);
+      if (inp && normAns(inp.value) === normAns(ans)) total++;
+    });
+  });
+  const pct = Math.round(total/max*100);
+  const msgs = ['Continuez — révisez les règles ! 💪','Bon début, relisez les exemples 📖','Bien ! Encore quelques erreurs 🙂','Très bien, quasi parfait ! ⭐','Maîtrise parfaite ! 🏆'];
+  document.getElementById('score-box').style.display='block';
+  document.getElementById('score-n').textContent = `${total}/${max}`;
+  document.getElementById('score-msg').textContent = msgs[Math.min(4,Math.floor(pct/20))];
+}
+
+function showAnswers() {
+  exos.forEach((ex,i) => {
+    ex.answers.forEach((ans,j) => {
+      const inp = document.getElementById(`ei-${i}-${j}`);
+      if (inp) inp.value = ans;
+    });
+    checkSingle(i);
+  });
+}
+
+function resetExos() {
+  exos.forEach((ex,i) => {
+    ex.answers.forEach((_,j) => {
+      const inp = document.getElementById(`ei-${i}-${j}`);
+      if (inp) { inp.value=''; inp.className='exo-inp'; }
+    });
+    document.getElementById(`ef-${i}`).className='exo-fb';
+    document.getElementById(`ef-${i}`).textContent='';
+    document.getElementById(`ec-${i}`).className='exo-card';
+    document.getElementById(`d-${i}`).className='dot';
+  });
+  document.getElementById('score-box').style.display='none';
+}
+
+// ===== TEXTE À TROUS =====
+// Structure: array of segments, each either a string or {hint, answer}
+const trouSegments = [
+  "Lundi dernier, le délégué français Armand ", {hint:"(avoir)", answer:"a eu"}, " rendez-vous au Quai d'Orsay. Il ",
+  {hint:"(vouloir)", answer:"voulait"}, " discuter du système des mandats proposé par la Société des Nations. C'",
+  {hint:"(être)", answer:"était"}, " une réunion décisive pour l'avenir des anciens territoires ottomans.\n\n",
+  "Ce matin-là, il ", {hint:"(se lever)", answer:"s'est levé"}, " très tôt. Il ",
+  {hint:"(être)", answer:"était"}, " un peu nerveux. Il ", {hint:"(prendre)", answer:"a pris"},
+  " un café et il ", {hint:"(mettre)", answer:"a mis"}, " son plus beau costume. Il ",
+  {hint:"(penser)", answer:"pensait"}, " : « J'espère que la France obtiendra ce qu'elle demande ! »\n\n",
+  "Quand il ", {hint:"(arriver)", answer:"est arrivé"}, " au ministère, une secrétaire l'",
+  {hint:"(accueillir)", answer:"a accueilli"}, " avec courtoisie. Elle lui ",
+  {hint:"(offrir)", answer:"a offert"}, " un verre d'eau. La salle de conférence ",
+  {hint:"(être)", answer:"était"}, " très solennelle. Il y ", {hint:"(avoir)", answer:"avait"},
+  " des cartes du monde entier sur les murs.\n\n",
+  "Le ministre ", {hint:"(entrer)", answer:"est entré"}, " dans la salle. Il ",
+  {hint:"(porter)", answer:"portait"}, " un costume sombre et il ",
+  {hint:"(avoir)", answer:"avait"}, " l'air déterminé. Il ", {hint:"(serrer)", answer:"a serré"},
+  " la main du délégué et ", {hint:"(commencer)", answer:"a commencé"}, " à parler des mandats en Syrie et en Palestine."
+];
+
+function buildTrou() {
+  const body = document.getElementById('trou-body');
+  body.innerHTML = '';
+  let inputIdx = 0;
+  trouSegments.forEach((seg, si) => {
+    if (typeof seg === 'string') {
+      // Handle newlines
+      const parts = seg.split('\n\n');
+      parts.forEach((part, pi) => {
+        if (part) body.appendChild(document.createTextNode(part));
+        if (pi < parts.length - 1) {
+          body.appendChild(document.createElement('br'));
+          body.appendChild(document.createElement('br'));
+        }
+      });
+    } else {
+      const wrap = document.createElement('span');
+      const inp = document.createElement('input');
+      inp.type = 'text';
+      inp.className = 'trou-inp';
+      inp.id = `ti-${inputIdx}`;
+      inp.setAttribute('autocomplete','off');
+      inp.setAttribute('spellcheck','false');
+      inp.setAttribute('data-answer', seg.answer);
+      inp.setAttribute('data-idx', inputIdx);
+      const hint = document.createElement('span');
+      hint.className = 'trou-hint';
+      hint.textContent = seg.hint;
+      wrap.appendChild(hint);
+      wrap.appendChild(inp);
+      body.appendChild(wrap);
+      inputIdx++;
+    }
+  });
+}
+
+function checkTrou() {
+  const inputs = document.querySelectorAll('.trou-inp');
+  let correct = 0;
+  inputs.forEach(inp => {
+    const ans = inp.getAttribute('data-answer');
+    const ok = normAns(inp.value) === normAns(ans);
+    inp.className = 'trou-inp ' + (ok ? 'ok' : 'nok');
+    if (ok) correct++;
+  });
+  const scoreEl = document.getElementById('trou-score');
+  scoreEl.style.display = 'block';
+  const pct = Math.round(correct/inputs.length*100);
+  scoreEl.innerHTML = `Score : <strong>${correct}/${inputs.length}</strong> — ${pct >= 80 ? '⭐ Excellent !' : pct >= 60 ? '🙂 Bien, continuez !' : '💪 Révisez et réessayez !'}`;
+}
+
+function showTrou() {
+  document.querySelectorAll('.trou-inp').forEach(inp => {
+    inp.value = inp.getAttribute('data-answer');
+    inp.className = 'trou-inp ok';
+  });
+  const scoreEl = document.getElementById('trou-score');
+  scoreEl.style.display = 'block';
+  const inputs = document.querySelectorAll('.trou-inp');
+  scoreEl.innerHTML = `📖 Toutes les corrections affichées — <strong>${inputs.length}/${inputs.length}</strong> réponses.`;
+}
+
+function resetTrou() {
+  document.querySelectorAll('.trou-inp').forEach(inp => {
+    inp.value = '';
+    inp.className = 'trou-inp';
+  });
+  document.getElementById('trou-score').style.display = 'none';
+}
+
+// ===== QCM =====
+const qcm = [
+  { q:"Quel marqueur temporel indique NORMALEMENT l'imparfait ?", opts:["Soudain","Le 11 novembre","Chaque matin","Tout à coup"], c:2, x:"« Chaque matin » exprime une habitude → imparfait. Les autres signalent un événement ponctuel → passé composé." },
+  { q:"Le traité de Versailles a été signé en :", opts:["1918","1919","1920","1921"], c:1, x:"Signé le 28 juin 1919 dans la galerie des Glaces à Versailles." },
+  { q:"Laquelle de ces phrases utilise correctement les deux temps ?", opts:["Soudain, les cloches sonnaient.","Chaque soir, il a lu les nouvelles.","Pendant que les civils souffraient, l'armistice a été signé.","Un jour, il partait au front."], c:2, x:"Imparfait pour le contexte continu (souffraient) + passé composé pour l'événement précis (a été signé) → structure correcte." },
+  { q:"Pourquoi la SDN a-t-elle été inefficace ?", opts:["Elle était dirigée par l'Allemagne.","Elle manquait de budget.","Les États-Unis ne l'ont pas rejointe et elle n'avait pas d'armée.","Elle avait trop de membres."], c:2, x:"Le Sénat américain refusa la ratification. Sans armée propre, la SDN ne pouvait rien imposer." },
+  { q:"Qu'est-ce que l'article 231 du traité de Versailles ?", opts:["La création de la SDN","La clause de culpabilité de guerre","Le tracé de la frontière franco-allemande","L'amnistie des prisonniers"], c:1, x:"L'article 231 établit la responsabilité exclusive de l'Allemagne dans le déclenchement de la guerre, justifiant les réparations." },
+  { q:"Lequel de ces États N'A PAS été créé après 1918 ?", opts:["La Tchécoslovaquie","La Yougoslavie","La Belgique","La Pologne"], c:2, x:"La Belgique existe depuis 1830. Les trois autres naissent de la dislocation des empires après la guerre." },
+  { q:"Comment se forme l'imparfait ?", opts:["Radical infinitif + -ais/-ait…","Radical « nous » présent + -ais/-ait…","Avoir/être + participe passé","Radical futur + -ais/-ait…"], c:1, x:"On prend la forme « nous » du présent, on enlève -ons, et on ajoute : -ais, -ais, -ait, -ions, -iez, -aient." },
+  { q:"Quel pays reçoit mandat sur la Syrie et le Liban après 1919 ?", opts:["Le Royaume-Uni","L'Italie","La France","La Belgique"], c:2, x:"La France reçoit mandat sur la Syrie et le Liban. Le Royaume-Uni obtient l'Irak, la Palestine et la Transjordanie." },
+  { q:"Complétez : « Il ___ (faire) nuit quand elle ___ (sortir). »", opts:["a fait / est sortie","faisait / est sortie","faisait / sortait","a fait / sortait"], c:1, x:"Imparfait pour le décor/contexte (faisait) + passé composé pour l'action principale (est sortie)." },
+  { q:"Choisissez la bonne combinaison : « Tandis que le village ___ silencieux, soudain une explosion ___ »", opts:["était / a retenti","a été / retentissait","était / retentissait","a été / a retenti"], c:0, x:"Imparfait pour l'arrière-plan (était) + passé composé pour l'événement brusque (a retenti) — structure classique du récit." }
+];
+
+let qAnswers = {};
+
+function buildQCM() {
+  const list = document.getElementById('qcm-list');
+  list.innerHTML = '';
+  qcm.forEach((q, qi) => {
+    const block = document.createElement('div');
+    block.className = 'qblock';
+    block.innerHTML = `<div class="qtext">${qi+1}. ${q.q}</div>
+      <div class="qopts">${q.opts.map((o,oi) => `<div class="qopt" onclick="pickQ(${qi},${oi},this,this.parentElement.parentElement)">${['A','B','C','D'][oi]}. ${o}</div>`).join('')}</div>
+      <div class="qexpl" id="qx-${qi}">${q.x}</div>`;
+    list.appendChild(block);
+  });
+}
+
+function pickQ(qi, oi, btn, block) {
+  if(block.dataset.answered) return;
+  qAnswers[qi] = oi; block.dataset.answered = '1';
+  block.querySelectorAll('.qopt').forEach(b => b.classList.add('locked'));
+  if(oi === qcm[qi].c) btn.classList.add('correct');
+  else { btn.classList.add('wrong'); block.querySelectorAll('.qopt')[qcm[qi].c].classList.add('correct'); }
+  document.getElementById(`qx-${qi}`).style.display = 'block';
+}
+
+function scoreQCM() {
+  let s=0;
+  qcm.forEach((_,qi) => { if(qAnswers[qi]===qcm[qi].c) s++; });
+  document.getElementById('qcm-score').style.display='block';
+  document.getElementById('qcm-n').textContent = `${s}/${qcm.length}`;
+}
+
+function resetQCM() {
+  qAnswers = {};
+  document.getElementById('qcm-list').innerHTML='';
+  document.getElementById('qcm-score').style.display='none';
+  buildQCM();
+}
+
+// ===== INIT =====
+buildVocab();
+buildExos();
+buildQCM();
+buildTrou();
+</script>
+</body>
+</html>
