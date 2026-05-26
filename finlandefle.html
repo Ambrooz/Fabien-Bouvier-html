@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Finlande – Cours FLE B2/C1</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,600;0,9..40,700;1,9..40,400&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --arctic:     #e8f7f5;
+  --fjord:      #c8eee8;
+  --pine:       #0d6e5a;
+  --pine-dark:  #084d40;
+  --pine-light: #1a9a7c;
+  --gold:       #e8a020;
+  --gold-light: #fdf0d5;
+  --amber:      #c97a10;
+  --midnight:   #0c1a2e;
+  --slate:      #2d4a62;
+  --mist:       #f0f5f8;
+  --ice:        #ffffff;
+  --rose:       #e85470;
+  --rose-soft:  #fde8ed;
+  --cobalt:     #2255cc;
+  --cobalt-soft:#e5ecff;
+  --lavender:   #6842c2;
+  --lav-soft:   #ede8ff;
+  --text:       #0e1c2e;
+  --muted:      #5a7085;
+  --border:     rgba(13,110,90,0.15);
+  --r:          18px;
+  --r-sm:       10px;
+  --shadow:     0 4px 24px rgba(13,110,90,0.10);
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: linear-gradient(170deg, #d8f5ef 0%, #e8f4fb 45%, #f5f0e8 100%);
+  min-height: 100vh;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ─── HEADER ─── */
+.header {
+  background: linear-gradient(135deg, var(--pine-dark) 0%, #0e5a4a 40%, #134a7a 80%, #3022a0 100%);
+  padding: 2.5rem 2rem 2rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.header::before {
+  content:'';
+  position:absolute;inset:0;
+  background: radial-gradient(ellipse at 20% 80%, rgba(255,255,255,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, rgba(255,255,255,0.08) 0%, transparent 50%);
+  pointer-events: none;
+}
+.header-lines {
+  position:absolute;inset:0;overflow:hidden;pointer-events:none;
+}
+.header-lines::after {
+  content:'';position:absolute;
+  top:-60%;left:-20%;width:140%;height:200%;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,transparent 60px,
+    rgba(255,255,255,0.02) 60px,rgba(255,255,255,0.02) 61px
+  );
+}
+.flag-ring {
+  display:inline-flex;align-items:center;justify-content:center;
+  width:72px;height:72px;border-radius:50%;
+  background:rgba(255,255,255,0.12);
+  border:2px solid rgba(255,255,255,0.25);
+  font-size:2.2rem;
+  margin-bottom:1rem;
+  animation: float 3.5s ease-in-out infinite;
+}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+
+.header h1 {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(1.3rem,4.5vw,2rem);
+  color:#fff;
+  line-height:1.25;
+  letter-spacing:-0.01em;
+  margin-bottom:0.5rem;
+}
+.header h1 em {
+  font-style:italic;
+  color:rgba(255,255,255,0.75);
+  font-size:0.85em;
+}
+.badge-row { margin-top:0.8rem; display:flex; gap:0.4rem; justify-content:center; flex-wrap:wrap; }
+.badge {
+  display:inline-block;
+  font-size:0.7rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  padding:0.3rem 1rem;border-radius:50px;
+}
+.badge-level { background:var(--gold); color:#3a1a00; }
+.badge-sub   { background:rgba(255,255,255,0.15); color:rgba(255,255,255,0.9); }
+
+/* ─── NAV ─── */
+.nav-wrap {
+  background:rgba(255,255,255,0.82);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0.6rem 1.2rem;
+  position:sticky;top:0;z-index:200;
+}
+.nav-tabs { display:flex; gap:0.4rem; max-width:900px; margin:0 auto; flex-wrap:wrap; }
+.tab-btn {
+  font-family:'DM Sans',sans-serif;
+  font-weight:700;font-size:0.72rem;
+  padding:0.45rem 1.1rem;
+  border:2px solid transparent;
+  border-radius:50px;cursor:pointer;
+  background:transparent;color:var(--muted);
+  transition:all 0.2s ease;
+  display:flex;align-items:center;gap:0.3rem;
+}
+.tab-btn:hover { background:var(--fjord); color:var(--pine-dark); }
+.tab-btn.active {
+  background:var(--pine);color:#fff;
+  box-shadow:0 4px 12px rgba(13,110,90,0.3);
+}
+
+/* ─── MAIN ─── */
+.main { padding:1.8rem 1.2rem 3rem; max-width:900px; margin:0 auto; }
+.section { display:none; }
+.section.active { display:block; animation:fadeUp 0.3s ease; }
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ─── CARDS ─── */
+.card {
+  background:var(--ice);
+  border-radius:var(--r);
+  padding:1.6rem;
+  margin-bottom:1.4rem;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+}
+
+.sec-title {
+  font-family:'Playfair Display',serif;
+  font-size:1.05rem;
+  font-weight:700;
+  margin-bottom:1.1rem;
+  display:flex;align-items:center;gap:0.5rem;
+  padding-bottom:0.6rem;
+  border-bottom:2px solid currentColor;
+}
+.sec-title.pine   { color:var(--pine-dark); border-color:var(--fjord); }
+.sec-title.amber  { color:var(--amber);     border-color:#fde8c0; }
+.sec-title.cobalt { color:var(--cobalt);    border-color:#d0dbff; }
+.sec-title.rose   { color:var(--rose);      border-color:#fcd5de; }
+.sec-title.lav    { color:var(--lavender);  border-color:#ddd5ff; }
+
+/* ─── TEXTE ─── */
+.texte-wrapper {
+  background:linear-gradient(135deg,#fdfbf2,#fff9e8);
+  border-radius:var(--r-sm);
+  padding:1.4rem 1.6rem;
+  border-left:5px solid var(--gold);
+  line-height:1.85;
+  font-size:0.92rem;
+  box-shadow:inset 0 0 0 1px rgba(232,160,32,0.12);
+}
+.texte-wrapper p { margin-bottom:1rem; }
+.texte-wrapper p:last-child { margin-bottom:0; }
+.kw {
+  background:linear-gradient(120deg, #fff099 0%, #ffe55a 100%);
+  color:var(--pine-dark);
+  font-weight:700;
+  padding:1px 5px 2px;
+  border-radius:5px;
+  font-size:0.9em;
+}
+
+/* ─── QUESTIONS ─── */
+.q-block {
+  background:var(--cobalt-soft);
+  border-radius:var(--r-sm);
+  padding:0.9rem 1.1rem;
+  margin-bottom:0.9rem;
+  border-left:4px solid var(--cobalt);
+}
+.q-num {
+  font-size:0.65rem;font-weight:700;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--cobalt);margin-bottom:0.25rem;
+}
+.q-text { font-weight:600;font-size:0.9rem;margin-bottom:0.5rem; }
+.show-btn {
+  background:var(--cobalt);color:#fff;
+  border:none;font-weight:700;font-size:0.68rem;
+  padding:0.28rem 0.9rem;border-radius:50px;cursor:pointer;
+  transition:background 0.2s;letter-spacing:0.04em;
+}
+.show-btn:hover { background:#1a44aa; }
+.answer-box {
+  display:none;margin-top:0.6rem;
+  background:#fff;border-radius:8px;
+  padding:0.7rem 0.9rem;font-size:0.87rem;
+  border-left:3px solid var(--cobalt);
+  color:var(--slate);
+}
+
+/* ─── VRAI / FAUX ─── */
+.vf-card {
+  border-radius:var(--r-sm);overflow:hidden;
+  border:1px solid rgba(232,84,112,0.2);
+}
+.vf-item {
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.6rem 0.9rem;gap:0.6rem;
+  border-bottom:1px solid rgba(232,84,112,0.12);
+  font-size:0.87rem;font-weight:600;
+}
+.vf-item:last-child{border-bottom:none;}
+.vf-item:nth-child(odd){background:#fffcfd;}
+.vf-item:nth-child(even){background:var(--rose-soft);}
+.vf-badge {
+  padding:0.22rem 0.7rem;border-radius:50px;
+  font-size:0.68rem;font-weight:700;
+  background:#ddd;color:#666;white-space:nowrap;
+  transition:all 0.3s;
+}
+.vf-badge.vrai{background:#b8f0c8;color:#0d5e28;}
+.vf-badge.faux{background:#ffc8d0;color:#9b1020;}
+
+/* ─── VOCAB GRID ─── */
+.vocab-grid {
+  border-radius:var(--r-sm);overflow:hidden;
+  border:1.5px solid #d0e4f8;
+  margin-bottom:1rem;
+}
+.vocab-header {
+  display:grid;grid-template-columns:1fr 1fr;
+  background:linear-gradient(90deg, var(--cobalt) 0%, #1a44cc 100%);
+}
+.vh {
+  color:#fff;font-weight:700;font-size:0.72rem;
+  padding:0.55rem;text-align:center;letter-spacing:0.06em;
+  text-transform:uppercase;
+}
+.vc {
+  display:grid;grid-template-columns:1fr 1fr;
+  padding:0.55rem 0.7rem;font-size:0.88rem;
+  border-bottom:1px solid #e0ecff;
+}
+.vc:last-child{border-bottom:none;}
+.vc:nth-child(odd){background:#f8fbff;}
+.vc:nth-child(even){background:#fff;}
+.vc-fr{font-weight:700;color:var(--pine-dark);}
+.vc-de{color:var(--cobalt);font-style:italic;}
+
+/* ─── JEU ─── */
+.jeu-score {
+  font-size:0.82rem;font-weight:700;
+  text-align:right;color:var(--rose);
+  margin-bottom:0.7rem;
+}
+.jeu-row {
+  display:flex;align-items:center;gap:0.5rem;
+  background:#fff;border-radius:50px;
+  padding:0.4rem 0.7rem;margin-bottom:0.45rem;
+  border:1.5px solid rgba(232,84,112,0.2);
+  transition:border-color 0.2s;
+}
+.jeu-row.done { border-color:rgba(13,110,90,0.3); }
+.jeu-de {
+  font-weight:700;font-size:0.73rem;
+  color:var(--cobalt);background:var(--cobalt-soft);
+  padding:0.22rem 0.7rem;border-radius:50px;
+  min-width:120px;text-align:center;flex-shrink:0;
+}
+.jeu-fr {
+  flex:1;font-weight:700;font-size:0.8rem;
+  background:var(--fjord);color:var(--pine-dark);
+  padding:0.22rem 0.7rem;border-radius:50px;
+  text-align:center;
+  filter:blur(5px);cursor:pointer;
+  transition:filter 0.3s;user-select:none;
+}
+.jeu-fr.shown { filter:blur(0); }
+.rev-btn {
+  background:var(--rose);color:#fff;border:none;
+  font-size:0.65rem;font-weight:700;
+  padding:0.22rem 0.7rem;border-radius:50px;cursor:pointer;
+  transition:background 0.2s;flex-shrink:0;
+}
+.rev-btn:disabled{background:#aaa;}
+
+/* ─── ACTION BUTTONS ─── */
+.btn-row { display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.9rem; }
+.action-btn {
+  padding:0.35rem 1.1rem;border-radius:50px;
+  border:none;font-weight:700;font-size:0.72rem;cursor:pointer;
+  transition:opacity 0.2s,transform 0.1s;letter-spacing:0.03em;
+}
+.action-btn:hover{opacity:0.88;transform:translateY(-1px);}
+.btn-rose   {background:var(--rose);color:#fff;}
+.btn-pine   {background:var(--pine);color:#fff;}
+.btn-cobalt {background:var(--cobalt);color:#fff;}
+.btn-amber  {background:var(--gold);color:#3a1a00;}
+
+/* ─── GRAMMAIRE ─── */
+.gram-lesson {
+  background:var(--lav-soft);
+  border-radius:var(--r-sm);
+  padding:1.1rem 1.3rem;
+  margin-bottom:1.2rem;
+  border-left:4px solid var(--lavender);
+  font-size:0.87rem;
+  line-height:1.7;
+}
+.gram-lesson h3 {
+  font-family:'Playfair Display',serif;
+  font-size:0.92rem;color:var(--lavender);
+  margin-bottom:0.6rem;
+}
+.gram-lesson p{margin-bottom:0.5rem;}
+.gram-lesson p:last-child{margin-bottom:0;}
+.gram-lesson code {
+  font-family:'DM Mono',monospace;
+  background:rgba(104,66,194,0.12);
+  color:var(--lavender);font-weight:500;
+  padding:1px 5px;border-radius:4px;font-size:0.82em;
+}
+.gram-lesson strong{color:var(--pine-dark);}
+.hl{background:linear-gradient(120deg,#fff099,#ffe55a);padding:1px 4px;border-radius:4px;font-weight:700;}
+
+.exo-section-title {
+  font-family:'DM Sans',sans-serif;
+  font-size:0.82rem;font-weight:700;
+  color:var(--lavender);
+  margin:1rem 0 0.6rem;
+  display:flex;align-items:center;gap:0.4rem;
+}
+.exo-item {
+  background:#fff;border-radius:var(--r-sm);
+  padding:0.75rem 1rem;margin-bottom:0.65rem;
+  border:1.5px solid rgba(104,66,194,0.18);
+}
+.exo-item label {
+  display:block;font-weight:600;font-size:0.87rem;
+  margin-bottom:0.4rem;color:var(--slate);
+  line-height:1.5;
+}
+.exo-item label em {
+  font-style:italic;color:var(--muted);font-size:0.8em;
+  font-weight:400;display:block;margin-top:0.1rem;
+}
+.exo-row { display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap; }
+.gram-input {
+  border:2px solid rgba(104,66,194,0.3);
+  border-radius:8px;padding:0.3rem 0.7rem;
+  font-family:'DM Sans',sans-serif;font-size:0.87rem;
+  width:220px;transition:border-color 0.2s,background 0.2s;
+  outline:none;
+}
+.gram-input:focus{border-color:var(--lavender);}
+.gram-input.ok{border-color:#2ecc71;background:#f0fff4;}
+.gram-input.err{border-color:var(--rose);background:#fff4f6;}
+.check-btn {
+  background:var(--lavender);color:#fff;border:none;
+  font-weight:700;font-size:0.7rem;
+  padding:0.32rem 0.9rem;border-radius:50px;cursor:pointer;
+  transition:background 0.2s;
+}
+.check-btn:hover{background:#5030a8;}
+.gram-feedback {
+  font-size:0.78rem;margin-top:0.35rem;
+  font-weight:600;
+}
+.gram-feedback.ok{color:#1a8a4a;}
+.gram-feedback.err{color:var(--rose);}
+
+.gram-divider {
+  height:1px;background:linear-gradient(90deg,transparent,rgba(104,66,194,0.2),transparent);
+  margin:1.2rem 0;
+}
+
+/* Tableau comparatif */
+.gram-table {
+  width:100%;border-collapse:collapse;
+  margin:0.7rem 0;font-size:0.82rem;
+  border-radius:10px;overflow:hidden;
+}
+.gram-table th {
+  background:linear-gradient(90deg,var(--lavender),#8055d4);
+  color:#fff;padding:0.55rem 0.7rem;
+  font-weight:700;text-align:left;font-size:0.78rem;
+}
+.gram-table td {
+  border:1px solid #ddd5ff;
+  padding:0.55rem 0.7rem;
+  vertical-align:top;line-height:1.5;
+}
+.gram-table tr:nth-child(odd) td{background:#f8f5ff;}
+.gram-table tr:nth-child(even) td{background:#fff;}
+.gram-table code {
+  font-family:'DM Mono',monospace;
+  background:rgba(104,66,194,0.1);color:var(--lavender);
+  padding:1px 4px;border-radius:3px;font-size:0.8em;font-weight:500;
+}
+
+/* Gold note box */
+.note-box {
+  background:var(--gold-light);
+  border:1.5px solid rgba(232,160,32,0.35);
+  border-radius:var(--r-sm);
+  padding:0.9rem 1.1rem;
+  font-size:0.84rem;
+  margin:0.8rem 0;
+  line-height:1.6;
+}
+.note-box strong{color:var(--amber);}
+
+hr.gram-hr{border:none;border-top:2px dashed rgba(104,66,194,0.15);margin:1.2rem 0;}
+
+/* ─── SCROLLBAR ─── */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--fjord);border-radius:4px;}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-lines"></div>
+  <div class="flag-ring">🇫🇮</div>
+  <h1>La Finlande<br><em>un modèle éducatif qui respecte l'enfance</em></h1>
+  <div class="badge-row">
+    <span class="badge badge-level">✦ B2 / C1 ✦</span>
+    <span class="badge badge-sub">Cours de Français Langue Étrangère</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="nav-tabs">
+    <button class="tab-btn active" data-tab="texte">📘 Texte &amp; Compréhension</button>
+    <button class="tab-btn" data-tab="vocab">📖 Vocabulaire &amp; Jeu</button>
+    <button class="tab-btn" data-tab="gram">📐 Grammaire</button>
+  </div>
+</div>
+
+<div class="main">
+
+<!-- ═══════════════════════════════════════════════
+     ONGLET 1 — TEXTE + COMPRÉHENSION
+════════════════════════════════════════════════ -->
+<div class="section active" id="sec-texte">
+
+  <div class="card">
+    <div class="sec-title pine"><span>🌲</span> Texte intégral</div>
+    <div class="texte-wrapper">
+      <p><span class="kw">En Finlande, les enfants ne commencent l'école qu'à l'âge de sept ans.</span> Cette décision, qui peut surprendre d'autres pays <span class="kw">obsédés par la performance précoce</span>, repose sur une conviction profonde : l'enfance est une étape sacrée qu'il faut respecter. Les autorités finlandaises estiment que l'apprentissage <span class="kw">s'épanouit</span> mieux lorsqu'il suit un <span class="kw">rythme naturel</span> et qu'il ne faut pas <span class="kw">brusquer</span> l'enfant avec des pressions inutiles. Cette approche, qui donne la priorité au développement personnel avant les résultats scolaires, est devenue un modèle admiré à l'échelle internationale.</p>
+      <p>Ce système éducatif se distingue aussi par son <span class="kw">organisation équilibrée</span>. Chaque cours dure une heure, mais seuls quarante-cinq minutes sont consacrées à l'étude. Les quinze minutes restantes sont réservées au repos, au jeu, au mouvement. Cette <span class="kw">alternance régulière</span> permet aux élèves de mieux se concentrer. La semaine scolaire est également pensée pour préserver l'<span class="kw">équilibre</span> : le vendredi, elle se termine dès le début de l'après-midi, et aucun cours n'a lieu le samedi.</p>
+      <p>Enfin, la <span class="kw">gratuité</span> et l'<span class="kw">égalité</span> constituent les piliers essentiels du modèle finlandais. Les familles ne dépensent rien pour les manuels, les fournitures ou les appareils numériques. Chaque élève reçoit une tablette où tout le contenu pédagogique est accessible. La nutrition scolaire est elle aussi universelle et gratuite. Ces choix politiques traduisent une conviction forte : investir dans l'éducation, c'est investir dans l'avenir du pays. Un peuple instruit devient plus juste, plus libre et plus <span class="kw">solidaire</span>. La Finlande rappelle que l'éducation devrait rester une source d'<span class="kw">émancipation</span> pour chaque enfant.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title amber"><span>✏️</span> Questions de compréhension</div>
+
+    <div class="q-block">
+      <div class="q-num">Question 1</div>
+      <div class="q-text">Pourquoi les enfants finlandais commencent-ils l'école à 7 ans ?</div>
+      <button class="show-btn" onclick="toggleAnswer('a1')">Afficher la réponse</button>
+      <div class="answer-box" id="a1">Pour respecter le rythme naturel de l'enfant. L'enfance est considérée comme une étape sacrée, et le système finlandais privilégie le développement personnel avant les résultats scolaires.</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 2</div>
+      <div class="q-text">Comment sont organisées les heures de cours en Finlande ?</div>
+      <button class="show-btn" onclick="toggleAnswer('a2')">Afficher la réponse</button>
+      <div class="answer-box" id="a2">Chaque heure se compose de 45 minutes d'étude et de 15 minutes de pause (repos, jeu, mouvement). Cette alternance régulière permet aux élèves de mieux se concentrer.</div>
+    </div>
+
+    <div class="q-block">
+      <div class="q-num">Question 3</div>
+      <div class="q-text">Quels avantages matériels sont gratuits pour tous les élèves ?</div>
+      <button class="show-btn" onclick="toggleAnswer('a3')">Afficher la réponse</button>
+      <div class="answer-box" id="a3">Les manuels, les fournitures, les tablettes numériques et les repas scolaires sont entièrement gratuits pour chaque élève.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title amber"><span>✔️</span> Vrai ou Faux ?</div>
+    <div class="vf-card">
+      <div class="vf-item"><span>En Finlande, l'école est obligatoire dès l'âge de 5 ans.</span><span class="vf-badge" id="vf1">?</span></div>
+      <div class="vf-item"><span>Les élèves finlandais ont cours le samedi matin.</span><span class="vf-badge" id="vf2">?</span></div>
+      <div class="vf-item"><span>Les repas scolaires sont gratuits en Finlande.</span><span class="vf-badge" id="vf3">?</span></div>
+      <div class="vf-item"><span>Chaque heure de cours inclut 15 minutes de pause.</span><span class="vf-badge" id="vf4">?</span></div>
+      <div class="vf-item"><span>Chaque élève reçoit une tablette numérique gratuite.</span><span class="vf-badge" id="vf5">?</span></div>
+      <div class="vf-item"><span>La Finlande privilégie la compétition scolaire.</span><span class="vf-badge" id="vf6">?</span></div>
+    </div>
+    <div class="btn-row">
+      <button class="action-btn btn-amber" onclick="correctVF()">✅ Vérifier les réponses</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ONGLET 2 — VOCABULAIRE + JEU
+════════════════════════════════════════════════ -->
+<div class="section" id="sec-vocab">
+
+  <div class="card">
+    <div class="sec-title cobalt"><span>📖</span> Vocabulaire bilingue (FR ⇔ DE)</div>
+    <div class="vocab-grid">
+      <div class="vocab-header">
+        <div class="vh">🇫🇷 Français</div>
+        <div class="vh">🇩🇪 Deutsch</div>
+      </div>
+      <div class="vc"><span class="vc-fr">obsédé par la performance précoce</span><span class="vc-de">besessen von Frühleistung</span></div>
+      <div class="vc"><span class="vc-fr">s'épanouir</span><span class="vc-de">sich entfalten</span></div>
+      <div class="vc"><span class="vc-fr">brusquer</span><span class="vc-de">übereilen / drängen</span></div>
+      <div class="vc"><span class="vc-fr">rythme naturel</span><span class="vc-de">natürlicher Rhythmus</span></div>
+      <div class="vc"><span class="vc-fr">urgence d'apprendre</span><span class="vc-de">Lerndruck</span></div>
+      <div class="vc"><span class="vc-fr">organisation équilibrée</span><span class="vc-de">ausgewogene Organisation</span></div>
+      <div class="vc"><span class="vc-fr">alternance régulière</span><span class="vc-de">regelmäßiger Wechsel</span></div>
+      <div class="vc"><span class="vc-fr">souplesse</span><span class="vc-de">Flexibilität</span></div>
+      <div class="vc"><span class="vc-fr">gratuité</span><span class="vc-de">Kostenlosigkeit</span></div>
+      <div class="vc"><span class="vc-fr">égalité des chances</span><span class="vc-de">Chancengleichheit</span></div>
+      <div class="vc"><span class="vc-fr">inégalités matérielles</span><span class="vc-de">materielle Ungleichheiten</span></div>
+      <div class="vc"><span class="vc-fr">solidaire</span><span class="vc-de">solidarisch</span></div>
+      <div class="vc"><span class="vc-fr">émancipation</span><span class="vc-de">Emanzipation</span></div>
+      <div class="vc"><span class="vc-fr">piliers essentiels</span><span class="vc-de">wesentliche Säulen</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="sec-title rose"><span>🎯</span> Jeu : devinez le mot français</div>
+    <div class="jeu-score" id="jeuScore">Révélés : 0 / 14</div>
+    <div id="jeuContainer">
+      <div class="jeu-row" data-idx="0"><span class="jeu-de">besessen von Frühleistung</span><span class="jeu-fr" onclick="revealJeu(0)">obsédé par la performance précoce</span><button class="rev-btn" onclick="revealJeu(0)">Révéler</button></div>
+      <div class="jeu-row" data-idx="1"><span class="jeu-de">sich entfalten</span><span class="jeu-fr" onclick="revealJeu(1)">s'épanouir</span><button class="rev-btn" onclick="revealJeu(1)">Révéler</button></div>
+      <div class="jeu-row" data-idx="2"><span class="jeu-de">übereilen / drängen</span><span class="jeu-fr" onclick="revealJeu(2)">brusquer</span><button class="rev-btn" onclick="revealJeu(2)">Révéler</button></div>
+      <div class="jeu-row" data-idx="3"><span class="jeu-de">natürlicher Rhythmus</span><span class="jeu-fr" onclick="revealJeu(3)">rythme naturel</span><button class="rev-btn" onclick="revealJeu(3)">Révéler</button></div>
+      <div class="jeu-row" data-idx="4"><span class="jeu-de">Lerndruck</span><span class="jeu-fr" onclick="revealJeu(4)">urgence d'apprendre</span><button class="rev-btn" onclick="revealJeu(4)">Révéler</button></div>
+      <div class="jeu-row" data-idx="5"><span class="jeu-de">ausgewogene Organisation</span><span class="jeu-fr" onclick="revealJeu(5)">organisation équilibrée</span><button class="rev-btn" onclick="revealJeu(5)">Révéler</button></div>
+      <div class="jeu-row" data-idx="6"><span class="jeu-de">regelmäßiger Wechsel</span><span class="jeu-fr" onclick="revealJeu(6)">alternance régulière</span><button class="rev-btn" onclick="revealJeu(6)">Révéler</button></div>
+      <div class="jeu-row" data-idx="7"><span class="jeu-de">Flexibilität</span><span class="jeu-fr" onclick="revealJeu(7)">souplesse</span><button class="rev-btn" onclick="revealJeu(7)">Révéler</button></div>
+      <div class="jeu-row" data-idx="8"><span class="jeu-de">Kostenlosigkeit</span><span class="jeu-fr" onclick="revealJeu(8)">gratuité</span><button class="rev-btn" onclick="revealJeu(8)">Révéler</button></div>
+      <div class="jeu-row" data-idx="9"><span class="jeu-de">Chancengleichheit</span><span class="jeu-fr" onclick="revealJeu(9)">égalité des chances</span><button class="rev-btn" onclick="revealJeu(9)">Révéler</button></div>
+      <div class="jeu-row" data-idx="10"><span class="jeu-de">materielle Ungleichheiten</span><span class="jeu-fr" onclick="revealJeu(10)">inégalités matérielles</span><button class="rev-btn" onclick="revealJeu(10)">Révéler</button></div>
+      <div class="jeu-row" data-idx="11"><span class="jeu-de">solidarisch</span><span class="jeu-fr" onclick="revealJeu(11)">solidaire</span><button class="rev-btn" onclick="revealJeu(11)">Révéler</button></div>
+      <div class="jeu-row" data-idx="12"><span class="jeu-de">Emanzipation</span><span class="jeu-fr" onclick="revealJeu(12)">émancipation</span><button class="rev-btn" onclick="revealJeu(12)">Révéler</button></div>
+      <div class="jeu-row" data-idx="13"><span class="jeu-de">wesentliche Säulen</span><span class="jeu-fr" onclick="revealJeu(13)">piliers essentiels</span><button class="rev-btn" onclick="revealJeu(13)">Révéler</button></div>
+    </div>
+    <div class="btn-row">
+      <button class="action-btn btn-rose" onclick="revealAll()">👁️ Tout révéler</button>
+      <button class="action-btn btn-pine" onclick="resetJeu()">🔄 Recommencer</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     ONGLET 3 — GRAMMAIRE
+════════════════════════════════════════════════ -->
+<div class="section" id="sec-gram">
+  <div class="card">
+    <div class="sec-title lav"><span>📐</span> Les pronoms relatifs composés</div>
+
+    <!-- ── LEÇON 1 : ACCORD DE BASE ── -->
+    <div class="gram-lesson">
+      <h3>🔹 Groupe 1 — Lequel / Laquelle / Lesquels / Lesquelles</h3>
+      <p>Ces pronoms s'accordent en <strong>genre et en nombre</strong> avec le nom qu'ils remplacent (leur <strong>antécédent</strong>). On les utilise pour <strong>reprendre un nom après une préposition</strong> (sauf « de »).</p>
+      <p>
+        <strong>Masculin singulier →</strong> <code>lequel</code><br>
+        <strong>Féminin singulier →</strong> <code>laquelle</code><br>
+        <strong>Masculin pluriel →</strong> <code>lesquels</code><br>
+        <strong>Féminin pluriel →</strong> <code>lesquelles</code>
+      </p>
+      <p>
+        ▸ <em>Le rapport, <span class="hl">lequel</span> a été publié hier, est très détaillé.</em> (rapport = masc. sing.)<br>
+        ▸ <em>La méthode, <span class="hl">laquelle</span> est simple, donne de bons résultats.</em> (méthode = fém. sing.)<br>
+        ▸ <em>Les résultats, <span class="hl">lesquels</span> sont encourageants, parlent d'eux-mêmes.</em> (résultats = masc. plur.)<br>
+        ▸ <em>Les solutions, <span class="hl">lesquelles</span> semblent efficaces, seront testées.</em> (solutions = fém. plur.)
+      </p>
+    </div>
+
+    <div class="exo-section-title">🧩 Exercice 1 — Choisissez la forme correcte (accord seul)</div>
+
+    <div class="exo-item">
+      <label>① La pause, _____ dure quinze minutes, est réservée au jeu et au repos.<em>Antécédent : « la pause » → féminin singulier</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g1" placeholder="lequel / laquelle / lesquels / lesquelles">
+        <button class="check-btn" onclick="checkGram('g1','laquelle','fb1')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb1"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>② Les repas scolaires, _____ sont servis chaque midi, sont entièrement gratuits.<em>Antécédent : « les repas » → masculin pluriel</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g2" placeholder="lequel / laquelle / lesquels / lesquelles">
+        <button class="check-btn" onclick="checkGram('g2','lesquels','fb2')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb2"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>③ L'égalité des chances, _____ est au cœur du système, bénéficie à tous les élèves.<em>Antécédent : « l'égalité » → féminin singulier</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g3" placeholder="lequel / laquelle / lesquels / lesquelles">
+        <button class="check-btn" onclick="checkGram('g3','laquelle','fb3')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb3"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>④ Les tablettes numériques, _____ sont distribuées gratuitement, remplacent les manuels.<em>Antécédent : « les tablettes » → féminin pluriel</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g4" placeholder="lequel / laquelle / lesquels / lesquelles">
+        <button class="check-btn" onclick="checkGram('g4','lesquelles','fb4')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb4"></div>
+    </div>
+
+    <div class="gram-divider"></div>
+
+    <!-- ── LEÇON 2 : AVEC PRÉPOSITION ── -->
+    <div class="gram-lesson">
+      <h3>🔹 Groupe 2 — Préposition + lequel / laquelle / lesquels / lesquelles</h3>
+      <p>Quand un verbe ou une expression se construit avec une préposition (autre que « de »), on place cette préposition <strong>devant</strong> le pronom relatif, qui continue de s'accorder avec l'antécédent.</p>
+      <p>
+        ▸ <em>La pause <span class="hl">pendant laquelle</span> les enfants jouent dure quinze minutes.</em> (pendant + laquelle)<br>
+        ▸ <em>Les moments <span class="hl">pendant lesquels</span> l'enfant se repose sont essentiels.</em> (pendant + lesquels)<br>
+        ▸ <em>La tablette <span class="hl">avec laquelle</span> les élèves travaillent est fournie gratuitement.</em> (avec + laquelle)<br>
+        ▸ <em>Le système éducatif <span class="hl">pour lequel</span> la Finlande est reconnue attire l'admiration.</em> (pour + lequel)
+      </p>
+      <p><strong>Cas particulier :</strong> <code>à + lesquelles → auxquelles</code> / <code>à + lesquels → auxquels</code><br>
+        ▸ <em>Les valeurs <span class="hl">auxquelles</span> les Finlandais sont attachés guident tout le système.</em>
+      </p>
+    </div>
+
+    <div class="exo-section-title">🧩 Exercice 2 — Complétez avec préposition + pronom relatif</div>
+
+    <div class="exo-item">
+      <label>⑤ La pause _____ les enfants jouent permet de mieux se concentrer ensuite.<em>Indice : jouer pendant quelque chose → « pendant » + laquelle</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g5" placeholder="pendant laquelle / lesquels…">
+        <button class="check-btn" onclick="checkGram('g5','pendant laquelle','fb5')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb5"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑥ Les moments _____ l'enfant se repose sont aussi importants que les heures de cours.<em>Indice : se reposer pendant quelque chose → « pendant » + lesquels</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g6" placeholder="pendant lesquels / lesquelles…">
+        <button class="check-btn" onclick="checkGram('g6','pendant lesquels','fb6')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb6"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑦ La tablette _____ les élèves accèdent aux contenus pédagogiques est entièrement gratuite.<em>Indice : accéder avec quelque chose → « avec » + laquelle</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g7" placeholder="avec laquelle / lequel…">
+        <button class="check-btn" onclick="checkGram('g7','avec laquelle','fb7')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb7"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑧ Le modèle éducatif _____ la Finlande est reconnue dans le monde entier date des années 1970.<em>Indice : être reconnue pour quelque chose → « pour » + lequel</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g8" placeholder="pour lequel / laquelle…">
+        <button class="check-btn" onclick="checkGram('g8','pour lequel','fb8')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb8"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑨ Les valeurs _____ les Finlandais sont profondément attachés sont l'égalité et la solidarité.<em>Indice : être attaché à quelque chose → « à » + lesquelles = auxquelles</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g9" placeholder="auxquelles / auxquels…">
+        <button class="check-btn" onclick="checkGram('g9','auxquelles','fb9')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb9"></div>
+    </div>
+
+    <div class="gram-divider"></div>
+
+    <!-- ── LEÇON 3 : DUQUEL ── -->
+    <div class="gram-lesson">
+      <h3>🔸 Groupe 3 — Duquel / De laquelle / Desquels / Desquelles</h3>
+      <p>Ce sont les <strong>contractions de « de + lequel »</strong>. On les utilise lorsque le verbe ou l'expression se construit avec la préposition <strong>DE</strong>.</p>
+      <p>Verbes et expressions courants avec <strong>DE</strong> :<br>
+        <code>être fier de</code> · <code>parler de</code> · <code>bénéficier de</code> · <code>s'inspirer de</code> · <code>avoir besoin de</code> · <code>découler de</code> · <code>se souvenir de</code>
+      </p>
+      <p>
+        ▸ <em>Le système éducatif, <span class="hl">duquel</span> la Finlande est fière, est étudié dans le monde entier.</em> (être fier <strong>de</strong> → duquel)<br>
+        ▸ <em>Les avantages, <span class="hl">desquels</span> tous les élèves bénéficient, sont financés par l'État.</em> (bénéficier <strong>de</strong> → desquels)<br>
+        ▸ <em>La réforme, <span class="hl">de laquelle</span> nous avons parlé, a transformé l'école finlandaise.</em> (parler <strong>de</strong> → de laquelle)<br>
+        ▸ <em>Les valeurs, <span class="hl">desquelles</span> découle tout le système, sont la confiance et l'égalité.</em> (découler <strong>de</strong> → desquelles)
+      </p>
+    </div>
+
+    <div class="exo-section-title">🎯 Exercice 3 — Complétez avec duquel / de laquelle / desquels / desquelles</div>
+
+    <div class="exo-item">
+      <label>⑩ Le modèle finlandais, _____ la Finlande est si fière, est étudié dans de nombreux pays.<em>Indice : être fier de + « le modèle » (masc. sing.) → duquel</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g10" placeholder="duquel / de laquelle / desquels / desquelles">
+        <button class="check-btn" onclick="checkGram('g10','duquel','fb10')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb10"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑪ La gratuité scolaire est un droit _____ tous les enfants finlandais bénéficient dès leur plus jeune âge.<em>Indice : bénéficier de + « un droit » (masc. sing.) → duquel</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g11" placeholder="duquel / de laquelle / desquels / desquelles">
+        <button class="check-btn" onclick="checkGram('g11','duquel','fb11')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb11"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑫ Les convictions profondes, _____ découle l'ensemble du système éducatif, sont l'égalité et la confiance.<em>Indice : découler de + « les convictions » (fém. plur.) → desquelles</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g12" placeholder="duquel / de laquelle / desquels / desquelles">
+        <button class="check-btn" onclick="checkGram('g12','desquelles','fb12')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb12"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑬ La réforme scolaire, _____ nous avons longuement parlé en cours, a été adoptée dans les années 1970.<em>Indice : parler de + « la réforme » (fém. sing.) → de laquelle</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="g13" placeholder="duquel / de laquelle / desquels / desquelles">
+        <button class="check-btn" onclick="checkGram('g13','de laquelle','fb13')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fb13"></div>
+    </div>
+
+    <div class="gram-divider"></div>
+
+    <!-- ── TABLEAU COMPARATIF ── -->
+    <div class="gram-lesson" style="background:#fff8e8;border-left-color:var(--gold);">
+      <h3 style="color:var(--amber);">📌 Récapitulatif — Lequel ou Duquel ?</h3>
+      <table class="gram-table">
+        <thead>
+          <tr>
+            <th>LEQUEL / LAQUELLE / LESQUELS / LESQUELLES</th>
+            <th>DUQUEL / DE LAQUELLE / DESQUELS / DESQUELLES</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Après toutes les prépositions <strong>sauf « de »</strong><br><em>avec, pour, pendant, sur, à…</em></td>
+            <td>Contraction de <strong>« de + lequel »</strong><br>Seulement avec la préposition <strong>DE</strong></td>
+          </tr>
+          <tr>
+            <td><code>La pause <strong>pendant laquelle</strong> on joue</code><br><code>Le stylo <strong>avec lequel</strong> j'écris</code></td>
+            <td><code>Le modèle <strong>duquel</strong> on s'inspire</code><br><code>La méthode <strong>de laquelle</strong> on parle</code></td>
+          </tr>
+          <tr>
+            <td>💡 Astuce : la préposition <strong>reste visible</strong> devant le pronom</td>
+            <td>💡 Astuce : le verbe a besoin du mot <strong>DE</strong> pour exister</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- ── EXERCICE 4 : MIXTE ── -->
+    <div class="exo-section-title">⚡ Exercice 4 — Choisissez la bonne forme (lequel / duquel / auxquelles…)</div>
+
+    <div class="exo-item">
+      <label>⑭ La tablette numérique, _____ les élèves travaillent chaque jour en classe, est entièrement fournie par l'école.<em>Indice : travailler avec quelque chose → « avec » + laquelle</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="m1" placeholder="avec laquelle / duquel…">
+        <button class="check-btn" onclick="checkGram('m1','avec laquelle','fm1')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fm1"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑮ Le modèle pédagogique finlandais, _____ de nombreux pays s'inspirent aujourd'hui, repose sur la confiance accordée à l'enfant.<em>Indice : s'inspirer de quelque chose → « de » + lequel = duquel</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="m2" placeholder="duquel / avec lequel…">
+        <button class="check-btn" onclick="checkGram('m2','duquel','fm2')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fm2"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑯ La philosophie éducative, _____ la Finlande a construit son école publique, place l'épanouissement de l'enfant au-dessus des résultats.<em>Indice : construire sur quelque chose → « sur » + laquelle</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="m3" placeholder="sur laquelle / duquel…">
+        <button class="check-btn" onclick="checkGram('m3','sur laquelle','fm3')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fm3"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑰ Les principes fondamentaux, _____ ce système éducatif est entièrement fondé, sont l'égalité, la gratuité et la solidarité.<em>Indice : être fondé sur quelque chose → « sur » + lesquels</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="m4" placeholder="sur lesquels / auxquels…">
+        <button class="check-btn" onclick="checkGram('m4','sur lesquels','fm4')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fm4"></div>
+    </div>
+
+    <div class="exo-item">
+      <label>⑱ Les valeurs humanistes, _____ les Finlandais sont profondément attachés depuis des décennies, expliquent le succès de leur école.<em>Indice : être attaché à quelque chose → « à » + lesquelles = auxquelles</em></label>
+      <div class="exo-row">
+        <input class="gram-input" id="m5" placeholder="auxquelles / desquelles…">
+        <button class="check-btn" onclick="checkGram('m5','auxquelles','fm5')">Vérifier</button>
+      </div>
+      <div class="gram-feedback" id="fm5"></div>
+    </div>
+
+    <div class="note-box">
+      <strong>⚠️ À retenir :</strong> La clé pour choisir le bon pronom, c'est toujours de repérer <strong>la préposition du verbe</strong>. Demandez-vous : quel mot manque après le verbe ? <em>« s'inspirer <u>de</u> »</em> → duquel / de laquelle. <em>« travailler <u>avec</u> »</em> → avec lequel / avec laquelle. <em>« être attaché <u>à</u> »</em> → auquel / auxquels / auxquelles.
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /.main -->
+
+<script>
+// ── TABS
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('sec-' + btn.dataset.tab).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
+// ── RÉPONSES
+function toggleAnswer(id) {
+  const el = document.getElementById(id);
+  const visible = el.style.display === 'block';
+  el.style.display = visible ? 'none' : 'block';
+}
+
+// ── VRAI / FAUX
+function correctVF() {
+  const data = [
+    { id:'vf1', c:false, t:'✗ FAUX (7 ans, pas 5)' },
+    { id:'vf2', c:false, t:'✗ FAUX (pas de cours le samedi)' },
+    { id:'vf3', c:true,  t:'✓ VRAI' },
+    { id:'vf4', c:true,  t:'✓ VRAI' },
+    { id:'vf5', c:true,  t:'✓ VRAI' },
+    { id:'vf6', c:false, t:'✗ FAUX (pas de compétition)' }
+  ];
+  data.forEach(d => {
+    const el = document.getElementById(d.id);
+    el.textContent = d.t;
+    el.classList.remove('vrai','faux');
+    el.classList.add(d.c ? 'vrai' : 'faux');
+  });
+}
+
+// ── GRAMMAIRE
+function checkGram(inputId, solution, fbId) {
+  const inp = document.getElementById(inputId);
+  const val = inp.value.trim().toLowerCase().replace(/\s+/g,' ');
+  const fb  = document.getElementById(fbId);
+  const ok  = val === solution.toLowerCase();
+  fb.className = 'gram-feedback ' + (ok ? 'ok' : 'err');
+  fb.innerHTML  = ok ? '✔️ Parfait !' : `❌ La bonne réponse est : « ${solution} »`;
+  inp.classList.toggle('ok', ok);
+  inp.classList.toggle('err', !ok);
+}
+
+// ── JEU VOCABULAIRE
+let revealed = 0;
+function revealJeu(idx) {
+  const rows = document.querySelectorAll('.jeu-row');
+  const row = rows[idx];
+  if (row.classList.contains('done')) return;
+  row.querySelector('.jeu-fr').classList.add('shown');
+  const btn = row.querySelector('.rev-btn');
+  btn.textContent = '✔️';
+  btn.disabled = true;
+  row.classList.add('done');
+  revealed++;
+  const score = document.getElementById('jeuScore');
+  score.textContent = revealed === 14
+    ? '🎉 Bravo ! Tous les mots révélés !'
+    : `Révélés : ${revealed} / 14`;
+}
+function revealAll() {
+  for (let i = 0; i < 14; i++) revealJeu(i);
+}
+function resetJeu() {
+  revealed = 0;
+  document.querySelectorAll('.jeu-row').forEach(row => {
+    row.classList.remove('done');
+    const fr  = row.querySelector('.jeu-fr');
+    const btn = row.querySelector('.rev-btn');
+    const idx = parseInt(row.dataset.idx);
+    fr.classList.remove('shown');
+    btn.textContent = 'Révéler';
+    btn.disabled = false;
+    btn.onclick = () => revealJeu(idx);
+    fr.onclick  = () => revealJeu(idx);
+  });
+  document.getElementById('jeuScore').textContent = 'Révélés : 0 / 14';
+}
+
+// Hide answer boxes on load
+document.querySelectorAll('.answer-box').forEach(el => el.style.display = 'none');
+</script>
+</body>
+</html>
