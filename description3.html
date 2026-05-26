@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon 3 · Défilé de mode (A2++)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fff0e0 0%, #ffe0cc 100%);
+            color: #3d2a1f;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 2rem;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            background: linear-gradient(135deg, #e85d2e, #f4a261, #e9c46a);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.25rem;
+        }
+
+        .soustitre {
+            color: #e76f51;
+            border-left: 5px solid #f4a261;
+            padding-left: 1rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+            background: #fff5ed;
+            border-radius: 0 20px 20px 0;
+            padding: 0.6rem 1rem;
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #e76f51;
+            border-bottom: 3px solid #ffe0b5;
+            padding-bottom: 0.3rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            margin-top: 1.3rem;
+            margin-bottom: 0.7rem;
+            color: #f08c5e;
+            display: inline-block;
+            background: #fff0e4;
+            padding: 0.2rem 1rem;
+            border-radius: 40px;
+        }
+
+        .card {
+            background: #fffdf7;
+            border-radius: 28px;
+            padding: 1.4rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #ffe0cc;
+        }
+
+        .highlight {
+            background: #ffefe3;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            font-weight: 500;
+            color: #e85d2e;
+        }
+
+        .vocab-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .vocab-table th {
+            background: #ffe0b5;
+            text-align: left;
+            padding: 12px 16px;
+            font-weight: 700;
+            color: #9b4a2c;
+        }
+
+        .vocab-table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid #ffe2cd;
+        }
+
+        .exemple {
+            background: #fef6e8;
+            border-left: 6px solid #f4a261;
+            padding: 0.9rem 1.2rem;
+            margin: 1rem 0;
+            border-radius: 20px;
+        }
+
+        .grammaire-box {
+            background: #fff5ed;
+            border: 2px solid #f4a261;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+        }
+
+        .exercise {
+            background: #ffffff;
+            border: 2px solid #ffe0b5;
+            border-radius: 28px;
+            padding: 1.5rem;
+            margin: 1.8rem 0;
+        }
+
+        .exercise p {
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            color: #e76f51;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            margin: 8px 0 14px 0;
+            border: 2px solid #ffe0b5;
+            border-radius: 28px;
+            font-family: inherit;
+            background: #fffcf7;
+            font-size: 1rem;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #f4a261;
+        }
+
+        button {
+            background: #f4a261;
+            border: none;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: 0.2s;
+            margin-right: 12px;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #e76f51;
+            transform: scale(1.02);
+        }
+
+        .feedback {
+            margin-top: 12px;
+            padding: 10px 14px;
+            border-radius: 24px;
+            background: #fff0e2;
+            color: #5a3e2c;
+        }
+
+        hr {
+            margin: 2rem 0;
+            border: 0;
+            height: 2px;
+            background: linear-gradient(to right, #ffe0b5, #ffe0cc, #ffe0b5);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #e0a37e;
+        }
+
+        .badge {
+            background: #f4a261;
+            color: white;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .sub-table {
+            background: #fef6e8;
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .sub-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .sub-table td {
+            padding: 8px;
+            border-bottom: 1px solid #ffe0b5;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>👗✨ Leçon 3 · Défilé de mode</h1>
+    <div class="soustitre">🎨 Décrire une photo de podium – niveau A2++ · subjonctif + exercices avec cases</div>
+
+    <!-- ========== TEXTE SIMPLE ========= -->
+    <h2>📖 1. Photo : Un défilé dans la rue</h2>
+    <div class="card">
+        <p><strong>Au premier plan</strong>, il y a un mannequin. Il porte une <strong>veste verte</strong> et un <strong>pantalon noir</strong>. La veste brille un peu. <strong>Devant</strong> lui, une photographe prend des photos. <strong>Derrière</strong> le mannequin, on voit un autre modèle avec une <strong>robe rose fluide</strong>. La robe bouge avec le vent.</p>
+
+        <p><strong>Au deuxième plan</strong>, il y a des immeubles gris et beiges. Les murs sont vieux. Mais les vêtements sont <span class="highlight">colorés : jaune, orange, turquoise</span>. C'est un grand contraste. <strong>On voit que</strong> les mannequins marchent lentement. Ils ont une expression neutre (pas de sourire, pas de tristesse).</p>
+
+        <p><strong>On peut imaginer que</strong> le styliste aime mélanger la ville et la mode. <strong>Bien que</strong> la rue soit normale, les tenues sont très élégantes. <strong>Il faut que</strong> les photographes soient rapides pour prendre les meilleures photos. J'aime cette image parce qu'elle est à la fois chic et naturelle.</p>
+    </div>
+
+    <!-- ========== VOCABULAIRE SIMPLE ========= -->
+    <h2>📚 2. Vocabulaire utile</h2>
+    <table class="vocab-table">
+        <thead><tr><th>Français</th><th>English</th></tr></thead>
+        <tbody>
+            <tr><td>au premier plan</td><td>in the foreground</td></tr>
+            <tr><td>au deuxième plan</td><td>in the background</td></tr>
+            <tr><td>devant / derrière</td><td>in front of / behind</td></tr>
+            <tr><td>un mannequin</td><td>a model</td></tr>
+            <tr><td>une veste verte / un pantalon noir</td><td>a green jacket / black trousers</td></tr>
+            <tr><td>une robe rose fluide</td><td>a flowing pink dress</td></tr>
+            <tr><td>une matière (légère, fluide, rigide)</td><td>material (light, flowing, stiff)</td></tr>
+            <tr><td>des couleurs vives (jaune, orange, turquoise)</td><td>bright colors (yellow, orange, turquoise)</td></tr>
+            <tr><td>on voit que...</td><td>we can see that...</td></tr>
+            <tr><td>on peut imaginer que...</td><td>we can imagine that...</td></tr>
+            <tr><td>un défilé de mode</td><td>a fashion show</td></tr>
+            <tr><td>une expression neutre</td><td>a neutral expression</td></tr>
+        </tbody>
+    </table>
+
+    <!-- ========== GRAMMAIRE SUBJONCTIF AVEC RAPPEL ========= -->
+    <h2>🎯 3. Le subjonctif : rappel et exercices</h2>
+    
+    <div class="grammaire-box">
+        <p><span class="badge">📌 RAPPEL</span> <strong>C'est quoi le subjonctif ?</strong></p>
+        <p>Le subjonctif est un <strong>mode</strong>. On l'utilise souvent après certaines expressions comme :</p>
+        <ul style="margin-left: 2rem; margin-top: 0.5rem; margin-bottom: 1rem;">
+            <li><strong>il faut que</strong> → exprime la nécessité (obligation)</li>
+            <li><strong>bien que / quoique</strong> → exprime l'opposition (concession)</li>
+            <li><strong>il est possible que</strong> → exprime la possibilité</li>
+        </ul>
+        
+        <div class="sub-table">
+            <p><strong>📖 Tableau des verbes importants au subjonctif :</strong></p>
+            <table>
+                <tr style="background:#ffe0b5;"><th>Infinitif</th><th>Subjonctif (il / elle / on)</th><th>Subjonctif (ils / elles)</th></tr>
+                <tr><td>être</td><td><strong>soit</strong></td><td><strong>soient</strong></td></tr>
+                <tr><td>avoir</td><td><strong>ait</strong></td><td><strong>aient</strong></td></tr>
+                <tr><td>faire</td><td><strong>fasse</strong></td><td><strong>fassent</strong></td></tr>
+                <tr><td>marcher</td><td><strong>marche</strong></td><td><strong>marchent</strong></td></tr>
+                <tr><td>porter</td><td><strong>porte</strong></td><td><strong>portent</strong></td></tr>
+                <tr><td>prendre</td><td><strong>preme</strong></td><td><strong>prement</strong></td></tr>
+            </table>
+        </div>
+        
+        <div class="exemple">
+            <strong>✨ Exemples pour décrire un défilé :</strong><br><br>
+            • <strong>Il faut que</strong> le mannequin <span class="highlight">soit</span> élégant.<br>
+            • <strong>Bien que</strong> la rue <span class="highlight">soit</span> grise, les vêtements sont colorés.<br>
+            • <strong>Il faut que</strong> les photographes <span class="highlight">soient</span> rapides.<br>
+            • <strong>Bien que</strong> les baskets <span class="highlight">soient</span> décontractées, la tenue est chic.<br>
+            • <strong>Il est possible que</strong> le styliste <span class="highlight">fasse</span> un défilé en extérieur.
+        </div>
+        
+        <p>💡 <strong>Astuce :</strong> « On voit que » et « on peut imaginer que » → <strong>indicatif</strong> (pas de subjonctif).<br>
+        « Il faut que » et « bien que » → <strong>subjonctif</strong>.</p>
+    </div>
+
+    <!-- ========== EXERCICES AVEC CASES ========= -->
+    <h2>✍️ 4. Exercices</h2>
+
+    <!-- Exercice 1 : on voit que / on peut imaginer que -->
+    <div class="exercise">
+        <p>📝 <strong>Exercice 1 – Complétez avec « on voit que » ou « on peut imaginer que »</strong></p>
+        
+        <label>1. ______________ le mannequin porte une veste qui brille.</label>
+        <input type="text" id="ex1_q1" placeholder="Écrivez votre réponse ici">
+        
+        <label>2. ______________ le styliste aime les couleurs vives.</label>
+        <input type="text" id="ex1_q2" placeholder="Écrivez votre réponse ici">
+        
+        <label>3. ______________ la robe rose est très fluide et légère.</label>
+        <input type="text" id="ex1_q3" placeholder="Écrivez votre réponse ici">
+        
+        <button onclick="checkExercice1()">Vérifier</button>
+        <div id="feedback1" class="feedback"></div>
+    </div>
+
+    <!-- Exercice 2 : subjonctif (être / avoir) avec cases -->
+    <div class="exercise">
+        <p>⚙️ <strong>Exercice 2 – Complétez avec le subjonctif : « soit » / « soient » / « ait » / « aient »</strong></p>
+        
+        <label>1. Il faut que le défilé __________ réussi. (être)</label>
+        <input type="text" id="ex2_q1" placeholder="soit / soient / ait">
+        
+        <label>2. Bien que les baskets __________ blanches, elles sont élégantes. (être)</label>
+        <input type="text" id="ex2_q2" placeholder="soit / soient / ait">
+        
+        <label>3. Il faut que le mannequin __________ une belle allure. (avoir)</label>
+        <input type="text" id="ex2_q3" placeholder="soit / soient / ait">
+        
+        <label>4. Bien que les mannequins __________ l'air sérieux, les vêtements sont joyeux. (avoir)</label>
+        <input type="text" id="ex2_q4" placeholder="soit / soient / ait / aient">
+        
+        <button onclick="checkExercice2()">Vérifier</button>
+        <div id="feedback2" class="feedback"></div>
+    </div>
+
+    <!-- Exercice 3 : subjonctif avec d'autres verbes -->
+    <div class="exercise">
+        <p>🎭 <strong>Exercice 3 – Complétez avec le bon subjonctif : « fasse » / « marchent » / « prenne »</strong></p>
+        
+        <label>1. Il faut que le photographe __________ une belle photo. (prendre)</label>
+        <input type="text" id="ex3_q1" placeholder="fasse / marchent / prenne">
+        
+        <label>2. Bien que le mannequin __________ des efforts, il reste naturel. (faire)</label>
+        <input type="text" id="ex3_q2" placeholder="fasse / marchent / prenne">
+        
+        <label>3. Il faut que les modèles __________ doucement sur le podium. (marcher)</label>
+        <input type="text" id="ex3_q3" placeholder="fasse / marchent / prenne">
+        
+        <button onclick="checkExercice3()">Vérifier</button>
+        <div id="feedback3" class="feedback"></div>
+    </div>
+
+    <!-- Exercice 4 : mots à placer (positions) -->
+    <div class="exercise">
+        <p>📖 <strong>Exercice 4 – Remettez les mots dans le bon ordre</strong></p>
+        <p>Mots à utiliser : <strong>au premier plan</strong> – <strong>derrière</strong> – <strong>on voit que</strong> – <strong>devant</strong></p>
+        
+        <label>Texte à compléter :</label>
+        <p style="background:#fef6e8; padding:12px; border-radius:20px;">
+        __________ de la photo, il y a un mannequin. __________ lui, une photographe est accroupie. __________, un autre modèle arrive avec une robe rose. __________ les vêtements sont très colorés.
+        </p>
+        
+        <label>Écrivez les 4 mots dans l'ordre (séparés par des virgules) :</label>
+        <input type="text" id="ex4_rep" placeholder="exemple: mot1, mot2, mot3, mot4">
+        
+        <button onclick="checkExercice4()">Vérifier</button>
+        <div id="feedback4" class="feedback"></div>
+    </div>
+
+    <!-- Exercice 5 : description libre avec consignes claires -->
+    <div class="exercise">
+        <p>🎨 <strong>Exercice 5 – Décrivez une image de défilé (création libre)</strong></p>
+        <p style="background:#fff0e2; padding:10px; border-radius:16px; font-size:0.95rem;">
+        <strong>👗 Situation :</strong> Imaginez une photo d’un défilé de mode dans une rue.<br>
+        Il y a un mannequin <strong>au premier plan</strong>. Il porte une tenue colorée.<br>
+        <strong>Au deuxième plan</strong>, il y a des immeubles et des spectateurs.<br>
+        <strong>Devant</strong> le mannequin, un photographe prend une photo.<br>
+        <strong>Derrière</strong>, un autre mannequin avance.
+        </p>
+        
+        <p><strong>✏️ Votre texte doit utiliser :</strong></p>
+        <ul style="margin-left: 1.8rem; margin-bottom: 1rem; color:#5a3e2c;">
+            <li>✔ <strong>au premier plan</strong></li>
+            <li>✔ <strong>au deuxième plan</strong></li>
+            <li>✔ <strong>devant</strong></li>
+            <li>✔ <strong>derrière</strong></li>
+            <li>✔ <strong>on voit que</strong></li>
+            <li>✔ <strong>on peut imaginer que</strong></li>
+        </ul>
+        
+        <label>📝 Écrivez votre description (4 à 6 phrases) :</label>
+        <textarea id="ex5_desc" rows="6" placeholder="Exemple : Au premier plan, un mannequin porte une robe jaune. Devant lui, un photographe prend une photo. Derrière, on voit un autre modèle. On voit que les vêtements sont brillants. On peut imaginer que le styliste aime les contrastes..."></textarea>
+        
+        <button onclick="showExample5()">💡 Voir un exemple</button>
+        <button onclick="validateExercise5()">✅ Valider ma description</button>
+        <div id="feedback5" class="feedback"></div>
+    </div>
+
+    <hr>
+    <footer>✨ Bravo ! Avec le subjonctif et les expressions de position, vous pouvez décrire un défilé de mode comme un pro. 🌟</footer>
+</div>
+
+<script>
+    // Exercice 1
+    function checkExercice1() {
+        let r1 = document.getElementById("ex1_q1").value.trim().toLowerCase();
+        let r2 = document.getElementById("ex1_q2").value.trim().toLowerCase();
+        let r3 = document.getElementById("ex1_q3").value.trim().toLowerCase();
+        
+        let ok1 = (r1 === "on voit que");
+        let ok2 = (r2 === "on peut imaginer que");
+        let ok3 = (r3 === "on voit que");
+        
+        if(ok1 && ok2 && ok3) {
+            document.getElementById("feedback1").innerHTML = "✅ Parfait ! 'on voit que' pour observer, 'on peut imaginer que' pour supposer.";
+        } else {
+            document.getElementById("feedback1").innerHTML = "📌 Réponses : 1. on voit que / 2. on peut imaginer que / 3. on voit que.<br> Vos réponses : 1. « " + r1 + " » 2. « " + r2 + " » 3. « " + r3 + " »";
+        }
+    }
+    
+    // Exercice 2 : subjonctif être/avoir
+    function checkExercice2() {
+        let a1 = document.getElementById("ex2_q1").value.trim().toLowerCase();
+        let a2 = document.getElementById("ex2_q2").value.trim().toLowerCase();
+        let a3 = document.getElementById("ex2_q3").value.trim().toLowerCase();
+        let a4 = document.getElementById("ex2_q4").value.trim().toLowerCase();
+        
+        let correct = (a1 === "soit") && (a2 === "soient") && (a3 === "ait") && (a4 === "aient");
+        
+        if(correct) {
+            document.getElementById("feedback2").innerHTML = "✅ Excellent ! 1. soit / 2. soient (baskets = pluriel) / 3. ait / 4. aient (mannequins = pluriel)";
+        } else {
+            document.getElementById("feedback2").innerHTML = "🔍 Réponses : 1. soit / 2. soient / 3. ait / 4. aient.<br>Rappel : 'soit' pour singulier, 'soient' pour pluriel, 'ait' pour singulier, 'aient' pour pluriel.";
+        }
+    }
+    
+    // Exercice 3 : autres verbes
+    function checkExercice3() {
+        let b1 = document.getElementById("ex3_q1").value.trim().toLowerCase();
+        let b2 = document.getElementById("ex3_q2").value.trim().toLowerCase();
+        let b3 = document.getElementById("ex3_q3").value.trim().toLowerCase();
+        
+        let correct = (b1 === "prenne") && (b2 === "fasse") && (b3 === "marchent");
+        
+        if(correct) {
+            document.getElementById("feedback3").innerHTML = "✅ Bravo ! 1. prenne (prendre) / 2. fasse (faire) / 3. marchent (marcher, pluriel)";
+        } else {
+            document.getElementById("feedback3").innerHTML = "🔍 Réponses : 1. prenne / 2. fasse / 3. marchent.<br>Révisez le tableau du subjonctif plus haut !";
+        }
+    }
+    
+    // Exercice 4
+    function checkExercice4() {
+        let rep = document.getElementById("ex4_rep").value.trim().toLowerCase();
+        let attendu = "au premier plan, devant, derrière, on voit que";
+        let attendu2 = "au premier plan,devant,derrière,on voit que";
+        
+        let repClean = rep.replace(/\s/g, '').replace(/,$/, '');
+        let attenduClean = attendu.replace(/\s/g, '');
+        
+        if(repClean === attenduClean || repClean === attendu2.replace(/\s/g, '')) {
+            document.getElementById("feedback4").innerHTML = "✅ Bravo ! L'ordre est : au premier plan → devant → derrière → on voit que.";
+        } else {
+            document.getElementById("feedback4").innerHTML = "📖 L'ordre attendu : au premier plan, devant, derrière, on voit que.<br>Exemple : 'Au premier plan de la photo, il y a un mannequin. Devant lui, une photographe. Derrière, un autre modèle. On voit que les vêtements sont colorés.'";
+        }
+    }
+    
+    // Exercice 5
+    function showExample5() {
+        document.getElementById("feedback5").innerHTML = "💡 <strong>Exemple de description :</strong><br><br>Au premier plan, un mannequin porte une veste orange et un pantalon blanc. Devant lui, un photographe prend des photos. Derrière, on voit un autre mannequin avec une robe verte fluide. Au deuxième plan, il y a des immeubles gris et des spectateurs avec des parapluies. On voit que les couleurs sont très vives. On peut imaginer que le styliste veut montrer un contraste entre la ville et la mode.";
+    }
+    
+    function validateExercise5() {
+        let texte = document.getElementById("ex5_desc").value.trim();
+        let motsRequis = ["au premier plan", "au deuxième plan", "devant", "derrière", "on voit que", "on peut imaginer que"];
+        let tousTrouves = true;
+        let manquants = [];
+        
+        for(let mot of motsRequis) {
+            if(!texte.toLowerCase().includes(mot.toLowerCase())) {
+                tousTrouves = false;
+                manquants.push(mot);
+            }
+        }
+        
+        if(texte.length < 40) {
+            document.getElementById("feedback5").innerHTML = "📝 Écrivez au moins 4 phrases complètes. Utilisez les 6 expressions demandées.";
+        } else if(tousTrouves) {
+            document.getElementById("feedback5").innerHTML = "🎉 Félicitations ! Votre description utilise bien tous les mots demandés. Vous savez maintenant décrire une image de défilé de mode. 🌟";
+        } else {
+            document.getElementById("feedback5").innerHTML = "⚠️ Il manque certaines expressions : " + manquants.join(", ") + "<br>Réessayez en les ajoutant à votre texte.";
+        }
+    }
+</script>
+</body>
+</html>
