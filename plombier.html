@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Une journée catastrophe | Cours FLE B2/C1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #f0f2f5 0%, #e6e9ef 100%);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            color: #1e2a2f;
+            line-height: 1.5;
+            padding: 2rem 1.5rem;
+        }
+
+        .cours-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 250, 0.96);
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #c4450c, #e76f51, #f4a261);
+            padding: 2rem 2rem 2rem;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: #fff7e8;
+            display: inline-block;
+            padding: 0.2rem 1.8rem;
+            border-radius: 60px;
+            font-size: 1.9rem;
+            color: #a04015;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge-niveau {
+            background: #ffec9f;
+            color: #5a3a1a;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+
+        .contenu-principal {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2.5rem 2rem;
+        }
+
+        .col-gauche {
+            flex: 2;
+            min-width: 280px;
+        }
+
+        .col-droite {
+            flex: 1.4;
+            min-width: 280px;
+        }
+
+        .carte {
+            background: white;
+            border-radius: 2rem;
+            padding: 1.8rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #ece2d4;
+        }
+
+        .titre-carte {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(120deg, #c4450c, #e76f51);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            border-left: 6px solid #f4a261;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .texte-original {
+            background: #fef7f0;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid #f3e1cf;
+            line-height: 1.7;
+        }
+
+        .texte-original strong {
+            color: #c4450c;
+            background: #fff0e6;
+            padding: 0 0.2rem;
+            border-radius: 6px;
+        }
+
+        .mini-table-vocab {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr 1fr;
+            gap: 0.6rem;
+            background: #fcf9f0;
+            padding: 0.8rem;
+            border-radius: 1.2rem;
+            font-size: 0.85rem;
+        }
+
+        .jeu-asso {
+            background: #fef3e8;
+            border-radius: 1.5rem;
+            padding: 1rem;
+        }
+
+        .ligne-jeu {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 0.7rem 0;
+            background: white;
+            padding: 0.4rem 1rem;
+            border-radius: 60px;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .mot-anglais {
+            font-weight: 700;
+            background: #e76f5120;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            min-width: 120px;
+        }
+
+        .mot-francais-flou {
+            filter: blur(4px);
+            cursor: pointer;
+            transition: filter 0.2s;
+            background: #e9e2d0;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-weight: 500;
+            flex-grow: 1;
+            text-align: center;
+        }
+
+        .mot-francais-flou.revele {
+            filter: blur(0);
+            background: #fde2c4;
+        }
+
+        button.small {
+            background: #d9b48b;
+            border: none;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        .question-bloc {
+            margin: 1rem 0 0.3rem;
+            font-weight: 700;
+            color: #b64926;
+        }
+
+        .btn-verif {
+            background: #ffcf8a;
+            border: none;
+            font-weight: 600;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 0.3rem;
+        }
+
+        .reponse-masquee {
+            background: #f2ede1;
+            border-left: 5px solid #f4a261;
+            padding: 0.7rem 1rem;
+            margin-top: 0.7rem;
+            border-radius: 1rem;
+            display: none;
+        }
+
+        .grammaire-box {
+            background: #fff1e8;
+            border-radius: 1.5rem;
+            padding: 1.2rem;
+        }
+
+        .exercice-item {
+            margin: 1rem 0;
+            border-bottom: 1px solid #f0e2d4;
+            padding-bottom: 0.8rem;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 0.6rem;
+            border-radius: 1rem;
+            border: 1px solid #d4c8b2;
+            background: #fffcf5;
+            margin-top: 0.2rem;
+        }
+
+        .feedback-ex, .feedback {
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        button:active {
+            transform: scale(0.97);
+        }
+    </style>
+</head>
+<body>
+<div class="cours-container">
+    <div class="hero">
+        <h1>☀️➡️🌪️ Une journée catastrophe</h1>
+        <p>récit, lexique bilingue et grammaire : pronoms relatifs</p>
+        <div class="badge-niveau">✧ Niveaux B2 / C1 ✧</div>
+    </div>
+
+    <div class="contenu-principal">
+        <!-- Colonne gauche : Texte + compréhension -->
+        <div class="col-gauche">
+            <div class="carte">
+                <div class="titre-carte">📖 Texte : « L’enfer du lundi »</div>
+                <div class="texte-original">
+                    <p>Ce lundi devait être ordinaire. Pourtant, dès le réveil, <strong>la catastrophe</strong> s’est invitée. Mon réveil, <strong>qui</strong> n’avait jamais failli, a décidé de ne pas sonner. Résultat : j’ai ouvert les yeux à 8h45, <strong>alors que</strong> mon premier rendez-vous était à 9h. <strong>Affolé(e)</strong>, j’ai enfilé n’importe quoi et je me suis précipité(e) dans la salle de bain, <strong>où</strong> une fuite d’eau avait transformé le sol en piscine miniature. <strong>Stupéfait(e)</strong>, j’ai glissé comme sur une patinoire, renversant au passage ma tasse de café <strong>dont</strong> le contenu brûlant s’est répandu sur mon unique chemise propre.</p>
+                    <p>Dehors, <strong>le déluge</strong> m’attendait. Une pluie torrentielle, <strong>à laquelle</strong> rien ne m’avait préparé, m’a trempé en quelques secondes. Arrivé(e) à la voiture, <strong>dont</strong> la batterie était morte – évidemment. J’ai dû courir vers la gare sous des trombes d’eau, <strong>où</strong> chaque train affichait « retard indéterminé ». Mon stress, <strong>que</strong> je tentais de maîtriser, est monté d’un cran. </p>
+                    <p>Au bureau, le cauchemar s’est amplifié : mon ordinateur, <strong>avec lequel</strong> je devais présenter un dossier crucial, a planté trois minutes avant la réunion. Mon chef, <strong>dont</strong> la patience est légendaire… enfin, <strong>dont</strong> l’absence de patience l’est davantage, m’a lancé un regard noir. Et pour couronner le tout, en voulant rattraper mon téléphone, je l’ai envoyé valser dans une poubelle <strong>qui</strong> venait d’être vidée de ses sacs — mais pas de son fond humide. </p>
+                    <p><strong>Bref, une journée catastrophe.</strong> Parfois, on aimerait appuyer sur « reset ». Mais ces journées-là, <strong>pendant lesquelles</strong> tout semble complice contre nous, finissent par devenir des anecdotes savoureuses. Si l’humour permet de survivre, je suis devenu(e) ce soir-là un maître du récit comique.</p>
+                </div>
+            </div>
+
+            <!-- Vocabulaire bilingue français / anglais -->
+            <div class="carte">
+                <div class="titre-carte">📚 Lexique essentiel – français ⟺ anglais</div>
+                <div class="mini-table-vocab">
+                    <span><strong>Français</strong></span><span><strong>Contexte</strong></span><span><strong>English</strong></span>
+                    <span>catastrophe</span><span>désastre, événement chaotique</span><span>disaster / catastrophe</span>
+                    <span>affolé(e)</span><span>paniqué, très inquiet</span><span>panicked / frantic</span>
+                    <span>stupéfait(e)</span><span>abasourdi, sous le choc</span><span>dumbfounded / stunned</span>
+                    <span>déluge</span><span>pluie torrentielle</span><span>downpour / deluge</span>
+                    <span>fuite d’eau</span><span>écoulement accidentel</span><span>water leak</span>
+                    <span>se précipiter</span><span>se dépêcher, courir</span><span>to rush</span>
+                    <span>glisser</span><span>perdre l’équilibre</span><span>to slip</span>
+                    <span>un regard noir</span><span>regard courroucé</span><span>a black look / glare</span>
+                    <span>retard indéterminé</span><span>délai inconnu</span><span>indefinite delay</span>
+                    <span>planter (ordinateur)</span><span>cesser de fonctionner</span><span>to crash</span>
+                    <span>s’amplifier</span><span>augmenter en intensité</span><span>to intensify</span>
+                    <span>une anecdote savoureuse</span><span>histoire amusante après coup</span><span>a tasty anecdote</span>
+                </div>
+            </div>
+
+            <!-- Questions compréhension -->
+            <div class="carte">
+                <div class="titre-carte">✎ Compréhension du texte</div>
+                <div class="question-bloc">❶ Quels sont les trois premiers incidents décrits dans le texte ?</div>
+                <button class="btn-verif" data-reponse="comp1">Afficher réponse</button>
+                <div id="comp1" class="reponse-masquee">Le réveil n’a pas sonné ; fuite d’eau dans la salle de bain ; glissade et café renversé.</div>
+                <div class="question-bloc">❷ Quelle météo aggrave la situation ?</div>
+                <button class="btn-verif" data-reponse="comp2">Afficher réponse</button>
+                <div id="comp2" class="reponse-masquee">Un déluge, une pluie torrentielle.</div>
+                <div class="question-bloc">❸ Que se passe-t-il avec l’ordinateur ?</div>
+                <button class="btn-verif" data-reponse="comp3">Afficher réponse</button>
+                <div id="comp3" class="reponse-masquee">Il plante trois minutes avant la réunion.</div>
+                <div class="question-bloc">❹ Comment l’auteur relativise-t-il cette journée à la fin ?</div>
+                <button class="btn-verif" data-reponse="comp4">Afficher réponse</button>
+                <div id="comp4" class="reponse-masquee">Il pense que ces journées deviennent des anecdotes savoureuses, et que l’humour permet de survivre.</div>
+            </div>
+
+            <!-- Production orale / Expression -->
+            <div class="carte">
+                <div class="titre-carte">🗣️ Expression – Racontez votre « journée catastrophe »</div>
+                <p>Avez-vous vécu une journée où tout s’est enchaîné ? Utilisez au moins deux pronoms relatifs (qui, que, où, dont, auquel...).</p>
+                <button class="btn-verif" id="oralIdeaBtn">💡 Exemple d’ouverture</button>
+                <div id="oralIdea" class="reponse-masquee">« La journée <strong>pendant laquelle</strong> j’ai raté mon train, <strong>dont</strong> le départ était avancé, puis j’ai oublié mes clés... »</div>
+            </div>
+        </div>
+
+        <!-- Colonne droite : Jeu de vocabulaire + Grammaire -->
+        <div class="col-droite">
+            <!-- JEU ASSOCIATION ANGLAIS → FRANÇAIS FLOU -->
+            <div class="carte">
+                <div class="titre-carte">🎯 Guess the word – anglais → français (flou)</div>
+                <div class="jeu-asso">
+                    <div class="ligne-jeu"><span class="mot-anglais">disaster</span> <span class="mot-francais-flou" data-mot="catastrophe">●●●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">panicked</span> <span class="mot-francais-flou" data-mot="affolé">●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">stunned</span> <span class="mot-francais-flou" data-mot="stupéfait">●●●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">downpour</span> <span class="mot-francais-flou" data-mot="déluge">●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">water leak</span> <span class="mot-francais-flou" data-mot="fuite d'eau">●●●●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">to crash (computer)</span> <span class="mot-francais-flou" data-mot="planter">●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">glare / black look</span> <span class="mot-francais-flou" data-mot="regard noir">●●●●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">indefinite delay</span> <span class="mot-francais-flou" data-mot="retard indéterminé">●●●●●●●●●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                    <div class="ligne-jeu"><span class="mot-anglais">tasty anecdote</span> <span class="mot-francais-flou" data-mot="anecdote savoureuse">●●●●●●●●●●●●●●</span> <button class="small reveler-mot">Révéler</button></div>
+                </div>
+                <p style="font-size:0.7rem; margin-top:0.5rem;">Cliquez sur « Révéler » pour découvrir le mot français.</p>
+            </div>
+
+            <!-- GRAMMAIRE : PRONOMS RELATIFS (qui, que, où, dont, lequel,...) -->
+            <div class="carte">
+                <div class="titre-carte">📐 Grammaire – Pronoms relatifs</div>
+                <div class="grammaire-box">
+                    <p><strong>QUI</strong> : sujet (personne ou chose) → <em>Le réveil <u>qui</u> n’avait jamais failli.</em><br>
+                    <strong>QUE</strong> : complément d’objet direct → <em>Le stress <u>que</u> je tentais de maîtriser.</em><br>
+                    <strong>OÙ</strong> : lieu ou moment → <em>La salle de bain <u>où</u> une fuite d’eau…</em><br>
+                    <strong>DONT</strong> : complément introduit par DE → <em>Le café <u>dont</u> le contenu brûlant…</em><br>
+                    <strong>LEQUEL / LAQUELLE / DUQUEL / AUQUEL</strong> : après préposition (à, de, avec, sans, pour, etc.) : <em>l’ordinateur <u>avec lequel</u> je devais présenter ; le déluge <u>auquel</u> rien ne m’avait préparé ; la batterie <u>de laquelle</u> (ou dont)…</em></p>
+                </div>
+
+                <h4 style="margin:1rem 0 0.3rem;">✏️ Exercice 1 – Complétez avec QUI, QUE, OÙ, DONT</h4>
+                <div class="exercice-item">
+                    ① La réunion <input type="text" id="rel1" placeholder="pronom" size="8"> commençait à 10h a été annulée. 
+                    <button class="verifRel" data-target="rel1" data-sol="qui">Vérifier</button><span class="feedback-ex" id="feedRel1"></span>
+                </div>
+                <div class="exercice-item">
+                    ② La journée <input type="text" id="rel2" placeholder="pronom" size="8"> je rêve de recommencer. 
+                    <button class="verifRel" data-target="rel2" data-sol="que">Vérifier</button><span class="feedback-ex" id="feedRel2"></span>
+                </div>
+                <div class="exercice-item">
+                    ③ L’incident <input type="text" id="rel3" placeholder="pronom" size="8"> tu te souviens est hilarant maintenant. 
+                    <button class="verifRel" data-target="rel3" data-sol="dont">Vérifier</button><span class="feedback-ex" id="feedRel3"></span>
+                </div>
+                <div class="exercice-item">
+                    ④ Le garage <input type="text" id="rel4" placeholder="pronom" size="8"> j’ai laissé ma voiture était inondé. 
+                    <button class="verifRel" data-target="rel4" data-sol="où">Vérifier</button><span class="feedback-ex" id="feedRel4"></span>
+                </div>
+
+                <h4 style="margin:1rem 0 0.3rem;">🔄 Exercice 2 – Pronoms composés (lequel, auquel, duquel...)</h4>
+                <div class="exercice-item">
+                    ⑤ Le réveil <input type="text" id="compRel1" placeholder="pronom" size="14"> j’ai accidentellement éteint n’a pas sonné. (préposition "que j’ai éteint" -> avec lequel)
+                    <button class="verifCompos" data-target="compRel1" data-sol="avec lequel">Vérifier</button><span class="feedback-ex" id="feedComp1"></span>
+                </div>
+                <div class="exercice-item">
+                    ⑥ La panne, <input type="text" id="compRel2" placeholder="pronom" size="14"> personne ne s’attendait, a tout bloqué. (s’attendre à)
+                    <button class="verifCompos" data-target="compRel2" data-sol="à laquelle">Vérifier</button><span class="feedback-ex" id="feedComp2"></span>
+                </div>
+                <div class="exercice-item">
+                    ⑦ Le collègue <input type="text" id="compRel3" placeholder="pronom" size="14"> j’ai emprunté le chargeur m’a sauvé. (emprunter à)
+                    <button class="verifCompos" data-target="compRel3" data-sol="auquel">Vérifier</button><span class="feedback-ex" id="feedComp3"></span>
+                </div>
+                <div class="exercice-item">
+                    ⑧ La flaque d’eau <input type="text" id="compRel4" placeholder="pronom" size="14"> j’ai glissé était énorme. (glisser sur)
+                    <button class="verifCompos" data-target="compRel4" data-sol="sur laquelle">Vérifier</button><span class="feedback-ex" id="feedComp4"></span>
+                </div>
+                
+                <h4 style="margin:1rem 0 0.3rem;">✍️ Exercice 3 – Réécrivez avec un pronom relatif (composé si nécessaire)</h4>
+                <div class="exercice-item">
+                    <em>« J’ai vécu une journée. Pendant cette journée, tout est allé de travers. »</em>
+                    <textarea id="rephraseDay" rows="2" placeholder="Votre phrase..."></textarea>
+                    <button id="corrRephrase1">Corriger</button>
+                    <div id="feedRephrase1" class="feedback"></div>
+                </div>
+                <div class="exercice-item">
+                    <em>« Mon ordinateur a planté. Sans cet ordinateur, je ne peux pas travailler. »</em>
+                    <textarea id="rephrasePc" rows="2" placeholder="Votre phrase..."></textarea>
+                    <button id="corrRephrase2">Corriger</button>
+                    <div id="feedRephrase2" class="feedback"></div>
+                </div>
+                <div class="exercice-item">
+                    <em>« Le déluge était incroyable. Je n’étais pas préparé à ce déluge. »</em>
+                    <textarea id="rephraseDeluge" rows="2" placeholder="Votre phrase..."></textarea>
+                    <button id="corrRephrase3">Corriger</button>
+                    <div id="feedRephrase3" class="feedback"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Bascule réponses compréhension
+    document.querySelectorAll('.btn-verif').forEach(btn => {
+        if(btn.id !== 'oralIdeaBtn') {
+            btn.addEventListener('click', function() {
+                const id = this.getAttribute('data-reponse');
+                if(id) {
+                    const el = document.getElementById(id);
+                    if(el) el.style.display = (el.style.display === 'none' || getComputedStyle(el).display === 'none') ? 'block' : 'none';
+                }
+            });
+        }
+    });
+    // Idée expression orale
+    document.getElementById('oralIdeaBtn')?.addEventListener('click', () => {
+        const el = document.getElementById('oralIdea');
+        if(el) el.style.display = (el.style.display === 'none' || getComputedStyle(el).display === 'none') ? 'block' : 'none';
+    });
+
+    // Jeu vocabulaire anglais->français flou
+    document.querySelectorAll('.reveler-mot').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const parent = this.parentElement;
+            const spanFlou = parent.querySelector('.mot-francais-flou');
+            const motReel = spanFlou.getAttribute('data-mot');
+            spanFlou.textContent = motReel;
+            spanFlou.classList.add('revele');
+            this.textContent = '✔️';
+            this.disabled = true;
+        });
+    });
+
+    // Vérification pronoms simples (qui/que/où/dont)
+    function verifSimple(inputId, solution, feedbackId) {
+        const val = document.getElementById(inputId).value.trim().toLowerCase();
+        const correct = solution.toLowerCase();
+        const fb = document.getElementById(feedbackId);
+        if(val === correct) fb.innerHTML = "✔️ Correct !";
+        else fb.innerHTML = `❌ Réponse : « ${solution} ». Relisez la règle.`;
+    }
+    document.querySelectorAll('.verifRel').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const target = this.getAttribute('data-target');
+            const sol = this.getAttribute('data-sol');
+            verifSimple(target, sol, `feed${target.charAt(0).toUpperCase() + target.slice(1)}`);
+        });
+    });
+
+    // Vérification pronoms composés (avec préposition)
+    function verifCompos(inputId, solution, feedbackId) {
+        const val = document.getElementById(inputId).value.trim().toLowerCase();
+        const correct = solution.toLowerCase();
+        const fb = document.getElementById(feedbackId);
+        if(val === correct) fb.innerHTML = "✔️ Parfait !";
+        else fb.innerHTML = `❌ La forme correcte : « ${solution} ».`;
+    }
+    document.querySelectorAll('.verifCompos').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const target = this.getAttribute('data-target');
+            const sol = this.getAttribute('data-sol');
+            verifCompos(target, sol, `feed${target.charAt(0).toUpperCase() + target.slice(1)}`);
+        });
+    });
+
+    // corrigés réécriture
+    document.getElementById('corrRephrase1')?.addEventListener('click', () => {
+        let val = document.getElementById('rephraseDay').value;
+        if(val.toLowerCase().includes('pendant laquelle') || val.toLowerCase().includes('durant laquelle'))
+            document.getElementById('feedRephrase1').innerHTML = "✅ Excellent : « J’ai vécu une journée <strong>pendant laquelle</strong> tout est allé de travers. »";
+        else document.getElementById('feedRephrase1').innerHTML = "📌 Suggestion : « J’ai vécu une journée <strong>pendant laquelle</strong> tout est allé de travers. »";
+    });
+    document.getElementById('corrRephrase2')?.addEventListener('click', () => {
+        let val = document.getElementById('rephrasePc').value;
+        if(val.toLowerCase().includes('sans lequel'))
+            document.getElementById('feedRephrase2').innerHTML = "✅ Parfait : « Mon ordinateur a planté, <strong>sans lequel</strong> je ne peux pas travailler. »";
+        else document.getElementById('feedRephrase2').innerHTML = "🔁 Idée : « Mon ordinateur a planté, <strong>sans lequel</strong> je ne peux pas travailler. »";
+    });
+    document.getElementById('corrRephrase3')?.addEventListener('click', () => {
+        let val = document.getElementById('rephraseDeluge').value;
+        if(val.toLowerCase().includes('auquel') || val.toLowerCase().includes('auquel je n’étais pas préparé'))
+            document.getElementById('feedRephrase3').innerHTML = "✅ Correct : « Le déluge, <strong>auquel</strong> je n’étais pas préparé, était incroyable. »";
+        else document.getElementById('feedRephrase3').innerHTML = "💡 Suggestion : « Le déluge, <strong>auquel</strong> je n’étais pas préparé, était incroyable. »";
+    });
+    // initialisation
+    document.querySelectorAll('.reponse-masquee').forEach(el => el.style.display = 'none');
+</script>
+</body>
+</html>
