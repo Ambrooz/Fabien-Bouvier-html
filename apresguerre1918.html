@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>France & Allemagne 1918–1939 - DELF B1+</title>
+  <style>
+    /* ========== VARIABLES ========== */
+    :root {
+      --border-radius-lg: 16px;
+      --border-radius-md: 12px;
+      --color-background-primary: #ffffff;
+      --color-background-secondary: #f8f9fa;
+      --color-border-tertiary: #e2e8f0;
+      --color-text-primary: #1a2c3e;
+      --color-text-secondary: #4a627a;
+      --color-text-tertiary: #94a3b8;
+    }
+
+    /* ========== RESET & BASE ========== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      background: #f1f5f9;
+      padding: 24px 16px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ========== EN-TÊTE ========== */
+    .hdr {
+      background: #1a3a6b;
+      color: #fff;
+      padding: 28px 24px 22px;
+      border-radius: var(--border-radius-lg);
+      margin-bottom: 20px;
+    }
+
+    .stars {
+      color: #ffd700;
+      font-size: 11px;
+      letter-spacing: 7px;
+      margin-bottom: 10px;
+    }
+
+    .hdr h1 {
+      font-size: clamp(20px, 4vw, 32px);
+      font-weight: 500;
+      line-height: 1.2;
+      color: #fff;
+    }
+
+    .hdr h1 em {
+      color: #ffd700;
+      font-style: normal;
+    }
+
+    .hdr p {
+      margin-top: 8px;
+      opacity: 0.8;
+      font-size: 13px;
+    }
+
+    /* Statistiques */
+    .hstats {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .hs {
+      background: rgba(255, 255, 255, 0.12);
+      padding: 8px 16px;
+      border-radius: var(--border-radius-md);
+      text-align: center;
+    }
+
+    .hs-n {
+      font-size: 22px;
+      font-weight: 500;
+      color: #ffd700;
+      line-height: 1;
+    }
+
+    .hs-l {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-top: 2px;
+    }
+
+    /* ========== ONGLETS ========== */
+    .tab-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .tab {
+      padding: 7px 16px;
+      border-radius: 40px;
+      border: 0.5px solid var(--color-border-tertiary);
+      background: var(--color-background-secondary);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      transition: all 0.2s ease;
+    }
+
+    .tab.active {
+      background: #185fa5;
+      color: #fff;
+      border-color: #185fa5;
+    }
+
+    .tab:hover:not(.active) {
+      border-color: #185fa5;
+    }
+
+    /* ========== PANNEAUX ========== */
+    .panel {
+      display: none;
+    }
+
+    .panel.active {
+      display: block;
+    }
+
+    /* ========== SECTIONS ========== */
+    .sec {
+      background: var(--color-background-primary);
+      border-radius: var(--border-radius-lg);
+      padding: 22px;
+      margin-bottom: 18px;
+      border: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .sec-title {
+      font-size: 17px;
+      font-weight: 500;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--color-text-primary);
+    }
+
+    /* ========== LETTRES ========== */
+    .letter {
+      border-radius: var(--border-radius-lg);
+      padding: 20px;
+      margin-bottom: 14px;
+      border: 0.5px solid;
+    }
+
+    .letter.fr {
+      background: #eef4fb;
+      border-color: #b5d4f4;
+    }
+
+    .letter.de {
+      background: #fef5e7;
+      border-color: #fac775;
+    }
+
+    .l-head {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .l-head.fr {
+      color: #185fa5;
+    }
+
+    .l-head.de {
+      color: #854f0b;
+    }
+
+    .l-body {
+      line-height: 1.8;
+      font-size: 14px;
+      color: var(--color-text-primary);
+    }
+
+    .l-body p {
+      margin-bottom: 0.65rem;
+    }
+
+    .l-sig {
+      text-align: right;
+      font-style: italic;
+      color: var(--color-text-secondary);
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .hl {
+      background: #fff3b0;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-weight: 500;
+      color: #5a4200;
+    }
+
+    /* ========== NOTES & BLOCS ========== */
+    .note-b1 {
+      background: #eaf3de;
+      border: 0.5px solid #c0dd97;
+      border-radius: var(--border-radius-md);
+      padding: 12px 16px;
+      font-size: 13px;
+      color: #27500a;
+      margin-bottom: 14px;
+      line-height: 1.6;
+    }
+
+    .note-b1 strong {
+      font-weight: 500;
+    }
+
+    .lesson {
+      background: #eef4fb;
+      border-radius: var(--border-radius-md);
+      padding: 14px 16px;
+      margin-bottom: 14px;
+      border: 0.5px solid #b5d4f4;
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--color-text-primary);
+    }
+
+    .lesson strong {
+      font-weight: 500;
+      color: #185fa5;
+    }
+
+    .lesson em {
+      color: #0f6e56;
+    }
+
+    /* ========== VOCABULAIRE ========== */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+      gap: 8px;
+      margin: 14px 0;
+    }
+
+    .vc {
+      background: var(--color-background-secondary);
+      border-radius: 40px;
+      padding: 7px 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .fr-w {
+      font-weight: 500;
+      color: #185fa5;
+      font-size: 13px;
+    }
+
+    .en-w {
+      font-style: italic;
+      color: #0f6e56;
+      font-size: 13px;
+    }
+
+    /* Quiz vocabulaire */
+    .vquiz {
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-lg);
+      padding: 16px;
+      margin-top: 16px;
+    }
+
+    .vquiz-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--color-text-secondary);
+      margin-bottom: 10px;
+    }
+
+    .vrow {
+      display: flex;
+      align-items: center;
+      background: var(--color-background-primary);
+      margin: 7px 0;
+      padding: 8px 13px;
+      border-radius: 40px;
+      gap: 10px;
+      flex-wrap: wrap;
+      border: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .eng {
+      font-weight: 500;
+      min-width: 150px;
+      color: #185fa5;
+      font-size: 13px;
+    }
+
+    .fhidden {
+      background: var(--color-background-secondary);
+      padding: 4px 14px;
+      border-radius: 40px;
+      min-width: 140px;
+      text-align: center;
+      color: var(--color-text-tertiary);
+      font-size: 13px;
+    }
+
+    .frevealed {
+      background: #eaf3de;
+      color: #27500a;
+      font-weight: 500;
+    }
+
+    .rbtn {
+      background: #185fa5;
+      border: none;
+      color: #fff;
+      padding: 5px 12px;
+      border-radius: 40px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 500;
+      transition: background 0.2s;
+    }
+
+    .rbtn:hover {
+      background: #0c447c;
+    }
+
+    /* ========== EXERCICES ========== */
+    .exbox {
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-md);
+      padding: 14px;
+      margin: 14px 0;
+    }
+
+    .ex-title {
+      font-size: 14px;
+      font-weight: 500;
+      margin-bottom: 10px;
+      color: var(--color-text-primary);
+    }
+
+    .qitem {
+      background: var(--color-background-primary);
+      padding: 10px 14px;
+      border-radius: var(--border-radius-md);
+      margin-bottom: 8px;
+      border: 0.5px solid var(--color-border-tertiary);
+      font-size: 13px;
+      color: var(--color-text-primary);
+    }
+
+    .qitem input {
+      width: 100%;
+      padding: 6px 12px;
+      border-radius: 40px;
+      border: 0.5px solid var(--color-border-tertiary);
+      margin-top: 6px;
+      font-size: 13px;
+      background: var(--color-background-secondary);
+      color: var(--color-text-primary);
+    }
+
+    .corr-btn {
+      background: #185fa5;
+      border: none;
+      color: #fff;
+      padding: 7px 18px;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 8px;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+
+    .corr-btn:hover {
+      background: #0c447c;
+    }
+
+    .corr-box {
+      background: #1a2a1a;
+      color: #b8e6b0;
+      padding: 12px 14px;
+      border-radius: var(--border-radius-md);
+      margin-top: 10px;
+      display: none;
+      line-height: 1.7;
+      font-size: 13px;
+    }
+
+    /* ========== QCM ========== */
+    .qcm-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .qcard {
+      background: var(--color-background-secondary);
+      border-radius: var(--border-radius-lg);
+      padding: 16px;
+      border-top: 3px solid #ffd700;
+      border-left: 0.5px solid var(--color-border-tertiary);
+      border-right: 0.5px solid var(--color-border-tertiary);
+      border-bottom: 0.5px solid var(--color-border-tertiary);
+    }
+
+    .qtxt {
+      font-weight: 500;
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: var(--color-text-primary);
+    }
+
+    .opt {
+      display: block;
+      background: var(--color-background-primary);
+      margin: 5px 0;
+      padding: 8px 13px;
+      border-radius: 40px;
+      cursor: pointer;
+      border: 0.5px solid var(--color-border-tertiary);
+      font-size: 13px;
+      color: var(--color-text-primary);
+      transition: all 0.2s;
+    }
+
+    .opt:hover {
+      border-color: #185fa5;
+      background: #eef4fb;
+    }
+
+    .opt.selected {
+      background: #eaf3de;
+      border-left: 4px solid #3b6d11;
+      color: #27500a;
+      font-weight: 500;
+    }
+
+    .fb {
+      margin-top: 8px;
+      font-size: 13px;
+      display: none;
+      line-height: 1.5;
+    }
+
+    .check-btn {
+      background: #3b6d11;
+      border: none;
+      color: #fff;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-top: 12px;
+      font-size: 13px;
+      transition: background 0.2s;
+    }
+
+    .check-btn:hover {
+      background: #27500a;
+    }
+
+    .score-box {
+      background: #1a2a1a;
+      color: #b8e6b0;
+      padding: 12px 14px;
+      border-radius: var(--border-radius-md);
+      margin-top: 10px;
+      display: none;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* ========== FOOTER ========== */
+    footer {
+      text-align: center;
+      background: #1a3a6b;
+      color: #ffd700;
+      padding: 16px;
+      border-radius: var(--border-radius-lg);
+      margin-top: 20px;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ========== EN-TÊTE ========== -->
+  <div class="hdr">
+    <div class="stars">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
+    <h1>France & Allemagne <em>1918–1939</em></h1>
+    <p>Correspondance entre deux enfants · Vocabulaire · Grammaire · DELF B1+</p>
+    <div class="hstats">
+      <div class="hs"><div class="hs-n">1918</div><div class="hs-l">Armistice</div></div>
+      <div class="hs"><div class="hs-n">1933</div><div class="hs-l">Hitler au pouvoir</div></div>
+      <div class="hs"><div class="hs-n">1939</div><div class="hs-l">Début WWII</div></div>
+      <div class="hs"><div class="hs-n">B1+</div><div class="hs-l">Niveau DELF</div></div>
+    </div>
+  </div>
+
+  <!-- ========== ONGLETS ========== -->
+  <div class="tab-bar">
+    <div class="tab active" onclick="showTab('lettres', this)">Lettres</div>
+    <div class="tab" onclick="showTab('vocab', this)">Vocabulaire</div>
+    <div class="tab" onclick="showTab('gram', this)">Grammaire</div>
+    <div class="tab" onclick="showTab('pqp', this)">Plus-que-parfait</div>
+    <div class="tab" onclick="showTab('qcm1', this)">QCM 1</div>
+    <div class="tab" onclick="showTab('qcm2', this)">QCM 2</div>
+  </div>
+
+  <!-- ========== SECTION LETTRES ========== -->
+  <div id="p-lettres" class="panel active">
+    <div class="sec">
+      <div class="sec-title">📮 Deux amis, deux pays</div>
+
+      <div class="note-b1">
+        <strong>Avant de lire :</strong> Paul habite en France, Hans habite en Allemagne. Ils ont environ 12 ans. Nous sommes dans les années 1930. L'Europe vit des moments difficiles après la guerre de 1914–1918.
+      </div>
+
+      <!-- Lettre de Paul -->
+      <div class="letter fr">
+        <div class="l-head fr"><span>🇫🇷</span> Lettre de Paul (France) à Hans</div>
+        <div class="l-body">
+          <p>Cher Hans,</p>
+          <p>Ce matin, notre maîtresse a montré une carte de l'Europe en classe. Elle nous a expliqué le <span class="hl">traité de paix</span> qui a mis fin à la Grande Guerre. En rentrant chez moi, j'avais encore beaucoup de questions.</p>
+          <p>Mon père dit souvent que cette guerre a laissé une <span class="hl">défaite cuisante</span> — une blessure profonde — qui n'a pas guéri. Il nous a aussi parlé d'un homme qui s'appelle Adolf Hitler. Cet homme a d'abord essayé de prendre le pouvoir en 1923, mais il a échoué. C'est ce qu'on appelle un <span class="hl">putsch manqué</span>. Mais maintenant, il est devenu le chef de l'Allemagne. Les adultes parlent à voix basse de la <span class="hl">montée du péril</span> en Europe.</p>
+          <p>Le soir, ma mère garde le pain avec soin, comme si elle avait peur qu'il vienne à manquer. L'<span class="hl">après-guerre</span> a tout abîmé, dit-elle. Nous, les enfants, on joue encore dans la cour. Mais quelque chose a changé.</p>
+          <p>J'espère que tu vas bien.</p>
+          <div class="l-sig">Ton ami, Paul</div>
+        </div>
+      </div>
+
+      <!-- Lettre de Hans -->
+      <div class="letter de">
+        <div class="l-head de"><span>🇩🇪</span> Lettre de Hans (Allemagne) à Paul</div>
+        <div class="l-body">
+          <p>Cher Paul,</p>
+          <p>Ta lettre est arrivée un matin où tout semblait encore calme. Mais ici, beaucoup de choses ont changé.</p>
+          <p>Mon père a perdu son travail. En Allemagne, après la guerre, le pays a dû payer de grosses sommes d'argent — on appelle ça des <span class="hl">indemnités</span>. Cela a rendu les gens très pauvres, et j'ai vu le <span class="hl">mécontentement</span> grandir dans notre rue.</p>
+          <p>À l'école, certains élèves portent maintenant un uniforme. Mon père dit que c'est de l'<span class="hl">embrigadement</span> — c'est-à-dire qu'on leur apprend à obéir sans réfléchir. Une voisine a disparu. Les adultes chuchotent qu'elle a été envoyée dans un <span class="hl">camp de concentration</span>. Notre maître a aussi parlé de <span class="hl">lois raciales</span> : certains enfants n'ont plus le droit de jouer avec nous à cause de leur religion.</p>
+          <p>Une <span class="hl">terreur d'État</span> s'installe. J'essaie quand même de rester un enfant.</p>
+          <div class="l-sig">Ton ami, Hans</div>
+        </div>
+      </div>
+
+      <div class="note-b1" style="margin-top: 14px; margin-bottom: 0">
+        <strong>Après la lecture :</strong> Les mots surlignés en jaune sont les mots de vocabulaire importants. Vous les retrouverez dans l'onglet <em>Vocabulaire</em>.
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION VOCABULAIRE ========== -->
+  <div id="p-vocab" class="panel">
+    <div class="sec">
+      <div class="sec-title">📚 Vocabulaire historique</div>
+
+      <div class="note-b1">
+        <strong>Conseil :</strong> Lisez d'abord les mots français avec leur traduction anglaise. Ensuite, testez-vous avec l'exercice ci-dessous.
+      </div>
+
+      <!-- Grille vocabulaire -->
+      <div class="vocab-grid">
+        <div class="vc"><span class="fr-w">le traité de paix</span><span class="en-w">peace treaty</span></div>
+        <div class="vc"><span class="fr-w">l'après-guerre</span><span class="en-w">post-war period</span></div>
+        <div class="vc"><span class="fr-w">la défaite cuisante</span><span class="en-w">crushing defeat</span></div>
+        <div class="vc"><span class="fr-w">les indemnités</span><span class="en-w">reparations</span></div>
+        <div class="vc"><span class="fr-w">la montée du péril</span><span class="en-w">rising danger</span></div>
+        <div class="vc"><span class="fr-w">le mécontentement</span><span class="en-w">discontent</span></div>
+        <div class="vc"><span class="fr-w">le putsch manqué</span><span class="en-w">failed coup</span></div>
+        <div class="vc"><span class="fr-w">le chef charismatique</span><span class="en-w">charismatic leader</span></div>
+        <div class="vc"><span class="fr-w">la terreur d'État</span><span class="en-w">state terror</span></div>
+        <div class="vc"><span class="fr-w">les lois raciales</span><span class="en-w">racial laws</span></div>
+        <div class="vc"><span class="fr-w">le camp de concentration</span><span class="en-w">concentration camp</span></div>
+        <div class="vc"><span class="fr-w">l'embrigadement</span><span class="en-w">indoctrination</span></div>
+      </div>
+
+      <!-- Quiz vocabulaire -->
+      <div class="vquiz">
+        <div class="vquiz-title">📝 Testez-vous : anglais → français — cliquez sur « Révéler »</div>
+        <div id="vlist"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION GRAMMAIRE ========== -->
+  <div id="p-gram" class="panel">
+    <div class="sec">
+      <div class="sec-title">⚖️ Imparfait ou passé composé ?</div>
+
+      <div class="lesson">
+        <strong>Imparfait</strong> → action répétée, habitude, description dans le passé.<br>
+        <em>Exemple : « Chaque soir, ma mère rangeait le pain. »</em><br><br>
+        <strong>Passé composé</strong> → action terminée, événement précis dans le passé.<br>
+        <em>Exemple : « En 1939, la guerre a commencé. »</em>
+      </div>
+
+      <div class="exbox">
+        <div class="ex-title">📝 Choisissez la bonne forme</div>
+
+        <div class="qitem">
+          <label>1. Chaque semaine, Paul (écrire) ________ une lettre à Hans.</label>
+          <input type="text" placeholder="imparfait ou passé composé ?">
+        </div>
+
+        <div class="qitem">
+          <label>2. Soudain, la guerre (commencer) ________ en 1939.</label>
+          <input type="text" placeholder="imparfait ou passé composé ?">
+        </div>
+
+        <div class="qitem">
+          <label>3. Hans (avoir) ________ toujours espoir malgré les difficultés.</label>
+          <input type="text" placeholder="imparfait ou passé composé ?">
+        </div>
+
+        <div class="qitem">
+          <label>4. Le père de Hans (perdre) ________ son emploi pendant la crise.</label>
+          <input type="text" placeholder="imparfait ou passé composé ?">
+        </div>
+
+        <button class="corr-btn" onclick="toggle('gcorr')">Voir le corrigé</button>
+
+        <div id="gcorr" class="corr-box">
+          1. écrivait (habitude → imparfait)<br>
+          2. a commencé (événement précis → passé composé)<br>
+          3. avait (état continu → imparfait)<br>
+          4. a perdu (événement terminé → passé composé)
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION PLUS-QUE-PARFAIT ========== -->
+  <div id="p-pqp" class="panel">
+    <div class="sec">
+      <div class="sec-title">⏰ Le plus-que-parfait</div>
+
+      <div class="lesson">
+        <strong>Formation :</strong> avoir ou être à l'imparfait + participe passé<br>
+        <em>Exemples tirés des lettres :</em><br>
+        → « Notre maîtresse <strong>avait montré</strong> une carte. » (elle l'avait fait avant que Paul raconte)<br>
+        → « Mon père <strong>avait perdu</strong> son travail. »<br><br>
+        <strong>Quand l'utiliser ?</strong> Pour dire qu'une action s'est passée <em>avant</em> une autre action passée.
+      </div>
+
+      <!-- Exercice 1 -->
+      <div class="exbox">
+        <div class="ex-title">📝 Exercice 1 — Conjuguez au plus-que-parfait</div>
+
+        <div class="qitem">
+          <label>1. Hans (écrire / déjà) ________ plusieurs lettres avant de recevoir une réponse.</label>
+          <input type="text" placeholder="ex: avait écrit">
+        </div>
+
+        <div class="qitem">
+          <label>2. Mon père (travailler) ________ dans une usine avant la crise de 1929.</label>
+          <input type="text" placeholder="">
+        </div>
+
+        <div class="qitem">
+          <label>3. Les tensions (monter) ________ avant l'arrivée d'Hitler.</label>
+          <input type="text" placeholder="">
+        </div>
+
+        <div class="qitem">
+          <label>4. La maison (reconstruire) ________ après la Grande Guerre.</label>
+          <input type="text" placeholder="être + participe passé">
+        </div>
+
+        <button class="corr-btn" onclick="toggle('pqpcorr')">Voir les réponses</button>
+
+        <div id="pqpcorr" class="corr-box">
+          1. avait déjà écrit<br>
+          2. avait travaillé<br>
+          3. avaient monté<br>
+          4. avait été reconstruite
+        </div>
+      </div>
+
+      <!-- Exercice 2 -->
+      <div class="exbox">
+        <div class="ex-title">📝 Exercice 2 — Mélange : PQP / imparfait / passé composé</div>
+
+        <div class="qitem">
+          <label>Quand Hans est né, son père (déjà / combattre) ________ pendant la Grande Guerre.</label>
+          <input type="text" placeholder="">
+        </div>
+
+        <div class="qitem">
+          <label>Nous (jouer) ________ dans la cour quand la pluie (commencer) ________ à tomber.</label>
+          <input type="text" placeholder="deux formes">
+        </div>
+
+        <div class="qitem">
+          <label>Paul (ne jamais voir) ________ Hans en personne avant 1939.</label>
+          <input type="text" placeholder="">
+        </div>
+
+        <button class="corr-btn" onclick="toggle('mixcorr')">Corrigé</button>
+
+        <div id="mixcorr" class="corr-box">
+          1. avait déjà combattu<br>
+          2. jouions / a commencé<br>
+          3. n'avait jamais vu
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION QCM 1 ========== -->
+  <div id="p-qcm1" class="panel">
+    <div class="sec">
+      <div class="sec-title">🎯 QCM 1 — Compréhension des lettres</div>
+
+      <div class="note-b1">
+        <strong>Conseil :</strong> Relisez les lettres si nécessaire avant de répondre.
+      </div>
+
+      <div id="q1c" class="qcm-grid"></div>
+
+      <button class="check-btn" onclick="checkQCM(q1, ua1, 'q1c', 's1')">Vérifier mes réponses</button>
+
+      <div id="s1" class="score-box"></div>
+    </div>
+  </div>
+
+  <!-- ========== SECTION QCM 2 ========== -->
+  <div id="p-qcm2" class="panel">
+    <div class="sec">
+      <div class="sec-title">🔥 QCM 2 — L'Allemagne nazie</div>
+
+      <div class="note-b1">
+        <strong>Niveau :</strong> Ces questions portent sur le contexte historique. Certaines réponses sont dans les lettres, d'autres font appel à vos connaissances générales.
+      </div>
+
+      <div id="q2c" class="qcm-grid"></div>
+
+      <button class="check-btn" onclick="checkQCM(q2, ua2, 'q2c', 's2')">Vérifier mes réponses</button>
+
+      <div id="s2" class="score-box"></div>
+    </div>
+  </div>
+
+  <!-- ========== FOOTER ========== -->
+  <footer>
+    🇫🇷 France & Allemagne 1918–1939 🇩🇪 — DELF B1+
+  </footer>
+
+  <!-- ========== SCRIPT ========== -->
+  <script>
+    // ========== NAVIGATION PAR ONGLETS ==========
+    function showTab(id, el) {
+      document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('p-' + id).classList.add('active');
+      el.classList.add('active');
+    }
+
+    function toggle(id) {
+      const el = document.getElementById(id);
+      el.style.display = el.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // ========== DONNÉES VOCABULAIRE ==========
+    const vocab = [
+      { e: "peace treaty", f: "le traité de paix" },
+      { e: "post-war period", f: "l'après-guerre" },
+      { e: "crushing defeat", f: "la défaite cuisante" },
+      { e: "reparations", f: "les indemnités" },
+      { e: "rising danger", f: "la montée du péril" },
+      { e: "discontent", f: "le mécontentement" },
+      { e: "failed coup", f: "le putsch manqué" },
+      { e: "charismatic leader", f: "le chef charismatique" },
+      { e: "state terror", f: "la terreur d'État" },
+      { e: "racial laws", f: "les lois raciales" },
+      { e: "concentration camp", f: "le camp de concentration" },
+      { e: "indoctrination", f: "l'embrigadement" }
+    ];
+
+    // Génération du quiz vocabulaire
+    const vlist = document.getElementById('vlist');
+    vocab.forEach((v, i) => {
+      const div = document.createElement('div');
+      div.className = 'vrow';
+      div.innerHTML = `
+        <div class="eng">${v.e}</div>
+        <div class="fhidden" id="fh${i}">[caché]</div>
+        <button class="rbtn" onclick="reveal(${i})">Révéler</button>
+      `;
+      vlist.appendChild(div);
+    });
+
+    function reveal(i) {
+      const el = document.getElementById('fh' + i);
+      el.textContent = vocab[i].f;
+      el.className = 'fhidden frevealed';
+    }
+
+    // ========== DONNÉES QCM ==========
+    function shuffleOptions(q) {
+      const options = [...q.options];
+      const correctValue = options[q.correct];
+      for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+      }
+      return {
+        ...q,
+        options: options,
+        correct: options.indexOf(correctValue)
+      };
+    }
+
+    const q1raw = [
+      { text: "Quel document l'institutrice a-t-elle montré en classe dans la lettre de Paul ?", options: ["Un journal de 1939", "Une carte de l'Europe", "Une photo de la guerre", "Un livre d'histoire"], correct: 1, exp: "Paul dit que la maîtresse a montré une carte de l'Europe." },
+      { text: "Quel adjectif décrit la défaite dans la lettre de Paul ?", options: ["Honorable", "Cuisante", "Inévitable", "Rapide"], correct: 1, exp: "Paul emploie l'expression « défaite cuisante » — une défaite très douloureuse." },
+      { text: "Pourquoi le père de Hans a-t-il perdu son travail ?", options: ["Il était malade", "L'usine a brûlé", "L'Allemagne devait payer des indemnités", "Il avait déménagé"], correct: 2, exp: "Hans explique que l'Allemagne a dû payer de grosses indemnités après la guerre, ce qui a appauvri le pays." },
+      { text: "Qu'est-ce que les 'lois raciales' interdisaient concrètement ?", options: ["De travailler le dimanche", "À certains enfants de jouer ensemble", "D'aller à l'école", "De voyager en train"], correct: 1, exp: "Hans dit que certains enfants n'ont plus le droit de jouer avec lui à cause de leur religion." },
+      { text: "Que signifie le mot 'embrigadement' dans la lettre de Hans ?", options: ["Un voyage scolaire", "Apprendre à obéir sans réfléchir", "Un jeu d'équipe", "Un travail manuel"], correct: 1, exp: "Hans explique lui-même : on apprend aux enfants à obéir sans réfléchir." },
+      { text: "Quel sentiment principal ressent-on à la lecture des deux lettres ?", options: ["La joie et l'espoir", "La colère et la révolte", "L'inquiétude et la peur", "L'indifférence"], correct: 2, exp: "Les deux lettres montrent une Europe de plus en plus menaçante : montée du péril, terreur d'État." }
+    ];
+
+    const q2raw = [
+      { text: "En quelle année Hitler devient-il chancelier d'Allemagne ?", options: ["1930", "1932", "1933", "1935"], correct: 2, exp: "Hitler est nommé chancelier le 30 janvier 1933." },
+      { text: "Qu'est-ce qu'un 'putsch' ?", options: ["Un discours politique", "Une tentative de prise du pouvoir par la force", "Une élection", "Un traité de paix"], correct: 1, exp: "Un putsch est une tentative violente de prendre le pouvoir. Celui de Hitler en 1923 à Munich a échoué." },
+      { text: "Quel livre Hitler a-t-il écrit en prison ?", options: ["Mein Kampf", "La République", "Le Troisième Reich", "L'Europe unie"], correct: 0, exp: "Hitler a écrit Mein Kampf (Mon Combat) pendant sa détention à Landsberg." },
+      { text: "Quel événement en 1933 permet à Hitler de prendre tous les pouvoirs ?", options: ["L'incendie du Reichstag", "La mort de Hindenburg", "Une grève générale", "La Nuit de Cristal"], correct: 0, exp: "L'incendie du Reichstag (parlement allemand) a servi de prétexte pour instaurer la dictature." },
+      { text: "Quel parti politique Hitler dirigeait-il ?", options: ["Le parti communiste", "Le parti social-démocrate", "Le NSDAP (parti nazi)", "Le parti libéral"], correct: 2, exp: "NSDAP = Nationalsozialistische Deutsche Arbeiterpartei, le parti national-socialiste (nazi)." },
+      { text: "Quel pogrom (violence contre les Juifs) a eu lieu en novembre 1938 ?", options: ["La Nuit des Longs Couteaux", "La Nuit de Cristal", "L'Anschluss", "La Nuit Blanche"], correct: 1, exp: "La Nuit de Cristal (Kristallnacht) : violences massives contre les Juifs dans toute l'Allemagne." },
+      { text: "Quel camp de concentration a été ouvert dès 1933, près de Munich ?", options: ["Auschwitz", "Buchenwald", "Dachau", "Treblinka"], correct: 2, exp: "Dachau a été le premier camp nazi régulier, ouvert en mars 1933." }
+    ];
+
+    const q1 = q1raw.map(shuffleOptions);
+    const q2 = q2raw.map(shuffleOptions);
+    const ua1 = new Array(q1.length).fill(null);
+    const ua2 = new Array(q2.length).fill(null);
+
+    // ========== RENDU DES QCM ==========
+    function renderQCM(qs, ua, containerId) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = '';
+
+      qs.forEach((q, i) => {
+        const card = document.createElement('div');
+        card.className = 'qcard';
+        card.innerHTML = `
+          <div class="qtxt">${i + 1}. ${q.text}</div>
+          ${q.options.map((o, j) => `<div class="opt" data-q="${i}" data-o="${j}">${String.fromCharCode(65 + j)}. ${o}</div>`).join('')}
+          <div class="fb" id="fb-${containerId}-${i}"></div>
+        `;
+        container.appendChild(card);
+      });
+
+      container.querySelectorAll('.opt').forEach(el => {
+        el.addEventListener('click', () => {
+          const qi = parseInt(el.dataset.q);
+          const oi = parseInt(el.dataset.o);
+          container.querySelectorAll(`.opt[data-q="${qi}"]`).forEach(x => x.classList.remove('selected'));
+          el.classList.add('selected');
+          ua[qi] = oi;
+          document.getElementById(`fb-${containerId}-${qi}`).style.display = 'none';
+        });
+      });
+    }
+
+    function checkQCM(qs, ua, containerId, scoreId) {
+      let score = 0;
+
+      qs.forEach((q, i) => {
+        const fb = document.getElementById(`fb-${containerId}-${i}`);
+        fb.style.display = 'block';
+
+        if (ua[i] === null) {
+          fb.innerHTML = '<span style="color:#ba7517">❓ Aucune réponse sélectionnée.</span>';
+        } else if (ua[i] === q.correct) {
+          score++;
+          fb.innerHTML = `<span style="color:#3b6d11">✅ Bonne réponse. ${q.exp}</span>`;
+        } else {
+          fb.innerHTML = `<span style="color:#993c1d">❌ Mauvaise réponse. Bonne réponse : ${String.fromCharCode(65 + q.correct)}. ${q.exp}</span>`;
+        }
+      });
+
+      const scoreBox = document.getElementById(scoreId);
+      scoreBox.style.display = 'block';
+      scoreBox.innerHTML = `<strong>🎯 Score : ${score}/${qs.length} (${Math.round(score / qs.length * 100)}%)</strong><br>📖 Relisez les explications pour les questions ratées.`;
+    }
+
+    // Initialisation des QCM
+    renderQCM(q1, ua1, 'q1c');
+    renderQCM(q2, ua2, 'q2c');
+  </script>
+
+</body>
+</html>
