@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon 4 · Styles et lumières – Textures, tons, effets</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f3efe8;
+            font-family: 'Garamond', 'Georgia', 'Times New Roman', 'Segoe UI', serif;
+            line-height: 1.5;
+            color: #2c2b28;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 28px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .hero {
+            background: #2c3e3b;
+            padding: 2rem 2rem;
+            text-align: center;
+            color: #f0ede5;
+            border-bottom: 1px solid #cfc7b5;
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            font-weight: 400;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #e6dacf;
+        }
+
+        .hero p {
+            font-size: 0.9rem;
+            font-weight: 300;
+            margin-top: 0.6rem;
+            opacity: 0.8;
+            border-top: 1px solid rgba(230, 218, 207, 0.3);
+            display: inline-block;
+            padding-top: 0.5rem;
+        }
+
+        section {
+            padding: 2rem 2.2rem;
+            border-bottom: 1px solid #e8e1d4;
+        }
+
+        section:last-of-type {
+            border-bottom: none;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #4a5b57;
+            letter-spacing: -0.2px;
+            margin-bottom: 1.2rem;
+            border-left: 3px solid #b9976b;
+            padding-left: 1rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 1.5rem 0 0.8rem 0;
+            color: #8f6d47;
+            letter-spacing: 0.3px;
+        }
+
+        .texte-principal {
+            background: #fefcf8;
+            padding: 1.5rem;
+            border-radius: 18px;
+            line-height: 1.6;
+            font-size: 1rem;
+            color: #3e3c37;
+            border: 1px solid #ebe3d7;
+        }
+
+        .highlight {
+            background: #ece4d8;
+            padding: 0 0.2rem;
+            font-weight: 500;
+            color: #7b5a3c;
+            border-radius: 4px;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 0.8rem;
+            margin-top: 1rem;
+        }
+
+        .vocab-card {
+            background: #fefaf5;
+            border: 1px solid #e2d9ce;
+            border-radius: 16px;
+            padding: 0.7rem 1rem;
+        }
+
+        .vocab-card strong {
+            color: #7a5a3c;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            background: #e7dfd5;
+            color: #5a4a34;
+            border-radius: 20px;
+            padding: 0.2rem 0.6rem;
+            margin-left: 0.6rem;
+            font-weight: normal;
+        }
+
+        .grammaire-block {
+            background: #faf7f2;
+            border-left: 4px solid #b9976b;
+            border-radius: 16px;
+            padding: 1.2rem 1.6rem;
+            margin: 1.5rem 0;
+        }
+
+        .exemple {
+            font-style: normal;
+            background: #ffffffea;
+            padding: 0.8rem 1rem;
+            margin: 0.8rem 0;
+            border-radius: 14px;
+            color: #4b4a44;
+            border: 1px solid #ece2d6;
+        }
+
+        .assoc-container {
+            background: #fefcf8;
+            border: 1px solid #e7dfd3;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        .assoc-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #7c5e3f;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+        .pair-list {
+            list-style: none;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .pair-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            margin: 0.6rem 0;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            border: 1px solid #e2d9ce;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .english-word {
+            font-weight: 600;
+            color: #4a5b57;
+            font-size: 1rem;
+            min-width: 180px;
+        }
+        .french-side {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .cache-btn {
+            background: #e8e0d5;
+            color: #e8e0d5;
+            cursor: pointer;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-family: monospace;
+            font-size: 0.9rem;
+            transition: 0.1s ease;
+            user-select: none;
+            border: none;
+            min-width: 110px;
+            text-align: center;
+        }
+        .cache-btn.revealed {
+            background: #fef7e0;
+            color: #7a5a3c;
+            font-weight: 500;
+            cursor: default;
+            border: 1px solid #cfc5b3;
+            font-family: inherit;
+        }
+        .cache-btn:hover:not(.revealed) {
+            background: #d6ccbe;
+            color: #d6ccbe;
+        }
+        .btn-reset-assoc {
+            background: none;
+            border: 1px solid #cbbdab;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            color: #7a603e;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            transition: 0.15s;
+        }
+        .btn-reset-assoc:hover {
+            background: #e8dfd3;
+        }
+
+        .exercice {
+            background: #fefcf9;
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0;
+            border: 1px solid #e7dfd3;
+        }
+
+        .exercice h4 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #7c5e3f;
+            margin-bottom: 0.8rem;
+            letter-spacing: -0.2px;
+        }
+
+        .input-reponse {
+            font-family: inherit;
+            background: #ffffff;
+            border: 1px solid #ddd2c2;
+            padding: 8px 14px;
+            border-radius: 40px;
+            width: 90%;
+            max-width: 500px;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+        .input-reponse:focus {
+            outline: none;
+            border-color: #b9976b;
+            background: #fffdf9;
+        }
+
+        textarea {
+            font-family: inherit;
+            background: #ffffff;
+            border: 1px solid #ddd2c2;
+            border-radius: 20px;
+            width: 100%;
+            padding: 0.8rem;
+            resize: vertical;
+            font-size: 0.9rem;
+        }
+
+        .btn-reponse {
+            background: none;
+            border: 1px solid #cbbdab;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #7a603e;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            transition: 0.15s;
+            font-family: inherit;
+        }
+
+        .btn-reponse:hover {
+            background: #e8dfd3;
+            border-color: #a78660;
+        }
+
+        .reponse {
+            background: #f3efe8;
+            margin-top: 0.9rem;
+            padding: 0.8rem 1rem;
+            border-radius: 20px;
+            display: none;
+            font-size: 0.9rem;
+            color: #4e5b54;
+            border-left: 3px solid #bda27e;
+        }
+
+        .regle-explicative {
+            background: #fef3e8;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            border-left: 4px solid #b9976b;
+        }
+
+        .regle-explicative strong {
+            color: #7a5a3c;
+        }
+
+        .en-trad {
+            color: #8f7657;
+            font-style: italic;
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+
+        .highlight-rule {
+            background: #e8dfd3;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .comparaison-item {
+            margin: 1rem 0;
+            padding: 0.5rem 0;
+            border-bottom: 1px dashed #e2d9ce;
+        }
+
+        footer {
+            background: #f7f2ea;
+            text-align: center;
+            padding: 1rem;
+            font-size: 0.8rem;
+            color: #8f7657;
+            border-top: 1px solid #e0d5c7;
+        }
+
+        @media (max-width: 700px) {
+            section { padding: 1.5rem; }
+            .hero h1 { font-size: 1.5rem; }
+            .input-reponse { width: 100%; }
+            .pair-item { flex-direction: column; text-align: center; }
+            .french-side { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="hero">
+        <h1>Styles & Lumières</h1>
+        <p>Textures · Tons · Effets · Éclairages</p>
+    </div>
+
+    <!-- TEXTE -->
+    <section>
+        <h2>📖 1. Une séance photo en studio</h2>
+        <div class="texte-principal">
+            <p>Ce matin, j'ai assisté à une séance photo dans un studio parisien. Il s'agissait d'une série consacrée aux contrastes entre matières naturelles et synthétiques. Une lumière <span class="highlight">douce et diffuse</span> venait d'une grande fenêtre orientée au nord : elle était froide et bleutée. En parallèle, un projecteur placé à droite créait un effet <span class="highlight">chaud et doré</span> sur les vêtements.</p>
+            <p>La mannequin portait une robe longue en <strong>velours côtelé</strong>, d'un rouge profond aux reflets mats. Sur ses épaules, une veste en cuir noir très <strong>brillante</strong>, presque laquée, captait la lumière de façon éclatante. Son chemisier en lin beige restait <strong>doux et absorbant</strong>, sans aucun éclat. Les textures s'opposaient : rugueux contre lisse, opaque contre brillant.</p>
+            <p>Le photographe a joué avec les tons. Il a atténué les ombres pour obtenir des <strong>dégradés subtils</strong>. Les tons chauds (ocre, terracotta) étaient placés près des sources lumineuses, tandis que les tons froids (gris bleuté, vert sauge) restaient dans l'arrière‑plan. Il a même ajouté un <strong>effet de flou</strong> derrière le modèle pour créer une impression de mouvement. Bien que l'ambiance soit très travaillée, elle semble naturelle et sophistiquée.</p>
+        </div>
+    </section>
+
+    <!-- VOCABULAIRE -->
+    <section>
+        <h2>📚 2. Vocabulaire · textures, tons, lumières</h2>
+        <div class="vocab-grid">
+            <div class="vocab-card"><strong>🧵 velours côtelé</strong> <span class="badge">texture</span><br>corduroy</div>
+            <div class="vocab-card"><strong>✨ brillant / brillante</strong> <span class="badge">éclat</span><br>shiny</div>
+            <div class="vocab-card"><strong>🍂 mat / mate</strong> <span class="badge">surface</span><br>matte</div>
+            <div class="vocab-card"><strong>🪨 rugueux / rugueuse</strong> <span class="badge">toucher</span><br>rough</div>
+            <div class="vocab-card"><strong>💧 lisse</strong> <span class="badge">toucher</span><br>smooth</div>
+            <div class="vocab-card"><strong>🧽 absorbant</strong> <span class="badge">matière</span><br>absorbent</div>
+            <div class="vocab-card"><strong>🎭 laqué (cuir)</strong> <span class="badge">brillance</span><br>lacquered</div>
+            <div class="vocab-card"><strong>🚫 opaque / transparent</strong> <span class="badge">effet</span><br>opaque / transparent</div>
+            <div class="vocab-card"><strong>🔥 ton chaud / ❄️ ton froid</strong> <span class="badge">couleur</span><br>warm / cool tone</div>
+            <div class="vocab-card"><strong>🌄 dégradé</strong> <span class="badge">nuance</span><br>gradient</div>
+            <div class="vocab-card"><strong>🔆 reflet</strong> <span class="badge">lumière</span><br>reflection</div>
+            <div class="vocab-card"><strong>💡 lumière diffuse / projecteur</strong> <span class="badge">éclairage</span><br>diffused light / spotlight</div>
+            <div class="vocab-card"><strong>🌀 effet de flou</strong> <span class="badge">technique</span><br>blur effect</div>
+            <div class="vocab-card"><strong>🎨 vibrer (couleurs)</strong> <span class="badge">sensation</span><br>to vibrate</div>
+        </div>
+    </section>
+
+    <!-- EXERCICE INTERACTIF : ANGLAIS VISIBLE / FRANÇAIS CACHÉ -->
+    <section>
+        <h2>🧩 3. Associez les mots · chaque anglais face à son français</h2>
+        <div class="assoc-container">
+            <div class="assoc-title">📖 Cliquez sur le cache (⬤) à droite pour révéler la traduction française</div>
+            <ul class="pair-list">
+                <li class="pair-item"><span class="english-word">corduroy</span><div class="french-side"><button class="cache-btn" data-word="velours côtelé">⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">shiny</span><div class="french-side"><button class="cache-btn" data-word="brillant / brillante">⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">matte</span><div class="french-side"><button class="cache-btn" data-word="mat / mate">⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">rough</span><div class="french-side"><button class="cache-btn" data-word="rugueux / rugueuse">⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">smooth</span><div class="french-side"><button class="cache-btn" data-word="lisse">⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">absorbent</span><div class="french-side"><button class="cache-btn" data-word="absorbant">⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">lacquered</span><div class="french-side"><button class="cache-btn" data-word="laqué (cuir)">⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">opaque / transparent</span><div class="french-side"><button class="cache-btn" data-word="opaque / transparent">⬤ ⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">warm tone / cool tone</span><div class="french-side"><button class="cache-btn" data-word="ton chaud / ton froid">⬤ ⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">gradient</span><div class="french-side"><button class="cache-btn" data-word="dégradé">⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">reflection</span><div class="french-side"><button class="cache-btn" data-word="reflet">⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">diffused light / spotlight</span><div class="french-side"><button class="cache-btn" data-word="lumière diffuse / projecteur">⬤ ⬤ ⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">blur effect</span><div class="french-side"><button class="cache-btn" data-word="effet de flou">⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+                <li class="pair-item"><span class="english-word">to vibrate (colors)</span><div class="french-side"><button class="cache-btn" data-word="vibrer (couleurs)">⬤ ⬤ ⬤ ⬤ ⬤</button></div></li>
+            </ul>
+            <button class="btn-reset-assoc" id="resetAssocBtn">⟳ Remettre tous les caches</button>
+            <p style="font-size: 0.8rem; margin-top: 1rem; text-align: center; color: #8f7657;">💡 Cliquez sur chaque zone grise pour faire apparaître le mot français correspondant.</p>
+        </div>
+    </section>
+
+    <!-- GRAMMAIRE DÉTAILLÉE -->
+    <section>
+        <h2>🎯 4. Nuancer la description</h2>
+        <div class="grammaire-block">
+            <h3>⟡ À la fois / Soit... soit (alternance)</h3>
+            <div class="exemple">La lumière était <strong>à la fois</strong> chaude et dorée, <strong>et</strong> froide et bleutée selon l’angle.<br>Le tissu semble <strong>soit</strong> rugueux, <strong>soit</strong> lisse selon l’éclairage.</div>
+
+            <h3>⟡ Comparer : plus… que / moins… que</h3>
+            <div class="exemple">Le cuir est <strong>plus brillant que</strong> le lin.<br>La lumière naturelle est <strong>moins intense que</strong> le projecteur.</div>
+
+            <h3>⟡ Mettre en valeur : ce qui / ce que</h3>
+            <div class="exemple"><strong>Ce qui</strong> frappe dans cette photo, c'est la lumière chaude.<br><strong>Ce que</strong> j'aime, c'est le contraste entre les matières.</div>
+            <div class="regle-explicative">
+                <strong>📌 Quand utilise-t-on « ce qui » et « ce que » ?</strong><br><br>
+                🔹 <span class="highlight-rule">CE QUI</span> + <strong>verbe</strong> → <em>sujet du verbe qui suit</em>.<br>
+                <span style="font-size:0.9rem;">➜ Ce qui surprend, c’est la lumière. / What is surprising is the light.</span><br>
+                (Ce = sujet = what)<br><br>
+                
+                🔹 <span class="highlight-rule">CE QUE</span> + <strong>sujet + verbe</strong> → <em>complément d’objet</em>.<br>
+                <span style="font-size:0.9rem;">➜ Ce que j’aime, c’est le contraste. / What I like is the contrast.</span><br>
+                (J’aime quoi ? → ce que / what)<br><br>
+
+                💡 <strong>Astuce / Tip :</strong><br>
+                • Après <strong>« ce que »</strong>, il y a toujours un <strong>sujet</strong> (je, tu, on, le photographe…).<br>
+                • Après <strong>« ce qui »</strong>, le <strong>verbe</strong> vient directement.<br>
+                • <em>After "ce que" there is always a subject (I, you, we, the photographer...). After "ce qui", the verb comes directly.</em>
+            </div>
+            <div class="exemple">
+                📷 <strong>Exemples supplémentaires / Extra examples :</strong><br>
+                • <strong>Ce qui</strong> rend l'image unique, c'est l'effet de flou.<br>
+                <span class="en-trad">→ What makes the image unique is the blur effect.</span><br>
+                • <strong>Ce que</strong> le photographe recherche, c'est une lumière diffuse.<br>
+                <span class="en-trad">→ What the photographer is looking for is a diffused light.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXERCICES ÉCRITS -->
+    <section>
+        <h2>✍️ 5. Exercices</h2>
+
+        <!-- EXERCICE 1 : à la fois / soit... soit -->
+        <div class="exercice">
+            <h4>Exercice 1 — Exprimer l’alternance : à la fois / soit… soit</h4>
+            <p>1. Dans ce portrait, la lumière est 
+                <input type="text" class="input-reponse" placeholder="?" style="width: 110px;"> dorée 
+                <input type="text" class="input-reponse" placeholder="?" style="width: 70px;"> bleutée, selon l’angle.
+            </p>
+            <p>2. Le tissu de la robe semble 
+                <input type="text" class="input-reponse" placeholder="?" style="width: 70px;"> épais et opaque, 
+                <input type="text" class="input-reponse" placeholder="?" style="width: 70px;"> léger et transparent selon l’éclairage.
+            </p>
+            <p>3. Le photographe utilise 
+                <input type="text" class="input-reponse" placeholder="?" style="width: 60px;"> un effet de flou, 
+                <input type="text" class="input-reponse" placeholder="?" style="width: 70px;"> une netteté parfaite.
+            </p>
+            <button class="btn-reponse" data-target="rep1">Voir la correction</button>
+            <div id="rep1" class="reponse">1. à la fois / et &nbsp;&nbsp; 2. soit / soit &nbsp;&nbsp; 3. soit / soit (ou "à la fois... et" possible selon nuance)</div>
+        </div>
+
+        <!-- EXERCICE 2 : COMPARAISONS -->
+        <div class="exercice">
+            <h4>Exercice 2 — Comparaisons (plus ... que / moins ... que)</h4>
+            <div class="comparaison-item">
+                <p><strong>1.</strong> Le velours (brillant) / le lin (mat)</p>
+                <input type="text" class="input-reponse" placeholder="Écrivez la phrase complète" style="width: 95%;">
+            </div>
+            <div class="comparaison-item">
+                <p><strong>2.</strong> Les tons chauds (vibrants) / les tons froids</p>
+                <input type="text" class="input-reponse" placeholder="Écrivez la phrase" style="width: 95%;">
+            </div>
+            <div class="comparaison-item">
+                <p><strong>3.</strong> L'effet de flou (difficile à obtenir) / l'effet net</p>
+                <input type="text" class="input-reponse" placeholder="Écrivez la phrase" style="width: 95%;">
+            </div>
+            <button class="btn-reponse" data-target="rep2">Correction suggérée / Suggested answers</button>
+            <div id="rep2" class="reponse">
+                <strong>🇫🇷 Français :</strong><br>
+                1. Le velours est plus brillant que le lin.<br>
+                2. Les tons chauds sont plus vibrants que les tons froids.<br>
+                3. L'effet de flou est plus difficile à obtenir que l'effet net.<br><br>
+                <strong>🇬🇧 English :</strong><br>
+                1. Velvet is shinier than linen.<br>
+                2. Warm tones are more vibrant than cool tones.<br>
+                3. The blur effect is more difficult to achieve than the sharp effect.
+            </div>
+        </div>
+
+        <!-- EXERCICE 3 : ce qui / ce que (amélioré avec plus de phrases) -->
+        <div class="exercice">
+            <h4>Exercice 3 — Mettez en valeur avec ce qui / ce que</h4>
+            <p>a) Le photographe recherche une lumière diffuse. → 
+                <input type="text" class="input-reponse" placeholder="Réécrivez" style="width: 90%;">
+            </p>
+            <p>b) Cela surprend dans l'image : la robe absorbe toute la lumière. → 
+                <input type="text" class="input-reponse" placeholder="Réécrivez" style="width: 90%;">
+            </p>
+            <p>c) Elle admire beaucoup la texture rugueuse du manteau. → 
+                <input type="text" class="input-reponse" placeholder="Réécrivez" style="width: 90%;">
+            </p>
+            <p>d) Le reflet du soleil sur l'eau rend la photo magique. → 
+                <input type="text" class="input-reponse" placeholder="Réécrivez" style="width: 90%;">
+            </p>
+            <p>e) Je remarque d'abord le contraste saisissant entre l'ombre et la lumière. → 
+                <input type="text" class="input-reponse" placeholder="Réécrivez" style="width: 90%;">
+            </p>
+            <button class="btn-reponse" data-target="rep3">Afficher réponses</button>
+            <div id="rep3" class="reponse">
+                a) Ce que le photographe recherche, c'est une lumière diffuse.<br>
+                b) Ce qui surprend dans l'image, c'est la robe absorbante.<br>
+                c) Ce qu'elle admire beaucoup, c'est la texture rugueuse du manteau.<br>
+                d) Ce qui rend la photo magique, c'est le reflet du soleil sur l'eau.<br>
+                e) Ce que je remarque d'abord, c'est le contraste saisissant entre l'ombre et la lumière.
+            </div>
+        </div>
+
+        <!-- EXERCICE 5 : texte à trous (modifié : "profonde" et "absorbant") -->
+        <div class="exercice">
+            <h4>Exercice 5 — Complétez avec les bons mots</h4>
+            <p><em>Mots : profonde – mat – brillante – dégradés – lisse – absorbant – reflets</em></p>
+            <p>La robe en velours a une couleur rouge <input type="text" class="input-reponse" placeholder="?" style="width: 120px;">. 
+            Le tissu est <input type="text" class="input-reponse" placeholder="?" style="width: 100px;">, sans éclat. 
+            La veste en cuir est très <input type="text" class="input-reponse" placeholder="?" style="width: 110px;"> : 
+            elle crée des <input type="text" class="input-reponse" placeholder="?" style="width: 100px;"> sur les épaules. 
+            On voit de magnifiques <input type="text" class="input-reponse" placeholder="?" style="width: 110px;"> de couleurs. 
+            Le chemisier en lin reste <input type="text" class="input-reponse" placeholder="?" style="width: 100px;"> et 
+            <input type="text" class="input-reponse" placeholder="?" style="width: 120px;">.</p>
+            <button class="btn-reponse" data-target="rep5">Vérifier</button>
+            <div id="rep5" class="reponse">profonde – mat – brillante – reflets – dégradés – lisse – absorbant.</div>
+        </div>
+
+        <!-- EXERCICE 6 : création -->
+        <div class="exercice">
+            <h4>Exercice 6 — Décrivez une image de mode (expression libre)</h4>
+            <p><strong>Situation :</strong> Coucher de soleil, lumière chaude et orangée. Mannequin avec robe satin (brillant) et veste en laine (rugueuse). Immeubles gris, ciel en dégradé, effet de flou autour du visage.</p>
+            <p>Utilisez :<br>
+            • 3 mots du vocabulaire (texture/ton/effet)<br>
+            • <strong>« soit… soit »</strong> <strong>OU</strong> <strong>« à la fois… et »</strong><br>
+            • une comparaison (<strong>plus... que / moins... que</strong>)<br>
+            • <strong>ce que / ce qui</strong>
+            </p>
+            <textarea rows="5" placeholder="Rédigez votre description élégante ici..."></textarea>
+            <button class="btn-reponse" data-target="rep6">Inspiration / exemple</button>
+            <div id="rep6" class="reponse">
+                🌅 Ce qui rend cette photo unique, c'est la lumière chaude du coucher de soleil. La robe satinée est soit éclatante de reflets, soit plus mate selon l'angle. La laine rugueuse semble à la fois naturelle et protectrice. Le satin est plus brillant que la laine, un contraste saisissant. Ce que j'aime, c'est le léger effet de flou autour du visage qui adoucit l'image et les tons chauds du ciel en dégradé.
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Leçon 4 · Textures, tons & lumières — approche élégante et épurée · niveau B1
+    </footer>
+</div>
+
+<script>
+    // Gestion des caches
+    const cacheBtns = document.querySelectorAll('.cache-btn');
+    cacheBtns.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            if (!this.classList.contains('revealed')) {
+                const word = this.getAttribute('data-word');
+                this.textContent = word;
+                this.classList.add('revealed');
+            }
+        });
+    });
+
+    const resetBtn = document.getElementById('resetAssocBtn');
+    if (resetBtn) {
+        resetBtn.addEventListener('click', function() {
+            const allCaches = document.querySelectorAll('.pair-list .cache-btn');
+            allCaches.forEach(btn => {
+                if (btn.classList.contains('revealed')) {
+                    const originalWord = btn.getAttribute('data-word');
+                    let masked = '';
+                    const length = Math.min(originalWord.length, 8);
+                    for (let i = 0; i < length; i++) {
+                        masked += '⬤ ';
+                    }
+                    btn.textContent = masked.trim() || '⬤';
+                    btn.classList.remove('revealed');
+                }
+            });
+        });
+    }
+
+    const btns = document.querySelectorAll('.btn-reponse');
+    btns.forEach(btn => {
+        if (btn.getAttribute('data-target') && btn.getAttribute('data-target').startsWith('rep')) {
+            btn.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                const repDiv = document.getElementById(target);
+                if (repDiv) {
+                    if (repDiv.style.display === 'none' || repDiv.style.display === '') {
+                        repDiv.style.display = 'block';
+                    } else {
+                        repDiv.style.display = 'none';
+                    }
+                }
+            });
+        }
+    });
+    document.querySelectorAll('.reponse').forEach(el => el.style.display = 'none');
+</script>
+</body>
+</html>
