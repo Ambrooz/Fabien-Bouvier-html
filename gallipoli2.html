@@ -1,0 +1,1155 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇳🇿 Gallipoli 1915 – Leçon FLE</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sand: #f5e6c8;
+  --sand-dark: #e8d0a0;
+  --ink: #1a1a2e;
+  --ink-light: #2d3561;
+  --blood: #c0392b;
+  --blood-light: #e74c3c;
+  --olive: #6b7c47;
+  --olive-light: #8fa45a;
+  --sky: #2980b9;
+  --sky-light: #5dade2;
+  --gold: #d4a017;
+  --cream: #fdf6e3;
+  --parchment: #f9f0d8;
+  --green-ok: #27ae60;
+  --red-err: #e74c3c;
+  --orange-warn: #e67e22;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: #1a1a2e;
+  color: var(--ink);
+  min-height: 100vh;
+}
+
+.page-bg {
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+  min-height: 100vh;
+  padding: 2rem 1rem;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 3rem 2rem 2rem;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(192,57,43,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-flag { font-size: 3.5rem; letter-spacing: 0.3rem; margin-bottom: 1rem; animation: fadein 1s; }
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  color: var(--sand);
+  text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+  line-height: 1.2;
+  animation: fadein 1.2s;
+}
+.hero-sub {
+  margin-top: 0.8rem;
+  font-size: 1rem;
+  color: #aab4d0;
+  letter-spacing: 0.1rem;
+  animation: fadein 1.5s;
+}
+.level-badge {
+  display: inline-block;
+  margin-top: 1.2rem;
+  background: var(--blood);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.3rem 1.2rem;
+  border-radius: 2rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+}
+
+@keyframes fadein { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── CONTAINER ── */
+.section {
+  max-width: 860px;
+  margin: 2rem auto;
+  background: var(--parchment);
+  border-radius: 1.5rem;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+  animation: fadein 0.8s;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.2rem 2rem;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.05rem;
+  text-transform: uppercase;
+  color: #fff;
+}
+.section-header .icon { font-size: 1.3rem; }
+
+.header-blood { background: linear-gradient(135deg, #922b21, #c0392b); }
+.header-olive { background: linear-gradient(135deg, #4a5c2a, #6b7c47); }
+.header-sky { background: linear-gradient(135deg, #1a5276, #2980b9); }
+.header-gold { background: linear-gradient(135deg, #7d6608, #d4a017); }
+.header-ink { background: linear-gradient(135deg, #1a1a2e, #2d3561); }
+
+.section-body { padding: 1.8rem 2rem; }
+
+/* ── LETTER ── */
+.letter-paper {
+  background: #fffef7;
+  border: 1px solid #d4c4a0;
+  border-radius: 0.8rem;
+  padding: 2rem 2.2rem;
+  position: relative;
+  box-shadow: inset 0 0 30px rgba(180,150,80,0.08);
+}
+.letter-paper::before {
+  content: "";
+  position: absolute;
+  left: 2.8rem; top: 0; bottom: 0;
+  width: 1px;
+  background: rgba(200,160,100,0.4);
+}
+.letter-lines {
+  background-image: repeating-linear-gradient(transparent, transparent 31px, #e8d8b8 31px, #e8d8b8 32px);
+  line-height: 2rem;
+}
+.letter-meta {
+  font-style: italic;
+  color: #7a6040;
+  font-size: 0.88rem;
+  margin-bottom: 1.2rem;
+}
+.letter-text { font-size: 1rem; line-height: 2rem; color: #2a1f10; }
+.letter-text p { margin-bottom: 0.5rem; }
+.neg { color: var(--blood); font-weight: 600; cursor: pointer; position: relative; transition: background 0.2s; border-radius: 3px; padding: 0 2px; }
+.neg:hover { background: rgba(192,57,43,0.12); }
+.neg.highlighted { background: rgba(192,57,43,0.2); }
+.neg-tooltip {
+  position: absolute;
+  bottom: 130%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--blood);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.3rem 0.7rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.neg:hover .neg-tooltip { opacity: 1; }
+.letter-sig {
+  text-align: right;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  color: #5a3e20;
+  margin-top: 1rem;
+}
+.letter-stamp {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.8rem;
+  color: #9a8060;
+  letter-spacing: 0.05rem;
+  border-top: 1px dashed #c8b080;
+  padding-top: 0.8rem;
+}
+
+/* ── GRAMMAR EXPLAINER ── */
+.grammar-intro {
+  background: #fff8e8;
+  border-left: 5px solid var(--gold);
+  border-radius: 0 0.8rem 0.8rem 0;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.grammar-intro strong { color: var(--ink-light); }
+.formula-box {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+.f-part {
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.5rem;
+  color: #fff;
+  font-family: 'DM Sans', monospace;
+}
+.f-ne { background: var(--blood); }
+.f-aux { background: var(--sky); }
+.f-pas { background: var(--blood); }
+.f-pp { background: var(--olive); }
+.f-arrow { color: var(--ink); font-size: 1.2rem; }
+.f-neutral { background: #7f8c8d; }
+
+.grammar-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+.gram-tab {
+  padding: 0.5rem 1.1rem;
+  border-radius: 2rem;
+  border: 2px solid transparent;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.gram-tab.avoir { border-color: var(--sky); color: var(--sky); }
+.gram-tab.etre { border-color: var(--olive); color: var(--olive); }
+.gram-tab.pronom { border-color: var(--blood); color: var(--blood); }
+.gram-tab.active.avoir { background: var(--sky); color: #fff; }
+.gram-tab.active.etre { background: var(--olive); color: #fff; }
+.gram-tab.active.pronom { background: var(--blood); color: #fff; }
+
+.gram-panel { display: none; }
+.gram-panel.active { display: block; }
+
+.gram-card {
+  background: #fff;
+  border-radius: 0.8rem;
+  padding: 1.2rem;
+  border: 1px solid #ddd;
+}
+.gram-card h4 { margin-bottom: 0.8rem; font-size: 0.95rem; }
+.gram-example {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.5rem 0;
+  font-size: 0.92rem;
+  flex-wrap: wrap;
+}
+.ex-plus { background: #eafaf1; color: var(--green-ok); padding: 0.3rem 0.8rem; border-radius: 0.5rem; font-weight: 600; }
+.ex-minus { background: #fdecea; color: var(--blood); padding: 0.3rem 0.8rem; border-radius: 0.5rem; font-weight: 600; }
+
+/* ── VOCAB GAME ── */
+.vocab-intro { font-size: 0.92rem; color: #555; margin-bottom: 1.2rem; }
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+.vcard {
+  background: #fff;
+  border: 2px solid #e0d0b0;
+  border-radius: 1rem;
+  padding: 0.9rem 0.7rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+  min-height: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+.vcard:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+.vcard.revealed { border-color: var(--olive); background: #f0f7e8; }
+.vcard .v-en { font-size: 0.85rem; color: #888; }
+.vcard .v-fr {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--olive);
+  filter: blur(6px);
+  transition: filter 0.3s;
+  user-select: none;
+}
+.vcard.revealed .v-fr { filter: none; }
+.vcard .v-hint { font-size: 0.7rem; color: #aaa; }
+
+/* ── GAMES ── */
+.game-intro { font-size: 0.92rem; color: #555; margin-bottom: 1rem; background: #fff9ee; padding: 0.8rem 1rem; border-radius: 0.6rem; border-left: 3px solid var(--gold); }
+
+/* DRAG & DROP MATCH */
+.match-arena {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.match-col { flex: 1; min-width: 200px; }
+.match-col h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1rem; color: #888; margin-bottom: 0.8rem; }
+.drag-item {
+  background: #fff;
+  border: 2px solid #ddd;
+  border-radius: 0.7rem;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.6rem;
+  cursor: grab;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  color: var(--sky);
+  user-select: none;
+}
+.drag-item:hover { border-color: var(--sky); transform: scale(1.02); }
+.drag-item.dragging { opacity: 0.4; }
+.drop-zone {
+  background: #f9f4e8;
+  border: 2px dashed #c8b080;
+  border-radius: 0.7rem;
+  padding: 0.6rem 1rem;
+  margin-bottom: 0.6rem;
+  min-height: 42px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.drop-zone .fr-label { color: #888; font-size: 0.88rem; }
+.drop-zone.over { background: #e8f4fd; border-color: var(--sky); }
+.drop-zone.correct { background: #eafaf1; border-color: var(--green-ok); border-style: solid; }
+.drop-zone.wrong { background: #fdecea; border-color: var(--red-err); border-style: solid; animation: shake 0.3s; }
+.drop-zone .placed { color: var(--ink); font-weight: 600; }
+
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+
+/* FILL IN THE BLANKS */
+.fill-text {
+  background: #fffef7;
+  border: 1px solid #d4c4a0;
+  border-radius: 0.8rem;
+  padding: 1.5rem;
+  font-size: 1rem;
+  line-height: 2.4;
+  color: #2a1f10;
+}
+.blank-input {
+  display: inline-block;
+  border: none;
+  border-bottom: 2px solid var(--gold);
+  background: transparent;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--blood);
+  padding: 0 4px;
+  min-width: 140px;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.blank-input:focus { border-color: var(--sky); }
+.blank-input.correct { border-color: var(--green-ok); color: var(--green-ok); }
+.blank-input.wrong { border-color: var(--red-err); color: var(--red-err); animation: shake 0.3s; }
+.hint-inf {
+  font-size: 0.82rem;
+  color: var(--sky);
+  font-style: italic;
+  font-weight: 600;
+  margin-left: 0.4rem;
+  opacity: 0.85;
+}
+
+/* TRUE/FALSE */
+.vf-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+.vf-item {
+  background: #fff;
+  border-radius: 0.8rem;
+  border: 1px solid #ddd;
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.vf-statement { flex: 1; font-size: 0.95rem; color: #333; }
+.vf-btns { display: flex; gap: 0.5rem; }
+.vf-btn {
+  padding: 0.35rem 1rem;
+  border-radius: 2rem;
+  border: 2px solid;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+  background: #fff;
+}
+.vf-btn.vrai { border-color: var(--green-ok); color: var(--green-ok); }
+.vf-btn.faux { border-color: var(--red-err); color: var(--red-err); }
+.vf-btn.vrai.selected { background: var(--green-ok); color: #fff; }
+.vf-btn.faux.selected { background: var(--red-err); color: #fff; }
+.vf-result { font-size: 0.85rem; font-weight: 700; min-width: 24px; }
+
+/* TRANSFORM EXERCISE */
+.transform-list { display: flex; flex-direction: column; gap: 0.9rem; }
+.transform-item {
+  background: #fff;
+  border-radius: 0.8rem;
+  border: 1px solid #ddd;
+  padding: 1rem 1.2rem;
+}
+.transform-original { font-size: 0.9rem; color: #666; margin-bottom: 0.6rem; }
+.transform-original strong { color: var(--ink); }
+.transform-row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  flex-wrap: wrap;
+}
+.transform-arrow { color: var(--blood); font-weight: 700; font-size: 1rem; }
+.transform-input {
+  flex: 1;
+  border: 2px solid #e0d0b0;
+  border-radius: 0.5rem;
+  padding: 0.45rem 0.8rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  min-width: 180px;
+  background: #fdfaf2;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.transform-input:focus { border-color: var(--sky); }
+.transform-input.correct { border-color: var(--green-ok); background: #eafaf1; color: var(--green-ok); }
+.transform-input.wrong { border-color: var(--red-err); background: #fdecea; animation: shake 0.3s; }
+.transform-fb { font-size: 0.82rem; font-weight: 700; }
+
+/* PRODUCTION */
+.production-area {
+  width: 100%;
+  background: #fffef7;
+  border: 2px solid #d4c4a0;
+  border-radius: 0.8rem;
+  padding: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: var(--ink);
+  resize: vertical;
+  min-height: 120px;
+  outline: none;
+  line-height: 1.8;
+  transition: border-color 0.2s;
+}
+.production-area:focus { border-color: var(--sky); }
+.prod-example {
+  display: none;
+  background: #eafaf1;
+  border-left: 4px solid var(--green-ok);
+  border-radius: 0 0.6rem 0.6rem 0;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.92rem;
+  color: #1e4a30;
+  line-height: 1.7;
+}
+
+/* BUTTONS */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.4rem;
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  margin-top: 1rem;
+  margin-right: 0.5rem;
+}
+.btn-check { background: var(--olive); color: #fff; }
+.btn-check:hover { background: #556038; transform: scale(0.97); }
+.btn-reveal { background: var(--sky); color: #fff; }
+.btn-reveal:hover { background: #1a6a9a; }
+.btn-reset { background: #7f8c8d; color: #fff; font-size: 0.82rem; padding: 0.4rem 1rem; }
+.btn-reset:hover { background: #5d6d6e; }
+
+/* SCORE BAR */
+.score-result {
+  margin-top: 1rem;
+  padding: 0.9rem 1.2rem;
+  border-radius: 0.8rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: none;
+}
+.score-result.show { display: block; }
+.score-good { background: #eafaf1; border-left: 5px solid var(--green-ok); color: #1e4a30; }
+.score-mid { background: #fff8e0; border-left: 5px solid var(--gold); color: #5a3e00; }
+.score-low { background: #fdecea; border-left: 5px solid var(--blood); color: #6b1e1e; }
+
+/* PROGRESS */
+.progress-bar-wrap {
+  height: 8px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  overflow: hidden;
+}
+.progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #f9ca24, #6ab04c);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+/* DISCUSSION */
+.discussion-item {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid #e8d8b8;
+}
+.discussion-item:last-child { border-bottom: none; }
+.disc-num {
+  width: 32px; height: 32px;
+  background: var(--ink-light);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+.disc-q { font-size: 0.95rem; color: #333; line-height: 1.6; }
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 2rem;
+  color: #4a5580;
+  font-size: 0.85rem;
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  .section-body { padding: 1.2rem; }
+  .letter-paper { padding: 1.2rem; }
+  .match-arena { flex-direction: column; }
+}
+
+/* ── VOCAB TABLE ── */
+.vocab-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+.vocab-table th {
+  background: var(--olive);
+  color: #fff;
+  padding: 0.6rem 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+.vocab-table td {
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid #e8d8b8;
+  color: #2a1f10;
+  vertical-align: top;
+}
+.vocab-table tr.alt td { background: #f4edd8; }
+.vocab-table tr:hover td { background: #ffe8c0; }
+.vocab-table td:first-child { min-width: 160px; }
+.vocab-table td:nth-child(2) { color: var(--sky); min-width: 180px; }
+.vocab-table td:nth-child(3) { color: #666; font-size: 0.85rem; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="page-bg">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-flag">🇳🇿 ⚓ 🇹🇷</div>
+  <h1>Gallipoli 1915<br>Le sacrifice néo-zélandais</h1>
+  <div class="hero-sub">Leçon FLE · La négation au passé composé</div>
+  <div class="level-badge">B1 · Niveau intermédiaire</div>
+</div>
+
+<!-- ══ LETTRE ══ -->
+<div class="section">
+  <div class="section-header header-blood">
+    <span class="icon">✉️</span>
+    Lettre depuis Anzac Cove — avril 1915
+  </div>
+  <div class="section-body">
+    <p class="letter-meta">Jack a 21 ans, fermier près de Christchurch. Il écrit à sa sœur Sofia depuis les tranchées de Gallipoli.</p>
+    <div class="letter-paper letter-lines">
+      <div class="letter-text">
+        <p><strong>Chère Sofia,</strong></p>
+        <p>Nous avons débarqué <span class="neg">avant l'aube<span class="neg-tooltip">Passé composé affirmatif</span></span> sur la plage d'<strong>Anzac Cove</strong>. Les falaises étaient si raides que beaucoup d'hommes ont glissé. Je <span class="neg">ne t'ai pas écrit<span class="neg-tooltip">NEG : ne + avoir + pas + p.p.</span></span> plus tôt car les combats <span class="neg">ne se sont pas arrêtés<span class="neg-tooltip">NEG pronominal : ne + se + être + pas</span></span> depuis quatre jours. Mon ami Liam <span class="neg">ne s'est pas réveillé<span class="neg-tooltip">NEG pronominal : ne + se + est + pas</span></span> après l'explosion d'un obus. Nous <span class="neg">n'avons pas eu<span class="neg-tooltip">NEG : ne + avoir + pas + eu</span></span> d'eau fraîche pendant une semaine. Pourtant, je me suis battu avec courage. Les Néo-Zélandais se sont souvenus de leur terre pour <span class="neg">ne pas perdre<span class="neg-tooltip">NEG à l'infinitif : ne pas + inf.</span></span> espoir.</p>
+        <p>Nous nous sommes cachés dans des trous de rocher. Nous <span class="neg">ne nous sommes pas reposés<span class="neg-tooltip">NEG pronominal : ne + nous + sommes + pas</span></span> vraiment. L'ennemi se bat avec acharnement — la soif et les mouches nous épuisent autant que les combats. Je <span class="neg">ne me suis pas plaint<span class="neg-tooltip">NEG pronominal : ne + me + suis + pas</span></span> une seule fois, pour l'honneur de notre île. La semaine dernière, je me suis souvent levé la nuit pour aller chercher des renforts. Les infirmières néo-zélandaises <span class="neg">ne se sont pas arrêtées<span class="neg-tooltip">NEG pronominal : ne + se + sont + pas</span></span> de soigner.</p>
+        <p>Si je <span class="neg">ne reviens pas<span class="neg-tooltip">NEG au présent</span></span>, dis à papa que je me suis souvenu de nos rivières et de nos montagnes. <strong>Kia kaha</strong> (sois forte).</p>
+      </div>
+      <div class="letter-sig">Ta sœur qui t'admire, Jack.</div>
+      <div class="letter-stamp">✉️ Lettre conservée à l'Auckland War Museum · Gallipoli, Turquie, 1915</div>
+    </div>
+    <p style="margin-top:1rem; font-size:0.83rem; color:#888;">💡 Passe la souris sur les <span style="color:var(--blood); font-weight:700;">mots en rouge</span> pour voir l'explication grammaticale.</p>
+  </div>
+</div>
+
+<!-- ══ VOCABULAIRE DU TEXTE ══ -->
+<div class="section">
+  <div class="section-header header-olive">
+    <span class="icon">📖</span>
+    Vocabulaire du texte — Mots et expressions
+  </div>
+  <div class="section-body">
+    <p class="vocab-intro" style="margin-bottom:1.2rem;">Voici les mots et expressions importants tirés de la lettre de Jack, avec leur traduction en anglais.</p>
+    <div style="overflow-x:auto;">
+    <table class="vocab-table">
+      <thead>
+        <tr><th>🇫🇷 Français</th><th>🇬🇧 English</th><th>📝 Contexte / Note</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>débarquer</strong></td><td>to land, to disembark</td><td>Nous avons <em>débarqué</em> avant l'aube.</td></tr>
+        <tr class="alt"><td><strong>avant l'aube</strong></td><td>before dawn</td><td>Très tôt le matin, avant le lever du soleil.</td></tr>
+        <tr><td><strong>la falaise</strong></td><td>the cliff</td><td>Les falaises étaient si raides que les hommes ont glissé.</td></tr>
+        <tr class="alt"><td><strong>les combats</strong></td><td>the fighting, the battles</td><td>Les combats ne se sont pas arrêtés depuis quatre jours.</td></tr>
+        <tr><td><strong>un obus</strong></td><td>a shell (artillery)</td><td>Liam ne s'est pas réveillé après l'<em>obus</em>.</td></tr>
+        <tr class="alt"><td><strong>l'eau fraîche</strong></td><td>fresh water</td><td>Nous n'avons pas eu d'<em>eau fraîche</em> pendant une semaine.</td></tr>
+        <tr><td><strong>se battre</strong></td><td>to fight</td><td>Je me suis <em>battu</em> avec courage. (verbe pronominal)</td></tr>
+        <tr class="alt"><td><strong>se souvenir (de)</strong></td><td>to remember</td><td>Nous nous sommes <em>souvenus</em> de notre terre.</td></tr>
+        <tr><td><strong>perdre espoir</strong></td><td>to lose hope</td><td>Pour ne pas <em>perdre espoir</em> — négation à l'infinitif.</td></tr>
+        <tr class="alt"><td><strong>se cacher</strong></td><td>to hide oneself</td><td>Nous nous sommes <em>cachés</em> dans des trous de rocher.</td></tr>
+        <tr><td><strong>se reposer</strong></td><td>to rest</td><td>Nous ne nous sommes pas <em>reposés</em>.</td></tr>
+        <tr class="alt"><td><strong>s'épuiser</strong></td><td>to be exhausted</td><td>La soif et les mouches nous <em>épuisent</em>.</td></tr>
+        <tr><td><strong>se plaindre</strong></td><td>to complain</td><td>Je ne me suis pas <em>plaint</em> une seule fois.</td></tr>
+        <tr class="alt"><td><strong>l'honneur (m.)</strong></td><td>honour</td><td>Pour l'<em>honneur</em> de notre île.</td></tr>
+        <tr><td><strong>les renforts (m.pl.)</strong></td><td>reinforcements</td><td>Aller chercher des <em>renforts</em> la nuit.</td></tr>
+        <tr class="alt"><td><strong>une infirmière</strong></td><td>a nurse</td><td>Les <em>infirmières</em> n'ont pas arrêté de soigner.</td></tr>
+        <tr><td><strong>soigner</strong></td><td>to care for, to treat</td><td>Soigner les blessés — verbe du 1er groupe.</td></tr>
+        <tr class="alt"><td><strong>une rivière</strong></td><td>a river</td><td>Nos <em>rivières</em> et nos montagnes — le pays natal.</td></tr>
+        <tr><td><strong>Kia kaha</strong></td><td>Stay strong (māori)</td><td>"Sois forte / restez forts" — identité néo-zélandaise.</td></tr>
+        <tr class="alt"><td><strong>l'acharnement (m.)</strong></td><td>fierce determination</td><td>L'ennemi se bat avec <em>acharnement</em>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GRAMMAIRE ══ -->
+<div class="section">
+  <div class="section-header header-gold">
+    <span class="icon">📚</span>
+    Grammaire — La négation au passé composé
+  </div>
+  <div class="section-body">
+    <div class="grammar-intro">
+      <strong>La règle d'or :</strong> <em>ne … pas</em> encadre toujours <strong>l'auxiliaire</strong> (avoir ou être), jamais le participe passé.
+    </div>
+
+    <div class="formula-box">
+      <span class="f-part f-ne">ne / n'</span>
+      <span class="f-arrow">+</span>
+      <span class="f-part f-aux">auxiliaire</span>
+      <span class="f-arrow">+</span>
+      <span class="f-part f-pas">pas</span>
+      <span class="f-arrow">+</span>
+      <span class="f-part f-pp">participe passé</span>
+    </div>
+
+    <div class="grammar-tabs">
+      <button class="gram-tab avoir active" onclick="showTab('avoir', this)">🔵 Avec AVOIR</button>
+      <button class="gram-tab etre" onclick="showTab('etre', this)">🟢 Avec ÊTRE</button>
+      <button class="gram-tab pronom" onclick="showTab('pronom', this)">🔴 Pronominaux</button>
+    </div>
+
+    <div id="tab-avoir" class="gram-panel active">
+      <div class="gram-card">
+        <h4 style="color:var(--sky);">Verbes avec AVOIR (manger, voir, écrire…)</h4>
+        <div class="gram-example">
+          <span class="ex-plus">J'ai mangé</span>
+          <span>→</span>
+          <span class="ex-minus">Je <u>n'</u>ai <u>pas</u> mangé</span>
+        </div>
+        <div class="gram-example">
+          <span class="ex-plus">Jack a combattu</span>
+          <span>→</span>
+          <span class="ex-minus">Jack <u>n'</u>a <u>pas</u> combattu</span>
+        </div>
+        <div class="gram-example">
+          <span class="ex-plus">Nous avons eu de l'eau</span>
+          <span>→</span>
+          <span class="ex-minus">Nous <u>n'</u>avons <u>pas</u> eu d'eau</span>
+        </div>
+        <p style="margin-top:0.8rem; font-size:0.85rem; color:#666;">⚠️ L'article partitif (du, de la, des) → <strong>de</strong> après la négation : <em>Nous n'avons pas <u>d'</u>eau.</em></p>
+      </div>
+    </div>
+
+    <div id="tab-etre" class="gram-panel">
+      <div class="gram-card">
+        <h4 style="color:var(--olive);">Verbes avec ÊTRE (partir, arriver, tomber, revenir…)</h4>
+        <div class="gram-example">
+          <span class="ex-plus">Il est parti</span>
+          <span>→</span>
+          <span class="ex-minus">Il <u>n'</u>est <u>pas</u> parti</span>
+        </div>
+        <div class="gram-example">
+          <span class="ex-plus">Les soldats sont revenus</span>
+          <span>→</span>
+          <span class="ex-minus">Les soldats <u>ne</u> sont <u>pas</u> revenus</span>
+        </div>
+        <div class="gram-example">
+          <span class="ex-plus">Elles sont arrivées</span>
+          <span>→</span>
+          <span class="ex-minus">Elles <u>ne</u> sont <u>pas</u> arrivées</span>
+        </div>
+        <p style="margin-top:0.8rem; font-size:0.85rem; color:#666;">✔️ Le participe passé s'accorde avec le sujet.</p>
+      </div>
+    </div>
+
+    <div id="tab-pronom" class="gram-panel">
+      <div class="gram-card">
+        <h4 style="color:var(--blood);">Verbes pronominaux (se lever, se souvenir, se plaindre…)</h4>
+        <div class="formula-box" style="font-size:0.85rem; margin-bottom:1rem;">
+          <span class="f-part f-ne">ne</span>
+          <span class="f-arrow">+</span>
+          <span class="f-part f-neutral">pronom (me/te/se…)</span>
+          <span class="f-arrow">+</span>
+          <span class="f-part f-aux">être</span>
+          <span class="f-arrow">+</span>
+          <span class="f-part f-pas">pas</span>
+          <span class="f-arrow">+</span>
+          <span class="f-part f-pp">p.p.</span>
+        </div>
+        <div class="gram-example">
+          <span class="ex-plus">Je me suis levé</span>
+          <span>→</span>
+          <span class="ex-minus">Je <u>ne</u> me suis <u>pas</u> levé</span>
+        </div>
+        <div class="gram-example">
+          <span class="ex-plus">Jack s'est plaint</span>
+          <span>→</span>
+          <span class="ex-minus">Jack <u>ne</u> s'est <u>pas</u> plaint</span>
+        </div>
+        <div class="gram-example">
+          <span class="ex-plus">Ils se sont reposés</span>
+          <span>→</span>
+          <span class="ex-minus">Ils <u>ne</u> se sont <u>pas</u> reposés</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ JEU 1 : DRAG & DROP ══ -->
+<div class="section">
+  <div class="section-header header-sky">
+    <span class="icon">🎯</span>
+    Jeu 1 — Associe l'anglais au français (glisser-déposer)
+  </div>
+  <div class="section-body">
+    <div class="game-intro">Fais glisser chaque mot anglais (à gauche) vers sa traduction française (à droite). Toutes les réponses viennent du vocabulaire ci-dessus !</div>
+    <div class="match-arena">
+      <div class="match-col">
+        <h4>🇬🇧 Anglais</h4>
+        <div id="dragItems"></div>
+      </div>
+      <div class="match-col">
+        <h4>🇫🇷 Français</h4>
+        <div id="dropZones"></div>
+      </div>
+    </div>
+    <button class="btn btn-check" onclick="checkMatch()">✅ Vérifier</button>
+    <button class="btn btn-reset" onclick="resetMatch()">↺ Recommencer</button>
+    <div id="matchScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ JEU 2 : FILL IN THE BLANKS ══ -->
+<div class="section">
+  <div class="section-header header-blood">
+    <span class="icon">✏️</span>
+    Jeu 2 — Complète les trous avec la négation correcte
+  </div>
+  <div class="section-body">
+    <div class="game-intro">Complète chaque blanc avec la forme négative correcte au passé composé. Attention aux verbes pronominaux !</div>
+    <div class="fill-text">
+      <p>📌 Les soldats <input class="blank-input" id="b1" placeholder="" size="14"> de renforts pendant une semaine. <span class="hint-inf">(avoir / avoir)</span></p>
+      <p style="margin-top:0.8rem;">📌 Ils <input class="blank-input" id="b2" placeholder="" size="14"> à cause des tirs d'obus. <span class="hint-inf">(dormir / avoir)</span></p>
+      <p style="margin-top:0.8rem;">📌 Mon ami Liam <input class="blank-input" id="b3" placeholder="" size="20"> après l'explosion. <span class="hint-inf">(se réveiller / être)</span></p>
+      <p style="margin-top:0.8rem;">📌 Nous <input class="blank-input" id="b4" placeholder="" size="18"> nos familles restées au pays. <span class="hint-inf">(oublier / avoir)</span></p>
+      <p style="margin-top:0.8rem;">📌 Je <input class="blank-input" id="b5" placeholder="" size="20"> une seule fois pour l'honneur. <span class="hint-inf">(se plaindre / être)</span></p>
+      <p style="margin-top:0.8rem;">📌 Les fusils <input class="blank-input" id="b6" placeholder="" size="21"> de tirer toute la nuit. <span class="hint-inf">(s'arrêter / être)</span></p>
+    </div>
+    <button class="btn btn-check" onclick="checkFill()">✅ Vérifier</button>
+    <button class="btn btn-reset" onclick="resetFill()">↺ Effacer</button>
+    <div id="fillScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ JEU 3 : VRAI / FAUX ══ -->
+<div class="section">
+  <div class="section-header header-olive">
+    <span class="icon">💡</span>
+    Jeu 3 — Vrai ou Faux ? Comprends la lettre
+  </div>
+  <div class="section-body">
+    <div class="game-intro">Lis bien la lettre de Jack. Ces affirmations sont-elles vraies ou fausses ?</div>
+    <div class="vf-grid" id="vfGrid"></div>
+    <button class="btn btn-check" onclick="checkVF()">✅ Vérifier</button>
+    <button class="btn btn-reset" onclick="resetVF()">↺ Recommencer</button>
+    <div id="vfScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ JEU 4 : TRANSFORM ══ -->
+<div class="section">
+  <div class="section-header header-ink">
+    <span class="icon">🔄</span>
+    Jeu 4 — Transforme à la forme négative
+  </div>
+  <div class="section-body">
+    <div class="game-intro">Réécris chaque phrase affirmative à la forme négative du passé composé. Fais attention à l'auxiliaire (avoir ou être) et aux pronominaux.</div>
+    <div class="transform-list" id="transformList"></div>
+    <button class="btn btn-check" onclick="checkTransform()">✅ Vérifier tout</button>
+    <button class="btn btn-reset" onclick="resetTransform()">↺ Effacer</button>
+    <div id="transformScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ PRODUCTION ÉCRITE ══ -->
+<div class="section">
+  <div class="section-header header-blood">
+    <span class="icon">✍️</span>
+    Production libre — Écris comme Jack
+  </div>
+  <div class="section-body">
+    <div class="game-intro">
+      Imagine un autre soldat néo-zélandais à Gallipoli. Écris <strong>4 à 6 phrases au passé composé</strong> en utilisant <strong>au moins 3 négations</strong> (avec avoir, avec être, et une forme pronominale).
+    </div>
+    <textarea class="production-area" id="productionText" placeholder="Commence ici… ex : « Je ne me suis pas couché avant l'aube… »"></textarea>
+    <br>
+    <button class="btn btn-reveal" onclick="toggleExample()">📖 Voir un exemple</button>
+    <div id="prodExample" class="prod-example">
+      🌟 <strong>Exemple :</strong><br>
+      « Je ne me suis pas couché sous les obus. Je n'ai pas abandonné mon poste même blessé. Mes amis ne se sont pas plaints malgré la soif. Nous n'avons pas oublié notre pays. Les infirmières ne se sont pas reposées de la nuit. Mais nous ne sommes pas revenus tous. »
+    </div>
+  </div>
+</div>
+
+<!-- ══ DISCUSSION ══ -->
+<div class="section">
+  <div class="section-header header-gold">
+    <span class="icon">💬</span>
+    Discussion — Questions ouvertes
+  </div>
+  <div class="section-body">
+    <div class="discussion-item">
+      <div class="disc-num">1</div>
+      <div class="disc-q">Pourquoi le <strong>25 avril</strong> (ANZAC Day) est-il une journée de commémoration importante pour les Néo-Zélandais et les Australiens ?</div>
+    </div>
+    <div class="discussion-item">
+      <div class="disc-num">2</div>
+      <div class="disc-q">Dans la lettre, trouve <strong>deux phrases avec une négation pronominale</strong>. Explique la structure de chacune.</div>
+    </div>
+    <div class="discussion-item">
+      <div class="disc-num">3</div>
+      <div class="disc-q">Quelle différence y a-t-il entre <em>« il n'a pas mangé »</em> (avoir) et <em>« il ne s'est pas levé »</em> (pronominal) ? Explique en tes mots.</div>
+    </div>
+    <div class="discussion-item">
+      <div class="disc-num">4</div>
+      <div class="disc-q">Jack dit <em>« je ne me suis pas plaint »</em>. Pourquoi pense-t-il que se plaindre serait un manque d'honneur ? Qu'en penses-tu ?</div>
+    </div>
+    <div class="discussion-item">
+      <div class="disc-num">5</div>
+      <div class="disc-q">Que signifie <strong>« Kia kaha »</strong> en māori ? Comment cette expression reflète-t-elle l'identité néo-zélandaise ?</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">🇳🇿 Leçon FLE · Gallipoli 1915 · La négation au passé composé</div>
+
+</div><!-- end page-bg -->
+
+<script>
+// ══ GRAMMAR TABS ══
+function showTab(name, btn) {
+  document.querySelectorAll('.gram-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.gram-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ══ DRAG & DROP ══
+const matchPairs = [
+  {en:"dawn", fr:"l'aube"},
+  {en:"cliff", fr:"la falaise"},
+  {en:"trenches", fr:"les tranchées"},
+  {en:"shell", fr:"un obus"},
+  {en:"to give up", fr:"abandonner"},
+  {en:"nurses", fr:"les infirmières"},
+  {en:"wounded", fr:"blessé(e)"},
+  {en:"to remember", fr:"se souvenir"},
+];
+
+let dragged = null;
+let dropAnswers = {};
+
+function shuffled(arr) {
+  let a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function buildMatch() {
+  dropAnswers = {};
+  const di = document.getElementById('dragItems');
+  const dz = document.getElementById('dropZones');
+  di.innerHTML = ''; dz.innerHTML = '';
+
+  const shuffledPairs = shuffled(matchPairs);
+
+  shuffledPairs.forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'drag-item';
+    d.draggable = true;
+    d.textContent = p.en;
+    d.dataset.en = p.en;
+    d.addEventListener('dragstart', e => { dragged = d; d.classList.add('dragging'); });
+    d.addEventListener('dragend', () => d.classList.remove('dragging'));
+    di.appendChild(d);
+  });
+
+  shuffled(matchPairs).forEach(p => {
+    const zone = document.createElement('div');
+    zone.className = 'drop-zone';
+    zone.dataset.fr = p.fr;
+    zone.innerHTML = `<span class="fr-label">${p.fr}</span><span class="placed"></span>`;
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.classList.remove('over');
+      zone.querySelector('.placed').textContent = dragged.dataset.en;
+      zone.classList.remove('correct', 'wrong');
+      dropAnswers[zone.dataset.fr] = dragged.dataset.en;
+    });
+    dz.appendChild(zone);
+  });
+}
+
+function checkMatch() {
+  let correct = 0;
+  document.querySelectorAll('.drop-zone').forEach(zone => {
+    const placed = zone.querySelector('.placed').textContent;
+    const expected = matchPairs.find(p => p.fr === zone.dataset.fr)?.en;
+    if (!placed) return;
+    zone.classList.remove('correct', 'wrong');
+    if (placed === expected) { zone.classList.add('correct'); correct++; }
+    else zone.classList.add('wrong');
+  });
+  const total = matchPairs.length;
+  showScore('matchScore', correct, total);
+}
+
+function resetMatch() {
+  buildMatch();
+  document.getElementById('matchScore').classList.remove('show');
+}
+
+buildMatch();
+
+// ══ FILL IN THE BLANKS ══
+const fillAnswers = [
+  {id:'b1', correct:["n'ont pas eu","n ont pas eu"]},
+  {id:'b2', correct:["n'ont pas dormi","n ont pas dormi"]},
+  {id:'b3', correct:["ne s'est pas réveillé","ne s est pas reveille","ne s'est pas reveille"]},
+  {id:'b4', correct:["n'avons pas oublié","n avons pas oublie"]},
+  {id:'b5', correct:["ne me suis pas plaint"]},
+  {id:'b6', correct:["ne se sont pas arrêtés","ne se sont pas arretes"]},
+];
+
+function normalize(s) {
+  return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['']/g,"'").trim();
+}
+
+function checkFill() {
+  let correct = 0;
+  fillAnswers.forEach(a => {
+    const el = document.getElementById(a.id);
+    const v = normalize(el.value);
+    const ok = a.correct.some(c => normalize(c) === v);
+    el.classList.remove('correct','wrong');
+    if (ok) { el.classList.add('correct'); correct++; }
+    else el.classList.add('wrong');
+  });
+  showScore('fillScore', correct, fillAnswers.length,
+    fillAnswers.map(a => a.correct[0])
+  );
+}
+
+function resetFill() {
+  fillAnswers.forEach(a => {
+    const el = document.getElementById(a.id);
+    el.value = '';
+    el.classList.remove('correct','wrong');
+  });
+  document.getElementById('fillScore').classList.remove('show');
+}
+
+// ══ VRAI / FAUX ══
+const vfData = [
+  {statement:"Les soldats néo-zélandais se sont bien reposés à Gallipoli.", answer:"Faux"},
+  {statement:"Jack n'a pas eu d'eau fraîche pendant une semaine.", answer:"Vrai"},
+  {statement:"Jack s'est plaint plusieurs fois de la soif.", answer:"Faux"},
+  {statement:"Liam ne s'est pas réveillé après l'explosion d'un obus.", answer:"Vrai"},
+  {statement:"Les infirmières ont arrêté de soigner pendant la nuit.", answer:"Faux"},
+  {statement:"Les Néo-Zélandais se sont souvenus de leur terre.", answer:"Vrai"},
+];
+
+function buildVF() {
+  const grid = document.getElementById('vfGrid');
+  grid.innerHTML = '';
+  vfData.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'vf-item';
+    d.innerHTML = `
+      <div class="vf-statement">${item.statement}</div>
+      <div class="vf-btns">
+        <button class="vf-btn vrai" data-idx="${i}" data-val="Vrai" onclick="selectVF(this)">✓ Vrai</button>
+        <button class="vf-btn faux" data-idx="${i}" data-val="Faux" onclick="selectVF(this)">✗ Faux</button>
+      </div>
+      <div class="vf-result" id="vfr${i}"></div>
+    `;
+    grid.appendChild(d);
+  });
+}
+
+function selectVF(btn) {
+  const idx = btn.dataset.idx;
+  document.querySelectorAll(`.vf-btn[data-idx="${idx}"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function checkVF() {
+  let correct = 0;
+  vfData.forEach((item, i) => {
+    const sel = document.querySelector(`.vf-btn[data-idx="${i}"].selected`);
+    const res = document.getElementById('vfr'+i);
+    if (!sel) { res.textContent = ''; return; }
+    if (sel.dataset.val === item.answer) { res.textContent = '✅'; correct++; }
+    else res.textContent = `❌ (${item.answer})`;
+  });
+  showScore('vfScore', correct, vfData.length);
+}
+
+function resetVF() {
+  buildVF();
+  document.getElementById('vfScore').classList.remove('show');
+}
+
+buildVF();
+
+// ══ TRANSFORM EXERCISE ══
+const transformData = [
+  {original:"Les soldats se sont levés tôt.", correct:"Les soldats ne se sont pas levés tôt."},
+  {original:"Je me suis souvenu de la lettre.", correct:"Je ne me suis pas souvenu de la lettre."},
+  {original:"Jack a combattu avec courage.", correct:"Jack n'a pas combattu avec courage."},
+  {original:"Nous nous sommes arrêtés à la plage.", correct:"Nous ne nous sommes pas arrêtés à la plage."},
+  {original:"Les infirmières ont soigné les blessés.", correct:"Les infirmières n'ont pas soigné les blessés."},
+  {original:"Elles se sont reposées après la bataille.", correct:"Elles ne se sont pas reposées après la bataille."},
+];
+
+function buildTransform() {
+  const list = document.getElementById('transformList');
+  list.innerHTML = '';
+  transformData.forEach((item, i) => {
+    const d = document.createElement('div');
+    d.className = 'transform-item';
+    d.innerHTML = `
+      <div class="transform-original">✔️ Affirmatif : <strong>${item.original}</strong></div>
+      <div class="transform-row">
+        <span class="transform-arrow">→ Négatif :</span>
+        <input type="text" class="transform-input" id="tr${i}" placeholder="Écris la phrase négative…">
+        <span class="transform-fb" id="trfb${i}"></span>
+      </div>
+    `;
+    list.appendChild(d);
+  });
+}
+
+function checkTransform() {
+  let correct = 0;
+  transformData.forEach((item, i) => {
+    const el = document.getElementById('tr'+i);
+    const fb = document.getElementById('trfb'+i);
+    el.classList.remove('correct','wrong');
+    const v = normalize(el.value);
+    const ok = normalize(item.correct) === v;
+    if (ok) { el.classList.add('correct'); fb.innerHTML = '✅'; correct++; }
+    else { el.classList.add('wrong'); fb.innerHTML = `❌ <span style="font-size:0.78rem;color:#888">${item.correct}</span>`; }
+  });
+  showScore('transformScore', correct, transformData.length);
+}
+
+function resetTransform() {
+  buildTransform();
+  document.getElementById('transformScore').classList.remove('show');
+}
+
+buildTransform();
+
+// ══ SCORE DISPLAY ══
+function showScore(id, correct, total, corrections) {
+  const el = document.getElementById(id);
+  const pct = correct / total;
+  el.classList.add('show');
+  el.classList.remove('score-good','score-mid','score-low');
+  let msg = '';
+  if (pct === 1) { el.classList.add('score-good'); msg = `🎉 Parfait ! ${correct}/${total} — Excellent travail !`; }
+  else if (pct >= 0.6) { el.classList.add('score-mid'); msg = `💪 Bien ! ${correct}/${total} — Encore un effort !`; }
+  else { el.classList.add('score-low'); msg = `📖 ${correct}/${total} — Relis la grammaire et réessaie.`; }
+  if (corrections && pct < 1) {
+    msg += '<br><span style="font-size:0.85rem; opacity:0.85">Réponses : ' + corrections.join(' · ') + '</span>';
+  }
+  el.innerHTML = msg;
+}
+
+// ══ PRODUCTION EXAMPLE ══
+function toggleExample() {
+  const ex = document.getElementById('prodExample');
+  ex.style.display = ex.style.display === 'block' ? 'none' : 'block';
+}
+</script>
+</body>
+</html>
