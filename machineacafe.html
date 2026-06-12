@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Les Français et la machine à café | Leçon A2 + adverbes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f7fa;
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.5;
+            color: #1e2a3a;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            padding: 2rem 2rem 2.5rem;
+        }
+
+        .badge-progress {
+            background: #eef2ff;
+            color: #1e3a8a;
+            border-radius: 40px;
+            padding: 0.3rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.25rem;
+            color: #0f2b3d;
+        }
+
+        .sub {
+            color: #4b5563;
+            border-left: 4px solid #c2410c;
+            padding-left: 1rem;
+            margin: 1rem 0 1.8rem 0;
+            font-style: italic;
+        }
+
+        .card-lecture {
+            background: #fefce8;
+            border-radius: 28px;
+            padding: 1.5rem;
+            margin: 1.8rem 0;
+            border: 1px solid #fde68a;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 3px solid #e2e8f0;
+            display: inline-block;
+            color: #2c3e4e;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .vocab-card {
+            background: #ffffff;
+            border-radius: 20px;
+            border: 1px solid #e2edf2;
+            padding: 0.8rem 1.2rem;
+            transition: all 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+        }
+
+        .vocab-card:hover {
+            background: #faf9fe;
+            border-color: #cbd5e1;
+        }
+
+        .fr-word {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #b45309;
+        }
+
+        .en-word {
+            color: #2c5282;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0.2rem 0;
+        }
+
+        .exemple {
+            font-size: 0.8rem;
+            color: #5b6e8c;
+            background: #f8fafc;
+            padding: 0.3rem 0.6rem;
+            border-radius: 14px;
+            margin-top: 0.4rem;
+        }
+
+        .grammar-box {
+            background: #ecfdf5;
+            border-left: 8px solid #10b981;
+            padding: 1.2rem 1.8rem;
+            border-radius: 24px;
+            margin: 1.8rem 0;
+        }
+
+        .adverb-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+
+        .adverb-table th {
+            background: #d1fae5;
+            padding: 10px 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .adverb-table td {
+            border-bottom: 1px solid #e2e8f0;
+            padding: 10px 12px;
+            vertical-align: top;
+        }
+
+        .exercise {
+            background: #ffffff;
+            border-radius: 28px;
+            border: 1px solid #e0e7ef;
+            margin: 1.8rem 0;
+            padding: 1.2rem 1.5rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .exercise h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: #1f4a6e;
+        }
+
+        .question-text {
+            font-weight: 500;
+            margin: 1rem 0 0.6rem 0;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 24px;
+            font-size: 0.95rem;
+            background: #fefefe;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #e67e22;
+            box-shadow: 0 0 0 2px #fbd38d;
+        }
+
+        /* Styles pour l'exercice de mots dans le désordre */
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: #f1f5f9;
+            border-radius: 20px;
+            min-height: 90px;
+        }
+
+        .word-token {
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.1s;
+            user-select: none;
+            font-size: 1rem;
+        }
+
+        .word-token:hover {
+            background: #e2e8f0;
+            border-color: #f97316;
+            transform: scale(1.02);
+        }
+
+        .word-token.selected {
+            background: #fef3c7;
+            border-color: #f59e0b;
+        }
+
+        .sentence-dropzone {
+            background: #fef9e6;
+            border: 2px dashed #fbbf24;
+            border-radius: 28px;
+            padding: 1rem;
+            margin: 1rem 0;
+            min-height: 85px;
+            font-size: 1.05rem;
+            color: #2d3e50;
+        }
+
+        .btn-reveal, .btn-reset {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 8px;
+            margin-right: 10px;
+            transition: 0.1s;
+            font-weight: 500;
+            color: #2d3e50;
+        }
+
+        .btn-reveal:hover, .btn-reset:hover {
+            background: #e6edf4;
+            border-color: #f97316;
+        }
+
+        .hidden-answer {
+            background: #f1f5f9;
+            border-radius: 20px;
+            padding: 0.75rem 1rem;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            color: #1e293b;
+            border-left: 3px solid #f97316;
+        }
+
+        hr {
+            margin: 1.8rem 0;
+            border: none;
+            height: 2px;
+            background: linear-gradient(to right, #e2e8f0, transparent);
+        }
+
+        footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #5f7f9e;
+        }
+
+        @media (max-width: 680px) {
+            .container {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+        <div class="badge-progress">🇫🇷 A2 · Culture au bureau</div>
+        <div class="badge-progress" style="background:#e9f0f9;">🏆 Score : 0 / 20 points</div>
+    </div>
+    <h1>Les Français et la <span style="color:#b85c00;">machine à café</span></h1>
+    <div class="sub">Vu du Royaume-Uni · French A2 Culture Lesson · Le rituel du café au travail</div>
+
+    <!-- 📰 Lecture avec texte simplifié et adverbes en gras -->
+    <div class="card-lecture">
+        <div style="font-weight: 700; font-size: 1.3rem;">📰 Lecture</div>
+        <div style="font-style: italic; color:#4b5563; margin-bottom: 12px;">Un article adapté – avril 2026</div>
+        <p><strong>Vu du Royaume-Uni – La machine à café, un endroit spécial en France</strong></p>
+        <p>En France, la machine à café n'est pas seulement un appareil pour faire du café. C'est un <strong>endroit très important</strong> au bureau. Les employés français ne boivent pas <strong>rapidement</strong> leur café. Ils prennent le temps de discuter avec leurs collègues. Une journaliste anglaise raconte : « J'étais surprise. Mes collègues parlent <strong>toujours</strong> près de la machine à café pendant vingt minutes. Ils rient et commentent l'actualité. »</p>
+        <p>Une étude récente montre que 78 % des chefs français pensent que le moment à la machine à café est <strong>vraiment</strong> utile pour l'esprit d'équipe. Mais certains jeunes employés évitent <strong>parfois</strong> ces pauses trop longues. « Je ne bois pas de café, alors je me sens exclu », dit un jeune informaticien. En France, refuser une pause café peut être mal vu. La journaliste anglaise explique : « Au Royaume-Uni, on prépare son café <strong>rapidement</strong>, on dit "cheers" et on retourne <strong>directement</strong> à son bureau. Ici, chaque pause café devient une petite fête. »</p>
+        <p>Pourtant, la machine à café aide <strong>vraiment</strong> les employés à se sentir bien. On y parle <strong>librement</strong>, on rigole, on dit ce qu'on pense. Les Français sont <strong>souvent</strong> très attachés à ce moment. La journaliste conclut : « Après six mois à Paris, j'ai changé d'avis. Les Britanniques devraient peut-être apprendre à ralentir <strong>un peu</strong> comme les Français. »</p>
+        <p style="font-size:0.8rem; margin-top:1rem;">📌 Source adaptée : The Guardian / enquête Ifop – avril 2026</p>
+    </div>
+
+    <!-- 📚 Vocabulaire bilingue -->
+    <div class="section-title">📚 Vocabulaire</div>
+    <div class="vocab-grid">
+        <div class="vocab-card"><div class="fr-word">une machine à café</div><div class="en-word">coffee machine</div><div class="exemple">« La machine à café est près de la fenêtre. »</div></div>
+        <div class="vocab-card"><div class="fr-word">une pause café</div><div class="en-word">coffee break</div><div class="exemple">« Je prends une pause café à 10 heures. »</div></div>
+        <div class="vocab-card"><div class="fr-word">un employé / une employée</div><div class="en-word">employee</div><div class="exemple">« Les employés se retrouvent à la machine. »</div></div>
+        <div class="vocab-card"><div class="fr-word">discuter</div><div class="en-word">to chat</div><div class="exemple">« Ils discutent autour du café. »</div></div>
+        <div class="vocab-card"><div class="fr-word">l'esprit d'équipe</div><div class="en-word">team spirit</div><div class="exemple">« Le café renforce l'esprit d'équipe. »</div></div>
+        <div class="vocab-card"><div class="fr-word">se sentir exclu(e)</div><div class="en-word">to feel left out</div><div class="exemple">« Il se sent exclu car il ne boit pas de café. »</div></div>
+        <div class="vocab-card"><div class="fr-word">un rituel</div><div class="en-word">ritual</div><div class="exemple">« C'est un rituel quotidien. »</div></div>
+        <div class="vocab-card"><div class="fr-word">le bien-être</div><div class="en-word">wellbeing</div><div class="exemple">« La pause café améliore le bien-être. »</div></div>
+        <div class="vocab-card"><div class="fr-word">ralentir</div><div class="en-word">to slow down</div><div class="exemple">« Les Français savent ralentir. »</div></div>
+        <div class="vocab-card"><div class="fr-word">librement</div><div class="en-word">freely</div><div class="exemple">« On y parle librement. »</div></div>
+    </div>
+
+    <!-- 📝 QUESTIONS DE COMPRÉHENSION (juste après le vocabulaire) -->
+    <div class="section-title">📝 Questions sur le texte</div>
+    <div class="exercise" style="margin-top: 0.5rem;">
+        <div class="question-text">1. Pourquoi la machine à café est-elle importante en France ?</div>
+        <input type="text" placeholder="Votre réponse">
+        <div class="hidden-answer" style="display:none;" id="comp1">✅ Parce que les Français aiment discuter et créer du lien social. C'est un endroit pour partager et se sentir bien.</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+
+        <div class="question-text">2. Que font les Britanniques pendant leur pause café, selon l'article ?</div>
+        <input type="text" placeholder="Votre réponse">
+        <div class="hidden-answer" style="display:none;" id="comp2">✅ Ils préparent leur café rapidement, disent "cheers" et retournent directement à leur bureau.</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+
+        <div class="question-text">3. Pourquoi certains jeunes employés se sentent-ils exclus ?</div>
+        <input type="text" placeholder="Votre réponse">
+        <div class="hidden-answer" style="display:none;" id="comp3">✅ Parce qu'ils ne boivent pas de café et évitent les longues pauses, donc ils se sentent différents.</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+
+        <div class="question-text">4. Quel est le conseil de la journaliste à la fin de l'article ?</div>
+        <input type="text" placeholder="Votre réponse">
+        <div class="hidden-answer" style="display:none;" id="comp4">✅ Elle pense que les Britanniques devraient apprendre à ralentir un peu, comme les Français.</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+    </div>
+
+    <!-- Grammaire : Les adverbes -->
+    <div class="grammar-box">
+        <div class="section-title" style="margin-top:0; border-bottom:none;">📐 Grammaire · Les adverbes (en gras dans le texte)</div>
+        <p>Les adverbes sont des mots qui disent <strong>comment, quand, où ou à quelle fréquence</strong> on fait quelque chose. Ils ne changent jamais. Dans le texte, vous avez vu des adverbes <strong>en gras</strong>. Les voici :</p>
+        <table class="adverb-table">
+            <thead><tr><th>Adverbe</th><th>Ce qu'il exprime</th><th>Exemple</th></tr></thead>
+            <tbody>
+                <tr><td><strong>rapidement</strong></td><td>manière (vitesse)</td><td>« Les Anglais boivent leur café rapidement. »</td></tr>
+                <tr><td><strong>toujours</strong></td><td>fréquence (100%)</td><td>« Il y a toujours quelqu'un à la machine. »</td></tr>
+                <tr><td><strong>parfois</strong></td><td>fréquence (~50%)</td><td>« Parfois, les jeunes évitent la pause. »</td></tr>
+                <tr><td><strong>vraiment</strong></td><td>intensité / affirmation</td><td>« La machine à café est vraiment utile. »</td></tr>
+                <tr><td><strong>librement</strong></td><td>manière (sans gêne)</td><td>« On y parle librement. »</td></tr>
+                <tr><td><strong>souvent</strong></td><td>fréquence</td><td>« Les Français sont souvent près du café. »</td></tr>
+                <tr><td><strong>directement</strong></td><td>manière (sans arrêt)</td><td>« Ils retournent directement au travail. »</td></tr>
+                <tr><td><strong>un peu</strong></td><td>quantité / intensité</td><td>« Il faut ralentir un peu. »</td></tr>
+            </tbody>
+        </table>
+        <p>💡 <strong>Règle simple</strong> : beaucoup d'adverbes se font en ajoutant <strong>-ment</strong> à la forme féminine de l'adjectif (rapide → rapidement, libre → librement).</p>
+    </div>
+
+    <!-- ========================================================== -->
+    <!-- EXERCICE AVEC PLUSIEURS PHRASES À REMETTRE DANS L'ORDRE    -->
+    <!-- ========================================================== -->
+    <div class="section-title">🔄 Exercice : remets les mots dans l'ordre</div>
+    <div class="exercise" id="multiOrderExercise">
+        <p><strong>Consigne :</strong> Clique sur les mots dans l'ordre pour former une phrase correcte. <strong>L'adverbe doit être à la bonne place !</strong> Plusieurs phrases différentes.</p>
+        
+        <!-- Zone pour afficher la phrase cible (consigne dynamique) -->
+        <div style="background:#eef2ff; padding: 8px 15px; border-radius: 40px; display: inline-block; margin-bottom: 15px;">
+            🔤 <span id="currentPhraseLabel">Phrase 1 / 4</span>
+        </div>
+        
+        <div id="wordBankContainer" class="word-bank"></div>
+        <div id="sentenceDropzone" class="sentence-dropzone">
+            ✏️ Clique sur les mots dans l'ordre pour former la phrase...
+        </div>
+        
+        <div style="margin-top: 10px;">
+            <button id="prevPhraseBtn" class="btn-reset">◀ Phrase précédente</button>
+            <button id="nextPhraseBtn" class="btn-reset">Phrase suivante ▶</button>
+            <button id="resetCurrentBtn" class="btn-reset">🔄 Recommencer cette phrase</button>
+            <button id="checkOrderBtn" class="btn-reveal">🔎 Vérifier / Voir la réponse</button>
+        </div>
+        <div id="multiOrderFeedback" class="hidden-answer" style="display:none; margin-top: 15px;"></div>
+    </div>
+
+    <!-- Autres exercices classiques -->
+    <div class="exercise">
+        <h3>✏️ 1 · Complète avec l'adverbe qui convient</h3>
+        <div class="question-text">a) « En France, les collègues discutent ________ à la machine à café. » (manière : sans gêne)</div>
+        <input type="text" placeholder="Tapez l'adverbe">
+        <div class="hidden-answer" style="display:none;" id="ex1a">✅ librement</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+
+        <div class="question-text">b) « La journaliste anglaise était ________ surprise par les longues pauses. » (intensité)</div>
+        <input type="text" placeholder="Adverbe">
+        <div class="hidden-answer" style="display:none;" id="ex1b">✅ vraiment</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+
+        <div class="question-text">c) « Au Royaume-Uni, on retourne ________ à son bureau après le café. » (sans attendre)</div>
+        <input type="text" placeholder="Adverbe">
+        <div class="hidden-answer" style="display:none;" id="ex1c">✅ directement</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+    </div>
+
+    <div class="exercise">
+        <h3>✅❌ 2 · Vrai ou faux ?</h3>
+        <div class="question-text">« En France, tout le monde boit du café très rapidement. »</div>
+        <input type="text" placeholder="Vrai ou Faux ?">
+        <div class="hidden-answer" style="display:none;" id="vf1">❌ Faux. Les Français prennent leur temps et discutent longtemps.</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+
+        <div class="question-text">« Selon l'article, la machine à café peut améliorer le bien-être. »</div>
+        <input type="text" placeholder="Vrai ou Faux ?">
+        <div class="hidden-answer" style="display:none;" id="vf2">✅ Vrai. Le texte dit que la machine à café aide les employés à se sentir bien.</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir la réponse</button>
+    </div>
+
+    <div class="exercise">
+        <h3>💬 3 · Production écrite (2-3 phrases)</h3>
+        <div class="question-text">À votre avis, pourquoi la machine à café est-elle un lieu de rencontre important ? Parlez de votre expérience ou donnez votre opinion.</div>
+        <textarea rows="3" placeholder="Écrivez en français..."></textarea>
+        <div class="hidden-answer" style="display:none;" id="prod">💡 Exemple : « Je pense que la machine à café est importante car on peut discuter calmement avec ses collègues. Cela crée une bonne ambiance et on se sent moins seul au travail. »</div>
+        <button class="btn-reveal" onclick="toggleAnswer(this)">🔎 Voir un exemple</button>
+    </div>
+
+    <hr />
+    <div style="background:#fef3e8; border-radius: 24px; padding: 1rem; margin-top: 1rem;">
+        <p>🎯 <strong>Astuce adverbes</strong> : Pour enrichir votre français, utilisez <strong>souvent, rapidement, librement, vraiment</strong> dans vos conversations autour de la machine à café ! 🇫🇷☕</p>
+    </div>
+    <footer>Leçon A2 · Thème : machine à café · Adverbes en gras · Exercice interactif avec 4 phrases à remettre dans l'ordre</footer>
+</div>
+
+<script>
+    // Fonction pour les réponses cachées classiques
+    function toggleAnswer(btn) {
+        let hiddenDiv = btn.previousElementSibling;
+        while (hiddenDiv && !hiddenDiv.classList.contains('hidden-answer')) {
+            hiddenDiv = hiddenDiv.previousElementSibling;
+        }
+        if (hiddenDiv && hiddenDiv.classList.contains('hidden-answer')) {
+            if (hiddenDiv.style.display === 'none' || hiddenDiv.style.display === '') {
+                hiddenDiv.style.display = 'block';
+                btn.textContent = '🙈 Cacher la réponse';
+            } else {
+                hiddenDiv.style.display = 'none';
+                btn.textContent = '🔎 Voir la réponse';
+            }
+        }
+    }
+    document.querySelectorAll('.hidden-answer').forEach(el => { el.style.display = 'none'; });
+
+    // ---------- MULTIPLES PHRASES À REMETTRE DANS L'ORDRE ----------
+    // Définition de 4 phrases avec mots dans le désordre + bonne phrase + adverbe cible
+    const phrases = [
+        {
+            words: ["Les", "Français", "prennent", "leur", "café", "toujours"],
+            correct: "Les Français prennent toujours leur café.",
+            hint: "L'adverbe 'toujours' se place après le verbe 'prennent'."
+        },
+        {
+            words: ["discute", "équipe", "librement", "Mon", "avec", "je"],
+            correct: "Mon équipe discute librement avec moi.",
+            hint: "L'adverbe 'librement' vient après le verbe 'discute'."
+        },
+        {
+            words: ["retourne", "bureau", "directement", "Elle", "son", "à"],
+            correct: "Elle retourne directement à son bureau.",
+            hint: "Place l'adverbe 'directement' juste après le verbe 'retourne'."
+        },
+        {
+            words: ["parfois", "seul", "le", "midi", "déjeune", "Il"],
+            correct: "Il déjeune parfois seul le midi.",
+            hint: "L'adverbe de fréquence 'parfois' se place après le verbe 'déjeune'."
+        }
+    ];
+
+    let currentPhraseIndex = 0;
+    let selectedIndices = [];  // indices des mots sélectionnés dans l'ordre
+
+    function renderWordBankForCurrent() {
+        const container = document.getElementById('wordBankContainer');
+        const currentWords = phrases[currentPhraseIndex].words;
+        container.innerHTML = '';
+        currentWords.forEach((word, idx) => {
+            const token = document.createElement('div');
+            token.className = 'word-token';
+            if (selectedIndices.includes(idx)) token.classList.add('selected');
+            token.textContent = word;
+            token.onclick = () => {
+                if (selectedIndices.includes(idx)) {
+                    // déjà sélectionné : on le retire
+                    selectedIndices = selectedIndices.filter(i => i !== idx);
+                } else {
+                    selectedIndices.push(idx);
+                }
+                renderWordBankForCurrent();
+                renderSentenceZoneForCurrent();
+            };
+            container.appendChild(token);
+        });
+    }
+
+    function renderSentenceZoneForCurrent() {
+        const zone = document.getElementById('sentenceDropzone');
+        if (selectedIndices.length === 0) {
+            zone.innerHTML = '✏️ Clique sur les mots dans l\'ordre pour former la phrase...';
+            return;
+        }
+        const currentWords = phrases[currentPhraseIndex].words;
+        const orderedWords = selectedIndices.map(i => currentWords[i]);
+        zone.innerHTML = '📝 ' + orderedWords.join(' ') + ' ';
+    }
+
+    function resetCurrent() {
+        selectedIndices = [];
+        renderWordBankForCurrent();
+        renderSentenceZoneForCurrent();
+        const feedback = document.getElementById('multiOrderFeedback');
+        feedback.style.display = 'none';
+        feedback.innerHTML = '';
+    }
+
+    function checkCurrentOrder() {
+        const currentWords = phrases[currentPhraseIndex].words;
+        const orderedWords = selectedIndices.map(i => currentWords[i]);
+        const userSentence = orderedWords.join(' ');
+        const correct = phrases[currentPhraseIndex].correct;
+        const hintMsg = phrases[currentPhraseIndex].hint;
+        const feedbackDiv = document.getElementById('multiOrderFeedback');
+        
+        if (userSentence === correct) {
+            feedbackDiv.innerHTML = '✅ Parfait ! La phrase est correcte : "' + correct + '"<br>💡 ' + hintMsg;
+            feedbackDiv.style.display = 'block';
+        } else {
+            feedbackDiv.innerHTML = '❌ Ce n\'est pas encore la bonne phrase. <br>🔹 Attendu : "' + correct + '"<br>🔸 ' + hintMsg + '<br>📌 Réessaie en cliquant sur les mots dans le bon ordre.';
+            feedbackDiv.style.display = 'block';
+        }
+    }
+
+    function loadPhrase(index) {
+        currentPhraseIndex = (index + phrases.length) % phrases.length;
+        selectedIndices = [];
+        renderWordBankForCurrent();
+        renderSentenceZoneForCurrent();
+        const feedbackDiv = document.getElementById('multiOrderFeedback');
+        feedbackDiv.style.display = 'none';
+        feedbackDiv.innerHTML = '';
+        document.getElementById('currentPhraseLabel').innerHTML = `Phrase ${currentPhraseIndex+1} / ${phrases.length}`;
+    }
+
+    // Événements
+    document.getElementById('prevPhraseBtn').onclick = () => loadPhrase(currentPhraseIndex - 1);
+    document.getElementById('nextPhraseBtn').onclick = () => loadPhrase(currentPhraseIndex + 1);
+    document.getElementById('resetCurrentBtn').onclick = resetCurrent;
+    document.getElementById('checkOrderBtn').onclick = checkCurrentOrder;
+    
+    // Initialisation
+    loadPhrase(0);
+</script>
+</body>
+</html>
