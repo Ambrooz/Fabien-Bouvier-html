@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Propositions subordonnées & pronoms relatifs — B2/C1</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Instrument+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0F0E0B;
+  --paper: #F7F4EE;
+  --cream: #EDE9E0;
+  --cream2: #E2DDD3;
+  --muted: #7A7469;
+  --accent-r: #C84B31;
+  --accent-t: #2A7B6C;
+  --accent-p: #5D4999;
+  --accent-g: #C48A00;
+  --line: rgba(15,14,11,0.12);
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --sans: 'Instrument Sans', sans-serif;
+  --r-bg: rgba(93,73,153,0.08);
+  --r-fg: #3d2e6e;
+  --d-bg: rgba(42,123,108,0.1);
+  --d-fg: #1a5248;
+  --c-bg: rgba(196,138,0,0.1);
+  --c-fg: #7a5500;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ─── HERO ─── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute; inset: 0;
+  background: #0F0E0B;
+}
+.hero-bg::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse at 10% 80%, rgba(93,73,153,0.28) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(42,123,108,0.18) 0%, transparent 50%);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0; bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.08) 40%, transparent);
+}
+
+.hero-rule-v {
+  position: absolute;
+  top: 0; left: 50%;
+  width: 1px; height: 100%;
+  background: rgba(255,255,255,0.05);
+}
+
+.hero-label {
+  position: absolute;
+  top: 48px; left: 52px;
+  font-family: var(--sans);
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+}
+
+.hero-level {
+  position: absolute;
+  top: 48px; right: 52px;
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: rgba(255,255,255,0.35);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 0 52px 64px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 48px;
+}
+
+.hero-num {
+  font-family: var(--serif);
+  font-size: clamp(7rem, 20vw, 16rem);
+  font-weight: 400;
+  line-height: 0.85;
+  color: rgba(255,255,255,0.04);
+  position: absolute;
+  right: 30px;
+  bottom: 30px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-t);
+  margin-bottom: 22px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.hero-eyebrow::before {
+  content: '';
+  display: block;
+  width: 28px; height: 1px;
+  background: var(--accent-t);
+}
+
+.hero h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.6rem, 5.5vw, 5.2rem);
+  font-weight: 400;
+  line-height: 1.08;
+  color: #fff;
+  max-width: 800px;
+  margin-bottom: 32px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: rgba(255,255,255,0.55);
+}
+
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 680px;
+}
+.hero-tag {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 2px;
+  padding: 5px 14px;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.6);
+  letter-spacing: 0.05em;
+}
+
+.scroll-cue {
+  position: absolute;
+  bottom: 28px; left: 52px;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.68rem; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  animation: cue 2s ease-in-out infinite;
+}
+@keyframes cue { 0%,100%{opacity:.25;transform:translateY(0)} 50%{opacity:.5;transform:translateY(4px)} }
+
+/* ─── MAIN ─── */
+.main { max-width: 900px; margin: 0 auto; padding: 0 40px 100px; }
+
+/* ─── SECTION ─── */
+.section {
+  padding-top: 72px;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.section.visible { opacity: 1; transform: translateY(0); }
+
+.section-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 36px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+.section-num {
+  font-family: var(--serif);
+  font-size: 3.5rem;
+  font-weight: 400;
+  line-height: 1;
+  color: var(--cream2);
+  flex-shrink: 0;
+  margin-top: -4px;
+}
+.section-meta h2 {
+  font-family: var(--serif);
+  font-size: 1.75rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.section-meta p {
+  font-size: 0.8rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.section-accent-r h2 { color: var(--accent-r); }
+.section-accent-t h2 { color: var(--accent-t); }
+.section-accent-p h2 { color: var(--accent-p); }
+.section-accent-g h2 { color: var(--accent-g); }
+.section-accent-i h2 { color: #c13f80; }
+
+/* ─── LEGEND ─── */
+.legend {
+  display: flex; flex-wrap: wrap; gap: 16px;
+  margin-bottom: 28px;
+  padding: 14px 20px;
+  background: var(--cream);
+  border-left: 3px solid var(--ink);
+  border-radius: 0 4px 4px 0;
+}
+.leg {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 0.78rem; color: var(--muted);
+}
+.leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+/* ─── TEXTE RÉCIT ─── */
+.recit {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  line-height: 2.0;
+  color: var(--ink);
+  column-gap: 40px;
+}
+.recit p { margin-bottom: 1.3em; }
+.recit p:last-child { margin-bottom: 0; }
+
+.rel {
+  background: var(--r-bg);
+  color: var(--r-fg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-style: italic;
+  font-weight: 500;
+}
+.dont {
+  background: var(--d-bg);
+  color: var(--d-fg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-style: italic;
+  font-weight: 500;
+}
+.comp {
+  background: var(--c-bg);
+  color: var(--c-fg);
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-style: italic;
+  font-weight: 500;
+}
+
+/* ─── VOCAB ─── */
+.vocab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.vocab-item {
+  background: var(--paper);
+  padding: 11px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background 0.15s;
+}
+.vocab-item:hover { background: var(--cream); }
+.vocab-fr {
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+.vocab-de {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ─── GRAMMAIRE ─── */
+.gram-block {
+  margin-bottom: 28px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  overflow: hidden;
+}
+.gram-block:last-child { margin-bottom: 0; }
+.gram-head {
+  padding: 12px 20px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.gram-head-dot {
+  width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+}
+.gram-head h4 {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+.gram-body {
+  padding: 20px 20px;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--ink);
+}
+.gram-body p { margin-bottom: 12px; }
+.gram-body p:last-child { margin-bottom: 0; }
+.gram-body ul { margin: 8px 0 0 0; padding-left: 0; list-style: none; }
+.gram-body ul li {
+  padding: 4px 0 4px 18px;
+  position: relative;
+  border-bottom: 1px solid var(--line);
+  font-size: 0.93rem;
+}
+.gram-body ul li:last-child { border-bottom: none; }
+.gram-body ul li::before {
+  content: '→';
+  position: absolute; left: 0;
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.formula {
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: 10px 16px;
+  margin: 12px 0;
+  display: block;
+  color: var(--accent-p);
+}
+.gram-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; margin: 10px 0; }
+.gram-table th {
+  text-align: left;
+  padding: 7px 12px;
+  background: var(--cream);
+  font-weight: 600;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+.gram-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+}
+.gram-table tr:last-child td { border-bottom: none; }
+.gram-table em { color: var(--accent-p); }
+
+/* ─── EXERCICES ─── */
+.ex-group { margin-bottom: 40px; }
+.ex-group:last-child { margin-bottom: 0; }
+
+.ex-title {
+  display: flex; align-items: center; gap: 10px;
+  margin-bottom: 18px;
+}
+.ex-title-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+}
+.ex-title h3 {
+  font-family: var(--sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.ex-rows { display: flex; flex-direction: column; gap: 0; }
+.ex-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  flex-wrap: wrap;
+}
+.ex-row:first-child { border-top: 1px solid var(--line); }
+.ex-n {
+  font-family: var(--serif);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+  width: 22px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.ex-text {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  flex: 1;
+  min-width: 200px;
+}
+input[type="text"] {
+  font-family: var(--serif);
+  font-size: 1rem;
+  border: none;
+  border-bottom: 1.5px solid var(--cream2);
+  background: transparent;
+  color: var(--ink);
+  padding: 2px 6px;
+  outline: none;
+  transition: border-color 0.2s;
+  min-width: 60px;
+}
+input[type="text"]:focus { border-color: var(--accent-p); }
+input[type="text"].correct { border-color: var(--accent-t); color: var(--accent-t); }
+input[type="text"].wrong { border-color: var(--accent-r); color: var(--accent-r); }
+
+.btn-check {
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 3px;
+  padding: 9px 22px;
+  cursor: pointer;
+  margin-top: 16px;
+  transition: all 0.18s;
+}
+.btn-check:hover { background: transparent; color: var(--ink); }
+
+.score-area { margin-top: 14px; }
+.score-bar-wrap {
+  height: 2px;
+  background: var(--cream2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+.score-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent-t);
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+}
+.score-txt {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-family: var(--sans);
+}
+
+.consigne-box {
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--accent-p);
+  border-radius: 0 6px 6px 0;
+  padding: 18px 22px;
+  margin-bottom: 18px;
+}
+.consigne-box h4 {
+  font-family: var(--sans);
+  font-size: 0.73rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-p);
+  margin-bottom: 10px;
+}
+.consigne-box p { font-size: 0.93rem; line-height: 1.65; margin-bottom: 8px; }
+.consigne-box ul { padding-left: 18px; margin-top: 6px; }
+.consigne-box ul li { font-size: 0.9rem; line-height: 1.7; color: var(--ink); }
+
+/* ─── PRODUCTION ─── */
+textarea {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.9;
+  width: 100%;
+  min-height: 200px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 18px 20px;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.2s;
+}
+textarea:focus { border-color: var(--accent-p); }
+textarea::placeholder { color: var(--muted); font-style: italic; }
+
+.prod-actions { display: flex; align-items: center; gap: 14px; margin-top: 12px; flex-wrap: wrap; }
+.word-count {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+/* ─── DIVIDER ─── */
+.divider {
+  display: flex; align-items: center; gap: 16px;
+  padding: 52px 0 0;
+}
+.divider-line { flex: 1; height: 1px; background: var(--line); }
+.divider-mark {
+  font-family: var(--serif);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--cream2);
+}
+
+/* ─── FOOTER ─── */
+footer {
+  text-align: center;
+  padding: 32px;
+  border-top: 1px solid var(--line);
+  font-size: 0.75rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 640px) {
+  .hero h1 { font-size: 2.2rem; }
+  .hero-content { padding: 36px 28px 52px; }
+  .hero-label, .hero-level, .scroll-cue { left: 28px; right: 28px; }
+  .main { padding: 0 22px 80px; }
+  .vocab-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-rule-v"></div>
+  <div class="hero-label">Grammaire avancée · Fiche pédagogique</div>
+  <div class="hero-level">Niveau B2 / C1</div>
+  <div class="hero-num">§</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Français langue étrangère</div>
+    <h1>Propositions subordonnées<br>&amp; <em>pronoms relatifs</em></h1>
+    <div class="hero-tags">
+      <span class="hero-tag">Pronoms relatifs simples</span>
+      <span class="hero-tag">Lequel · Duquel · Auquel</span>
+      <span class="hero-tag">Dont &amp; Ce dont</span>
+      <span class="hero-tag">Subjonctif</span>
+      <span class="hero-tag">Production écrite</span>
+    </div>
+  </div>
+  <div class="scroll-cue">↓ &nbsp;Défiler</div>
+</div>
+
+<!-- ─── MAIN CONTENT ─── -->
+<div class="main">
+
+  <!-- §1 RÉCIT -->
+  <div class="section" id="s1">
+    <div class="section-header section-accent-r">
+      <span class="section-num">01</span>
+      <div class="section-meta">
+        <h2>Récit — La décision silencieuse</h2>
+        <p>Subordonnées &amp; pronoms relatifs en contexte littéraire</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <span class="leg"><span class="leg-dot" style="background:#5D4999"></span>Pronom relatif</span>
+      <span class="leg"><span class="leg-dot" style="background:#2A7B6C"></span>Dont / Ce dont</span>
+      <span class="leg"><span class="leg-dot" style="background:#C48A00"></span>Pronom composé</span>
+    </div>
+
+    <div class="recit">
+      <p>Elle entra dans la bibliothèque <span class="rel">dont les murs exhalaient une odeur de bois et de mystère</span>. L'homme <span class="rel">qu'elle était venue voir</span> se tenait près de la fenêtre, absorbé par un manuscrit ancien. <span class="rel">« Je dois vous poser une question que personne n'ose formuler »</span>, murmura‑t‑elle, tandis qu'un frisson parcourait l'air.</p>
+      <p>Il leva les yeux, <span class="rel">comme s'il l'attendait depuis toujours</span>. « Dis‑moi <span class="rel">ce qui te tourmente</span>, afin que nous trouvions ensemble une issue. » Elle hésita, car les mots <span class="rel">qu'elle cherchait</span> semblaient trop lourds à prononcer. Puis elle déplia une lettre <span class="dont">dont l'encre avait pâli avec les années</span>. « Mon père, <span class="rel">à qui tu as jadis sauvé la vie</span>, a laissé cet aveu avant de disparaître. »</p>
+      <p>L'homme devint pâle, <span class="rel">bien qu'il fût réputé pour son sang‑froid</span>. Il prit la lettre, là <span class="rel">où les secrets dormaient entre chaque phrase</span>. « Je comprends pourquoi tu me cherchais sans jamais me trouver », dit‑il d'une voix grave. Elle sourit avec un soulagement <span class="rel">tel qu'elle n'en avait jamais éprouvé</span>. « Ainsi, tout <span class="rel">ce que j'ai construit</span> n'était qu'un voile <span class="comp">derrière lequel se cachait la vérité</span>. » Ils restèrent silencieux, alors que la pénombre enveloppait la pièce. Cette rencontre, <span class="dont">dont les conséquences allaient bouleverser deux existences</span>, venait de sceller un pacte fragile.</p>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+  <!-- §2 VOCABULAIRE -->
+  <div class="section" id="s2">
+    <div class="section-header section-accent-t">
+      <span class="section-num">02</span>
+      <div class="section-meta">
+        <h2>Vocabulaire du récit</h2>
+        <p>Français → Deutsch · Termes clés</p>
+      </div>
+    </div>
+
+    <div class="vocab-grid">
+      <div class="vocab-item"><span class="vocab-fr">une bibliothèque</span><span class="vocab-de">die Bibliothek</span></div>
+      <div class="vocab-item"><span class="vocab-fr">exhaler une odeur</span><span class="vocab-de">einen Duft verströmen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">un manuscrit ancien</span><span class="vocab-de">ein altes Manuskript</span></div>
+      <div class="vocab-item"><span class="vocab-fr">oser formuler</span><span class="vocab-de">wagen zu formulieren</span></div>
+      <div class="vocab-item"><span class="vocab-fr">un frisson</span><span class="vocab-de">ein Schauer / Schauder</span></div>
+      <div class="vocab-item"><span class="vocab-fr">une issue</span><span class="vocab-de">der Ausweg</span></div>
+      <div class="vocab-item"><span class="vocab-fr">déplier une lettre</span><span class="vocab-de">einen Brief entfalten</span></div>
+      <div class="vocab-item"><span class="vocab-fr">l'encre a pâli</span><span class="vocab-de">die Tinte ist verblasst</span></div>
+      <div class="vocab-item"><span class="vocab-fr">jadis</span><span class="vocab-de">einst / vor langer Zeit</span></div>
+      <div class="vocab-item"><span class="vocab-fr">sauver la vie</span><span class="vocab-de">das Leben retten</span></div>
+      <div class="vocab-item"><span class="vocab-fr">être réputé pour</span><span class="vocab-de">bekannt sein für</span></div>
+      <div class="vocab-item"><span class="vocab-fr">le sang-froid</span><span class="vocab-de">die Gelassenheit / Kaltblütigkeit</span></div>
+      <div class="vocab-item"><span class="vocab-fr">un voile</span><span class="vocab-de">der Schleier</span></div>
+      <div class="vocab-item"><span class="vocab-fr">bouleverser</span><span class="vocab-de">erschüttern / durcheinanderbringen</span></div>
+      <div class="vocab-item"><span class="vocab-fr">un pacte fragile</span><span class="vocab-de">ein zerbrechlicher Pakt</span></div>
+      <div class="vocab-item"><span class="vocab-fr">ce dont tu as besoin</span><span class="vocab-de">was du brauchst</span></div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+  <!-- §3 LEÇON -->
+  <div class="section" id="s3">
+    <div class="section-header section-accent-p">
+      <span class="section-num">03</span>
+      <div class="section-meta">
+        <h2>Leçon grammaticale</h2>
+        <p>Bases + emplois avancés · B2/C1</p>
+      </div>
+    </div>
+
+    <div class="gram-block">
+      <div class="gram-head">
+        <div class="gram-head-dot" style="background:#5D4999"></div>
+        <h4>Proposition subordonnée relative — Structure</h4>
+      </div>
+      <div class="gram-body">
+        <p>Introduite par un pronom relatif, elle donne une information sur l'antécédent. Elle peut remplir les fonctions de sujet, COD, complément du nom ou complément circonstanciel.</p>
+        <code class="formula">Antécédent  +  pronom relatif  +  verbe subordonné</code>
+        <ul>
+          <li><strong>Qui</strong> → sujet : <em>L'homme <span class="rel">qui lisait</span> se retourna.</em></li>
+          <li><strong>Que</strong> → COD : <em>La lettre <span class="rel">qu'elle a lue</span> était ancienne.</em></li>
+          <li><strong>Dont</strong> → compl. de nom / verbe (de) : <em>Le secret <span class="dont">dont il parlait</span>.</em></li>
+          <li><strong>Où</strong> → lieu ou temps : <em>L'instant <span class="rel">où tout a basculé</span>.</em></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gram-block">
+      <div class="gram-head">
+        <div class="gram-head-dot" style="background:#C48A00"></div>
+        <h4>Pronoms relatifs composés — Lequel / Duquel / Auquel</h4>
+      </div>
+      <div class="gram-body">
+        <p>Employés après une <strong>préposition</strong> (pour, sans, contre, derrière, devant, sur, avec…). Ils s'accordent en <strong>genre et nombre</strong> avec l'antécédent.</p>
+        <table class="gram-table">
+          <tr><th>Genre · Nombre</th><th>Forme</th><th>Exemple</th></tr>
+          <tr><td>Masculin singulier</td><td><em>lequel</em></td><td>le miroir <span class="comp">devant lequel</span> elle passait</td></tr>
+          <tr><td>Féminin singulier</td><td><em>laquelle</em></td><td>la fenêtre <span class="comp">derrière laquelle</span> il se tenait</td></tr>
+          <tr><td>Masculin pluriel</td><td><em>lesquels</em></td><td>les obstacles <span class="comp">contre lesquels</span> ils luttent</td></tr>
+          <tr><td>Féminin pluriel</td><td><em>lesquelles</em></td><td>les raisons <span class="comp">pour lesquelles</span> j'ai accepté</td></tr>
+        </table>
+        <p style="margin-top:12px;"><strong>Contractions :</strong> à + lequel = <em>auquel</em> · de + lequel = <em>duquel</em> · à + lesquels = <em>auxquels</em> · de + lesquelles = <em>desquelles</em></p>
+      </div>
+    </div>
+
+    <div class="gram-block">
+      <div class="gram-head">
+        <div class="gram-head-dot" style="background:#2A7B6C"></div>
+        <h4>Ce dont / Ce que — Subordonnées sans antécédent explicite</h4>
+      </div>
+      <div class="gram-body">
+        <p><strong>Ce que</strong> (COD implicite) : <em>Je sais <span class="rel">ce que tu veux dire</span>.</em></p>
+        <p><strong>Ce dont</strong> (verbe construit avec « de ») : <em>Je comprends <span class="dont">ce dont tu as besoin</span>.</em></p>
+        <p><strong>Subjonctif</strong> après <em>bien que, afin que, pourvu que, quoique</em> : <em>Bien qu'il <span class="rel">fût</span> fatigué, il continua.</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+  <!-- §4 EXERCICES -->
+  <div class="section" id="s4">
+    <div class="section-header section-accent-g">
+      <span class="section-num">04</span>
+      <div class="section-meta">
+        <h2>Exercices interactifs</h2>
+        <p>Complétez · Vérifiez · Progressez</p>
+      </div>
+    </div>
+
+    <!-- EXO 1 -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#5D4999"></div>
+        <h3>Exercice 1 — Qui, que, dont, où</h3>
+      </div>
+      <div class="ex-rows" id="ex1">
+        <div class="ex-row">
+          <span class="ex-n">1</span>
+          <div class="ex-text">La bibliothèque <input type="text" data-answer="dont" placeholder="…" style="width:70px"> les murs sentaient le bois.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">2</span>
+          <div class="ex-text">L'homme <input type="text" data-answer="qu'" placeholder="…" style="width:70px"> elle cherchait se tenait près de la fenêtre.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">3</span>
+          <div class="ex-text">La lettre <input type="text" data-answer="dont" placeholder="…" style="width:70px"> l'encre avait pâli.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">4</span>
+          <div class="ex-text">L'instant <input type="text" data-answer="où" placeholder="…" style="width:70px"> tout a basculé.</div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('ex1','sc1','br1')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="br1"></div></div>
+        <p class="score-txt" id="sc1"></p>
+      </div>
+    </div>
+
+    <!-- EXO 2 -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#C48A00"></div>
+        <h3>Exercice 2 — Lequel / laquelle / lesquelles / auquel</h3>
+      </div>
+      <div class="ex-rows" id="ex2">
+        <div class="ex-row">
+          <span class="ex-n">1</span>
+          <div class="ex-text">La fenêtre derrière <input type="text" data-answer="laquelle" placeholder="…" style="width:100px"> se tenait l'homme.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">2</span>
+          <div class="ex-text">Le manuscrit <input type="text" data-answer="auquel" placeholder="…" style="width:90px"> il se référait.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">3</span>
+          <div class="ex-text">Les personnes avec <input type="text" data-answer="lesquelles" placeholder="…" style="width:100px"> j'ai voyagé.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">4</span>
+          <div class="ex-text">La décision <input type="text" data-answer="de laquelle" placeholder="…" style="width:110px"> dépend notre avenir.</div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('ex2','sc2','br2')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="br2"></div></div>
+        <p class="score-txt" id="sc2"></p>
+      </div>
+    </div>
+
+    <!-- EXO 3 -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#2A7B6C"></div>
+        <h3>Exercice 3 — Subjonctif (bien que · afin que)</h3>
+      </div>
+      <div class="ex-rows" id="ex3">
+        <div class="ex-row">
+          <span class="ex-n">1</span>
+          <div class="ex-text">Bien qu'il <input type="text" data-answer="fût" placeholder="être…" style="width:80px"> fatigué, il continua.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">2</span>
+          <div class="ex-text">Elle a préparé un plan afin qu'ils <input type="text" data-answer="réussissent" placeholder="réussir…" style="width:110px"> ensemble.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">3</span>
+          <div class="ex-text">Je cherche un livre <input type="text" data-answer="dont" placeholder="…" style="width:70px"> le titre m'échappe.</div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('ex3','sc3','br3')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="br3"></div></div>
+        <p class="score-txt" id="sc3"></p>
+      </div>
+    </div>
+
+    <!-- EXO 4 -->
+    <div class="ex-group">
+      <div class="consigne-box">
+        <h4>★ Complétez avec le pronom relatif qui convient</h4>
+        <p>Faites attention aux prépositions et à la fonction grammaticale.</p>
+      </div>
+      <div class="ex-rows" id="ex4">
+        <div class="ex-row">
+          <span class="ex-n">★</span>
+          <div class="ex-text">Voici l'histoire <input type="text" data-answer="dont" placeholder="…" style="width:70px"> je t'ai parlé hier.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">★</span>
+          <div class="ex-text">Le rideau <input type="text" data-answer="derrière lequel" placeholder="pronom composé" style="width:140px"> le secret était caché.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">★</span>
+          <div class="ex-text">Ce <input type="text" data-answer="dont" placeholder="ce…" style="width:70px"> tu as besoin pour avancer.</div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('ex4','sc4','br4')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="br4"></div></div>
+        <p class="score-txt" id="sc4"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+  <!-- §5 SUBORDONNÉES RELATIVES -->
+  <div class="section" id="s5rel">
+    <div class="section-header section-accent-r">
+      <span class="section-num">05</span>
+      <div class="section-meta">
+        <h2>Propositions subordonnées relatives</h2>
+        <p>Identifier · Compléter · Construire</p>
+      </div>
+    </div>
+
+    <!-- EXO A : Identifier la fonction -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#C84B31"></div>
+        <h3>Exercice A — Choisir le bon pronom relatif (qui / que / dont / où)</h3>
+      </div>
+      <div class="ex-rows" id="exA">
+        <div class="ex-row">
+          <span class="ex-n">1</span>
+          <div class="ex-text">C'est une ville <input type="text" data-answer="où" placeholder="…" style="width:70px"> il fait bon vivre.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">2</span>
+          <div class="ex-text">Le professeur <input type="text" data-answer="qui" placeholder="…" style="width:70px"> nous enseigne est très exigeant.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">3</span>
+          <div class="ex-text">Le roman <input type="text" data-answer="que" placeholder="…" style="width:70px"> j'ai lu cet été m'a bouleversé.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">4</span>
+          <div class="ex-text">L'ami <input type="text" data-answer="dont" placeholder="…" style="width:70px"> je t'ai parlé vient ce soir.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">5</span>
+          <div class="ex-text">L'époque <input type="text" data-answer="où" placeholder="…" style="width:70px"> tout semblait possible est révolue.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">6</span>
+          <div class="ex-text">Le tableau <input type="text" data-answer="dont" placeholder="…" style="width:70px"> les couleurs sont si vives date du XVIIe siècle.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">7</span>
+          <div class="ex-text">La personne <input type="text" data-answer="que" placeholder="…" style="width:70px"> tu cherches n'est plus là.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">8</span>
+          <div class="ex-text">C'est un problème <input type="text" data-answer="dont" placeholder="…" style="width:70px"> nous devons parler sérieusement.</div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('exA','scA','brA')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="brA"></div></div>
+        <p class="score-txt" id="scA"></p>
+      </div>
+    </div>
+
+    <!-- EXO B : Relier deux phrases -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#C84B31"></div>
+        <h3>Exercice B — Relier deux phrases avec une subordonnée relative</h3>
+      </div>
+      <div class="consigne-box">
+        <h4>Mode d'emploi</h4>
+        <p>Deux phrases sont données. Entrez la phrase complète reliée par le bon pronom relatif dans le champ.</p>
+      </div>
+      <div class="ex-rows" id="exB">
+        <div class="ex-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="font-family:var(--serif);font-size:1rem;color:var(--muted);font-style:italic;">J'ai rencontré une femme. Cette femme parle six langues.</div>
+          <div class="ex-text" style="width:100%">→ <input type="text" data-answer="J'ai rencontré une femme qui parle six langues." placeholder="Réécrivez en une seule phrase…" style="width:90%"></div>
+        </div>
+        <div class="ex-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="font-family:var(--serif);font-size:1rem;color:var(--muted);font-style:italic;">Voici le livre. Je t'ai parlé de ce livre.</div>
+          <div class="ex-text" style="width:100%">→ <input type="text" data-answer="Voici le livre dont je t'ai parlé." placeholder="Réécrivez en une seule phrase…" style="width:90%"></div>
+        </div>
+        <div class="ex-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="font-family:var(--serif);font-size:1rem;color:var(--muted);font-style:italic;">C'est un quartier. J'habitais dans ce quartier il y a dix ans.</div>
+          <div class="ex-text" style="width:100%">→ <input type="text" data-answer="C'est un quartier où j'habitais il y a dix ans." placeholder="Réécrivez en une seule phrase…" style="width:90%"></div>
+        </div>
+        <div class="ex-row" style="flex-direction:column; align-items:flex-start; gap:8px;">
+          <div style="font-family:var(--serif);font-size:1rem;color:var(--muted);font-style:italic;">Il cherche un emploi. Cet emploi lui permettrait de voyager.</div>
+          <div class="ex-text" style="width:100%">→ <input type="text" data-answer="Il cherche un emploi qui lui permettrait de voyager." placeholder="Réécrivez en une seule phrase…" style="width:90%"></div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('exB','scB','brB')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="brB"></div></div>
+        <p class="score-txt" id="scB"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+  <!-- §6 LEQUEL / LAQUELLE / LESQUELS -->
+  <div class="section" id="s6leq">
+    <div class="section-header section-accent-g">
+      <span class="section-num">06</span>
+      <div class="section-meta">
+        <h2>Lequel · Laquelle · Lesquels · Lesquelles</h2>
+        <p>Exercices ciblés — Accord en genre et en nombre</p>
+      </div>
+    </div>
+
+    <!-- Rappel visuel -->
+    <div class="gram-block" style="margin-bottom:32px;">
+      <div class="gram-head">
+        <div class="gram-head-dot" style="background:#C48A00"></div>
+        <h4>Rappel — Tableau d'accord</h4>
+      </div>
+      <div class="gram-body">
+        <table class="gram-table">
+          <tr><th>Genre · Nombre</th><th>Forme</th><th>Avec « à »</th><th>Avec « de »</th></tr>
+          <tr><td>Masc. singulier</td><td><em>lequel</em></td><td><em>auquel</em></td><td><em>duquel</em></td></tr>
+          <tr><td>Fém. singulier</td><td><em>laquelle</em></td><td><em>à laquelle</em></td><td><em>de laquelle</em></td></tr>
+          <tr><td>Masc. pluriel</td><td><em>lesquels</em></td><td><em>auxquels</em></td><td><em>desquels</em></td></tr>
+          <tr><td>Fém. pluriel</td><td><em>lesquelles</em></td><td><em>auxquelles</em></td><td><em>desquelles</em></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <!-- EXO C : lequel / laquelle / lesquels / lesquelles simple -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#C48A00"></div>
+        <h3>Exercice C — Lequel / laquelle / lesquels / lesquelles (forme simple)</h3>
+      </div>
+      <div class="consigne-box">
+        <h4>Consigne</h4>
+        <p>Complétez uniquement avec <strong>lequel · laquelle · lesquels · lesquelles</strong>. Accordez avec le nom souligné.</p>
+      </div>
+      <div class="ex-rows" id="exC">
+        <div class="ex-row">
+          <span class="ex-n">1</span>
+          <div class="ex-text">Le stylo avec <input type="text" data-answer="lequel" placeholder="…" style="width:100px"> il écrit est très fin. <span style="font-size:0.78rem;color:var(--muted)">(un stylo → masc. sing.)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">2</span>
+          <div class="ex-text">La table sur <input type="text" data-answer="laquelle" placeholder="…" style="width:100px"> tu as posé ton sac est fragile. <span style="font-size:0.78rem;color:var(--muted)">(une table → fém. sing.)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">3</span>
+          <div class="ex-text">Les arguments pour <input type="text" data-answer="lesquels" placeholder="…" style="width:100px"> il a voté étaient solides. <span style="font-size:0.78rem;color:var(--muted)">(des arguments → masc. plur.)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">4</span>
+          <div class="ex-text">Les raisons pour <input type="text" data-answer="lesquelles" placeholder="…" style="width:110px"> elle est partie restent floues. <span style="font-size:0.78rem;color:var(--muted)">(des raisons → fém. plur.)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">5</span>
+          <div class="ex-text">Le pont sous <input type="text" data-answer="lequel" placeholder="…" style="width:100px"> coule la rivière est très ancien. <span style="font-size:0.78rem;color:var(--muted)">(un pont → masc. sing.)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">6</span>
+          <div class="ex-text">La fenêtre par <input type="text" data-answer="laquelle" placeholder="…" style="width:100px"> il s'est échappé était grande ouverte. <span style="font-size:0.78rem;color:var(--muted)">(une fenêtre → fém. sing.)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">7</span>
+          <div class="ex-text">Les amis avec <input type="text" data-answer="lesquels" placeholder="…" style="width:100px"> nous voyageons sont fiables. <span style="font-size:0.78rem;color:var(--muted)">(des amis → masc. plur.)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">8</span>
+          <div class="ex-text">Les villes dans <input type="text" data-answer="lesquelles" placeholder="…" style="width:110px"> j'ai vécu étaient toutes au bord de la mer. <span style="font-size:0.78rem;color:var(--muted)">(des villes → fém. plur.)</span></div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('exC','scC','brC')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="brC"></div></div>
+        <p class="score-txt" id="scC"></p>
+      </div>
+    </div>
+
+    <!-- EXO D : mélange avec prépositions variées -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#C48A00"></div>
+        <h3>Exercice D — Prépositions variées + lequel / laquelle / lesquels / lesquelles</h3>
+      </div>
+      <div class="ex-rows" id="exD">
+        <div class="ex-row">
+          <span class="ex-n">1</span>
+          <div class="ex-text">C'est le projet sur <input type="text" data-answer="lequel" placeholder="…" style="width:100px"> nous travaillons depuis des mois.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">2</span>
+          <div class="ex-text">Voilà la décision contre <input type="text" data-answer="laquelle" placeholder="…" style="width:110px"> tout le monde s'est insurgé.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">3</span>
+          <div class="ex-text">Ce sont des valeurs sans <input type="text" data-answer="lesquelles" placeholder="…" style="width:110px"> la société ne peut pas fonctionner.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">4</span>
+          <div class="ex-text">L'instrument grâce à <input type="text" data-answer="lequel" placeholder="…" style="width:100px"> ils ont fait cette découverte est révolutionnaire.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">5</span>
+          <div class="ex-text">La situation face à <input type="text" data-answer="laquelle" placeholder="…" style="width:110px"> nous nous trouvons est inédite.</div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">6</span>
+          <div class="ex-text">Ce sont des obstacles autour de <input type="text" data-answer="lesquels" placeholder="…" style="width:110px"> il faut naviguer avec prudence.</div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('exD','scD','brD')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="brD"></div></div>
+        <p class="score-txt" id="scD"></p>
+      </div>
+    </div>
+
+    <!-- EXO E : QCM visuel lequel/laquelle -->
+    <div class="ex-group">
+      <div class="ex-title">
+        <div class="ex-title-dot" style="background:#C48A00"></div>
+        <h3>Exercice E — Choix rapide : lequel ou laquelle ?</h3>
+      </div>
+      <div class="consigne-box">
+        <h4>Consigne</h4>
+        <p>Tapez uniquement <strong>lequel</strong> ou <strong>laquelle</strong> selon le genre du nom entre parenthèses.</p>
+      </div>
+      <div class="ex-rows" id="exE">
+        <div class="ex-row">
+          <span class="ex-n">1</span>
+          <div class="ex-text">Le couloir à travers <input type="text" data-answer="lequel" placeholder="…" style="width:100px"> on passe. <span style="font-size:0.78rem;color:var(--muted)">(un couloir)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">2</span>
+          <div class="ex-text">La crise face à <input type="text" data-answer="laquelle" placeholder="…" style="width:100px"> nous sommes. <span style="font-size:0.78rem;color:var(--muted)">(une crise)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">3</span>
+          <div class="ex-text">Le mur derrière <input type="text" data-answer="lequel" placeholder="…" style="width:100px"> il se cachait. <span style="font-size:0.78rem;color:var(--muted)">(un mur)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">4</span>
+          <div class="ex-text">La règle sans <input type="text" data-answer="laquelle" placeholder="…" style="width:100px"> tout s'effondre. <span style="font-size:0.78rem;color:var(--muted)">(une règle)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">5</span>
+          <div class="ex-text">Le contrat grâce à <input type="text" data-answer="lequel" placeholder="…" style="width:100px"> ils ont signé. <span style="font-size:0.78rem;color:var(--muted)">(un contrat)</span></div>
+        </div>
+        <div class="ex-row">
+          <span class="ex-n">6</span>
+          <div class="ex-text">La route par <input type="text" data-answer="laquelle" placeholder="…" style="width:100px"> nous sommes passés. <span style="font-size:0.78rem;color:var(--muted)">(une route)</span></div>
+        </div>
+      </div>
+      <button class="btn-check" onclick="checkEx('exE','scE','brE')">Vérifier</button>
+      <div class="score-area">
+        <div class="score-bar-wrap"><div class="score-fill" id="brE"></div></div>
+        <p class="score-txt" id="scE"></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"><div class="divider-line"></div><span class="divider-mark">✦</span><div class="divider-line"></div></div>
+
+  <!-- §7 PRODUCTION -->
+  <div class="section" id="s5">
+    <div class="section-header section-accent-i">
+      <span class="section-num">07</span>
+      <div class="section-meta">
+        <h2>Production écrite guidée</h2>
+        <p>Expression libre avec contraintes grammaticales</p>
+      </div>
+    </div>
+
+    <div class="consigne-box">
+      <h4>Consigne</h4>
+      <p>Rédigez <strong>8 à 10 phrases</strong> sur un moment marquant de votre vie. Intégrez obligatoirement :</p>
+      <ul>
+        <li>Au moins <strong>3 pronoms relatifs différents</strong> (dont, lequel, qui, que, où…)</li>
+        <li>Une subordonnée avec <strong>bien que + subjonctif</strong></li>
+        <li>Une expression avec <strong>ce dont</strong></li>
+      </ul>
+    </div>
+
+    <textarea placeholder="Rédigez ici… Par exemple : « Le jour où j'ai pris cette décision, dont les conséquences furent considérables, reste gravé dans ma mémoire. Bien que j'eusse hésité longtemps, ce dont j'avais besoin était simplement le courage d'agir… »"></textarea>
+
+    <div class="prod-actions">
+      <button class="btn-check" onclick="countWords()">Compter les mots</button>
+      <span class="word-count" id="wc"></span>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer>Fiche pédagogique B2/C1 · Propositions subordonnées &amp; pronoms relatifs · Grammaire avancée du français</footer>
+
+<script>
+const sections = document.querySelectorAll('.section');
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.05 });
+sections.forEach(s => io.observe(s));
+
+function norm(s) {
+  return s.toLowerCase().trim()
+    .replace(/[éèêë]/g,'e').replace(/[àâä]/g,'a')
+    .replace(/[îï]/g,'i').replace(/[ôö]/g,'o')
+    .replace(/[ûü]/g,'u').replace(/ç/g,'c')
+    .replace(/['']/g,'').replace(/\s+/g,' ');
+}
+
+function checkEx(exId, scId, brId) {
+  const inputs = document.getElementById(exId).querySelectorAll('input[data-answer]');
+  let ok = 0;
+  inputs.forEach(inp => {
+    const good = norm(inp.value) === norm(inp.dataset.answer);
+    inp.classList.toggle('correct', good);
+    inp.classList.toggle('wrong', !good);
+    if (good) ok++;
+  });
+  const pct = Math.round(ok / inputs.length * 100);
+  document.getElementById(brId).style.width = pct + '%';
+  const msg = pct === 100 ? 'Excellent — score parfait ✓' : pct >= 70 ? 'Très bien !' : pct >= 40 ? 'Continuez… !' : 'À revoir — courage !';
+  document.getElementById(scId).textContent = ok + ' / ' + inputs.length + ' · ' + pct + '% · ' + msg;
+}
+
+function countWords() {
+  const ta = document.querySelector('textarea');
+  const words = ta.value.trim().split(/\s+/).filter(w => w.length > 0);
+  const n = words.length;
+  const el = document.getElementById('wc');
+  if (!n) { el.textContent = '0 mot'; el.style.color = ''; return; }
+  const ok = n >= 70;
+  el.style.color = ok ? 'var(--accent-t)' : n >= 40 ? 'var(--accent-g)' : 'var(--accent-r)';
+  el.textContent = n + ' mot' + (n > 1 ? 's' : '') + (ok ? ' — objectif atteint ✓' : ' (objectif : ≈ 70 mots)');
+}
+</script>
+</body>
+</html>
