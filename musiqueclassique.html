@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎻 Soirée Classique & Conditionnel Passé</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #f5f0fa;
+            --surface: #ffffff;
+            --surface2: #ede7f5;
+            --border: #d4c9e0;
+            --border2: #b8aacc;
+            --accent: #5b2d8e;
+            --accent2: #7c3aed;
+            --accent3: #2d4a7c;
+            --text: #2c241e;
+            --muted: #6b5e7a;
+            --correct: #2b7a4b;
+            --input-bg: #fefcf9;
+            --input-border: #b8aacc;
+            --drag-bg: #f5f0fa;
+            --drop-bg: #ede7f5;
+            --gold: #7c3aed;
+            --gold-light: #ede7f9;
+            --lavender: #d4c9e8;
+            --indigo: #3b2d6e;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        @media print {
+            body { background: white; }
+            .page { max-width: 100%; padding: 16px 20px 30px; }
+            .section { break-inside: avoid; page-break-inside: avoid; }
+            .reveal-btn, .print-btn, .reset-game-btn { display: none !important; }
+            .answer-hidden { display: block !important; }
+            input[type="text"], textarea { border: 1px solid #aaa !important; background: white !important; }
+            .drag-drop-game { display: none !important; }
+        }
+        body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; line-height: 1.7; min-height: 100vh; }
+        .page { max-width: 880px; margin: 0 auto; padding: 48px 36px 80px; }
+
+        .header { background: linear-gradient(145deg, #1a1a3a, #2d1a5c); padding: 32px 36px 28px; margin-bottom: 48px; display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 16px; border-bottom: 4px solid var(--accent2); }
+        .header-title { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.6rem, 6vw, 4.2rem); letter-spacing: 0.04em; line-height: 1; color: #fff; }
+        .header-title span { color: #d4c9e8; }
+        .header-meta { text-align: right; font-family: 'DM Mono', monospace; font-size: 0.72rem; color: rgba(255,255,255,0.75); text-transform: uppercase; letter-spacing: 0.12em; line-height: 1.9; }
+        .level-badge { display: inline-block; background: rgba(255,255,255,0.15); color: #fff; font-family: 'DM Mono', monospace; font-size: 0.68rem; padding: 3px 10px; margin-top: 6px; border: 1px solid rgba(255,255,255,0.3); }
+
+        .section { margin-bottom: 52px; animation: fadeUp 0.45s ease both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+        .section-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.22em; color: var(--accent); margin-bottom: 5px; }
+        .section-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.85rem; letter-spacing: 0.06em; color: var(--text); border-bottom: 2px solid var(--border); padding-bottom: 10px; margin-bottom: 24px; }
+
+        .reading-text { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--accent2); padding: 28px 32px; font-size: 1.04rem; line-height: 2; font-style: italic; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .reading-text mark { background: var(--gold-light); color: var(--accent); font-style: normal; font-weight: 600; padding: 0 4px; border-radius: 2px; }
+        .comprehension-q { margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); font-style: normal; font-size: 0.9rem; color: var(--muted); }
+        .comprehension-q strong { color: var(--text); display: block; margin-bottom: 10px; font-weight: 600; }
+        .comprehension-q ol { padding-left: 20px; }
+        .comprehension-q li { margin-bottom: 7px; }
+
+        /* ANNONCE CONCERT */
+        .annonce-card { margin-top: 28px; background: var(--surface); border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; }
+        .annonce-header { background: #1a1a3a; padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 2px solid var(--accent2); }
+        .annonce-header-left { display: flex; align-items: center; gap: 12px; }
+        .annonce-tag { background: var(--accent2); color: white; font-family: 'DM Mono', monospace; font-size: 0.62rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 3px 10px; border-radius: 2px; flex-shrink: 0; }
+        .annonce-site { font-family: 'DM Mono', monospace; font-size: 0.65rem; color: rgba(255,255,255,0.4); text-transform: uppercase; letter-spacing: 0.1em; }
+        .annonce-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.45rem; letter-spacing: 0.06em; color: white; }
+        .annonce-body { padding: 24px 28px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: start; }
+        .annonce-poste { display: inline-flex; align-items: center; gap: 8px; background: var(--gold-light); border: 1px solid var(--accent2); padding: 4px 12px; font-family: 'DM Mono', monospace; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); font-weight: 500; margin-bottom: 14px; }
+        .annonce-text { font-size: 0.95rem; line-height: 1.8; color: var(--text); margin-bottom: 18px; }
+        .annonce-text mark { background: var(--gold-light); color: var(--accent); font-weight: 600; padding: 0 4px; border-radius: 2px; }
+        .annonce-details { display: flex; flex-direction: column; gap: 7px; }
+        .annonce-detail-row { display: flex; align-items: baseline; gap: 10px; font-size: 0.87rem; }
+        .detail-icon { font-size: 0.9rem; flex-shrink: 0; }
+        .detail-label { font-family: 'DM Mono', monospace; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); width: 80px; flex-shrink: 0; }
+        .detail-value { color: var(--text); font-weight: 500; }
+        .annonce-sidebar { display: flex; flex-direction: column; align-items: center; gap: 14px; min-width: 140px; }
+        .annonce-avatar { width: 80px; height: 80px; background: var(--gold-light); border: 2px solid var(--accent2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+        .annonce-contact { background: var(--accent); color: white; font-family: 'DM Mono', monospace; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 16px; cursor: default; text-align: center; width: 100%; }
+        .annonce-date { font-family: 'DM Mono', monospace; font-size: 0.6rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; text-align: center; }
+        .annonce-footer-bar { background: var(--surface2); border-top: 1px solid var(--border); padding: 10px 28px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .annonce-genre-chip { display: inline-block; background: #1a1a3a; color: #fff; font-family: 'DM Mono', monospace; font-size: 0.65rem; padding: 3px 10px; letter-spacing: 0.08em; }
+
+        /* VOCABULAIRE */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(195px, 1fr)); gap: 14px; }
+        .vocab-block { background: var(--surface); border: 1px solid var(--border); padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); border-top: 3px solid var(--accent2); }
+        .vocab-block-title { font-family: 'DM Mono', monospace; font-size: 0.67rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent2); margin-bottom: 14px; border-bottom: 1px solid var(--border); padding-bottom: 10px; display: flex; align-items: center; gap: 7px; }
+        .vocab-item { display: flex; justify-content: space-between; align-items: baseline; padding: 5px 0; border-bottom: 1px dashed var(--border); font-size: 0.91rem; gap: 8px; }
+        .vocab-item:last-child { border-bottom: none; }
+        .vocab-fr { font-weight: 500; }
+        .vocab-en { color: var(--muted); font-size: 0.81rem; font-style: italic; text-align: right; flex-shrink: 0; }
+
+        /* GRAMMAIRE CONDITIONNEL PASSÉ */
+        .grammar-block { background: var(--surface); border: 1px solid var(--border); padding: 22px 26px; margin-bottom: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); border-left: 4px solid var(--accent3); }
+        .grammar-block-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; letter-spacing: 0.08em; color: var(--accent3); margin-bottom: 14px; }
+        .structure { background: #e8edf5; border-left: 3px solid var(--accent3); padding: 9px 14px; margin: 10px 0; font-family: 'DM Mono', monospace; font-size: 0.86rem; }
+        .example-list { margin: 10px 0 0; list-style: none; }
+        .example-list li { padding: 4px 0; font-size: 0.92rem; display: flex; align-items: baseline; gap: 8px; }
+        .example-list li::before { content: '→'; color: var(--accent2); font-size: 0.78rem; flex-shrink: 0; }
+        .b1-tag { background: var(--accent3); color: white; font-family: 'DM Mono', monospace; font-size: 0.58rem; padding: 2px 6px; letter-spacing: 0.1em; vertical-align: middle; margin-left: 6px; border-radius: 2px; }
+
+        /* EXERCICES */
+        .exercise-block { background: var(--surface); border: 1px solid var(--border); padding: 26px 28px; margin-bottom: 18px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); border-top: 3px solid var(--accent); }
+        .exercise-title { font-size: 0.95rem; font-weight: 700; color: var(--text); margin-bottom: 6px; display: flex; align-items: center; gap: 12px; }
+        .ex-num { background: var(--accent); color: #fff; font-family: 'DM Mono', monospace; font-size: 0.72rem; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; flex-shrink: 0; border-radius: 2px; }
+        .exercise-instruction { font-size: 0.875rem; color: var(--muted); margin-bottom: 20px; font-style: italic; }
+        .fill-item { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 0.94rem; flex-wrap: wrap; }
+        .fill-item:last-of-type { border-bottom: none; }
+        .fill-num { color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.78rem; width: 22px; flex-shrink: 0; }
+        .fill-text { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; line-height: 2; flex: 1; }
+        input.answer-input { display: inline-block; min-width: 130px; border: none; border-bottom: 2px solid var(--input-border); background: var(--input-bg); padding: 3px 8px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--text); outline: none; transition: border-color 0.2s, background 0.2s; vertical-align: baseline; border-radius: 2px 2px 0 0; }
+        input.answer-input:focus { border-bottom-color: var(--accent); background: var(--gold-light); }
+        input.answer-input.wide { min-width: 220px; }
+        .free-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+        .free-item:last-of-type { border-bottom: none; }
+        .free-label { color: var(--accent); font-family: 'DM Mono', monospace; font-size: 0.78rem; width: 22px; flex-shrink: 0; padding-top: 10px; }
+        .free-content { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .free-prompt { font-size: 0.92rem; font-weight: 500; }
+        textarea.free-input { width: 100%; border: 1px solid var(--input-border); background: var(--input-bg); border-radius: 3px; padding: 8px 10px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--text); resize: vertical; min-height: 52px; outline: none; transition: border-color 0.2s, background 0.2s; line-height: 1.5; }
+        textarea.free-input:focus { border-color: var(--accent); background: var(--gold-light); }
+
+        .reveal-btn { background: none; border: 1px solid var(--border2); color: var(--muted); font-family: 'DM Mono', monospace; font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em; padding: 8px 16px; cursor: pointer; margin-top: 18px; transition: all 0.2s; display: inline-flex; align-items: center; gap: 8px; }
+        .reveal-btn:hover { border-color: var(--accent); color: var(--accent); background: var(--gold-light); }
+        .answer-hidden { display: none; }
+        .answer-box { margin-top: 14px; background: var(--gold-light); border: 1px solid var(--border); border-left: 3px solid var(--correct); padding: 18px 22px; animation: slideDown 0.25s ease; }
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+        .answer-box-title { font-family: 'DM Mono', monospace; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--correct); margin-bottom: 12px; font-weight: 500; }
+        .answer-item { display: flex; gap: 12px; padding: 5px 0; font-size: 0.91rem; align-items: baseline; border-bottom: 1px dashed var(--border); }
+        .answer-item:last-child { border-bottom: none; }
+        .answer-num { color: var(--correct); font-family: 'DM Mono', monospace; font-size: 0.76rem; width: 20px; flex-shrink: 0; }
+        .answer-text { font-weight: 500; }
+
+        /* DIALOGUE */
+        .dialogue-wrapper { background: var(--surface); border: 1px solid var(--border); box-shadow: 0 2px 10px rgba(0,0,0,0.06); overflow: hidden; }
+        .dialogue-header { background: var(--accent3); padding: 14px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 2px solid var(--accent2); }
+        .dialogue-header-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.08em; color: white; }
+        .dialogue-header-sub { font-family: 'DM Mono', monospace; font-size: 0.63rem; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; margin-left: auto; }
+        .dialogue-scene { background: #e8edf5; padding: 10px 24px; font-size: 0.82rem; color: var(--accent3); font-style: italic; font-family: 'DM Mono', monospace; border-bottom: 1px solid var(--border); }
+        .dialogue-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 14px; }
+        .dialogue-line { display: flex; gap: 12px; align-items: flex-start; }
+        .speaker { font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; width: 52px; flex-shrink: 0; padding-top: 10px; }
+        .speaker.lea { color: var(--accent); }
+        .speaker.thomas { color: var(--accent3); }
+        .bubble { flex: 1; background: #f7f5f0; border: 1px solid var(--border); padding: 10px 14px; font-size: 0.93rem; line-height: 1.9; border-radius: 0 6px 6px 6px; display: flex; align-items: center; flex-wrap: wrap; gap: 3px; }
+        .thomas-bubble { background: #e8edf5; border-color: #b0c9d6; border-radius: 6px 0 6px 6px; }
+        input.dialogue-input { display: inline-block; min-width: 110px; border: none; border-bottom: 2px solid var(--input-border); background: rgba(255,255,255,0.6); padding: 2px 6px; font-family: 'DM Sans', sans-serif; font-size: 0.93rem; color: var(--text); outline: none; transition: border-color 0.2s, background 0.2s; vertical-align: baseline; border-radius: 2px 2px 0 0; }
+        input.dialogue-input:focus { border-bottom-color: var(--accent); background: var(--gold-light); }
+        .word-bank { background: #e8edf5; border: 1px dashed var(--border2); padding: 14px 20px; margin: 0 24px; }
+        .word-bank-title { font-family: 'DM Mono', monospace; font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 10px; }
+        .word-chip { display: inline-block; background: white; border: 1px solid var(--border2); padding: 2px 10px; margin: 2px 3px; font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--text); }
+        .dialogue-actions { padding: 16px 24px 20px; border-top: 1px solid var(--border); margin-top: 20px; }
+
+        /* MINI PROJET */
+        .project-card { background: var(--surface); border: 1px solid var(--border); border-top: 3px solid var(--accent2); padding: 28px 32px; box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+        .project-prompt-text { font-size: 1rem; margin-bottom: 22px; }
+        .project-prompts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(175px, 1fr)); gap: 12px; }
+        .project-prompt-item { background: var(--surface2); border: 1px solid var(--border); padding: 16px; font-size: 0.87rem; display: flex; flex-direction: column; gap: 4px; border-left: 3px solid var(--accent2); }
+        .prompt-emoji { font-size: 1.3rem; margin-bottom: 5px; }
+        .prompt-label { font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+        .prompt-hint { color: var(--muted); font-size: 0.81rem; font-style: italic; }
+
+        .footer { margin-top: 60px; padding-top: 18px; border-top: 2px solid var(--accent2); display: flex; justify-content: space-between; font-family: 'DM Mono', monospace; font-size: 0.63rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.12em; }
+        .print-btn { position: fixed; bottom: 26px; right: 26px; background: var(--accent); color: white; border: none; font-family: 'DM Mono', monospace; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; padding: 11px 18px; cursor: pointer; box-shadow: 0 4px 18px rgba(91,45,142,0.35); transition: transform 0.15s, box-shadow 0.15s; z-index: 100; border-radius: 4px; }
+        .print-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(91,45,142,0.45); }
+
+        /* JEU DRAG & DROP */
+        .drag-drop-game { background: var(--surface); border: 2px solid var(--accent2); padding: 20px 24px; margin: 20px 0; border-radius: 4px; }
+        .game-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+        .game-title { font-family: 'Bebas Neue', sans-serif; font-size: 1.2rem; letter-spacing: 0.06em; color: var(--accent); }
+        .game-score { font-family: 'DM Mono', monospace; font-size: 0.8rem; color: var(--muted); }
+        .game-container { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+        .drag-column, .drop-column { flex: 1; min-width: 200px; }
+        .drag-column h4, .drop-column h4 { font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; border-bottom: 2px solid var(--accent2); padding-bottom: 6px; }
+        .drag-items { display: flex; flex-direction: column; gap: 8px; }
+        .drag-item { background: var(--drag-bg); border: 2px solid var(--border2); padding: 10px 16px; border-radius: 4px; cursor: grab; font-size: 0.9rem; text-align: center; transition: all 0.2s; user-select: none; }
+        .drag-item:active { cursor: grabbing; }
+        .drag-item.dragging { opacity: 0.4; }
+        .drag-item.correct { border-color: var(--correct); background: #d4edda; }
+        .drag-item.wrong { border-color: #dc3545; background: #f8d7da; animation: shake 0.3s; }
+        .drag-item.placed { opacity: 0.3; pointer-events: none; }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .drop-items { display: flex; flex-direction: column; gap: 8px; }
+        .drop-item { background: var(--drop-bg); border: 2px dashed var(--border2); padding: 10px 16px; border-radius: 4px; font-size: 0.9rem; text-align: center; min-height: 46px; transition: all 0.2s; }
+        .drop-item.drag-over { border-color: var(--accent); background: var(--gold-light); }
+        .drop-item.filled { border-style: solid; border-color: var(--correct); background: #d4edda; }
+        .drop-item.wrong-filled { border-color: #dc3545; background: #f8d7da; }
+        .game-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; }
+        .game-btn { background: var(--accent); color: white; border: none; font-family: 'DM Mono', monospace; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; padding: 8px 20px; border-radius: 4px; cursor: pointer; transition: background 0.2s; }
+        .game-btn:hover { background: #4a1a7a; }
+        .game-btn.reset { background: var(--border2); }
+        .game-btn.reset:hover { background: #8a7a9b; }
+        .game-result { text-align: center; margin-top: 12px; font-family: 'DM Mono', monospace; font-size: 0.9rem; color: var(--correct); }
+
+        @media (max-width: 620px) {
+            .page { padding: 24px 16px 60px; }
+            .header { grid-template-columns: 1fr; padding: 24px 20px; }
+            .header-meta { text-align: left; }
+            .vocab-grid { grid-template-columns: 1fr 1fr; }
+            .project-prompts-grid { grid-template-columns: 1fr 1fr; }
+            .annonce-body { grid-template-columns: 1fr; }
+            .annonce-sidebar { flex-direction: row; min-width: auto; }
+            .print-btn { display: none; }
+            .game-container { flex-direction: column; }
+            .drag-column, .drop-column { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div>
+                <div class="header-title">🎻 Soirée <span>Classique</span></div>
+            </div>
+            <div class="header-meta">
+                Cours de français<br>
+                Thème : Musique & Conditionnel Passé<br>
+                <span class="level-badge">A2 · B1</span>
+            </div>
+        </header>
+
+        <!-- 1. TEXTE & ANNONCE -->
+        <section class="section">
+            <div class="section-label">Section 01</div>
+            <div class="section-title">Texte — Lecture & Compréhension</div>
+            <div class="reading-text">
+                <mark>Chère Émilie,</mark><br>
+                <mark>J'espère que cette missive te trouvera en pleine forme.</mark> J'ai déniché une <mark>perle rare</mark> dont je souhaite te faire profiter : un concert exceptionnel qui se tiendra samedi prochain à la Philharmonie. Il s'agit de <mark>« L'Aube des Cieux »</mark>, une œuvre magistrale du compositeur contemporain Raphaël Delacroix. La presse musicale en <mark>fait des gorges chaudes</mark> et les connaisseurs s'arrachent déjà les billets. Cela fait <mark>une éternité</mark> que nous n'avons pas partagé un moment d'anthologie ensemble.<br><br>
+                Tu sais à quel point je suis <mark>avide de sensations artistiques</mark>. Ce spectacle promet une <mark>expérience transcendantale</mark>, où l'orchestre symphonique dialogue avec des projections lumineuses d'une beauté saisissante. J'ai eu la chance de visionner une répétition : <mark>c'est à tomber par terre</mark> ! Les musiciens sont d'une <mark>virtuosité confondante</mark>. Si cette proposition te <mark>fait vibrer</mark>, je peux réserver deux fauteuils d'orchestre pour la représentation de 20h30. Qu'en dis-tu ?<br><br>
+                Nous pourrions même <mark>nous offrir un dîner gastronomique</mark> avant au « Clair de Lune », ce restaurant étoilé dont on m'a tant parlé, histoire de <mark>mettre les petits plats dans les grands</mark> (et de <mark>nous délecter d'une conversation</mark> qui n'a pas eu lieu depuis trop longtemps !). L'ambiance y est raffinée, et <mark>ce n'est pas une promesse en l'air</mark> : la carte est un <mark>festin pour les papilles</mark>. Bien entendu, si ce répertoire ne te transporte pas, je suis également tenté par un récital de piano ou un opéra. L'essentiel est de <mark>nous offrir une parenthèse enchantée</mark>.<br><br>
+                Alors, <mark>es-tu des nôtres</mark> ? Fais-moi savoir ce qui te <mark>fait de l'œil</mark>, et je me charge de l'organisation. J'ai cruellement besoin de <mark>m'évader du train-train quotidien</mark> et de <mark>nous offrir un moment d'exception</mark> ! Réponds-moi sans délai, les places <mark>s'arrachent comme des petits pains</mark>. Dans l'attente de te lire !<br>
+                — <mark>Amicalement, Julien</mark> ✨
+
+                <div class="comprehension-q">
+                    <strong>🔍 Questions de compréhension</strong>
+                    <ol>
+                        <li>Quel est le programme du concert proposé par Julien ?</li>
+                        <li>Où a lieu le concert ? (devine d'après le texte)</li>
+                        <li>Que propose Julien de faire avant le concert ?</li>
+                        <li>Pourquoi dit-il qu'il faut réserver vite ?</li>
+                    </ol>
+                </div>
+
+                <!-- ANNONCE CONCERT -->
+                <div class="annonce-card">
+                    <div class="annonce-header">
+                        <div class="annonce-header-left">
+                            <span class="annonce-tag">🎻 Concert</span>
+                            <span class="annonce-name">Philharmonique</span>
+                        </div>
+                        <span class="annonce-site">philharmonique.fr</span>
+                    </div>
+
+                    <div class="annonce-body">
+                        <div class="annonce-main">
+                            <div class="annonce-poste">🎫 L'Aube des Cieux — Création Mondiale</div>
+                            <p class="annonce-text">
+                                L'Orchestre <mark>Philharmonique</mark> vous convie à la <mark>création mondiale</mark> de <mark>« L'Aube des Cieux »</mark>, une œuvre audacieuse du compositeur Raphaël Delacroix. Un <mark>chef-d'œuvre</mark> de la musique contemporaine, interprété par quatre-vingts musiciens. La soirée sera sublimée par un <mark>jeu de lumières</mark> immersif et des <mark>effets visuels</mark> spectaculaires. Une <mark>avant-première</mark> à ne pas manquer !<br><br>
+                                Au programme : <mark>concerto pour piano</mark>, <mark>cordes</mark> et <mark>cuivres</mark>. L'orchestre sera dirigé par la talentueuse <mark>chef d'orchestre</mark> Helena Novak. Un véritable <mark>voyage acoustique</mark> !
+                            </p>
+                            <div class="annonce-details">
+                                <div class="annonce-detail-row"><span class="detail-icon">📍</span><span class="detail-label">Lieu</span><span class="detail-value">Philharmonie de Paris, Salle des Concerts</span></div>
+                                <div class="annonce-detail-row"><span class="detail-icon">📅</span><span class="detail-label">Date</span><span class="detail-value">Samedi 5 juillet 2026, 20h30</span></div>
+                                <div class="annonce-detail-row"><span class="detail-icon">🎟️</span><span class="detail-label">Billets</span><span class="detail-value">35 € à 85 € (tarif réduit)</span></div>
+                                <div class="annonce-detail-row"><span class="detail-icon">🔗</span><span class="detail-label">Réservation</span><span class="detail-value">en ligne sur philharmonique.fr</span></div>
+                            </div>
+                        </div>
+                        <div class="annonce-sidebar">
+                            <div class="annonce-avatar">🎵</div>
+                            <div class="annonce-contact">Réserver</div>
+                            <div class="annonce-date">Publiée le 15 juin 2026</div>
+                        </div>
+                    </div>
+                    <div class="annonce-footer-bar">
+                        <span class="annonce-footer-label">Style :</span>
+                        <span class="annonce-genre-chip">Contemporain</span>
+                        <span class="annonce-genre-chip">Classique</span>
+                        <span class="annonce-genre-chip">Symphonique</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. VOCABULAIRE -->
+        <section class="section">
+            <div class="section-label">Section 02</div>
+            <div class="section-title">Vocabulaire — Concert & Sortie Culturelle</div>
+            <div class="vocab-grid">
+                <div class="vocab-block">
+                    <div class="vocab-block-title"><span>🎵</span> Le concert</div>
+                    <div class="vocab-item"><span class="vocab-fr">un concert</span><span class="vocab-en">concert</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un orchestre</span><span class="vocab-en">orchestra</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un chef d'orchestre</span><span class="vocab-en">conductor</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un musicien</span><span class="vocab-en">musician</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un violon</span><span class="vocab-en">violin</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un piano</span><span class="vocab-en">piano</span></div>
+                </div>
+                <div class="vocab-block">
+                    <div class="vocab-block-title"><span>🎫</span> Billets & Lieux</div>
+                    <div class="vocab-item"><span class="vocab-fr">un billet / une place</span><span class="vocab-en">ticket</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">la billetterie</span><span class="vocab-en">ticket office</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">une avant-première</span><span class="vocab-en">preview</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un opéra</span><span class="vocab-en">opera house</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">une salle de concert</span><span class="vocab-en">concert hall</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">faire la queue</span><span class="vocab-en">to queue</span></div>
+                </div>
+                <div class="vocab-block">
+                    <div class="vocab-block-title"><span>💬</span> Expressions (invitation)</div>
+                    <div class="vocab-item"><span class="vocab-fr">Une perle rare</span><span class="vocab-en">a rare gem</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">Faire des gorges chaudes</span><span class="vocab-en">to rave about</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">Une éternité</span><span class="vocab-en">forever / ages</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">C'est à tomber par terre</span><span class="vocab-en">it's mind-blowing</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">Mettre les petits plats dans les grands</span><span class="vocab-en">to go all out</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">S'arracher comme des petits pains</span><span class="vocab-en">to be snapped up</span></div>
+                </div>
+                <div class="vocab-block">
+                    <div class="vocab-block-title"><span>🎭</span> Culture & Sortie</div>
+                    <div class="vocab-item"><span class="vocab-fr">un chef-d'œuvre</span><span class="vocab-en">masterpiece</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">une expérience transcendantale</span><span class="vocab-en">transcendental experience</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un entracte</span><span class="vocab-en">intermission</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">se donner rendez-vous</span><span class="vocab-en">to meet up</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">s'évader du train-train quotidien</span><span class="vocab-en">to escape daily routine</span></div>
+                    <div class="vocab-item"><span class="vocab-fr">un voyage acoustique</span><span class="vocab-en">acoustic journey</span></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- JEU DRAG & DROP -->
+        <section class="section">
+            <div class="section-label">Section 03</div>
+            <div class="section-title">Jeu — Associe l'anglais au français</div>
+            <div class="drag-drop-game" id="dragDropGame">
+                <div class="game-header">
+                    <span class="game-title">🇬🇧 ↔ 🇫🇷 Glisser-déposer</span>
+                    <span class="game-score" id="gameScore">0 / 8</span>
+                </div>
+                <p style="font-size:0.9rem;color:var(--muted);margin-bottom:16px;">Fais glisser chaque mot anglais (à gauche) vers sa traduction française (à droite). Toutes les réponses viennent du vocabulaire ci-dessus !</p>
+                <div class="game-container">
+                    <div class="drag-column">
+                        <h4>🇬🇧 Anglais</h4>
+                        <div class="drag-items" id="dragItems"></div>
+                    </div>
+                    <div class="drop-column">
+                        <h4>🇫🇷 Français</h4>
+                        <div class="drop-items" id="dropItems"></div>
+                    </div>
+                </div>
+                <div class="game-buttons">
+                    <button class="game-btn" id="checkGameBtn">✅ Vérifier</button>
+                    <button class="game-btn reset" id="resetGameBtn">↺ Recommencer</button>
+                </div>
+                <div class="game-result" id="gameResult"></div>
+            </div>
+        </section>
+
+        <!-- 4. GRAMMAIRE : CONDITIONNEL PASSÉ -->
+        <section class="section">
+            <div class="section-label">Section 04</div>
+            <div class="section-title">Point de Grammaire — Le Conditionnel Passé</div>
+
+            <div class="grammar-block">
+                <div class="grammar-block-title">🎯 Formation du conditionnel passé</div>
+                <div class="structure">auxiliaire (avoir ou être) au conditionnel présent + participe passé du verbe</div>
+                <ul class="example-list">
+                    <li><strong>écouter</strong> → j'<strong>aurais écouté</strong>, tu <strong>aurais écouté</strong>, il <strong>aurait écouté</strong>, nous <strong>aurions écouté</strong>, vous <strong>auriez écouté</strong>, ils <strong>auraient écouté</strong></li>
+                    <li><strong>venir</strong> → je <strong>serais venu(e)</strong>, tu <strong>serais venu(e)</strong>, il <strong>serait venu</strong>, elle <strong>serait venue</strong>, nous <strong>serions venu(e)s</strong>…</li>
+                    <li><strong>aller</strong> → je <strong>serais allé(e)</strong>, tu <strong>serais allé(e)</strong>, il <strong>serait allé</strong>…</li>
+                    <li><strong>se donner</strong> → je me <strong>serais donné(e)</strong>, tu te <strong>serais donné(e)</strong>…</li>
+                </ul>
+                <div class="structure" style="margin-top:10px;">⚠️ Avec <strong>être</strong>, le participe passé s'accorde avec le sujet.</div>
+            </div>
+
+            <div class="grammar-block">
+                <div class="grammar-block-title">🎯 Usages du conditionnel passé</div>
+
+                <div class="structure">1. Exprimer un regret ou un reproche</div>
+                <ul class="example-list">
+                    <li>J'<strong>aurais aimé</strong> assister à ce concert.</li>
+                    <li>Tu <strong>aurais dû</strong> réserver les billets plus tôt.</li>
+                    <li>Nous <strong>aurions pu</strong> voir l'orchestre en coulisses.</li>
+                </ul>
+
+                <div class="structure" style="margin-top:14px;">2. Faire une hypothèse sur le passé (irréel du passé)</div>
+                <ul class="example-list">
+                    <li>Si j'avais su, je <strong>serais venu(e)</strong> au concert.</li>
+                    <li>Si nous avions eu plus de temps, nous <strong>aurions écouté</strong> le deuxième mouvement.</li>
+                    <li>Si elle avait pris des billets, elle <strong>aurait assisté</strong> à la représentation.</li>
+                </ul>
+
+                <div class="structure" style="margin-top:14px;">3. Exprimer une supposition / une information non confirmée <span class="b1-tag">B1</span></div>
+                <ul class="example-list">
+                    <li>Le chef d'orchestre <strong>aurait été</strong> malade hier.</li>
+                    <li>Les musiciens <strong>auraient joué</strong> un rappel, mais je n'en suis pas sûr.</li>
+                </ul>
+
+                <div class="structure" style="margin-top:14px;">4. Dans une proposition au discours indirect <span class="b1-tag">B1</span></div>
+                <ul class="example-list">
+                    <li>Elle a dit qu'elle <strong>serait venue</strong> au concert si elle avait su.</li>
+                    <li>Il a raconté qu'il <strong>aurait aimé</strong> être chef d'orchestre.</li>
+                </ul>
+            </div>
+
+            <div class="grammar-block">
+                <div class="grammar-block-title">🔍 Conditionnel présent vs passé</div>
+                <div class="structure">Présent → hypothèse possible / souhait actuel</div>
+                <ul class="example-list">
+                    <li>Je <strong>voudrais</strong> aller à ce concert. <em style="color:var(--muted)">(maintenant)</em></li>
+                    <li>Si j'avais le temps, j'<strong>irais</strong> au concert. <em style="color:var(--muted)">(maintenant / futur)</em></li>
+                </ul>
+                <div class="structure" style="margin-top:10px;">Passé → hypothèse sur le passé / regret</div>
+                <ul class="example-list">
+                    <li>J'<strong>aurais voulu</strong> aller à ce concert. <em style="color:var(--muted)">(dans le passé, impossible)</em></li>
+                    <li>Si j'avais eu le temps, je <strong>serais allé</strong> au concert. <em style="color:var(--muted)">(passé irréel)</em></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. EXERCICES -->
+        <section class="section">
+            <div class="section-label">Section 05</div>
+            <div class="section-title">Exercices — Conditionnel Passé & Vocabulaire</div>
+
+            <!-- EX 1 : Conditionnel passé -->
+            <div class="exercise-block">
+                <div class="exercise-title"><span class="ex-num">1</span> Conditionnel passé — conjugue le verbe</div>
+                <div class="exercise-instruction">Conjugue le verbe au conditionnel passé, selon le sujet et le sens de la phrase.</div>
+                <div class="fill-item"><span class="fill-num">1.</span><div class="fill-text">Si j'avais su, je <input type="text" class="answer-input" placeholder="…"> (venir) au concert.</div></div>
+                <div class="fill-item"><span class="fill-num">2.</span><div class="fill-text">Elle <input type="text" class="answer-input" placeholder="…"> (vouloir) être violoniste, mais elle a choisi le piano.</div></div>
+                <div class="fill-item"><span class="fill-num">3.</span><div class="fill-text">Nous <input type="text" class="answer-input" placeholder="…"> (pouvoir) acheter des places au parterre.</div></div>
+                <div class="fill-item"><span class="fill-num">4.</span><div class="fill-text">Tu <input type="text" class="answer-input" placeholder="…"> (devoir) réserver tes billets à l'avance.</div></div>
+                <div class="fill-item"><span class="fill-num">5.</span><div class="fill-text">Ils <input type="text" class="answer-input" placeholder="…"> (jouer) un morceau de Mozart, mais ils ont choisi Vivaldi.</div></div>
+                <div class="fill-item"><span class="fill-num">6.</span><div class="fill-text">Je <input type="text" class="answer-input" placeholder="…"> (aller) à l'opéra si j'avais eu le temps.</div></div>
+                <button class="reveal-btn" onclick="toggleAnswer(this)"><span>👁</span> Afficher les réponses</button>
+                <div class="answer-hidden answer-box">
+                    <div class="answer-box-title">✓ Réponses — Exercice 1</div>
+                    <div class="answer-item"><span class="answer-num">1.</span><span class="answer-text">serais venu(e)</span></div>
+                    <div class="answer-item"><span class="answer-num">2.</span><span class="answer-text">aurait voulu</span></div>
+                    <div class="answer-item"><span class="answer-num">3.</span><span class="answer-text">aurions pu</span></div>
+                    <div class="answer-item"><span class="answer-num">4.</span><span class="answer-text">aurais dû</span></div>
+                    <div class="answer-item"><span class="answer-num">5.</span><span class="answer-text">auraient joué</span></div>
+                    <div class="answer-item"><span class="answer-num">6.</span><span class="answer-text">serais allé(e)</span></div>
+                </div>
+            </div>
+
+            <!-- EX 2 : Vocabulaire -->
+            <div class="exercise-block">
+                <div class="exercise-title"><span class="ex-num">2</span> Vocabulaire — complète les phrases</div>
+                <div class="exercise-instruction">Utilise les mots du vocabulaire ci-dessus pour compléter.</div>
+                <div class="fill-item"><span class="fill-num">1.</span><div class="fill-text">Le <input type="text" class="answer-input wide" placeholder="…"> dirigeait l'orchestre avec passion.</div></div>
+                <div class="fill-item"><span class="fill-num">2.</span><div class="fill-text">Nous avons acheté des <input type="text" class="answer-input wide" placeholder="…"> pour le concert de samedi.</div></div>
+                <div class="fill-item"><span class="fill-num">3.</span><div class="fill-text">Les <input type="text" class="answer-input wide" placeholder="…"> ont joué un concerto pour piano.</div></div>
+                <div class="fill-item"><span class="fill-num">4.</span><div class="fill-text">Il y avait une <input type="text" class="answer-input wide" placeholder="…"> pour les billets devant la salle.</div></div>
+                <div class="fill-item"><span class="fill-num">5.</span><div class="fill-text">Cette symphonie est un véritable <input type="text" class="answer-input wide" placeholder="…"> de la musique contemporaine.</div></div>
+                <div class="fill-item"><span class="fill-num">6.</span><div class="fill-text">Pendant l'<input type="text" class="answer-input wide" placeholder="…">, nous avons discuté du spectacle.</div></div>
+                <button class="reveal-btn" onclick="toggleAnswer(this)"><span>👁</span> Afficher les réponses</button>
+                <div class="answer-hidden answer-box">
+                    <div class="answer-box-title">✓ Réponses — Exercice 2</div>
+                    <div class="answer-item"><span class="answer-num">1.</span><span class="answer-text">chef d'orchestre</span></div>
+                    <div class="answer-item"><span class="answer-num">2.</span><span class="answer-text">billets</span></div>
+                    <div class="answer-item"><span class="answer-num">3.</span><span class="answer-text">musiciens</span></div>
+                    <div class="answer-item"><span class="answer-num">4.</span><span class="answer-text">queue</span></div>
+                    <div class="answer-item"><span class="answer-num">5.</span><span class="answer-text">chef-d'œuvre</span></div>
+                    <div class="answer-item"><span class="answer-num">6.</span><span class="answer-text">entracte</span></div>
+                </div>
+            </div>
+
+            <!-- EX 3 : Production libre -->
+            <div class="exercise-block">
+                <div class="exercise-title"><span class="ex-num">3</span> Parler de soi — Production libre</div>
+                <div class="exercise-instruction">Complète ces phrases avec tes propres idées. Utilise le conditionnel passé quand c'est possible.</div>
+                <div class="free-item"><span class="free-label">1.</span><div class="free-content"><span class="free-prompt">J'aurais aimé assister à…</span><textarea class="free-input" placeholder="Ex: … un concert de Beethoven." rows="2"></textarea></div></div>
+                <div class="free-item"><span class="free-label">2.</span><div class="free-content"><span class="free-prompt">Si j'avais su, je serais allé(e)…</span><textarea class="free-input" placeholder="Ex: … à l'opéra la semaine dernière." rows="2"></textarea></div></div>
+                <div class="free-item"><span class="free-label">3.</span><div class="free-content"><span class="free-prompt">J'aurais aimé apprendre à jouer…</span><textarea class="free-input" placeholder="Ex: … du violon." rows="2"></textarea></div></div>
+                <div class="free-item"><span class="free-label">4.</span><div class="free-content"><span class="free-prompt">Si j'avais eu plus de temps, j'aurais…</span><textarea class="free-input" placeholder="Ex: … écouté plus de musique classique." rows="2"></textarea></div></div>
+            </div>
+        </section>
+
+        <!-- 6. DIALOGUE -->
+        <section class="section">
+            <div class="section-label">Section 06</div>
+            <div class="section-title">Dialogue à Trous — Invitation au concert</div>
+
+            <div class="dialogue-wrapper">
+                <div class="dialogue-header">
+                    <div class="dialogue-header-title">💬 Conversation entre amis</div>
+                    <div class="dialogue-header-sub">Exercice 4 — Complète le dialogue</div>
+                </div>
+                <div class="dialogue-scene">📍 Samia appelle Karim pour l'inviter au concert « L'Aube des Cieux ».</div>
+
+                <div class="dialogue-body">
+                    <div class="dialogue-line"><span class="speaker lea">Samia</span><div class="bubble">Salut ! J'ai déniché une <input type="text" class="dialogue-input" placeholder="…"> rare : un concert classique samedi. Serais-tu partant ?</div></div>
+                    <div class="dialogue-line"><span class="speaker thomas">Karim</span><div class="bubble thomas-bubble">Super idée ! J'aimerais voir l'<input type="text" class="dialogue-input" placeholder="…"> jouer cette symphonie contemporaine.</div></div>
+                    <div class="dialogue-line"><span class="speaker lea">Samia</span><div class="bubble">Il paraît que le <input type="text" class="dialogue-input" placeholder="…"> est exceptionnel.</div></div>
+                    <div class="dialogue-line"><span class="speaker thomas">Karim</span><div class="bubble thomas-bubble">Il faut qu'on achète les <input type="text" class="dialogue-input" placeholder="…"> vite, ils <input type="text" class="dialogue-input" placeholder="…"> comme des petits pains !</div></div>
+                    <div class="dialogue-line"><span class="speaker lea">Samia</span><div class="bubble">On pourrait se donner <input type="text" class="dialogue-input" placeholder="…"> devant la salle à 19h.</div></div>
+                    <div class="dialogue-line"><span class="speaker thomas">Karim</span><div class="bubble thomas-bubble">Parfait ! Et après le concert, on pourrait <input type="text" class="dialogue-input" placeholder="…"> pour prolonger la soirée.</div></div>
+                </div>
+
+                <div class="word-bank">
+                    <div class="word-bank-title">📦 Banque de mots</div>
+                    <span class="word-chip">perle</span>
+                    <span class="word-chip">orchestre</span>
+                    <span class="word-chip">chef d'orchestre</span>
+                    <span class="word-chip">billets</span>
+                    <span class="word-chip">s'arrachent</span>
+                    <span class="word-chip">rendez-vous</span>
+                    <span class="word-chip">dîner</span>
+                </div>
+
+                <div class="dialogue-actions">
+                    <button class="reveal-btn" onclick="toggleAnswer(this)"><span>👁</span> Afficher les réponses du dialogue</button>
+                    <div class="answer-hidden answer-box">
+                        <div class="answer-box-title">✓ Réponses — Dialogue (Exercice 4)</div>
+                        <div class="answer-item"><span class="answer-num">1.</span><span class="answer-text">Samia : « une <strong>perle</strong> rare »</span></div>
+                        <div class="answer-item"><span class="answer-num">2.</span><span class="answer-text">Karim : « voir l'<strong>orchestre</strong> jouer »</span></div>
+                        <div class="answer-item"><span class="answer-num">3.</span><span class="answer-text">Samia : « le <strong>chef d'orchestre</strong> est exceptionnel »</span></div>
+                        <div class="answer-item"><span class="answer-num">4.</span><span class="answer-text">Karim : « les <strong>billets</strong>, ils <strong>s'arrachent</strong> comme des petits pains »</span></div>
+                        <div class="answer-item"><span class="answer-num">5.</span><span class="answer-text">Samia : « se donner <strong>rendez-vous</strong> devant la salle »</span></div>
+                        <div class="answer-item"><span class="answer-num">6.</span><span class="answer-text">Karim : « on pourrait <strong>dîner</strong> pour prolonger »</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. MINI PROJET -->
+        <section class="section">
+            <div class="section-label">Section 07</div>
+            <div class="section-title">Mini-Projet — Invitation & Conditionnel Passé</div>
+            <div class="project-card">
+                <p class="project-prompt-text">👉 Rédige un message pour inviter un ami à un concert de musique classique. Utilise <strong>au moins 3 conditionnels passés</strong> et le vocabulaire de la fiche.</p>
+                <div class="project-prompts-grid">
+                    <div class="project-prompt-item"><span class="prompt-emoji">🎻</span><span class="prompt-label">Le concert</span><span class="prompt-hint">Quel orchestre ? Quel programme ?</span></div>
+                    <div class="project-prompt-item"><span class="prompt-emoji">📅</span><span class="prompt-label">Le moment</span><span class="prompt-hint">Quand ? Où ?</span></div>
+                    <div class="project-prompt-item"><span class="prompt-emoji">🍽️</span><span class="prompt-label">Avant / après</span><span class="prompt-hint">Restaurant, balade, etc.</span></div>
+                    <div class="project-prompt-item"><span class="prompt-emoji">🎟️</span><span class="prompt-label">Réservation</span><span class="prompt-hint">Billets, organisation</span></div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span>Cours de français — Concert classique & Conditionnel passé</span>
+            <span>Niveau A2 / B1</span>
+        </footer>
+
+    </div>
+
+    <button class="print-btn" onclick="window.print()">🖨 Imprimer</button>
+
+    <script>
+        // Toggle answers
+        function toggleAnswer(btn) {
+            const box = btn.nextElementSibling;
+            const hidden = box.classList.contains('answer-hidden');
+            if (hidden) {
+                box.classList.remove('answer-hidden');
+                btn.innerHTML = '<span>🙈</span> Masquer les réponses';
+            } else {
+                box.classList.add('answer-hidden');
+                btn.innerHTML = '<span>👁</span> Afficher les réponses';
+            }
+        }
+
+        // Drag & Drop Game
+        const gameData = [
+            { en: 'concert', fr: 'un concert' },
+            { en: 'orchestra', fr: 'un orchestre' },
+            { en: 'conductor', fr: 'un chef d\'orchestre' },
+            { en: 'musician', fr: 'un musicien' },
+            { en: 'ticket', fr: 'un billet' },
+            { en: 'masterpiece', fr: 'un chef-d\'œuvre' },
+            { en: 'intermission', fr: 'un entracte' },
+            { en: 'to queue', fr: 'faire la queue' }
+        ];
+
+        let gameState = [];
+        let dragItem = null;
+
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function initGame() {
+            const dragContainer = document.getElementById('dragItems');
+            const dropContainer = document.getElementById('dropItems');
+            const scoreSpan = document.getElementById('gameScore');
+            const resultDiv = document.getElementById('gameResult');
+
+            const shuffled = shuffle([...gameData]);
+            gameState = gameData.map(item => ({
+                ...item,
+                placed: false,
+                matched: false
+            }));
+
+            dragContainer.innerHTML = '';
+            dropContainer.innerHTML = '';
+
+            shuffled.forEach((item, index) => {
+                const dragEl = document.createElement('div');
+                dragEl.className = 'drag-item';
+                dragEl.textContent = item.en;
+                dragEl.dataset.index = index;
+                dragEl.draggable = true;
+                dragEl.addEventListener('dragstart', handleDragStart);
+                dragEl.addEventListener('dragend', handleDragEnd);
+                dragContainer.appendChild(dragEl);
+            });
+
+            const dropOrder = shuffle([...gameData]);
+            dropOrder.forEach((item, index) => {
+                const dropEl = document.createElement('div');
+                dropEl.className = 'drop-item';
+                dropEl.textContent = item.fr;
+                dropEl.dataset.fr = item.fr;
+                dropEl.dataset.matched = 'false';
+                dropEl.addEventListener('dragover', handleDragOver);
+                dropEl.addEventListener('dragenter', handleDragEnter);
+                dropEl.addEventListener('dragleave', handleDragLeave);
+                dropEl.addEventListener('drop', handleDrop);
+                dropContainer.appendChild(dropEl);
+            });
+
+            updateScore();
+            resultDiv.textContent = '';
+        }
+
+        function handleDragStart(e) {
+            dragItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/plain', this.dataset.index);
+        }
+
+        function handleDragEnd(e) {
+            this.classList.remove('dragging');
+            document.querySelectorAll('.drop-item.drag-over').forEach(el => el.classList.remove('drag-over'));
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+
+        function handleDragEnter(e) {
+            e.preventDefault();
+            this.classList.add('drag-over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('drag-over');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            this.classList.remove('drag-over');
+
+            const dragIndex = e.dataTransfer.getData('text/plain');
+            const dragEl = document.querySelector(`.drag-item[data-index="${dragIndex}"]`);
+            if (!dragEl) return;
+
+            const dropFr = this.dataset.fr;
+            const gameItem = gameData[parseInt(dragIndex)];
+
+            if (gameState[parseInt(dragIndex)].placed) return;
+            if (this.dataset.matched === 'true') return;
+
+            if (gameItem.fr === dropFr) {
+                this.classList.remove('wrong-filled');
+                this.classList.add('filled');
+                this.dataset.matched = 'true';
+                dragEl.classList.add('placed');
+                gameState[parseInt(dragIndex)].placed = true;
+                gameState[parseInt(dragIndex)].matched = true;
+                dragEl.classList.remove('wrong');
+                dragEl.classList.add('correct');
+                updateScore();
+                checkWin();
+            } else {
+                dragEl.classList.add('wrong');
+                this.classList.add('wrong-filled');
+                setTimeout(() => {
+                    dragEl.classList.remove('wrong');
+                    this.classList.remove('wrong-filled');
+                }, 600);
+            }
+        }
+
+        function updateScore() {
+            const total = gameData.length;
+            const matched = gameState.filter(item => item.matched).length;
+            document.getElementById('gameScore').textContent = `${matched} / ${total}`;
+        }
+
+        function checkWin() {
+            const allMatched = gameState.every(item => item.matched);
+            const resultDiv = document.getElementById('gameResult');
+            if (allMatched) {
+                resultDiv.textContent = '🎉 Bravo ! Toutes les associations sont correctes !';
+                resultDiv.style.color = 'var(--correct)';
+            } else {
+                const matched = gameState.filter(item => item.matched).length;
+                resultDiv.textContent = `✅ ${matched} / ${gameData.length} bonnes associations. Continue !`;
+                resultDiv.style.color = 'var(--muted)';
+            }
+        }
+
+        function resetGame() {
+            document.querySelectorAll('.drag-item').forEach(el => {
+                el.classList.remove('placed', 'correct', 'wrong');
+                el.draggable = true;
+            });
+            document.querySelectorAll('.drop-item').forEach(el => {
+                el.classList.remove('filled', 'wrong-filled', 'drag-over');
+                el.dataset.matched = 'false';
+            });
+            gameState.forEach(item => {
+                item.placed = false;
+                item.matched = false;
+            });
+            document.getElementById('gameResult').textContent = '';
+            updateScore();
+
+            const dragContainer = document.getElementById('dragItems');
+            const items = Array.from(dragContainer.children);
+            shuffle(items);
+            items.forEach(item => dragContainer.appendChild(item));
+        }
+
+        document.getElementById('checkGameBtn').addEventListener('click', function() {
+            const dropItems = document.querySelectorAll('.drop-item');
+            let allCorrect = true;
+            dropItems.forEach(drop => {
+                if (drop.dataset.matched !== 'true') {
+                    allCorrect = false;
+                }
+            });
+            const resultDiv = document.getElementById('gameResult');
+            if (allCorrect && gameState.every(item => item.matched)) {
+                resultDiv.textContent = '🎉 Parfait ! Toutes les associations sont correctes !';
+                resultDiv.style.color = 'var(--correct)';
+            } else {
+                const matched = gameState.filter(item => item.matched).length;
+                resultDiv.textContent = `✅ ${matched} / ${gameData.length} bonnes associations. Continue !`;
+                resultDiv.style.color = 'var(--muted)';
+            }
+        });
+
+        document.getElementById('resetGameBtn').addEventListener('click', resetGame);
+
+        document.addEventListener('DOMContentLoaded', initGame);
+    </script>
+</body>
+</html>
