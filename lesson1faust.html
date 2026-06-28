@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faust · French Diction Coach · Conductor's Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  /* ============================================================
+     ROOT & RESET
+     ============================================================ */
+  :root {
+    --bg: #f8f5ef;
+    --bg-card: #ffffff;
+    --text: #1e1a16;
+    --text2: #4a3f38;
+    --text3: #7a6e64;
+    --gold: #b8862a;
+    --gold2: #d4a843;
+    --gold-light: #f5edd9;
+    --crimson: #8b2020;
+    --crimson2: #b03030;
+    --crimson-light: #faf0f0;
+    --navy: #1a2a4a;
+    --navy-light: #eef2f8;
+    --forest: #1e5a3a;
+    --forest-light: #eef8f2;
+    --border: #e2dcd2;
+    --shadow: 0 4px 20px rgba(60,40,20,0.08);
+    --shadow-hover: 0 8px 32px rgba(60,40,20,0.16);
+    --radius: 4px;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    font-family: var(--font-body);
+    color: var(--text);
+    line-height: 1.7;
+    padding: 0;
+    min-height: 100vh;
+  }
+
+  /* ============================================================
+     HEADER
+     ============================================================ */
+  .header {
+    background: var(--navy);
+    color: #fff;
+    padding: 2.5rem 1.5rem 2rem;
+    text-align: center;
+    border-bottom: 4px solid var(--gold);
+  }
+  .header-ornament {
+    font-size: 0.75rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    font-weight: 400;
+    margin-bottom: 0.6rem;
+  }
+  .header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .header h1 span { color: var(--gold2); }
+  .header-sub {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.7);
+    margin-top: 0.3rem;
+  }
+  .header-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1.2rem;
+  }
+  .badge {
+    border: 1px solid rgba(212,168,67,0.4);
+    color: var(--gold2);
+    padding: 0.25rem 1rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    font-weight: 400;
+  }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  .nav {
+    background: #fff;
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    padding: 0.9rem 1.2rem;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text3);
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active {
+    color: var(--navy);
+    border-bottom-color: var(--gold);
+    background: rgba(184,134,42,0.04);
+  }
+
+  /* ============================================================
+     MAIN
+     ============================================================ */
+  .main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+  .section {
+    display: none;
+    animation: fadeUp 0.35s ease;
+  }
+  .section.active { display: block; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--crimson);
+    border-bottom: 2px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, var(--border), transparent);
+  }
+  .section-sub {
+    font-size: 0.85rem;
+    color: var(--text3);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  h3 {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text);
+    margin: 1.8rem 0 0.6rem;
+  }
+
+  p { margin-bottom: 0.8rem; color: var(--text2); font-size: 0.98rem; }
+
+  /* ============================================================
+     CARDS
+     ============================================================ */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.6rem;
+    margin-bottom: 1.2rem;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.2s;
+  }
+  .card:hover { box-shadow: var(--shadow-hover); }
+  .card-gold {
+    border-left: 4px solid var(--gold);
+    background: var(--gold-light);
+  }
+  .card-crimson {
+    border-left: 4px solid var(--crimson);
+    background: var(--crimson-light);
+  }
+  .card-navy {
+    border-left: 4px solid var(--navy);
+    background: var(--navy-light);
+  }
+  .card-forest {
+    border-left: 4px solid var(--forest);
+    background: var(--forest-light);
+  }
+
+  /* ============================================================
+     AUDIO PLAYER
+     ============================================================ */
+  .audio-player {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: var(--bg);
+    padding: 0.4rem 1rem 0.4rem 0.8rem;
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    margin: 0.2rem 0.3rem 0.2rem 0;
+    font-size: 0.85rem;
+  }
+  .audio-player button {
+    background: var(--navy);
+    border: none;
+    color: #fff;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.8rem;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .audio-player button:hover { background: var(--gold); }
+  .audio-player .label {
+    font-weight: 500;
+    color: var(--text2);
+    margin-right: 0.2rem;
+  }
+  .audio-player .ipa {
+    font-family: 'Courier New', monospace;
+    color: var(--text3);
+    font-size: 0.8rem;
+  }
+
+  .audio-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0.5rem 0 1rem 0;
+  }
+
+  /* ============================================================
+     TEXT ANNOTATION (The Diction Display)
+     ============================================================ */
+  .diction-box {
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.8rem 2rem;
+    margin: 1.5rem 0;
+    box-shadow: var(--shadow);
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 2;
+    color: var(--text);
+  }
+  .diction-box .fr { font-weight: 400; }
+  .diction-box .en { font-size: 0.85rem; color: var(--text3); font-family: var(--font-body); font-weight: 400; line-height: 1.6; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border); }
+  .diction-box .ipa {
+    font-size: 0.85rem;
+    color: var(--text3);
+    font-family: 'Courier New', monospace;
+    margin-top: 0.2rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
+  }
+
+  /* Annotation colors */
+  .liaison { color: #1a5a9c; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #1a5a9c; text-decoration-thickness: 2px; }
+  .liaison::after { content: '‿'; font-size: 0.7em; color: #1a5a9c; margin-left: 0.05em; }
+  .e-muet { color: #b0a8a0; text-decoration: line-through; text-decoration-color: #b0a8a0; }
+  .accent { font-weight: 700; color: var(--crimson); }
+  .breath { color: var(--gold); font-weight: 300; }
+  .breath::after { content: ' | '; color: var(--gold); opacity: 0.5; }
+  .nasal { color: var(--forest); font-weight: 600; border-bottom: 2px dotted var(--forest); }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    padding: 1rem 0 0.5rem;
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    color: var(--text2);
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .legend-swatch {
+    display: inline-block;
+    width: 18px;
+    height: 3px;
+    border-radius: 2px;
+  }
+  .swatch-liaison { background: #1a5a9c; }
+  .swatch-e { background: #b0a8a0; }
+  .swatch-accent { background: var(--crimson); height: 4px; }
+  .swatch-breath { background: var(--gold); }
+  .swatch-nasal { background: var(--forest); height: 4px; border-radius: 2px; }
+
+  /* ============================================================
+     RULES GRID
+     ============================================================ */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1rem 0;
+  }
+  .rule-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.2rem 1.3rem;
+    box-shadow: var(--shadow);
+  }
+  .rule-card .num {
+    display: inline-block;
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.1rem 0.6rem;
+    border-radius: 2px;
+    margin-bottom: 0.4rem;
+    letter-spacing: 0.1em;
+  }
+  .rule-card h4 {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+  .rule-card p {
+    font-size: 0.88rem;
+    color: var(--text2);
+    margin: 0 0 0.3rem 0;
+    line-height: 1.6;
+  }
+  .rule-card .ex {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--crimson);
+    font-size: 0.92rem;
+    margin-top: 0.3rem;
+  }
+  .rule-card .ex-faust {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--navy);
+    font-size: 0.9rem;
+    margin-top: 0.2rem;
+    padding: 0.3rem 0.6rem;
+    background: var(--navy-light);
+    border-radius: 3px;
+    border-left: 3px solid var(--navy);
+  }
+
+  /* ============================================================
+     EXERCISES
+     ============================================================ */
+  .exercise-block {
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.8rem;
+    margin: 1.2rem 0;
+    box-shadow: var(--shadow);
+  }
+  .exercise-block .ex-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+  .exercise-block .ex-desc {
+    font-size: 0.9rem;
+    color: var(--text2);
+    margin-bottom: 0.8rem;
+  }
+  .exercise-block .ex-line {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    padding: 0.4rem 0.6rem;
+    background: var(--bg);
+    border-radius: 3px;
+    margin: 0.3rem 0;
+    border-left: 3px solid var(--gold);
+  }
+  .exercise-block .ex-line .num {
+    color: var(--text3);
+    font-size: 0.8rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    margin-right: 0.5rem;
+  }
+
+  /* ============================================================
+     TABLE
+     ============================================================ */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 1rem 0;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    font-size: 0.92rem;
+  }
+  th {
+    background: var(--navy);
+    color: #fff;
+    padding: 0.7rem 1rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    text-align: left;
+  }
+  td {
+    padding: 0.7rem 1rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text2);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:nth-child(even) td { background: rgba(0,0,0,0.01); }
+
+  /* ============================================================
+     STEPS / SCHEDULE
+     ============================================================ */
+  .step-list {
+    list-style: none;
+    padding: 0;
+    margin: 0.8rem 0;
+  }
+  .step-list li {
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+    padding: 0.7rem 0.8rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.92rem;
+    color: var(--text2);
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-n {
+    background: var(--gold);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+
+  /* ============================================================
+     PROMPT BOX
+     ============================================================ */
+  .prompt-box {
+    background: #1e1a16;
+    color: #e8e0d8;
+    padding: 1.2rem 1.5rem;
+    border-radius: var(--radius);
+    font-family: 'Courier New', monospace;
+    font-size: 0.82rem;
+    line-height: 1.7;
+    margin: 1rem 0;
+    border-left: 4px solid var(--gold2);
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .prompt-box .label {
+    color: var(--gold2);
+    font-weight: 600;
+    font-family: var(--font-body);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: 0.65rem;
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 640px) {
+    .diction-box {
+      font-size: 1rem;
+      padding: 1.2rem;
+    }
+    .header h1 { font-size: 1.8rem; }
+    .section-title { font-size: 1.4rem; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .nav-btn { padding: 0.7rem 0.8rem; font-size: 0.7rem; }
+    .main { padding: 1.2rem 0.8rem; }
+    .audio-player { font-size: 0.75rem; }
+    .audio-player button { width: 28px; height: 28px; font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="header">
+  <div class="header-ornament">Lyric Diction · Conductor's Edition</div>
+  <h1>Faust <span>·</span> French Diction</h1>
+  <div class="header-sub">Charles Gounod · Libretto by Barbier & Carré</div>
+  <div class="header-badges">
+    <span class="badge">Act II · The Encounter</span>
+    <span class="badge">For Non-French Speakers</span>
+    <span class="badge">Conductor's Reference</span>
+  </div>
+</header>
+
+<!-- ============================================================
+     NAV
+     ============================================================ -->
+<nav class="nav" id="nav">
+  <button class="nav-btn active" data-tab="diction">Diction Display</button>
+  <button class="nav-btn" data-tab="rules">5 Golden Rules</button>
+  <button class="nav-btn" data-tab="exercises">Exercises</button>
+  <button class="nav-btn" data-tab="method">Work Method</button>
+  <button class="nav-btn" data-tab="schedule">Schedule</button>
+  <button class="nav-btn" data-tab="reference">Quick Reference</button>
+</nav>
+
+<!-- ============================================================
+     MAIN
+     ============================================================ -->
+<main class="main">
+
+  <!-- ==========================================================
+       SECTION: DICTION DISPLAY
+       ========================================================== -->
+  <div class="section active" id="diction">
+    <h2 class="section-title">Annotated Text · Act II</h2>
+    <p class="section-sub">
+      <strong>Faust</strong> and <strong>Marguerite</strong>'s first exchange — fully annotated for French lyric diction.
+    </p>
+
+    <div class="legend">
+      <span class="legend-item"><span class="legend-swatch swatch-liaison"></span> Liaison (link)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-e"></span> Silent E (drop)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-accent"></span> Accented syllable</span>
+      <span class="legend-item"><span class="legend-swatch swatch-breath"></span> Breath mark</span>
+      <span class="legend-item"><span class="legend-swatch swatch-nasal"></span> Nasal vowel</span>
+    </div>
+
+    <!-- FAUST -->
+    <div class="diction-box">
+      <div class="fr">
+        <span class="breath"></span>
+        Ne permett<span class="nasal">e</span>r<span class="nasal">e</span>z-vous pas, <span class="breath"></span>
+        ma belle demois<span class="nasal">e</span>lle, <span class="breath"></span>
+        qu'on vous offre le <span class="accent">bras</span> <span class="breath"></span>
+        pour faire le <span class="accent">chem<span class="nasal">in</span></span> ?
+      </div>
+      <div class="ipa">
+        [nə pɛʁ.mɛ.tə.ʁe vu pa | ma bɛl də.mwa.zɛl | kɔ̃ vu zɔfʁ lə bʁa | puʁ fɛʁ lə ʃə.mɛ̃]
+      </div>
+      <div class="en">
+        <strong>Faust:</strong> "Will you not allow, my beautiful young lady, that one offer you the arm to walk the way?"
+      </div>
+      <div style="margin-top:0.8rem;">
+        <div class="audio-player">
+          <button onclick="playAudio('faust-full')">▶</button>
+          <span class="label">Faust (full line)</span>
+        </div>
+        <div class="audio-player">
+          <button onclick="playAudio('faust-nasal')">▶</button>
+          <span class="label">Nasal focus: <span class="nasal">chem<span style="border-bottom:2px dotted var(--forest);">in</span></span></span>
+          <span class="ipa">[ʃə.mɛ̃]</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARGUERITE -->
+    <div class="diction-box">
+      <div class="fr">
+        <span class="breath"></span>
+        Non, monsieur ! <span class="breath"></span>
+        je ne suis demoiselle, ni <span class="accent">belle</span>, <span class="breath"></span>
+        et je n'ai pas <span class="accent">beso<span class="nasal">in</span></span> <span class="breath"></span>
+        qu'on me donne la <span class="accent">m<span class="nasal">ain</span></span> !
+      </div>
+      <div class="ipa">
+        [nɔ̃ mɔ.sjœʁ | ʒə nə sɥi də.mwa.zɛl ni bɛl | e ʒə nɛ pa bə.zwɛ̃ | kɔ̃ mə dɔn la mɛ̃]
+      </div>
+      <div class="en">
+        <strong>Marguerite:</strong> "No, sir! I am neither a young lady, nor beautiful, and I have no need that one give me the hand!"
+      </div>
+      <div style="margin-top:0.8rem;">
+        <div class="audio-player">
+          <button onclick="playAudio('marguerite-full')">▶</button>
+          <span class="label">Marguerite (full line)</span>
+        </div>
+        <div class="audio-player">
+          <button onclick="playAudio('marguerite-nasal')">▶</button>
+          <span class="label">Nasal focus: <span class="nasal">beso<span style="border-bottom:2px dotted var(--forest);">in</span></span> + <span class="nasal">m<span style="border-bottom:2px dotted var(--forest);">ain</span></span></span>
+          <span class="ipa">[bə.zwɛ̃] + [mɛ̃]</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-gold">
+      <p><strong>🎯 Conductor's Focus:</strong> The phrase must flow as one continuous line. The <strong>accent</strong> falls on the <em>very last syllable</em> of each sense group. The <strong>silent E's</strong> are rhythmic shortcuts — they speed up the phrase. The <strong>liaisons</strong> create the legato that connects everything.</p>
+      <p style="margin-top:0.5rem; font-size:0.9rem;"><strong>Important:</strong> In <em>"Ne permett<span class="nasal">e</span>r<span class="nasal">e</span>z-vous pas"</em>, the <strong>E's are NOT silent</strong> — they are all pronounced: [nə pɛʁ.mɛ.tə.ʁe]. Likewise, <em>"ma belle demoiselle"</em> keeps all E's: [ma bɛl də.mwa.zɛl]. The E's that drop are only those in <strong>weak, unstressed positions</strong> like <em>je</em> → <em>j'</em>, or internal E's before a single consonant.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       SECTION: 5 GOLDEN RULES
+       ========================================================== -->
+  <div class="section" id="rules">
+    <h2 class="section-title">The 5 Golden Rules</h2>
+    <p class="section-sub">
+      <em>"In French, you don't pronounce words — you pronounce phrases. It's like a grand orchestral legato."</em>
+    </p>
+
+    <div class="rules-grid">
+      <!-- Rule 1 -->
+      <div class="rule-card">
+        <span class="num">Rule 1</span>
+        <h4>Final Accent of the Sense Group</h4>
+        <p>Individual words have no stress. The accent falls <strong>only</strong> on the very last syllable of the thought group.</p>
+        <div class="ex-faust">
+          <strong>From Faust:</strong> <em>"Non, monsieur !"</em> → accent on <strong>-sieur</strong> [sjœʁ]<br>
+          <em>"ma belle demoiselle"</em> → accent on <strong>-selle</strong> [zɛl]
+        </div>
+        <div class="ex">General: Je ne suis pas heureux → accent on <strong>-reux</strong></div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-player">
+            <button onclick="playAudio('rule1-accent')">▶</button>
+            <span class="label">Accent: demois<span style="color:var(--crimson);font-weight:700;">elle</span></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 2 -->
+      <div class="rule-card">
+        <span class="num">Rule 2</span>
+        <h4>The Silent "E"</h4>
+        <p>Many E's drop in speech — but <strong>NOT all of them!</strong> Only E's in weak, unstressed positions. The E's in <em>"permett<strong>e</strong>rez"</em> and <em>"demois<strong>e</strong>lle"</em> are <strong>pronounced</strong>.</p>
+        <div class="ex-faust">
+          <strong>From Faust:</strong> <em>"je ne suis"</em> → [ʒə nə sɥi] (the first E's are kept)<br>
+          <em>"qu'on vous offre"</em> → [kɔ̃ vu zɔfʁ] — no silent E here.
+        </div>
+        <div class="ex">General: Je te demande → "J'te d'mande" (E's that drop are after a single consonant)</div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-player">
+            <button onclick="playAudio('rule2-e')">▶</button>
+            <span class="label">E's pronounced: permett<span style="color:var(--forest);">e</span>r<span style="color:var(--forest);">e</span>z</span>
+            <span class="ipa">[pɛʁ.mɛ.tə.ʁe]</span>
+          </div>
+          <div class="audio-player">
+            <button onclick="playAudio('rule2-e-silent')">▶</button>
+            <span class="label">Silent E: j'te d'mande</span>
+            <span class="ipa">[ʃtə dmand]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 3 -->
+      <div class="rule-card">
+        <span class="num">Rule 3</span>
+        <h4>Liaisons — The Legato</h4>
+        <p>When a word ends in a silent consonant and the next begins with a vowel, <strong>link them</strong>.</p>
+        <div class="ex-faust">
+          <strong>From Faust:</strong> <em>"qu'on vous offre"</em> → link the final S of <em>vous</em> to <em>offre</em>: [vu‿zɔfʁ]<br>
+          <em>"la main"</em> → no liaison (main ends with N, which is pronounced nasally)
+        </div>
+        <div class="ex">General: les_amis (Z sound) · grand_homme (T sound)</div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-player">
+            <button onclick="playAudio('rule3-liaison')">▶</button>
+            <span class="label">Liaison: vous‿offre</span>
+            <span class="ipa">[vu‿zɔfʁ]</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 4 -->
+      <div class="rule-card">
+        <span class="num">Rule 4</span>
+        <h4>Nasal Vowels</h4>
+        <p>Sound resonates in the nose — <strong>do not</strong> pronounce the final N or M. The nasal sound is one unified vowel.</p>
+        <div class="ex-faust">
+          <strong>From Faust:</strong> <em>"chemin"</em> → [ʃə.mɛ̃] — nasal <strong>IN</strong><br>
+          <em>"besoin"</em> → [bə.zwɛ̃] — nasal <strong>IN</strong><br>
+          <em>"main"</em> → [mɛ̃] — nasal <strong>AIN</strong> (like <em>pain</em> or <em>vin</em>)<br>
+          <em>"en vain"</em> → [ɑ̃ vɛ̃] — two nasals: <strong>AN</strong> + <strong>AIN</strong>
+        </div>
+        <div class="ex">General: AN (enfant) · ON (ballon) · IN/AIN (pain, vin, main, chemin) · OI (moi, toi, soir)</div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-grid">
+            <div class="audio-player">
+              <button onclick="playAudio('nasal-an')">▶</button>
+              <span class="label">AN</span>
+              <span class="ipa">[ɑ̃]</span>
+            </div>
+            <div class="audio-player">
+              <button onclick="playAudio('nasal-on')">▶</button>
+              <span class="label">ON</span>
+              <span class="ipa">[ɔ̃]</span>
+            </div>
+            <div class="audio-player">
+              <button onclick="playAudio('nasal-in')">▶</button>
+              <span class="label">IN / AIN</span>
+              <span class="ipa">[ɛ̃]</span>
+            </div>
+            <div class="audio-player">
+              <button onclick="playAudio('nasal-oi')">▶</button>
+              <span class="label">OI</span>
+              <span class="ipa">[wa]</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Rule 5 -->
+      <div class="rule-card">
+        <span class="num">Rule 5</span>
+        <h4>The French "R"</h4>
+        <p>Soft — produced by the back of the tongue against the soft palate. Not rolled, not harsh.</p>
+        <div class="ex-faust">
+          <strong>From Faust:</strong> <em>"permett<strong>er</strong>ez"</em> → soft throat touch [ʁ]<br>
+          <em>"monsieur"</em> → [sjœʁ] — soft R at the end<br>
+          <em>"bras"</em> → [bʁa] — R followed by A
+        </div>
+        <div class="ex">General: Rien · cœur · bras (gentle throat touch)</div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-player">
+            <button onclick="playAudio('rule5-r')">▶</button>
+            <span class="label">French R: <span style="color:var(--crimson);">R</span>ien · <span style="color:var(--crimson);">R</span>endre · b<span style="color:var(--crimson);">r</span>as</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-navy">
+      <p><strong>🎵 Integration Exercise:</strong></p>
+      <ol style="padding-left:1.2rem; color:var(--text2);">
+        <li><strong>Imitation:</strong> Listen to the audio and repeat <em>"En vain"</em> [ɑ̃ vɛ̃] → copy the nasal sound.</li>
+        <li><strong>Slow repetition:</strong> Halve the tempo to exaggerate nasals and the R.</li>
+        <li><strong>Reading:</strong> Read the entire line at normal tempo, focusing on the <strong>final accent</strong> of each group.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       SECTION: EXERCISES
+       ========================================================== -->
+  <div class="section" id="exercises">
+    <h2 class="section-title">Diction Exercises</h2>
+    <p class="section-sub">Progressive exercises from isolated sounds to full sentences.</p>
+
+    <!-- Level 1: Sounds -->
+    <h3>Level 1 — Nasal Vowels</h3>
+    <div class="exercise-block">
+      <div class="ex-title">🔊 Nasal Vowels</div>
+      <div class="ex-desc">Practice each nasal vowel. The sound should resonate in the nose — no final N or M.</div>
+      <div class="ex-line"><span class="num">AN</span> [ɑ̃] — <em>enfant, dans, chanter</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('nasal-an')">▶</button></span></div>
+      <div class="ex-line"><span class="num">ON</span> [ɔ̃] — <em>ballon, mon, son, bon</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('nasal-on')">▶</button></span></div>
+      <div class="ex-line"><span class="num">IN / AIN</span> [ɛ̃] — <em>pain, chemin, main, rien, vin</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('nasal-in')">▶</button></span></div>
+      <div class="ex-line"><span class="num">OI</span> [wa] — <em>moi, toi, soir, bois</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('nasal-oi')">▶</button></span></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="ex-title">🔊 French R</div>
+      <div class="ex-desc">The French R is a soft throat sound — not rolled, not harsh.</div>
+      <div class="ex-line"><span class="num">R</span> [ʁ] — <em>rien, rendre, bras, cœur</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('rule5-r')">▶</button></span></div>
+    </div>
+
+    <div class="exercise-block">
+      <div class="ex-title">🔊 Liaisons</div>
+      <div class="ex-desc">Connect the final consonant to the following vowel.</div>
+      <div class="ex-line"><span class="num">vous‿offre</span> [vu‿zɔfʁ] <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('rule3-liaison')">▶</button></span></div>
+      <div class="ex-line"><span class="num">les‿amis</span> [le‿zami] <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('liaison-example')">▶</button></span></div>
+    </div>
+
+    <!-- Level 2: Words -->
+    <h3>Level 2 — Words from Faust</h3>
+    <div class="exercise-block">
+      <div class="ex-title">📖 Key Words from the Libretto</div>
+      <div class="ex-desc">Practice each word individually before combining them.</div>
+      <div class="ex-line"><span class="num">permett<span style="color:var(--forest);">e</span>r<span style="color:var(--forest);">e</span>z</span> [pɛʁ.mɛ.tə.ʁe] — all E's pronounced! <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('word-permettrez')">▶</button></span></div>
+      <div class="ex-line"><span class="num">demoiselle</span> [də.mwa.zɛl] — accent on <strong>-selle</strong> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('word-demoiselle')">▶</button></span></div>
+      <div class="ex-line"><span class="num">chem<span style="color:var(--forest);border-bottom:2px dotted var(--forest);">in</span></span> [ʃə.mɛ̃] — nasal IN <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('word-chemin')">▶</button></span></div>
+      <div class="ex-line"><span class="num">beso<span style="color:var(--forest);border-bottom:2px dotted var(--forest);">in</span></span> [bə.zwɛ̃] — nasal IN <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('word-besoin')">▶</button></span></div>
+      <div class="ex-line"><span class="num">m<span style="color:var(--forest);border-bottom:2px dotted var(--forest);">ain</span></span> [mɛ̃] — nasal AIN <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('word-main')">▶</button></span></div>
+      <div class="ex-line"><span class="num">monsieur</span> [mɔ.sjœʁ] — soft R at the end <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('word-monsieur')">▶</button></span></div>
+      <div class="ex-line"><span class="num">b<span style="color:var(--crimson);">r</span>as</span> [bʁa] — R + A <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('word-bras')">▶</button></span></div>
+    </div>
+
+    <!-- Level 3: Phrases -->
+    <h3>Level 3 — Phrases from Faust</h3>
+    <div class="exercise-block">
+      <div class="ex-title">📖 Short Phrases</div>
+      <div class="ex-desc">Practice with the correct sense grouping and final accents.</div>
+      <div class="ex-line"><span class="num">1.</span> <em>Ne permett<span style="color:var(--forest);">e</span>r<span style="color:var(--forest);">e</span>z-vous pas ?</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('phrase1')">▶</button></span></div>
+      <div class="ex-line"><span class="num">2.</span> <em>Ma belle demoiselle.</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('phrase2')">▶</button></span></div>
+      <div class="ex-line"><span class="num">3.</span> <em>Qu'on vous offre le bras.</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('phrase3')">▶</button></span></div>
+      <div class="ex-line"><span class="num">4.</span> <em>Pour faire le chemin.</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('phrase4')">▶</button></span></div>
+      <div class="ex-line"><span class="num">5.</span> <em>Je ne suis demoiselle, ni belle.</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('phrase5')">▶</button></span></div>
+      <div class="ex-line"><span class="num">6.</span> <em>Je n'ai pas besoin.</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('phrase6')">▶</button></span></div>
+      <div class="ex-line"><span class="num">7.</span> <em>Qu'on me donne la main.</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('phrase7')">▶</button></span></div>
+    </div>
+
+    <!-- Level 4: Full Dialogue -->
+    <h3>Level 4 — Full Dialogue (Pass 1: Free Reading)</h3>
+    <div class="exercise-block">
+      <div class="ex-title">🎭 Faust & Marguerite — Complete Exchange</div>
+      <div class="ex-desc">
+        <strong>Pass 1 — Free Reading:</strong> Read the text according to your current understanding. <strong>Listen only</strong> — no corrections yet. Use the audio as a reference.
+      </div>
+      <div style="background:var(--bg);padding:1rem;border-radius:var(--radius);margin:0.8rem 0;border:1px solid var(--border);">
+        <div style="font-family:var(--font-display);font-size:1.1rem;line-height:2;">
+          <strong style="color:var(--navy);">Faust:</strong> Ne permett<span style="color:var(--forest);">e</span>r<span style="color:var(--forest);">e</span>z-vous pas, ma belle demoiselle, qu'on vous offre le bras pour faire le <span style="color:var(--forest);border-bottom:2px dotted var(--forest);">chem<span style="border-bottom:2px dotted var(--forest);">in</span></span> ?
+        </div>
+        <div style="font-family:var(--font-display);font-size:1.1rem;line-height:2;margin-top:0.5rem;padding-top:0.5rem;border-top:1px dashed var(--border);">
+          <strong style="color:var(--crimson);">Marguerite:</strong> Non, monsieur ! je ne suis demoiselle, ni belle, et je n'ai pas <span style="color:var(--forest);border-bottom:2px dotted var(--forest);">beso<span style="border-bottom:2px dotted var(--forest);">in</span></span> qu'on me donne la <span style="color:var(--forest);border-bottom:2px dotted var(--forest);">m<span style="border-bottom:2px dotted var(--forest);">ain</span></span> !
+        </div>
+      </div>
+      <div>
+        <div class="audio-player">
+          <button onclick="playAudio('faust-full')">▶</button>
+          <span class="label">Faust (full line)</span>
+        </div>
+        <div class="audio-player">
+          <button onclick="playAudio('marguerite-full')">▶</button>
+          <span class="label">Marguerite (full line)</span>
+        </div>
+        <div class="audio-player">
+          <button onclick="playAudio('dialogue-full')">▶</button>
+          <span class="label">Full Dialogue (both lines)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Level 5: Extended Practice -->
+    <h3>Level 5 — Extended Practice</h3>
+    <div class="exercise-block">
+      <div class="ex-title">📖 Additional Phrases from Faust</div>
+      <div class="ex-desc">Practice these phrases from other parts of the libretto.</div>
+      <div class="ex-line"><span class="num">1.</span> <em>Rien ! En vain j'interroge...</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('extended1')">▶</button></span></div>
+      <div class="ex-line"><span class="num">2.</span> <em>Salut ! demeure chaste et pure...</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('extended2')">▶</button></span></div>
+      <div class="ex-line"><span class="num">3.</span> <em>Il était un roi de Thulé...</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('extended3')">▶</button></span></div>
+      <div class="ex-line"><span class="num">4.</span> <em>Anges purs, anges radieux...</em> <span class="audio-player" style="display:inline-flex;"><button onclick="playAudio('extended4')">▶</button></span></div>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       SECTION: WORK METHOD
+       ========================================================== -->
+  <div class="section" id="method">
+    <h2 class="section-title">Work Method — 4 Passes</h2>
+    <p class="section-sub">Work through the Act II excerpt in <strong>4 progressive passes</strong>.</p>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="num">Pass 1</span>
+        <h4>Free Reading</h4>
+        <p>She reads the text according to her current understanding. <strong>Listen only</strong> — no corrections yet.</p>
+        <div class="ex-faust">
+          Text: <em>"Ne permettrez-vous pas, ma belle demoiselle..."</em>
+        </div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-player">
+            <button onclick="playAudio('faust-full')">▶</button>
+            <span class="label">Reference audio</span>
+          </div>
+        </div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Pass 2</span>
+        <h4>Word-by-Word Correction</h4>
+        <p>Adjust vowel purity and hard consonants. Focus on nasals, R's, and final consonants. Check that E's are pronounced where needed.</p>
+        <div class="ex-faust">
+          Key corrections: <em>"permett<strong>e</strong>rez"</em> [pɛʁ.mɛ.tə.ʁe] — all E's pronounced!<br>
+          <em>"chemin"</em> [ʃə.mɛ̃] — nasal IN
+        </div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Pass 3</span>
+        <h4>Sense Groups</h4>
+        <p>Mark breathing points and textual dynamics. Identify where the <strong>accent</strong> falls in each group.</p>
+        <div class="ex-faust">
+          Groups: <em>"Ne permettrez-vous pas, | ma belle demoiselle, | qu'on vous offre le bras | pour faire le chemin ?"</em><br>
+          Accents: <strong>-pas</strong> · <strong>-selle</strong> · <strong>bras</strong> · <strong>min</strong>
+        </div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Pass 4</span>
+        <h4>Fluid Reading</h4>
+        <p>She recites the entire passage as a <strong>continuous spoken score</strong> — legato, flowing, with clear sense groups and final accents.</p>
+        <div class="ex-faust">
+          Goal: A smooth, connected line where each sense group resolves to its final accent like a musical phrase.
+        </div>
+      </div>
+    </div>
+
+    <div class="card card-gold">
+      <p><strong>✏️ Annotation System:</strong> Have her mark her score with:</p>
+      <ul style="padding-left:1.2rem; color:var(--text2);">
+        <li><strong><span style="color:var(--gold);">|</span></strong> = Breath bar (end of a sense group)</li>
+        <li><strong><u>Underlined word</u></strong> = Strong word (destination of the phrase)</li>
+        <li><strong><span style="color:#1a5a9c;">‿</span></strong> = Mandatory liaison (e.g., <em>vous‿offre</em>)</li>
+        <li><strong><span style="color:#b0a8a0; text-decoration:line-through;">e</span></strong> = Silent E to be cut (only in weak positions)</li>
+        <li><strong><span style="color:var(--forest);">◌̃</span></strong> = Nasal vowel (e.g., <em>chemĩ</em>, <em>beswĩ</em>)</li>
+      </ul>
+    </div>
+
+    <div class="card card-crimson">
+      <p><strong>💡 Tip for the Conductor:</strong> Think of this like balancing an orchestra. The <strong>silent E's</strong> are the inner voices — they move quickly. The <strong>accented syllables</strong> are the downbeats. The <strong>liaisons</strong> are the strings' legato bowing. The <strong>nasals</strong> are the resonance of the brass section.</p>
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       SECTION: SCHEDULE
+       ========================================================== -->
+  <div class="section" id="schedule">
+    <h2 class="section-title">Homework Schedule</h2>
+    <p class="section-sub">Dedicate <strong>20 minutes per day</strong> following this 4-day cycle.</p>
+
+    <ul class="step-list">
+      <li>
+        <span class="step-n">1</span>
+        <div>
+          <strong>Day 1 — Listening + Silent Reading</strong><br>
+          Listen to a reference recording (Paris Opera) while following the text with your eyes. Focus <strong>only</strong> on how the French singers link the words and where they place the accents.
+          <div style="font-size:0.85rem; color:var(--text3); margin-top:0.3rem;">
+            Pay attention to: nasals in <em>"chemin"</em>, <em>"besoin"</em>, <em>"main"</em> — and the R's in <em>"permett<strong>er</strong>ez"</em>, <em>"monsieur"</em>, <em>"bras"</em>.
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="step-n">2</span>
+        <div>
+          <strong>Day 2 — Reading Aloud</strong><br>
+          Read the Act II excerpt out loud, meticulously respecting your own pencil annotations (liaisons, nasal marks, breath bars).
+          <div style="font-size:0.85rem; color:var(--text3); margin-top:0.3rem;">
+            Focus: pronounce ALL E's in <em>"permett<strong>e</strong>rez"</em> and <em>"demois<strong>e</strong>lle"</em> — they are NOT silent here!
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="step-n">3</span>
+        <div>
+          <strong>Day 3 — Recording</strong><br>
+          Record yourself on your smartphone reading the text as fluidly as possible — as if you were giving intention cues to your singers.
+          <div style="font-size:0.85rem; color:var(--text3); margin-top:0.3rem;">
+            Listen back: can you hear the nasal vowels? Is the R soft? Are the sense groups clear?
+          </div>
+        </div>
+      </li>
+      <li>
+        <span class="step-n">4</span>
+        <div>
+          <strong>Day 4 — AI Feedback</strong><br>
+          Use the prompt below to generate an interactive visual learning tool.
+        </div>
+      </li>
+    </ul>
+
+    <div class="prompt-box">
+      <span class="label">📋 Copy this prompt for Day 4 →</span>
+
+      "Here is the Act II text from Faust that I am working on: 
+
+      <em>Ne permettrez-vous pas, ma belle demoiselle, qu'on vous offre le bras pour faire le chemin ? Non, monsieur ! je ne suis demoiselle, ni belle, et je n'ai pas besoin qu'on me donne la main !</em>
+
+      Act as a lyric diction coach for conductors who don't speak French. Generate the complete code for a self-contained, interactive HTML page. This page should display the text with a precise color code: mandatory liaisons in blue, silent E's to drop in light gray/strikethrough, accented syllables in bold, nasal vowels in green. Also include IPA transcription and a visual metronome to help scan the rhythm of the French language."
+    </div>
+  </div>
+
+  <!-- ==========================================================
+       SECTION: QUICK REFERENCE
+       ========================================================== -->
+  <div class="section" id="reference">
+    <h2 class="section-title">Quick Reference Card</h2>
+    <p class="section-sub">For the conductor — at a glance.</p>
+
+    <div class="table-wrap">
+      <table>
+        <tr>
+          <th>Sound</th>
+          <th>How to Explain</th>
+          <th>Example from Faust</th>
+          <th>Audio</th>
+        </tr>
+        <tr>
+          <td><strong>Nasal "AN"</strong></td>
+          <td>"The sound resonates in the nose — no 'n' at the end."</td>
+          <td><em>enfant</em> → [ɑ̃.fɑ̃]</td>
+          <td><button onclick="playAudio('nasal-an')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+        <tr>
+          <td><strong>Nasal "ON"</strong></td>
+          <td>"Open your mouth, send the sound up into the nasal cavity."</td>
+          <td><em>ballon</em> → [ba.lɔ̃]</td>
+          <td><button onclick="playAudio('nasal-on')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+        <tr>
+          <td><strong>Nasal "IN" / "AIN"</strong></td>
+          <td>"A single nasal vowel. Like 'pain' or 'vin'."</td>
+          <td><em>chemin</em> → [ʃə.mɛ̃]<br><em>main</em> → [mɛ̃]</td>
+          <td><button onclick="playAudio('nasal-in')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+        <tr>
+          <td><strong>OI</strong></td>
+          <td>"The sound 'wa' — like 'soi', 'bois', 'moi'."</td>
+          <td><em>moi</em> → [mwa]</td>
+          <td><button onclick="playAudio('nasal-oi')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+        <tr>
+          <td><strong>French R</strong></td>
+          <td>"Back of the tongue against soft palate — soft and continuous."</td>
+          <td><em>permettre</em> → [pɛʁ.mɛtʁ]</td>
+          <td><button onclick="playAudio('rule5-r')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+        <tr>
+          <td><strong>Liaison</strong></td>
+          <td>"Connect final consonant to following vowel."</td>
+          <td><em>vous‿offre</em> → [vu‿zɔfʁ]</td>
+          <td><button onclick="playAudio('rule3-liaison')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+        <tr>
+          <td><strong>Silent E</strong></td>
+          <td>"E's are silent ONLY in weak positions."</td>
+          <td><em>permett<strong>e</strong>rez</em> → ALL pronounced!</td>
+          <td><button onclick="playAudio('rule2-e')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+        <tr>
+          <td><strong>Final Accent</strong></td>
+          <td>"Stress on the very last syllable of each thought group."</td>
+          <td><em>demois<strong>elle</strong></em> → accent on <strong>-selle</strong></td>
+          <td><button onclick="playAudio('rule1-accent')" style="background:var(--navy);color:#fff;border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;">▶</button></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="card card-forest">
+      <p><strong>🎶 Final Word from the Coach:</strong></p>
+      <p style="font-style:italic; color:var(--text);">
+        "Your ears are trained for orchestral balance and legato. French diction is the same skill — you're just balancing syllables instead of instruments. The goal is a long, continuous line with the accent at the very end of each thought, just like a phrase that resolves to its final chord."
+      </p>
+    </div>
+
+    <div class="card card-gold">
+      <p><strong>📌 Key Takeaway:</strong> In French lyric diction, <em>everything connects</em>. The <strong>nasals</strong> give the resonance. The <strong>liaisons</strong> are the slurs. The <strong>final accent</strong> is the downbeat of the next phrase. Think <strong>legato</strong>, think <strong>line</strong>, think <strong>flow</strong>.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- ============================================================
+     SCRIPT: TABS + AUDIO
+     ============================================================ -->
+<script>
+  // ============================================================
+  // TABS
+  // ============================================================
+  (function() {
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        navBtns.forEach(b => b.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+
+        this.classList.add('active');
+        const target = document.getElementById(this.dataset.tab);
+        if (target) target.classList.add('active');
+      });
+    });
+  })();
+
+  // ============================================================
+  // AUDIO ENGINE - Web Audio API Speech Synthesis
+  // ============================================================
+  function speakText(text, rate = 0.85, pitch = 1.0) {
+    // Cancel any ongoing speech
+    if (window.speechSynthesis) {
+      window.speechSynthesis.cancel();
+    }
+
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = rate;
+    utterance.pitch = pitch;
+    utterance.volume = 1;
+
+    // Try to find a French voice
+    const voices = window.speechSynthesis.getVoices();
+    const frenchVoice = voices.find(v => v.lang.startsWith('fr'));
+    if (frenchVoice) {
+      utterance.voice = frenchVoice;
+    }
+
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // Preload voices
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => {
+      window.speechSynthesis.getVoices();
+    };
+  }
+
+  // ============================================================
+  // AUDIO FUNCTIONS - All sounds mapped to text-to-speech
+  // ============================================================
+  function playAudio(id) {
+    const audioMap = {
+      // === NASALS - words instead of isolated sounds ===
+      'nasal-an': { text: 'enfant', rate: 0.7 },
+      'nasal-on': { text: 'ballon', rate: 0.7 },
+      'nasal-in': { text: 'pain', rate: 0.7 },
+      'nasal-oi': { text: 'moi', rate: 0.7 },
+
+      // === RULE DEMOS ===
+      'rule1-accent': { text: 'demoiselle', rate: 0.75 },
+      'rule2-e': { text: 'permettrez', rate: 0.7 },
+      'rule2-e-silent': { text: "j'te d'mande", rate: 0.8 },
+      'rule3-liaison': { text: 'vous offre', rate: 0.7 },
+      'liaison-example': { text: 'les amis', rate: 0.7 },
+      'rule5-r': { text: 'rien rendre bras', rate: 0.7 },
+
+      // === WORDS ===
+      'word-permettrez': { text: 'permettrez', rate: 0.7 },
+      'word-demoiselle': { text: 'demoiselle', rate: 0.7 },
+      'word-chemin': { text: 'chemin', rate: 0.7 },
+      'word-besoin': { text: 'besoin', rate: 0.7 },
+      'word-main': { text: 'main', rate: 0.7 },
+      'word-monsieur': { text: 'monsieur', rate: 0.7 },
+      'word-bras': { text: 'bras', rate: 0.7 },
+
+      // === PHRASES ===
+      'phrase1': { text: 'Ne permettrez-vous pas ?', rate: 0.75 },
+      'phrase2': { text: 'Ma belle demoiselle.', rate: 0.75 },
+      'phrase3': { text: "Qu'on vous offre le bras.", rate: 0.75 },
+      'phrase4': { text: 'Pour faire le chemin.', rate: 0.75 },
+      'phrase5': { text: 'Je ne suis demoiselle, ni belle.', rate: 0.75 },
+      'phrase6': { text: "Je n'ai pas besoin.", rate: 0.75 },
+      'phrase7': { text: "Qu'on me donne la main.", rate: 0.75 },
+
+      // === FULL LINES ===
+      'faust-full': { text: 'Ne permettrez-vous pas, ma belle demoiselle, qu\'on vous offre le bras pour faire le chemin ?', rate: 0.7 },
+      'faust-nasal': { text: 'chemin', rate: 0.7 },
+      'marguerite-full': { text: 'Non, monsieur ! je ne suis demoiselle, ni belle, et je n\'ai pas besoin qu\'on me donne la main !', rate: 0.7 },
+      'marguerite-nasal': { text: 'besoin main', rate: 0.7 },
+      'dialogue-full': { text: 'Ne permettrez-vous pas, ma belle demoiselle, qu\'on vous offre le bras pour faire le chemin ? Non, monsieur ! je ne suis demoiselle, ni belle, et je n\'ai pas besoin qu\'on me donne la main !', rate: 0.65 },
+
+      // === EXTENDED ===
+      'extended1': { text: 'Rien ! En vain j\'interroge', rate: 0.7 },
+      'extended2': { text: 'Salut ! demeure chaste et pure', rate: 0.7 },
+      'extended3': { text: 'Il était un roi de Thulé', rate: 0.7 },
+      'extended4': { text: 'Anges purs, anges radieux', rate: 0.7 },
+    };
+
+    const entry = audioMap[id];
+    if (!entry) {
+      console.warn('No audio mapping for:', id);
+      return;
+    }
+
+    speakText(entry.text, entry.rate || 0.8, 1.0);
+  }
+
+  // Make playAudio globally accessible
+  window.playAudio = playAudio;
+</script>
+
+</body>
+</html>
