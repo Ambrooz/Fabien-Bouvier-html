@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Guinguettes — Leçon de Français</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #fdf8f0;
+    --parchment: #ece4d0;
+    --ink: #1a1208;
+    --brown: #5c3d1e;
+    --terracotta: #c0622f;
+    --rose: #d63f6a;
+    --violet: #6b3fa0;
+    --sage: #3a7a45;
+    --teal: #1d7a72;
+    --gold: #c8952a;
+    --blue: #1e4d8c;
+    --sky: #2980b9;
+    --light-blue: #dff0fc;
+    --light-green: #e2f5e4;
+    --light-red: #fde8ec;
+    --light-violet: #f0eafa;
+    --light-teal: #dff5f3;
+    --light-gold: #fdf3dc;
+    --shadow: rgba(60,30,10,0.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(160deg, #fff8ee 0%, #eef4fb 50%, #f5f0fb 100%);
+    font-family: 'Source Serif 4', serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(120deg, #1e4d8c 0%, #6b3fa0 45%, #c0622f 100%);
+    color: #fff;
+    text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      60deg, transparent, transparent 30px,
+      rgba(255,255,255,0.03) 30px, rgba(255,255,255,0.03) 31px
+    );
+  }
+  header .flag { font-size: 2.4rem; letter-spacing: 0.4rem; margin-bottom: 0.7rem; position: relative; z-index:1; }
+  header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.6rem, 7vw, 4.2rem);
+    letter-spacing: 0.06em;
+    color: #fff;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.35);
+    position: relative; z-index:1;
+  }
+  header p {
+    margin-top: 0.6rem; font-size: 1.05rem; font-style: italic;
+    color: rgba(255,255,255,0.82); letter-spacing: 0.1em;
+    position: relative; z-index:1;
+  }
+
+  /* NAV */
+  nav {
+    background: linear-gradient(90deg, #1a5a54, #1e4d8c, #6b3fa0, #a03020, #b07a10);
+    display: flex; justify-content: center; gap: 0.4rem; padding: 0.65rem 1rem; flex-wrap: wrap;
+  }
+  nav a {
+    color: #fff; text-decoration: none; font-size: 0.88rem; letter-spacing: 0.05em;
+    padding: 0.3rem 1rem; border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px; transition: background 0.2s, transform 0.1s;
+    background: rgba(255,255,255,0.1);
+  }
+  nav a:hover { background: rgba(255,255,255,0.27); transform: translateY(-1px); }
+
+  /* MAIN */
+  main { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Playfair Display', serif; font-size: 1.8rem;
+    padding: 0.5rem 1.2rem; margin: 2.8rem 0 1.3rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    border-radius: 6px;
+  }
+  .st-red    { background: linear-gradient(90deg,#ffe2d6,#fff5f0); color:#8a2010; border-left:5px solid #c0622f; }
+  .st-blue   { background: linear-gradient(90deg,#d5e9fc,#f0f7ff); color:#14387a; border-left:5px solid #1e4d8c; }
+  .st-violet { background: linear-gradient(90deg,#e4daf8,#f5f0ff); color:#50258a; border-left:5px solid #6b3fa0; }
+  .st-gold   { background: linear-gradient(90deg,#fcefd5,#fffbf0); color:#7a5000; border-left:5px solid #c8952a; }
+  .st-teal   { background: linear-gradient(90deg,#ccf0ec,#f0fffd); color:#105a52; border-left:5px solid #1d7a72; }
+  .st-rose   { background: linear-gradient(90deg,#fce4ec,#fff0f5); color:#8a1440; border-left:5px solid #d63f6a; }
+
+  /* TEXTE */
+  .texte-card {
+    background: white; border-left: 6px solid #d63f6a;
+    border-radius: 4px 10px 10px 4px;
+    padding: 2rem 2.2rem; box-shadow: 0 4px 24px var(--shadow);
+    line-height: 2.05; font-size: 1.05rem; position: relative;
+  }
+  .texte-card::before {
+    content: '♪'; position: absolute; top: 0.4rem; left: 0.6rem;
+    font-size: 4.5rem; line-height:1; color: rgba(214,63,106,0.08);
+    font-family: 'Playfair Display', serif; pointer-events:none;
+  }
+  .titre-texte {
+    font-family: 'Playfair Display', serif; font-style: italic;
+    color: #d63f6a; font-size: 1.18rem; margin-bottom: 1.1rem; text-align: center;
+  }
+  .present { color: #b03020; font-style: italic; border-bottom: 2px dotted #d63f6a; padding-bottom:1px; }
+  .expression-highlight {
+    background: #fce4ec;
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+    color: #8a1440;
+    font-style: italic;
+    border: 1px dashed #d63f6a;
+  }
+  .dialogue {
+    background: #f9f0f5;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    margin: 0.8rem 0;
+    border-left: 4px solid #d63f6a;
+    font-style: italic;
+    color: #5a2a3a;
+  }
+  .dialogue .speaker {
+    font-weight: 700;
+    color: #8a1440;
+    font-style: normal;
+  }
+  .dialogue .translation {
+    font-style: normal;
+    color: #888;
+    font-size: 0.9rem;
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  /* VOCAB */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 0.75rem; }
+  .vocab-item {
+    background: white; border-radius: 6px; padding: 0.7rem 1rem;
+    box-shadow: 0 2px 10px var(--shadow); border-top: 4px solid var(--vc,#1e4d8c);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .vocab-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px var(--shadow); }
+  .vocab-fr { font-weight: 400; color: var(--vc,#1e4d8c); font-size: 1rem; }
+  .vocab-en { font-style: italic; color: #777; font-size: 0.87rem; margin-top: 0.18rem; }
+
+  /* LEÇON */
+  .lecon-box {
+    border-radius: 10px; padding: 1.7rem 2rem; margin-bottom: 1.3rem;
+    border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 3px 14px var(--shadow);
+  }
+  .lb-blue   { background: linear-gradient(135deg,#dff0fc,#f2f9ff); }
+  .lb-violet { background: linear-gradient(135deg,#ede8f8,#f8f5ff); }
+  .lb-amber  { background: linear-gradient(135deg,#fdf3dc,#fff9f0); }
+  .lb-rose   { background: linear-gradient(135deg,#fce4ec,#fff0f5); }
+  .lecon-box h3 { font-family:'Playfair Display',serif; font-size:1.2rem; margin-bottom:0.9rem; }
+  .lb-blue h3   { color:#1e4d8c; }
+  .lb-violet h3 { color:#5a30a0; }
+  .lb-amber h3  { color:#7a5000; }
+  .lb-rose h3   { color:#8a1440; }
+  .lecon-box ol, .lecon-box ul { padding-left:1.3rem; line-height:2.1; }
+  .lecon-box li { font-size:0.97rem; }
+  .lecon-box .formule {
+    background: rgba(255,255,255,0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    margin: 0.5rem 0;
+    border-left: 3px solid #d63f6a;
+    font-style: italic;
+  }
+  .lecon-box .formule strong { color: #d63f6a; }
+
+  /* TABLE */
+  .table-wrapper { overflow-x:auto; margin:1rem 0; border-radius:8px; overflow:hidden; box-shadow:0 3px 16px var(--shadow); }
+  table { width:100%; border-collapse:collapse; font-size:0.94rem; }
+  thead { background:linear-gradient(90deg,#1e4d8c,#6b3fa0); color:white; }
+  thead th { padding:0.65rem 1rem; text-align:left; font-weight:400; letter-spacing:0.04em; }
+  tbody tr:nth-child(odd) { background:#fff; }
+  tbody tr:nth-child(even) { background:#f0ecfb; }
+  tbody tr:hover { background:#e5f2fd; }
+  tbody td { padding:0.55rem 1rem; }
+  .pronoun { color:#5c3d1e; font-style:italic; font-weight:600; }
+  .ending  { color:#b03020; font-weight:800; }
+
+  /* EMPLOIS */
+  .emplois-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:0.85rem; margin-top:0.6rem; }
+  .emploi-card { border-radius:8px; padding:1rem 1.2rem; box-shadow:0 2px 12px var(--shadow); }
+  .ec-rose   { background:linear-gradient(135deg,#fce4ec,#fff0f5); border-top:4px solid #d63f6a; }
+  .ec-blue   { background:linear-gradient(135deg,#d8ecff,#f0f8ff); border-top:4px solid #2980b9; }
+  .ec-green  { background:linear-gradient(135deg,#e0f7e2,#f2fff5); border-top:4px solid #3a7a45; }
+  .ec-violet { background:linear-gradient(135deg,#ece5fc,#f8f4ff); border-top:4px solid #6b3fa0; }
+  .emploi-card h4 { font-family:'Playfair Display',serif; margin-bottom:0.4rem; font-size:1rem; }
+  .ec-rose h4   { color:#8a1440; }
+  .ec-blue h4   { color:#1e4d8c; }
+  .ec-green h4  { color:#2a6a30; }
+  .ec-violet h4 { color:#5a30a0; }
+  .emploi-card p { font-size:0.87rem; line-height:1.65; }
+  .emploi-card em { color:#b03020; }
+
+  /* EXERCICES */
+  .exo-block {
+    background:white; border-radius:10px; padding:1.6rem 1.8rem;
+    margin-bottom:1.6rem; box-shadow:0 3px 18px var(--shadow);
+  }
+  .exo-block.exo-gold   { border-top:5px solid #c8952a; }
+  .exo-block.exo-teal   { border-top:5px solid #1d7a72; }
+  .exo-block.exo-rose   { border-top:5px solid #d63f6a; }
+  .exo-block h3 { font-family:'Playfair Display',serif; color:var(--brown); font-size:1.15rem; margin-bottom:1rem; }
+
+  .fill-item { display:flex; align-items:baseline; flex-wrap:wrap; gap:0.4rem; margin:0.7rem 0; font-size:0.98rem; line-height:1.8; }
+  .fill-item .num { color:#c8952a; font-weight:700; min-width:1.4rem; }
+  .fill-input {
+    border:none; border-bottom:2.5px solid #d63f6a;
+    background:#fff9f4; padding:0.1rem 0.5rem;
+    font-family:'Source Serif 4',serif; font-size:0.97rem;
+    color:var(--ink); min-width:130px; outline:none;
+    border-radius:3px 3px 0 0; transition:all 0.2s;
+  }
+  .fill-input:focus { background:#fce4ec; border-color:#d63f6a; }
+  .fill-input.correct   { border-color:#2a8a35; background:#e2f5e4; color:#1a6a20; }
+  .fill-input.incorrect { border-color:#c0392b; background:#fde8ec; color:#a02020; }
+
+  .choix-item { margin:0.85rem 0; font-size:0.97rem; }
+  .choix-item p { margin-bottom:0.38rem; }
+  .choix-item label {
+    display:inline-flex; align-items:center; gap:0.35rem;
+    margin-right:0.9rem; cursor:pointer; font-size:0.93rem;
+    padding:0.22rem 0.6rem; border-radius:4px; transition:background 0.15s;
+    border:1px solid transparent;
+  }
+  .choix-item label:hover { background:#fce4ec; border-color:#f0a0b8; }
+  .choix-item input[type=radio] { accent-color:#d63f6a; }
+
+  /* BTN */
+  .btn-group { display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:1.2rem; }
+  .btn {
+    padding:0.55rem 1.4rem; border:none; border-radius:20px;
+    font-family:'Source Serif 4',serif; font-size:0.95rem;
+    cursor:pointer; letter-spacing:0.04em; transition:all 0.2s;
+    box-shadow:0 2px 8px rgba(0,0,0,0.12);
+  }
+  .btn-check { background:linear-gradient(90deg,#d63f6a,#c0622f); color:white; }
+  .btn-check:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(214,63,106,0.35); }
+  .btn-reset { background:var(--parchment); color:var(--brown); border:1px solid #cbb898; }
+  .btn-reset:hover { background:#ddd0b8; }
+
+  /* RÉPONSE */
+  .reponse-box { margin-top:1rem; background:#f7f3ff; border-radius:8px; overflow:hidden; border:1px solid #d0c2f0; }
+  .toggle-btn {
+    width:100%; background:none; border:none; padding:0.7rem 1rem;
+    text-align:left; cursor:pointer; font-family:'Source Serif 4',serif;
+    font-size:0.91rem; color:#5a30a0; display:flex; align-items:center; gap:0.5rem; font-style:italic;
+  }
+  .toggle-btn:hover { background:rgba(107,63,160,0.08); }
+  .toggle-btn .arrow { transition:transform 0.3s; }
+  .toggle-btn.open .arrow { transform:rotate(90deg); display:inline-block; }
+  .reponse-content { display:none; padding:0.8rem 1.2rem 1rem; border-top:1px solid #d0c2f0; font-size:0.92rem; line-height:2; color:#4a2a80; }
+  .reponse-content.visible { display:block; }
+  .reponse-content strong { color:#b03020; }
+
+  /* SCORE */
+  .score-banner { display:none; border-radius:8px; font-size:1rem; margin-top:1rem; font-style:italic; text-align:center; padding:0.8rem 1.4rem; }
+  .score-perfect { background:linear-gradient(90deg,#2a6a30,#1d7a72); color:#fff; }
+  .score-good    { background:linear-gradient(90deg,#b07a10,#c8952a); color:#fff; }
+  .score-try     { background:linear-gradient(90deg,#9a2018,#c0622f); color:#fff; }
+
+  /* ══ EXPRESSIONS ══ */
+  .expr-intro {
+    background:linear-gradient(135deg,#fce4ec,#fff0f5);
+    border-left:6px solid #d63f6a;
+    border-radius:4px 10px 10px 4px;
+    padding:1.1rem 1.5rem; font-size:0.95rem; line-height:1.8; color:#6a1040;
+    margin-bottom:1.5rem; box-shadow:0 2px 12px rgba(214,63,106,0.1);
+  }
+
+  .expr-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:1rem; margin-bottom:1.5rem; }
+
+  .expr-card {
+    border-radius:10px; padding:1.1rem 1.3rem 1rem;
+    box-shadow:0 3px 16px var(--shadow); transition:transform 0.15s, box-shadow 0.15s;
+    position:relative; overflow:hidden;
+  }
+  .expr-card::before {
+    content:attr(data-num);
+    position:absolute; top:-0.5rem; right:0.7rem;
+    font-family:'Playfair Display',serif; font-size:3.8rem;
+    opacity:0.07; color:#000; line-height:1; pointer-events:none;
+  }
+  .expr-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px var(--shadow); }
+
+  .xc1 { background:linear-gradient(135deg,#fce4ec,#fff0f5); border-top:4px solid #d63f6a; }
+  .xc2 { background:linear-gradient(135deg,#ddeeff,#f2f8ff); border-top:4px solid #2980b9; }
+  .xc3 { background:linear-gradient(135deg,#e0f8e2,#f2fff4); border-top:4px solid #3a7a45; }
+  .xc4 { background:linear-gradient(135deg,#f0e8ff,#faf5ff); border-top:4px solid #6b3fa0; }
+  .xc5 { background:linear-gradient(135deg,#fff8d8,#fffef0); border-top:4px solid #c8952a; }
+  .xc6 { background:linear-gradient(135deg,#fce4ec,#fff0f5); border-top:4px solid #d63f6a; }
+  .xc7 { background:linear-gradient(135deg,#d8f5f0,#f0fffd); border-top:4px solid #1d7a72; }
+  .xc8 { background:linear-gradient(135deg,#ffeedd,#fff8f0); border-top:4px solid #c87020; }
+
+  .expr-tag {
+    display:inline-block; font-size:0.7rem; letter-spacing:0.07em;
+    text-transform:uppercase; padding:0.1rem 0.5rem;
+    border-radius:20px; margin-bottom:0.45rem;
+  }
+  .xc1 .expr-tag { background:#ffc8d8; color:#8a1440; }
+  .xc2 .expr-tag { background:#bdd8f8; color:#14387a; }
+  .xc3 .expr-tag { background:#baecc0; color:#1a5220; }
+  .xc4 .expr-tag { background:#d8c8f8; color:#4a2090; }
+  .xc5 .expr-tag { background:#f8e4a0; color:#6a4400; }
+  .xc6 .expr-tag { background:#ffcce0; color:#8a1440; }
+  .xc7 .expr-tag { background:#a8e8e0; color:#0a4a44; }
+  .xc8 .expr-tag { background:#f0d8b0; color:#7a4808; }
+
+  .expr-fr { font-family:'Playfair Display',serif; font-size:1.07rem; margin-bottom:0.22rem; }
+  .xc1 .expr-fr { color:#8a1440; }
+  .xc2 .expr-fr { color:#14387a; }
+  .xc3 .expr-fr { color:#1a5220; }
+  .xc4 .expr-fr { color:#4a2090; }
+  .xc5 .expr-fr { color:#6a4400; }
+  .xc6 .expr-fr { color:#8a1440; }
+  .xc7 .expr-fr { color:#0a4a44; }
+  .xc8 .expr-fr { color:#7a4808; }
+
+  .expr-en { font-style:italic; font-size:0.86rem; color:#666; margin-bottom:0.55rem; }
+  .expr-ex { font-size:0.89rem; line-height:1.7; color:#333; border-top:1px dashed rgba(0,0,0,0.13); padding-top:0.5rem; margin-top:0.5rem; }
+  .ex-en { font-style:italic; color:#888; font-size:0.83rem; }
+
+  /* FOOTER */
+  footer {
+    text-align:center; padding:1.5rem; color:#8a7055; font-size:0.85rem; font-style:italic;
+    border-top:1px solid var(--parchment);
+    background:linear-gradient(90deg,#fff8ee,#eef4ff,#f5f0ff,#fff0f5);
+  }
+
+  @media (max-width:600px) {
+    .texte-card,.lecon-box,.exo-block { padding:1.2rem; }
+    .expr-card { padding:0.9rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="flag">🇫🇷 🇬🇧</div>
+  <h1>Les Guinguettes</h1>
+  <p>Leçon complète · Complete Lesson · Ambiance bucolique</p>
+</header>
+
+<nav>
+  <a href="#texte">🎵 Texte</a>
+  <a href="#vocabulaire">📚 Vocabulaire</a>
+  <a href="#lecon">📝 Leçon</a>
+  <a href="#exercices">✏️ Exercices</a>
+  <a href="#expressions">💬 Expressions</a>
+</nav>
+
+<main>
+
+<!-- ═══ TEXTE ═══ -->
+<h2 class="section-title st-rose" id="texte">🎵 Texte de lecture</h2>
+<div class="texte-card">
+  <p class="titre-texte">« Un dimanche à la guinguette » — A Sunday at the Riverside Café</p>
+  <p>
+    Tous les dimanches, nous <span class="present">allons</span> à la guinguette au bord de la Marne.<br>
+    J'<span class="present">aime</span> particulièrement cet endroit authentique et convivial.<br>
+    Les musiciens <span class="present">jouent</span> de l'accordéon et les gens <span class="present">dansent</span> sur la piste.<br>
+    Mon ami Pierre <span class="present">commande</span> toujours un verre de vin rouge.<br>
+    Sa femme, Marie, <span class="present">préfère</span> la limonade bien fraîche.<br>
+    Nous <span class="present">nous installons</span> sous les grands arbres, à l'ombre des peupliers.<br>
+    Le soleil <span class="present">brille</span> et une douce brise <span class="present">souffle</span> sur la rivière.<br>
+    Les enfants <span class="present">jouent</span> près de l'eau pendant que les parents <span class="present">discutent</span>.<br>
+    Le patron de la guinguette, Monsieur Dubois, <span class="present">prépare</span> des grillades.<br>
+    L'odeur des saucisses et du pain <span class="present">embaume</span> tout le jardin.<br>
+    Nous <span class="present">mangeons</span> en famille sur la grande terrasse en bois.<br>
+    Après le repas, les plus jeunes <span class="present">vont</span> faire un tour en barque.<br>
+    Les plus âgés <span class="present">restent</span> à table pour boire un café ou un digestif.<br>
+    Vers dix-sept heures, l'orchestre <span class="present">commence</span> à jouer des valses.<br>
+    Les couples <span class="present">se lèvent</span> et <span class="present">tournent</span> au rythme de la musique.<br>
+    Marie <span class="present">danse</span> avec son mari et elle <span class="present">rit</span> aux éclats.<br>
+    Nous <span class="present">passons</span> toujours un moment délicieux à la guinguette.<br>
+    Ces instants de bonheur simple <span class="present">font</span> tout le charme de ces lieux.<br>
+    Quand le soir <span class="present">tombe</span>, nous <span class="present">rentrons</span> chez nous, le cœur léger.<br>
+    Nous <span class="present">gardons</span> précieusement ces souvenirs de dimanches heureux.<br>
+    Ma grand-mère <span class="present">dit</span> souvent : « La vie est belle à la guinguette ! »
+  </p>
+
+  <!-- DIALOGUE 1 - Commander -->
+  <div class="dialogue">
+    <span class="speaker">Serveur :</span> Bonjour ! Qu'est-ce que je vous sers ?<br>
+    <span class="speaker">Pierre :</span> <span class="expression-highlight">Je voudrais</span> un verre de vin rouge, s'il vous plaît.<br>
+    <span class="speaker">Marie :</span> <span class="expression-highlight">Pour moi, ce sera</span> une limonade bien fraîche.<br>
+    <span class="speaker">Moi :</span> <span class="expression-highlight">Je prends</span> le plat du jour.<br>
+    <span class="speaker">Serveur :</span> <span class="expression-highlight">Je vais prendre</span> vos commandes tout de suite.<br>
+    <span class="translation">— Waiter: Hello! What can I get you? / Pierre: I would like a glass of red wine, please. / Marie: For me, it will be a nice fresh lemonade. / Me: I'll have the daily special. / Waiter: I'm going to take your orders right away.</span>
+  </div>
+
+  <!-- DIALOGUE 2 - Demander quelque chose -->
+  <div class="dialogue">
+    <span class="speaker">Moi :</span> Excusez-moi, <span class="expression-highlight">est-ce que vous avez</span> du pain ?<br>
+    <span class="speaker">Pierre :</span> <span class="expression-highlight">Qu'est-ce que vous recommandez</span> comme dessert ?<br>
+    <span class="speaker">Serveur :</span> Je vous recommande la tarte aux pommes.<br>
+    <span class="speaker">Marie :</span> <span class="expression-highlight">Est-ce que je peux avoir</span> un peu de moutarde, s'il vous plaît ?<br>
+    <span class="speaker">Moi :</span> <span class="expression-highlight">Pourriez-vous m'apporter</span> une carafe d'eau ?<br>
+    <span class="translation">— Me: Excuse me, do you have some bread? / Pierre: What do you recommend for dessert? / Waiter: I recommend the apple pie. / Marie: Can I have some mustard, please? / Me: Could you bring me a pitcher of water?</span>
+  </div>
+
+  <!-- DIALOGUE 3 - À table -->
+  <div class="dialogue">
+    <span class="speaker">Nous :</span> <span class="expression-highlight">Bon appétit</span> !<br>
+    <span class="speaker">Marie :</span> Mmm, <span class="expression-highlight">c'est délicieux</span> !<br>
+    <span class="speaker">Pierre :</span> <span class="expression-highlight">Je me régale</span> avec ces grillades !<br>
+    <span class="speaker">Moi :</span> <span class="expression-highlight">À votre santé</span> ! (en trinquant)<br>
+    <span class="speaker">Tous :</span> <span class="expression-highlight">Santé</span> !<br>
+    <span class="translation">— Us: Enjoy your meal! / Marie: Mmm, it's delicious! / Pierre: I'm really enjoying these grilled foods! / Me: Cheers! (clinking glasses) / All: Cheers!</span>
+  </div>
+
+  <!-- DIALOGUE 4 - Payer -->
+  <div class="dialogue">
+    <span class="speaker">Moi :</span> <span class="expression-highlight">On peut avoir l'addition, s'il vous plaît ?</span><br>
+    <span class="speaker">Serveur :</span> Voilà, ça fait 45 euros.<br>
+    <span class="speaker">Pierre :</span> <span class="expression-highlight">On va payer séparément</span>.<br>
+    <span class="speaker">Marie :</span> <span class="expression-highlight">Je vous laisse le pourboire</span>.<br>
+    <span class="speaker">Moi :</span> Merci beaucoup, c'était parfait !<br>
+    <span class="translation">— Me: Can we have the bill, please? / Waiter: Here you go, that'll be 45 euros. / Pierre: We'll pay separately. / Marie: I'll leave the tip. / Me: Thank you very much, it was perfect!</span>
+  </div>
+</div>
+
+<!-- ═══ VOCAB ═══ -->
+<h2 class="section-title st-blue" id="vocabulaire">📚 Vocabulaire · Vocabulary</h2>
+<div class="vocab-grid">
+  <div class="vocab-item" style="--vc:#d63f6a"><div class="vocab-fr">une guinguette</div><div class="vocab-en">a riverside café / dance hall</div></div>
+  <div class="vocab-item" style="--vc:#1e4d8c"><div class="vocab-fr">au bord de</div><div class="vocab-en">at the edge of</div></div>
+  <div class="vocab-item" style="--vc:#6b3fa0"><div class="vocab-fr">authentique</div><div class="vocab-en">authentic</div></div>
+  <div class="vocab-item" style="--vc:#c0622f"><div class="vocab-fr">convivial</div><div class="vocab-en">friendly / sociable</div></div>
+  <div class="vocab-item" style="--vc:#c8952a"><div class="vocab-fr">l'accordéon (m)</div><div class="vocab-en">accordion</div></div>
+  <div class="vocab-item" style="--vc:#1d7a72"><div class="vocab-fr">danser</div><div class="vocab-en">to dance</div></div>
+  <div class="vocab-item" style="--vc:#3a7a45"><div class="vocab-fr">commander</div><div class="vocab-en">to order</div></div>
+  <div class="vocab-item" style="--vc:#d63f6a"><div class="vocab-fr">la limonade</div><div class="vocab-en">lemonade</div></div>
+  <div class="vocab-item" style="--vc:#1e4d8c"><div class="vocab-fr">s'installer</div><div class="vocab-en">to settle / to sit down</div></div>
+  <div class="vocab-item" style="--vc:#6b3fa0"><div class="vocab-fr">un peuplier</div><div class="vocab-en">a poplar tree</div></div>
+  <div class="vocab-item" style="--vc:#c0622f"><div class="vocab-fr">la brise</div><div class="vocab-en">the breeze</div></div>
+  <div class="vocab-item" style="--vc:#c8952a"><div class="vocab-fr">souffler</div><div class="vocab-en">to blow</div></div>
+  <div class="vocab-item" style="--vc:#1d7a72"><div class="vocab-fr">discuter</div><div class="vocab-en">to chat / to talk</div></div>
+  <div class="vocab-item" style="--vc:#3a7a45"><div class="vocab-fr">une grillade</div><div class="vocab-en">barbecue / grilled food</div></div>
+  <div class="vocab-item" style="--vc:#d63f6a"><div class="vocab-fr">embaumer</div><div class="vocab-en">to perfume / to smell wonderful</div></div>
+  <div class="vocab-item" style="--vc:#1e4d8c"><div class="vocab-fr">une barque</div><div class="vocab-en">a rowboat</div></div>
+  <div class="vocab-item" style="--vc:#6b3fa0"><div class="vocab-fr">un digestif</div><div class="vocab-en">an after-dinner drink</div></div>
+  <div class="vocab-item" style="--vc:#c0622f"><div class="vocab-fr">une valse</div><div class="vocab-en">a waltz</div></div>
+  <div class="vocab-item" style="--vc:#c8952a"><div class="vocab-fr">rire aux éclats</div><div class="vocab-en">to laugh out loud</div></div>
+  <div class="vocab-item" style="--vc:#1d7a72"><div class="vocab-fr">garder</div><div class="vocab-en">to keep</div></div>
+</div>
+
+<!-- ═══ LEÇON ═══ -->
+<h2 class="section-title st-violet" id="lecon">📝 Leçon — Expressions utiles au restaurant &amp; à table</h2>
+
+<div class="lecon-box lb-rose">
+  <h3>🍽️ Formules de politesse essentielles</h3>
+  <p style="font-size:0.95rem;line-height:2.2;color:#6a1040;">
+    Voici les expressions les plus utiles quand on est au restaurant, à la guinguette ou à table avec des amis. Ces formules vous aideront à <strong>commander, demander, remercier et payer</strong> avec naturel.
+  </p>
+</div>
+
+<div class="lecon-box lb-blue">
+  <h3>📋 Pour commander · Ordering</h3>
+  <div class="formule"><strong>Je voudrais…</strong> — I would like… (formel et poli)</div>
+  <div class="formule"><strong>Je prends…</strong> — I'll have… (plus familier, très courant)</div>
+  <div class="formule"><strong>Est-ce que je peux avoir… ?</strong> — Can I have… ? (très poli)</div>
+  <div class="formule"><strong>Pour moi, ce sera…</strong> — For me, it will be… (élégant)</div>
+  <div class="formule"><strong>Je vais prendre…</strong> — I'm going to have… (futur proche, courant)</div>
+  <br>
+  <p style="font-style:italic;color:#1e4d8c;font-size:0.93rem;">
+    ➜ Exemple : <em>Je voudrais une limonade, s'il vous plaît.</em><br>
+    ➜ Exemple : <em>Je prends le plat du jour.</em>
+  </p>
+</div>
+
+<div class="lecon-box lb-amber">
+  <h3>❓ Pour demander quelque chose · Asking for something</h3>
+  <div class="formule"><strong>Est-ce que vous avez… ?</strong> — Do you have… ?</div>
+  <div class="formule"><strong>Pourriez-vous m'apporter… ?</strong> — Could you bring me… ? (très poli)</div>
+  <div class="formule"><strong>Je peux avoir du pain, s'il vous plaît ?</strong> — Can I have some bread, please?</div>
+  <div class="formule"><strong>La carte, s'il vous plaît.</strong> — The menu, please.</div>
+  <div class="formule"><strong>Qu'est-ce que vous recommandez ?</strong> — What do you recommend?</div>
+  <br>
+  <p style="font-style:italic;color:#7a5000;font-size:0.93rem;">
+    ➜ Exemple : <em>Est-ce que vous avez des plats végétariens ?</em><br>
+    ➜ Exemple : <em>Qu'est-ce que vous recommandez comme dessert ?</em>
+  </p>
+</div>
+
+<div class="lecon-box lb-violet">
+  <h3>💬 À table · Conversation &amp; réactions</h3>
+  <div class="formule"><strong>Bon appétit !</strong> — Enjoy your meal ! (à dire avant de manger)</div>
+  <div class="formule"><strong>C'est délicieux !</strong> — It's delicious!</div>
+  <div class="formule"><strong>Je me régale !</strong> — I'm really enjoying it!</div>
+  <div class="formule"><strong>À votre santé !</strong> — Cheers! (quand on trinque)</div>
+  <div class="formule"><strong>Santé !</strong> — Cheers! (plus court)</div>
+  <div class="formule"><strong>On peut avoir l'addition, s'il vous plaît ?</strong> — Can we have the bill, please?</div>
+  <div class="formule"><strong>On va payer séparément.</strong> — We'll pay separately.</div>
+  <div class="formule"><strong>Je vous laisse le pourboire.</strong> — I'll leave the tip.</div>
+  <br>
+  <p style="font-style:italic;color:#5a30a0;font-size:0.93rem;">
+    ➜ Exemple : <em>On peut avoir l'addition ? On va payer séparément.</em><br>
+    ➜ Exemple : <em>C'était délicieux, merci beaucoup !</em>
+  </p>
+</div>
+
+<div class="lecon-box lb-blue">
+  <h3>📝 Astuce : le vouvoiement et le tutoiement</h3>
+  <ul>
+    <li><strong>Vous</strong> → utilisez-le avec le serveur/la serveuse, les inconnus, les personnes plus âgées.</li>
+    <li><strong>Tu</strong> → utilisez-le avec les amis, la famille, les personnes que vous connaissez bien.</li>
+    <li>Exemple avec un serveur : <em>Est-ce que <strong>vous</strong> pouvez m'apporter l'addition ?</em></li>
+    <li>Exemple avec un ami : <em>Est-ce que <strong>tu</strong> veux goûter mon plat ?</em></li>
+  </ul>
+</div>
+
+<h3 style="font-family:'Playfair Display',serif;color:#1e4d8c;margin:1.6rem 0 0.85rem;font-size:1.18rem;padding-left:0.4rem;">🕰 Quand utiliser ces expressions ?</h3>
+<div class="emplois-grid">
+  <div class="emploi-card ec-rose">
+    <h4>Commander</h4>
+    <p>Au début du repas.<br><em>Je voudrais un verre de vin rouge.</em><br><small style="color:#999">(I would like a glass of red wine.)</small></p>
+  </div>
+  <div class="emploi-card ec-blue">
+    <h4>Demander</h4>
+    <p>Pendant le repas.<br><em>Est-ce que vous avez de la moutarde ?</em><br><small style="color:#999">(Do you have some mustard?)</small></p>
+  </div>
+  <div class="emploi-card ec-green">
+    <h4>Apprécier</h4>
+    <p>Pendant ou après le repas.<br><em>C'est délicieux ! Je me régale.</em><br><small style="color:#999">(It's delicious! I'm really enjoying it.)</small></p>
+  </div>
+  <div class="emploi-card ec-violet">
+    <h4>Payer</h4>
+    <p>À la fin du repas.<br><em>L'addition, s'il vous plaît.</em><br><small style="color:#999">(The bill, please.)</small></p>
+  </div>
+</div>
+
+<!-- ═══ EXERCICES ═══ -->
+<h2 class="section-title st-gold" id="exercices">✏️ Exercices · Exercises</h2>
+
+<!-- EXO 1 - Choisir la bonne formule -->
+<div class="exo-block exo-gold">
+  <h3>Exercice 1 — Choisissez la formule la plus appropriée</h3>
+  <p style="font-size:0.87rem;color:#999;margin-bottom:1rem;font-style:italic;">Cochez la réponse la plus naturelle dans la situation donnée.</p>
+  <div class="choix-item">
+    <p><strong>1.</strong> Vous êtes à la guinguette, vous voulez commander un verre. Que dites-vous ?</p>
+    <label><input type="radio" name="c1" value="a"> Je voudrais un verre de limonade.</label>
+    <label><input type="radio" name="c1" value="b"> Donne-moi un verre.</label>
+    <label><input type="radio" name="c1" value="c"> Je veux un verre.</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>2.</strong> Vous voulez savoir ce que le serveur recommande. Que dites-vous ?</p>
+    <label><input type="radio" name="c2" value="a"> C'est quoi ton plat préféré ?</label>
+    <label><input type="radio" name="c2" value="b"> Qu'est-ce que vous recommandez ?</label>
+    <label><input type="radio" name="c2" value="c"> Donne-moi le menu.</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>3.</strong> Vous trouvez le plat excellent. Que dites-vous à vos amis ?</p>
+    <label><input type="radio" name="c3" value="a"> C'est dégueulasse !</label>
+    <label><input type="radio" name="c3" value="b"> C'est délicieux ! Je me régale.</label>
+    <label><input type="radio" name="c3" value="c"> C'est pas mal.</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>4.</strong> Vous voulez payer. Que dites-vous au serveur ?</p>
+    <label><input type="radio" name="c4" value="a"> L'addition, s'il vous plaît.</label>
+    <label><input type="radio" name="c4" value="b"> Combien ça coûte ?</label>
+    <label><input type="radio" name="c4" value="c"> Je veux payer maintenant.</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>5.</strong> Vous trinquez avec des amis. Que dites-vous ?</p>
+    <label><input type="radio" name="c5" value="a"> Bonjour !</label>
+    <label><input type="radio" name="c5" value="b"> Santé !</label>
+    <label><input type="radio" name="c5" value="c"> Au revoir !</label>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo1()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo1()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score1"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep1',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep1">
+      1. <strong>Je voudrais un verre de limonade.</strong> (poli, naturel)<br>
+      2. <strong>Qu'est-ce que vous recommandez ?</strong> (formule standard)<br>
+      3. <strong>C'est délicieux ! Je me régale.</strong> (enthousiasme naturel)<br>
+      4. <strong>L'addition, s'il vous plaît.</strong> (formule polie et correcte)<br>
+      5. <strong>Santé !</strong> (formule traditionnelle pour trinquer)
+    </div>
+  </div>
+</div>
+
+<!-- EXO 2 - Remettre en ordre -->
+<div class="exo-block exo-teal">
+  <h3>Exercice 2 — Remettez les mots dans le bon ordre</h3>
+  <p style="font-size:0.87rem;color:#999;margin-bottom:1rem;font-style:italic;">Remettez les mots pour former une phrase correcte et polie.</p>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;">
+    <span><span class="num">1.</span> Mots : <em>voudrais / limonade / je / une / de / s'il vous plaît</em></span>
+    <span>➜ <input class="fill-input" id="f1" placeholder="Écrivez la phrase…" data-answer="je voudrais une limonade s'il vous plaît" style="min-width:300px"></span>
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.5rem;">
+    <span><span class="num">2.</span> Mots : <em>recommandez / vous / qu'est-ce que / ?</em></span>
+    <span>➜ <input class="fill-input" id="f2" placeholder="Écrivez la phrase…" data-answer="qu'est-ce que vous recommandez" style="min-width:300px"></span>
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.5rem;">
+    <span><span class="num">3.</span> Mots : <em>délicieux / est / c' / !</em></span>
+    <span>➜ <input class="fill-input" id="f3" placeholder="Écrivez la phrase…" data-answer="c'est délicieux" style="min-width:300px"></span>
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.5rem;">
+    <span><span class="num">4.</span> Mots : <em>l'addition / avoir / on / peut / s'il vous plaît / ?</em></span>
+    <span>➜ <input class="fill-input" id="f4" placeholder="Écrivez la phrase…" data-answer="on peut avoir l'addition s'il vous plaît" style="min-width:300px"></span>
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.5rem;">
+    <span><span class="num">5.</span> Mots : <em>vous / apporter / pourriez / du pain / - ? / m'</em></span>
+    <span>➜ <input class="fill-input" id="f5" placeholder="Écrivez la phrase…" data-answer="pourriez-vous m'apporter du pain" style="min-width:300px"></span>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo2()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo2()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score2"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep2',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep2">
+      1. <strong>Je voudrais une limonade, s'il vous plaît.</strong><br>
+      2. <strong>Qu'est-ce que vous recommandez ?</strong><br>
+      3. <strong>C'est délicieux !</strong><br>
+      4. <strong>On peut avoir l'addition, s'il vous plaît ?</strong><br>
+      5. <strong>Pourriez-vous m'apporter du pain ?</strong>
+    </div>
+  </div>
+</div>
+
+<!-- EXO 3 - Trouver l'erreur -->
+<div class="exo-block exo-rose">
+  <h3>Exercice 3 — Trouvez l'expression qui ne convient pas</h3>
+  <p style="font-size:0.87rem;color:#999;margin-bottom:1rem;font-style:italic;">Dans chaque groupe, une expression ne convient pas à la situation. Trouvez-la.</p>
+  <div class="choix-item">
+    <p><strong>1.</strong> Pour commander poliment :</p>
+    <label><input type="radio" name="d1" value="a"> Je voudrais...</label>
+    <label><input type="radio" name="d1" value="b"> Je prends...</label>
+    <label><input type="radio" name="d1" value="c"> Donne-moi...</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>2.</strong> Pour demander la carte :</p>
+    <label><input type="radio" name="d2" value="a"> La carte, s'il vous plaît.</label>
+    <label><input type="radio" name="d2" value="b"> File-moi le menu.</label>
+    <label><input type="radio" name="d2" value="c"> Est-ce que je peux voir la carte ?</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>3.</strong> Pour apprécier le repas :</p>
+    <label><input type="radio" name="d3" value="a"> C'est délicieux.</label>
+    <label><input type="radio" name="d3" value="b"> Je me régale.</label>
+    <label><input type="radio" name="d3" value="c"> C'est pas terrible.</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>4.</strong> Pour payer :</p>
+    <label><input type="radio" name="d4" value="a"> L'addition, s'il vous plaît.</label>
+    <label><input type="radio" name="d4" value="b"> On va payer séparément.</label>
+    <label><input type="radio" name="d4" value="c"> C'est combien déjà ?</label>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo3()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo3()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score3"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep3',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep3">
+      1. <strong>Donne-moi...</strong> (trop familier pour un serveur)<br>
+      2. <strong>File-moi le menu.</strong> (trop familier)<br>
+      3. <strong>C'est pas terrible.</strong> (négatif, on apprécie le repas)<br>
+      4. <strong>C'est combien déjà ?</strong> (trop familier pour demander l'addition)
+    </div>
+  </div>
+</div>
+
+<!-- ═══ EXPRESSIONS ═══ -->
+<h2 class="section-title st-teal" id="expressions">💬 Expressions pour parler des guinguettes et des moments conviviaux</h2>
+
+<div class="expr-intro">
+  <strong>Pourquoi ces expressions ?</strong> Les guinguettes sont un symbole de la culture française : convivialité, musique, danse, bonne humeur. Ces expressions vous aideront à parler de ces moments de plaisir partagé, mais aussi plus largement de tous les instants de fête et de détente.
+  <br><br>
+  <span style="font-style:italic;color:#8a6a74;font-size:0.9rem;">(Guinguettes are a symbol of French culture: conviviality, music, dancing, good cheer. These expressions will help you talk about these moments of shared pleasure, but also about any festive and relaxing moments.)</span>
+</div>
+
+<div class="expr-grid">
+
+  <div class="expr-card xc1" data-num="1">
+    <span class="expr-tag">Ambiance</span>
+    <div class="expr-fr">Avoir le cœur léger</div>
+    <div class="expr-en">To feel light-hearted / carefree</div>
+    <div class="expr-ex">
+      Après la fête, je suis rentré chez moi le cœur léger.<br>
+      <span class="ex-en">After the party, I went home feeling light-hearted.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc2" data-num="2">
+    <span class="expr-tag">Musique</span>
+    <div class="expr-fr">Mener la danse</div>
+    <div class="expr-en">To lead the dance / to be in charge</div>
+    <div class="expr-ex">
+      C'est toujours la même personne qui mène la danse !<br>
+      <span class="ex-en">It's always the same person who leads the dance!</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc3" data-num="3">
+    <span class="expr-tag">Convivialité</span>
+    <div class="expr-fr">Mettre l'ambiance</div>
+    <div class="expr-en">To create a lively atmosphere</div>
+    <div class="expr-ex">
+      L'orchestre met une super ambiance à la guinguette.<br>
+      <span class="ex-en">The orchestra creates a great atmosphere at the café.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc4" data-num="4">
+    <span class="expr-tag">Bonne humeur</span>
+    <div class="expr-fr">Être aux anges</div>
+    <div class="expr-en">To be over the moon / delighted</div>
+    <div class="expr-ex">
+      Marie était aux anges quand elle a dansé avec son mari.<br>
+      <span class="ex-en">Marie was over the moon when she danced with her husband.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc5" data-num="5">
+    <span class="expr-tag">Nourriture</span>
+    <div class="expr-fr">Se régaler</div>
+    <div class="expr-en">To enjoy oneself (with food)</div>
+    <div class="expr-ex">
+      Nous nous sommes régalés avec les grillades du patron !<br>
+      <span class="ex-en">We really enjoyed the boss's grilled food!</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc6" data-num="6">
+    <span class="expr-tag">Fête</span>
+    <div class="expr-fr">Faire la fête</div>
+    <div class="expr-en">To party / to celebrate</div>
+    <div class="expr-ex">
+      Tous les dimanches, on fait la fête à la guinguette.<br>
+      <span class="ex-en">Every Sunday, we party at the café.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc7" data-num="7">
+    <span class="expr-tag">Détente</span>
+    <div class="expr-fr">Prendre son temps</div>
+    <div class="expr-en">To take one's time</div>
+    <div class="expr-ex">
+      À la guinguette, on prend son temps pour profiter du moment.<br>
+      <span class="ex-en">At the café, we take our time to enjoy the moment.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc8" data-num="8">
+    <span class="expr-tag">Souvenir</span>
+    <div class="expr-fr">Garder un bon souvenir de</div>
+    <div class="expr-en">To keep a good memory of</div>
+    <div class="expr-ex">
+      Je garde un excellent souvenir de mes dimanches à la guinguette.<br>
+      <span class="ex-en">I have a great memory of my Sundays at the café.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc1" data-num="9">
+    <span class="expr-tag">Proverbe</span>
+    <div class="expr-fr">La vie est belle</div>
+    <div class="expr-en">Life is beautiful</div>
+    <div class="expr-ex">
+      Quand on est à la guinguette, on se dit que la vie est belle !<br>
+      <span class="ex-en">When we're at the café, we tell ourselves that life is beautiful!</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc2" data-num="10">
+    <span class="expr-tag">Activité</span>
+    <div class="expr-fr">Aller faire un tour</div>
+    <div class="expr-en">To go for a walk / ride</div>
+    <div class="expr-ex">
+      Après le repas, les enfants vont faire un tour en barque.<br>
+      <span class="ex-en">After the meal, the children go for a rowboat ride.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc3" data-num="11">
+    <span class="expr-tag">Fin de journée</span>
+    <div class="expr-fr">Le cœur léger</div>
+    <div class="expr-en">Light-hearted / carefree</div>
+    <div class="expr-ex">
+      On rentre chez soi le cœur léger après une belle journée.<br>
+      <span class="ex-en">We go home light-hearted after a beautiful day.</span>
+    </div>
+  </div>
+
+  <div class="expr-card xc4" data-num="12">
+    <span class="expr-tag">Philosophie</span>
+    <div class="expr-fr">Profiter du moment présent</div>
+    <div class="expr-en">To enjoy the present moment</div>
+    <div class="expr-ex">
+      À la guinguette, on apprend à profiter du moment présent.<br>
+      <span class="ex-en">At the café, we learn to enjoy the present moment.</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ASTUCE -->
+<div class="lecon-box lb-violet">
+  <h3>💡 Astuce · Pro tip</h3>
+  <p style="font-size:0.95rem;line-height:1.9;color:#3a1870;">
+    Les guinguettes sont un lieu emblématique de la vie française où l'on <strong>mange, danse et chante</strong> en famille ou entre amis.<br>
+    Pour commander ou demander quelque chose, utilisez toujours <strong>"s'il vous plaît"</strong> et le <strong>vouvoiement</strong> avec le serveur.<br>
+    Avec vos amis, vous pouvez utiliser le tutoiement, mais gardez les formules de politesse pour être agréable.
+    <br><br>
+    <em style="color:#6b3fa0;font-size:0.9rem;">Guinguettes are an emblematic place of French life where people eat, dance and sing with family or friends. Always use "s'il vous plaît" and the formal "vous" with the waiter. With friends, use "tu", but keep polite formulas to be pleasant.</em>
+  </p>
+</div>
+
+</main>
+
+<footer>
+  🇫🇷 Leçon de français · Les Guinguettes · Ambiance &amp; Convivialité · © 2025
+</footer>
+
+<script>
+function toggleRep(id, btn) {
+  document.getElementById(id).classList.toggle('visible');
+  btn.classList.toggle('open');
+}
+function showScore(id, correct, total) {
+  const el = document.getElementById(id);
+  const pct = Math.round(correct/total*100);
+  if (pct===100) { el.textContent='🏆 Parfait ! Score : '+correct+'/'+total; el.className='score-banner score-perfect'; }
+  else if (pct>=60){ el.textContent='👍 Bien ! Score : '+correct+'/'+total+' ('+pct+'%)'; el.className='score-banner score-good'; }
+  else { el.textContent='💪 Continuez ! Score : '+correct+'/'+total+' ('+pct+'%)'; el.className='score-banner score-try'; }
+  el.style.display='block';
+}
+function checkFills(ids) {
+  let c=0;
+  ids.forEach(id=>{
+    const i=document.getElementById(id);
+    const v=i.value.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const a=i.dataset.answer.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    i.classList.remove('correct','incorrect');
+    if(v===a){i.classList.add('correct');c++;}
+    else if(v!=='') i.classList.add('incorrect');
+  });
+  return c;
+}
+function resetFills(ids,sid){
+  ids.forEach(id=>{const i=document.getElementById(id);i.value='';i.classList.remove('correct','incorrect');});
+  const s=document.getElementById(sid);s.style.display='none';s.className='score-banner';
+}
+
+// Exo 1 - Choix multiples
+const ans1 = {c1:'a', c2:'b', c3:'b', c4:'a', c5:'b'};
+function checkExo1(){
+  let c=0;
+  Object.entries(ans1).forEach(([n,a])=>{
+    const rs=document.querySelectorAll(`input[name="${n}"]`);
+    rs.forEach(r=>{r.parentElement.style.background='';r.parentElement.style.color='';});
+    const sel=document.querySelector(`input[name="${n}"]:checked`);
+    if(sel){
+      if(sel.value===a){sel.parentElement.style.background='#c8f0cc';sel.parentElement.style.color='#1a5020';c++;}
+      else{
+        sel.parentElement.style.background='#fcc8d0';sel.parentElement.style.color='#801020';
+        rs.forEach(r=>{if(r.value===a){r.parentElement.style.background='#c8f0cc';r.parentElement.style.color='#1a5020';}});
+      }
+    }
+  });
+  showScore('score1',c,5);
+}
+function resetExo1(){
+  document.querySelectorAll('#exercices input[type=radio]').forEach(r=>{r.checked=false;r.parentElement.style.background='';r.parentElement.style.color='';});
+  const s=document.getElementById('score1');s.style.display='none';s.className='score-banner';
+}
+
+// Exo 2 - Remettre en ordre
+function checkExo2(){ showScore('score2',checkFills(['f1','f2','f3','f4','f5']),5); }
+function resetExo2(){ resetFills(['f1','f2','f3','f4','f5'],'score2'); }
+
+// Exo 3 - Trouver l'erreur
+const ans3 = {d1:'c', d2:'b', d3:'c', d4:'c'};
+function checkExo3(){
+  let c=0;
+  Object.entries(ans3).forEach(([n,a])=>{
+    const rs=document.querySelectorAll(`input[name="${n}"]`);
+    rs.forEach(r=>{r.parentElement.style.background='';r.parentElement.style.color='';});
+    const sel=document.querySelector(`input[name="${n}"]:checked`);
+    if(sel){
+      if(sel.value===a){sel.parentElement.style.background='#c8f0cc';sel.parentElement.style.color='#1a5020';c++;}
+      else{
+        sel.parentElement.style.background='#fcc8d0';sel.parentElement.style.color='#801020';
+        rs.forEach(r=>{if(r.value===a){r.parentElement.style.background='#c8f0cc';r.parentElement.style.color='#1a5020';}});
+      }
+    }
+  });
+  showScore('score3',c,4);
+}
+function resetExo3(){
+  document.querySelectorAll('#exercices input[type=radio]').forEach(r=>{r.checked=false;r.parentElement.style.background='';r.parentElement.style.color='';});
+  const s=document.getElementById('score3');s.style.display='none';s.className='score-banner';
+}
+</script>
+</body>
+</html>
