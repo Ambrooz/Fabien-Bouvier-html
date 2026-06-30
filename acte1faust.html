@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Faust · Acte I (complet, corrigé) · French Diction Coach</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f8f5ef; --bg-card: #ffffff; --text: #1e1a16; --text2: #4a3f38; --text3: #7a6e64;
+    --gold: #b8862a; --gold2: #d4a843; --gold-light: #f5edd9;
+    --crimson: #8b2020; --crimson2: #b03030; --crimson-light: #faf0f0;
+    --navy: #1a2a4a; --navy-light: #eef2f8;
+    --forest: #1e5a3a; --forest-light: #eef8f2;
+    --border: #e2dcd2; --shadow: 0 4px 20px rgba(60,40,20,0.08); --shadow-hover: 0 8px 32px rgba(60,40,20,0.16);
+    --radius: 4px; --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-display: 'Playfair Display', Georgia, serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); font-family: var(--font-body); color: var(--text); line-height: 1.7; }
+  .header { background: var(--navy); color: #fff; padding: 2.5rem 1.5rem 2rem; text-align: center; border-bottom: 4px solid var(--gold); }
+  .header-ornament { font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.6rem; }
+  .header h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; letter-spacing: -0.01em; }
+  .header h1 span { color: var(--gold2); }
+  .header-sub { font-family: var(--font-display); font-style: italic; font-size: 1.1rem; color: rgba(255,255,255,0.7); margin-top: 0.3rem; }
+  .header-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1.2rem; }
+  .badge { border: 1px solid rgba(212,168,67,0.4); color: var(--gold2); padding: 0.25rem 1rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
+  .badge.fix { border-color: rgba(176,48,48,0.5); color: #e08a8a; }
+  .nav { background: #fff; display: flex; overflow-x: auto; scrollbar-width: none; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav-btn { flex-shrink: 0; background: none; border: none; border-bottom: 3px solid transparent; padding: 0.9rem 1.2rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .nav-btn:hover { color: var(--text); }
+  .nav-btn.active { color: var(--navy); border-bottom-color: var(--gold); background: rgba(184,134,42,0.04); }
+  .main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem; }
+  .section { display: none; animation: fadeUp 0.35s ease; }
+  .section.active { display: block; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+  .section-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--crimson); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+  .section-sub { font-size: 0.85rem; color: var(--text3); margin-bottom: 1.5rem; }
+  h3 { font-family: var(--font-display); font-size: 1.2rem; font-weight: 700; margin: 1.8rem 0 0.6rem; }
+  p { margin-bottom: 0.8rem; color: var(--text2); font-size: 0.98rem; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; box-shadow: var(--shadow); }
+  .card-gold { border-left: 4px solid var(--gold); background: var(--gold-light); }
+  .card-crimson { border-left: 4px solid var(--crimson); background: var(--crimson-light); }
+  .card-navy { border-left: 4px solid var(--navy); background: var(--navy-light); }
+  .card-forest { border-left: 4px solid var(--forest); background: var(--forest-light); }
+  .audio-player { display: inline-flex; align-items: center; gap: 0.8rem; background: var(--bg); padding: 0.4rem 1rem 0.4rem 0.8rem; border-radius: 30px; border: 1px solid var(--border); margin: 0.2rem 0.3rem 0.2rem 0; font-size: 0.85rem; }
+  .audio-player button { background: var(--navy); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
+  .audio-player button:hover { background: var(--gold); }
+  .audio-player .label { font-weight: 500; color: var(--text2); margin-right: 0.2rem; }
+  .diction-box { background: #fff; border: 2px solid var(--border); border-radius: var(--radius); padding: 1.8rem 2rem; margin: 1.5rem 0; box-shadow: var(--shadow); font-family: var(--font-display); font-size: 1.25rem; line-height: 2.2; }
+  .diction-box .fr { font-weight: 400; }
+  .diction-box .en { font-size: 0.85rem; color: var(--text3); font-family: var(--font-body); font-weight: 400; line-height: 1.6; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border); }
+  .diction-box .didascalie { font-size: 0.85rem; font-family: var(--font-body); font-style: italic; color: var(--text3); margin: 0.3rem 0; padding-left: 0.5rem; border-left: 2px solid var(--gold); }
+  .diction-box .silence { font-size: 0.85rem; font-family: var(--font-body); font-style: italic; color: var(--text3); background: var(--gold-light); padding: 0.1rem 0.5rem; border-radius: 3px; display: inline-block; }
+  .diction-box .speaker { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--navy); margin-top: 0.8rem; display: block; }
+  .diction-box .speaker-mephisto { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--crimson); margin-top: 0.8rem; display: block; }
+  .diction-box .speaker-choeur { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--forest); margin-top: 0.8rem; display: block; }
+  .extended { color: var(--crimson); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--crimson); text-decoration-thickness: 2px; }
+  .accent { font-weight: 700; color: var(--crimson); }
+  .legend { display: flex; flex-wrap: wrap; gap: 1.2rem; padding: 1rem 0 0.5rem; font-size: 0.8rem; color: var(--text2); }
+  .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+  .legend-swatch { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
+  .swatch-extended { background: var(--crimson); height: 4px; }
+  .swatch-accent { background: var(--crimson); height: 4px; }
+  .swatch-silence { background: var(--gold-light); border: 1px solid var(--border); height: 12px; width: 18px; }
+  .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+  .rule-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; box-shadow: var(--shadow); }
+  .rule-card .num { display: inline-block; background: var(--gold); color: #fff; font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem; border-radius: 2px; margin-bottom: 0.4rem; letter-spacing: 0.1em; }
+  .rule-card h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .rule-card p { font-size: 0.88rem; margin: 0 0 0.3rem 0; }
+  .rule-card .ex { font-family: var(--font-display); font-style: italic; color: var(--crimson); font-size: 0.92rem; margin-top: 0.3rem; }
+  .rule-card .ex-faust { font-family: var(--font-display); font-style: italic; color: var(--navy); font-size: 0.9rem; margin-top: 0.2rem; padding: 0.3rem 0.6rem; background: var(--navy-light); border-radius: 3px; border-left: 3px solid var(--navy); }
+  @media (max-width: 640px) {
+    .diction-box { font-size: 1rem; padding: 1.2rem; }
+    .header h1 { font-size: 1.8rem; }
+    .section-title { font-size: 1.4rem; }
+    .rules-grid { grid-template-columns: 1fr; }
+    .nav-btn { padding: 0.7rem 0.8rem; font-size: 0.7rem; }
+    .main { padding: 1.2rem 0.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-ornament">Lyric Diction · Conductor's Edition</div>
+  <h1>Faust <span>·</span> French Diction</h1>
+  <div class="header-sub">Charles Gounod · Libretto by Barbier & Carré</div>
+  <div class="header-badges">
+    <span class="badge">Acte I complet · Scènes 1 & 2</span>
+    <span class="badge">For Non-French Speakers</span>
+    <span class="badge fix">Texte vérifié sur le livret original</span>
+  </div>
+</header>
+
+<nav class="nav" id="nav">
+  <button class="nav-btn active" data-tab="diction">Diction Display</button>
+  <button class="nav-btn" data-tab="rules">6 Diction Rules</button>
+  <button class="nav-btn" data-tab="grammar">Grammar Points</button>
+</nav>
+
+<main class="main">
+
+  <!-- ========================= DICTION DISPLAY ========================= -->
+  <div class="section active" id="diction">
+    <h2 class="section-title">Annotated Text · Acte I (intégral)</h2>
+    <p class="section-sub">
+      <strong>Faust</strong>, Acte I — Scène première (Le désespoir de Faust) et Scène deuxième (le pacte avec Méphistophélès), entièrement annotées pour la diction lyrique française.
+    </p>
+
+    <div class="legend">
+      <span class="legend-item"><span class="legend-swatch swatch-extended"></span> Extended vowel (tenue)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-silence"></span> Silence / Breath</span>
+      <span class="legend-item"><span class="legend-swatch swatch-accent"></span> Accented syllable</span>
+    </div>
+
+    <!-- SCÈNE PREMIÈRE -->
+    <div class="diction-box">
+      <div class="didascalie"><span class="en">(Le cabinet de Faust. Sa lampe est près de s'éteindre. Il est assis devant une table chargée de parchemins. Un livre est ouvert devant lui.)</span></div>
+
+      <span class="speaker">FAUST</span>
+      <div class="didascalie"><span class="en">(absorbed, reading)</span></div>
+
+      <div class="fr"><span class="extended">Riennnnnnnnnnn !</span> <span class="silence">(5 sec. de silence absolu, regard fixe, accablement)</span></div>
+      <div class="fr">~ En vain j'interroge, en mon <span class="extended">ardenteeeeeee</span> veille,</div>
+      <div class="fr">la nature et le créateur ;</div>
+      <div class="fr">pas une voix ne glisse à mon oreille</div>
+      <div class="fr">un mot consolateur !</div>
+      <div class="didascalie"><span class="en">(audible sigh)</span></div>
+      <div class="fr">J'ai langui, <span class="extended">triste et solitaireeeeeeeee</span>,</div>
+      <div class="fr">sans pouvoir briser le lien</div>
+      <div class="fr">qui m'attache encore à la <span class="extended">terreeeeeeeeeeeeeeee !...</span></div>
+      <div class="didascalie"><span class="en">(voice fading, diminuendo, 5 sec.)</span></div>
+      <div class="didascalie"><span class="silence">(2 sec. de silence, regard vide)</span></div>
+      <div class="fr">Je ne vois rien ! ~ Je ne sais rien !...</div>
+
+      <div class="didascalie"><span class="en">(Il ferme le livre et se lève. Le jour commence à naître.)</span></div>
+
+      <div class="fr">Le ciel <span class="extended">pâliiiiiiiiit !</span> Devant l'aube <span class="extended">nouvelleeeeee</span></div>
+      <div class="fr">la sombre nuit <span class="extended">s'évanouiiiiiii !...</span></div>
+
+      <div class="didascalie"><span class="en">(Avec désespoir.)</span></div>
+
+      <div class="fr">Encore un jour ! ~ encore un jour qui luit !...</div>
+      <div class="fr">Ô mort, quand viendras-tu m'abriter sous ton <span class="extended">aileeeeee ?</span></div>
+
+      <div class="didascalie"><span class="en">(Saisissant une fiole sur la table.)</span></div>
+      <div class="didascalie"><span class="silence">(2 sec. de silence, la main tremble vers la fiole)</span></div>
+
+      <div class="fr">Eh bien ! puisque la mort me fuit,</div>
+      <div class="fr">pourquoi n'irais-je <span class="extended">paaaaaaaaaas</span> <span class="extended">vers elleeeeeee ?...</span></div>
+      <div class="didascalie"><span class="en">(portamento dramatique, 7 sec.)</span></div>
+      <div class="didascalie"><span class="silence">(2 sec. de silence, regard fixé sur la coupe)</span></div>
+
+      <div class="fr">Salut ! ô mon dernier matin !</div>
+      <div class="fr"><span class="extended">J'arriveeeee</span> sans terreur au <span class="extended">termeeeeee</span> du <span class="extended">voyageeeee</span> ;</div>
+      <div class="fr">et je suis, avec ce breuvage,</div>
+      <div class="fr"><span class="accent">le seul maître de mon destin !</span></div>
+
+      <div class="didascalie"><span class="en">(Il verse le contenu de la fiole dans une coupe en cristal. Au moment où il va porter la coupe à ses lèvres, des voix de jeunes filles se font entendre au dehors.)</span></div>
+
+      <span class="speaker-choeur">JEUNES FILLES</span>
+      <div class="didascalie"><span class="en">(au loin — voix très légères, presque irréelles)</span></div>
+
+      <div class="fr" style="color: var(--forest);">
+        Paresseuse fille<br>
+        qui sommeille encor !<br>
+        Déjà le jour brille<br>
+        sous son manteau d'or ;<br>
+        déjà l'oiseau chante<br>
+        ses <span class="extended">folleeeeeeees</span> chansons ;<br>
+        l'aube <span class="extended">caressanteeeee</span><br>
+        sourit aux moissons ;<br>
+        le ruisseau murmure,<br>
+        la fleur s'ouvre au jour,<br>
+        toute la nature<br>
+        s'éveille à l'amour !
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="didascalie"><span class="en">(avec mépris, coupant brutalement)</span></div>
+
+      <div class="fr">Vains échos de la joie humaine,</div>
+      <div class="fr">passez, passez votre chemin !</div>
+      <div class="fr">Ô coupe des aïeux, qui tant de fois fus <span class="extended">pleineeeee</span>,</div>
+      <div class="fr">pourquoi trembles-tu dans ma main ?</div>
+
+      <div class="didascalie"><span class="en">(Il porte de nouveau la coupe à ses lèvres.)</span></div>
+
+      <span class="speaker-choeur">JEUNES FILLES</span>
+      <div class="fr" style="color: var(--forest);">
+        Aux champs <span class="extended">l'auroreeeee</span> nous rappelle ;<br>
+        le temps est beau, la terre est belle ;<br>
+        béni soit dieu !<br>
+        À peine voit-on l'hirondelle,<br>
+        qui vole et plonge d'un coup d'aile<br>
+        dans le ciel bleu !
+      </div>
+
+      <span class="speaker-choeur">JEUNES FILLES</span> <span class="didascalie" style="display:inline;"><span class="en">(dans l'éloignement)</span></span>
+      <div class="fr" style="color: var(--forest);">L'oiseau chante !</div>
+
+      <span class="speaker-choeur">LABOUREURS</span> <span class="didascalie" style="display:inline;"><span class="en">(dans l'éloignement)</span></span>
+      <div class="fr" style="color: var(--forest);">La terre est belle !</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Ô <span class="extended">prièreeeee</span> universelle !</div>
+
+      <span class="speaker-choeur">JEUNES FILLES, LABOUREURS</span>
+      <div class="fr" style="color: var(--forest);">Béni soit Dieu !</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Dieu !</div>
+      <div class="didascalie"><span class="en">(distant echo fading away)</span></div>
+
+      <div class="didascalie"><span class="en">(Il se laisse retomber dans son fauteuil.)</span></div>
+      <div class="didascalie"><span class="silence">(2 sec. de silence, effondrement physique)</span></div>
+
+      <div class="fr">Mais ce dieu, que peut-il pour moi ?</div>
+
+      <div class="didascalie"><span class="en">(Se levant, colère croissante.)</span></div>
+
+      <div class="fr">Me rendra-t-il l'amour, l'espérance et la foi ?</div>
+
+      <div class="didascalie"><span class="en">(Avec rage, martelant chaque syllabe.)</span></div>
+
+      <div class="fr">
+        Maudites soyez-vous, ô voluptés humaines !<br>
+        Maudites soient les chaînes<br>
+        qui me font ramper ici-bas !<br>
+        Maudit soit tout ce qui nous leurre,<br>
+        vain espoir qui passe avec l'heure,<br>
+        rêves d'amour ou de combats !<br>
+        Maudit soit le bonheur, maudite la science,<br>
+        <span class="extended">la prièreeeee</span> et la foi !<br>
+        Maudite sois-tu, patience !
+      </div>
+
+      <div class="didascalie"><span class="en">(Un temps. Puis, cri déchirant.)</span></div>
+      <div class="didascalie"><span class="silence">(2 sec. de silence, puis explosion)</span></div>
+
+      <div class="fr" style="font-size:1.4rem; font-weight:700; color:var(--crimson); margin-top:0.5rem;">
+        <span class="accent">À moi, Satan ! à moi !</span>
+      </div>
+    </div>
+
+    <!-- SCÈNE DEUXIÈME -->
+    <div class="diction-box">
+      <div class="didascalie" style="border-left-color: var(--crimson);"><span class="en">(Scène deuxième. Faust, Méphistophélès.)</span></div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="didascalie"><span class="en">(apparaissant)</span></div>
+      <div class="fr">
+        Me voici !... D'où vient ta surprise ?<br>
+        Ne suis-je pas mis à ta guise ?<br>
+        L'épée au côté, la plume au chapeau,<br>
+        l'escarcelle pleine, un riche manteau<br>
+        sur l'épaule ; ~ en somme<br>
+        un vrai gentilhomme !<br>
+        Eh bien ! que me veux-tu, docteur ?<br>
+        Parle, voyons !... ~ Te fais-je peur ?
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Non.</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Doutes-tu de ma puissance ?</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Peut-être.</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Mets-la donc à l'épreuve !...</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Va-t'en !</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">
+        Fi ! ~ c'est là ta reconnaissance !<br>
+        Apprends de moi qu'avec Satan<br>
+        l'on en doit user d'autre sorte,<br>
+        et qu'il n'était pas besoin<br>
+        de l'appeler de si loin<br>
+        pour le mettre ensuite à la porte !
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Et que peux-tu pour moi ?</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">
+        Tout. ~ Mais dis-moi d'abord<br>
+        ce que tu veux : ~ est-ce de l'or ?
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Que ferais-je de la richesse ?</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">
+        Bon ! Je vois où le bât te blesse !<br>
+        Tu veux la gloire ?
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Plus encor !</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">La puissance ?</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">
+        Non ! je veux un trésor<br>
+        qui les contient tous !... je veux la jeunesse !
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="didascalie"><span class="en">(avec passion)</span></div>
+      <div class="fr">
+        À moi les plaisirs,<br>
+        les jeunes maîtresses !<br>
+        À moi leurs caresses !<br>
+        À moi leurs désirs !<br>
+        À moi l'énergie<br>
+        des instincts puissants,<br>
+        et la folle orgie<br>
+        du cœur et des sens !<br>
+        Ardente jeunesse,<br>
+        à moi tes désirs !<br>
+        À moi ton ivresse !<br>
+        À moi tes plaisirs !
+      </div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Fort bien ! je puis contenter ton caprice.</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Et que te donnerai-je en retour ?</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">
+        Presque rien :<br>
+        ici, je suis à ton service,<br>
+        mais là-bas tu seras au mien.
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Là-bas !...</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Là-bas.</div>
+      <div class="didascalie"><span class="en">(Lui présentant un parchemin.)</span></div>
+      <div class="fr">
+        Allons, signe. ~ Eh quoi ! ta main tremble,<br>
+        que faut-il pour te décider ?...<br>
+        La jeunesse t'appelle : ose la regarder !...
+      </div>
+      <div class="didascalie"><span class="en">(Il fait un geste. Le fond du théâtre s'ouvre et laisse voir Marguerite assise devant son rouet et filant.)</span></div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Ô merveille !...</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Eh bien ! que t'en semble ?...</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="didascalie"><span class="en">(prenant le parchemin)</span></div>
+      <div class="fr">Donne !...</div>
+
+      <span class="didascalie" style="display:block;"><span class="en">(Il signe.)</span></span>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Allons donc !</div>
+      <div class="didascalie"><span class="en">(Prenant la coupe restée sur la table.)</span></div>
+      <div class="fr">
+        Et maintenant,<br>
+        maître, c'est moi qui te convie<br>
+        à vider cette coupe où fume en bouillonnant<br>
+        non plus la mort, non plus le poison ; ~ mais la vie.
+      </div>
+
+      <span class="speaker">FAUST</span>
+      <div class="didascalie"><span class="en">(prenant la coupe et se tournant vers Marguerite)</span></div>
+      <div class="fr">À toi, fantôme adorable et charmant !...</div>
+      <div class="didascalie"><span class="en">(Il vide la coupe et se trouve métamorphosé en jeune et élégant seigneur. La vision disparaît.)</span></div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Viens ?</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Je la reverrai ?</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Sans doute.</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Quand ?</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Aujourd'hui.</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">C'est bien.</div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">En route !</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">
+        À moi les plaisirs,<br>
+        les jeunes maîtresses !<br>
+        À moi leurs caresses !<br>
+        À moi leurs désirs !
+      </div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">
+        À toi la jeunesse,<br>
+        à toi tes désirs,<br>
+        à toi ton ivresse,<br>
+        à toi tes plaisirs !
+      </div>
+
+      <div class="didascalie" style="margin-top:0.8rem;"><span class="en">(Ils sortent. La toile tombe.)</span></div>
+    </div>
+
+    <div class="card card-crimson">
+      <h3 style="margin-top:0;">Corrections apportées par rapport au livret de référence</h3>
+      <p style="font-size:0.9rem;">Le duo Faust/Méphisto (scène 2) comportait plusieurs erreurs d'attribution de répliques :</p>
+      <ul style="padding-left:1.2rem; font-size:0.9rem; color:var(--text2);">
+        <li><strong>"Non."</strong> (réponse de Faust à "Te fais-je peur ?") avait disparu — rétabli.</li>
+        <li><strong>"Va-t'en !"</strong> était collé à tort dans la réplique de Méphisto ("Tout. Mais dis-moi…") — replacé comme réplique de Faust à sa place originale.</li>
+        <li><strong>"Fi ! c'est là ta reconnaissance !..."</strong> était attribué à Faust — c'est en réalité Méphistophélès qui parle (Faust se moque, Méphisto se vexe).</li>
+        <li><strong>"Plus encor !"</strong> (réponse de Faust à "Tu veux la gloire ?") avait été remplacé par "Non !" — corrigé ; le "Non !" original répond en fait à "La puissance ?".</li>
+        <li><strong>"Et que te donnerai-je en retour ?"</strong> était fusionné dans la tirade de Méphisto — c'est une question de Faust, rétablie comme réplique séparée.</li>
+        <li><strong>"Presque rien"</strong> apparaissait deux fois (dupliqué) — supprimé en double, conservé à sa place unique d'origine.</li>
+      </ul>
+    </div>
+
+    <div class="card card-gold">
+      <h3 style="margin-top:0;">Récapitulatif des extensions vocaliques</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem 2rem; font-size:0.95rem;">
+        <div><span style="font-weight:600;">Riennnnnnnnnnn !</span> — "i" tenu</div>
+        <div><span style="font-weight:600;">ardenteeeeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">triste et solitaireeeeeeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">terreeeeeeeeeeeeeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">pâliiiiiiiiit</span> — "i"</div>
+        <div><span style="font-weight:600;">nouvelleeeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">s'évanouiiiiiii</span> — "i"</div>
+        <div><span style="font-weight:600;">aileeeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">paaaaaaaaaas</span> — "a"</div>
+        <div><span style="font-weight:600;">vers elleeeeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">J'arriveeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">termeeeeee</span> — "è"</div>
+        <div><span style="font-weight:600;">voyageeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">folleeeeeeees</span> — "è"</div>
+        <div><span style="font-weight:600;">caressanteeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">pleineeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">l'auroreeeee</span> — "è" final</div>
+        <div><span style="font-weight:600;">prièreeeee</span> — "è" final</div>
+      </div>
+    </div>
+
+    <div class="card card-navy">
+      <h3 style="margin-top:0;">Récapitulatif des silences</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem 2rem; font-size:0.95rem;">
+        <div><span style="font-weight:600;">Après "Rien !"</span> — 5 sec.</div>
+        <div style="color:var(--text3);">Silence absolu, accablement</div>
+        <div><span style="font-weight:600;">Après "terreeeeeeeeeeeeeeee !..."</span> — 2 sec.</div>
+        <div style="color:var(--text3);">Regard vide</div>
+        <div><span style="font-weight:600;">Avant "Eh bien !"</span> — 2 sec.</div>
+        <div style="color:var(--text3);">Main tremblante vers la fiole</div>
+        <div><span style="font-weight:600;">Après "vers elleeeeeee ?..."</span> — 2 sec.</div>
+        <div style="color:var(--text3);">Regard fixé sur la coupe</div>
+        <div><span style="font-weight:600;">Après "Dieu !" (écho)</span> — 2 sec.</div>
+        <div style="color:var(--text3);">Voix qui s'éteint</div>
+        <div><span style="font-weight:600;">Après "Mais ce dieu"</span> — 2 sec.</div>
+        <div style="color:var(--text3);">Effondrement physique</div>
+        <div><span style="font-weight:600;">Avant "À moi, Satan !"</span> — 2 sec.</div>
+        <div style="color:var(--text3);">Silence de rage contenue, puis explosion</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================= 6 DICTION RULES ========================= -->
+  <div class="section" id="rules">
+    <h2 class="section-title">6 Diction Rules from Faust</h2>
+    <p class="section-sub"><em>"In French, you don't pronounce words — you pronounce phrases. It's like a grand orchestral legato."</em></p>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="num">Rule 1</span>
+        <h4>Final Accent of the Sense Group</h4>
+        <p>The accent falls <strong>only</strong> on the very last syllable of the thought group.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Rien !"</em> → accent on <strong>Rien</strong> [ʁjɛ̃]<br><em>"consolateur"</em> → accent on <strong>-teur</strong> [tœʁ]</div>
+        <div class="ex">"Je ne vois rien !" → accent on <strong>rien</strong></div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('rule1-accent')">▶</button><span class="label">Accent: consolateur → <span style="color:var(--crimson);font-weight:700;">-teur</span></span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">Rule 2</span>
+        <h4>Extended Vowels (Tenue)</h4>
+        <p>In lyric singing, final vowels are often <strong>held</strong> for dramatic effect — especially on accented syllables.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"terreeeeeeeeeeeeeeee"</em> → extended final <strong>-erre</strong> [ɛːʁ]<br><em>"aileeeeee"</em> → extended final <strong>-aile</strong> [ɛːl]</div>
+        <div class="ex">"Ô mort, quand viendras-tu m'abriter sous ton aile ?" → hold on <strong>aile</strong></div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('rule2-extended')">▶</button><span class="label">Extended: <span style="color:var(--crimson);font-weight:700;">terreeeeeeeeeeeeeeee</span></span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">Rule 3</span>
+        <h4>Silent "E" — When to Drop</h4>
+        <p>Many E's drop in speech — but <strong>NOT all of them!</strong> Only in weak, unstressed positions.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"je ne vois"</em> → [ʒə nə vwa] (the E's are kept here)<br><em>"j'interroge"</em> → [ʒɛ̃.tɛ.ʁɔʒ] — the E of <em>je</em> drops before a vowel</div>
+        <div class="ex">"je te demande" → "j'te d'mande" (E's drop after a single consonant)</div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-player"><button onclick="playAudio('rule3-e')">▶</button><span class="label">E pronounced: je ne vois [ʒə nə vwa]</span></div>
+          <div class="audio-player"><button onclick="playAudio('rule3-e-silent')">▶</button><span class="label">E dropped: j'interroge [ʒɛ̃.tɛ.ʁɔʒ]</span></div>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">Rule 4</span>
+        <h4>The French "R" — Soft Throat</h4>
+        <p>Produced by the back of the tongue against the soft palate. Not rolled, not harsh.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"interroge"</em> → [ɛ̃.tɛ.<span style="color:var(--crimson);">ʁ</span>ɔʒ]<br><em>"créateur"</em> → [k<strong>ʁ</strong>e.a.tœ<strong>ʁ</strong>] — soft R at beginning and end</div>
+        <div class="ex">"rien", "cœur", "bras" — gentle throat touch</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('rule4-r')">▶</button><span class="label">French R: <span style="color:var(--crimson);">R</span>ien · cœu<span style="color:var(--crimson);">r</span> · b<span style="color:var(--crimson);">r</span>as</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">Rule 5</span>
+        <h4>Nasal Vowels in Faust</h4>
+        <p>Sound resonates in the nose — <strong>do not</strong> pronounce the final N or M.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"en vain"</em> → [ɑ̃ vɛ̃] — two nasals: <strong>AN</strong> + <strong>AIN</strong><br><em>"chemin"</em> → [ʃə.mɛ̃] — nasal <strong>IN</strong></div>
+        <div class="ex">"main", "besoin", "rien" — all nasal vowels</div>
+        <div style="margin-top:0.5rem;">
+          <div class="audio-player"><button onclick="playAudio('rule5-nasal')">▶</button><span class="label">Nasal: en vain [ɑ̃ vɛ̃]</span></div>
+          <div class="audio-player"><button onclick="playAudio('rule5-nasal2')">▶</button><span class="label">Nasal: chemin [ʃə.mɛ̃]</span></div>
+        </div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">Rule 6</span>
+        <h4>Expressive Silence & Breath</h4>
+        <p>In French lyric diction, <strong>silence</strong> is as important as sound. Breath marks create dramatic tension.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Rien !"</em> → <strong>5 seconds</strong> of silence after the cry<br><em>"terreeeeeeeeeeeeeeee !..."</em> → voice fades with <strong>diminuendo</strong></div>
+        <div class="ex">The silence before "À moi, Satan !" creates maximum impact.</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('rule6-silence')">▶</button><span class="label">Silence + explosion: À moi, Satan !</span></div></div>
+      </div>
+    </div>
+
+    <div class="card card-navy">
+      <p><strong>🎵 Integration Exercise:</strong></p>
+      <ol style="padding-left:1.2rem; color:var(--text2);">
+        <li><strong>Imitation:</strong> Listen to <em>"En vain"</em> [ɑ̃ vɛ̃] — copy the nasal sound.</li>
+        <li><strong>Extended vowels:</strong> Practice holding final vowels like <em>"terreeeeeeeeeeeeeeee"</em> with a steady breath.</li>
+        <li><strong>Silence:</strong> Count the silences — they are part of the musical score.</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- ========================= GRAMMAR POINTS ========================= -->
+  <div class="section" id="grammar">
+    <h2 class="section-title">Grammar Points from Faust</h2>
+    <p class="section-sub">Key grammatical structures in the libretto — explained for the conductor.</p>
+
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="num">1</span>
+        <h4>Inversion in Questions</h4>
+        <p>French uses <strong>subject-verb inversion</strong> in formal questions — common in opera libretti.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Que peut-il pour moi ?"</em> → What can he do for me?<br><em>"Me rendra-t-il l'amour ?"</em> → Will he give me back love?</div>
+        <div class="ex">"Que ferais-je de la richesse ?" → What would I do with wealth?</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar1')">▶</button><span class="label">Inversion: Me rendra-t-il l'amour ?</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">2</span>
+        <h4>Negative Constructions</h4>
+        <p>In formal French, <strong>ne</strong> is placed before the verb and <strong>pas</strong> after — in opera, the <strong>ne</strong> is often pronounced.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Je ne vois rien !"</em> → I see nothing!<br><em>"Je ne sais rien !"</em> → I know nothing!</div>
+        <div class="ex">"pas une voix ne glisse" → not a single voice slips</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar2')">▶</button><span class="label">Negative: Je ne vois rien !</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">3</span>
+        <h4>Imperative & Exclamations</h4>
+        <p>Opera uses many <strong>exclamations</strong> and <strong>imperatives</strong> — they carry strong emotional weight.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"À moi, Satan !"</em> → To me, Satan!<br><em>"Salut !"</em> → Hail!<br><em>"Encore un jour !"</em> → Another day!</div>
+        <div class="ex">"Passez, passez votre chemin !" → Pass on, pass on your way!</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar3')">▶</button><span class="label">Imperative: À moi, Satan !</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">4</span>
+        <h4>Future Tense</h4>
+        <p>The <strong>future tense</strong> is often used in questions of destiny and hope — common in Faust's monologue.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Quand viendras-tu m'abriter ?"</em> → When will you come to shelter me?<br><em>"Me rendra-t-il l'amour ?"</em> → Will he give me back love?</div>
+        <div class="ex">"J'arriverai" → I will arrive (implied in "J'arrive")</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar4')">▶</button><span class="label">Future: quand viendras-tu ?</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">5</span>
+        <h4>Possessive Adjectives</h4>
+        <p>French uses <strong>possessive adjectives</strong> (mon, ma, mes, ton, ta, tes, son, sa, ses) that agree with the noun they modify.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"mon ardente veille"</em> → my burning vigil (masculine singular)<br><em>"mon dernier matin"</em> → my last morning (masculine singular)<br><em>"ta surprise"</em> → your surprise (feminine singular)</div>
+        <div class="ex">"mes désirs" → my desires (plural)</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar5')">▶</button><span class="label">Possessive: mon ardente veille</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">6</span>
+        <h4>Object Pronouns</h4>
+        <p>French uses <strong>object pronouns</strong> (me, te, le, la, nous, vous, les) that come <strong>before</strong> the verb.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"qui m'attache"</em> → that ties me<br><em>"me rendra-t-il"</em> → will he give me back<br><em>"te décider"</em> → to decide you</div>
+        <div class="ex">"je te vois" → I see you</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar6')">▶</button><span class="label">Object pronoun: qui m'attache</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">7</span>
+        <h4>Subjunctive Mood</h4>
+        <p>The <strong>subjunctive</strong> expresses doubt, desire, or uncertainty — very common in opera libretti.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"qu'il n'était pas besoin"</em> → that it wasn't necessary (literary past subjunctive context)<br><em>"pour que..."</em> → so that... (triggers subjunctive)</div>
+        <div class="ex">"Il faut que j'aille" → It is necessary that I go</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar7')">▶</button><span class="label">Subjunctive: Il faut que...</span></div></div>
+      </div>
+
+      <div class="rule-card">
+        <span class="num">8</span>
+        <h4>Prepositions with Infinitives</h4>
+        <p>Some French verbs require a <strong>preposition</strong> before the infinitive — an essential structure in lyric diction.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"sans pouvoir briser"</em> → without being able to break<br><em>"pour te décider"</em> → to make you decide</div>
+        <div class="ex">"à vider" → to empty (after "convier")</div>
+        <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('grammar8')">▶</button><span class="label">Preposition: sans pouvoir</span></div></div>
+      </div>
+    </div>
+
+    <div class="card card-gold">
+      <p><strong>📌 Key Takeaway:</strong> Understanding these <strong>grammatical structures</strong> helps you phrase the text correctly. The <strong>inversions</strong>, <strong>negatives</strong>, <strong>imperatives</strong>, and <strong>pronouns</strong> all affect where the <strong>accent</strong> falls.</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  (function() {
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        navBtns.forEach(b => b.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        const target = document.getElementById(this.dataset.tab);
+        if (target) target.classList.add('active');
+      });
+    });
+  })();
+
+  function speakText(text, rate = 0.85, pitch = 1.0) {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = rate;
+    utterance.pitch = pitch;
+    utterance.volume = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const frenchVoice = voices.find(v => v.lang.startsWith('fr'));
+    if (frenchVoice) utterance.voice = frenchVoice;
+    window.speechSynthesis.speak(utterance);
+  }
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  }
+
+  function playAudio(id) {
+    const audioMap = {
+      'rule1-accent': { text: 'consolateur', rate: 0.7 },
+      'rule2-extended': { text: 'terre', rate: 0.5 },
+      'rule3-e': { text: 'je ne vois', rate: 0.7 },
+      'rule3-e-silent': { text: "j'interroge", rate: 0.7 },
+      'rule4-r': { text: 'rien cœur bras', rate: 0.7 },
+      'rule5-nasal': { text: 'en vain', rate: 0.7 },
+      'rule5-nasal2': { text: 'chemin', rate: 0.7 },
+      'rule6-silence': { text: 'À moi, Satan ! à moi !', rate: 0.6 },
+      'grammar1': { text: "Me rendra-t-il l'amour ?", rate: 0.7 },
+      'grammar2': { text: 'Je ne vois rien !', rate: 0.7 },
+      'grammar3': { text: 'À moi, Satan !', rate: 0.7 },
+      'grammar4': { text: 'Quand viendras-tu ?', rate: 0.7 },
+      'grammar5': { text: 'mon ardente veille', rate: 0.7 },
+      'grammar6': { text: "qui m'attache", rate: 0.7 },
+      'grammar7': { text: "Il faut que j'aille", rate: 0.7 },
+      'grammar8': { text: 'sans pouvoir briser', rate: 0.7 },
+    };
+    const entry = audioMap[id];
+    if (!entry) { console.warn('No audio mapping for:', id); return; }
+    speakText(entry.text, entry.rate || 0.8, 1.0);
+  }
+  window.playAudio = playAudio;
+</script>
+
+</body>
+</html>
