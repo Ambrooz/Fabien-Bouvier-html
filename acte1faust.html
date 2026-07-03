@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Faust · Acte I (complet, corrigé) · French Diction Coach</title>
+<title>Faust · Acte I (complet, annoté) · French Diction Coach</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -15,6 +15,9 @@
     --border: #e2dcd2; --shadow: 0 4px 20px rgba(60,40,20,0.08); --shadow-hover: 0 8px 32px rgba(60,40,20,0.16);
     --radius: 4px; --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-display: 'Playfair Display', Georgia, serif;
+    /* phonetic colors */
+    --z: #2563eb; --s: #b45309; --y: #7c3aed; --o: #0d9488; --ai: #db2777; --k: #92400e; --muet: #9ca3af;
+    --an: #4f46e5; --in: #be123c;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--bg); font-family: var(--font-body); color: var(--text); line-height: 1.7; }
@@ -49,22 +52,38 @@
   .audio-player button { background: var(--navy); border: none; color: #fff; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; }
   .audio-player button:hover { background: var(--gold); }
   .audio-player .label { font-weight: 500; color: var(--text2); margin-right: 0.2rem; }
-  .diction-box { background: #fff; border: 2px solid var(--border); border-radius: var(--radius); padding: 1.8rem 2rem; margin: 1.5rem 0; box-shadow: var(--shadow); font-family: var(--font-display); font-size: 1.25rem; line-height: 2.2; }
+  .diction-box { background: #fff; border: 2px solid var(--border); border-radius: var(--radius); padding: 1.8rem 2rem; margin: 1.5rem 0; box-shadow: var(--shadow); font-family: var(--font-display); font-size: 1.2rem; line-height: 2; }
   .diction-box .fr { font-weight: 400; }
-  .diction-box .en { font-size: 0.85rem; color: var(--text3); font-family: var(--font-body); font-weight: 400; line-height: 1.6; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--border); }
-  .diction-box .didascalie { font-size: 0.85rem; font-family: var(--font-body); font-style: italic; color: var(--text3); margin: 0.3rem 0; padding-left: 0.5rem; border-left: 2px solid var(--gold); }
-  .diction-box .silence { font-size: 0.85rem; font-family: var(--font-body); font-style: italic; color: var(--text3); background: var(--gold-light); padding: 0.1rem 0.5rem; border-radius: 3px; display: inline-block; }
-  .diction-box .speaker { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--navy); margin-top: 0.8rem; display: block; }
-  .diction-box .speaker-mephisto { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--crimson); margin-top: 0.8rem; display: block; }
-  .diction-box .speaker-choeur { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--forest); margin-top: 0.8rem; display: block; }
+  .diction-box .en { font-size: 0.82rem; color: var(--text3); font-family: var(--font-body); font-weight: 400; font-style: italic; line-height: 1.5; margin: 0.1rem 0 0.7rem 0; }
+  .diction-box .scene-head { font-size: 0.85rem; font-family: var(--font-body); font-style: italic; color: var(--text3); margin: 0.4rem 0 0.8rem; padding-left: 0.6rem; border-left: 2px solid var(--gold); }
+  .diction-box .speaker { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--navy); margin-top: 0.9rem; display: block; }
+  .diction-box .speaker-mephisto { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--crimson); margin-top: 0.9rem; display: block; }
+  .diction-box .speaker-choeur { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--forest); margin-top: 0.9rem; display: block; }
   .extended { color: var(--crimson); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--crimson); text-decoration-thickness: 2px; }
   .accent { font-weight: 700; color: var(--crimson); }
-  .legend { display: flex; flex-wrap: wrap; gap: 1.2rem; padding: 1rem 0 0.5rem; font-size: 0.8rem; color: var(--text2); }
+  /* phonetic tags */
+  .son-z { color: var(--z); font-weight: 700; }
+  .son-s { color: var(--s); font-weight: 700; }
+  .son-y { color: var(--y); font-weight: 700; }
+  .son-o { color: var(--o); font-weight: 700; }
+  .son-ai { color: var(--ai); font-weight: 700; }
+  .son-k { color: var(--k); font-weight: 700; text-decoration: underline dotted; text-underline-offset: 2px; }
+  .son-an { color: var(--an); font-weight: 700; text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 2px; }
+  .son-in { color: var(--in); font-weight: 700; text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 2px; }
+  .muet { color: var(--muet); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+  .legend { display: flex; flex-wrap: wrap; gap: 0.9rem 1.3rem; padding: 1rem 0 0.5rem; font-size: 0.76rem; color: var(--text2); }
   .legend-item { display: flex; align-items: center; gap: 0.4rem; }
   .legend-swatch { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
   .swatch-extended { background: var(--crimson); height: 4px; }
-  .swatch-accent { background: var(--crimson); height: 4px; }
-  .swatch-silence { background: var(--gold-light); border: 1px solid var(--border); height: 12px; width: 18px; }
+  .swatch-z { background: var(--z); height: 4px; }
+  .swatch-s { background: var(--s); height: 4px; }
+  .swatch-y { background: var(--y); height: 4px; }
+  .swatch-o { background: var(--o); height: 4px; }
+  .swatch-ai { background: var(--ai); height: 4px; }
+  .swatch-k { background: var(--k); height: 4px; }
+  .swatch-an { background: var(--an); height: 4px; }
+  .swatch-in { background: var(--in); height: 4px; }
+  .swatch-muet { background: var(--muet); height: 2px; }
   .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
   .rule-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.3rem; box-shadow: var(--shadow); }
   .rule-card .num { display: inline-block; background: var(--gold); color: #fff; font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem; border-radius: 2px; margin-bottom: 0.4rem; letter-spacing: 0.1em; }
@@ -92,6 +111,7 @@
     <span class="badge">Acte I complet · Scènes 1 & 2</span>
     <span class="badge">For Non-French Speakers</span>
     <span class="badge fix">Texte vérifié sur le livret original</span>
+    <span class="badge fix">+ Traduction & phonétique couleur</span>
   </div>
 </header>
 
@@ -107,381 +127,448 @@
   <div class="section active" id="diction">
     <h2 class="section-title">Annotated Text · Acte I (intégral)</h2>
     <p class="section-sub">
-      <strong>Faust</strong>, Acte I — Scène première (Le désespoir de Faust) et Scène deuxième (le pacte avec Méphistophélès), entièrement annotées pour la diction lyrique française.
+      <strong>Faust</strong>, Acte I — Scène première (le désespoir de Faust) et Scène deuxième (le pacte avec Méphistophélès). Traduction anglaise sous chaque vers ; didascalies retirées ; code couleur phonétique complet ci-dessous.
     </p>
 
     <div class="legend">
-      <span class="legend-item"><span class="legend-swatch swatch-extended"></span> Extended vowel (tenue)</span>
-      <span class="legend-item"><span class="legend-swatch swatch-silence"></span> Silence / Breath</span>
-      <span class="legend-item"><span class="legend-swatch swatch-accent"></span> Accented syllable</span>
+      <span class="legend-item"><span class="legend-swatch swatch-extended"></span> Voyelle tenue</span>
+      <span class="legend-item"><span class="legend-swatch swatch-z"></span> S → Z (oiseaux)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-s"></span> S → S (snake)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-y"></span> ILL / EILLE / Y → Y (you)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-o"></span> O (o, au, eau, aux…)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-ai"></span> AI / aient (è)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-k"></span> QUE / QUI → K</span>
+      <span class="legend-item"><span class="legend-swatch swatch-an"></span> Nasale AN / EN</span>
+      <span class="legend-item"><span class="legend-swatch swatch-in"></span> Nasale IN / AIN / EIN / UN</span>
+      <span class="legend-item"><span class="legend-swatch swatch-muet"></span> Consonne muette</span>
     </div>
 
     <!-- SCÈNE PREMIÈRE -->
     <div class="diction-box">
-      <div class="didascalie"><span class="en">(Le cabinet de Faust. Sa lampe est près de s'éteindre. Il est assis devant une table chargée de parchemins. Un livre est ouvert devant lui.)</span></div>
+      <div class="scene-head">Le cabinet de Faust. Sa lampe est près de s'éteindre. Il est assis devant une table chargée de parchemins. Un livre est ouvert devant lui.</div>
 
       <span class="speaker">FAUST</span>
-      <div class="didascalie"><span class="en">(absorbed, reading)</span></div>
 
-      <div class="fr"><span class="extended">Riennnnnnnnnnn !</span> <span class="silence">(5 sec. de silence absolu, regard fixe, accablement)</span></div>
-      <div class="fr">~ En vain j'interroge, en mon <span class="extended">ardenteeeeeee</span> veille,</div>
+      <div class="fr"><span class="extended">R<span class="son-in">ien</span>nnnnnnnnnn !</span></div>
+      <div class="en">Nothing!</div>
+
+      <div class="fr">~ <span class="son-an">En</span> v<span class="son-in">ain</span> j'interroge, <span class="son-an">en</span> mon <span class="extended">ard<span class="son-an">en</span>teeeeeee</span> v<span class="son-y">eille</span>,</div>
+      <div class="en">In vain I question, in my burning vigil,</div>
       <div class="fr">la nature et le créateur ;</div>
-      <div class="fr">pas une voix ne glisse à mon oreille</div>
-      <div class="fr">un mot consolateur !</div>
-      <div class="didascalie"><span class="en">(audible sigh)</span></div>
-      <div class="fr">J'ai langui, <span class="extended">triste et solitaireeeeeeeee</span>,</div>
-      <div class="fr">sans pouvoir briser le lien</div>
-      <div class="fr">qui m'attache encore à la <span class="extended">terreeeeeeeeeeeeeeee !...</span></div>
-      <div class="didascalie"><span class="en">(voice fading, diminuendo, 5 sec.)</span></div>
-      <div class="didascalie"><span class="silence">(2 sec. de silence, regard vide)</span></div>
-      <div class="fr">Je ne vois rien ! ~ Je ne sais rien !...</div>
+      <div class="en">nature and the creator;</div>
+      <div class="fr">pa<span class="muet">s</span> une voix ne gli<span class="son-s">ss</span>e à mon or<span class="son-y">eille</span></div>
+      <div class="en">not a single voice slips into my ear</div>
+      <div class="fr"><span class="son-in">un</span> mo<span class="muet">t</span> consolateur !</div>
+      <div class="en">a comforting word!</div>
+      <div class="fr">J'<span class="son-ai">ai</span> l<span class="son-an">an</span>gui, tri<span class="son-s">s</span>te et solit<span class="son-ai">ai</span>reeeeeeeee,</div>
+      <div class="en">I have languished, sad and alone,</div>
+      <div class="fr"><span class="son-s">s</span><span class="son-an">an</span><span class="muet">s</span> pouvoir bri<span class="son-z">s</span>er le l<span class="son-in">ien</span></div>
+      <div class="en">without being able to break the bond</div>
+      <div class="fr"><span class="son-k">qu</span>i m'attache <span class="son-an">en</span>core à la terreeeeeeeeeeeeeeee !...</div>
+      <div class="en">that still binds me to the earth!...</div>
+      <div class="fr">Je ne voi<span class="muet">s</span> r<span class="son-in">ien</span> ! ~ Je ne <span class="son-s">s</span><span class="son-ai">ai</span><span class="muet">s</span> r<span class="son-in">ien</span> !...</div>
+      <div class="en">I see nothing! I know nothing!...</div>
 
-      <div class="didascalie"><span class="en">(Il ferme le livre et se lève. Le jour commence à naître.)</span></div>
+      <div class="scene-head">Il ferme le livre et se lève. Le jour commence à naître.</div>
 
-      <div class="fr">Le ciel <span class="extended">pâliiiiiiiiit !</span> Devant l'aube <span class="extended">nouvelleeeeee</span></div>
-      <div class="fr">la sombre nuit <span class="extended">s'évanouiiiiiii !...</span></div>
+      <div class="fr">Le ciel pâliiiiiiiii<span class="muet">t</span> ! Dev<span class="son-an">an</span>t l'<span class="son-o">au</span>be nouvelleeeeee</div>
+      <div class="en">The sky grows pale! Before the new dawn</div>
+      <div class="fr">la sombre nui<span class="muet">t</span> s'évanouiiiiiii !...</div>
+      <div class="en">the somber night vanishes!...</div>
 
-      <div class="didascalie"><span class="en">(Avec désespoir.)</span></div>
+      <div class="fr"><span class="son-an">En</span>core <span class="son-in">un</span> jour ! ~ <span class="son-an">en</span>core <span class="son-in">un</span> jour <span class="son-k">qu</span>i lui<span class="muet">t</span> !...</div>
+      <div class="en">Another day! Another day that dawns!...</div>
+      <div class="fr">Ô mor<span class="muet">t</span>, <span class="son-k">qu</span><span class="son-an">and</span> viendras-tu m'abriter <span class="son-s">s</span>ou<span class="muet">s</span> ton aileeeeee ?</div>
+      <div class="en">O death, when will you come to shelter me under your wing?</div>
 
-      <div class="fr">Encore un jour ! ~ encore un jour qui luit !...</div>
-      <div class="fr">Ô mort, quand viendras-tu m'abriter sous ton <span class="extended">aileeeeee ?</span></div>
+      <div class="fr">Eh b<span class="son-in">ien</span> ! puis<span class="son-k">que</span> la mor<span class="muet">t</span> me fui<span class="muet">t</span>,</div>
+      <div class="en">Well then! since death flees from me,</div>
+      <div class="fr">pour<span class="son-k">quoi</span> n'ir<span class="son-ai">ai</span>s-je paaaaaaaaaa<span class="muet">s</span> ver<span class="muet">s</span> elleeeeeee ?...</div>
+      <div class="en">why wouldn't I go toward her?...</div>
 
-      <div class="didascalie"><span class="en">(Saisissant une fiole sur la table.)</span></div>
-      <div class="didascalie"><span class="silence">(2 sec. de silence, la main tremble vers la fiole)</span></div>
+      <div class="fr">Salu<span class="muet">t</span> ! ô mon dernier mat<span class="son-in">in</span> !</div>
+      <div class="en">Hail! O my last morning!</div>
+      <div class="fr">J'arriveeeee <span class="son-s">s</span><span class="son-an">an</span><span class="muet">s</span> terreur au termeeeeee du vo<span class="son-y">y</span>ageeeee ;</div>
+      <div class="en">I arrive without fear at the end of the journey;</div>
+      <div class="fr">et je <span class="son-s">s</span>ui<span class="muet">s</span>, avec ce breuvage,</div>
+      <div class="en">and I stand, with this potion,</div>
+      <div class="fr"><span class="accent">le seul maître de mon dest<span class="son-in">in</span> !</span></div>
+      <div class="en">the sole master of my destiny!</div>
 
-      <div class="fr">Eh bien ! puisque la mort me fuit,</div>
-      <div class="fr">pourquoi n'irais-je <span class="extended">paaaaaaaaaas</span> <span class="extended">vers elleeeeeee ?...</span></div>
-      <div class="didascalie"><span class="en">(portamento dramatique, 7 sec.)</span></div>
-      <div class="didascalie"><span class="silence">(2 sec. de silence, regard fixé sur la coupe)</span></div>
-
-      <div class="fr">Salut ! ô mon dernier matin !</div>
-      <div class="fr"><span class="extended">J'arriveeeee</span> sans terreur au <span class="extended">termeeeeee</span> du <span class="extended">voyageeeee</span> ;</div>
-      <div class="fr">et je suis, avec ce breuvage,</div>
-      <div class="fr"><span class="accent">le seul maître de mon destin !</span></div>
-
-      <div class="didascalie"><span class="en">(Il verse le contenu de la fiole dans une coupe en cristal. Au moment où il va porter la coupe à ses lèvres, des voix de jeunes filles se font entendre au dehors.)</span></div>
+      <div class="scene-head">Il verse le contenu de la fiole dans une coupe en cristal. Au moment où il va porter la coupe à ses lèvres, des voix de jeunes filles se font entendre au dehors.</div>
 
       <span class="speaker-choeur">JEUNES FILLES</span>
-      <div class="didascalie"><span class="en">(au loin — voix très légères, presque irréelles)</span></div>
-
       <div class="fr" style="color: var(--forest);">
-        Paresseuse fille<br>
-        qui sommeille encor !<br>
-        Déjà le jour brille<br>
-        sous son manteau d'or ;<br>
-        déjà l'oiseau chante<br>
-        ses <span class="extended">folleeeeeeees</span> chansons ;<br>
-        l'aube <span class="extended">caressanteeeee</span><br>
-        sourit aux moissons ;<br>
-        le ruisseau murmure,<br>
-        la fleur s'ouvre au jour,<br>
+        Pare<span class="son-s">ss</span>eu<span class="son-z">s</span>e f<span class="son-y">ille</span><br>
+        <span class="en" style="display:block; color:var(--text3);">Lazy girl</span>
+        <span class="son-k">qu</span>i somm<span class="son-y">eille</span> <span class="son-an">en</span>cor !<br>
+        <span class="en" style="display:block; color:var(--text3);">who still sleeps!</span>
+        Déjà le jour br<span class="son-y">ille</span><br>
+        <span class="en" style="display:block; color:var(--text3);">Already the day shines</span>
+        <span class="son-s">s</span>ou<span class="muet">s</span> son m<span class="son-an">an</span>t<span class="son-o">eau</span> d'or ;<br>
+        <span class="en" style="display:block; color:var(--text3);">under its golden cloak;</span>
+        déjà l'<span class="son-z">ois</span><span class="son-o">eau</span> ch<span class="son-an">an</span>te<br>
+        <span class="en" style="display:block; color:var(--text3);">already the bird sings</span>
+        <span class="son-s">s</span>e<span class="muet">s</span> folleeeeeeee<span class="muet">s</span> ch<span class="son-an">an</span>sons ;<br>
+        <span class="en" style="display:block; color:var(--text3);">its mad little songs;</span>
+        l'<span class="son-o">au</span>be care<span class="son-s">ss</span><span class="son-an">an</span>teeeee<br>
+        <span class="en" style="display:block; color:var(--text3);">the caressing dawn</span>
+        sourit <span class="son-o">aux</span> moi<span class="son-s">ss</span>on<span class="muet">s</span> ;<br>
+        <span class="en" style="display:block; color:var(--text3);">smiles on the harvests;</span>
+        le rui<span class="son-s">ss</span><span class="son-o">eau</span> murmure,<br>
+        <span class="en" style="display:block; color:var(--text3);">the stream murmurs,</span>
+        la fleur s'ouvre <span class="son-o">au</span> jour,<br>
+        <span class="en" style="display:block; color:var(--text3);">the flower opens to the day,</span>
         toute la nature<br>
-        s'éveille à l'amour !
+        <span class="en" style="display:block; color:var(--text3);">all of nature</span>
+        s'év<span class="son-y">eille</span> à l'amour !
+        <span class="en" style="display:block; color:var(--text3);">awakens to love!</span>
       </div>
 
       <span class="speaker">FAUST</span>
-      <div class="didascalie"><span class="en">(avec mépris, coupant brutalement)</span></div>
 
-      <div class="fr">Vains échos de la joie humaine,</div>
-      <div class="fr">passez, passez votre chemin !</div>
-      <div class="fr">Ô coupe des aïeux, qui tant de fois fus <span class="extended">pleineeeee</span>,</div>
-      <div class="fr">pourquoi trembles-tu dans ma main ?</div>
-
-      <div class="didascalie"><span class="en">(Il porte de nouveau la coupe à ses lèvres.)</span></div>
+      <div class="fr">V<span class="son-in">ain</span>s écho<span class="muet">s</span> de la joie hum<span class="son-ai">ai</span>ne,</div>
+      <div class="en">Vain echoes of human joy,</div>
+      <div class="fr">passez, passez votre chem<span class="son-in">in</span> !</div>
+      <div class="en">pass on, pass on your way!</div>
+      <div class="fr">Ô coupe de<span class="son-z">s</span> aïeux, <span class="son-k">qu</span>i t<span class="son-an">an</span>t de foi<span class="muet">s</span> fu<span class="muet">s</span> pleineeeee,</div>
+      <div class="en">O cup of the ancestors, so often full,</div>
+      <div class="fr">pour<span class="son-k">quoi</span> trembles-tu d<span class="son-an">an</span>s ma m<span class="son-in">ain</span> ?</div>
+      <div class="en">why does my hand tremble in yours?</div>
 
       <span class="speaker-choeur">JEUNES FILLES</span>
       <div class="fr" style="color: var(--forest);">
-        Aux champs <span class="extended">l'auroreeeee</span> nous rappelle ;<br>
-        le temps est beau, la terre est belle ;<br>
-        béni soit dieu !<br>
-        À peine voit-on l'hirondelle,<br>
-        qui vole et plonge d'un coup d'aile<br>
-        dans le ciel bleu !
+        <span class="son-o">Aux</span> ch<span class="son-an">am</span>ps l'aur<span class="son-o">o</span>reeeee nous rappelle ;<br>
+        <span class="en" style="display:block; color:var(--text3);">To the fields, dawn calls us;</span>
+        le t<span class="son-an">em</span>p<span class="muet">s</span> e<span class="muet">st</span> be<span class="son-o">au</span>, la terre e<span class="muet">st</span> belle ;<br>
+        <span class="en" style="display:block; color:var(--text3);">the weather is fine, the earth is fair;</span>
+        béni soi<span class="muet">t</span> dieu !<br>
+        <span class="en" style="display:block; color:var(--text3);">blessed be God!</span>
+        À peine voi<span class="muet">t</span>-on l'hirondelle,<br>
+        <span class="en" style="display:block; color:var(--text3);">Hardly do we see the swallow,</span>
+        <span class="son-k">qu</span>i vole et plonge d'<span class="son-in">un</span> coup d'aile<br>
+        <span class="en" style="display:block; color:var(--text3);">that swoops and dives with a stroke of the wing</span>
+        d<span class="son-an">an</span>s le ciel bleu !
+        <span class="en" style="display:block; color:var(--text3);">into the blue sky!</span>
       </div>
 
-      <span class="speaker-choeur">JEUNES FILLES</span> <span class="didascalie" style="display:inline;"><span class="en">(dans l'éloignement)</span></span>
-      <div class="fr" style="color: var(--forest);">L'oiseau chante !</div>
+      <span class="speaker-choeur">JEUNES FILLES</span>
+      <div class="fr" style="color: var(--forest);">L'<span class="son-z">ois</span><span class="son-o">eau</span> ch<span class="son-an">an</span>te !</div>
+      <div class="en">The bird sings!</div>
 
-      <span class="speaker-choeur">LABOUREURS</span> <span class="didascalie" style="display:inline;"><span class="en">(dans l'éloignement)</span></span>
-      <div class="fr" style="color: var(--forest);">La terre est belle !</div>
+      <span class="speaker-choeur">LABOUREURS</span>
+      <div class="fr" style="color: var(--forest);">La terre e<span class="muet">st</span> belle !</div>
+      <div class="en">The earth is fair!</div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Ô <span class="extended">prièreeeee</span> universelle !</div>
+      <div class="fr">Ô prièreeeee universelle !</div>
+      <div class="en">O universal prayer!</div>
 
       <span class="speaker-choeur">JEUNES FILLES, LABOUREURS</span>
-      <div class="fr" style="color: var(--forest);">Béni soit Dieu !</div>
+      <div class="fr" style="color: var(--forest);">Béni soi<span class="muet">t</span> Dieu !</div>
+      <div class="en">Blessed be God!</div>
 
       <span class="speaker">FAUST</span>
       <div class="fr">Dieu !</div>
-      <div class="didascalie"><span class="en">(distant echo fading away)</span></div>
+      <div class="en">God!</div>
 
-      <div class="didascalie"><span class="en">(Il se laisse retomber dans son fauteuil.)</span></div>
-      <div class="didascalie"><span class="silence">(2 sec. de silence, effondrement physique)</span></div>
+      <div class="fr">Mai<span class="son-s">s</span> ce dieu, <span class="son-k">que</span> peut-il pour moi ?</div>
+      <div class="en">But this God — what can he do for me?</div>
 
-      <div class="fr">Mais ce dieu, que peut-il pour moi ?</div>
-
-      <div class="didascalie"><span class="en">(Se levant, colère croissante.)</span></div>
-
-      <div class="fr">Me rendra-t-il l'amour, l'espérance et la foi ?</div>
-
-      <div class="didascalie"><span class="en">(Avec rage, martelant chaque syllabe.)</span></div>
+      <div class="fr">Me rend<span class="son-an">r</span>a-t-il l'amour, l'espér<span class="son-an">an</span>ce et la foi ?</div>
+      <div class="en">Will he give me back love, hope and faith?</div>
 
       <div class="fr">
-        Maudites soyez-vous, ô voluptés humaines !<br>
-        Maudites soient les chaînes<br>
-        qui me font ramper ici-bas !<br>
-        Maudit soit tout ce qui nous leurre,<br>
-        vain espoir qui passe avec l'heure,<br>
-        rêves d'amour ou de combats !<br>
-        Maudit soit le bonheur, maudite la science,<br>
-        <span class="extended">la prièreeeee</span> et la foi !<br>
-        Maudite sois-tu, patience !
+        M<span class="son-o">au</span>dite<span class="muet">s</span> so<span class="son-y">y</span>ez-vous, ô voluptés hum<span class="son-ai">ai</span>ne<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">Cursed be you, o human pleasures!</span>
+        M<span class="son-o">au</span>dite<span class="muet">s</span> soi<span class="muet">ent</span> les ch<span class="son-ai">aî</span>nes<br>
+        <span class="en" style="display:block; color:var(--text3);">Cursed be the chains</span>
+        <span class="son-k">qu</span>i me font ramper ici-ba<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">that make me crawl here below!</span>
+        M<span class="son-o">au</span>di<span class="muet">t</span> soi<span class="muet">t</span> tou<span class="muet">t</span> ce <span class="son-k">qu</span>i nous leurre,<br>
+        <span class="en" style="display:block; color:var(--text3);">Cursed be all that deceives us,</span>
+        v<span class="son-in">ain</span> espoir <span class="son-k">qu</span>i passe avec l'heure,<br>
+        <span class="en" style="display:block; color:var(--text3);">vain hope that passes with the hour,</span>
+        rêves d'amour ou de comb<span class="son-an">at</span><span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">dreams of love or of battle!</span>
+        M<span class="son-o">au</span>di<span class="muet">t</span> soi<span class="muet">t</span> le bonheur, m<span class="son-o">au</span>dite la sc<span class="son-an">ien</span>ce,<br>
+        <span class="en" style="display:block; color:var(--text3);">Cursed be happiness, cursed be knowledge,</span>
+        la prièreeeee et la foi !<br>
+        <span class="en" style="display:block; color:var(--text3);">prayer and faith!</span>
+        M<span class="son-o">au</span>dite soi<span class="muet">s</span>-tu, pat<span class="son-an">ien</span>ce !
+        <span class="en" style="display:block; color:var(--text3);">Cursed be you, patience!</span>
       </div>
-
-      <div class="didascalie"><span class="en">(Un temps. Puis, cri déchirant.)</span></div>
-      <div class="didascalie"><span class="silence">(2 sec. de silence, puis explosion)</span></div>
 
       <div class="fr" style="font-size:1.4rem; font-weight:700; color:var(--crimson); margin-top:0.5rem;">
-        <span class="accent">À moi, Satan ! à moi !</span>
+        <span class="accent">À moi, <span class="son-s">S</span>at<span class="son-an">an</span> ! à moi !</span>
       </div>
+      <div class="en">To me, Satan! To me!</div>
     </div>
 
     <!-- SCÈNE DEUXIÈME -->
     <div class="diction-box">
-      <div class="didascalie" style="border-left-color: var(--crimson);"><span class="en">(Scène deuxième. Faust, Méphistophélès.)</span></div>
+      <div class="scene-head" style="border-left-color: var(--crimson);">Scène deuxième. Faust, Méphistophélès.</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="didascalie"><span class="en">(apparaissant)</span></div>
       <div class="fr">
-        Me voici !... D'où vient ta surprise ?<br>
-        Ne suis-je pas mis à ta guise ?<br>
-        L'épée au côté, la plume au chapeau,<br>
-        l'escarcelle pleine, un riche manteau<br>
-        sur l'épaule ; ~ en somme<br>
-        un vrai gentilhomme !<br>
-        Eh bien ! que me veux-tu, docteur ?<br>
-        Parle, voyons !... ~ Te fais-je peur ?
+        Me voici !... D'où v<span class="son-in">ien</span>t ta <span class="son-s">s</span>urpri<span class="son-z">s</span>e ?<br>
+        <span class="en" style="display:block; color:var(--text3);">Here I am!... Where does your surprise come from?</span>
+        Ne <span class="son-s">s</span>ui<span class="muet">s</span>-je pa<span class="muet">s</span> mis à ta gui<span class="son-z">s</span>e ?<br>
+        <span class="en" style="display:block; color:var(--text3);">Am I not dressed as you'd wish?</span>
+        L'épée <span class="son-o">au</span> côté, la plume <span class="son-o">au</span> chape<span class="son-o">au</span>,<br>
+        <span class="en" style="display:block; color:var(--text3);">Sword at my side, feather in my hat,</span>
+        l'escarcelle pleine, <span class="son-in">un</span> riche m<span class="son-an">an</span>t<span class="son-o">eau</span><br>
+        <span class="en" style="display:block; color:var(--text3);">a purse full, a rich cloak</span>
+        sur l'épaule ; ~ <span class="son-an">en</span> somme<br>
+        <span class="en" style="display:block; color:var(--text3);">upon my shoulder — in short,</span>
+        <span class="son-in">un</span> vr<span class="son-ai">ai</span> gentilh<span class="son-o">o</span>mme !<br>
+        <span class="en" style="display:block; color:var(--text3);">a true gentleman!</span>
+        Eh b<span class="son-in">ien</span> ! <span class="son-k">que</span> me veux-tu, doc<span class="son-o">t</span>eur ?<br>
+        <span class="en" style="display:block; color:var(--text3);">Well then! What do you want of me, doctor?</span>
+        Parle, vo<span class="son-y">y</span>ons !... ~ Te f<span class="son-ai">ai</span>s-je peur ?
+        <span class="en" style="display:block; color:var(--text3);">Speak, come now!... Do I frighten you?</span>
       </div>
 
       <span class="speaker">FAUST</span>
       <div class="fr">Non.</div>
+      <div class="en">No.</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="fr">Doutes-tu de ma puissance ?</div>
+      <div class="fr">Doute<span class="muet">s</span>-tu de ma pui<span class="son-s">ss</span><span class="son-an">an</span>ce ?</div>
+      <div class="en">Do you doubt my power?</div>
 
       <span class="speaker">FAUST</span>
       <div class="fr">Peut-être.</div>
+      <div class="en">Perhaps.</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">Mets-la donc à l'épreuve !...</div>
+      <div class="en">Put it to the test then!...</div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Va-t'en !</div>
+      <div class="fr">Va-t'<span class="son-an">en</span> !</div>
+      <div class="en">Go away!</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">
-        Fi ! ~ c'est là ta reconnaissance !<br>
-        Apprends de moi qu'avec Satan<br>
-        l'on en doit user d'autre sorte,<br>
-        et qu'il n'était pas besoin<br>
-        de l'appeler de si loin<br>
-        pour le mettre ensuite à la porte !
+        Fi ! ~ c'e<span class="muet">st</span> là ta reconn<span class="son-ai">ai</span><span class="son-s">ss</span><span class="son-an">an</span>ce !<br>
+        <span class="en" style="display:block; color:var(--text3);">Fie! So that's your gratitude!</span>
+        Appr<span class="son-an">en</span>ds de moi <span class="son-k">qu</span>'avec <span class="son-s">S</span>at<span class="son-an">an</span><br>
+        <span class="en" style="display:block; color:var(--text3);">Learn from me that with Satan</span>
+        l'on <span class="son-an">en</span> doi<span class="muet">t</span> u<span class="son-z">s</span>er d'autre s<span class="son-o">o</span>rte,<br>
+        <span class="en" style="display:block; color:var(--text3);">one must act quite otherwise,</span>
+        et <span class="son-k">qu</span>'il n'ét<span class="son-ai">ai</span><span class="muet">t</span> pa<span class="muet">s</span> bes<span class="son-in">oin</span><br>
+        <span class="en" style="display:block; color:var(--text3);">and there was no need</span>
+        de l'appeler de <span class="son-s">s</span>i l<span class="son-in">oin</span><br>
+        <span class="en" style="display:block; color:var(--text3);">to call him from so far away</span>
+        pour le mettre <span class="son-an">en</span>suite à la p<span class="son-o">o</span>rte !
+        <span class="en" style="display:block; color:var(--text3);">only to throw him out the door!</span>
       </div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Et que peux-tu pour moi ?</div>
+      <div class="fr">Et <span class="son-k">que</span> peux-tu pour moi ?</div>
+      <div class="en">And what can you do for me?</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">
-        Tout. ~ Mais dis-moi d'abord<br>
-        ce que tu veux : ~ est-ce de l'or ?
+        Tou<span class="muet">t</span>. ~ M<span class="son-ai">ai</span>s dis-moi d'abord<br>
+        <span class="en" style="display:block; color:var(--text3);">Everything. But tell me first —</span>
+        ce <span class="son-k">que</span> tu veux : ~ e<span class="muet">st</span>-ce de l'or ?
+        <span class="en" style="display:block; color:var(--text3);">what do you want? Is it gold?</span>
       </div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Que ferais-je de la richesse ?</div>
+      <div class="fr"><span class="son-k">Que</span> fer<span class="son-ai">ai</span><span class="muet">s</span>-je de la riche<span class="son-s">ss</span>e ?</div>
+      <div class="en">What would I do with riches?</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">
-        Bon ! Je vois où le bât te blesse !<br>
+        Bon ! Je voi<span class="muet">s</span> où le bâ<span class="muet">t</span> te ble<span class="son-s">ss</span>e !<br>
+        <span class="en" style="display:block; color:var(--text3);">Good! I see where the shoe pinches!</span>
         Tu veux la gloire ?
+        <span class="en" style="display:block; color:var(--text3);">You want glory?</span>
       </div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Plus encor !</div>
+      <div class="fr">Plus <span class="son-an">en</span>cor !</div>
+      <div class="en">Even more!</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="fr">La puissance ?</div>
+      <div class="fr">La pui<span class="son-s">ss</span><span class="son-an">an</span>ce ?</div>
+      <div class="en">Power?</div>
 
       <span class="speaker">FAUST</span>
       <div class="fr">
-        Non ! je veux un trésor<br>
-        qui les contient tous !... je veux la jeunesse !
+        Non ! je veux <span class="son-in">un</span> tré<span class="son-z">s</span><span class="son-o">o</span>r<br>
+        <span class="en" style="display:block; color:var(--text3);">No! I want a treasure</span>
+        <span class="son-k">qu</span>i les cont<span class="son-in">ien</span>t tou<span class="son-s">s</span> !... je veux la jeune<span class="son-s">ss</span>e !
+        <span class="en" style="display:block; color:var(--text3);">that contains them all!... I want youth!</span>
       </div>
 
       <span class="speaker">FAUST</span>
-      <div class="didascalie"><span class="en">(avec passion)</span></div>
       <div class="fr">
-        À moi les plaisirs,<br>
-        les jeunes maîtresses !<br>
-        À moi leurs caresses !<br>
-        À moi leurs désirs !<br>
+        À moi les pl<span class="son-ai">ai</span><span class="son-z">s</span>ir<span class="muet">s</span>,<br>
+        <span class="en" style="display:block; color:var(--text3);">To me the pleasures,</span>
+        les jeunes m<span class="son-ai">aî</span>tre<span class="son-s">ss</span>e<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">the young mistresses!</span>
+        À moi leurs care<span class="son-s">ss</span>e<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">To me their caresses!</span>
+        À moi leurs dé<span class="son-z">s</span>ir<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">To me their desires!</span>
         À moi l'énergie<br>
-        des instincts puissants,<br>
+        <span class="en" style="display:block; color:var(--text3);">To me the energy</span>
+        de<span class="son-z">s</span> <span class="son-in">in</span>st<span class="son-in">in</span>cts pui<span class="son-s">ss</span><span class="son-an">an</span>t<span class="muet">s</span>,<br>
+        <span class="en" style="display:block; color:var(--text3);">of powerful instincts,</span>
         et la folle orgie<br>
-        du cœur et des sens !<br>
-        Ardente jeunesse,<br>
-        à moi tes désirs !<br>
-        À moi ton ivresse !<br>
-        À moi tes plaisirs !
+        <span class="en" style="display:block; color:var(--text3);">and the wild orgy</span>
+        du cœur et de<span class="muet">s</span> <span class="son-s">s</span><span class="son-an">en</span>s !<br>
+        <span class="en" style="display:block; color:var(--text3);">of heart and senses!</span>
+        Ard<span class="son-an">en</span>te jeune<span class="son-s">ss</span>e,<br>
+        <span class="en" style="display:block; color:var(--text3);">Ardent youth,</span>
+        à moi te<span class="muet">s</span> dé<span class="son-z">s</span>ir<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">to me your desires!</span>
+        À moi ton ivre<span class="son-s">ss</span>e !<br>
+        <span class="en" style="display:block; color:var(--text3);">To me your intoxication!</span>
+        À moi te<span class="muet">s</span> pl<span class="son-ai">ai</span><span class="son-z">s</span>ir<span class="muet">s</span> !
+        <span class="en" style="display:block; color:var(--text3);">To me your pleasures!</span>
       </div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="fr">Fort bien ! je puis contenter ton caprice.</div>
+      <div class="fr">Fort bi<span class="son-in">en</span> ! je puis cont<span class="son-an">en</span>ter ton caprice.</div>
+      <div class="en">Very well! I can satisfy your whim.</div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Et que te donnerai-je en retour ?</div>
+      <div class="fr">Et <span class="son-k">que</span> te donnerai-je <span class="son-an">en</span> retour ?</div>
+      <div class="en">And what shall I give you in return?</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">
-        Presque rien :<br>
-        ici, je suis à ton service,<br>
-        mais là-bas tu seras au mien.
+        Pres<span class="son-k">que</span> r<span class="son-in">ien</span> :<br>
+        <span class="en" style="display:block; color:var(--text3);">Almost nothing:</span>
+        ici, je <span class="son-s">s</span>ui<span class="muet">s</span> à ton <span class="son-s">s</span>ervice,<br>
+        <span class="en" style="display:block; color:var(--text3);">here, I am at your service,</span>
+        m<span class="son-ai">ai</span>s là-bas tu <span class="son-s">s</span>era<span class="muet">s</span> <span class="son-o">au</span> m<span class="son-in">ien</span>.
+        <span class="en" style="display:block; color:var(--text3);">but over there, you will be mine.</span>
       </div>
 
       <span class="speaker">FAUST</span>
       <div class="fr">Là-bas !...</div>
+      <div class="en">Over there!...</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">Là-bas.</div>
-      <div class="didascalie"><span class="en">(Lui présentant un parchemin.)</span></div>
+      <div class="en">Over there.</div>
       <div class="fr">
-        Allons, signe. ~ Eh quoi ! ta main tremble,<br>
-        que faut-il pour te décider ?...<br>
-        La jeunesse t'appelle : ose la regarder !...
+        Allons, signe. ~ Eh <span class="son-k">quoi</span> ! ta m<span class="son-in">ain</span> tremble,<br>
+        <span class="en" style="display:block; color:var(--text3);">Come now, sign. What now! Your hand trembles,</span>
+        <span class="son-k">que</span> faut-il pour te décider ?...<br>
+        <span class="en" style="display:block; color:var(--text3);">what will it take to make you decide?...</span>
+        La jeune<span class="son-s">ss</span>e t'appelle : ose la regarder !...
+        <span class="en" style="display:block; color:var(--text3);">Youth calls you — dare to look at it!...</span>
       </div>
-      <div class="didascalie"><span class="en">(Il fait un geste. Le fond du théâtre s'ouvre et laisse voir Marguerite assise devant son rouet et filant.)</span></div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Ô merveille !...</div>
+      <div class="fr">Ô merv<span class="son-y">eille</span> !...</div>
+      <div class="en">O marvel!...</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="fr">Eh bien ! que t'en semble ?...</div>
+      <div class="fr">Eh bi<span class="son-in">en</span> ! <span class="son-k">que</span> t'<span class="son-an">en</span> s<span class="son-an">em</span>ble ?...</div>
+      <div class="en">Well then! What do you think?...</div>
 
       <span class="speaker">FAUST</span>
-      <div class="didascalie"><span class="en">(prenant le parchemin)</span></div>
       <div class="fr">Donne !...</div>
-
-      <span class="didascalie" style="display:block;"><span class="en">(Il signe.)</span></span>
+      <div class="en">Give it to me!...</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">Allons donc !</div>
-      <div class="didascalie"><span class="en">(Prenant la coupe restée sur la table.)</span></div>
+      <div class="en">Come now!</div>
       <div class="fr">
-        Et maintenant,<br>
-        maître, c'est moi qui te convie<br>
-        à vider cette coupe où fume en bouillonnant<br>
-        non plus la mort, non plus le poison ; ~ mais la vie.
+        Et m<span class="son-in">ain</span>ten<span class="son-an">an</span>t,<br>
+        <span class="en" style="display:block; color:var(--text3);">And now,</span>
+        maître, c'e<span class="muet">st</span> moi <span class="son-k">qu</span>i te convie<br>
+        <span class="en" style="display:block; color:var(--text3);">master, it is I who invite you</span>
+        à vider cette coupe où fume <span class="son-an">en</span> bouillonn<span class="son-an">an</span>t<br>
+        <span class="en" style="display:block; color:var(--text3);">to drain this cup where seethes, bubbling,</span>
+        non plus la mor<span class="muet">t</span>, non plus le poi<span class="son-z">s</span>on ; ~ m<span class="son-ai">ai</span>s la vie.
+        <span class="en" style="display:block; color:var(--text3);">no longer death, no longer poison — but life.</span>
       </div>
 
       <span class="speaker">FAUST</span>
-      <div class="didascalie"><span class="en">(prenant la coupe et se tournant vers Marguerite)</span></div>
-      <div class="fr">À toi, fantôme adorable et charmant !...</div>
-      <div class="didascalie"><span class="en">(Il vide la coupe et se trouve métamorphosé en jeune et élégant seigneur. La vision disparaît.)</span></div>
+      <div class="fr">À toi, f<span class="son-an">an</span>tôme adorable et charm<span class="son-an">an</span>t !...</div>
+      <div class="en">To you, adorable and charming phantom!...</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="fr">Viens ?</div>
+      <div class="fr">V<span class="son-in">ien</span>s ?</div>
+      <div class="en">Coming?</div>
 
       <span class="speaker">FAUST</span>
       <div class="fr">Je la reverrai ?</div>
+      <div class="en">Will I see her again?</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="fr">Sans doute.</div>
+      <div class="fr"><span class="son-s">S</span><span class="son-an">an</span><span class="muet">s</span> doute.</div>
+      <div class="en">Without doubt.</div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">Quand ?</div>
+      <div class="fr"><span class="son-k">Qu</span><span class="son-an">and</span> ?</div>
+      <div class="en">When?</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">Aujourd'hui.</div>
+      <div class="en">Today.</div>
 
       <span class="speaker">FAUST</span>
-      <div class="fr">C'est bien.</div>
+      <div class="fr">C'e<span class="muet">st</span> bi<span class="son-in">en</span>.</div>
+      <div class="en">Good.</div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
-      <div class="fr">En route !</div>
+      <div class="fr"><span class="son-an">En</span> route !</div>
+      <div class="en">On our way!</div>
 
       <span class="speaker">FAUST</span>
       <div class="fr">
-        À moi les plaisirs,<br>
-        les jeunes maîtresses !<br>
-        À moi leurs caresses !<br>
-        À moi leurs désirs !
+        À moi les pl<span class="son-ai">ai</span><span class="son-z">s</span>ir<span class="muet">s</span>,<br>
+        <span class="en" style="display:block; color:var(--text3);">To me the pleasures,</span>
+        les jeunes m<span class="son-ai">aî</span>tre<span class="son-s">ss</span>e<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">the young mistresses!</span>
+        À moi leurs care<span class="son-s">ss</span>e<span class="muet">s</span> !<br>
+        <span class="en" style="display:block; color:var(--text3);">To me their caresses!</span>
+        À moi leurs dé<span class="son-z">s</span>ir<span class="muet">s</span> !
+        <span class="en" style="display:block; color:var(--text3);">To me their desires!</span>
       </div>
 
       <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
       <div class="fr">
-        À toi la jeunesse,<br>
-        à toi tes désirs,<br>
-        à toi ton ivresse,<br>
-        à toi tes plaisirs !
+        À toi la jeune<span class="son-s">ss</span>e,<br>
+        <span class="en" style="display:block; color:var(--text3);">To you, youth,</span>
+        à toi te<span class="muet">s</span> dé<span class="son-z">s</span>ir<span class="muet">s</span>,<br>
+        <span class="en" style="display:block; color:var(--text3);">to you your desires,</span>
+        à toi ton ivre<span class="son-s">ss</span>e,<br>
+        <span class="en" style="display:block; color:var(--text3);">to you your intoxication,</span>
+        à toi te<span class="muet">s</span> pl<span class="son-ai">ai</span><span class="son-z">s</span>ir<span class="muet">s</span> !
+        <span class="en" style="display:block; color:var(--text3);">to you your pleasures!</span>
       </div>
 
-      <div class="didascalie" style="margin-top:0.8rem;"><span class="en">(Ils sortent. La toile tombe.)</span></div>
+      <div class="scene-head" style="margin-top:0.8rem;">Ils sortent. La toile tombe.</div>
     </div>
 
     <div class="card card-crimson">
-      <h3 style="margin-top:0;">Corrections apportées par rapport au livret de référence</h3>
-      <p style="font-size:0.9rem;">Le duo Faust/Méphisto (scène 2) comportait plusieurs erreurs d'attribution de répliques :</p>
-      <ul style="padding-left:1.2rem; font-size:0.9rem; color:var(--text2);">
-        <li><strong>"Non."</strong> (réponse de Faust à "Te fais-je peur ?") avait disparu — rétabli.</li>
-        <li><strong>"Va-t'en !"</strong> était collé à tort dans la réplique de Méphisto ("Tout. Mais dis-moi…") — replacé comme réplique de Faust à sa place originale.</li>
-        <li><strong>"Fi ! c'est là ta reconnaissance !..."</strong> était attribué à Faust — c'est en réalité Méphistophélès qui parle (Faust se moque, Méphisto se vexe).</li>
-        <li><strong>"Plus encor !"</strong> (réponse de Faust à "Tu veux la gloire ?") avait été remplacé par "Non !" — corrigé ; le "Non !" original répond en fait à "La puissance ?".</li>
-        <li><strong>"Et que te donnerai-je en retour ?"</strong> était fusionné dans la tirade de Méphisto — c'est une question de Faust, rétablie comme réplique séparée.</li>
-        <li><strong>"Presque rien"</strong> apparaissait deux fois (dupliqué) — supprimé en double, conservé à sa place unique d'origine.</li>
-      </ul>
+      <h3 style="margin-top:0;">Notes de révision</h3>
+      <p style="font-size:0.9rem;">Correction : "veil<em>ille</em>" était une faute de frappe (double "i") — remplacé par "veille", avec le groupe <strong>eille</strong> colorié comme son Y, au même titre que "oreille", "fille", "sommeille", "brille", "s'éveille", "merveille". Toutes les didascalies entre parenthèses ont été retirées du texte chanté. Deux nouvelles familles nasales ont été ajoutées au code couleur : <strong>AN/EN</strong> et <strong>IN/AIN/EIN/UN</strong> (y compris "oin" qui se prononce comme "in"). La couleur "O" couvre désormais aussi le o simple, en plus de au/eau/aux.</p>
     </div>
 
     <div class="card card-gold">
-      <h3 style="margin-top:0;">Récapitulatif des extensions vocaliques</h3>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem 2rem; font-size:0.95rem;">
-        <div><span style="font-weight:600;">Riennnnnnnnnnn !</span> — "i" tenu</div>
-        <div><span style="font-weight:600;">ardenteeeeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">triste et solitaireeeeeeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">terreeeeeeeeeeeeeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">pâliiiiiiiiit</span> — "i"</div>
-        <div><span style="font-weight:600;">nouvelleeeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">s'évanouiiiiiii</span> — "i"</div>
-        <div><span style="font-weight:600;">aileeeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">paaaaaaaaaas</span> — "a"</div>
-        <div><span style="font-weight:600;">vers elleeeeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">J'arriveeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">termeeeeee</span> — "è"</div>
-        <div><span style="font-weight:600;">voyageeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">folleeeeeeees</span> — "è"</div>
-        <div><span style="font-weight:600;">caressanteeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">pleineeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">l'auroreeeee</span> — "è" final</div>
-        <div><span style="font-weight:600;">prièreeeee</span> — "è" final</div>
-      </div>
-    </div>
-
-    <div class="card card-navy">
-      <h3 style="margin-top:0;">Récapitulatif des silences</h3>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.3rem 2rem; font-size:0.95rem;">
-        <div><span style="font-weight:600;">Après "Rien !"</span> — 5 sec.</div>
-        <div style="color:var(--text3);">Silence absolu, accablement</div>
-        <div><span style="font-weight:600;">Après "terreeeeeeeeeeeeeeee !..."</span> — 2 sec.</div>
-        <div style="color:var(--text3);">Regard vide</div>
-        <div><span style="font-weight:600;">Avant "Eh bien !"</span> — 2 sec.</div>
-        <div style="color:var(--text3);">Main tremblante vers la fiole</div>
-        <div><span style="font-weight:600;">Après "vers elleeeeeee ?..."</span> — 2 sec.</div>
-        <div style="color:var(--text3);">Regard fixé sur la coupe</div>
-        <div><span style="font-weight:600;">Après "Dieu !" (écho)</span> — 2 sec.</div>
-        <div style="color:var(--text3);">Voix qui s'éteint</div>
-        <div><span style="font-weight:600;">Après "Mais ce dieu"</span> — 2 sec.</div>
-        <div style="color:var(--text3);">Effondrement physique</div>
-        <div><span style="font-weight:600;">Avant "À moi, Satan !"</span> — 2 sec.</div>
-        <div style="color:var(--text3);">Silence de rage contenue, puis explosion</div>
+      <h3 style="margin-top:0;">Légende détaillée du code couleur</h3>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem 2rem; font-size:0.9rem;">
+        <div><span class="son-z" style="font-weight:700;">S → Z</span> — s intervocalique ou de liaison, ex. <em>oi<span class="son-z">s</span>eau, bri<span class="son-z">s</span>er</em></div>
+        <div><span class="son-s" style="font-weight:700;">S → S</span> — s initial, ss, ou s final rare prononcé, ex. <em><span class="son-s">s</span>alut, pa<span class="son-s">ss</span>ez</em></div>
+        <div><span class="son-y" style="font-weight:700;">ILL / EILLE / Y → Y</span> — semi-voyelle "you", ex. <em>v<span class="son-y">eille</span>, f<span class="son-y">ille</span>, so<span class="son-y">y</span>ez</em></div>
+        <div><span class="son-o" style="font-weight:700;">O (o / au / eau / aux)</span> — ex. <em>m<span class="son-o">o</span>t, b<span class="son-o">eau</span>, ch<span class="son-o">au</span>d</em></div>
+        <div><span class="son-ai" style="font-weight:700;">AI / aient</span> — son "è", ex. <em>m<span class="son-ai">ai</span>s, ét<span class="son-ai">ai</span>t</em></div>
+        <div><span class="son-k" style="font-weight:700;">QUE / QUI → K</span> — ex. <em><span class="son-k">qu</span>i, pres<span class="son-k">que</span></em></div>
+        <div><span class="son-an" style="font-weight:700;">Nasale AN / EN</span> — ex. <em>d<span class="son-an">an</span>s, <span class="son-an">en</span>core</em></div>
+        <div><span class="son-in" style="font-weight:700;">Nasale IN / AIN / EIN / UN</span> — ex. <em>b<span class="son-in">ien</span>, m<span class="son-in">ain</span>, <span class="son-in">un</span></em></div>
+        <div><span class="muet" style="font-weight:700;">Consonne muette</span> — ex. <em>mo<span class="muet">t</span>, mor<span class="muet">t</span>, oiseau<span class="muet">x</span></em></div>
       </div>
     </div>
   </div>
@@ -547,7 +634,7 @@
         <span class="num">Rule 6</span>
         <h4>Expressive Silence & Breath</h4>
         <p>In French lyric diction, <strong>silence</strong> is as important as sound. Breath marks create dramatic tension.</p>
-        <div class="ex-faust"><strong>From Faust:</strong> <em>"Rien !"</em> → <strong>5 seconds</strong> of silence after the cry<br><em>"terreeeeeeeeeeeeeeee !..."</em> → voice fades with <strong>diminuendo</strong></div>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Rien !"</em> → a long silence follows the cry<br><em>"terreeeeeeeeeeeeeeee !..."</em> → voice fades with <strong>diminuendo</strong></div>
         <div class="ex">The silence before "À moi, Satan !" creates maximum impact.</div>
         <div style="margin-top:0.5rem;"><div class="audio-player"><button onclick="playAudio('rule6-silence')">▶</button><span class="label">Silence + explosion: À moi, Satan !</span></div></div>
       </div>
