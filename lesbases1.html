@@ -1,0 +1,1259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLE A0 · Les bases du français</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --ink: #1a1230;
+      --cream: #fdfbf7;
+      --parchment: #f5f0e8;
+      --gold: #e0a020;
+      --gold-light: #faecc8;
+      --red: #d63050;
+      --red-light: #fde8ed;
+      --blue: #1a6fb5;
+      --blue-light: #dbeeff;
+      --green: #1e8a4a;
+      --green-light: #d4f0e0;
+      --purple: #7c3abf;
+      --purple-light: #ede5fa;
+      --orange: #e86a10;
+      --orange-light: #fde8d4;
+      --teal: #0f8080;
+      --teal-light: #d4f0f0;
+      --pink: #d43080;
+      --pink-light: #fde0ef;
+      --grey: #7a7a8a;
+      --border: #e0d8cc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.75; padding: 20px; display: flex; justify-content: center; }
+
+    .app-wrapper {
+      max-width: 1300px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 40px;
+      box-shadow: 0 30px 60px -20px rgba(18, 60, 70, 0.25);
+      padding: 30px 35px;
+      transition: all 0.2s;
+    }
+
+    /* ===== PROGRESS BAR ===== */
+    .progress-container {
+      background: #e4f0ed;
+      border-radius: 60px;
+      height: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--teal);
+      border-radius: 60px;
+      transition: width 0.5s ease;
+    }
+
+    /* ===== TYPO ===== */
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 6px solid var(--gold);
+      padding-bottom: 18px;
+      margin-bottom: 10px;
+    }
+    h1 span {
+      background: var(--ink);
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 6px 26px;
+      border-radius: 60px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .subhead {
+      font-size: 1.2rem;
+      color: var(--teal);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 44px 0 20px 0;
+      border-left: 18px solid var(--gold);
+      padding-left: 22px;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--purple);
+      margin: 24px 0 14px 0;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      background: linear-gradient(135deg, #1a1230 0%, #2e1a5a 40%, #1a3a6a 100%);
+      color: white;
+      border-radius: 36px;
+      padding: 40px 42px;
+      margin: 10px 0 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(224,160,32,.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 30%, rgba(124,58,191,.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero .flag-row {
+      display: flex; justify-content: center; gap: 6px; margin-bottom: 26px; position: relative;
+    }
+    .hero .flag-bar { width: 10px; height: 52px; border-radius: 4px; }
+    .hero .fb { background: #002395; }
+    .hero .fw { background: #fff; }
+    .hero .frc { background: #ed2939; }
+    .hero h1 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      color: white;
+      font-size: clamp(2rem,5vw,3.2rem);
+      justify-content: center;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero .subtitle {
+      margin-top: 12px;
+      font-size: 1rem;
+      font-weight: 300;
+      opacity: .7;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .hero .badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .hero .badge {
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .hero .b-gold { background: var(--gold); color: var(--ink); }
+    .hero .b-purple { background: rgba(124,58,191,.6); color: #e8d0ff; border: 1px solid rgba(200,160,255,.3); }
+    .hero .b-blue { background: rgba(26,111,181,.6); color: #c8e4ff; border: 1px solid rgba(100,180,255,.3); }
+
+    .hero ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 30px;
+      margin: 18px 0 24px;
+      position: relative;
+      justify-content: center;
+    }
+    .hero ul li {
+      background: rgba(255,255,255,0.15);
+      padding: 8px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      color: #e8e0f0;
+    }
+    .btn-start {
+      background: var(--gold);
+      border: none;
+      color: var(--ink);
+      font-size: 1.2rem;
+      font-weight: 800;
+      padding: 16px 48px;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #b08010;
+      transition: 0.1s;
+      font-family: 'Nunito', sans-serif;
+      position: relative;
+      display: block;
+      margin: 0 auto;
+    }
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 0 #b08010;
+      background: #f0b030;
+    }
+
+    /* ===== PRONUNCIATION ===== */
+    .pronunciation-box {
+      background: linear-gradient(135deg, var(--purple-light), var(--blue-light));
+      border: 2px solid var(--purple);
+      border-radius: 20px;
+      padding: 28px 34px;
+      margin: 20px 0;
+    }
+    .pronunciation-box h3 {
+      color: var(--purple);
+      margin-top: 0;
+    }
+    .pronunciation-box .example {
+      background: white;
+      border-radius: 12px;
+      padding: 12px 18px;
+      margin: 8px 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .pronunciation-box .example .fr {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 1.1rem;
+    }
+    .pronunciation-box .example .en {
+      color: var(--blue);
+      font-style: italic;
+    }
+    .pronunciation-box .group-title {
+      font-weight: 800;
+      color: var(--purple);
+      font-size: 1.05rem;
+      margin: 12px 0 6px 0;
+    }
+
+    /* ===== STORY ===== */
+    .story-box {
+      background: linear-gradient(135deg,#f5f0e8,#fdf8f0);
+      border-left: 5px solid var(--gold);
+      border-radius: 0 14px 14px 0;
+      padding: 30px 34px;
+      margin: 20px 0 30px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .dialogue-line {
+      margin-bottom: 8px;
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.7);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 14px;
+    }
+    .dialogue-line .fr {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 1.1rem;
+    }
+    .dialogue-line .en {
+      color: var(--blue);
+      font-style: italic;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+    }
+    .dialogue-line .en.hidden {
+      display: none;
+    }
+    .dialogue-line .speaker {
+      font-weight: 800;
+      color: var(--purple);
+    }
+
+    /* ===== CARDS ===== */
+    .lesson-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 34px;
+      padding: 28px 32px;
+      margin-bottom: 38px;
+      box-shadow: 0 10px 0 #d0c8bc;
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin: 16px 0;
+    }
+    .expr-card {
+      background: #f6fcfb;
+      border-radius: 24px;
+      padding: 20px 22px;
+      border-left: 12px solid var(--teal);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .expr-card h4 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--teal);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .expr-card .fr {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .expr-card .en {
+      color: var(--blue);
+      font-size: 1rem;
+      border-bottom: 1px dashed var(--blue);
+      padding-bottom: 6px;
+      margin-top: 4px;
+    }
+    .expr-card .example {
+      background: white;
+      padding: 10px 14px;
+      border-radius: 16px;
+      margin-top: 12px;
+      font-style: italic;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+      color: var(--ink);
+    }
+
+    /* ===== FAMILY TREE ===== */
+    .family-tree {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px 30px;
+      background: var(--purple-light);
+      padding: 28px;
+      border-radius: 40px;
+      margin: 16px 0;
+    }
+    .family-node {
+      text-align: center;
+      background: white;
+      padding: 12px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.04);
+      min-width: 120px;
+    }
+    .family-node .label {
+      font-weight: 700;
+      color: var(--purple);
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .family-node .sub {
+      color: var(--grey);
+      font-size: 0.85rem;
+    }
+
+    /* ===== GRAMMAR ===== */
+    .grammar-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      background: var(--teal-light);
+      padding: 28px;
+      border-radius: 32px;
+    }
+    .grammar-item {
+      background: white;
+      padding: 14px 20px;
+      border-radius: 20px;
+      border-left: 8px solid var(--teal);
+    }
+    .grammar-item strong {
+      color: var(--teal);
+      font-size: 1.2rem;
+      font-family: 'Nunito', sans-serif;
+    }
+    .grammar-item .note {
+      color: var(--grey);
+      font-size: 0.9rem;
+    }
+
+    /* ===== NUMBERS ===== */
+    .number-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .number-item {
+      border-radius: 12px;
+      padding: 12px 8px;
+      text-align: center;
+      border: 1px solid transparent;
+      background: var(--teal-light);
+      border-color: #80c8c8;
+      color: #044040;
+      transition: transform .15s,box-shadow .15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .number-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,.12);
+    }
+    .number-item .num {
+      font-size: 1.3rem;
+      font-weight: 800;
+    }
+    .number-item .word {
+      font-size: .75rem;
+      font-weight: 600;
+      color: var(--grey);
+    }
+
+    /* ===== EXERCISES ===== */
+    .exo-block {
+      background: white;
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      border-top: 4px solid var(--blue);
+    }
+    .exo-block.exo-r { border-top-color: var(--red); }
+    .exo-block.exo-p { border-top-color: var(--purple); }
+    .exo-block.exo-t { border-top-color: var(--teal); }
+    .exo-block.exo-gold { border-top-color: var(--gold); }
+    .exo-block.exo-orange { border-top-color: var(--orange); }
+
+    .exo-line {
+      font-size: 1.1rem;
+      margin: 16px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 18px;
+      background: #fafdfc;
+      padding: 10px 16px;
+      border-radius: 50px;
+    }
+    .exo-line input, .exo-line select {
+      border: none;
+      border-bottom: 2px solid var(--gold);
+      background: transparent;
+      padding: 2px 8px;
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      font-family: 'Nunito', sans-serif;
+      outline: none;
+      min-width: 150px;
+      transition: border-color .2s;
+    }
+    .exo-line input:focus, .exo-line select:focus {
+      border-bottom-color: var(--blue);
+    }
+    .exo-line input.ok, .exo-line select.ok {
+      border-bottom-color: var(--green);
+      color: var(--green);
+      font-weight: 700;
+    }
+    .exo-line input.bad, .exo-line select.bad {
+      border-bottom-color: var(--red);
+      color: var(--red);
+    }
+    .btn-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: .86rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: opacity .2s,transform .1s;
+      color: white;
+      background: var(--blue);
+    }
+    .btn-check:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-check.bc-red { background: var(--red); }
+    .btn-check.bc-purple { background: var(--purple); }
+    .btn-check.bc-teal { background: var(--teal); }
+    .btn-check.bc-gold { background: var(--gold); color: var(--ink); }
+    .btn-check.bc-orange { background: var(--orange); }
+
+    .feedback {
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .feedback.correct { background: var(--green-light); color: var(--green); }
+    .feedback.wrong { background: var(--red-light); color: var(--red); }
+    .hidden { display: none !important; }
+
+    /* ===== AUDIO ===== */
+    .audio-btn {
+      background: var(--gold-light);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1rem;
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: 0.1s;
+    }
+    .audio-btn:hover {
+      background: var(--gold);
+      color: white;
+      transform: scale(1.04);
+    }
+    .audio-btn-sm { width: 32px; height: 32px; font-size: 0.8rem; }
+    .audio-btn-xs { width: 26px; height: 26px; font-size: 0.65rem; }
+
+    /* ===== BADGES & FOOTER ===== */
+    .badge {
+      background: var(--ink);
+      color: var(--gold);
+      border-radius: 50px;
+      padding: 4px 24px;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+    .recap-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 30px 0 20px;
+      background: var(--parchment);
+      border-radius: 48px;
+      padding: 24px 30px;
+      justify-content: center;
+      border: 2px solid var(--border);
+    }
+    .recap-item {
+      font-weight: 700;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 6px 20px 6px 16px;
+      border-radius: 60px;
+      font-family: 'Nunito', sans-serif;
+    }
+    footer {
+      margin-top: 40px;
+      color: var(--grey);
+      text-align: center;
+      border-top: 3px solid var(--border);
+      padding-top: 28px;
+      font-size: 1rem;
+    }
+    .score-display {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--teal);
+      text-align: center;
+      padding: 16px;
+    }
+
+    /* ===== NATIONALITIES ===== */
+    .nat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 10px;
+      margin: 16px 0;
+    }
+    .nat-item {
+      background: white;
+      border-radius: 10px;
+      padding: 10px 16px;
+      border: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .nat-fr { font-weight: 700; color: var(--red); }
+    .nat-en { color: var(--blue); font-style: italic; font-size: .9rem; }
+
+    /* ===== CONJUGAISON ===== */
+    .conj {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      margin: 20px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+    .conj .ch {
+      grid-column: 1/-1;
+      padding: 10px 16px;
+      text-align: center;
+      font-weight: 800;
+      letter-spacing: .08em;
+      font-size: .85rem;
+      text-transform: uppercase;
+    }
+    .conj .ch-red { background: var(--red); color: white; }
+    .conj .ch-purple { background: var(--purple); color: white; }
+    .conj .cc {
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+      align-items: baseline;
+    }
+    .conj .cc:nth-child(odd) { background: white; }
+    .conj .cc:nth-child(even) { background: var(--parchment); border-left: 1px solid var(--border); }
+    .conj .cp {
+      color: var(--grey);
+      font-size: .86rem;
+      min-width: 64px;
+    }
+    .conj .cv-blue { color: var(--blue); font-weight: 800; }
+    .conj .cv-purple { color: var(--purple); font-weight: 800; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 700px) {
+      .app-wrapper { padding: 16px; }
+      h1 { font-size: 1.8rem; }
+      .hero { padding: 24px; }
+      .exo-line { flex-direction: column; align-items: stretch; }
+      .exo-line input { width: 100%; }
+      .family-tree { gap: 12px; }
+      .number-grid { grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); }
+      .conj { grid-template-columns: 1fr; }
+      .conj .cc:nth-child(even) { border-left: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+  <!-- Progress Bar -->
+  <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="flag-row">
+      <div class="flag-bar fb"></div>
+      <div class="flag-bar fw"></div>
+      <div class="flag-bar frc"></div>
+    </div>
+    <h1>Français A0 — <em>Les bases du français</em></h1>
+    <p class="subtitle">L'Âge · Les Couleurs · Les Pronoms</p>
+    <div class="badges">
+      <span class="badge b-gold">Niveau A1</span>
+      <span class="badge b-purple">Pour anglophones</span>
+      <span class="badge b-blue">Leçon complète</span>
+    </div>
+    <ul>
+      <li>✅ Saluer & prendre congé</li>
+      <li>✅ Se présenter</li>
+      <li>✅ Poser des questions</li>
+      <li>✅ Parler de soi</li>
+      <li>✅ Compter jusqu'à 100</li>
+    </ul>
+    <button class="btn-start" onclick="document.getElementById('pronunciation').scrollIntoView({behavior:'smooth'})">
+      <i class="fas fa-play"></i> Start lesson
+    </button>
+  </section>
+
+  <!-- ===== PRONUNCIATION ===== -->
+  <section id="pronunciation">
+    <h2>🔊 Prononciation — Les voyelles nasales & les liaisons</h2>
+    <div class="pronunciation-box">
+      <h3>🇫🇷 Les voyelles nasales</h3>
+
+      <div class="group-title">📌 Groupe 1 : an / en</div>
+      <div class="example">
+        <span class="fr">enfant</span>
+        <span class="en">(child) — [an-fan]</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('enfant')"><i class="fas fa-volume-up"></i></button>
+        <span style="color:var(--grey); font-size:0.9rem;">Ex: <strong>grand</strong> (big), <strong>maman</strong> (mom)</span>
+      </div>
+
+      <div class="group-title">📌 Groupe 2 : in / un / ain / ein</div>
+      <div class="example">
+        <span class="fr">pain</span>
+        <span class="en">(bread) — [pan]</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('pain')"><i class="fas fa-volume-up"></i></button>
+        <span style="color:var(--grey); font-size:0.9rem;">Ex: <strong>vin</strong> (wine), <strong>brun</strong> (brown), <strong>plein</strong> (full)</span>
+      </div>
+
+      <div class="group-title">📌 Groupe 3 : on</div>
+      <div class="example">
+        <span class="fr">ils sont</span>
+        <span class="en">(they are) — [il zon]</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('ils sont')"><i class="fas fa-volume-up"></i></button>
+        <span style="color:var(--grey); font-size:0.9rem;">Ex: <strong>bon</strong> (good), <strong>nom</strong> (name)</span>
+      </div>
+
+      <h3 style="margin-top:24px;">🔗 Les liaisons</h3>
+      <p style="margin-bottom:12px;">En français, on lie la consonne finale d'un mot avec la voyelle suivante.</p>
+      <div class="example">
+        <span class="fr">Vous êtes</span>
+        <span class="en">(you are) — le "s" se lie avec "êtes" → [vou-zèt]</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Vous êtes')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example">
+        <span class="fr">Un homme</span>
+        <span class="en">(a man) — le "n" se lie avec "homme" → [un-nom]</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Un homme')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example">
+        <span class="fr">Les amis</span>
+        <span class="en">(the friends) — le "s" se lie avec "amis" → [lé-zami]</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Les amis')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div class="example">
+        <span class="fr">Ils ont</span>
+        <span class="en">(they have) — le "s" se lie avec "ont" → [il-zon]</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Ils ont')"><i class="fas fa-volume-up"></i></button>
+      </div>
+      <div style="background:var(--gold-light); border-radius:12px; padding:14px 20px; margin-top:16px;">
+        <strong>💡 Astuce :</strong> En anglais, on ne fait généralement pas de liaisons. En français, elles sont <strong>essentielles</strong> pour une prononciation naturelle !
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== STORY ===== -->
+  <section id="story">
+    <h2>📖 Sarah arrives in Lyon</h2>
+    <div class="story-box">
+      <div class="dialogue-line"><span class="speaker">Sarah :</span> <span class="fr">Bonjour ! <button class="audio-btn audio-btn-sm" onclick="speak('Bonjour !')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Hello!</span></div>
+      <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Bonjour, madame. <button class="audio-btn audio-btn-sm" onclick="speak('Bonjour, madame.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Good morning, ma'am.</span></div>
+      <div class="dialogue-line"><span class="speaker">Sarah :</span> <span class="fr">Je m'appelle Sarah, et vous ? <button class="audio-btn audio-btn-sm" onclick="speak('Je m\'appelle Sarah, et vous ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">My name is Sarah, and you?</span></div>
+      <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Enchanté, Sarah. Je m'appelle Thomas. <button class="audio-btn audio-btn-sm" onclick="speak('Enchanté, Sarah. Je m\'appelle Thomas.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Nice to meet you, Sarah. I'm Thomas.</span></div>
+      <div class="dialogue-line"><span class="speaker">Sarah :</span> <span class="fr">Je viens d'Édimbourg, en Écosse. <button class="audio-btn audio-btn-sm" onclick="speak('Je viens d\'Édimbourg, en Écosse.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I come from Edinburgh, Scotland.</span></div>
+      <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Ah, très bien ! J'habite à Lyon. <button class="audio-btn audio-btn-sm" onclick="speak('Ah, très bien ! J\'habite à Lyon.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Very good! I live in Lyon.</span></div>
+      <div class="dialogue-line"><span class="speaker">Sarah :</span> <span class="fr">Merci beaucoup, au revoir ! <button class="audio-btn audio-btn-sm" onclick="speak('Merci beaucoup, au revoir !')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Thanks a lot, goodbye!</span></div>
+      <div style="margin-top:16px; font-size:0.9rem; color:var(--grey);"><i class="fas fa-eye"></i> Cliquez sur la traduction anglaise pour la cacher / afficher.</div>
+    </div>
+  </section>
+
+  <!-- ===== LESSON 1 ===== -->
+  <section id="lesson1">
+    <h2>Lesson 1 · Greetings & Politeness</h2>
+    <div class="lesson-card">
+      <div class="grid-2col">
+        <div class="expr-card"><h4>👋 Bonjour</h4><div class="fr">Bonjour <button class="audio-btn audio-btn-sm" onclick="speak('Bonjour')"><i class="fas fa-volume-up"></i></button></div><div class="en">Hello / Good morning</div><div class="example">Bonjour, comment allez-vous ?</div></div>
+        <div class="expr-card"><h4>🌙 Bonsoir</h4><div class="fr">Bonsoir <button class="audio-btn audio-btn-sm" onclick="speak('Bonsoir')"><i class="fas fa-volume-up"></i></button></div><div class="en">Good evening</div><div class="example">Bonsoir, tout le monde !</div></div>
+        <div class="expr-card"><h4>👋 Salut</h4><div class="fr">Salut <button class="audio-btn audio-btn-sm" onclick="speak('Salut')"><i class="fas fa-volume-up"></i></button></div><div class="en">Hi / Bye (informal)</div><div class="example">Salut, ça va ?</div></div>
+        <div class="expr-card"><h4>👋 Au revoir</h4><div class="fr">Au revoir <button class="audio-btn audio-btn-sm" onclick="speak('Au revoir')"><i class="fas fa-volume-up"></i></button></div><div class="en">Goodbye</div><div class="example">Au revoir, à demain !</div></div>
+        <div class="expr-card"><h4>🙏 Merci</h4><div class="fr">Merci <button class="audio-btn audio-btn-sm" onclick="speak('Merci')"><i class="fas fa-volume-up"></i></button></div><div class="en">Thank you</div><div class="example">Merci beaucoup !</div></div>
+        <div class="expr-card"><h4>🤗 De rien</h4><div class="fr">De rien <button class="audio-btn audio-btn-sm" onclick="speak('De rien')"><i class="fas fa-volume-up"></i></button></div><div class="en">You're welcome</div><div class="example">– Merci ! – De rien.</div></div>
+        <div class="expr-card"><h4>🤗 Avec plaisir</h4><div class="fr">Avec plaisir <button class="audio-btn audio-btn-sm" onclick="speak('Avec plaisir')"><i class="fas fa-volume-up"></i></button></div><div class="en">With pleasure / You're welcome</div><div class="example">– Merci ! – Avec plaisir.</div></div>
+        <div class="expr-card"><h4>🙏 S'il vous plaît</h4><div class="fr">S'il vous plaît <button class="audio-btn audio-btn-sm" onclick="speak('S\'il vous plaît')"><i class="fas fa-volume-up"></i></button></div><div class="en">Please (formal)</div><div class="example">Un café, s'il vous plaît.</div></div>
+        <div class="expr-card"><h4>😅 Excusez-moi</h4><div class="fr">Excusez-moi <button class="audio-btn audio-btn-sm" onclick="speak('Excusez-moi')"><i class="fas fa-volume-up"></i></button></div><div class="en">Excuse me</div><div class="example">Excusez-moi, où est la gare ?</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LESSON 2 ===== -->
+  <section id="lesson2">
+    <h2>Lesson 2 · Introductions</h2>
+    <div class="lesson-card">
+      <div class="grid-2col">
+        <div class="expr-card"><h4>👤 Je m'appelle</h4><div class="fr">Je m'appelle... <button class="audio-btn audio-btn-sm" onclick="speak('Je m\'appelle...')"><i class="fas fa-volume-up"></i></button></div><div class="en">My name is...</div><div class="example">Je m'appelle Marie.</div></div>
+        <div class="expr-card"><h4>❓ Comment vous appelez-vous ?</h4><div class="fr">Comment vous appelez-vous ? <button class="audio-btn audio-btn-sm" onclick="speak('Comment vous appelez-vous ?')"><i class="fas fa-volume-up"></i></button></div><div class="en">What is your name? (formal)</div><div class="example">– Comment vous appelez-vous ? – Je m'appelle Paul.</div></div>
+        <div class="expr-card"><h4>😊 Enchanté(e)</h4><div class="fr">Enchanté / Enchantée <button class="audio-btn audio-btn-sm" onclick="speak('Enchanté')"><i class="fas fa-volume-up"></i></button></div><div class="en">Nice to meet you</div><div class="example">Enchanté, Sophie !</div></div>
+        <div class="expr-card"><h4>🌍 Je viens de...</h4><div class="fr">Je viens de... <button class="audio-btn audio-btn-sm" onclick="speak('Je viens de...')"><i class="fas fa-volume-up"></i></button></div><div class="en">I come from...</div><div class="example">Je viens du Canada.</div></div>
+        <div class="expr-card"><h4>🏠 J'habite à...</h4><div class="fr">J'habite à... <button class="audio-btn audio-btn-sm" onclick="speak('J\'habite à...')"><i class="fas fa-volume-up"></i></button></div><div class="en">I live in...</div><div class="example">J'habite à Paris.</div></div>
+        <div class="expr-card"><h4>🗣️ Je parle...</h4><div class="fr">Je parle... <button class="audio-btn audio-btn-sm" onclick="speak('Je parle...')"><i class="fas fa-volume-up"></i></button></div><div class="en">I speak...</div><div class="example">Je parle français et anglais.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LESSON 3 ===== -->
+  <section id="lesson3">
+    <h2>Lesson 3 · Numbers & Personal Info</h2>
+    <div class="lesson-card">
+      <h3>🔢 Numbers 0–20</h3>
+      <div class="number-grid" id="nums1"></div>
+      <h3 style="margin-top:24px;">🔢 20–69</h3>
+      <div class="number-grid" id="nums2"></div>
+      <h3 style="margin-top:24px;">🔢 70–100</h3>
+      <div class="number-grid" id="nums3"></div>
+      <div style="margin-top:20px; background:var(--parchment); padding:20px; border-radius:30px;">
+        <p><strong>📞 Téléphone :</strong> 06 12 34 56 78 → <em>zéro six, douze, trente-quatre, cinquante-six, soixante-dix-huit</em></p>
+        <p><strong>📅 Âge :</strong> J'ai 25 ans. → <em>vingt-cinq ans</em></p>
+        <p><strong>📍 Adresse :</strong> 15, rue de la République</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LESSON 4 ===== -->
+  <section id="lesson4">
+    <h2>Lesson 4 · Personal Information</h2>
+    <div class="lesson-card">
+      <div class="grid-2col">
+        <div class="expr-card"><h4>🎂 Âge</h4><div class="fr">J'ai ... ans <button class="audio-btn audio-btn-sm" onclick="speak('J\'ai ... ans')"><i class="fas fa-volume-up"></i></button></div><div class="en">I am ... years old</div><div class="example">J'ai 30 ans.</div></div>
+        <div class="expr-card"><h4>🌍 Nationalités</h4><div class="fr">Je suis français / française <button class="audio-btn audio-btn-sm" onclick="speak('Je suis français')"><i class="fas fa-volume-up"></i></button></div><div class="en">I am French</div><div class="example">Je suis espagnol.</div></div>
+        <div class="expr-card"><h4>💼 Professions</h4><div class="fr">Je suis étudiant(e) <button class="audio-btn audio-btn-sm" onclick="speak('Je suis étudiant')"><i class="fas fa-volume-up"></i></button></div><div class="en">I am a student</div><div class="example">Je suis ingénieur.</div></div>
+        <div class="expr-card"><h4>💼 Je travaille</h4><div class="fr">Je travaille... <button class="audio-btn audio-btn-sm" onclick="speak('Je travaille...')"><i class="fas fa-volume-up"></i></button></div><div class="en">I work...</div><div class="example">Je travaille dans une banque.</div></div>
+      </div>
+      <div style="background:var(--parchment); padding:18px 24px; border-radius:30px; margin-top:18px;">
+        <p><strong>💬 Mini dialogue :</strong></p>
+        <p>– Quel âge avez-vous ? <button class="audio-btn audio-btn-sm" onclick="speak('Quel âge avez-vous ?')"><i class="fas fa-volume-up"></i></button> → How old are you?</p>
+        <p>– J'ai 28 ans. <button class="audio-btn audio-btn-sm" onclick="speak('J\'ai 28 ans.')"><i class="fas fa-volume-up"></i></button> → I'm 28.</p>
+        <p>– Vous venez d'où ? <button class="audio-btn audio-btn-sm" onclick="speak('Vous venez d\'où ?')"><i class="fas fa-volume-up"></i></button> → Where are you from?</p>
+        <p>– Je viens de Belgique. <button class="audio-btn audio-btn-sm" onclick="speak('Je viens de Belgique.')"><i class="fas fa-volume-up"></i></button> → I'm from Belgium.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== LESSON 5 ===== -->
+  <section id="lesson5">
+    <h2>Lesson 5 · Family</h2>
+    <div class="lesson-card">
+      <div class="family-tree">
+        <div class="family-node">
+          <div class="label">👨 mon père <button class="audio-btn audio-btn-sm" onclick="speak('mon père')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my father</div>
+        </div>
+        <div class="family-node">
+          <div class="label">👩 ma mère <button class="audio-btn audio-btn-sm" onclick="speak('ma mère')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my mother</div>
+        </div>
+        <div class="family-node">
+          <div class="label">👦 mon frère <button class="audio-btn audio-btn-sm" onclick="speak('mon frère')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my brother</div>
+        </div>
+        <div class="family-node">
+          <div class="label">👧 ma sœur <button class="audio-btn audio-btn-sm" onclick="speak('ma sœur')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my sister</div>
+        </div>
+        <div class="family-node">
+          <div class="label">👫 mes parents <button class="audio-btn audio-btn-sm" onclick="speak('mes parents')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my parents</div>
+        </div>
+        <div class="family-node">
+          <div class="label">👴👵 mes grands-parents <button class="audio-btn audio-btn-sm" onclick="speak('mes grands-parents')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my grandparents</div>
+        </div>
+        <div class="family-node">
+          <div class="label">👨‍👩‍👦 mes enfants <button class="audio-btn audio-btn-sm" onclick="speak('mes enfants')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my children</div>
+        </div>
+        <div class="family-node">
+          <div class="label">💑 mon mari / ma femme <button class="audio-btn audio-btn-sm" onclick="speak('mon mari, ma femme')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="sub">my husband / wife</div>
+        </div>
+      </div>
+      <div style="margin-top:16px; background:var(--parchment); padding:16px 22px; border-radius:30px;">
+        <p><strong>🔊 Écoutez :</strong> <button class="audio-btn audio-btn-sm" onclick="speak('Mon père s\'appelle Jean. Ma mère s\'appelle Marie. J\'ai un frère et une sœur.')"><i class="fas fa-volume-up"></i></button> Mon père s'appelle Jean. Ma mère s'appelle Marie. J'ai un frère et une sœur.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GRAMMAR ===== -->
+  <section id="grammar">
+    <h2>🧠 Grammar Focus</h2>
+    <div class="lesson-card">
+      <div class="grammar-grid">
+        <div class="grammar-item"><strong>être</strong> <span class="note">je suis, tu es, il/elle est</span></div>
+        <div class="grammar-item"><strong>avoir</strong> <span class="note">j'ai, tu as, il/elle a</span></div>
+        <div class="grammar-item"><strong>je m'appelle</strong> <span class="note">+ prénom</span></div>
+        <div class="grammar-item"><strong>je suis</strong> <span class="note">+ nationalité / profession</span></div>
+        <div class="grammar-item"><strong>j'ai</strong> <span class="note">+ âge / + number</span></div>
+        <div class="grammar-item"><strong>je viens de</strong> <span class="note">+ pays / ville</span></div>
+        <div class="grammar-item"><strong>j'habite à</strong> <span class="note">+ ville</span></div>
+        <div class="grammar-item"><strong>mon / ma / mes</strong> <span class="note">possessifs</span></div>
+        <div class="grammar-item"><strong>masculin / féminin</strong> <span class="note">un étudiant / une étudiante</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EXERCISES ===== -->
+  <section id="exercises">
+    <h2>🧪 Exercises · Check your knowledge</h2>
+    <div style="text-align:right; margin-bottom:12px; font-weight:700; color:var(--teal);" id="scoreDisplay">Score : 0 / 0</div>
+
+    <!-- EXO 1 : QCM -->
+    <div class="exo-block">
+      <h3 style="margin-top:0; color:var(--blue);">1️⃣ Choose the correct answer</h3>
+      <div class="exo-line">a) "Hello" in French is : 
+        <select id="qcm1"><option value="">--</option><option value="bonjour">Bonjour</option><option value="au revoir">Au revoir</option><option value="merci">Merci</option></select>
+        <button class="btn-check" onclick="checkQCM('qcm1','bonjour','fb1')">Check</button>
+        <span id="fb1" class="feedback"></span>
+      </div>
+      <div class="exo-line">b) "Thank you" in French is : 
+        <select id="qcm2"><option value="">--</option><option value="de rien">De rien</option><option value="merci">Merci</option><option value="pardon">Pardon</option></select>
+        <button class="btn-check" onclick="checkQCM('qcm2','merci','fb2')">Check</button>
+        <span id="fb2" class="feedback"></span>
+      </div>
+      <div class="exo-line">c) "I live in London" is : 
+        <select id="qcm3"><option value="">--</option><option value="je viens de Londres">Je viens de Londres</option><option value="j'habite à Londres">J'habite à Londres</option><option value="je suis Londres">Je suis Londres</option></select>
+        <button class="btn-check" onclick="checkQCM('qcm3','j\'habite à Londres','fb3')">Check</button>
+        <span id="fb3" class="feedback"></span>
+      </div>
+    </div>
+
+    <!-- EXO 2 : Fill in the blanks -->
+    <div class="exo-block exo-r">
+      <h3 style="margin-top:0; color:var(--red);">2️⃣ Fill in the blanks</h3>
+      <div class="exo-line">a) Je ______ Marie.
+        <input type="text" id="fill1" placeholder="réponse">
+        <button class="btn-check bc-red" onclick="checkFill('fill1','m\'appelle','fbFill1')">Check</button>
+        <span id="fbFill1" class="feedback"></span>
+      </div>
+      <div class="exo-line">b) J'______ 25 ans.
+        <input type="text" id="fill2" placeholder="réponse">
+        <button class="btn-check bc-red" onclick="checkFill('fill2','ai','fbFill2')">Check</button>
+        <span id="fbFill2" class="feedback"></span>
+      </div>
+      <div class="exo-line">c) Je ______ de Paris.
+        <input type="text" id="fill3" placeholder="réponse">
+        <button class="btn-check bc-red" onclick="checkFill('fill3','viens','fbFill3')">Check</button>
+        <span id="fbFill3" class="feedback"></span>
+      </div>
+    </div>
+
+    <!-- EXO 3 : Translation -->
+    <div class="exo-block exo-p">
+      <h3 style="margin-top:0; color:var(--purple);">3️⃣ Translate into French</h3>
+      <div class="exo-line">a) My name is Emma. 
+        <input type="text" id="trans1" placeholder="traduction" style="min-width:200px;">
+        <button class="btn-check bc-purple" onclick="checkTrans('trans1','Je m\'appelle Emma.','fbTrans1')">Check</button>
+        <span id="fbTrans1" class="feedback"></span>
+      </div>
+      <div class="exo-line">b) I am a student. 
+        <input type="text" id="trans2" placeholder="traduction" style="min-width:200px;">
+        <button class="btn-check bc-purple" onclick="checkTrans('trans2','Je suis étudiant(e).','fbTrans2')">Check</button>
+        <span id="fbTrans2" class="feedback"></span>
+      </div>
+      <div class="exo-line">c) I come from Canada. 
+        <input type="text" id="trans3" placeholder="traduction" style="min-width:200px;">
+        <button class="btn-check bc-purple" onclick="checkTrans('trans3','Je viens du Canada.','fbTrans3')">Check</button>
+        <span id="fbTrans3" class="feedback"></span>
+      </div>
+    </div>
+
+    <!-- EXO 4 : Dialogue completion -->
+    <div class="exo-block exo-t">
+      <h3 style="margin-top:0; color:var(--teal);">4️⃣ Complete the dialogue</h3>
+      <div class="exo-line">– Bonjour, je ______ Sarah.
+        <input type="text" id="dial1" placeholder="réponse">
+        <button class="btn-check bc-teal" onclick="checkFill('dial1','m\'appelle','fbDial1')">Check</button>
+        <span id="fbDial1" class="feedback"></span>
+      </div>
+      <div class="exo-line">– ______, Sarah. Je m'appelle Thomas.
+        <input type="text" id="dial2" placeholder="réponse">
+        <button class="btn-check bc-teal" onclick="checkFill('dial2','Enchanté','fbDial2')">Check</button>
+        <span id="fbDial2" class="feedback"></span>
+      </div>
+      <div class="exo-line">– Vous ______ d'où ?
+        <input type="text" id="dial3" placeholder="réponse">
+        <button class="btn-check bc-teal" onclick="checkFill('dial3','venez','fbDial3')">Check</button>
+        <span id="fbDial3" class="feedback"></span>
+      </div>
+    </div>
+
+    <!-- EXO 5 : Numbers -->
+    <div class="exo-block exo-gold">
+      <h3 style="margin-top:0; color:var(--gold);">5️⃣ Write the number in words</h3>
+      <div class="exo-line">a) 15 → 
+        <input type="text" id="num1" placeholder="en français">
+        <button class="btn-check bc-gold" onclick="checkFill('num1','quinze','fbNum1')">Check</button>
+        <span id="fbNum1" class="feedback"></span>
+      </div>
+      <div class="exo-line">b) 42 → 
+        <input type="text" id="num2" placeholder="en français">
+        <button class="btn-check bc-gold" onclick="checkFill('num2','quarante-deux','fbNum2')">Check</button>
+        <span id="fbNum2" class="feedback"></span>
+      </div>
+      <div class="exo-line">c) 78 → 
+        <input type="text" id="num3" placeholder="en français">
+        <button class="btn-check bc-gold" onclick="checkFill('num3','soixante-dix-huit','fbNum3')">Check</button>
+        <span id="fbNum3" class="feedback"></span>
+      </div>
+    </div>
+
+    <!-- EXO 6 : Nationalities -->
+    <div class="exo-block exo-orange">
+      <h3 style="margin-top:0; color:var(--orange);">6️⃣ Nationalities — Write the correct form</h3>
+      <div class="exo-line">a) Elle est (anglais) → 
+        <input type="text" id="nat1" placeholder="anglaise">
+        <button class="btn-check bc-orange" onclick="checkFill('nat1','anglaise','fbNat1')">Check</button>
+        <span id="fbNat1" class="feedback"></span>
+      </div>
+      <div class="exo-line">b) Il est (allemand) → 
+        <input type="text" id="nat2" placeholder="allemand">
+        <button class="btn-check bc-orange" onclick="checkFill('nat2','allemand','fbNat2')">Check</button>
+        <span id="fbNat2" class="feedback"></span>
+      </div>
+      <div class="exo-line">c) Ma sœur est (américain) → 
+        <input type="text" id="nat3" placeholder="américaine">
+        <button class="btn-check bc-orange" onclick="checkFill('nat3','américaine','fbNat3')">Check</button>
+        <span id="fbNat3" class="feedback"></span>
+      </div>
+      <div class="exo-line">d) Mon père est (japonais) → 
+        <input type="text" id="nat4" placeholder="japonais">
+        <button class="btn-check bc-orange" onclick="checkFill('nat4','japonais','fbNat4')">Check</button>
+        <span id="fbNat4" class="feedback"></span>
+      </div>
+      <div class="exo-line">e) Marie est (français) → 
+        <input type="text" id="nat5" placeholder="française">
+        <button class="btn-check bc-orange" onclick="checkFill('nat5','française','fbNat5')">Check</button>
+        <span id="fbNat5" class="feedback"></span>
+      </div>
+    </div>
+
+    <!-- FINAL CHALLENGE -->
+    <div class="exo-block" style="border-top:4px solid var(--purple);">
+      <h3 style="margin-top:0; color:var(--purple);">🏁 Final Challenge : Introduce yourself in French</h3>
+      <p>Complete the text :</p>
+      <div style="background:var(--parchment); padding:20px; border-radius:30px; font-size:1.1rem; line-height:2.2;">
+        <span>Bonjour ! Je ______ (name) . J' ______ (age) ans. Je ______ (nationality) . Je ______ (origin) . J' ______ (city) .</span>
+      </div>
+      <div style="margin-top:16px; display:flex; flex-wrap:wrap; gap:12px;">
+        <input type="text" id="final1" placeholder="m'appelle" style="flex:1; min-width:120px; padding:10px 16px; border:2px solid var(--gold); border-radius:60px; font-family:'Nunito',sans-serif;">
+        <input type="text" id="final2" placeholder="ai" style="flex:1; min-width:80px; padding:10px 16px; border:2px solid var(--gold); border-radius:60px; font-family:'Nunito',sans-serif;">
+        <input type="text" id="final3" placeholder="suis" style="flex:1; min-width:120px; padding:10px 16px; border:2px solid var(--gold); border-radius:60px; font-family:'Nunito',sans-serif;">
+        <input type="text" id="final4" placeholder="viens de" style="flex:1; min-width:120px; padding:10px 16px; border:2px solid var(--gold); border-radius:60px; font-family:'Nunito',sans-serif;">
+        <input type="text" id="final5" placeholder="habite à" style="flex:1; min-width:120px; padding:10px 16px; border:2px solid var(--gold); border-radius:60px; font-family:'Nunito',sans-serif;">
+      </div>
+      <button class="btn-check bc-purple" style="margin-top:16px; font-size:1.1rem; padding:12px 40px;" onclick="checkFinalChallenge()">Check final challenge</button>
+      <div id="finalFeedback" style="margin-top:16px; font-size:1.2rem; font-weight:700;"></div>
+    </div>
+  </section>
+
+  <!-- Recap -->
+  <div class="recap-bar">
+    <div class="recap-item"><i class="fas fa-hand-peace"></i> Bonjour</div>
+    <div class="recap-item"><i class="fas fa-user-plus"></i> Je m'appelle</div>
+    <div class="recap-item"><i class="fas fa-flag"></i> Je viens de</div>
+    <div class="recap-item"><i class="fas fa-home"></i> J'habite à</div>
+    <div class="recap-item"><i class="fas fa-birthday-cake"></i> J'ai ... ans</div>
+  </div>
+
+  <footer>
+    <span class="badge">FLE A0 · Les bases du français</span> — Meet People & Introduce Yourself · 40+ expressions & exercises
+    <div style="margin-top:8px; font-size:0.9rem;">🔊 Cliquez sur <i class="fas fa-volume-up"></i> pour écouter chaque phrase.</div>
+  </footer>
+</div>
+
+<script>
+  // ===== SPEECH SYNTHESIS =====
+  function speak(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.85;
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // ===== NUMBERS =====
+  const numbers1 = [
+    {num: '0', word: 'zéro'}, {num: '1', word: 'un'}, {num: '2', word: 'deux'},
+    {num: '3', word: 'trois'}, {num: '4', word: 'quatre'}, {num: '5', word: 'cinq'},
+    {num: '6', word: 'six'}, {num: '7', word: 'sept'}, {num: '8', word: 'huit'},
+    {num: '9', word: 'neuf'}, {num: '10', word: 'dix'}, {num: '11', word: 'onze'},
+    {num: '12', word: 'douze'}, {num: '13', word: 'treize'}, {num: '14', word: 'quatorze'},
+    {num: '15', word: 'quinze'}, {num: '16', word: 'seize'}, {num: '17', word: 'dix-sept'},
+    {num: '18', word: 'dix-huit'}, {num: '19', word: 'dix-neuf'}, {num: '20', word: 'vingt'}
+  ];
+
+  const numbers2 = [
+    {num: '20', word: 'vingt'}, {num: '21', word: 'vingt et un'}, {num: '22', word: 'vingt-deux'},
+    {num: '30', word: 'trente'}, {num: '31', word: 'trente et un'}, {num: '40', word: 'quarante'},
+    {num: '41', word: 'quarante et un'}, {num: '50', word: 'cinquante'}, {num: '51', word: 'cinquante et un'},
+    {num: '60', word: 'soixante'}, {num: '61', word: 'soixante et un'}
+  ];
+
+  const numbers3 = [
+    {num: '70', word: 'soixante-dix'}, {num: '71', word: 'soixante et onze'},
+    {num: '80', word: 'quatre-vingts'}, {num: '81', word: 'quatre-vingt-un'},
+    {num: '90', word: 'quatre-vingt-dix'}, {num: '91', word: 'quatre-vingt-onze'},
+    {num: '100', word: 'cent'}
+  ];
+
+  function renderNumbers(arr, containerId) {
+    const container = document.getElementById(containerId);
+    arr.forEach(({num, word}) => {
+      container.innerHTML += `
+        <div class="number-item">
+          <div class="num">${num}</div>
+          <div class="word">${word}</div>
+          <button class="audio-btn audio-btn-xs" onclick="speak('${word}')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      `;
+    });
+  }
+
+  renderNumbers(numbers1, 'nums1');
+  renderNumbers(numbers2, 'nums2');
+  renderNumbers(numbers3, 'nums3');
+
+  // ===== SCORE SYSTEM =====
+  let totalQuestions = 0;
+  let correctAnswers = 0;
+  const scoreDisplay = document.getElementById('scoreDisplay');
+
+  function updateScore() {
+    scoreDisplay.textContent = `Score : ${correctAnswers} / ${totalQuestions}`;
+    const pct = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+    document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+  }
+
+  function markFeedback(id, isCorrect, correctText) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+    if (isCorrect) {
+      el.innerHTML = '✅ Correct ! <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correctText + '\')"><i class="fas fa-volume-up"></i></button>';
+    } else {
+      el.innerHTML = '❌ Essaie encore. La réponse est : <strong>' + correctText + '</strong> <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correctText + '\')"><i class="fas fa-volume-up"></i></button>';
+    }
+    if (isCorrect) correctAnswers++;
+    totalQuestions++;
+    updateScore();
+  }
+
+  // ===== QCM =====
+  function checkQCM(selectId, correct, feedbackId) {
+    const select = document.getElementById(selectId);
+    const val = select.value;
+    if (!val) { alert('Choisis une réponse.'); return; }
+    const isCorrect = val === correct;
+    if (!select.dataset.checked) {
+      markFeedback(feedbackId, isCorrect, correct);
+      select.dataset.checked = 'true';
+    } else {
+      const el = document.getElementById(feedbackId);
+      el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+      if (isCorrect) {
+        el.innerHTML = '✅ Correct ! <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correct + '\')"><i class="fas fa-volume-up"></i></button>';
+      } else {
+        el.innerHTML = '❌ Essaie encore. La réponse est : <strong>' + correct + '</strong> <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correct + '\')"><i class="fas fa-volume-up"></i></button>';
+      }
+    }
+  }
+
+  // ===== FILL IN THE BLANKS =====
+  function checkFill(inputId, correct, feedbackId) {
+    const input = document.getElementById(inputId);
+    const val = input.value.trim();
+    if (!val) { alert('Écris une réponse.'); return; }
+    const isCorrect = val.toLowerCase() === correct.toLowerCase();
+    if (!input.dataset.checked) {
+      markFeedback(feedbackId, isCorrect, correct);
+      input.dataset.checked = 'true';
+    } else {
+      const el = document.getElementById(feedbackId);
+      el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+      if (isCorrect) {
+        el.innerHTML = '✅ Correct ! <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correct + '\')"><i class="fas fa-volume-up"></i></button>';
+      } else {
+        el.innerHTML = '❌ Essaie encore. La réponse est : <strong>' + correct + '</strong> <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correct + '\')"><i class="fas fa-volume-up"></i></button>';
+      }
+    }
+  }
+
+  // ===== TRANSLATION =====
+  function checkTrans(inputId, correct, feedbackId) {
+    const input = document.getElementById(inputId);
+    const val = input.value.trim();
+    if (!val) { alert('Écris une traduction.'); return; }
+    const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ');
+    const isCorrect = normalize(val) === normalize(correct);
+    if (!input.dataset.checked) {
+      markFeedback(feedbackId, isCorrect, correct);
+      input.dataset.checked = 'true';
+    } else {
+      const el = document.getElementById(feedbackId);
+      el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+      if (isCorrect) {
+        el.innerHTML = '✅ Correct ! <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correct + '\')"><i class="fas fa-volume-up"></i></button>';
+      } else {
+        el.innerHTML = '❌ Essaie encore. La réponse est : <strong>' + correct + '</strong> <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correct + '\')"><i class="fas fa-volume-up"></i></button>';
+      }
+    }
+  }
+
+  // ===== FINAL CHALLENGE =====
+  function checkFinalChallenge() {
+    const answers = [
+      document.getElementById('final1').value.trim(),
+      document.getElementById('final2').value.trim(),
+      document.getElementById('final3').value.trim(),
+      document.getElementById('final4').value.trim(),
+      document.getElementById('final5').value.trim()
+    ];
+    const expected = ['m\'appelle', 'ai', 'suis', 'viens de', 'habite à'];
+    const normalized = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ');
+    let allCorrect = true;
+    for (let i = 0; i < answers.length; i++) {
+      if (!answers[i]) { allCorrect = false; break; }
+      if (normalized(answers[i]) !== normalized(expected[i])) { allCorrect = false; break; }
+    }
+    const fb = document.getElementById('finalFeedback');
+    if (allCorrect) {
+      fb.innerHTML = '🎉 Félicitations ! Vous avez terminé les bases du français ! <span style="background:var(--purple); color:white; padding:4px 20px; border-radius:40px; margin-left:12px;">BADGE A0</span>';
+      fb.style.color = 'var(--green)';
+      if (!document.getElementById('finalFeedback').dataset.done) {
+        correctAnswers += 5;
+        totalQuestions += 5;
+        updateScore();
+        document.getElementById('finalFeedback').dataset.done = 'true';
+      }
+    } else {
+      fb.innerHTML = '⚠️ Vérifie les mots : m\'appelle, ai, suis, viens de, habite à. <button class="audio-btn audio-btn-sm" onclick="speak(\'m\'appelle, ai, suis, viens de, habite à\')"><i class="fas fa-volume-up"></i></button>';
+      fb.style.color = 'var(--red)';
+    }
+  }
+
+  // ===== INIT SCORE =====
+  document.querySelectorAll('.exo-block select, .exo-block input[type="text"]').forEach(el => {
+    totalQuestions++;
+  });
+  totalQuestions -= 5;
+  totalQuestions += 5;
+  updateScore();
+</script>
+</body>
+</html>
