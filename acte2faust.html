@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faust · Acte II (complet, annoté) · French Diction Coach</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f8f5ef; --bg-card: #ffffff; --text: #1e1a16; --text2: #4a3f38; --text3: #7a6e64;
+      --gold: #b8862a; --gold2: #d4a843; --gold-light: #f5edd9;
+      --crimson: #8b2020; --crimson2: #b03030; --crimson-light: #faf0f0;
+      --navy: #1a2a4a; --navy-light: #eef2f8;
+      --forest: #1e5a3a; --forest-light: #eef8f2;
+      --border: #e2dcd2; --shadow: 0 4px 20px rgba(60,40,20,0.08);
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: 'Playfair Display', Georgia, serif;
+      /* Couleurs plus distinctes */
+      --z: #0284c7;     /* S → Z  (bleu ciel) */
+      --s: #b45309;     /* S → S  (marron) */
+      --y: #7c3aed;     /* ILL → Y (violet) */
+      --o: #0d9488;     /* O, au, eau (teal) */
+      --ai: #db2777;    /* AI, aient (rose) */
+      --k: #92400e;     /* QUE → K (brun) */
+      --an: #4f46e5;    /* nasale AN/EN (indigo) */
+      --in: #be123c;    /* nasale IN/AIN/EIN/UN (rouge foncé) */
+      --muet: #9ca3af;  /* muet (gris) */
+      --c-ss: #059669;  /* C → SS (vert émeraude) */
+      --c-k: #b45309;   /* C → K (marron) */
+      --liaison: #8b5cf6; /* liaison (violet clair) */
+      --ent-muet: #6b7280; /* terminaison ENT muet (gris foncé) */
+      --em-nasal: #4f46e5; /* EM → nasale AN (indigo) */
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); font-family: var(--font-body); color: var(--text); line-height: 1.7; }
+    .header { background: var(--navy); color: #fff; padding: 2.5rem 1.5rem 2rem; text-align: center; border-bottom: 4px solid var(--gold); }
+    .header-ornament { font-size: 0.75rem; letter-spacing: 0.35em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.6rem; }
+    .header h1 { font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3.4rem); font-weight: 700; }
+    .header h1 span { color: var(--gold2); }
+    .header-sub { font-family: var(--font-display); font-style: italic; font-size: 1.1rem; color: rgba(255,255,255,0.7); margin-top: 0.3rem; }
+    .header-badges { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin-top: 1.2rem; }
+    .badge { border: 1px solid rgba(212,168,67,0.4); color: var(--gold2); padding: 0.25rem 1rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
+    .badge.fix { border-color: rgba(176,48,48,0.5); color: #e08a8a; }
+    .nav { background: #fff; display: flex; overflow-x: auto; border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+    .nav::-webkit-scrollbar { display: none; }
+    .nav-btn { flex-shrink: 0; background: none; border: none; border-bottom: 3px solid transparent; padding: 0.9rem 1.2rem; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text3); cursor: pointer; transition: 0.2s; white-space: nowrap; }
+    .nav-btn:hover { color: var(--text); }
+    .nav-btn.active { color: var(--navy); border-bottom-color: var(--gold); background: rgba(184,134,42,0.04); }
+    .main { max-width: 1000px; margin: 0 auto; padding: 2rem 1.5rem; }
+    .section { display: none; animation: fadeUp 0.35s ease; }
+    .section.active { display: block; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .section-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--crimson); border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.8rem; }
+    .section-title::after { content: ''; flex: 1; height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+    .section-sub { font-size: 0.85rem; color: var(--text3); margin-bottom: 1.5rem; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; box-shadow: var(--shadow); }
+    .card-gold { border-left: 4px solid var(--gold); background: var(--gold-light); }
+    .card-crimson { border-left: 4px solid var(--crimson); background: var(--crimson-light); }
+    .card-navy { border-left: 4px solid var(--navy); background: var(--navy-light); }
+    .card-forest { border-left: 4px solid var(--forest); background: var(--forest-light); }
+    .audio-player { display: inline-flex; align-items: center; gap: 0.8rem; background: var(--bg); padding: 0.3rem 1rem 0.3rem 0.8rem; border-radius: 30px; border: 1px solid var(--border); margin: 0.2rem 0.3rem 0.2rem 0; font-size: 0.85rem; }
+    .audio-player button { background: var(--navy); border: none; color: #fff; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; font-size: 0.75rem; display: flex; align-items: center; justify-content: center; }
+    .audio-player button:hover { background: var(--gold); }
+    .diction-box { background: #fff; border: 2px solid var(--border); border-radius: 4px; padding: 1.8rem 2rem; margin: 1.5rem 0; box-shadow: var(--shadow); font-family: var(--font-display); font-size: 1.15rem; line-height: 2; }
+    .diction-box .fr { font-weight: 400; }
+    .diction-box .en { font-size: 0.82rem; color: var(--text3); font-family: var(--font-body); font-style: italic; line-height: 1.5; margin: 0.1rem 0 0.7rem 0; }
+    .diction-box .scene-head { font-size: 0.85rem; font-family: var(--font-body); font-style: italic; color: var(--text3); margin: 0.4rem 0 0.8rem; padding-left: 0.6rem; border-left: 2px solid var(--gold); }
+    .diction-box .speaker { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--navy); margin-top: 0.9rem; display: block; }
+    .diction-box .speaker-mephisto { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--crimson); margin-top: 0.9rem; display: block; }
+    .diction-box .speaker-choeur { font-weight: 700; font-variant: small-caps; letter-spacing: 0.05em; color: var(--forest); margin-top: 0.9rem; display: block; }
+    .extended { color: var(--crimson); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--crimson); text-decoration-thickness: 2px; }
+    .accent { font-weight: 700; color: var(--crimson); }
+    .son-z { color: var(--z); font-weight: 700; }
+    .son-s { color: var(--s); font-weight: 700; }
+    .son-y { color: var(--y); font-weight: 700; }
+    .son-o { color: var(--o); font-weight: 700; }
+    .son-ai { color: var(--ai); font-weight: 700; }
+    .son-k { color: var(--k); font-weight: 700; text-decoration: underline dotted; text-underline-offset: 2px; }
+    .son-an { color: var(--an); font-weight: 700; text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 2px; }
+    .son-in { color: var(--in); font-weight: 700; text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 2px; }
+    .muet { color: var(--muet); text-decoration: line-through; text-decoration-thickness: 1.5px; }
+    .son-css { color: var(--c-ss); font-weight: 700; text-decoration: underline dotted; text-underline-offset: 2px; }
+    .son-ck { color: var(--c-k); font-weight: 700; text-decoration: underline dotted; text-underline-offset: 2px; }
+    .liaison { color: var(--liaison); font-weight: 700; text-decoration: underline; text-decoration-style: dotted; text-underline-offset: 2px; }
+    .ent-muet { color: var(--ent-muet); text-decoration: line-through; text-decoration-thickness: 2px; text-decoration-color: var(--ent-muet); }
+    .em-nasal { color: var(--em-nasal); font-weight: 700; text-decoration: underline; text-decoration-style: wavy; text-underline-offset: 2px; }
+    .legend { display: flex; flex-wrap: wrap; gap: 0.9rem 1.3rem; padding: 1rem 0 0.5rem; font-size: 0.76rem; color: var(--text2); }
+    .legend-item { display: flex; align-items: center; gap: 0.4rem; }
+    .legend-swatch { display: inline-block; width: 18px; height: 3px; border-radius: 2px; }
+    .swatch-extended { background: var(--crimson); height: 4px; }
+    .swatch-z { background: var(--z); height: 4px; }
+    .swatch-s { background: var(--s); height: 4px; }
+    .swatch-y { background: var(--y); height: 4px; }
+    .swatch-o { background: var(--o); height: 4px; }
+    .swatch-ai { background: var(--ai); height: 4px; }
+    .swatch-k { background: var(--k); height: 4px; }
+    .swatch-an { background: var(--an); height: 4px; }
+    .swatch-in { background: var(--in); height: 4px; }
+    .swatch-muet { background: var(--muet); height: 2px; }
+    .swatch-css { background: var(--c-ss); height: 4px; }
+    .swatch-ck { background: var(--c-k); height: 4px; }
+    .swatch-liaison { background: var(--liaison); height: 3px; border-top: 1px solid var(--liaison); }
+    .swatch-ent { background: var(--ent-muet); height: 2px; border-top: 1px solid var(--ent-muet); }
+    .swatch-em { background: var(--em-nasal); height: 4px; }
+    .rules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
+    .rule-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 4px; padding: 1.2rem 1.3rem; box-shadow: var(--shadow); }
+    .rule-card .num { display: inline-block; background: var(--gold); color: #fff; font-size: 0.7rem; font-weight: 600; padding: 0.1rem 0.6rem; border-radius: 2px; margin-bottom: 0.4rem; letter-spacing: 0.1em; }
+    .rule-card h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .rule-card p { font-size: 0.88rem; margin: 0 0 0.3rem 0; }
+    .rule-card .ex { font-family: var(--font-display); font-style: italic; color: var(--crimson); font-size: 0.92rem; margin-top: 0.3rem; }
+    .rule-card .ex-faust { font-family: var(--font-display); font-style: italic; color: var(--navy); font-size: 0.9rem; margin-top: 0.2rem; padding: 0.3rem 0.6rem; background: var(--navy-light); border-radius: 3px; border-left: 3px solid var(--navy); }
+    @media (max-width: 640px) {
+      .diction-box { font-size: 1rem; padding: 1.2rem; }
+      .header h1 { font-size: 1.8rem; }
+      .section-title { font-size: 1.4rem; }
+      .rules-grid { grid-template-columns: 1fr; }
+      .nav-btn { padding: 0.7rem 0.8rem; font-size: 0.7rem; }
+      .main { padding: 1.2rem 0.8rem; }
+    }
+  </style>
+</head>
+<body>
+<header class="header">
+  <div class="header-ornament">Lyric Diction · Conductor's Edition</div>
+  <h1>Faust <span>·</span> French Diction</h1>
+  <div class="header-sub">Charles Gounod · Barbier & Carré · Acte II complet</div>
+  <div class="header-badges">
+    <span class="badge">Scènes 1 à 5</span>
+    <span class="badge">Texte intégral</span>
+    <span class="badge fix">+ Phonétique & grammaire</span>
+    <span class="badge fix">Liaisons & C prononciation</span>
+    <span class="badge fix">ENT muet · EM nasale</span>
+  </div>
+</header>
+
+<nav class="nav" id="nav">
+  <button class="nav-btn active" data-tab="diction">Diction Display</button>
+  <button class="nav-btn" data-tab="rules">Diction Rules</button>
+  <button class="nav-btn" data-tab="grammar">Grammar Points</button>
+</nav>
+
+<main class="main">
+
+  <!-- ========== DICTION DISPLAY ========== -->
+  <div class="section active" id="diction">
+    <h2 class="section-title">Acte II · La kermesse</h2>
+    <p class="section-sub">
+      <strong>Scènes 1 à 5</strong> — Vin, soldats, valse, et l'apparition de Marguerite. Code couleur phonétique complet ; didascalies retirées, traduction anglaise sous chaque vers.
+    </p>
+
+    <div class="legend">
+      <span class="legend-item"><span class="legend-swatch swatch-extended"></span> Voyelle tenue</span>
+      <span class="legend-item"><span class="legend-swatch swatch-z"></span> S → Z (oiseaux)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-s"></span> S → S (snake)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-y"></span> ILL / Y → Y (you) — <em>gaillardes</em> [ga.jaʁd]</span>
+      <span class="legend-item"><span class="legend-swatch swatch-o"></span> O (o, au, eau, aux)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-ai"></span> AI / aient (è)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-k"></span> QUE / QUI → K</span>
+      <span class="legend-item"><span class="legend-swatch swatch-an"></span> Nasale AN / EN</span>
+      <span class="legend-item"><span class="legend-swatch swatch-in"></span> Nasale IN / AIN / EIN / UN</span>
+      <span class="legend-item"><span class="legend-swatch swatch-muet"></span> Consonne muette</span>
+      <span class="legend-item"><span class="legend-swatch swatch-css"></span> C → SS (ç, c+e/i/y)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-ck"></span> C → K (c+a/o/u, cc)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-liaison"></span> Liaison (Z/T/N)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-ent"></span> ENT muet (3e pl. verbes)</span>
+      <span class="legend-item"><span class="legend-swatch swatch-em"></span> EM → nasale AN (temps)</span>
+    </div>
+
+    <!-- SCÈNE 1 -->
+    <div class="diction-box">
+      <div class="scene-head">Une des portes de la ville. Cabaret à l'enseigne du dieu Bacchus. Wagner, étudiants, bourgeois, soldats, jeunes filles, matrones.</div>
+
+      <span class="speaker-choeur">WAGNER, ÉTUDIANTS</span>
+      <div style="color:var(--forest);">
+        <div class="fr">V<span class="son-in">in</span> ou bièreeeeee,</div><div class="en">Wine or beer,</div>
+        <div class="fr">bière ou v<span class="son-in">in</span>,</div><div class="en">beer or wine,</div>
+        <div class="fr"><span class="son-k">que</span> mon v<span class="son-ai">er</span>re</div><div class="en">let my glass</div>
+        <div class="fr">soi<span class="muet">t</span> ple<span class="son-in">in</span> !</div><div class="en">be full!</div>
+        <div class="fr"><span class="son-s">S</span><span class="son-an">an</span><span class="muet">s</span> vergogne,</div><div class="en">Without shame,</div>
+        <div class="fr">cou<span class="muet">p</span> sur cou<span class="muet">p</span>,</div><div class="en">one after another,</div>
+        <div class="fr"><span class="son-in">un</span> ivrogne</div><div class="en">a drunkard</div>
+        <div class="fr">boi<span class="muet">t</span> tou<span class="muet">t</span> !</div><div class="en">drinks it all!</div>
+        <div class="fr">Jeune adepte</div><div class="en">Young adept</div>
+        <div class="fr">du tonne<span class="son-o">au</span>,</div><div class="en">of the barrel,</div>
+        <div class="fr">n'<span class="son-an">en</span> excepte</div><div class="en">exclude</div>
+        <div class="fr"><span class="son-k">que</span> l'<span class="son-o">eau</span> !</div><div class="en">only water!</div>
+        <div class="fr"><span class="son-k">Que</span> ta gloire,</div><div class="en">Let your glory,</div>
+        <div class="fr">tes amours</div><div class="en">your loves</div>
+        <div class="fr">soi<span class="muet">ent</span> de boire</div><div class="en">be to drink</div>
+        <div class="fr">toujours !</div><div class="en">forever!</div>
+      </div>
+
+      <span class="speaker-choeur">SOLDATS</span>
+      <div style="color:var(--forest);">
+        <div class="fr">F<span class="son-y">ille</span>s ou fortere<span class="son-s">ss</span>e<span class="muet">s</span></div><div class="en">Girls or fortresses,</div>
+        <div class="fr">c'e<span class="muet">st</span> tou<span class="muet">t</span> <span class="son-in">un</span>, morbleu !</div><div class="en">it's all the same, morbleu!</div>
+        <div class="fr">Vieux burg<span class="muet">s</span>, jeunes m<span class="son-ai">aî</span>tre<span class="son-s">ss</span>e<span class="muet">s</span>,</div><div class="en">Old castles, young mistresses,</div>
+        <div class="fr"><span class="son-s">s</span>ont pour nou<span class="muet">s</span> <span class="son-in">un</span> jeu !</div><div class="en">are a game for us!</div>
+        <div class="fr">Celui <span class="son-k">qu</span>i <span class="son-s">s</span><span class="son-ai">ai</span>t <span class="son-s">s</span>'y pren<span class="son-d">dr</span>e</div><div class="en">He who knows how to go about it</div>
+        <div class="fr"><span class="son-s">s</span><span class="son-an">an</span><span class="muet">s</span> trop de faç<span class="son-on">on</span>,</div><div class="en">without too much fuss,</div>
+        <div class="fr">les oblige à <span class="son-s">s</span>e rendre</div><div class="en">forces them to surrender</div>
+        <div class="fr"><span class="son-an">en</span> pay<span class="son-an">an</span>t ranç<span class="son-on">on</span> !</div><div class="en">by paying a ransom!</div>
+      </div>
+
+      <span class="speaker-choeur">BOURGEOIS</span>
+      <div style="color:var(--forest);">
+        <div class="fr"><span class="son-o">Aux</span> jours de d<span class="son-in">im</span>anche et de fête,</div><div class="en">On Sundays and holidays,</div>
+        <div class="fr">j'<span class="son-ai">ai</span>me à parler guerre et comb<span class="son-an">at</span><span class="muet">s</span>,</div><div class="en">I like to talk war and battles,</div>
+        <div class="fr">tandis <span class="son-k">que</span> les peuples là-ba<span class="muet">s</span></div><div class="en">while the people over there</div>
+        <div class="fr">se ca<span class="son-s">ss</span><span class="son-an">en</span>t la tête.</div><div class="en">crack their heads.</div>
+        <div class="fr">Je vais m'<span class="son-an">as</span>seoir sur les côte<span class="son-o">aux</span></div><div class="en">I go and sit on the hills</div>
+        <div class="fr"><span class="son-k">qui</span> sont vois<span class="son-in">in</span><span class="muet">s</span> de la rivièreeeee,</div><div class="en">that are near the river,</div>
+        <div class="fr">et je voi<span class="muet">s</span> pa<span class="son-s">ss</span>er les bate<span class="son-o">aux</span></div><div class="en">and I see the boats pass by</div>
+        <div class="fr"><span class="son-an">en</span> vidant mon verre !</div><div class="en">while draining my glass!</div>
+      </div>
+
+      <span class="speaker-choeur">LE MENDIANT</span>
+      <div style="color:var(--forest);">
+        <div class="fr">Mes beaux me<span class="son-s">ss</span>ier<span class="muet">s</span>, mes belles dames,</div><div class="en">My handsome sirs, my fair ladies,</div>
+        <div class="fr"><span class="son-k">que</span> la pitié touche vos âme<span class="muet">s</span> ;</div><div class="en">may pity touch your souls;</div>
+        <div class="fr">et <span class="son-k">que</span> votre folle gaîté</div><div class="en">and may your mad gaiety</div>
+        <div class="fr">sur moi retombe <span class="son-an">en</span> charité !...</div><div class="en">fall back on me in charity!...</div>
+      </div>
+
+      <span class="speaker-choeur">JEUNES FILLES</span>
+      <div style="color:var(--forest);">
+        <div class="fr">Vo<span class="son-y">y</span>ez <span class="liaison">ces</span> hardi<span class="muet">s</span> compères</div><div class="en">See those bold fellows</div>
+        <div class="fr"><span class="son-k">qu</span>i viennent là-ba<span class="muet">s</span> ;</div><div class="en">coming over there;</div>
+        <div class="fr">ne <span class="son-s">s</span>oyons pas trop <span class="son-s">s</span>évèreeee<span class="muet">s</span>,</div><div class="en">let's not be too severe,</div>
+        <div class="fr">retardons le pas.</div><div class="en">let's slow our step.</div>
+      </div>
+
+      <span class="speaker-choeur">ÉTUDIANTS</span>
+      <div style="color:var(--forest);">
+        <div class="fr">Vo<span class="son-y">y</span>ez <span class="liaison">ces</span> m<span class="son-in">in</span>es <span class="son-y">gaillardes</span></div><div class="en">See those jaunty faces</div>
+        <div class="fr">et <span class="liaison">ces</span> airs vainqueurs !</div><div class="en">and those victorious looks!</div>
+        <div class="fr">Amis, <span class="son-s">s</span>oyons sur nos gardes !</div><div class="en">Friends, let's be on our guard!</div>
+        <div class="fr">Tenons bien nos cœurs !</div><div class="en">Let's hold fast our hearts!</div>
+      </div>
+
+      <span class="speaker-choeur">MATRONES</span>
+      <div style="color:var(--forest);">
+        <div class="fr">Vo<span class="son-y">y</span>ez après <span class="liaison">ces</span> donzelles</div><div class="en">See after those wenches</div>
+        <div class="fr">courir <span class="liaison">ces</span> me<span class="son-s">ss</span>ier<span class="muet">s</span> !</div><div class="en">these gentlemen run!</div>
+        <div class="fr">Nous <span class="son-s">s</span>ommes au<span class="son-s">ss</span>i bi<span class="son-in">en</span> qu'elles</div><div class="en">We are just as good as they</div>
+        <div class="fr"><span class="son-s">s</span>inon beaucoup mieux !</div><div class="en">if not much better!</div>
+      </div>
+
+      <div class="scene-head" style="border-left-color:var(--crimson);">Tous les groupes redescendent en scène.</div>
+      <span class="speaker-choeur">ENSEMBLE</span>
+      <div style="color:var(--forest);">
+        <div class="fr">V<span class="son-in">in</span> ou bière, bière ou v<span class="son-in">in</span>, <span class="son-k">que</span> mon verre soi<span class="muet">t</span> ple<span class="son-in">in</span> !</div><div class="en">Wine or beer, beer or wine, let my glass be full!</div>
+        <div class="fr">Pas de beauté fière ! Nous <span class="son-s">s</span>avons leur plaire <span class="son-an">en</span> <span class="son-in">un</span> tour de m<span class="son-in">ain</span> !</div><div class="en">No proud beauty! We know how to please them in a trice!</div>
+        <div class="fr">Vidons <span class="son-in">un</span> verre de ce bon v<span class="son-in">in</span> !</div><div class="en">Let's empty a glass of this good wine!</div>
+        <div class="fr">Vous voulez leur plaire, nous le voyons bi<span class="son-in">en</span> !</div><div class="en">You want to please them, we see that well!</div>
+        <div class="fr">De votre colère nous ne craignons r<span class="son-in">ien</span> !</div><div class="en">We fear nothing from your anger!</div>
+      </div>
+    </div>
+
+    <!-- SCÈNE 2 -->
+    <div class="diction-box">
+      <div class="scene-head">Scène 2. Wagner, Siébel, étudiants, Valentin.</div>
+      <span class="speaker">VALENTIN</span>
+      <div class="fr">Ô toi, <span class="son-s">s</span>ainte méd<span class="son-ai">aille</span>, <span class="son-k">qu</span>i me viens de ma <span class="son-s">s</span>œur,</div><div class="en">O you, holy medal, who come to me from my sister,</div>
+      <div class="fr"><span class="son-o">au</span> jour de la bat<span class="son-ai">aille</span>, pour écarter la mor<span class="muet">t</span>,</div><div class="en">on the day of battle, to ward off death,</div>
+      <div class="fr">reste là sur mon cœur !</div><div class="en">stay there on my heart!</div>
+      <span class="speaker">WAGNER</span>
+      <div class="fr">Ah ! Voi<span class="son-s">ss</span>i Valentin <span class="son-k">qu</span>i nous cherche <span class="son-s">s</span><span class="son-an">an</span><span class="muet">s</span> doute !</div><div class="en">Ah! Here's Valentin, who is looking for us no doubt!</div>
+      <span class="speaker">VALENTIN</span>
+      <div class="fr"><span class="son-in">Un</span> dernier cou<span class="muet">p</span>, me<span class="son-s">ss</span>ier<span class="muet">s</span>, et metton<span class="muet">s</span>-nou<span class="muet">s</span> <span class="son-an">en</span> route !</div><div class="en">One last drink, gentlemen, and let's get on our way!</div>
+      <span class="speaker">WAGNER</span>
+      <div class="fr">Qu'<span class="son-ai">as</span>-tu donc ?... <span class="son-k">que</span>ls regrets attri<span class="son-s">ss</span>tent nos adieux ?</div><div class="en">What's wrong with you?... what regrets sadden our farewells?</div>
+      <span class="speaker">VALENTIN</span>
+      <div class="fr">Comme vous, pour longtemps, je vais <span class="son-k">quit</span>ter ces lieux ;</div><div class="en">Like you, for a long time, I am going to leave this place;</div>
+      <div class="fr">j'y lai<span class="son-s">ss</span>e Marguerite, et, pour veiller sur elle,</div><div class="en">I leave Marguerite there, and to watch over her,</div>
+      <div class="fr">ma mère n'e<span class="muet">st</span> plus là !</div><div class="en">my mother is no longer here!</div>
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">Plus d'<span class="son-in">un</span> ami fidèle <span class="son-s">s</span>aura te remplacer à <span class="son-s">s</span>e<span class="muet">s</span> côtés !</div><div class="en">More than one faithful friend will know how to take your place at her side!</div>
+      <span class="speaker">VALENTIN</span>
+      <div class="fr">Merci !</div><div class="en">Thank you!</div>
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">Sur moi tu peux compter.</div><div class="en">You can count on me.</div>
+      <span class="speaker">ÉTUDIANTS</span>
+      <div class="fr">Compte sur nou<span class="muet">s</span> au<span class="son-s">ss</span>i !</div><div class="en">Count on us too!</div>
+      <span class="speaker">WAGNER</span>
+      <div class="fr">Allons, amis ! point de vaines alarmes ! À ce bon v<span class="son-in">in</span> ne mêlons pas de larmes !</div><div class="en">Come, friends! No vain alarms! Let's not mix tears with this good wine!</div>
+      <div class="fr">Buvons, trinquons, et <span class="son-k">qu</span>'<span class="son-in">un</span> joyeux refr<span class="son-in">ain</span> nou<span class="muet">s</span> mette <span class="son-an">en</span> tra<span class="son-in">in</span> !</div><div class="en">Let's drink, clink glasses, and let a merry refrain get us going!</div>
+    </div>
+
+    <!-- SCÈNE 3 -->
+    <div class="diction-box">
+      <div class="scene-head">Scène 3. Les mêmes, Méphistophélès.</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Pardon ! Parmi vous, de grâce, permettez-moi de prendre place !</div><div class="en">Pardon! Among you, if you please, allow me to take a seat!</div>
+      <div class="fr"><span class="son-k">Que</span> votre ami d'abord achève sa chanson !</div><div class="en">Let your friend first finish his song!</div>
+      <div class="fr">Moi, je vous <span class="son-an">en</span> promets plu<span class="son-s">s</span>ieurs de ma faç<span class="son-on">on</span> !</div><div class="en">I, I promise you several of my own!</div>
+      <span class="speaker">WAGNER</span>
+      <div class="fr"><span class="son-in">Un</span>e <span class="son-s">s</span>eule <span class="son-s">s</span>uffit, pourvu <span class="son-k">qu</span>'elle <span class="son-s">s</span>oit bonne !</div><div class="en">One is enough, provided it's a good one!</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Je ferai de mon mieux pour n'<span class="son-an">en</span>nuyer personne !</div><div class="en">I'll do my best not to bore anyone!</div>
+
+      <div class="scene-head" style="border-left-color:var(--crimson);">[N. 7 — Ronde du veau d’or]</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Le ve<span class="son-o">au</span> d'or e<span class="muet">st</span> toujours debout ;</div><div class="en">The golden calf still stands;</div>
+      <div class="fr">on encen<span class="son-s">se</span></div><div class="en">they incense</div>
+      <div class="fr"><span class="son-s">sa</span> puiss<span class="son-an">an</span>ce</div><div class="en">his power</div>
+      <div class="fr">d'<span class="son-in">un</span> bout du monde à l'autre bout !</div><div class="en">from one end of the world to the other!</div>
+      <div class="fr">Pour fêter l'infâme idole,</div><div class="en">To celebrate the infamous idol,</div>
+      <div class="fr">rois et peuples confondus,</div><div class="en">kings and peoples mingled,</div>
+      <div class="fr"><span class="son-o">au</span> bruit <span class="son-s">s</span>ombre des écus,</div><div class="en">to the somber sound of coins,</div>
+      <div class="fr">dan<span class="son-s">s</span>ent <span class="son-in">un</span>e ronde folle</div><div class="en">dance a mad round</div>
+      <div class="fr">autour de <span class="son-s">son</span> piédestal !...</div><div class="en">around his pedestal!...</div>
+      <div class="fr">Et <span class="son-s">S</span>atan conduit le bal !</div><div class="en">And Satan leads the ball!</div>
+      <div class="fr">II — Le ve<span class="son-o">au</span> d'or e<span class="muet">st</span> vainqueur des dieux !</div><div class="en">The golden calf is conqueror of the gods!</div>
+      <div class="fr">Dans <span class="son-s">sa</span> gloire dérisoire</div><div class="en">In his derisory glory</div>
+      <div class="fr"><span class="son-s">son</span> front abjecte in<span class="son-s">s</span>ulte aux cieux !</div><div class="en">his abject brow insults the heavens!</div>
+      <div class="fr">Il contemple, ô rage étrange ! à <span class="son-s">ses</span> pieds le genre humain</div><div class="en">He contemplates, o strange rage! at his feet the human race</div>
+      <div class="fr"><span class="son-s">se</span> ruant, le fer <span class="son-an">en</span> m<span class="son-in">ain</span>,</div><div class="en">rushing, sword in hand,</div>
+      <div class="fr">dans le <span class="son-s">s</span>ang et dans la fange</div><div class="en">into the blood and the mire</div>
+      <div class="fr">où brille l'ard<span class="son-an">en</span>t métal !...</div><div class="en">where the burning metal gleams!...</div>
+      <div class="fr">Et <span class="son-s">S</span>atan conduit le bal !</div><div class="en">And Satan leads the ball!</div>
+      <span class="speaker-choeur">TOUS</span>
+      <div class="fr">Et <span class="son-s">S</span>atan conduit le bal !</div><div class="en">And Satan leads the ball!</div>
+
+      <span class="speaker">VALENTIN</span>
+      <div class="fr">Singulier personnage !</div><div class="en">A singular fellow!</div>
+      <span class="speaker">WAGNER</span>
+      <div class="fr">Nous ferez-vous l'honneur de trinquer avec nous ?</div><div class="en">Will you do us the honor of clinking glasses with us?</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Volontiers !... Ah ! voi<span class="son-s">ci</span> <span class="son-k">qui</span> m'attriste pour vous !</div><div class="en">Willingly!... Ah! here's something that saddens me for you!</div>
+      <div class="fr">Vous voyez cette ligne ? Fâcheux présage !</div><div class="en">You see this line? Unlucky omen!</div>
+      <div class="fr">Vous vous ferez tuer <span class="son-an">en</span> montant à l'assaut !</div><div class="en">You'll get killed mounting the assault!</div>
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">Vous êtes donc <span class="son-s">s</span>orcier ?</div><div class="en">You're a sorcerer, then?</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Tout ju<span class="son-s">st</span>e autant <span class="son-k">qu</span>'il faut pour lire dans ta main <span class="son-k">que</span> le <span class="son-s">s</span>orte te condamne à ne plus toucher <span class="son-in">un</span>e fleur <span class="son-s">s</span>ans <span class="son-k">qu</span>'elle <span class="son-s">se</span> fane !</div><div class="en">Just enough to read in your hand that fate condemns you to never touch a flower without it wilting!</div>
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">Moi !</div><div class="en">Me!</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Plus de bouquets à Marguerite !...</div><div class="en">No more bouquets for Marguerite!...</div>
+      <span class="speaker">VALENTIN</span>
+      <div class="fr">Ma <span class="son-s">s</span>œur !... <span class="son-k">Qui</span> vous a dit <span class="son-s">son</span> nom ?</div><div class="en">My sister!... Who told you her name?</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Prenez garde, mon brave ! Vous vous ferez tuer par quelqu'<span class="son-in">un</span> <span class="son-k">que</span> je <span class="son-s">s</span>ais !</div><div class="en">Take care, my brave fellow! You'll get killed by someone I know!</div>
+      <div class="fr">À votre santé !... Peuh ! <span class="son-k">que</span> ton v<span class="son-in">in</span> e<span class="muet">st</span> mauvais !</div><div class="en">To your health!... Pah! how bad your wine is!</div>
+      <div class="fr">Permettez-moi de vous <span class="son-an">en</span> offrir de ma cave !</div><div class="en">Allow me to offer you some from my cellar!</div>
+      <div class="fr">Holà, <span class="son-s">se</span>igneur Bacchus ! à boire !...</div><div class="en">Ho there, Lord Bacchus! Something to drink!...</div>
+      <div class="fr">À la santé <span class="son-k">que</span> tout à l'heure vous portiez, mes amis, à Marguerite !...</div><div class="en">To the health that you just now drank, my friends, to Marguerite!...</div>
+
+      <span class="speaker">VALENTIN</span>
+      <div class="fr">A<span class="son-s">ssez</span> !... Si je ne te fais taire à l'<span class="son-in">in</span>stant, <span class="son-k">que</span> je meure !</div><div class="en">Enough! If I don't silence you this instant, may I die!</div>
+      <span class="speaker-choeur">WAGNER, ÉTUDIANTS</span>
+      <div class="fr">Holà !...</div><div class="en">Hey!...</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Pourquoi trembler, vous <span class="son-k">qui</span> me menacez ?</div><div class="en">Why tremble, you who threaten me?</div>
+      <span class="speaker">VALENTIN</span>
+      <div class="fr">Mon fer, ô <span class="son-s">sur</span>prise ! dans les airs <span class="son-s">se</span> brise !</div><div class="en">My sword, o surprise! shatters in the air!</div>
+      <span class="speaker-choeur">VALENTIN, WAGNER, SIÉBEL, ÉTUDIANTS</span>
+      <div class="fr">De l'<span class="son-an">en</span>fer <span class="son-k">qui</span> vient émousser nos armes, nous ne pouvons pas repousser les charmes !</div><div class="en">From hell that comes to blunt our weapons, we cannot repel the charms!</div>
+      <div class="fr">Puis<span class="son-k">que</span> tu brises le fer, regarde ! C'e<span class="muet">st</span> <span class="son-in">un</span>e croix, <span class="son-k">qui</span> de l'<span class="son-an">en</span>fer nous garde !...</div><div class="en">Since you break the sword, look! It's a cross, which guards us from hell!...</div>
+    </div>
+
+    <!-- SCÈNE 4 & 5 -->
+    <div class="diction-box">
+      <div class="scene-head">Scène 4. Méphistophélès, puis Faust.</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Nous nous retrouverons, mes amis ! ~ <span class="son-s">S</span>erviteur !</div><div class="en">We'll meet again, my friends! ~ Good day!</div>
+      <span class="speaker">FAUST</span>
+      <div class="fr">Qu'<span class="son-ai">as</span>-tu donc ?</div><div class="en">What's wrong with you?</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Rien ! ~ À nous deux, cher docteur ! Qu'attendez-vous de moi ? Par où commencerai-je ?</div><div class="en">Nothing! ~ Just the two of us, dear doctor! What do you expect of me? Where shall I begin?</div>
+      <span class="speaker">FAUST</span>
+      <div class="fr">Où <span class="son-s">se</span> cache la belle <span class="son-an">en</span>fant <span class="son-k">que</span> ton art m'a fait voir ? ~ E<span class="muet">st</span>-ce <span class="son-in">un</span> vain <span class="son-s">s</span>ortilège ?</div><div class="en">Where is the beautiful child that your art showed me? ~ Is it a vain spell?</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Non pas, mais contre nou<span class="muet">s</span> <span class="son-s">sa</span> vertu la protège ; et le ciel même la défend !</div><div class="en">No, but against us her virtue protects her; and heaven itself defends her!</div>
+      <span class="speaker">FAUST</span>
+      <div class="fr">Qu'importe ? je le veux ! viens ! conduis-moi près d'elle ou je me <span class="son-s">s</span>épare de toi !</div><div class="en">What does it matter? I want it! Come! lead me to her or I separate myself from you!</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Il <span class="son-s">s</span>uffit !... Je tiens trop à mon nouvel emploi pour vous laisser douter un <span class="son-in">in</span>stant de mon zèle ! Attendons !... ici même, à ce <span class="son-s">s</span>ignal joyeux, la belle et chaste <span class="son-an">en</span>fant va paraître à vos yeux.</div><div class="en">Enough!... I hold too much to my new position to let you doubt for a moment of my zeal! Let's wait!... right here, at this joyful signal, the beautiful and chaste child will appear before your eyes.</div>
+
+      <div class="scene-head" style="border-left-color:var(--crimson);">Scène 5. Les mêmes, Étudiants, Jeunes filles, Bourgeois, puis Siébel et Marguerite.</div>
+
+      <span class="speaker-choeur">CHŒUR (Valse)</span>
+      <div style="color:var(--forest);">
+        <div class="fr">Ain<span class="son-s">si</span> <span class="son-k">que</span> la brise légère</div><div class="en">Just as the light breeze</div>
+        <div class="fr"><span class="son-s">s</span>oulève <span class="son-an">en</span> épais tourbillons</div><div class="en">lifts in thick swirls</div>
+        <div class="fr">la pou<span class="son-s">ss</span>ière des <span class="son-s">s</span>illons,</div><div class="en">the dust of the furrows,</div>
+        <div class="fr"><span class="son-k">que</span> la valse nou<span class="muet">s</span> entraîne !</div><div class="en">let the waltz sweep us away!</div>
+        <div class="fr">Fai<span class="son-s">s</span>ons retentir la plaine</div><div class="en">Let's make the plain resound</div>
+        <div class="fr">de l'éclat de vos chansons !</div><div class="en">with the brilliance of your songs!</div>
+        <div class="fr">Val<span class="son-s">s</span>on<span class="muet">s</span> !...</div><div class="en">Let's waltz!...</div>
+      </div>
+
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Voi<span class="son-s">s</span> ces f<span class="son-y">ille</span>s gentilles ! Ne veux-tu pas <span class="son-o">aux</span> plus belles d'entre elles offrir ton bras ?</div><div class="en">See those pretty girls! Don't you want to offer your arm to the prettiest among them?</div>
+      <span class="speaker">FAUST</span>
+      <div class="fr">Non ! Fai<span class="son-s">s</span> trêve à ce ton moqueur ! Et lai<span class="son-s">sse</span> mon cœur à <span class="son-s">son</span> rêve !...</div><div class="en">No! Cease this mocking tone! And leave my heart to its dream!...</div>
+
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">C'e<span class="muet">st</span> par ici <span class="son-k">que</span> doit pa<span class="son-s">ss</span>er Marguerite !</div><div class="en">It's this way that Marguerite must pass!</div>
+      <span class="speaker-choeur">QUELQUES JEUNES FILLES</span>
+      <div class="fr">Faut-il <span class="son-k">qu</span>'<span class="son-in">un</span>e jeune f<span class="son-y">ille</span> à danser vous invite ?</div><div class="en">Must a young girl invite you to dance?</div>
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">Non !... non !... je ne veux pas valser !</div><div class="en">No!... no!... I don't want to waltz!</div>
+
+      <span class="speaker">FAUST</span>
+      <div class="fr">Ah !... la voi<span class="son-s">ci</span> ! c'e<span class="muet">st</span> elle !</div><div class="en">Ah!... here she is! it's her!</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Eh bi<span class="son-in">en</span> ! Abordez-la !</div><div class="en">Well then! Approach her!</div>
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">Marguerite !...</div><div class="en">Marguerite!...</div>
+      <span class="speaker-mephisto">MÉPHISTOPHÉLÈS</span>
+      <div class="fr">Plaît-il !...</div><div class="en">Pardon!...</div>
+      <span class="speaker">SIÉBEL</span>
+      <div class="fr">Maudit homme ! <span class="son-an">en</span>cor là !...</div><div class="en">Cursed man! still here!...</div>
+      <span class="speaker">FAUST</span>
+      <div class="fr">Ne permettrez vous pas, ma belle demoi<span class="son-s">sel</span>le, <span class="son-k">qu</span>'on vous offre le bras pour faire le chemin ?</div><div class="en">Will you not allow, my pretty young lady, that one offer you the arm to walk along?</div>
+      <span class="speaker">MARGUERITE</span>
+      <div class="fr">Non, me<span class="son-s">ss</span>ieur ! je ne <span class="son-s">s</span>ui<span class="muet">s</span> demoi<span class="son-s">sel</span>le, ni belle, et je n'ai pas be<span class="son-in">oin</span> <span class="son-k">qu</span>'on me donne la m<span class="son-in">ain</span> !</div><div class="en">No, sir! I am neither a lady, nor pretty, and I don't need anyone to give me a hand!</div>
+      <span class="speaker">FAUST</span>
+      <div class="fr">Par le ciel ! <span class="son-k">que</span> de grâce... et quelle mode<span class="son-s">st</span>ie !... Ô belle <span class="son-an">en</span>fant, je t'<span class="son-ai">ai</span>me !</div><div class="en">By heaven! so much grace... and such modesty!... O beautiful child, I love you!</div>
+
+      <div class="scene-head" style="border-left-color:var(--crimson);">La valse reprend. Les étudiants rentrent. Final de l'acte.</div>
+      <span class="speaker-choeur">LES VALSEURS</span>
+      <div style="color:var(--forest);">
+        <div class="fr">Ain<span class="son-s">si</span> <span class="son-k">que</span> la brise légère...</div><div class="en">Just as the light breeze...</div>
+        <div class="fr">Ju<span class="son-s">s</span>qu'à perdre haleine !... ju<span class="son-s">s</span>qu'à mourir !...</div><div class="en">Till we lose our breath!... till we die!...</div>
+        <div class="fr">Mon regard <span class="son-s">se</span> noie... dans le ciel bleu !...</div><div class="en">My gaze drowns... in the blue sky!...</div>
+        <div class="fr">La terre tournoie !... je meurs... Ah !... dieu !...</div><div class="en">The earth spins!... I'm dying... Ah!... God!...</div>
+      </div>
+    </div>
+
+    <div class="card card-crimson">
+      <h3 style="margin-top:0;">Notes de révision — Acte II</h3>
+      <p style="font-size:0.9rem;">
+        <strong>Corrections majeures :</strong><br>
+        • <span class="son-y">gaillardes</span> [ga.jaʁd] — le "ill" fait bien le son Y (comme dans <em>fille</em>).<br>
+        • <strong>Liaisons</strong> ajoutées (en violet) : <span class="liaison">ces</span> + voyelle → [se.z‿].<br>
+        • <strong>Prononciation des "C"</strong> : <span class="son-css">ç</span> et <span class="son-css">c+e/i/y</span> font [s] ; <span class="son-ck">c+a/o/u</span> font [k]. Ex. <em>re<span class="son-css">ç</span>u</em>, <em>gla<span class="son-css">çons</span></em>, <em>a<span class="son-ck">cc</span>ueil</em> [a.kœj].<br>
+        • <strong>ENT muet</strong> : les verbes à la 3e personne du pluriel (<em>ils/elles</em>) ne prononcent pas le "-ent" : <span class="ent-muet">se cassent</span> → [ka.s], <span class="ent-muet">dansent</span> → [dɑ̃s].<br>
+        • <strong>EM = nasale AN</strong> : <span class="em-nasal">temps</span> [tɑ̃], <span class="em-nasal">membre</span> [mɑ̃bʁ].<br>
+        • Toutes les didascalies ont été retirées du texte chanté.
+      </p>
+    </div>
+  </div>
+
+  <!-- ========== DICTION RULES ========== -->
+  <div class="section" id="rules">
+    <h2 class="section-title">Diction Rules from Faust</h2>
+    <p class="section-sub"><em>"In French, you don't pronounce words — you pronounce phrases. It's like a grand orchestral legato."</em></p>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="num">Rule 1</span>
+        <h4>Final Accent of the Sense Group</h4>
+        <p>The accent falls <strong>only</strong> on the very last syllable of the thought group.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Vin ou bière"</em> → accent on <strong>-bière</strong> [bjɛːʁ]<br><em>"à votre santé"</em> → accent on <strong>-té</strong> [te]</div>
+        <div class="audio-player"><button onclick="playAudio('rule1-accent')">▶</button><span class="label">Accent: santé → <span style="color:var(--crimson);font-weight:700;">-té</span></span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Rule 2</span>
+        <h4>Extended Vowels (Tenue)</h4>
+        <p>In lyric singing, final vowels are often <strong>held</strong> for dramatic effect — especially on accented syllables.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"bièreeeeee"</em> → extended final <strong>-ère</strong> [ɛːʁ]<br><em>"rivièreeeee"</em> → hold on <strong>-ière</strong></div>
+        <div class="audio-player"><button onclick="playAudio('rule2-extended')">▶</button><span class="label">Extended: <span style="color:var(--crimson);font-weight:700;">bièreeeeee</span></span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Rule 3</span>
+        <h4>Silent "E" — When to Drop</h4>
+        <p>Many E's drop in speech — but <strong>NOT all of them!</strong> Only in weak, unstressed positions.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"je ne sais"</em> → [ʒə nə sɛ] (kept here)<br><em>"j'écoute"</em> → [ʒe.kut] — E drops before a vowel</div>
+        <div class="audio-player"><button onclick="playAudio('rule3-e')">▶</button><span class="label">E kept: je ne sais</span></div>
+        <div class="audio-player"><button onclick="playAudio('rule3-e-silent')">▶</button><span class="label">E dropped: j'écoute</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Rule 4</span>
+        <h4>The French "R" — Soft Throat</h4>
+        <p>Produced by the back of the tongue against the soft palate. Not rolled, not harsh.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"créateur"</em> → [kʁe.a.tœʁ] — soft R<br><em>"brave"</em> → [bʁav]</div>
+        <div class="audio-player"><button onclick="playAudio('rule4-r')">▶</button><span class="label">French R: <span style="color:var(--crimson);">R</span>ien · b<span style="color:var(--crimson);">r</span>ave</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Rule 5</span>
+        <h4>Nasal Vowels in Faust</h4>
+        <p>Sound resonates in the nose — <strong>do not</strong> pronounce the final N or M.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"en vain"</em> → [ɑ̃ vɛ̃] — two nasals: AN + AIN<br><em>"chemin"</em> → [ʃə.mɛ̃] — nasal IN</div>
+        <div class="audio-player"><button onclick="playAudio('rule5-nasal')">▶</button><span class="label">Nasal: en vain [ɑ̃ vɛ̃]</span></div>
+        <div class="audio-player"><button onclick="playAudio('rule5-nasal2')">▶</button><span class="label">Nasal: chemin [ʃə.mɛ̃]</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">Rule 6</span>
+        <h4>Expressive Silence & Breath</h4>
+        <p>In French lyric diction, <strong>silence</strong> is as important as sound. Breath marks create dramatic tension.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Ah !... la voici ! c'est elle !"</em> — silence before "la voici"<br><em>"Non !... non !..."</em> — the repeated negative with breath</div>
+        <div class="audio-player"><button onclick="playAudio('rule6-silence')">▶</button><span class="label">Silence + explosion: Ah !... la voici !</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== GRAMMAR POINTS ========== -->
+  <div class="section" id="grammar">
+    <h2 class="section-title">Grammar Points from Acte II</h2>
+    <p class="section-sub">Key grammatical structures in the libretto — explained for the conductor.</p>
+    <div class="rules-grid">
+      <div class="rule-card">
+        <span class="num">1</span>
+        <h4>Inversion in Questions</h4>
+        <p>Formal French uses <strong>subject-verb inversion</strong> — common in opera.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Qu'as-tu donc ?"</em> → What's wrong with you?<br><em>"Nous ferez-vous l'honneur ?"</em> → Will you do us the honor?</div>
+        <div class="audio-player"><button onclick="playAudio('grammar1')">▶</button><span class="label">Inversion: Qu'as-tu donc ?</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">2</span>
+        <h4>Negative Constructions</h4>
+        <p><strong>ne</strong> before the verb, <strong>pas</strong> after — in opera, the <strong>ne</strong> is often pronounced.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"je ne vois rien"</em> → I see nothing<br><em>"ne nous mêlons pas"</em> → let's not mix</div>
+        <div class="audio-player"><button onclick="playAudio('grammar2')">▶</button><span class="label">Negative: je ne vois rien</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">3</span>
+        <h4>Imperative & Exclamations</h4>
+        <p>Opera uses many <strong>exclamations</strong> and <strong>imperatives</strong> — they carry strong emotional weight.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Holà !"</em> → Hey!<br><em>"Allons !"</em> → Come on!<br><em>"Approchez-vous !"</em> → Come closer!</div>
+        <div class="audio-player"><button onclick="playAudio('grammar3')">▶</button><span class="label">Imperative: Holà ! Allons !</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">4</span>
+        <h4>Future Tense</h4>
+        <p>The <strong>future tense</strong> often expresses destiny and hope.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"Nous nous retrouverons"</em> → We'll meet again<br><em>"je te vengerai"</em> → I will avenge you</div>
+        <div class="audio-player"><button onclick="playAudio('grammar4')">▶</button><span class="label">Future: nous nous retrouverons</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">5</span>
+        <h4>Possessive Adjectives</h4>
+        <p><strong>Mon, ma, mes, ton, ta, tes, son, sa, ses</strong> agree with the noun they modify.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"ma sœur"</em> → my sister<br><em>"ton bras"</em> → your arm<br><em>"ses pieds"</em> → his feet</div>
+        <div class="audio-player"><button onclick="playAudio('grammar5')">▶</button><span class="label">Possessive: ma sœur · ton bras</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">6</span>
+        <h4>Object Pronouns</h4>
+        <p>Object pronouns (<strong>me, te, le, la, nous, vous, les</strong>) come <strong>before</strong> the verb.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"qui m'attriste"</em> → that saddens me<br><em>"je vous en promets"</em> → I promise you</div>
+        <div class="audio-player"><button onclick="playAudio('grammar6')">▶</button><span class="label">Object pronoun: qui m'attriste</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">7</span>
+        <h4>Subjunctive Mood</h4>
+        <p>The <strong>subjunctive</strong> expresses doubt, desire, or uncertainty.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"que la valse nous entraîne"</em> → may the waltz sweep us away<br><em>"que je meure"</em> → may I die</div>
+        <div class="audio-player"><button onclick="playAudio('grammar7')">▶</button><span class="label">Subjunctive: que la valse nous entraîne</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">8</span>
+        <h4>Prepositions with Infinitives</h4>
+        <p>Some verbs require a <strong>preposition</strong> before the infinitive.</p>
+        <div class="ex-faust"><strong>From Faust:</strong> <em>"sans trop de façon"</em> → without too much fuss<br><em>"à danser"</em> → to dance (after "inviter")</div>
+        <div class="audio-player"><button onclick="playAudio('grammar8')">▶</button><span class="label">Preposition: à danser</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">9</span>
+        <h4>Prononciation des "C"</h4>
+        <p>
+          <span class="son-css">ç</span> + <span class="son-css">c devant e, i, y</span> → [s] comme <em>gla<span class="son-css">çon</span></em> [gla.sɔ̃], <em>re<span class="son-css">çu</span></em> [ʁə.sy].<br>
+          <span class="son-ck">c devant a, o, u</span> → [k] comme <em><span class="son-ck">c</span>ave</em> [kav], <em>a<span class="son-ck">cc</span>ueil</em> [a.kœj] (les deux c font [k]).<br>
+          <span class="son-ck">c en fin de mot</span> → souvent muet : <em>blanc</em> [blɑ̃].
+        </p>
+        <div class="ex-faust"><strong>Exemples :</strong> <em>gla<span class="son-css">çons</span></em> [gla.sɔ̃], <em>re<span class="son-css">çu</span></em> [ʁə.sy], <em>a<span class="son-ck">cc</span>ueil</em> [a.kœj].</div>
+        <div class="audio-player"><button onclick="playAudio('grammar9')">▶</button><span class="label">C → SS : glaçons · C → K : accueil</span></div>
+      </div>
+      <div class="rule-card">
+        <span class="num">10</span>
+        <h4>ENT muet / EM nasal</h4>
+        <p>
+          <span class="ent-muet">-ent</span> à la 3e personne du pluriel (ils/elles) est <strong>muet</strong> : <em>ils <span class="ent-muet">dansent</span></em> [dɑ̃s], <em>elles <span class="ent-muet">cassent</span></em> [kas].<br>
+          En revanche, <span class="em-nasal">em</span> se prononce comme la nasale <span class="son-an">AN</span> : <em><span class="em-nasal">temps</span></em> [tɑ̃], <em><span class="em-nasal">membre</span></em> [mɑ̃bʁ].
+        </p>
+        <div class="ex-faust"><strong>Exemples :</strong> <em>ils <span class="ent-muet">dansent</span></em> [dɑ̃s] · <em>le <span class="em-nasal">temps</span></em> [tɑ̃].</div>
+        <div class="audio-player"><button onclick="playAudio('grammar10')">▶</button><span class="label">ENT muet · EM nasal</span></div>
+      </div>
+    </div>
+    <div class="card card-gold">
+      <p><strong>📌 Key Takeaway:</strong> Understanding these <strong>grammatical structures</strong> helps you phrase the text correctly. The <strong>inversions</strong>, <strong>negatives</strong>, <strong>imperatives</strong>, and <strong>pronouns</strong> all affect where the <strong>accent</strong> falls.</p>
+    </div>
+  </div>
+
+</main>
+
+<script>
+  (function() {
+    const navBtns = document.querySelectorAll('.nav-btn');
+    const sections = document.querySelectorAll('.section');
+    navBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        navBtns.forEach(b => b.classList.remove('active'));
+        sections.forEach(s => s.classList.remove('active'));
+        this.classList.add('active');
+        const target = document.getElementById(this.dataset.tab);
+        if (target) target.classList.add('active');
+      });
+    });
+  })();
+
+  function speakText(text, rate = 0.85, pitch = 1.0) {
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = rate;
+    utterance.pitch = pitch;
+    utterance.volume = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const frenchVoice = voices.find(v => v.lang.startsWith('fr'));
+    if (frenchVoice) utterance.voice = frenchVoice;
+    window.speechSynthesis.speak(utterance);
+  }
+  if (window.speechSynthesis) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+  }
+
+  function playAudio(id) {
+    const audioMap = {
+      'rule1-accent': { text: 'santé', rate: 0.7 },
+      'rule2-extended': { text: 'bière', rate: 0.5 },
+      'rule3-e': { text: 'je ne sais', rate: 0.7 },
+      'rule3-e-silent': { text: "j'écoute", rate: 0.7 },
+      'rule4-r': { text: 'rien brave', rate: 0.7 },
+      'rule5-nasal': { text: 'en vain', rate: 0.7 },
+      'rule5-nasal2': { text: 'chemin', rate: 0.7 },
+      'rule6-silence': { text: 'Ah ! la voici !', rate: 0.6 },
+      'grammar1': { text: "Qu'as-tu donc ?", rate: 0.7 },
+      'grammar2': { text: 'Je ne vois rien.', rate: 0.7 },
+      'grammar3': { text: 'Holà ! Allons !', rate: 0.7 },
+      'grammar4': { text: 'Nous nous retrouverons.', rate: 0.7 },
+      'grammar5': { text: 'ma sœur, ton bras', rate: 0.7 },
+      'grammar6': { text: "qui m'attriste", rate: 0.7 },
+      'grammar7': { text: 'que la valse nous entraîne', rate: 0.7 },
+      'grammar8': { text: 'à danser', rate: 0.7 },
+      'grammar9': { text: 'glaçons accueil', rate: 0.7 },
+      'grammar10': { text: 'ils dansent, le temps', rate: 0.7 },
+    };
+    const entry = audioMap[id];
+    if (!entry) return;
+    speakText(entry.text, entry.rate || 0.8, 1.0);
+  }
+  window.playAudio = playAudio;
+</script>
+</body>
+</html>
