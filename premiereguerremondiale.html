@@ -202,6 +202,7 @@
     border-radius: 20px;
     overflow: hidden;
     box-shadow: 0 12px 32px rgba(0,0,0,0.14);
+    background: #0d1f33;
   }
   .card-img img { width: 100%; display: block; }
   .card-img figcaption {
@@ -224,6 +225,8 @@
   .encadre.bleu  { background: #eef3f9; border-color: var(--bleu); }
   .encadre.olive { background: #f2f5ed; border-color: var(--olive); }
   .encadre strong { display: block; margin-bottom: 0.4rem; font-size: 0.95rem; }
+  .encadre ul { padding-left: 1.1rem; margin-top: 0.4rem; }
+  .encadre li { margin-bottom: 0.3rem; }
 
   .deux-camps {
     display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.8rem 0;
@@ -291,6 +294,38 @@
   .frise-year { font-weight: 700; font-size: 0.88rem; color: var(--bleu); }
   .frise-label { font-size: 0.74rem; color: var(--gris); margin-top: 0.25rem; padding: 0 0.3rem; }
 
+  /* ── SCHÉMA / CARTE ── */
+  .schema-bloc {
+    background: #fff;
+    border: 1px solid var(--parchemin);
+    border-radius: 20px;
+    padding: 1.8rem 1.8rem 1.2rem;
+    margin: 2rem 0;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.05);
+  }
+  .schema-bloc h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--bleu);
+    margin-bottom: 1rem;
+  }
+  .schema-bloc .legende {
+    font-size: 0.8rem;
+    color: var(--gris);
+    font-style: italic;
+    text-align: center;
+    margin-top: 0.8rem;
+  }
+  .legende-puces {
+    display: flex; flex-wrap: wrap; gap: 0.9rem;
+    justify-content: center;
+    font-size: 0.78rem;
+    color: var(--gris);
+    margin-top: 0.9rem;
+  }
+  .legende-puces span { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .puce { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+
   /* ── EXERCICES ── */
   .exercices {
     background: #fff;
@@ -338,6 +373,75 @@
     color: var(--bleu);
   }
 
+  /* ── QCM ── */
+  .qcm-bloc {
+    background: linear-gradient(160deg, #0d1f33 0%, #1a0d0d 70%);
+    border-radius: 24px;
+    padding: 2.2rem 2.2rem 2.6rem;
+    margin-top: 1rem;
+    color: #f0e8d8;
+  }
+  .qcm-bloc h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--sepia);
+    margin-bottom: 0.4rem;
+  }
+  .qcm-bloc > p.intro {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin-bottom: 1.6rem;
+  }
+  .qcm-q {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(200,169,110,0.25);
+    border-radius: 16px;
+    padding: 1.1rem 1.3rem;
+    margin-bottom: 1rem;
+  }
+  .qcm-q p.enonce {
+    font-size: 0.97rem;
+    margin-bottom: 0.7rem;
+    color: #f0e8d8;
+  }
+  .qcm-q p.enonce strong { color: var(--sepia); }
+  .qcm-opt {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .qcm-opt:hover { background: rgba(255,255,255,0.06); }
+  .qcm-opt input { accent-color: var(--sepia); }
+  .qcm-opt.correcte { background: rgba(42,110,58,0.35); }
+  .qcm-opt.incorrecte { background: rgba(139,26,26,0.35); }
+  .qcm-actions { text-align: center; margin-top: 1.8rem; }
+  .qcm-submit {
+    background: var(--sepia);
+    color: var(--ink);
+    border: none;
+    padding: 0.7rem 2.2rem;
+    border-radius: 100px;
+    font-family: 'Source Serif 4', serif;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: transform 0.15s, background 0.15s;
+  }
+  .qcm-submit:hover { transform: translateY(-2px); background: #d8bd8a; }
+  .qcm-score {
+    display: none;
+    text-align: center;
+    margin-top: 1.2rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--sepia);
+  }
+
   /* ── BILAN HUMAIN ── */
   .stats-row {
     display: flex; flex-wrap: wrap; gap: 1.2rem; margin: 1.5rem 0;
@@ -373,6 +477,7 @@
   /* ── RESPONSIVE HELPERS ── */
   @media(max-width:480px){
     .section-num { font-size: 2.8rem; }
+    .citation-bloc { padding: 1.8rem 1.5rem; }
   }
 </style>
 </head>
@@ -430,6 +535,17 @@
       <p class="auteur">— Jean Jaurès, discours de Vaise (Lyon), 25 juillet 1914<br><em>(Trois jours avant son assassinat, il alerte sur la catastrophe imminente)</em></p>
     </div>
 
+    <div class="grid-2">
+      <div>
+        <p>Tout part d'un seul coup de pistolet : l'assassinat de l'archiduc François-Ferdinand d'Autriche à Sarajevo, le <strong>28 juin 1914</strong>, par un nationaliste serbe. Mais les poudrières étaient déjà en place depuis des années : rivalités coloniales, nationalismes exacerbés, courses aux armements et surtout un système d'alliances rigide qui transforme un conflit local en incendie mondial.</p>
+        <p>Jean Jaurès, chef de file des socialistes français et fervent pacifiste, tente jusqu'au bout d'empêcher la guerre. Il est assassiné le 31 juillet 1914, trois jours avant la déclaration de guerre.</p>
+      </div>
+      <figure class="card-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Jean%20Jaur%C3%A8s%2C%201904%2C%20by%20Nadar.jpg" alt="Portrait de Jean Jaurès, 1904" loading="lazy">
+        <figcaption>Jean Jaurès photographié par Nadar en 1904 — assassiné le 31 juillet 1914</figcaption>
+      </figure>
+    </div>
+
     <!-- FRISE -->
     <div class="frise">
       <h3>📅 Chronologie en un coup d'œil</h3>
@@ -467,21 +583,170 @@
       </div>
     </div>
 
-    <div class="grid-2">
-      <div>
-        <p>Tout part d'un seul coup de pistolet : l'assassinat de l'archiduc François-Ferdinand d'Autriche à Sarajevo, le <strong>28 juin 1914</strong>, par un nationaliste serbe. Mais les poudrières étaient déjà en place depuis des années : rivalités coloniales, nationalismes exacerbés, courses aux armements et surtout un système d'alliances rigide qui transforme un conflit local en incendie mondial.</p>
+    <!-- SCHÉMA : chronologie détaillée par phases et batailles -->
+    <div class="schema-bloc">
+      <h3>📊 Chronologie détaillée — phases de la guerre et grandes batailles</h3>
+      <svg viewBox="0 0 900 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <rect x="0" y="0" width="900" height="280" fill="#f5efe3" rx="14"/>
 
-        <div class="encadre rouge">
-          <strong>💥 Le mécanisme des alliances</strong>
-          L'Autriche déclare la guerre à la Serbie → la Russie mobilise → l'Allemagne déclare la guerre à la Russie → la France entre en guerre → l'Allemagne envahit la Belgique neutre → le Royaume-Uni déclare la guerre à l'Allemagne. En à peine une semaine, toute l'Europe est à feu et à sang.
-        </div>
+        <!-- bandes de phases -->
+        <rect x="150" y="50" width="70"  height="34" rx="6" fill="#1b3a5c" opacity="0.28"/>
+        <rect x="220" y="50" width="573" height="34" rx="6" fill="#c8a96e" opacity="0.35"/>
+        <rect x="793" y="50" width="87"  height="34" rx="6" fill="#1b3a5c" opacity="0.28"/>
+        <text x="185" y="42" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="11.5" fill="#1b3a5c">Guerre de mouvement</text>
+        <text x="506" y="42" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="11.5" fill="#8a6a2f">Guerre des tranchées</text>
+        <text x="836" y="42" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="11.5" fill="#1b3a5c">Guerre de mouvement</text>
 
-        <p>Le conflit s'étend bien au-delà de l'Europe. Les empires coloniaux envoient leurs soldats combattre sur tous les fronts : environ <strong>200 000 Africains de l'AOF</strong> (Afrique Occidentale Française) se battent sous le drapeau français, dont 30 000 y perdront la vie.</p>
-      </div>
-      <figure class="card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Map_Europe_alliances_1914-fr.svg/1024px-Map_Europe_alliances_1914-fr.svg.png" alt="Carte des alliances en Europe en 1914">
-        <figcaption>🗺️ L'Europe en 1914 : Triple Alliance (rouge) vs Triple Entente (vert)</figcaption>
-      </figure>
+        <!-- axe des années -->
+        <line x1="60" y1="140" x2="880" y2="140" stroke="#6b6259" stroke-width="1.5"/>
+        <g font-family="Source Serif 4, serif" font-size="12" font-weight="700" fill="#1b3a5c">
+          <text x="60"  y="160" text-anchor="middle">1914</text>
+          <text x="220" y="160" text-anchor="middle">1915</text>
+          <text x="380" y="160" text-anchor="middle">1916</text>
+          <text x="540" y="160" text-anchor="middle">1917</text>
+          <text x="700" y="160" text-anchor="middle">1918</text>
+          <text x="860" y="160" text-anchor="middle">1919</text>
+        </g>
+        <g stroke="#c8a96e" stroke-width="1.5">
+          <line x1="60" y1="135" x2="60" y2="145"/><line x1="220" y1="135" x2="220" y2="145"/>
+          <line x1="380" y1="135" x2="380" y2="145"/><line x1="540" y1="135" x2="540" y2="145"/>
+          <line x1="700" y1="135" x2="700" y2="145"/><line x1="860" y1="135" x2="860" y2="145"/>
+        </g>
+
+        <!-- évènements ponctuels au-dessus de l'axe -->
+        <g font-family="Source Serif 4, serif" font-size="10" fill="#1a1610">
+          <circle cx="95" cy="140" r="4" fill="#8b1a1a"/>
+          <text x="95" y="122" text-anchor="middle" font-weight="700">28 juin 1914</text>
+          <text x="95" y="133" text-anchor="middle">Attentat de Sarajevo</text>
+
+          <circle cx="150" cy="140" r="4" fill="#8b1a1a"/>
+          <text x="150" y="104" text-anchor="middle" font-weight="700">28 juil.–3 août 1914</text>
+          <text x="150" y="115" text-anchor="middle">Déclarations de guerre</text>
+
+          <circle cx="633" cy="140" r="4" fill="#8b1a1a"/>
+          <text x="633" y="122" text-anchor="middle" font-weight="700">6 avril 1917</text>
+          <text x="633" y="133" text-anchor="middle">Entrée en guerre des USA</text>
+
+          <circle cx="713" cy="140" r="4" fill="#8b1a1a"/>
+          <text x="713" y="104" text-anchor="middle" font-weight="700">Octobre 1917</text>
+          <text x="713" y="115" text-anchor="middle">Révolution russe</text>
+
+          <circle cx="853" cy="140" r="4" fill="#2a6e3a"/>
+          <text x="853" y="122" text-anchor="middle" font-weight="700">11 nov. 1918</text>
+          <text x="853" y="133" text-anchor="middle">Armistice signé</text>
+        </g>
+
+        <!-- évènements en dessous de l'axe (barres de durée) -->
+        <g font-family="Source Serif 4, serif" font-size="10" fill="#1a1610">
+          <line x1="170" y1="150" x2="180" y2="150" stroke="#8b1a1a" stroke-width="3"/>
+          <text x="175" y="165" text-anchor="middle" font-weight="700">6–13 sept. 1914</text>
+          <text x="175" y="176" text-anchor="middle">Bataille de la Marne</text>
+
+          <line x1="220" y1="152" x2="380" y2="152" stroke="#6a4f8a" stroke-width="4"/>
+          <text x="300" y="168" text-anchor="middle" font-weight="700">1915–1916</text>
+          <text x="300" y="179" text-anchor="middle">Génocide arménien</text>
+
+          <line x1="407" y1="160" x2="540" y2="160" stroke="#8b1a1a" stroke-width="4"/>
+          <text x="473" y="176" text-anchor="middle" font-weight="700">Fév.–déc. 1916</text>
+          <text x="473" y="187" text-anchor="middle">Bataille de Verdun</text>
+
+          <line x1="473" y1="196" x2="527" y2="196" stroke="#1b3a5c" stroke-width="4"/>
+          <text x="500" y="212" text-anchor="middle" font-weight="700">Juil.–nov. 1916</text>
+          <text x="500" y="223" text-anchor="middle">Bataille de la Somme</text>
+
+          <text x="647" y="200" text-anchor="middle" font-weight="700">Mai–juin 1917</text>
+          <text x="647" y="211" text-anchor="middle">Mutineries et grèves</text>
+          <circle cx="647" cy="140" r="4" fill="#4a5c2f"/>
+
+          <line x1="793" y1="152" x2="847" y2="152" stroke="#2a6e3a" stroke-width="4"/>
+          <text x="820" y="168" text-anchor="middle" font-weight="700">Juil.–nov. 1918</text>
+          <text x="820" y="179" text-anchor="middle">Contre-offensive alliée</text>
+        </g>
+
+        <text x="470" y="260" text-anchor="middle" font-family="Source Serif 4, serif" font-style="italic" font-size="11.5" fill="#6b6259">La guerre bascule deux fois de forme : mouvement rapide en 1914, immobilisation dans les tranchées, puis retour au mouvement en 1918.</text>
+      </svg>
+    </div>
+
+    <div class="encadre rouge">
+      <strong>💥 Le mécanisme des alliances</strong>
+      L'Autriche déclare la guerre à la Serbie → la Russie mobilise → l'Allemagne déclare la guerre à la Russie → la France entre en guerre → l'Allemagne envahit la Belgique neutre → le Royaume-Uni déclare la guerre à l'Allemagne. En à peine une semaine, toute l'Europe est à feu et à sang.
+    </div>
+
+    <!-- SCHÉMA : engrenage des alliances (effet domino) -->
+    <div class="schema-bloc">
+      <h3>⚙️ L'engrenage des alliances — de l'attentat à la guerre mondiale</h3>
+      <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <rect x="0" y="0" width="760" height="210" fill="#f5efe3" rx="14"/>
+        <g font-family="Source Serif 4, serif" font-size="11" fill="#1a1610">
+          <rect x="10" y="20" width="115" height="60" rx="10" fill="#fdf0f0" stroke="#8b1a1a"/>
+          <text x="67" y="45" text-anchor="middle" font-weight="700" fill="#8b1a1a">28 juin</text>
+          <text x="67" y="62" text-anchor="middle">Attentat de Sarajevo</text>
+
+          <rect x="140" y="20" width="115" height="60" rx="10" fill="#eef3f9" stroke="#1b3a5c"/>
+          <text x="197" y="45" text-anchor="middle" font-weight="700" fill="#1b3a5c">28 juil.</text>
+          <text x="197" y="62" text-anchor="middle">Autriche déclare</text>
+          <text x="197" y="74" text-anchor="middle">la guerre à la Serbie</text>
+
+          <rect x="270" y="20" width="115" height="60" rx="10" fill="#f2f5ed" stroke="#4a5c2f"/>
+          <text x="327" y="45" text-anchor="middle" font-weight="700" fill="#4a5c2f">30 juil.</text>
+          <text x="327" y="62" text-anchor="middle">La Russie mobilise</text>
+          <text x="327" y="74" text-anchor="middle">(alliée de la Serbie)</text>
+
+          <rect x="400" y="20" width="115" height="60" rx="10" fill="#fdf0f0" stroke="#8b1a1a"/>
+          <text x="457" y="45" text-anchor="middle" font-weight="700" fill="#8b1a1a">1er août</text>
+          <text x="457" y="62" text-anchor="middle">Allemagne déclare</text>
+          <text x="457" y="74" text-anchor="middle">la guerre à la Russie</text>
+
+          <rect x="530" y="20" width="105" height="60" rx="10" fill="#eef3f9" stroke="#1b3a5c"/>
+          <text x="582" y="45" text-anchor="middle" font-weight="700" fill="#1b3a5c">3 août</text>
+          <text x="582" y="62" text-anchor="middle">Guerre à la France</text>
+          <text x="582" y="74" text-anchor="middle">et à la Belgique</text>
+
+          <rect x="655" y="20" width="95" height="60" rx="10" fill="#f2f5ed" stroke="#4a5c2f"/>
+          <text x="702" y="45" text-anchor="middle" font-weight="700" fill="#4a5c2f">4 août</text>
+          <text x="702" y="62" text-anchor="middle">Le Royaume-Uni</text>
+          <text x="702" y="74" text-anchor="middle">entre en guerre</text>
+        </g>
+        <g stroke="#c8a96e" stroke-width="2.5" fill="none" marker-end="url(#arrowg)">
+          <line x1="126" y1="50" x2="138" y2="50"/>
+          <line x1="256" y1="50" x2="268" y2="50"/>
+          <line x1="386" y1="50" x2="398" y2="50"/>
+          <line x1="516" y1="50" x2="528" y2="50"/>
+          <line x1="636" y1="50" x2="653" y2="50"/>
+        </g>
+        <defs>
+          <marker id="arrowg" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#c8a96e"/></marker>
+        </defs>
+        <text x="380" y="130" text-anchor="middle" font-family="Source Serif 4, serif" font-style="italic" font-size="11.5" fill="#6b6259">En une semaine, un attentat régional devient une guerre européenne, puis mondiale.</text>
+      </svg>
+    </div>
+
+    <!-- CARTE SCHÉMATIQUE DES ALLIANCES -->
+    <div class="schema-bloc">
+      <h3>🗺️ L'Europe des alliances en 1914</h3>
+      <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <rect x="0" y="0" width="760" height="230" fill="#f5efe3" rx="14"/>
+        <rect x="30" y="30" width="330" height="180" rx="18" fill="#8b1a1a" opacity="0.10" stroke="#8b1a1a" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="195" y="20" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="15" fill="#8b1a1a">Triple Alliance — Empires centraux</text>
+        <g font-family="Source Serif 4, serif" font-size="12" fill="#1a1610">
+          <rect x="45" y="45" width="140" height="34" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="115" y="66" text-anchor="middle">Empire allemand</text>
+          <rect x="200" y="45" width="140" height="34" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="270" y="66" text-anchor="middle">Autriche-Hongrie</text>
+          <rect x="45" y="90" width="140" height="34" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="115" y="111" text-anchor="middle">Empire ottoman</text>
+          <rect x="200" y="90" width="140" height="34" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="270" y="111" text-anchor="middle">Bulgarie (dès 1915)</text>
+        </g>
+        <text x="195" y="200" text-anchor="middle" font-family="Source Serif 4, serif" font-style="italic" font-size="11" fill="#6b6259">4 puissances centrales, cœur de l'Europe</text>
+
+        <rect x="400" y="30" width="330" height="180" rx="18" fill="#1b3a5c" opacity="0.10" stroke="#1b3a5c" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="565" y="20" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="15" fill="#1b3a5c">Triple Entente — les Alliés</text>
+        <g font-family="Source Serif 4, serif" font-size="12" fill="#1a1610">
+          <rect x="415" y="45" width="140" height="34" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="485" y="66" text-anchor="middle">France</text>
+          <rect x="570" y="45" width="140" height="34" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="640" y="66" text-anchor="middle">Royaume-Uni</text>
+          <rect x="415" y="90" width="140" height="34" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="485" y="111" text-anchor="middle">Russie</text>
+          <rect x="570" y="90" width="140" height="34" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="640" y="111" text-anchor="middle">Italie (dès 1915)</text>
+          <rect x="415" y="135" width="295" height="34" rx="8" fill="#eef3f9" stroke="#1b3a5c"/><text x="562" y="156" text-anchor="middle">États-Unis (dès avril 1917)</text>
+        </g>
+      </svg>
+      <p class="legende">Schéma simplifié des blocs d'alliances — les colonies (AOF, Inde, Canada, Australie…) combattent aux côtés de leurs métropoles.</p>
     </div>
 
     <div class="deux-camps">
@@ -504,6 +769,8 @@
         </ul>
       </div>
     </div>
+
+    <p>Le conflit s'étend bien au-delà de l'Europe. Les empires coloniaux envoient leurs soldats combattre sur tous les fronts : environ <strong>200 000 Africains de l'AOF</strong> (Afrique Occidentale Française) se battent sous le drapeau français, dont 30 000 y perdront la vie.</p>
 
     <div class="encadre bleu">
       <strong>🇺🇸 Pourquoi les États-Unis entrent-ils en guerre en 1917 ?</strong>
@@ -577,9 +844,34 @@
         </div>
       </div>
       <figure class="card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/1024px-French_soldiers_trench_1915.jpg" alt="Soldats français dans une tranchée, 1915">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/1024px-French_soldiers_trench_1915.jpg" alt="Soldats français dans une tranchée, 1915" loading="lazy">
         <figcaption>Poilus dans une tranchée de l'Aisne, hiver 1915 — Wikimedia Commons</figcaption>
       </figure>
+    </div>
+
+    <figure class="card-img" style="margin: 2rem 0;">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Bataille%20de%20Verdun%201916.jpg" alt="La bataille de Verdun, 1916" loading="lazy" style="max-height:380px;object-fit:cover;width:100%;">
+      <figcaption>La bataille de Verdun, février–décembre 1916 — l'un des affrontements les plus meurtriers de la guerre</figcaption>
+    </figure>
+
+    <!-- GRAPHIQUE pertes des grandes batailles -->
+    <div class="schema-bloc">
+      <h3>📊 Le bilan des grandes batailles de 1916</h3>
+      <svg viewBox="0 0 700 170" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <text x="10" y="30" font-family="Source Serif 4, serif" font-size="13" fill="#1a1610">Verdun</text>
+        <rect x="150" y="16" width="300" height="24" rx="6" fill="#8b1a1a"/>
+        <text x="460" y="33" font-family="Playfair Display, serif" font-size="12.5" fill="#1a1610">≈ 300 000 morts</text>
+
+        <text x="10" y="80" font-family="Source Serif 4, serif" font-size="13" fill="#1a1610">La Somme</text>
+        <rect x="150" y="66" width="500" height="24" rx="6" fill="#1b3a5c"/>
+        <text x="660" y="83" text-anchor="end" font-family="Playfair Display, serif" font-size="12.5" fill="#fff">+1 000 000 de pertes</text>
+
+        <text x="10" y="130" font-family="Source Serif 4, serif" font-size="13" fill="#1a1610">Chemin des Dames</text>
+        <rect x="150" y="116" width="120" height="24" rx="6" fill="#4a5c2f"/>
+        <text x="280" y="133" font-family="Playfair Display, serif" font-size="12.5" fill="#1a1610">Échec + mutineries (1917)</text>
+
+        <text x="10" y="160" font-family="Source Serif 4, serif" font-style="italic" font-size="11" fill="#6b6259">Échelle indicative — les pertes incluent morts, blessés et disparus.</text>
+      </svg>
     </div>
 
     <div class="encadre olive">
@@ -592,8 +884,41 @@
       Profitant du chaos de la guerre, l'Empire ottoman procède à la déportation et au massacre de la population arménienne. Entre 600 000 et 1,2 million d'Arméniens sont tués — l'un des premiers génocides du XXe siècle. Cette violence extrême contre des civils illustre la dimension de « guerre totale ».
     </div>
 
-    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Western_front_1915-1916.jpg/1200px-Western_front_1915-1916.jpg" alt="Front ouest 1915-1916" class="img-full">
-    <p style="text-align:center; color: var(--gris); font-size: 0.82rem; margin-top: -1rem; margin-bottom: 1.5rem;">🗺️ Le front ouest : des positions figées pendant des années — Verdun au centre des combats</p>
+    <!-- SCHÉMA : anatomie d'une tranchée -->
+    <div class="schema-bloc">
+      <h3>🪖 Schéma — l'organisation d'un système de tranchées</h3>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <rect x="0" y="0" width="760" height="220" fill="#f5efe3" rx="14"/>
+        <rect x="20" y="150" width="200" height="40" fill="#c8a96e" opacity="0.35"/>
+        <text x="120" y="145" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">Tranchée de 1<tspan font-size="8" baseline-shift="super">re</tspan> ligne (Alliés)</text>
+
+        <rect x="540" y="150" width="200" height="40" fill="#8b1a1a" opacity="0.25"/>
+        <text x="640" y="145" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">Tranchée de 1<tspan font-size="8" baseline-shift="super">re</tspan> ligne (Empires centraux)</text>
+
+        <rect x="260" y="160" width="240" height="20" fill="#6b6259" opacity="0.25"/>
+        <text x="380" y="205" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-size="13" fill="#6b6259">« No man's land »</text>
+
+        <g stroke="#1a1610" stroke-width="1.5">
+          <line x1="255" y1="160" x2="265" y2="170"/><line x1="265" y1="160" x2="275" y2="170"/>
+          <line x1="285" y1="160" x2="295" y2="170"/><line x1="295" y1="160" x2="305" y2="170"/>
+          <line x1="455" y1="160" x2="465" y2="170"/><line x1="465" y1="160" x2="475" y2="170"/>
+          <line x1="485" y1="160" x2="495" y2="170"/><line x1="495" y1="160" x2="505" y2="170"/>
+        </g>
+        <text x="280" y="30" font-family="Source Serif 4, serif" font-size="11" fill="#6b6259" font-style="italic">Barbelés</text>
+        <text x="480" y="30" font-family="Source Serif 4, serif" font-size="11" fill="#6b6259" font-style="italic">Barbelés</text>
+
+        <rect x="20" y="60" width="200" height="16" fill="#c8a96e" opacity="0.2"/>
+        <text x="120" y="55" text-anchor="middle" font-family="Source Serif 4, serif" font-size="10.5" fill="#6b6259">Tranchée de 2<tspan font-size="7" baseline-shift="super">e</tspan> ligne (réserve)</text>
+        <rect x="540" y="60" width="200" height="16" fill="#8b1a1a" opacity="0.15"/>
+        <text x="640" y="55" text-anchor="middle" font-family="Source Serif 4, serif" font-size="10.5" fill="#6b6259">Tranchée de 2<tspan font-size="7" baseline-shift="super">e</tspan> ligne (réserve)</text>
+
+        <path d="M120,76 Q170,110 120,150" stroke="#6b6259" stroke-width="3" fill="none" stroke-dasharray="4 3"/>
+        <path d="M640,76 Q590,110 640,150" stroke="#6b6259" stroke-width="3" fill="none" stroke-dasharray="4 3"/>
+        <text x="120" y="115" text-anchor="middle" font-family="Source Serif 4, serif" font-size="9.5" fill="#6b6259">boyau</text>
+        <text x="640" y="115" text-anchor="middle" font-family="Source Serif 4, serif" font-size="9.5" fill="#6b6259">boyau</text>
+      </svg>
+      <p class="legende">Un système de tranchées comprend plusieurs lignes reliées par des « boyaux » de communication, séparées de l'ennemi par le no man's land.</p>
+    </div>
 
     <!-- EXERCICES PARTIE 2 -->
     <div class="exercices">
@@ -663,9 +988,36 @@
         </div>
       </div>
       <figure class="card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Women_workers_WW1.jpg/800px-Women_workers_WW1.jpg" alt="Femmes travaillant dans une usine d'armement, Première Guerre mondiale" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/800px-French_soldiers_trench_1915.jpg'">
-        <figcaption>Femmes ouvrières dans une usine d'armement — la mobilisation de l'arrière</figcaption>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/English%20women%20munition%20workers%20LCCN2014699641.jpg" alt="Ouvrières anglaises dans une usine de munitions, Première Guerre mondiale" loading="lazy">
+        <figcaption>Ouvrières dans une usine de munitions britannique — la mobilisation de l'arrière</figcaption>
       </figure>
+    </div>
+
+    <!-- SCHÉMA guerre totale : front / arrière -->
+    <div class="schema-bloc">
+      <h3>⚙️ La guerre totale : deux fronts liés</h3>
+      <svg viewBox="0 0 700 190" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <rect x="20" y="20" width="300" height="150" rx="18" fill="#8b1a1a" opacity="0.10" stroke="#8b1a1a"/>
+        <text x="170" y="45" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="14" fill="#8b1a1a">Le front</text>
+        <text x="170" y="70" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">Soldats dans les tranchées</text>
+        <text x="170" y="90" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">Besoin constant en armes,</text>
+        <text x="170" y="108" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">munitions, ravitaillement</text>
+
+        <rect x="380" y="20" width="300" height="150" rx="18" fill="#1b3a5c" opacity="0.10" stroke="#1b3a5c"/>
+        <text x="530" y="45" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="14" fill="#1b3a5c">L'arrière</text>
+        <text x="530" y="70" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">Femmes dans les usines</text>
+        <text x="530" y="90" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">Rationnement, emprunts,</text>
+        <text x="530" y="108" text-anchor="middle" font-family="Source Serif 4, serif" font-size="11.5" fill="#1a1610">propagande d'État</text>
+
+        <line x1="320" y1="95" x2="378" y2="95" stroke="#c8a96e" stroke-width="2.5" marker-end="url(#af1)"/>
+        <line x1="378" y1="130" x2="320" y2="130" stroke="#c8a96e" stroke-width="2.5" marker-end="url(#af2)"/>
+        <text x="350" y="88" text-anchor="middle" font-family="Source Serif 4, serif" font-size="9.5" fill="#6b6259">besoins</text>
+        <text x="350" y="146" text-anchor="middle" font-family="Source Serif 4, serif" font-size="9.5" fill="#6b6259">production</text>
+        <defs>
+          <marker id="af1" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#c8a96e"/></marker>
+          <marker id="af2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#c8a96e"/></marker>
+        </defs>
+      </svg>
     </div>
 
     <div class="encadre olive">
@@ -738,7 +1090,18 @@
         </div>
       </div>
       <figure class="card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Bundesarchiv_Bild_183-R27882%2C_Versailles%2C_Unterzeichnung_Friedensvertrag.jpg/1024px-Bundesarchiv_Bild_183-R27882%2C_Versailles%2C_Unterzeichnung_Friedensvertrag.jpg" alt="Signature du traité de Versailles, 1919" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/French_soldiers_trench_1915.jpg/800px-French_soldiers_trench_1915.jpg'">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Woodrow%20Wilson%20in%201919.jpg" alt="Woodrow Wilson, président des États-Unis, en 1919" loading="lazy">
+        <figcaption>Woodrow Wilson en 1919, auteur du programme des « 14 points »</figcaption>
+      </figure>
+    </div>
+
+    <div class="grid-2">
+      <figure class="card-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Georges%20Clemenceau%2C%20three-quarter%20length%20portrait%2C%20standing%2C%20facing%20slightly%20left%20LCCN89715086.jpg" alt="Georges Clemenceau, portrait" loading="lazy">
+        <figcaption>Georges Clemenceau, « Le Tigre », Président du Conseil français (1917-1920)</figcaption>
+      </figure>
+      <figure class="card-img">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Treaty%20of%20Versailles%20Signing%2C%20Hall%20of%20Mirrors.jpg" alt="Signature du traité de Versailles, Galerie des Glaces, 1919" loading="lazy">
         <figcaption>Signature du traité de Versailles dans la Galerie des Glaces, 28 juin 1919</figcaption>
       </figure>
     </div>
@@ -763,9 +1126,66 @@
       </div>
     </div>
 
-    <div class="encadre bleu">
-      <strong>🗺️ Une Europe redessinée</strong>
-      La guerre entraîne la chute de quatre grands empires : l'Empire allemand, l'Empire austro-hongrois, l'Empire ottoman et l'Empire russe. De nouveaux États apparaissent sur la carte : Pologne, Tchécoslovaquie, Yougoslavie, États baltes… La carte de l'Europe est profondément redessinée par les traités de 1919–1920.
+    <!-- CARTE : une Europe redessinée -->
+    <div class="schema-bloc">
+      <h3>🗺️ Une Europe redessinée — empires disparus, nouveaux États</h3>
+      <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <rect x="0" y="0" width="760" height="220" fill="#f5efe3" rx="14"/>
+        <rect x="20" y="30" width="340" height="170" rx="18" fill="#8b1a1a" opacity="0.10" stroke="#8b1a1a" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="190" y="20" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="14" fill="#8b1a1a">Empires disparus (1918)</text>
+        <g font-family="Source Serif 4, serif" font-size="12" fill="#1a1610">
+          <rect x="35" y="45" width="150" height="32" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="110" y="66" text-anchor="middle">Empire allemand</text>
+          <rect x="195" y="45" width="150" height="32" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="270" y="66" text-anchor="middle">Autriche-Hongrie</text>
+          <rect x="35" y="85" width="150" height="32" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="110" y="106" text-anchor="middle">Empire ottoman</text>
+          <rect x="195" y="85" width="150" height="32" rx="8" fill="#fff" stroke="#8b1a1a"/><text x="270" y="106" text-anchor="middle">Empire russe</text>
+        </g>
+
+        <rect x="400" y="30" width="340" height="170" rx="18" fill="#1b3a5c" opacity="0.10" stroke="#1b3a5c" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="570" y="20" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="14" fill="#1b3a5c">Nouveaux États nés en 1918-1920</text>
+        <g font-family="Source Serif 4, serif" font-size="12" fill="#1a1610">
+          <rect x="415" y="45" width="150" height="32" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="490" y="66" text-anchor="middle">Pologne</text>
+          <rect x="575" y="45" width="150" height="32" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="650" y="66" text-anchor="middle">Tchécoslovaquie</text>
+          <rect x="415" y="85" width="150" height="32" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="490" y="106" text-anchor="middle">Yougoslavie</text>
+          <rect x="575" y="85" width="150" height="32" rx="8" fill="#fff" stroke="#1b3a5c"/><text x="650" y="106" text-anchor="middle">États baltes</text>
+          <rect x="415" y="125" width="310" height="32" rx="8" fill="#eef3f9" stroke="#1b3a5c"/><text x="570" y="146" text-anchor="middle">Alsace-Lorraine rendue à la France</text>
+        </g>
+      </svg>
+      <p class="legende">Les traités de 1919-1920 démantèlent quatre grands empires et redessinent profondément la carte de l'Europe centrale et orientale.</p>
+    </div>
+
+    <!-- CARTE : les empires coloniaux redessinés -->
+    <div class="schema-bloc">
+      <h3>🗺️ Les empires coloniaux redessinés — le partage des colonies allemandes</h3>
+      <svg viewBox="0 0 780 280" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;">
+        <rect x="0" y="0" width="780" height="280" fill="#f5efe3" rx="14"/>
+        <text x="195" y="24" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="14" fill="#8b1a1a">Anciennes colonies allemandes</text>
+        <text x="585" y="24" text-anchor="middle" font-family="Playfair Display, serif" font-weight="700" font-size="14" fill="#1b3a5c">Nouvelles puissances mandataires (SDN)</text>
+
+        <g font-family="Source Serif 4, serif" font-size="12" fill="#1a1610">
+          <rect x="30" y="40" width="330" height="34" rx="8" fill="#fdf0f0" stroke="#8b1a1a"/><text x="195" y="61" text-anchor="middle">Togo</text>
+          <rect x="30" y="84" width="330" height="34" rx="8" fill="#fdf0f0" stroke="#8b1a1a"/><text x="195" y="105" text-anchor="middle">Cameroun</text>
+          <rect x="30" y="128" width="330" height="34" rx="8" fill="#fdf0f0" stroke="#8b1a1a"/><text x="195" y="149" text-anchor="middle">Afrique orientale allemande (Tanganyika)</text>
+          <rect x="30" y="172" width="330" height="34" rx="8" fill="#fdf0f0" stroke="#8b1a1a"/><text x="195" y="193" text-anchor="middle">Sud-Ouest africain (actuelle Namibie)</text>
+          <rect x="30" y="216" width="330" height="34" rx="8" fill="#fdf0f0" stroke="#8b1a1a"/><text x="195" y="237" text-anchor="middle">Colonies du Pacifique (Nouvelle-Guinée, Samoa…)</text>
+        </g>
+
+        <g font-family="Source Serif 4, serif" font-size="12" fill="#1a1610">
+          <rect x="420" y="40" width="330" height="34" rx="8" fill="#eef3f9" stroke="#1b3a5c"/><text x="585" y="61" text-anchor="middle">Partagé : France / Royaume-Uni</text>
+          <rect x="420" y="84" width="330" height="34" rx="8" fill="#eef3f9" stroke="#1b3a5c"/><text x="585" y="105" text-anchor="middle">Partagé : France / Royaume-Uni</text>
+          <rect x="420" y="128" width="330" height="34" rx="8" fill="#eef3f9" stroke="#1b3a5c"/><text x="585" y="149" text-anchor="middle">Royaume-Uni · Ruanda-Urundi → Belgique</text>
+          <rect x="420" y="172" width="330" height="34" rx="8" fill="#eef3f9" stroke="#1b3a5c"/><text x="585" y="193" text-anchor="middle">Union sud-africaine</text>
+          <rect x="420" y="216" width="330" height="34" rx="8" fill="#eef3f9" stroke="#1b3a5c"/><text x="585" y="237" text-anchor="middle">Japon · Australie · Nouvelle-Zélande</text>
+        </g>
+
+        <g stroke="#c8a96e" stroke-width="1.5" stroke-dasharray="3 3">
+          <line x1="360" y1="57"  x2="420" y2="57"/>
+          <line x1="360" y1="101" x2="420" y2="101"/>
+          <line x1="360" y1="145" x2="420" y2="145"/>
+          <line x1="360" y1="189" x2="420" y2="189"/>
+          <line x1="360" y1="233" x2="420" y2="233"/>
+        </g>
+        <text x="390" y="264" text-anchor="middle" font-family="Source Serif 4, serif" font-style="italic" font-size="11" fill="#6b6259">L'Allemagne perd toutes ses colonies, transformées en « mandats » confiés par la SDN aux puissances victorieuses.</text>
+      </svg>
     </div>
 
     <div class="encadre olive">
@@ -799,6 +1219,111 @@
     </div>
   </section>
 
+  <!-- ════════════════════════════════════════════════════
+       QCM FINAL — 10 QUESTIONS
+  ═══════════════════════════════════════════════════════ -->
+  <section id="qcm" style="border-bottom: none;">
+    <div class="section-header">
+      <div class="section-num">?</div>
+      <div class="section-title">
+        <h2>QCM récapitulatif</h2>
+        <p>10 questions pour réviser l'ensemble de la séquence</p>
+      </div>
+    </div>
+
+    <div class="qcm-bloc">
+      <h3>🎯 Testez vos connaissances</h3>
+      <p class="intro">Choisissez une réponse par question, puis cliquez sur « Vérifier mes réponses » pour voir votre score.</p>
+      <form id="qcm-form">
+
+        <div class="qcm-q" data-correct="c">
+          <p class="enonce"><strong>1.</strong> Quel événement déclenche directement la Première Guerre mondiale ?</p>
+          <label class="qcm-opt"><input type="radio" name="q1" value="a"> L'invasion de la Pologne</label>
+          <label class="qcm-opt"><input type="radio" name="q1" value="b"> La révolution russe</label>
+          <label class="qcm-opt"><input type="radio" name="q1" value="c"> L'attentat de Sarajevo</label>
+          <label class="qcm-opt"><input type="radio" name="q1" value="d"> Le naufrage du Lusitania</label>
+        </div>
+
+        <div class="qcm-q" data-correct="b">
+          <p class="enonce"><strong>2.</strong> Quel homme politique français, pacifiste, est assassiné le 31 juillet 1914 ?</p>
+          <label class="qcm-opt"><input type="radio" name="q2" value="a"> Georges Clemenceau</label>
+          <label class="qcm-opt"><input type="radio" name="q2" value="b"> Jean Jaurès</label>
+          <label class="qcm-opt"><input type="radio" name="q2" value="c"> Raymond Poincaré</label>
+          <label class="qcm-opt"><input type="radio" name="q2" value="d"> Aristide Briand</label>
+        </div>
+
+        <div class="qcm-q" data-correct="a">
+          <p class="enonce"><strong>3.</strong> Quels trois pays forment la Triple Entente en 1914 ?</p>
+          <label class="qcm-opt"><input type="radio" name="q3" value="a"> France, Royaume-Uni, Russie</label>
+          <label class="qcm-opt"><input type="radio" name="q3" value="b"> France, Allemagne, Italie</label>
+          <label class="qcm-opt"><input type="radio" name="q3" value="c"> Royaume-Uni, Autriche-Hongrie, Russie</label>
+          <label class="qcm-opt"><input type="radio" name="q3" value="d"> France, États-Unis, Italie</label>
+        </div>
+
+        <div class="qcm-q" data-correct="b">
+          <p class="enonce"><strong>4.</strong> Pourquoi les États-Unis entrent-ils en guerre en avril 1917 ?</p>
+          <label class="qcm-opt"><input type="radio" name="q4" value="a"> Pour défendre leurs colonies</label>
+          <label class="qcm-opt"><input type="radio" name="q4" value="b"> À cause de la guerre sous-marine allemande</label>
+          <label class="qcm-opt"><input type="radio" name="q4" value="c"> Pour venger l'attentat de Sarajevo</label>
+          <label class="qcm-opt"><input type="radio" name="q4" value="d"> À la demande de la Société des Nations</label>
+        </div>
+
+        <div class="qcm-q" data-correct="c">
+          <p class="enonce"><strong>5.</strong> Quel slogan est associé à la bataille de Verdun (1916) ?</p>
+          <label class="qcm-opt"><input type="radio" name="q5" value="a"> « Liberté, égalité, fraternité »</label>
+          <label class="qcm-opt"><input type="radio" name="q5" value="b"> « Vae victis »</label>
+          <label class="qcm-opt"><input type="radio" name="q5" value="c"> « Ils ne passeront pas ! »</label>
+          <label class="qcm-opt"><input type="radio" name="q5" value="d"> « La paix sans victoire »</label>
+        </div>
+
+        <div class="qcm-q" data-correct="d">
+          <p class="enonce"><strong>6.</strong> Laquelle de ces armes n'apparaît PAS pendant la Première Guerre mondiale ?</p>
+          <label class="qcm-opt"><input type="radio" name="q6" value="a"> Le char d'assaut</label>
+          <label class="qcm-opt"><input type="radio" name="q6" value="b"> Le gaz moutarde</label>
+          <label class="qcm-opt"><input type="radio" name="q6" value="c"> La mitrailleuse lourde</label>
+          <label class="qcm-opt"><input type="radio" name="q6" value="d"> La bombe atomique</label>
+        </div>
+
+        <div class="qcm-q" data-correct="b">
+          <p class="enonce"><strong>7.</strong> Qu'est-ce qu'une « guerre totale » ?</p>
+          <label class="qcm-opt"><input type="radio" name="q7" value="a"> Une guerre menée uniquement par les armées professionnelles</label>
+          <label class="qcm-opt"><input type="radio" name="q7" value="b"> Une guerre qui mobilise l'ensemble de la société, y compris l'arrière</label>
+          <label class="qcm-opt"><input type="radio" name="q7" value="c"> Une guerre sans aucune règle internationale</label>
+          <label class="qcm-opt"><input type="radio" name="q7" value="d"> Une guerre limitée à un seul continent</label>
+        </div>
+
+        <div class="qcm-q" data-correct="a">
+          <p class="enonce"><strong>8.</strong> Quand et où l'armistice de 1918 est-il signé ?</p>
+          <label class="qcm-opt"><input type="radio" name="q8" value="a"> Le 11 novembre 1918, à Rethondes</label>
+          <label class="qcm-opt"><input type="radio" name="q8" value="b"> Le 28 juin 1919, à Versailles</label>
+          <label class="qcm-opt"><input type="radio" name="q8" value="c"> Le 1er août 1914, à Berlin</label>
+          <label class="qcm-opt"><input type="radio" name="q8" value="d"> Le 3 mars 1918, à Brest-Litovsk</label>
+        </div>
+
+        <div class="qcm-q" data-correct="c">
+          <p class="enonce"><strong>9.</strong> Quel président américain propose les « 14 points » et la création d'une Société des Nations ?</p>
+          <label class="qcm-opt"><input type="radio" name="q9" value="a"> Theodore Roosevelt</label>
+          <label class="qcm-opt"><input type="radio" name="q9" value="b"> Franklin D. Roosevelt</label>
+          <label class="qcm-opt"><input type="radio" name="q9" value="c"> Woodrow Wilson</label>
+          <label class="qcm-opt"><input type="radio" name="q9" value="d"> Warren Harding</label>
+        </div>
+
+        <div class="qcm-q" data-correct="b">
+          <p class="enonce"><strong>10.</strong> Quel empire ne disparaît PAS à l'issue de la Première Guerre mondiale ?</p>
+          <label class="qcm-opt"><input type="radio" name="q10" value="a"> L'Empire ottoman</label>
+          <label class="qcm-opt"><input type="radio" name="q10" value="b"> L'Empire britannique</label>
+          <label class="qcm-opt"><input type="radio" name="q10" value="c"> L'Empire austro-hongrois</label>
+          <label class="qcm-opt"><input type="radio" name="q10" value="d"> L'Empire allemand</label>
+        </div>
+
+        <div class="qcm-actions">
+          <button type="button" class="qcm-submit" id="qcm-check">Vérifier mes réponses</button>
+          <p class="qcm-score" id="qcm-score"></p>
+        </div>
+      </form>
+    </div>
+  </section>
+
   <!-- CONCLUSION -->
   <section style="border-bottom: none; text-align: center; padding-bottom: 3rem;">
     <p style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; color: var(--bleu); max-width: 700px; margin: 0 auto 1rem;">
@@ -813,7 +1338,7 @@
 <footer>
   <p><strong>🎓 Page pédagogique — Séquence 1H2</strong><br>
   Guerres européennes, guerres mondiales, guerres totales (1914–1945)<br>
-  Sources : dossier leproflhg.wordpress.com · Wikimedia Commons · Archives nationales</p>
+  Sources : dossier leproflhg.wordpress.com · Wikimedia Commons (photographies du domaine public) · Archives nationales</p>
   <p style="margin-top: 1rem; opacity: 0.6;">🕯️ « Souviens-toi, frère, de ceux qui ne revinrent jamais. » — 11 novembre, jour de mémoire.</p>
 </footer>
 
@@ -825,6 +1350,45 @@ document.querySelectorAll('.reponse-btn').forEach(btn => {
     btn.style.display = 'none';
   });
 });
+
+// Mélange aléatoire des options du QCM à chaque chargement
+document.querySelectorAll('.qcm-q').forEach(q => {
+  const opts = Array.from(q.querySelectorAll('.qcm-opt'));
+  for (let i = opts.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [opts[i], opts[j]] = [opts[j], opts[i]];
+  }
+  opts.forEach(opt => q.appendChild(opt));
+});
+
+// QCM final
+const qcmCheckBtn = document.getElementById('qcm-check');
+if (qcmCheckBtn) {
+  qcmCheckBtn.addEventListener('click', () => {
+    const questions = document.querySelectorAll('.qcm-q');
+    let score = 0;
+    questions.forEach(q => {
+      const correct = q.getAttribute('data-correct');
+      const options = q.querySelectorAll('.qcm-opt');
+      const selected = q.querySelector('input[type="radio"]:checked');
+      options.forEach(opt => opt.classList.remove('correcte', 'incorrecte'));
+      options.forEach(opt => {
+        const input = opt.querySelector('input');
+        if (input.value === correct) opt.classList.add('correcte');
+      });
+      if (selected) {
+        if (selected.value === correct) {
+          score++;
+        } else {
+          selected.closest('.qcm-opt').classList.add('incorrecte');
+        }
+      }
+    });
+    const scoreEl = document.getElementById('qcm-score');
+    scoreEl.style.display = 'block';
+    scoreEl.textContent = 'Résultat : ' + score + ' / ' + questions.length;
+  });
+}
 </script>
 </body>
 </html>
