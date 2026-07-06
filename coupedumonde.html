@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leçon FLE - Coupe du Monde ⚽</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #eee;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            color: #333;
+        }
+        h1 {
+            color: #e94560;
+            text-align: center;
+            border-bottom: 3px solid #e94560;
+            padding-bottom: 10px;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: #0f3460;
+            margin-top: 30px;
+            border-left: 5px solid #e94560;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #16213e;
+        }
+        .dialogue {
+            background: #f0f4ff;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #e94560;
+            line-height: 1.8;
+        }
+        .dialogue p {
+            margin: 10px 0;
+        }
+        .journaliste {
+            color: #1a5276;
+            font-weight: bold;
+        }
+        .joueur {
+            color: #1e8449;
+            font-weight: bold;
+        }
+        .coach {
+            color: #b7950b;
+            font-weight: bold;
+        }
+        .lexique {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .lexique ul {
+            columns: 2;
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .lexique li {
+            margin: 5px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+        .lexique li:before {
+            content: "🏆";
+            position: absolute;
+            left: 0;
+        }
+        .questions {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        .questions ol {
+            line-height: 2;
+        }
+        .reponse-cachee {
+            display: none;
+            background: #c8e6c9;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            border-left: 4px solid #2e7d32;
+        }
+        .btn-reponse {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin: 10px 0;
+        }
+        .btn-reponse:hover {
+            background: #45a049;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 2px solid #0f3460;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background: #0f3460;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background: #f8f9ff;
+        }
+        .exercice {
+            background: #ffebee;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        .exercice input[type="text"] {
+            border: none;
+            border-bottom: 2px solid #0f3460;
+            padding: 5px;
+            font-size: 16px;
+            width: 150px;
+            background: white;
+            border-radius: 3px;
+        }
+        .exercice input[type="text"]:focus {
+            outline: none;
+            border-bottom: 2px solid #e94560;
+            background: #fff9c4;
+        }
+        .exercice input[type="text"].reponse-juste {
+            border-bottom: 3px solid #4caf50;
+            background: #d4edda;
+        }
+        .exercice input[type="text"].reponse-fausse {
+            border-bottom: 3px solid #f44336;
+            background: #f8d7da;
+        }
+        button {
+            background: #e94560;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        button:hover {
+            background: #c0392b;
+            transform: scale(1.02);
+        }
+        .resultat {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        .correct {
+            background: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .highlight {
+            background: #fff9c4;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .grammaire-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #0f3460;
+        }
+        .verbe-exemple {
+            color: #c0392b;
+            font-weight: bold;
+        }
+        .test-vocabulaire {
+            background: #e8f5e9;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 2px solid #4caf50;
+        }
+        .test-vocabulaire input[type="text"] {
+            border: none;
+            border-bottom: 2px solid #2e7d32;
+            padding: 5px;
+            font-size: 16px;
+            width: 180px;
+            background: white;
+            border-radius: 3px;
+        }
+        .test-vocabulaire input[type="text"]:focus {
+            outline: none;
+            border-bottom: 2px solid #e94560;
+            background: #fff9c4;
+        }
+        .vocab-item {
+            margin: 8px 0;
+            padding: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .vocab-item label {
+            min-width: 180px;
+            font-weight: bold;
+        }
+        .btn-test {
+            background: #4caf50;
+        }
+        .btn-test:hover {
+            background: #388e3c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏆 Coupe du Monde de Football 🏆</h1>
+        <p style="text-align: center; font-style: italic; color: #555;">Niveau A2/B1 - Spécial Mondial</p>
+
+        <!-- ============================================= -->
+        <!-- DIALOGUE SUR LA COUPE DU MONDE                 -->
+        <!-- ============================================= -->
+        <h2>📺 Interview d'avant-match (Coupe du Monde)</h2>
+        <div class="dialogue">
+            <p><span class="journaliste">Journaliste :</span> Bonsoir et bienvenue dans notre émission spéciale Coupe du Monde. Je suis en direct avec Tom, l'attaquant de l'équipe de France. Tom, comment <span class="verbe-exemple">vous sentez-vous</span> avant ce match crucial contre l'Argentine ?</p>
+            <p><span class="joueur">Tom :</span> Bonsoir ! Je <span class="verbe-exemple">me sens</span> très bien, merci. Toute l'équipe <span class="verbe-exemple">est</span> concentrée. Nous <span class="verbe-exemple">savons</span> que ce match <span class="verbe-exemple">est</span> très important pour la qualification.</p>
+            <p><span class="journaliste">Journaliste :</span> L'Argentine <span class="verbe-exemple">a</span> une attaque redoutable, surtout avec Messi. Comment <span class="verbe-exemple">allez-vous</span> le stopper ?</p>
+            <p><span class="joueur">Tom :</span> Nous <span class="verbe-exemple">avons</span> un plan spécial. Je <span class="verbe-exemple">ne joue</span> pas seul en défense. Nous <span class="verbe-exemple">travaillons</span> tous ensemble. Le coach <span class="verbe-exemple">dit</span> toujours : "La défense <span class="verbe-exemple">commence</span> avec l'attaquant".</p>
+            <p><span class="journaliste">Journaliste :</span> Vous <span class="verbe-exemple">marquez</span> beaucoup de buts en ce moment. <span class="verbe-exemple">Pensez-vous</span> pouvoir marquer ce soir ?</p>
+            <p><span class="joueur">Tom :</span> Je l'<span class="verbe-exemple">espère</span> ! Je <span class="verbe-exemple">travaille</span> mes tirs tous les jours à l'entraînement. Je <span class="verbe-exemple">regarde</span> aussi beaucoup de vidéos du gardien argentin. Je <span class="verbe-exemple">connais</span> ses faiblesses.</p>
+            <p><span class="journaliste">Journaliste :</span> Et la pression de la Coupe du Monde ? Elle <span class="verbe-exemple">est</span> énorme, non ?</p>
+            <p><span class="joueur">Tom :</span> Oui, elle <span class="verbe-exemple">est</span> forte. Mais nous <span class="verbe-exemple">aimons</span> cette pression. Elle <span class="verbe-exemple">nous motive</span> encore plus. Nous <span class="verbe-exemple">voulons</span> soulever ce trophée pour nos supporters.</p>
+            <p><span class="journaliste">Journaliste :</span> Un dernier mot pour vos fans ?</p>
+            <p><span class="joueur">Tom :</span> Je <span class="verbe-exemple">dis</span> merci à tous. Nous <span class="verbe-exemple">jouons</span> pour vous. On <span class="verbe-exemple">va</span> tout donner sur le terrain. Allez les Bleus !</p>
+            <p><span class="journaliste">Journaliste :</span> Merci Tom, et bonne chance pour ce soir !</p>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- LEXIQUE DE LA COUPE DU MONDE + TEST VOCABULAIRE -->
+        <!-- ============================================= -->
+        <div class="lexique">
+            <h3>📚 Lexique de la Coupe du Monde</h3>
+            <ul>
+                <li><strong>la Coupe du Monde</strong> = World Cup</li>
+                <li><strong>un match crucial</strong> = a crucial match</li>
+                <li><strong>la qualification</strong> = qualification</li>
+                <li><strong>une attaque redoutable</strong> = a formidable attack</li>
+                <li><strong>un gardien</strong> = goalkeeper</li>
+                <li><strong>un tir</strong> = a shot</li>
+                <li><strong>un trophée</strong> = a trophy</li>
+                <li><strong>un supporter / un fan</strong> = a fan</li>
+                <li><strong>les Bleus</strong> = the French team</li>
+                <li><strong>soulever un trophée</strong> = to lift a trophy</li>
+                <li><strong>la pression</strong> = pressure</li>
+                <li><strong>un entraînement</strong> = a training session</li>
+                <li><strong>une faiblesse</strong> = a weakness</li>
+                <li><strong>une vidéo</strong> = a video</li>
+                <li><strong>un plan spécial</strong> = a special plan</li>
+                <li><strong>la défense</strong> = defense</li>
+                <li><strong>l'attaque</strong> = attack</li>
+                <li><strong>un coéquipier</strong> = teammate</li>
+            </ul>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- TEST DE VOCABULAIRE                           -->
+        <!-- ============================================= -->
+        <div class="test-vocabulaire">
+            <h3>🧪 Test de vocabulaire</h3>
+            <p>Complétez les phrases avec le mot correct du lexique :</p>
+            
+            <div class="vocab-item">
+                <label>1. Le joueur qui garde le but est le :</label>
+                <input type="text" id="vocab1" placeholder="Votre réponse">
+            </div>
+            <div class="vocab-item">
+                <label>2. Une compétition mondiale de football s'appelle :</label>
+                <input type="text" id="vocab2" placeholder="Votre réponse">
+            </div>
+            <div class="vocab-item">
+                <label>3. Quand une équipe marque, elle fait un :</label>
+                <input type="text" id="vocab3" placeholder="Votre réponse">
+            </div>
+            <div class="vocab-item">
+                <label>4. L'équipe de France est surnommée :</label>
+                <input type="text" id="vocab4" placeholder="Votre réponse">
+            </div>
+            <div class="vocab-item">
+                <label>5. Un fan de football est aussi appelé :</label>
+                <input type="text" id="vocab5" placeholder="Votre réponse">
+            </div>
+            <div class="vocab-item">
+                <label>6. Le contraire de l'attaque est :</label>
+                <input type="text" id="vocab6" placeholder="Votre réponse">
+            </div>
+            <div class="vocab-item">
+                <label>7. Un partenaire dans l'équipe est un :</label>
+                <input type="text" id="vocab7" placeholder="Votre réponse">
+            </div>
+            <div class="vocab-item">
+                <label>8. Le stress avant un match s'appelle :</label>
+                <input type="text" id="vocab8" placeholder="Votre réponse">
+            </div>
+            
+            <button class="btn-test" onclick="corrigerVocabulaire()">Corriger le test</button>
+            <div id="resultatVocab" class="resultat"></div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- QUESTIONS DE COMPRÉHENSION                     -->
+        <!-- ============================================= -->
+        <h2>❓ Questions sur l'interview</h2>
+        <div class="questions">
+            <ol>
+                <li>Contre quelle équipe joue la France ? 
+                    <button class="btn-reponse" onclick="montrerReponse(100)">Voir la réponse</button>
+                    <div id="reponse100" class="reponse-cachee">Contre l'Argentine.</div>
+                </li>
+                <li>Comment Tom se sent-il avant le match ?
+                    <button class="btn-reponse" onclick="montrerReponse(101)">Voir la réponse</button>
+                    <div id="reponse101" class="reponse-cachee">Il se sent très bien.</div>
+                </li>
+                <li>Qu'est-ce que Tom travaille tous les jours ?
+                    <button class="btn-reponse" onclick="montrerReponse(102)">Voir la réponse</button>
+                    <div id="reponse102" class="reponse-cachee">Il travaille ses tirs.</div>
+                </li>
+                <li>Que regarde Tom pour connaître les faiblesses du gardien ?
+                    <button class="btn-reponse" onclick="montrerReponse(103)">Voir la réponse</button>
+                    <div id="reponse103" class="reponse-cachee">Il regarde des vidéos.</div>
+                </li>
+                <li>Qu'est-ce que les joueurs veulent soulever ?
+                    <button class="btn-reponse" onclick="montrerReponse(104)">Voir la réponse</button>
+                    <div id="reponse104" class="reponse-cachee">Le trophée de la Coupe du Monde.</div>
+                </li>
+                <li>Pour qui les joueurs jouent-ils ?
+                    <button class="btn-reponse" onclick="montrerReponse(105)">Voir la réponse</button>
+                    <div id="reponse105" class="reponse-cachee">Pour leurs supporters / fans.</div>
+                </li>
+            </ol>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- GRAMMAIRE : LES VERBES AU PRÉSENT (RAPPEL)     -->
+        <!-- ============================================= -->
+        <h2>🔄 Point Grammaire : Les verbes au présent</h2>
+        <div class="grammaire-box">
+            <h3>📌 Les 3 groupes de verbes</h3>
+            <ul>
+                <li><strong>1er groupe (-er)</strong> : <span class="verbe-exemple">parler, marquer, entraîner</span></li>
+                <li><strong>2e groupe (-ir)</strong> : <span class="verbe-exemple">finir, réussir</span> (attention, peu de verbes)</li>
+                <li><strong>3e groupe (irréguliers)</strong> : <span class="verbe-exemple">être, avoir, aller, faire, dire, savoir, pouvoir, vouloir, devoir</span>…</li>
+            </ul>
+            <p><strong>Règle :</strong> Pour conjuguer un verbe au présent, on remplace la terminaison de l'infinitif par : <br>
+            <strong>-e, -es, -e, -ons, -ez, -ent</strong> (1er gr.) ; <strong>-is, -is, -it, -issons, -issez, -issent</strong> (2e gr.).</p>
+            <p><span style="background:#fff9c4; padding:2px 6px;">⚠️ Attention aux verbes irréguliers !</span> Ils changent de radical.</p>
+        </div>
+
+        <!-- Tableau de conjugaison des verbes clés du dialogue -->
+        <h3>Conjugaison des verbes employés dans l'interview</h3>
+        <table>
+            <tr>
+                <th>Sujet</th>
+                <th>ÊTRE</th>
+                <th>AVOIR</th>
+                <th>ALLER</th>
+                <th>FAIRE</th>
+                <th>DIRE</th>
+                <th>SAVOIR</th>
+            </tr>
+            <tr><td>Je</td><td>suis</td><td>ai</td><td>vais</td><td>fais</td><td>dis</td><td>sais</td></tr>
+            <tr><td>Tu</td><td>es</td><td>as</td><td>vas</td><td>fais</td><td>dis</td><td>sais</td></tr>
+            <tr><td>Il/Elle/On</td><td>est</td><td>a</td><td>va</td><td>fait</td><td>dit</td><td>sait</td></tr>
+            <tr><td>Nous</td><td>sommes</td><td>avons</td><td>allons</td><td>faisons</td><td>disons</td><td>savons</td></tr>
+            <tr><td>Vous</td><td>êtes</td><td>avez</td><td>allez</td><td>faites</td><td>dites</td><td>savez</td></tr>
+            <tr><td>Ils/Elles</td><td>sont</td><td>ont</td><td>vont</td><td>font</td><td>disent</td><td>savent</td></tr>
+        </table>
+
+        <!-- ============================================= -->
+        <!-- EXERCICES SUR LE PRÉSENT (AVEC CHAMPS)         -->
+        <!-- ============================================= -->
+        <h2>💪 Exercices : Conjuguez au présent</h2>
+
+        <div class="exercice">
+            <h3>Exercice 1 : Complétez avec le verbe indiqué (présent)</h3>
+            <p>1. Nous <input type="text" id="p1_1" placeholder="vouloir"> gagner la Coupe du Monde.</p>
+            <p>2. Tu <input type="text" id="p1_2" placeholder="devoir"> marquer ce penalty.</p>
+            <p>3. Les joueurs <input type="text" id="p1_3" placeholder="pouvoir"> courir vite.</p>
+            <p>4. Je <input type="text" id="p1_4" placeholder="savoir"> où se trouve le stade.</p>
+            <p>5. Vous <input type="text" id="p1_5" placeholder="dire"> la vérité aux supporters.</p>
+            <button onclick="corrigerPresent1()">Corriger</button>
+            <div id="resultatP1" class="resultat"></div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 2 : Mettez les verbes entre parenthèses au présent</h3>
+            <p>1. Chaque matin, je <input type="text" id="p2_1" placeholder="s'entraîner"> pendant deux heures.</p>
+            <p>2. Le coach <input type="text" id="p2_2" placeholder="donner"> des conseils avant chaque match.</p>
+            <p>3. Nous <input type="text" id="p2_3" placeholder="regarder"> les matchs à la télévision.</p>
+            <p>4. Les supporters <input type="text" id="p2_4" placeholder="encourager"> leur équipe avec passion.</p>
+            <p>5. Tu <input type="text" id="p2_5" placeholder="aller"> au stade ce soir ?</p>
+            <button onclick="corrigerPresent2()">Corriger</button>
+            <div id="resultatP2" class="resultat"></div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 3 : Complétez avec ÊTRE, AVOIR ou ALLER</h3>
+            <p>1. Je <input type="text" id="p3_1" placeholder="être/avoir/aller"> prêt pour le match.</p>
+            <p>2. Nous <input type="text" id="p3_2" placeholder="être/avoir/aller"> confiance en nos capacités.</p>
+            <p>3. Ils <input type="text" id="p3_3" placeholder="être/avoir/aller"> au stade en bus.</p>
+            <p>4. Vous <input type="text" id="p3_4" placeholder="être/avoir/aller"> fatigués après l'entraînement ?</p>
+            <p>5. Elle <input type="text" id="p3_5" placeholder="être/avoir/aller"> une grande joueuse.</p>
+            <button onclick="corrigerPresent3()">Corriger</button>
+            <div id="resultatP3" class="resultat"></div>
+        </div>
+
+        <div class="exercice">
+            <h3>Exercice 4 : Traduisez en français (utilisez le présent)</h3>
+            <p>1. I know the coach = Je <input type="text" id="p4_1" placeholder="sais"> l'entraîneur.</p>
+            <p>2. We say hello to the fans = Nous <input type="text" id="p4_2" placeholder="disons"> bonjour aux fans.</p>
+            <p>3. They (fem.) are motivated = Elles <input type="text" id="p4_3" placeholder="sont"> motivées.</p>
+            <p>4. You (sing.) have a lot of talent = Tu <input type="text" id="p4_4" placeholder="as"> beaucoup de talent.</p>
+            <p>5. I go to the stadium = Je <input type="text" id="p4_5" placeholder="vais"> au stade.</p>
+            <button onclick="corrigerPresent4()">Corriger</button>
+            <div id="resultatP4" class="resultat"></div>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- POUR ALLER PLUS LOIN : EXPRESSION DE LA ROUTINE -->
+        <!-- ============================================= -->
+        <h2>⏰ La routine d'un joueur de la Coupe du Monde</h2>
+        <div style="background:#f1f8e9; padding:15px; border-radius:8px;">
+            <p><strong>Chaque jour, pendant la Coupe du Monde :</strong></p>
+            <ul>
+                <li>Je <span class="verbe-exemple">me réveille</span> à 7h.</li>
+                <li>Je <span class="verbe-exemple">petit-déjeune</span> avec l'équipe.</li>
+                <li>Nous <span class="verbe-exemple">allons</span> à l'entraînement à 9h.</li>
+                <li>Le coach <span class="verbe-exemple">analyse</span> les adversaires.</li>
+                <li>Nous <span class="verbe-exemple">faisons</span> des exercices tactiques.</li>
+                <li>L'après-midi, je <span class="verbe-exemple">regarde</span> des vidéos.</li>
+                <li>Le soir, je <span class="verbe-exemple">me repose</span> et je <span class="verbe-exemple">dors</span> tôt.</li>
+            </ul>
+            <p><span style="background:#fff9c4; padding:2px 6px;">👉 À vous :</span> Rédigez votre propre routine (3-4 phrases) en utilisant des verbes au présent.</p>
+            <textarea style="width:100%; padding:10px; border-radius:5px; border:2px solid #0f3460; font-size:16px; min-height:80px;" placeholder="Écrivez votre routine ici..."></textarea>
+        </div>
+
+        <!-- ============================================= -->
+        <!-- SCRIPTS (CORRECTIONS)                          -->
+        <!-- ============================================= -->
+        <script>
+            // Fonction pour afficher/masquer les réponses
+            function montrerReponse(num) {
+                const reponse = document.getElementById('reponse' + num);
+                if (reponse.style.display === 'none' || reponse.style.display === '') {
+                    reponse.style.display = 'block';
+                } else {
+                    reponse.style.display = 'none';
+                }
+            }
+
+            // --- CORRECTION TEST VOCABULAIRE ---
+            function corrigerVocabulaire() {
+                const reponses = ['gardien', 'coupe du monde', 'tir', 'bleus', 'supporter', 'défense', 'coéquipier', 'pression'];
+                const ids = ['vocab1', 'vocab2', 'vocab3', 'vocab4', 'vocab5', 'vocab6', 'vocab7', 'vocab8'];
+                let score = 0;
+                let details = '';
+                
+                for(let i = 0; i < ids.length; i++) {
+                    const input = document.getElementById(ids[i]);
+                    const reponse = input.value.toLowerCase().trim();
+                    // Nettoyer les accents pour la comparaison
+                    const reponseNormalisee = reponse.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                    const attenduNormalise = reponses[i].normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+                    
+                    if(reponseNormalisee === attenduNormalise) {
+                        score++;
+                        input.style.borderBottom = '3px solid #4caf50';
+                        input.style.background = '#d4edda';
+                        details += `${i+1}. ✅ Correct\n`;
+                    } else {
+                        input.style.borderBottom = '3px solid #f44336';
+                        input.style.background = '#f8d7da';
+                        details += `${i+1}. ❌ Réponse : "${reponses[i]}"\n`;
+                    }
+                }
+                
+                const resultat = document.getElementById('resultatVocab');
+                resultat.style.display = 'block';
+                resultat.className = 'resultat ' + (score === 8 ? 'correct' : 'incorrect');
+                resultat.innerHTML = `Score : ${score}/8<br><pre style="white-space:pre-wrap; margin:5px 0;">${details}</pre>`;
+            }
+
+            // --- CORRECTION EXERCICE 1 (présent) ---
+            function corrigerPresent1() {
+                const reponses = ['voulons', 'dois', 'peuvent', 'sais', 'dites'];
+                const ids = ['p1_1', 'p1_2', 'p1_3', 'p1_4', 'p1_5'];
+                let score = 0;
+                let details = '';
+                
+                for(let i = 0; i < ids.length; i++) {
+                    const input = document.getElementById(ids[i]);
+                    const reponse = input.value.toLowerCase().trim();
+                    if(reponse === reponses[i]) {
+                        score++;
+                        input.style.borderBottom = '3px solid #4caf50';
+                        input.style.background = '#d4edda';
+                        details += `${i+1}. ✅ "${reponses[i]}"\n`;
+                    } else {
+                        input.style.borderBottom = '3px solid #f44336';
+                        input.style.background = '#f8d7da';
+                        details += `${i+1}. ❌ Attendu : "${reponses[i]}"\n`;
+                    }
+                }
+                
+                const resultat = document.getElementById('resultatP1');
+                resultat.style.display = 'block';
+                resultat.className = 'resultat ' + (score === 5 ? 'correct' : 'incorrect');
+                resultat.innerHTML = `Score : ${score}/5<br><pre style="white-space:pre-wrap; margin:5px 0;">${details}</pre>`;
+            }
+
+            // --- CORRECTION EXERCICE 2 (présent) ---
+            function corrigerPresent2() {
+                const reponses = ['m\'entraîne', 'donne', 'regardons', 'encouragent', 'vas'];
+                const ids = ['p2_1', 'p2_2', 'p2_3', 'p2_4', 'p2_5'];
+                let score = 0;
+                let details = '';
+                
+                for(let i = 0; i < ids.length; i++) {
+                    const input = document.getElementById(ids[i]);
+                    const reponse = input.value.toLowerCase().trim();
+                    // Tolérance pour l'accent et "va" pour "tu vas"
+                    const estCorrect = (reponse === reponses[i]) || 
+                                      (i===0 && reponse === "m'entraine") ||
+                                      (i===4 && reponse === "va");
+                    
+                    if(estCorrect) {
+                        score++;
+                        input.style.borderBottom = '3px solid #4caf50';
+                        input.style.background = '#d4edda';
+                        details += `${i+1}. ✅ "${reponses[i]}"\n`;
+                    } else {
+                        input.style.borderBottom = '3px solid #f44336';
+                        input.style.background = '#f8d7da';
+                        details += `${i+1}. ❌ Attendu : "${reponses[i]}"\n`;
+                    }
+                }
+                
+                const resultat = document.getElementById('resultatP2');
+                resultat.style.display = 'block';
+                resultat.className = 'resultat ' + (score === 5 ? 'correct' : 'incorrect');
+                resultat.innerHTML = `Score : ${score}/5<br><pre style="white-space:pre-wrap; margin:5px 0;">${details}</pre>`;
+            }
+
+            // --- CORRECTION EXERCICE 3 (être/avoir/aller) ---
+            function corrigerPresent3() {
+                const reponses = ['suis', 'avons', 'vont', 'êtes', 'est'];
+                const ids = ['p3_1', 'p3_2', 'p3_3', 'p3_4', 'p3_5'];
+                let score = 0;
+                let details = '';
+                
+                for(let i = 0; i < ids.length; i++) {
+                    const input = document.getElementById(ids[i]);
+                    const reponse = input.value.toLowerCase().trim();
+                    if(reponse === reponses[i]) {
+                        score++;
+                        input.style.borderBottom = '3px solid #4caf50';
+                        input.style.background = '#d4edda';
+                        details += `${i+1}. ✅ "${reponses[i]}"\n`;
+                    } else {
+                        input.style.borderBottom = '3px solid #f44336';
+                        input.style.background = '#f8d7da';
+                        details += `${i+1}. ❌ Attendu : "${reponses[i]}"\n`;
+                    }
+                }
+                
+                const resultat = document.getElementById('resultatP3');
+                resultat.style.display = 'block';
+                resultat.className = 'resultat ' + (score === 5 ? 'correct' : 'incorrect');
+                resultat.innerHTML = `Score : ${score}/5<br><pre style="white-space:pre-wrap; margin:5px 0;">${details}</pre>`;
+            }
+
+            // --- CORRECTION EXERCICE 4 (traductions) ---
+            function corrigerPresent4() {
+                const reponses = ['sais', 'disons', 'sont', 'as', 'vais'];
+                const ids = ['p4_1', 'p4_2', 'p4_3', 'p4_4', 'p4_5'];
+                let score = 0;
+                let details = '';
+                
+                for(let i = 0; i < ids.length; i++) {
+                    const input = document.getElementById(ids[i]);
+                    const reponse = input.value.toLowerCase().trim();
+                    if(reponse === reponses[i]) {
+                        score++;
+                        input.style.borderBottom = '3px solid #4caf50';
+                        input.style.background = '#d4edda';
+                        details += `${i+1}. ✅ "${reponses[i]}"\n`;
+                    } else {
+                        input.style.borderBottom = '3px solid #f44336';
+                        input.style.background = '#f8d7da';
+                        details += `${i+1}. ❌ Attendu : "${reponses[i]}"\n`;
+                    }
+                }
+                
+                const resultat = document.getElementById('resultatP4');
+                resultat.style.display = 'block';
+                resultat.className = 'resultat ' + (score === 5 ? 'correct' : 'incorrect');
+                resultat.innerHTML = `Score : ${score}/5<br><pre style="white-space:pre-wrap; margin:5px 0;">${details}</pre>`;
+            }
+        </script>
+
+        <p style="text-align:center; margin-top:30px; color:#888;">⚽ Allez, on continue à s'entraîner ! La Coupe du Monde nous attend ! ⚽</p>
+    </div>
+</body>
+</html>
