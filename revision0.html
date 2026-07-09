@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLE A1 · Révision · Exercices</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --ink: #1a1230;
+            --cream: #fdfbf7;
+            --parchment: #f5f0e8;
+            --gold: #e0a020;
+            --gold-light: #faecc8;
+            --red: #d63050;
+            --red-light: #fde8ed;
+            --blue: #1a6fb5;
+            --blue-light: #dbeeff;
+            --green: #1e8a4a;
+            --green-light: #d4f0e0;
+            --purple: #7c3abf;
+            --purple-light: #ede5fa;
+            --orange: #e86a10;
+            --orange-light: #fde8d4;
+            --teal: #0f8080;
+            --teal-light: #d4f0f0;
+            --pink: #d43080;
+            --pink-light: #fde0ef;
+            --grey: #7a7a8a;
+            --border: #e0d8cc;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.75; padding: 20px; display: flex; justify-content: center; }
+
+        .app-wrapper {
+            max-width: 1300px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px -20px rgba(18, 60, 70, 0.25);
+            padding: 30px 35px;
+            transition: all 0.2s;
+        }
+
+        .progress-container {
+            background: #e4f0ed;
+            border-radius: 60px;
+            height: 10px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--teal);
+            border-radius: 60px;
+            transition: width 0.5s ease;
+        }
+
+        .nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 14px;
+            padding: 12px 0 18px 0;
+            border-bottom: 2px solid var(--border);
+            margin-bottom: 25px;
+            position: sticky;
+            top: 0;
+            background: #ffffff;
+            z-index: 50;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--teal);
+            font-weight: 600;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            transition: 0.15s;
+        }
+        .nav-menu a:hover {
+            background: var(--blue-light);
+            color: var(--blue);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.02em;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 14px;
+            border-bottom: 6px solid var(--gold);
+            padding-bottom: 18px;
+            margin-bottom: 10px;
+        }
+        h1 span {
+            background: var(--ink);
+            color: var(--gold);
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 4px 22px;
+            border-radius: 60px;
+            font-family: 'Nunito', sans-serif;
+        }
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--ink);
+            margin: 38px 0 18px 0;
+            border-left: 18px solid var(--gold);
+            padding-left: 22px;
+        }
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--purple);
+            margin: 20px 0 12px 0;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #1a1230 0%, #2e1a5a 40%, #1a3a6a 100%);
+            color: white;
+            border-radius: 36px;
+            padding: 36px 38px;
+            margin: 10px 0 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(224,160,32,.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 80% 30%, rgba(124,58,191,.2) 0%, transparent 60%);
+            pointer-events: none;
+        }
+        .hero .flag-row {
+            display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; position: relative;
+        }
+        .hero .flag-bar { width: 10px; height: 44px; border-radius: 4px; }
+        .hero .fb { background: #002395; }
+        .hero .fw { background: #fff; }
+        .hero .frc { background: #ed2939; }
+        .hero h1 {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+            color: white;
+            font-size: clamp(1.8rem,4vw,2.8rem);
+            justify-content: center;
+        }
+        .hero h1 em { color: var(--gold); font-style: italic; }
+        .hero .subtitle {
+            margin-top: 10px;
+            font-size: 0.95rem;
+            font-weight: 300;
+            opacity: .7;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .hero .badges {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 18px;
+            flex-wrap: wrap;
+            position: relative;
+        }
+        .hero .badge {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: .7rem;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+        .hero .b-gold { background: var(--gold); color: var(--ink); }
+        .hero .b-purple { background: rgba(124,58,191,.6); color: #e8d0ff; border: 1px solid rgba(200,160,255,.3); }
+        .hero .b-blue { background: rgba(26,111,181,.6); color: #c8e4ff; border: 1px solid rgba(100,180,255,.3); }
+
+        .hero ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px 24px;
+            margin: 14px 0 20px;
+            position: relative;
+            justify-content: center;
+        }
+        .hero ul li {
+            background: rgba(255,255,255,0.15);
+            padding: 6px 20px;
+            border-radius: 60px;
+            font-weight: 500;
+            color: #e8e0f0;
+            font-size: 0.85rem;
+        }
+        .btn-start {
+            background: var(--gold);
+            border: none;
+            color: var(--ink);
+            font-size: 1.1rem;
+            font-weight: 800;
+            padding: 14px 40px;
+            border-radius: 60px;
+            cursor: pointer;
+            box-shadow: 0 8px 0 #b08010;
+            transition: 0.1s;
+            font-family: 'Nunito', sans-serif;
+            position: relative;
+            display: block;
+            margin: 0 auto;
+        }
+        .btn-start:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 0 #b08010;
+            background: #f0b030;
+        }
+
+        .story-box {
+            background: linear-gradient(135deg,#f5f0e8,#fdf8f0);
+            border-left: 5px solid var(--gold);
+            border-radius: 0 14px 14px 0;
+            padding: 24px 30px;
+            margin: 16px 0 25px;
+            box-shadow: 0 2px 12px rgba(0,0,0,.05);
+        }
+        .story-box h3 {
+            color: var(--purple);
+            margin-top: 16px;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .story-box h3:first-of-type { margin-top: 0; }
+        .dialogue-line {
+            margin-bottom: 6px;
+            padding: 6px 12px;
+            border-radius: 30px;
+            background: rgba(255,255,255,0.7);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            gap: 6px 12px;
+        }
+        .dialogue-line .fr {
+            font-weight: 700;
+            color: var(--red);
+            font-size: 1rem;
+        }
+        .dialogue-line .en {
+            color: var(--blue);
+            font-style: italic;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-bottom: 1px dashed var(--blue);
+        }
+        .dialogue-line .en.hidden {
+            display: none;
+        }
+        .dialogue-line .speaker {
+            font-weight: 800;
+            color: var(--purple);
+            font-size: 0.85rem;
+        }
+        .story-box .tip {
+            margin-top: 14px;
+            background: var(--gold-light);
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-size: 0.9rem;
+            color: var(--ink);
+        }
+
+        .lesson-card {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 30px;
+            padding: 24px 28px;
+            margin-bottom: 32px;
+            box-shadow: 0 8px 0 #d0c8bc;
+        }
+
+        .exo-line {
+            font-size: 1rem;
+            margin: 10px 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 14px;
+            background: #fafdfc;
+            padding: 8px 14px;
+            border-radius: 40px;
+        }
+        .exo-line input {
+            border: none;
+            border-bottom: 2px solid var(--gold);
+            background: transparent;
+            padding: 2px 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--ink);
+            font-family: 'Nunito', sans-serif;
+            outline: none;
+            min-width: 130px;
+            transition: border-color .2s;
+        }
+        .exo-line input::placeholder { color: #b8b0a8; font-style: italic; }
+        .exo-line input:focus {
+            border-bottom-color: var(--blue);
+        }
+        .exo-line input.ok {
+            border-bottom-color: var(--green);
+            color: var(--green);
+            font-weight: 700;
+        }
+        .exo-line input.bad {
+            border-bottom-color: var(--red);
+            color: var(--red);
+        }
+
+        .btn-check {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-size: .75rem;
+            font-weight: 800;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+            transition: opacity .2s,transform .1s;
+            color: white;
+            background: var(--blue);
+        }
+        .btn-check:hover { opacity: .88; transform: translateY(-1px); }
+        .btn-check.bc-blue { background: var(--blue); }
+        .btn-check.bc-green { background: var(--green); }
+        .btn-check.bc-purple { background: var(--purple); }
+
+        .feedback {
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .feedback.correct { background: var(--green-light); color: var(--green); }
+        .feedback.wrong { background: var(--red-light); color: var(--red); }
+        .hidden { display: none !important; }
+
+        .answer-blur {
+            display: inline-block;
+            background: var(--parchment);
+            border: 2px dashed var(--gold);
+            border-radius: 30px;
+            padding: 4px 16px;
+            font-weight: 700;
+            color: var(--ink);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+            min-width: 60px;
+            text-align: center;
+            filter: blur(7px);
+            user-select: none;
+        }
+        .answer-blur:hover {
+            filter: blur(4px);
+            background: var(--gold-light);
+        }
+        .answer-blur.revealed {
+            filter: blur(0);
+            background: var(--green-light);
+            border-color: var(--green);
+            cursor: default;
+            user-select: text;
+        }
+        .answer-blur.revealed:hover {
+            background: var(--green-light);
+        }
+        .answer-blur::before {
+            content: "💡 indice";
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 800;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            color: var(--grey);
+            filter: none;
+            margin-bottom: 1px;
+        }
+        .answer-blur.revealed::before { content: "✅ réponse"; color: var(--green); }
+
+        .answer-blur-wrong {
+            display: inline-block;
+            background: var(--red-light);
+            border: 2px solid var(--red);
+            border-radius: 30px;
+            padding: 4px 16px;
+            font-weight: 700;
+            color: var(--red);
+            font-size: 0.95rem;
+            min-width: 60px;
+            text-align: center;
+            filter: blur(6px);
+            user-select: none;
+            cursor: pointer;
+        }
+        .answer-blur-wrong.revealed {
+            filter: blur(0);
+            background: var(--red-light);
+            border-color: var(--red);
+            cursor: default;
+        }
+
+        .answer-container {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .exo-translation {
+            color: var(--grey);
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-left: 4px;
+        }
+
+        .audio-btn {
+            background: var(--gold-light);
+            border: 2px solid var(--gold);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 0.8rem;
+            color: var(--ink);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: 0.1s;
+        }
+        .audio-btn:hover {
+            background: var(--gold);
+            color: white;
+            transform: scale(1.04);
+        }
+        .audio-btn-sm { width: 28px; height: 28px; font-size: 0.7rem; }
+
+        .badge {
+            background: var(--ink);
+            color: var(--gold);
+            border-radius: 50px;
+            padding: 3px 18px;
+            font-size: 0.8rem;
+            display: inline-block;
+        }
+        .recap-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 24px 0 16px;
+            background: var(--parchment);
+            border-radius: 40px;
+            padding: 16px 22px;
+            justify-content: center;
+            border: 2px solid var(--border);
+        }
+        .recap-item {
+            font-weight: 700;
+            color: var(--teal);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: white;
+            padding: 4px 14px 4px 10px;
+            border-radius: 50px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 0.8rem;
+        }
+        footer {
+            margin-top: 32px;
+            color: var(--grey);
+            text-align: center;
+            border-top: 3px solid var(--border);
+            padding-top: 24px;
+            font-size: 0.85rem;
+        }
+        .score-display {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--teal);
+            text-align: right;
+            padding: 8px 0;
+        }
+
+        .qcm-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 8px 0;
+        }
+        .qcm-options button {
+            padding: 6px 18px;
+            border: 2px solid var(--border);
+            border-radius: 30px;
+            background: white;
+            cursor: pointer;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.15s;
+            color: var(--ink);
+        }
+        .qcm-options button:hover {
+            background: var(--blue-light);
+            border-color: var(--blue);
+        }
+        .qcm-options button.selected {
+            background: var(--blue);
+            color: white;
+            border-color: var(--blue);
+        }
+        .qcm-options button.correct-answer {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+        }
+        .qcm-options button.wrong-answer {
+            background: var(--red);
+            color: white;
+            border-color: var(--red);
+        }
+
+        @keyframes fi {
+            0% { transform: scale(0.95); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 700px) {
+            .app-wrapper { padding: 14px; }
+            h1 { font-size: 1.6rem; }
+            .hero { padding: 20px; }
+            .exo-line { flex-direction: column; align-items: stretch; }
+            .exo-line input { width: 100%; }
+            .nav-menu { gap: 4px 8px; }
+            .nav-menu a { font-size: 0.7rem; padding: 3px 8px; }
+            .qcm-options button { padding: 4px 12px; font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+    <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+    <nav class="nav-menu">
+        <a href="#hero">Accueil</a>
+        <a href="#story">📖 Dialogue</a>
+        <a href="#exos">Exercices</a>
+        <a href="#final">Mission</a>
+    </nav>
+
+    <section id="hero" class="hero">
+        <div class="flag-row">
+            <div class="flag-bar fb"></div>
+            <div class="flag-bar fw"></div>
+            <div class="flag-bar frc"></div>
+        </div>
+        <h1>Français A1 · <em>Révision</em></h1>
+        <p class="subtitle">Informations personnelles · Questions &amp; Réponses</p>
+        <div class="badges">
+            <span class="badge b-gold">Niveau A1</span>
+            <span class="badge b-purple">Pour anglophones</span>
+            <span class="badge b-blue">Répétition</span>
+        </div>
+        <ul>
+            <li>✅ Poser des questions</li>
+            <li>✅ Pronoms & possessifs</li>
+            <li>✅ Couleurs & vêtements</li>
+            <li>✅ Nombres 0-100</li>
+            <li>✅ Être & Avoir</li>
+        </ul>
+        <button class="btn-start" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">
+            <i class="fas fa-play"></i> Commencer
+        </button>
+    </section>
+
+    <!-- ===== DIALOGUE ===== -->
+    <section id="story">
+        <h2>📖 Dialogue : Rencontre à Lyon</h2>
+        <div class="story-box">
+            <p style="font-weight:600; color:var(--purple); margin-bottom:12px;">👨‍💼 Thomas rencontre Sophie dans un café à Lyon.</p>
+
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Bonjour, madame ! Comment allez-vous ? <button class="audio-btn audio-btn-sm" onclick="speak('Bonjour, madame ! Comment allez-vous ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Hello, ma'am! How are you?</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Je vais bien, merci ! Et vous ? <button class="audio-btn audio-btn-sm" onclick="speak('Je vais bien, merci ! Et vous ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I'm fine, thanks! And you?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Très bien, merci ! Je m'appelle Thomas. Et vous ? <button class="audio-btn audio-btn-sm" onclick="speak('Très bien, merci ! Je m\'appelle Thomas. Et vous ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Very well, thanks! I'm Thomas. And you?</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Je m'appelle Sophie. Enchantée. Vous venez d'où ? <button class="audio-btn audio-btn-sm" onclick="speak('Je m\'appelle Sophie. Enchantée. Vous venez d\'où ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I'm Sophie. Nice to meet you. Where are you from?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Je viens des États-Unis. J'habite à New York. <button class="audio-btn audio-btn-sm" onclick="speak('Je viens des États-Unis. J\'habite à New York.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I'm from the United States. I live in New York.</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Ah, c'est formidable ! Vous habitez à Lyon maintenant ? <button class="audio-btn audio-btn-sm" onclick="speak('Ah, c\'est formidable ! Vous habitez à Lyon maintenant ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Oh, that's great! Do you live in Lyon now?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Oui, je travaille ici, à Lyon. <button class="audio-btn audio-btn-sm" onclick="speak('Oui, je travaille ici, à Lyon.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Yes, I work here, in Lyon.</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Vous êtes marié, Thomas ? <button class="audio-btn audio-btn-sm" onclick="speak('Vous êtes marié, Thomas ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Are you married, Thomas?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Oui, je suis marié. Ma femme s'appelle Claire. <button class="audio-btn audio-btn-sm" onclick="speak('Oui, je suis marié. Ma femme s\'appelle Claire.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Yes, I'm married. My wife's name is Claire.</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Vous avez des enfants ? <button class="audio-btn audio-btn-sm" onclick="speak('Vous avez des enfants ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Do you have children?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Oui, nous avons trois enfants. <button class="audio-btn audio-btn-sm" onclick="speak('Oui, nous avons trois enfants.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Yes, we have three children.</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Quel âge ont vos enfants ? <button class="audio-btn audio-btn-sm" onclick="speak('Quel âge ont vos enfants ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">How old are your children?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Mon fils a 8 ans, ma fille a 5 ans et mon autre fils a 3 ans. <button class="audio-btn audio-btn-sm" onclick="speak('Mon fils a 8 ans, ma fille a 5 ans et mon autre fils a 3 ans.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">My son is 8, my daughter is 5 and my other son is 3.</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Quel âge avez-vous ? <button class="audio-btn audio-btn-sm" onclick="speak('Quel âge avez-vous ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">How old are you?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">J'ai 35 ans. <button class="audio-btn audio-btn-sm" onclick="speak('J\'ai 35 ans.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I'm 35.</span></div>
+            <div class="dialogue-line"><span class="speaker">Sophie :</span> <span class="fr">Vous travaillez où ? <button class="audio-btn audio-btn-sm" onclick="speak('Vous travaillez où ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Where do you work?</span></div>
+            <div class="dialogue-line"><span class="speaker">Thomas :</span> <span class="fr">Je travaille dans une banque à Lyon. <button class="audio-btn audio-btn-sm" onclick="speak('Je travaille dans une banque à Lyon.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I work in a bank in Lyon.</span></div>
+            <div class="tip">💡 <strong>Mots clés :</strong> Comment allez-vous ? Je vais bien. Comment vous appelez-vous ? Vous venez d'où ? J'habite à... Vous êtes marié ? Vous avez des enfants ? Quel âge ont vos enfants ? Quel âge avez-vous ? Vous travaillez où ?</div>
+        </div>
+    </section>
+
+    <!-- ===== EXERCICES ===== -->
+    <section id="exos">
+        <h2>✏️ Exercices</h2>
+
+        <!-- EXERCICE 1 : Questions -->
+        <div class="lesson-card">
+            <h3>Exercice 1 : Questions (QCM)</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Choose the correct question.</em></p>
+
+            <div id="qcm1" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">a)</span> Pour demander comment va quelqu'un :</div>
+                <div class="qcm-options" id="qcm1-options"></div>
+                <div id="fbQcm1" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcm2" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">b)</span> Pour demander le nom :</div>
+                <div class="qcm-options" id="qcm2-options"></div>
+                <div id="fbQcm2" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcm3" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">c)</span> Pour demander la provenance :</div>
+                <div class="qcm-options" id="qcm3-options"></div>
+                <div id="fbQcm3" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcm4" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">d)</span> Pour demander l'âge :</div>
+                <div class="qcm-options" id="qcm4-options"></div>
+                <div id="fbQcm4" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcm5" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">e)</span> Pour demander le lieu de travail :</div>
+                <div class="qcm-options" id="qcm5-options"></div>
+                <div id="fbQcm5" class="feedback" style="margin-top:6px;"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 2 : Possessifs -->
+        <div class="lesson-card">
+            <h3>Exercice 2 : Possessifs (QCM)</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Choose the correct possessive.</em></p>
+
+            <div id="qcmP1" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">a)</span> ______ femme s'appelle Claire. <span style="color:var(--grey);font-size:0.85rem;">(My wife)</span></div>
+                <div class="qcm-options" id="qcmP1-options"></div>
+                <div id="fbQcmP1" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmP2" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">b)</span> ______ mari est ingénieur. <span style="color:var(--grey);font-size:0.85rem;">(My husband)</span></div>
+                <div class="qcm-options" id="qcmP2-options"></div>
+                <div id="fbQcmP2" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmP3" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">c)</span> ______ enfants sont adorables. <span style="color:var(--grey);font-size:0.85rem;">(My children)</span></div>
+                <div class="qcm-options" id="qcmP3-options"></div>
+                <div id="fbQcmP3" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmP4" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">d)</span> ______ amie est espagnole. <span style="color:var(--grey);font-size:0.85rem;">(My friend (f))</span></div>
+                <div class="qcm-options" id="qcmP4-options"></div>
+                <div id="fbQcmP4" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmP5" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">e)</span> ______ fils a 8 ans. <span style="color:var(--grey);font-size:0.85rem;">(My son)</span></div>
+                <div class="qcm-options" id="qcmP5-options"></div>
+                <div id="fbQcmP5" class="feedback" style="margin-top:6px;"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 3 : Couleurs + Vêtements -->
+        <div class="lesson-card">
+            <h3>Exercice 3 : Couleurs &amp; Vêtements (QCM)</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Choose the correct translation.</em></p>
+
+            <div id="qcmC1" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">a)</span> a red sweater</div>
+                <div class="qcm-options" id="qcmC1-options"></div>
+                <div id="fbQcmC1" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmC2" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">b)</span> a green jacket</div>
+                <div class="qcm-options" id="qcmC2-options"></div>
+                <div id="fbQcmC2" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmC3" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">c)</span> black trousers</div>
+                <div class="qcm-options" id="qcmC3-options"></div>
+                <div id="fbQcmC3" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmC4" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">d)</span> a white dress</div>
+                <div class="qcm-options" id="qcmC4-options"></div>
+                <div id="fbQcmC4" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmC5" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">e)</span> a blue skirt</div>
+                <div class="qcm-options" id="qcmC5-options"></div>
+                <div id="fbQcmC5" class="feedback" style="margin-top:6px;"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 4 : Nombres QCM -->
+        <div class="lesson-card">
+            <h3>Exercice 4 : Nombres (QCM)</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Choose the correct number.</em></p>
+
+            <div id="qcmN1" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">a)</span> vingt et un</div>
+                <div class="qcm-options" id="qcmN1-options"></div>
+                <div id="fbQcmN1" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmN2" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">b)</span> soixante-douze</div>
+                <div class="qcm-options" id="qcmN2-options"></div>
+                <div id="fbQcmN2" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmN3" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">c)</span> quatre-vingt-onze</div>
+                <div class="qcm-options" id="qcmN3-options"></div>
+                <div id="fbQcmN3" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmN4" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">d)</span> trente-cinq</div>
+                <div class="qcm-options" id="qcmN4-options"></div>
+                <div id="fbQcmN4" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmN5" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">e)</span> quatre-vingt-trois</div>
+                <div class="qcm-options" id="qcmN5-options"></div>
+                <div id="fbQcmN5" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmN6" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">f)</span> cinquante-huit</div>
+                <div class="qcm-options" id="qcmN6-options"></div>
+                <div id="fbQcmN6" class="feedback" style="margin-top:6px;"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 5 : Être & Avoir -->
+        <div class="lesson-card">
+            <h3>Exercice 5 : Être ou Avoir (QCM)</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Choose the correct form of être or avoir.</em></p>
+
+            <div id="qcmE1" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">a)</span> Je ______ marié. <span style="color:var(--grey);font-size:0.85rem;">(I am married.)</span></div>
+                <div class="qcm-options" id="qcmE1-options"></div>
+                <div id="fbQcmE1" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmE2" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">b)</span> Nous ______ trois enfants. <span style="color:var(--grey);font-size:0.85rem;">(We have three children.)</span></div>
+                <div class="qcm-options" id="qcmE2-options"></div>
+                <div id="fbQcmE2" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmE3" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">c)</span> Elle ______ professeur. <span style="color:var(--grey);font-size:0.85rem;">(She is a teacher.)</span></div>
+                <div class="qcm-options" id="qcmE3-options"></div>
+                <div id="fbQcmE3" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmE4" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">d)</span> Vous ______ à Paris ? <span style="color:var(--grey);font-size:0.85rem;">(Are you in Paris?)</span></div>
+                <div class="qcm-options" id="qcmE4-options"></div>
+                <div id="fbQcmE4" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmE5" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">e)</span> Tu ______ faim ? <span style="color:var(--grey);font-size:0.85rem;">(Are you hungry?)</span></div>
+                <div class="qcm-options" id="qcmE5-options"></div>
+                <div id="fbQcmE5" class="feedback" style="margin-top:6px;"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 6 : Automatisation -->
+        <div class="lesson-card">
+            <h3>Exercice 6 : Questions &amp; Réponses (QCM)</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Choose the correct answer.</em></p>
+
+            <div id="qcmR1" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">a)</span> Comment allez-vous ?</div>
+                <div class="qcm-options" id="qcmR1-options"></div>
+                <div id="fbQcmR1" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmR2" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">b)</span> Vous avez des enfants ?</div>
+                <div class="qcm-options" id="qcmR2-options"></div>
+                <div id="fbQcmR2" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmR3" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">c)</span> Vous venez d'où ?</div>
+                <div class="qcm-options" id="qcmR3-options"></div>
+                <div id="fbQcmR3" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmR4" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">d)</span> Vous habitez où ?</div>
+                <div class="qcm-options" id="qcmR4-options"></div>
+                <div id="fbQcmR4" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmR5" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">e)</span> Vous travaillez où ?</div>
+                <div class="qcm-options" id="qcmR5-options"></div>
+                <div id="fbQcmR5" class="feedback" style="margin-top:6px;"></div>
+            </div>
+
+            <div id="qcmR6" class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px; flex-direction:column; align-items:stretch;">
+                <div><span style="font-weight:700;">f)</span> Quel âge avez-vous ?</div>
+                <div class="qcm-options" id="qcmR6-options"></div>
+                <div id="fbQcmR6" class="feedback" style="margin-top:6px;"></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 7 : Écrire les nombres en chiffres -->
+        <div class="lesson-card">
+            <h3>Exercice 7 : Écrivez le nombre en chiffres</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Write the number in digits.</em></p>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                a) soixante-dix-huit<br>
+                <input type="text" id="n1" placeholder="chiffres" style="min-width:80px;"><button class="btn-check bc-blue" onclick="checkFill('n1','78','fbN1')">Check</button>
+                <span id="fbN1" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, '78', '78')">78</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                b) cinquante-deux<br>
+                <input type="text" id="n2" placeholder="chiffres" style="min-width:80px;"><button class="btn-check bc-blue" onclick="checkFill('n2','52','fbN2')">Check</button>
+                <span id="fbN2" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, '52', '52')">52</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                c) quatre-vingt-seize<br>
+                <input type="text" id="n3" placeholder="chiffres" style="min-width:80px;"><button class="btn-check bc-blue" onclick="checkFill('n3','96','fbN3')">Check</button>
+                <span id="fbN3" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, '96', '96')">96</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                d) quarante-quatre<br>
+                <input type="text" id="n4" placeholder="chiffres" style="min-width:80px;"><button class="btn-check bc-blue" onclick="checkFill('n4','44','fbN4')">Check</button>
+                <span id="fbN4" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, '44', '44')">44</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                e) vingt-neuf<br>
+                <input type="text" id="n5" placeholder="chiffres" style="min-width:80px;"><button class="btn-check bc-blue" onclick="checkFill('n5','29','fbN5')">Check</button>
+                <span id="fbN5" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, '29', '29')">29</span></div>
+            </div>
+        </div>
+
+        <!-- EXERCICE 8 : Écrire les nombres en lettres -->
+        <div class="lesson-card">
+            <h3>Exercice 8 : Écrivez le nombre en lettres</h3>
+            <p style="font-size:0.9rem; color:var(--grey); margin-bottom:12px;"><em>Write the number in words.</em></p>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                a) 16<br>
+                <input type="text" id="nw1" placeholder="en lettres" style="min-width:120px;"><button class="btn-check bc-green" onclick="checkFill('nw1','seize','fbNw1')">Check</button>
+                <span id="fbNw1" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'seize', 'seize')">seize</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                b) 34<br>
+                <input type="text" id="nw2" placeholder="en lettres" style="min-width:120px;"><button class="btn-check bc-green" onclick="checkFill('nw2','trente-quatre','fbNw2')">Check</button>
+                <span id="fbNw2" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'trente-quatre', 'trente-quatre')">trente-quatre</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                c) 57<br>
+                <input type="text" id="nw3" placeholder="en lettres" style="min-width:120px;"><button class="btn-check bc-green" onclick="checkFill('nw3','cinquante-sept','fbNw3')">Check</button>
+                <span id="fbNw3" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'cinquante-sept', 'cinquante-sept')">cinquante-sept</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                d) 83<br>
+                <input type="text" id="nw4" placeholder="en lettres" style="min-width:120px;"><button class="btn-check bc-green" onclick="checkFill('nw4','quatre-vingt-trois','fbNw4')">Check</button>
+                <span id="fbNw4" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'quatre-vingt-trois', 'quatre-vingt-trois')">quatre-vingt-trois</span></div>
+            </div>
+
+            <div class="exo-line" style="background:white; border-radius:30px; margin:8px 0; padding:8px 14px;">
+                e) 72<br>
+                <input type="text" id="nw5" placeholder="en lettres" style="min-width:120px;"><button class="btn-check bc-green" onclick="checkFill('nw5','soixante-douze','fbNw5')">Check</button>
+                <span id="fbNw5" class="feedback"></span>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'soixante-douze', 'soixante-douze')">soixante-douze</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CHALLENGE ===== -->
+    <section id="final">
+        <h2>🏁 Mission finale : Présentation</h2>
+        <div class="score-display" id="scoreDisplay">Score : 0 / 0</div>
+
+        <div class="lesson-card" style="border-top:4px solid var(--purple);">
+            <p style="font-size:0.95rem; color:var(--grey);">Complète le dialogue avec les mots corrects.<br>
+                <strong>💡 Cliquez sur les mots floutés pour voir la réponse.</strong></p>
+            <div style="background:var(--parchment); padding:18px 22px; border-radius:20px; font-size:1rem; line-height:2.2;">
+
+                <p><strong>Toi :</strong> Bonjour ! Comment ______ ?</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'allez-vous', 'Comment allez-vous ?')">allez-vous</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('Comment allez-vous ?')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Moi :</strong> Je vais bien, merci ! Et vous ?</p>
+
+                <p><strong>Toi :</strong> Je vais bien aussi. Comment vous ______ ?</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'appelez-vous', 'Comment vous appelez-vous ?')">appelez-vous</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('Comment vous appelez-vous ?')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Moi :</strong> Je m'appelle Claire. Et vous ?</p>
+
+                <p><strong>Toi :</strong> Je m'appelle Thomas. Vous ______ d'où ?</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'venez', 'Vous venez d\'où ?')">venez</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('Vous venez d\'où ?')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Moi :</strong> Je viens de Lyon. Et vous ?</p>
+
+                <p><strong>Toi :</strong> Je viens des États-Unis. J'______ à Lyon maintenant.</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'habite', 'J\'habite à Lyon.')">habite</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('J\'habite à Lyon.')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Moi :</strong> Vous ______ marié ?</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'êtes', 'Vous êtes marié ?')">êtes</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('Vous êtes marié ?')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Toi :</strong> Oui, je ______ marié. Ma femme s'appelle Marie.</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'suis', 'je suis marié')">suis</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('je suis marié')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Moi :</strong> Vous ______ des enfants ?</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'avez', 'Vous avez des enfants ?')">avez</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('Vous avez des enfants ?')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Toi :</strong> Oui, nous ______ trois enfants.</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'avons', 'nous avons trois enfants')">avons</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('nous avons trois enfants')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Moi :</strong> Quel ______ ont vos enfants ?</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'âge', 'Quel âge ont vos enfants ?')">âge</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('Quel âge ont vos enfants ?')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Toi :</strong> Mon fils a 8 ans, ma fille a 5 ans et mon autre fils a 3 ans.</p>
+
+                <p><strong>Moi :</strong> Vous ______ où ?</p>
+                <div class="answer-container"><span class="answer-blur" onclick="revealAnswer(this, 'travaillez', 'Vous travaillez où ?')">travaillez</span></div>
+                <button class="audio-btn audio-btn-sm" onclick="speak('Vous travaillez où ?')"><i class="fas fa-volume-up"></i></button>
+
+                <p><strong>Toi :</strong> Je travaille dans une banque à Lyon. Merci et au revoir !</p>
+            </div>
+            <button class="btn-check" style="margin-top:16px; font-size:1rem; padding:12px 36px; background:var(--purple); color:white;" onclick="checkFinalChallenge()">Check final challenge</button>
+            <div id="finalFeedback" style="margin-top:16px; font-size:1.1rem; font-weight:700;"></div>
+        </div>
+    </section>
+
+    <div class="recap-bar">
+        <div class="recap-item"><i class="fas fa-question-circle"></i> Questions</div>
+        <div class="recap-item"><i class="fas fa-user"></i> Possessifs</div>
+        <div class="recap-item"><i class="fas fa-palette"></i> Couleurs</div>
+        <div class="recap-item"><i class="fas fa-tshirt"></i> Vêtements</div>
+        <div class="recap-item"><i class="fas fa-calculator"></i> Nombres</div>
+        <div class="recap-item"><i class="fas fa-spell-check"></i> Être / Avoir</div>
+    </div>
+
+    <footer>
+        <span class="badge">FLE A1 · Révision</span> — Informations personnelles · Questions &amp; Réponses
+        <div style="margin-top:6px; font-size:0.85rem;">🔊 Cliquez sur <i class="fas fa-volume-up"></i> pour écouter. 💡 Cliquez sur les indices flous pour révéler la réponse.</div>
+    </footer>
+</div>
+
+<script>
+    function speak(text) {
+        if (!window.speechSynthesis) return;
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'fr-FR';
+        utterance.rate = 0.85;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    function revealAnswer(element, correctText, fullSentence) {
+        if (element.classList.contains('revealed')) {
+            if (fullSentence) { speak(fullSentence); } else { speak(correctText); }
+            return;
+        }
+        element.classList.add('revealed');
+        element.textContent = correctText;
+        if (fullSentence) { speak(fullSentence); } else { speak(correctText); }
+        element.style.animation = 'none';
+        setTimeout(() => { element.style.animation = 'fi 0.3s ease'; }, 10);
+    }
+
+    // ===== QCM SYSTEM with multiple correct answers support =====
+    function createQCM(containerId, options, correctIndices, feedbackId) {
+        const container = document.getElementById(containerId);
+        const feedback = document.getElementById(feedbackId);
+        if (!container) return;
+
+        // Ensure correctIndices is an array
+        if (!Array.isArray(correctIndices)) {
+            correctIndices = [correctIndices];
+        }
+
+        const shuffled = options.map((opt, idx) => ({text: opt, originalIdx: idx}));
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+
+        container.innerHTML = '';
+        shuffled.forEach((item, idx) => {
+            const btn = document.createElement('button');
+            btn.textContent = item.text;
+            btn.dataset.originalIdx = item.originalIdx;
+            btn.onclick = function() {
+                container.querySelectorAll('button').forEach(b => {
+                    b.classList.remove('selected', 'correct-answer', 'wrong-answer');
+                });
+                this.classList.add('selected');
+                const isCorrect = correctIndices.includes(parseInt(this.dataset.originalIdx));
+                if (isCorrect) {
+                    this.classList.add('correct-answer');
+                    feedback.className = 'feedback correct';
+                    feedback.innerHTML = '✅ Correct !';
+                    if (!container.dataset.done) {
+                        container.dataset.done = 'true';
+                        correctAnswers++;
+                        totalQuestions++;
+                        updateScore();
+                    }
+                } else {
+                    this.classList.add('wrong-answer');
+                    feedback.className = 'feedback wrong';
+                    const correctTexts = correctIndices.map(i => options[i]).join(' ou ');
+                    feedback.innerHTML = '❌ Essaie encore. <span class="answer-container"><span class="answer-blur-wrong" onclick="revealAnswer(this, \'' + correctTexts + '\', \'' + correctTexts + '\')" style="filter:blur(6px);cursor:pointer;display:inline-block;padding:4px 16px;border-radius:30px;border:2px dashed var(--red);background:var(--red-light);">' + correctTexts + '</span></span>';
+                }
+            };
+            container.appendChild(btn);
+        });
+    }
+
+    // ===== QCM DATA =====
+    // Exercice 1 - Questions (avec multiples réponses possibles)
+    createQCM('qcm1-options', ['Comment allez-vous ?', 'Comment ça va ?', 'Comment vous appelez-vous ?'], [0, 1], 'fbQcm1');
+    createQCM('qcm2-options', ['Comment vous appelez-vous ?', 'Comment ça va ?', 'Comment allez-vous ?'], [0], 'fbQcm2');
+    createQCM('qcm3-options', ['Vous venez d\'où ?', 'Vous habitez où ?', 'Vous travaillez où ?'], [0], 'fbQcm3');
+    createQCM('qcm4-options', ['Quel âge avez-vous ?', 'Quelle heure est-il ?', 'Comment ça va ?'], [0], 'fbQcm4');
+    createQCM('qcm5-options', ['Vous travaillez où ?', 'Vous habitez où ?', 'Vous venez d\'où ?'], [0], 'fbQcm5');
+
+    // Exercice 2 - Possessifs
+    createQCM('qcmP1-options', ['ma', 'mon'], [0], 'fbQcmP1');
+    createQCM('qcmP2-options', ['mon', 'ma'], [0], 'fbQcmP2');
+    createQCM('qcmP3-options', ['mes', 'ma'], [0], 'fbQcmP3');
+    createQCM('qcmP4-options', ['mon', 'ma'], [0], 'fbQcmP4'); // "mon" devant "amie" (voyelle)
+    createQCM('qcmP5-options', ['mon', 'ma'], [0], 'fbQcmP5');
+
+    // Exercice 3 - Couleurs + Vêtements
+    createQCM('qcmC1-options', ['un pull rouge', 'des chaussures noires', 'un chapeau rose', 'une veste bleue'], [0], 'fbQcmC1');
+    createQCM('qcmC2-options', ['une veste verte', 'une robe verte', 'un pull vert', 'une jupe verte'], [0], 'fbQcmC2');
+    createQCM('qcmC3-options', ['un pantalon noir', 'des chaussures noires', 'une veste noire', 'un pull noir'], [0], 'fbQcmC3');
+    createQCM('qcmC4-options', ['une robe blanche', 'un pull blanc', 'une chemise blanche', 'une jupe blanche'], [0], 'fbQcmC4');
+    createQCM('qcmC5-options', ['une jupe bleue', 'une robe bleue', 'un pull bleu', 'une veste bleue'], [0], 'fbQcmC5');
+
+    // Exercice 4 - Nombres
+    createQCM('qcmN1-options', ['21', '22', '20', '31'], [0], 'fbQcmN1');
+    createQCM('qcmN2-options', ['72', '82', '62', '70'], [0], 'fbQcmN2');
+    createQCM('qcmN3-options', ['91', '81', '90', '71'], [0], 'fbQcmN3');
+    createQCM('qcmN4-options', ['35', '34', '36', '45'], [0], 'fbQcmN4');
+    createQCM('qcmN5-options', ['83', '82', '84', '93'], [0], 'fbQcmN5');
+    createQCM('qcmN6-options', ['58', '50', '68', '48'], [0], 'fbQcmN6');
+
+    // Exercice 5 - Être & Avoir
+    createQCM('qcmE1-options', ['suis', 'es', 'ai', 'est'], [0], 'fbQcmE1');
+    createQCM('qcmE2-options', ['avons', 'ont', 'sommes', 'avez'], [0], 'fbQcmE2');
+    createQCM('qcmE3-options', ['est', 'a', 'as', 'es'], [0], 'fbQcmE3');
+    createQCM('qcmE4-options', ['êtes', 'suis', 'avez', 'est'], [0], 'fbQcmE4');
+    createQCM('qcmE5-options', ['as', 'ai', 'est', 'es'], [0], 'fbQcmE5');
+
+    // Exercice 6 - Automatisation
+    createQCM('qcmR1-options', ['Je vais bien, merci !', 'Je viens de Lyon.', 'Je m\'appelle Claire.', 'J\'ai 35 ans.'], [0], 'fbQcmR1');
+    createQCM('qcmR2-options', ['Oui, j\'ai trois enfants.', 'Oui, je suis marié.', 'Oui, j\'ai 3 ans.', 'Oui, je travaille.'], [0], 'fbQcmR2');
+    createQCM('qcmR3-options', ['Je viens des États-Unis.', 'Je suis américain.', 'J\'habite aux États-Unis.', 'Je travaille aux États-Unis.'], [0], 'fbQcmR3');
+    createQCM('qcmR4-options', ['J\'habite à Lyon.', 'Je suis à Lyon.', 'Je viens de Lyon.', 'Je travaille à Lyon.'], [0], 'fbQcmR4');
+    createQCM('qcmR5-options', ['Je travaille dans une banque.', 'Je travaille dans une école.', 'Je travaille dans un hôpital.', 'Je travaille dans un restaurant.'], [0], 'fbQcmR5');
+    createQCM('qcmR6-options', ['J\'ai 35 ans.', 'Je suis 35 ans.', 'J\'ai 35 enfants.', 'J\'habite à Paris.'], [0], 'fbQcmR6');
+
+    // ===== SCORE SYSTEM =====
+    let totalQuestions = 0;
+    let correctAnswers = 0;
+    const scoreDisplay = document.getElementById('scoreDisplay');
+
+    function updateScore() {
+        scoreDisplay.textContent = `Score : ${correctAnswers} / ${totalQuestions}`;
+        const pct = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+        document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+    }
+
+    function initScore() {
+        const qcmContainers = document.querySelectorAll('.qcm-options');
+        totalQuestions = qcmContainers.length;
+        const inputs = document.querySelectorAll('.exo-line input[type="text"]');
+        totalQuestions += inputs.length;
+        updateScore();
+    }
+
+    // ===== FILL IN THE BLANKS =====
+    function checkFill(inputId, correct, feedbackId) {
+        const input = document.getElementById(inputId);
+        const val = input.value.trim();
+        if (!val) { alert('Écris une réponse.'); return; }
+        const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ');
+        const isCorrect = normalize(val) === normalize(correct);
+        if (!input.dataset.checked) {
+            markFeedback(feedbackId, isCorrect, correct);
+            input.dataset.checked = 'true';
+            input.classList.add(isCorrect ? 'ok' : 'bad');
+            input.classList.remove(isCorrect ? 'bad' : 'ok');
+        } else {
+            const el = document.getElementById(feedbackId);
+            el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+            el.innerHTML = isCorrect ? '✅ Correct !' : '❌ Essaie encore. <span class="answer-container"><span class="answer-blur-wrong" onclick="revealAnswer(this, \'' + correct + '\', \'' + correct + '\')" style="filter:blur(6px);cursor:pointer;display:inline-block;padding:4px 16px;border-radius:30px;border:2px dashed var(--red);background:var(--red-light);">' + correct + '</span></span>';
+            input.classList.add(isCorrect ? 'ok' : 'bad');
+            input.classList.remove(isCorrect ? 'bad' : 'ok');
+        }
+    }
+
+    function markFeedback(id, isCorrect, correctText) {
+        const el = document.getElementById(id);
+        if (!el) return;
+        el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+        if (isCorrect) {
+            el.innerHTML = '✅ Correct !';
+        } else {
+            el.innerHTML = '❌ Essaie encore. <span class="answer-container"><span class="answer-blur-wrong" onclick="revealAnswer(this, \'' + correctText + '\', \'' + correctText + '\')" style="filter:blur(6px);cursor:pointer;display:inline-block;padding:4px 16px;border-radius:30px;border:2px dashed var(--red);background:var(--red-light);">' + correctText + '</span></span>';
+        }
+        if (isCorrect) correctAnswers++;
+        totalQuestions++;
+        updateScore();
+    }
+
+    // ===== FINAL CHALLENGE =====
+    function checkFinalChallenge() {
+        const blurred = document.querySelectorAll('#final .answer-blur:not(.revealed)');
+        if (blurred.length > 0) {
+            alert('Cliquez sur tous les mots floutés pour révéler les réponses avant de valider !');
+            return;
+        }
+        const revealed = document.querySelectorAll('#final .answer-blur.revealed');
+        const answers = [];
+        revealed.forEach(el => { answers.push(el.textContent.trim()); });
+        const expected = ['allez-vous', 'appelez-vous', 'venez', 'habite', 'êtes', 'suis', 'avez', 'avons', 'âge', 'travaillez'];
+        const normalize = (s) => s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/\s+/g, ' ');
+        let allCorrect = true;
+        for (let i = 0; i < answers.length; i++) {
+            if (normalize(answers[i]) !== normalize(expected[i])) {
+                allCorrect = false;
+                revealed[i].style.borderColor = 'var(--red)';
+                revealed[i].style.background = 'var(--red-light)';
+            } else {
+                revealed[i].style.borderColor = 'var(--green)';
+                revealed[i].style.background = 'var(--green-light)';
+            }
+        }
+        const fb = document.getElementById('finalFeedback');
+        if (allCorrect && answers.length === expected.length) {
+            fb.innerHTML = '🎉 Félicitations ! Vous maîtrisez les informations personnelles ! <span style="background:var(--purple); color:white; padding:4px 20px; border-radius:40px; margin-left:12px;">⭐ A1 Révision</span>';
+            fb.style.color = 'var(--green)';
+            if (!document.getElementById('finalFeedback').dataset.done) {
+                correctAnswers += 10;
+                totalQuestions += 10;
+                updateScore();
+                document.getElementById('finalFeedback').dataset.done = 'true';
+            }
+        } else {
+            fb.innerHTML = '⚠️ Vérifie les mots. Clique sur les mots en rouge pour voir la bonne réponse.';
+            fb.style.color = 'var(--red)';
+        }
+    }
+
+    initScore();
+</script>
+</body>
+</html>
