@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FLE A0 · Les bases 3 · Week-end et loisirs</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    :root {
+      --ink: #1a1230;
+      --cream: #fdfbf7;
+      --parchment: #f5f0e8;
+      --gold: #e0a020;
+      --gold-light: #faecc8;
+      --red: #d63050;
+      --red-light: #fde8ed;
+      --blue: #1a6fb5;
+      --blue-light: #dbeeff;
+      --green: #1e8a4a;
+      --green-light: #d4f0e0;
+      --purple: #7c3abf;
+      --purple-light: #ede5fa;
+      --orange: #e86a10;
+      --orange-light: #fde8d4;
+      --teal: #0f8080;
+      --teal-light: #d4f0f0;
+      --pink: #d43080;
+      --pink-light: #fde0ef;
+      --grey: #7a7a8a;
+      --border: #e0d8cc;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Nunito', sans-serif; background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.75; padding: 20px; display: flex; justify-content: center; }
+
+    .app-wrapper {
+      max-width: 1300px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 40px;
+      box-shadow: 0 30px 60px -20px rgba(18, 60, 70, 0.25);
+      padding: 30px 35px;
+      transition: all 0.2s;
+    }
+
+    .progress-container {
+      background: #e4f0ed;
+      border-radius: 60px;
+      height: 10px;
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      background: var(--teal);
+      border-radius: 60px;
+      transition: width 0.5s ease;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
+      font-weight: 700;
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 6px solid var(--gold);
+      padding-bottom: 18px;
+      margin-bottom: 10px;
+    }
+    h1 span {
+      background: var(--ink);
+      color: var(--gold);
+      font-size: 1.1rem;
+      font-weight: 500;
+      padding: 6px 26px;
+      border-radius: 60px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .subhead {
+      font-size: 1.2rem;
+      color: var(--teal);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--ink);
+      margin: 44px 0 20px 0;
+      border-left: 18px solid var(--gold);
+      padding-left: 22px;
+    }
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--purple);
+      margin: 24px 0 14px 0;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #1a1230 0%, #2e1a5a 40%, #1a3a6a 100%);
+      color: white;
+      border-radius: 36px;
+      padding: 40px 42px;
+      margin: 10px 0 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(224,160,32,.15) 0%, transparent 60%),
+                  radial-gradient(ellipse at 80% 30%, rgba(124,58,191,.2) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .hero .flag-row {
+      display: flex; justify-content: center; gap: 6px; margin-bottom: 26px; position: relative;
+    }
+    .hero .flag-bar { width: 10px; height: 52px; border-radius: 4px; }
+    .hero .fb { background: #002395; }
+    .hero .fw { background: #fff; }
+    .hero .frc { background: #ed2939; }
+    .hero h1 {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+      color: white;
+      font-size: clamp(2rem,5vw,3.2rem);
+      justify-content: center;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; }
+    .hero .subtitle {
+      margin-top: 12px;
+      font-size: 1rem;
+      font-weight: 300;
+      opacity: .7;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      text-align: center;
+    }
+    .hero .badges {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 22px;
+      flex-wrap: wrap;
+      position: relative;
+    }
+    .hero .badge {
+      padding: 5px 16px;
+      border-radius: 20px;
+      font-size: .75rem;
+      font-weight: 800;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .hero .b-gold { background: var(--gold); color: var(--ink); }
+    .hero .b-purple { background: rgba(124,58,191,.6); color: #e8d0ff; border: 1px solid rgba(200,160,255,.3); }
+    .hero .b-blue { background: rgba(26,111,181,.6); color: #c8e4ff; border: 1px solid rgba(100,180,255,.3); }
+
+    .hero ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 30px;
+      margin: 18px 0 24px;
+      position: relative;
+      justify-content: center;
+    }
+    .hero ul li {
+      background: rgba(255,255,255,0.15);
+      padding: 8px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      color: #e8e0f0;
+    }
+    .btn-start {
+      background: var(--gold);
+      border: none;
+      color: var(--ink);
+      font-size: 1.2rem;
+      font-weight: 800;
+      padding: 16px 48px;
+      border-radius: 60px;
+      cursor: pointer;
+      box-shadow: 0 8px 0 #b08010;
+      transition: 0.1s;
+      font-family: 'Nunito', sans-serif;
+      position: relative;
+      display: block;
+      margin: 0 auto;
+    }
+    .btn-start:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 0 #b08010;
+      background: #f0b030;
+    }
+
+    .story-box {
+      background: linear-gradient(135deg,#f5f0e8,#fdf8f0);
+      border-left: 5px solid var(--gold);
+      border-radius: 0 14px 14px 0;
+      padding: 30px 34px;
+      margin: 20px 0 30px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.05);
+    }
+    .dialogue-line {
+      margin-bottom: 8px;
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.7);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 14px;
+    }
+    .dialogue-line .fr {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 1.1rem;
+    }
+    .dialogue-line .en {
+      color: var(--blue);
+      font-style: italic;
+      font-size: 0.95rem;
+      cursor: pointer;
+      border-bottom: 1px dashed var(--blue);
+    }
+    .dialogue-line .en.hidden {
+      display: none;
+    }
+    .dialogue-line .speaker {
+      font-weight: 800;
+      color: var(--purple);
+    }
+    .dialogue-line .example-tag {
+      background: var(--gold-light);
+      padding: 2px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .lesson-card {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 34px;
+      padding: 28px 32px;
+      margin-bottom: 38px;
+      box-shadow: 0 10px 0 #d0c8bc;
+    }
+    .grid-2col {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      margin: 16px 0;
+    }
+    .expr-card {
+      background: #f6fcfb;
+      border-radius: 24px;
+      padding: 20px 22px;
+      border-left: 12px solid var(--teal);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .expr-card h4 {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--teal);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Nunito', sans-serif;
+    }
+    .expr-card .fr {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .expr-card .en {
+      color: var(--blue);
+      font-size: 1rem;
+      border-bottom: 1px dashed var(--blue);
+      padding-bottom: 6px;
+      margin-top: 4px;
+    }
+    .expr-card .examples {
+      background: white;
+      padding: 12px 16px;
+      border-radius: 16px;
+      margin-top: 12px;
+      border: 1px solid var(--border);
+      font-size: 0.95rem;
+    }
+    .expr-card .examples .ex {
+      padding: 4px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 12px;
+      align-items: baseline;
+    }
+    .expr-card .examples .ex .fr-ex {
+      color: var(--red);
+      font-weight: 700;
+    }
+    .expr-card .examples .ex .en-ex {
+      color: var(--blue);
+      font-style: italic;
+      font-size: 0.9rem;
+    }
+    .expr-card .examples .ex .tag {
+      background: var(--purple-light);
+      color: var(--purple);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .audio-btn {
+      background: var(--gold-light);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      font-size: 1rem;
+      color: var(--ink);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: 0.1s;
+    }
+    .audio-btn:hover {
+      background: var(--gold);
+      color: white;
+      transform: scale(1.04);
+    }
+    .audio-btn-sm { width: 32px; height: 32px; font-size: 0.8rem; }
+    .audio-btn-xs { width: 26px; height: 26px; font-size: 0.65rem; }
+
+    .badge {
+      background: var(--ink);
+      color: var(--gold);
+      border-radius: 50px;
+      padding: 4px 24px;
+      font-size: 0.9rem;
+      display: inline-block;
+    }
+    .recap-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin: 30px 0 20px;
+      background: var(--parchment);
+      border-radius: 48px;
+      padding: 24px 30px;
+      justify-content: center;
+      border: 2px solid var(--border);
+    }
+    .recap-item {
+      font-weight: 700;
+      color: var(--teal);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: white;
+      padding: 6px 20px 6px 16px;
+      border-radius: 60px;
+      font-family: 'Nunito', sans-serif;
+    }
+    footer {
+      margin-top: 40px;
+      color: var(--grey);
+      text-align: center;
+      border-top: 3px solid var(--border);
+      padding-top: 28px;
+      font-size: 1rem;
+    }
+    .score-display {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--teal);
+      text-align: center;
+      padding: 16px;
+    }
+
+    /* ===== GRAMMAR ===== */
+    .conj-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    .conj-table th {
+      background: var(--ink);
+      color: white;
+      padding: 14px 16px;
+      text-align: center;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .conj-table td {
+      padding: 12px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .conj-table tr:nth-child(even) {
+      background: var(--parchment);
+    }
+    .conj-table tr:nth-child(odd) {
+      background: white;
+    }
+    .conj-table .pronoun {
+      font-weight: 700;
+      color: var(--purple);
+    }
+    .conj-table .verb {
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 1.1rem;
+    }
+
+    .grammar-box {
+      background: var(--parchment);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin: 16px 0;
+      border-left: 6px solid var(--gold);
+    }
+    .grammar-box .rule {
+      font-weight: 700;
+      color: var(--purple);
+      font-size: 1.1rem;
+    }
+    .grammar-box .example {
+      background: white;
+      padding: 12px 18px;
+      border-radius: 12px;
+      margin: 8px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      align-items: center;
+    }
+    .grammar-box .example .fr {
+      color: var(--red);
+      font-weight: 700;
+    }
+    .grammar-box .example .en {
+      color: var(--blue);
+      font-style: italic;
+    }
+    .grammar-box .example .tag {
+      background: var(--purple-light);
+      color: var(--purple);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 10px;
+      border-radius: 20px;
+    }
+
+    .neg-box {
+      background: var(--red-light);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      border-left: 6px solid var(--red);
+    }
+    .neg-box .rule {
+      font-weight: 700;
+      color: var(--red);
+      font-size: 1.1rem;
+    }
+    .neg-box .example {
+      background: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      margin: 6px 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 16px;
+      align-items: center;
+    }
+
+    .faire-box {
+      background: var(--blue-light);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin: 16px 0;
+      border-left: 6px solid var(--blue);
+    }
+    .faire-box .rule {
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 1.1rem;
+    }
+    .faire-box .example {
+      background: white;
+      padding: 10px 16px;
+      border-radius: 10px;
+      margin: 6px 0;
+    }
+
+    .exo-block {
+      background: white;
+      border-radius: 14px;
+      padding: 28px 32px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 12px rgba(0,0,0,.06);
+      border-top: 4px solid var(--blue);
+    }
+    .exo-block.exo-r { border-top-color: var(--red); }
+    .exo-block.exo-p { border-top-color: var(--purple); }
+    .exo-block.exo-t { border-top-color: var(--teal); }
+    .exo-block.exo-gold { border-top-color: var(--gold); }
+    .exo-block.exo-orange { border-top-color: var(--orange); }
+
+    .exo-line {
+      font-size: 1.1rem;
+      margin: 16px 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px 18px;
+      background: #fafdfc;
+      padding: 10px 16px;
+      border-radius: 50px;
+    }
+
+    .btn-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: .86rem;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      transition: opacity .2s,transform .1s;
+      color: white;
+      background: var(--blue);
+    }
+    .btn-check:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-check.bc-red { background: var(--red); }
+    .btn-check.bc-purple { background: var(--purple); }
+    .btn-check.bc-teal { background: var(--teal); }
+    .btn-check.bc-gold { background: var(--gold); color: var(--ink); }
+    .btn-check.bc-orange { background: var(--orange); }
+
+    .feedback {
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .feedback.correct { background: var(--green-light); color: var(--green); }
+    .feedback.wrong { background: var(--red-light); color: var(--red); }
+    .hidden { display: none !important; }
+
+    .exo-line .blurred-answer {
+      filter: blur(5px);
+      cursor: pointer;
+      transition: filter 0.3s ease;
+      user-select: none;
+      display: inline-block;
+      padding: 2px 12px;
+      background: rgba(200, 200, 200, 0.3);
+      border-radius: 4px;
+      font-weight: 700;
+      color: var(--blue);
+      font-size: 1.1rem;
+    }
+    .exo-line .blurred-answer.revealed {
+      filter: blur(0);
+      background: transparent;
+    }
+    .exo-line .blurred-answer:hover {
+      filter: blur(2px);
+    }
+
+    .exo-line .exo-text {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 4px 8px;
+    }
+
+    @media (max-width: 700px) {
+      .app-wrapper { padding: 16px; }
+      h1 { font-size: 1.8rem; }
+      .hero { padding: 24px; }
+      .exo-line { flex-direction: column; align-items: stretch; }
+      .grid-2col { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-wrapper">
+
+  <!-- Progress Bar -->
+  <div class="progress-container"><div class="progress-bar" id="progressBar"></div></div>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero">
+    <div class="flag-row">
+      <div class="flag-bar fb"></div>
+      <div class="flag-bar fw"></div>
+      <div class="flag-bar frc"></div>
+    </div>
+    <h1>Français A0 — <em>Les bases 3</em></h1>
+    <p class="subtitle">Week-end et loisirs · Parler de ses activités · Verbes de préférence</p>
+    <div class="badges">
+      <span class="badge b-gold">Niveau A0→A1</span>
+      <span class="badge b-purple">Pour anglophones</span>
+      <span class="badge b-blue">Leçon complète</span>
+    </div>
+    <ul>
+      <li>✅ Parler de ses loisirs</li>
+      <li>✅ Exprimer ses préférences</li>
+      <li>✅ Utiliser les verbes en -er</li>
+      <li>✅ Le verbe FAIRE</li>
+    </ul>
+    <button class="btn-start" onclick="document.getElementById('dialogue').scrollIntoView({behavior:'smooth'})">
+      <i class="fas fa-play"></i> Commencer la leçon
+    </button>
+  </section>
+
+  <!-- ===== DIALOGUE SIMPLIFIÉ ===== -->
+  <section id="dialogue">
+    <h2>💬 Dialogue · Les week-ends</h2>
+    <div class="story-box">
+      <div class="dialogue-line"><span class="speaker">Marie :</span> <span class="fr">Salut Ivan ! Tu as passé un bon week-end ? <button class="audio-btn audio-btn-sm" onclick="speak('Salut Ivan ! Tu as passé un bon week-end ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Hi Ivan! Did you have a good weekend?</span></div>
+      <div class="dialogue-line"><span class="speaker">Ivan :</span> <span class="fr">Oui, et toi ? <button class="audio-btn audio-btn-sm" onclick="speak('Oui, et toi ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Yes, and you?</span></div>
+      <div class="dialogue-line"><span class="speaker">Marie :</span> <span class="fr">Très bien ! Voici Jean, mon ami. <button class="audio-btn audio-btn-sm" onclick="speak('Très bien ! Voici Jean, mon ami.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Very good! This is Jean, my friend.</span></div>
+      <div class="dialogue-line"><span class="speaker">Jean :</span> <span class="fr">Bonjour Ivan ! Enchanté. <button class="audio-btn audio-btn-sm" onclick="speak('Bonjour Ivan ! Enchanté.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Hello Ivan! Nice to meet you.</span></div>
+      <div class="dialogue-line"><span class="speaker">Ivan :</span> <span class="fr">Enchanté, Jean. Qu'est-ce que vous aimez faire le week-end ? <button class="audio-btn audio-btn-sm" onclick="speak('Enchanté, Jean. Qu\'est-ce que vous aimez faire le week-end ?')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Nice to meet you, Jean. What do you like to do on weekends?</span></div>
+      <div class="dialogue-line"><span class="speaker">Marie :</span> <span class="fr">J'aime beaucoup lire. Le samedi, je vais à la librairie. <button class="audio-btn audio-btn-sm" onclick="speak('J\'aime beaucoup lire. Le samedi, je vais à la librairie.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I really like to read. On Saturday, I go to the bookstore.</span> <span class="example-tag">+ verbe</span></div>
+      <div class="dialogue-line"><span class="speaker">Marie :</span> <span class="fr">J'adore les films. Je vais au cinéma. <button class="audio-btn audio-btn-sm" onclick="speak('J\'adore les films. Je vais au cinéma.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I love movies. I go to the cinema.</span> <span class="example-tag">+ nom</span></div>
+      <div class="dialogue-line"><span class="speaker">Jean :</span> <span class="fr">Moi, j'adore le sport. Je fais du tennis le samedi. <button class="audio-btn audio-btn-sm" onclick="speak('Moi, j\'adore le sport. Je fais du tennis le samedi.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Me, I love sports. I play tennis on Saturday.</span> <span class="example-tag">+ nom</span></div>
+      <div class="dialogue-line"><span class="speaker">Jean :</span> <span class="fr">Je préfère faire de la natation le dimanche. <button class="audio-btn audio-btn-sm" onclick="speak('Je préfère faire de la natation le dimanche.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I prefer to go swimming on Sunday.</span> <span class="example-tag">+ verbe</span></div>
+      <div class="dialogue-line"><span class="speaker">Ivan :</span> <span class="fr">Moi, j'aime la musique. Je joue de la guitare. <button class="audio-btn audio-btn-sm" onclick="speak('Moi, j\'aime la musique. Je joue de la guitare.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Me, I like music. I play guitar.</span> <span class="example-tag">+ nom</span></div>
+      <div class="dialogue-line"><span class="speaker">Ivan :</span> <span class="fr">J'adore cuisiner pour mes amis. <button class="audio-btn audio-btn-sm" onclick="speak('J\'adore cuisiner pour mes amis.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">I love to cook for my friends.</span> <span class="example-tag">+ verbe</span></div>
+      <div class="dialogue-line"><span class="speaker">Marie :</span> <span class="fr">Tu cuisines ? C'est génial ! Moi, je déteste cuisiner. <button class="audio-btn audio-btn-sm" onclick="speak('Tu cuisines ? C\'est génial ! Moi, je déteste cuisiner.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">You cook? That's great! Me, I hate to cook.</span> <span class="example-tag">+ verbe</span></div>
+      <div class="dialogue-line"><span class="speaker">Marie :</span> <span class="fr">Mais j'aime voyager. L'été, je vais en Espagne. <button class="audio-btn audio-btn-sm" onclick="speak('Mais j\'aime voyager. L\'été, je vais en Espagne.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">But I like to travel. In summer, I go to Spain.</span> <span class="example-tag">+ verbe</span></div>
+      <div class="dialogue-line"><span class="speaker">Jean :</span> <span class="fr">Moi, je préfère rester ici et faire des randonnées. <button class="audio-btn audio-btn-sm" onclick="speak('Moi, je préfère rester ici et faire des randonnées.')"><i class="fas fa-volume-up"></i></button></span> <span class="en" onclick="this.classList.toggle('hidden')">Me, I prefer to stay here and go hiking.</span> <span class="example-tag">+ verbe</span></div>
+      <div style="margin-top:16px; font-size:0.9rem; color:var(--grey);"><i class="fas fa-eye"></i> Cliquez sur la traduction anglaise pour la cacher / afficher.</div>
+    </div>
+  </section>
+
+  <!-- ===== VOCABULARY ===== -->
+  <section id="vocab">
+    <h2>📚 Vocabulaire · Loisirs et activités</h2>
+    <div class="lesson-card">
+      <h3>🎯 Expressions utiles</h3>
+      <div class="grid-2col">
+        <div class="expr-card">
+          <h4>❓ Qu'est-ce que tu aimes faire ?</h4>
+          <div class="fr">Qu'est-ce que tu aimes faire ? <button class="audio-btn audio-btn-sm" onclick="speak('Qu\'est-ce que tu aimes faire ?')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="en">What do you like to do?</div>
+          <div class="examples">
+            <div class="ex"><span class="tag">+ verbe</span> <span class="fr-ex">Qu'est-ce que tu aimes faire le soir ?</span> <span class="en-ex">What do you like to do in the evening?</span></div>
+          </div>
+        </div>
+
+        <div class="expr-card">
+          <h4>❤️ J'aime beaucoup...</h4>
+          <div class="fr">J'aime beaucoup... <button class="audio-btn audio-btn-sm" onclick="speak('J\'aime beaucoup')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="en">I like... a lot.</div>
+          <div class="examples">
+            <div class="ex"><span class="tag">+ nom</span> <span class="fr-ex">J'aime beaucoup le chocolat.</span> <span class="en-ex">I like chocolate a lot.</span></div>
+            <div class="ex"><span class="tag">+ verbe</span> <span class="fr-ex">J'aime beaucoup lire.</span> <span class="en-ex">I like to read a lot.</span></div>
+            <div class="ex"><span class="tag">+ nom</span> <span class="fr-ex">J'aime beaucoup les films.</span> <span class="en-ex">I like movies a lot.</span></div>
+          </div>
+        </div>
+
+        <div class="expr-card">
+          <h4>⭐ Je préfère...</h4>
+          <div class="fr">Je préfère... <button class="audio-btn audio-btn-sm" onclick="speak('Je préfère')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="en">I prefer...</div>
+          <div class="examples">
+            <div class="ex"><span class="tag">+ verbe</span> <span class="fr-ex">Je préfère faire des randonnées.</span> <span class="en-ex">I prefer to go hiking.</span></div>
+            <div class="ex"><span class="tag">+ nom</span> <span class="fr-ex">Je préfère le thé.</span> <span class="en-ex">I prefer tea.</span></div>
+            <div class="ex"><span class="tag">+ verbe</span> <span class="fr-ex">Je préfère rester à la maison.</span> <span class="en-ex">I prefer to stay home.</span></div>
+          </div>
+        </div>
+
+        <div class="expr-card">
+          <h4>🚫 Je déteste...</h4>
+          <div class="fr">Je déteste... <button class="audio-btn audio-btn-sm" onclick="speak('Je déteste')"><i class="fas fa-volume-up"></i></button></div>
+          <div class="en">I hate...</div>
+          <div class="examples">
+            <div class="ex"><span class="tag">+ verbe</span> <span class="fr-ex">Je déteste cuisiner.</span> <span class="en-ex">I hate to cook.</span></div>
+            <div class="ex"><span class="tag">+ nom</span> <span class="fr-ex">Je déteste le bruit.</span> <span class="en-ex">I hate noise.</span></div>
+            <div class="ex"><span class="tag">+ verbe</span> <span class="fr-ex">Je déteste me lever tôt.</span> <span class="en-ex">I hate to get up early.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <h3 style="margin-top:30px;">🏃 Activités et loisirs</h3>
+      <div class="grid-2col">
+        <div class="expr-card"><h4>📖 lire</h4><div class="fr">lire <button class="audio-btn audio-btn-sm" onclick="speak('lire')"><i class="fas fa-volume-up"></i></button></div><div class="en">to read</div><div class="example">J'aime lire des livres.</div></div>
+        <div class="expr-card"><h4>🎬 regarder des films</h4><div class="fr">regarder des films <button class="audio-btn audio-btn-sm" onclick="speak('regarder des films')"><i class="fas fa-volume-up"></i></button></div><div class="en">to watch movies</div><div class="example">J'adore regarder des films.</div></div>
+        <div class="expr-card"><h4>🎾 faire du tennis</h4><div class="fr">faire du tennis <button class="audio-btn audio-btn-sm" onclick="speak('faire du tennis')"><i class="fas fa-volume-up"></i></button></div><div class="en">to play tennis</div><div class="example">Je fais du tennis le samedi.</div></div>
+        <div class="expr-card"><h4>🏊 faire de la natation</h4><div class="fr">faire de la natation <button class="audio-btn audio-btn-sm" onclick="speak('faire de la natation')"><i class="fas fa-volume-up"></i></button></div><div class="en">to go swimming</div><div class="example">Je fais de la natation à la piscine.</div></div>
+        <div class="expr-card"><h4>🎸 jouer de la guitare</h4><div class="fr">jouer de la guitare <button class="audio-btn audio-btn-sm" onclick="speak('jouer de la guitare')"><i class="fas fa-volume-up"></i></button></div><div class="en">to play guitar</div><div class="example">Je joue de la guitare souvent.</div></div>
+        <div class="expr-card"><h4>👨‍🍳 cuisiner</h4><div class="fr">cuisiner <button class="audio-btn audio-btn-sm" onclick="speak('cuisiner')"><i class="fas fa-volume-up"></i></button></div><div class="en">to cook</div><div class="example">J'adore cuisiner pour mes amis.</div></div>
+        <div class="expr-card"><h4>✈️ voyager</h4><div class="fr">voyager <button class="audio-btn audio-btn-sm" onclick="speak('voyager')"><i class="fas fa-volume-up"></i></button></div><div class="en">to travel</div><div class="example">J'aime voyager en Espagne.</div></div>
+        <div class="expr-card"><h4>🥾 faire des randonnées</h4><div class="fr">faire des randonnées <button class="audio-btn audio-btn-sm" onclick="speak('faire des randonnées')"><i class="fas fa-volume-up"></i></button></div><div class="en">to go hiking</div><div class="example">Je fais des randonnées dans les montagnes.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== GRAMMAIRE ===== -->
+  <section id="grammar">
+    <h2>📝 Grammaire · Verbes de préférence et FAIRE</h2>
+    <div class="lesson-card">
+
+      <!-- ===== VERBES DE PRÉFÉRENCE ===== -->
+      <h3>🔹 Les verbes de préférence · Aimer, Préférer, Détester</h3>
+
+      <div class="grammar-box">
+        <div class="rule">📌 Ces verbes expriment ce qu'on aime ou n'aime pas.</div>
+      </div>
+
+      <table class="conj-table">
+        <thead>
+          <tr>
+            <th>Pronom</th>
+            <th>AIMER</th>
+            <th>PRÉFÉRER</th>
+            <th>DÉTESTER</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pronoun">je</td>
+            <td class="verb">aime</td>
+            <td class="verb">préfère</td>
+            <td class="verb">déteste</td>
+          </tr>
+          <tr>
+            <td class="pronoun">tu</td>
+            <td class="verb">aimes</td>
+            <td class="verb">préfères</td>
+            <td class="verb">détestes</td>
+          </tr>
+          <tr>
+            <td class="pronoun">il / elle / on</td>
+            <td class="verb">aime</td>
+            <td class="verb">préfère</td>
+            <td class="verb">déteste</td>
+          </tr>
+          <tr>
+            <td class="pronoun">nous</td>
+            <td class="verb">aimons</td>
+            <td class="verb">préférons</td>
+            <td class="verb">détestons</td>
+          </tr>
+          <tr>
+            <td class="pronoun">vous</td>
+            <td class="verb">aimez</td>
+            <td class="verb">préférez</td>
+            <td class="verb">détestez</td>
+          </tr>
+          <tr>
+            <td class="pronoun">ils / elles</td>
+            <td class="verb">aiment</td>
+            <td class="verb">préfèrent</td>
+            <td class="verb">détestent</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- ===== RÈGLES D'UTILISATION ===== -->
+      <h3 style="margin-top:24px;">🔸 Utilisation des verbes de préférence</h3>
+
+      <div class="grammar-box">
+        <div class="rule">📌 Règle 1 : Verbe de préférence + <strong>Infinitif</strong> (pour une action)</div>
+        <div class="example">
+          <span class="tag">+ verbe</span>
+          <span class="fr">J'aime <strong>voyager</strong>.</span>
+          <span class="en">I like to travel.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('J\'aime voyager.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example">
+          <span class="tag">+ verbe</span>
+          <span class="fr">Il préfère <strong>regarder</strong> un film.</span>
+          <span class="en">He prefers to watch a movie.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Il préfère regarder un film.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example">
+          <span class="tag">+ verbe</span>
+          <span class="fr">Elle déteste <strong>cuisiner</strong>.</span>
+          <span class="en">She hates to cook.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Elle déteste cuisiner.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+
+      <div class="grammar-box">
+        <div class="rule">📌 Règle 2 : Verbe de préférence + <strong>le, la, l', les + Nom</strong> (pour une chose ou un concept)</div>
+        <div class="example">
+          <span class="tag">+ nom</span>
+          <span class="fr">J'aime <strong>le</strong> sport.</span>
+          <span class="en">I like sports.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('J\'aime le sport.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example">
+          <span class="tag">+ nom</span>
+          <span class="fr">Elle adore <strong>la</strong> musique.</span>
+          <span class="en">She loves music.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Elle adore la musique.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example">
+          <span class="tag">+ nom</span>
+          <span class="fr">Nous détestons <strong>les</strong> films d'horreur.</span>
+          <span class="en">We hate horror movies.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Nous détestons les films d\'horreur.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+
+      <!-- ===== VERBE FAIRE ===== -->
+      <h3 style="margin-top:32px;">🔸 Le verbe FAIRE (to do / to make) avec les loisirs</h3>
+
+      <table class="conj-table">
+        <thead>
+          <tr>
+            <th>Pronom</th>
+            <th>FAIRE</th>
+            <th>Exemple</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="pronoun">je</td>
+            <td class="verb">fais</td>
+            <td>Je fais du tennis.</td>
+          </tr>
+          <tr>
+            <td class="pronoun">tu</td>
+            <td class="verb">fais</td>
+            <td>Tu fais de la natation ?</td>
+          </tr>
+          <tr>
+            <td class="pronoun">il / elle / on</td>
+            <td class="verb">fait</td>
+            <td>Elle fait des randonnées.</td>
+          </tr>
+          <tr>
+            <td class="pronoun">nous</td>
+            <td class="verb">faisons</td>
+            <td>Nous faisons du sport.</td>
+          </tr>
+          <tr>
+            <td class="pronoun">vous</td>
+            <td class="verb">faites</td>
+            <td>Vous faites de la musique ?</td>
+          </tr>
+          <tr>
+            <td class="pronoun">ils / elles</td>
+            <td class="verb">font</td>
+            <td>Ils font des gâteaux.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="faire-box">
+        <div class="rule">📌 Structure : faire + <strong>du, de la, de l', des</strong> + activité</div>
+        <div class="example">
+          <strong>Faire du</strong> + masculin<br>
+          <span style="color:var(--blue);">Je fais <strong>du</strong> tennis.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Je fais du tennis.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example">
+          <strong>Faire de la</strong> + féminin<br>
+          <span style="color:var(--blue);">Elle fait <strong>de la</strong> natation.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Elle fait de la natation.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example">
+          <strong>Faire des</strong> + pluriel<br>
+          <span style="color:var(--blue);">Nous faisons <strong>des</strong> randonnées.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Nous faisons des randonnées.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div style="background:var(--gold-light);border-radius:10px;padding:10px 16px;margin-top:10px;">
+          <strong>💡 Astuce :</strong> <strong>Faire</strong> est un verbe irrégulier. Il ne suit pas la règle des verbes en -er !
+        </div>
+      </div>
+
+      <!-- ===== NÉGATION AVEC FAIRE ===== -->
+      <div class="neg-box">
+        <div class="rule">📌 Négation avec FAIRE</div>
+        <div class="example">
+          <span style="font-weight:700;color:var(--red);">Je ne fais pas</span> de sport.
+          <span style="color:var(--blue);font-style:italic;margin-left:12px;">I don't play sports.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Je ne fais pas de sport.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+        <div class="example">
+          <span style="font-weight:700;color:var(--red);">Il ne fait pas</span> de natation.
+          <span style="color:var(--blue);font-style:italic;margin-left:12px;">He doesn't go swimming.</span>
+          <button class="audio-btn audio-btn-sm" onclick="speak('Il ne fait pas de natation.')"><i class="fas fa-volume-up"></i></button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== EXERCISES ===== -->
+  <section id="exercises">
+    <h2>✏️ Exercices · Pratique</h2>
+    <div style="text-align:right; margin-bottom:12px; font-weight:700; color:var(--teal);" id="scoreDisplay">Score : 0 / 0</div>
+
+    <!-- EXO 1 : Complétez avec l'article défini -->
+    <div class="exo-block exo-gold">
+      <h3 style="margin-top:0; color:var(--gold);">Exercice 1 — Complétez avec l'Article Défini (Le, La, L', Les)</h3>
+      <p>Choisissez le bon article. <span style="font-size:0.9rem; color:var(--grey);">(Cliquez sur la réponse floutée pour la révéler)</span></p>
+
+      <div class="exo-line">
+        <span class="exo-text">1. J'adore <strong>... soleil</strong> (m.).</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">le</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('J\'adore le soleil.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo1a" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">2. Il préfère <strong>... vacances</strong> (f. pl.).</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">les</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Il préfère les vacances.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo1b" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">3. Tu aimes <strong>... lecture</strong> (f.) ?</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">la</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Tu aimes la lecture ?')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo1c" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">4. Nous détestons <strong>... attente</strong> (f. voyelle).</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">l'</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Nous détestons l\'attente.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo1d" class="feedback"></span>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button class="btn-check bc-gold" onclick="resetExercise('exo1')" style="background:var(--gold);color:var(--ink);">Recommencer ↺</button>
+        <button class="btn-check" onclick="showAnswersExo1()">▶ Voir les réponses</button>
+      </div>
+    </div>
+
+    <!-- EXO 2 : Transformez pour exprimer une préférence -->
+    <div class="exo-block exo-p">
+      <h3 style="margin-top:0; color:var(--purple);">Exercice 2 — Transformez pour exprimer une préférence</h3>
+      <p>Conjuguez le verbe de préférence (aimer / préférer / détester). <span style="font-size:0.9rem; color:var(--grey);">(Cliquez sur la réponse floutée pour la révéler)</span></p>
+
+      <div class="exo-line">
+        <span class="exo-text">1. Elle mange une pizza le soir. → Elle <strong>... une pizza le soir.</strong></span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">aime</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Elle aime une pizza le soir.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo2a" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">2. Nous dansons ensemble. → Nous <strong>... ensemble.</strong></span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">aimons danser</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Nous aimons danser ensemble.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo2b" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">3. Je visite les musées. → Je <strong>... les musées.</strong></span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">préfère</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Je préfère les musées.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo2c" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">4. Vous chantez sous la douche. → Vous <strong>... sous la douche ?</strong></span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">aimez chanter</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Vous aimez chanter sous la douche ?')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo2d" class="feedback"></span>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button class="btn-check bc-gold" onclick="resetExercise('exo2')" style="background:var(--gold);color:var(--ink);">Recommencer ↺</button>
+        <button class="btn-check" onclick="showAnswersExo2()">▶ Voir les réponses</button>
+      </div>
+    </div>
+
+    <!-- EXO 3 : Complétez avec FAIRE -->
+    <div class="exo-block exo-r">
+      <h3 style="margin-top:0; color:var(--red);">Exercice 3 — Complétez avec FAIRE</h3>
+      <p>Conjuguez le verbe FAIRE. <span style="font-size:0.9rem; color:var(--grey);">(Cliquez sur la réponse floutée pour la révéler)</span></p>
+
+      <div class="exo-line">
+        <span class="exo-text">1. Je <strong>... du tennis</strong> tous les samedis.</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">fais</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Je fais du tennis tous les samedis.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo3a" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">2. Elle <strong>... de la natation</strong> à la piscine.</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">fait</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Elle fait de la natation à la piscine.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo3b" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">3. Nous <strong>... des randonnées</strong> dans les montagnes.</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">faisons</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Nous faisons des randonnées dans les montagnes.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo3c" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">4. Vous <strong>... du sport</strong> ?</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">faites</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Vous faites du sport ?')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo3d" class="feedback"></span>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button class="btn-check bc-gold" onclick="resetExercise('exo3')" style="background:var(--gold);color:var(--ink);">Recommencer ↺</button>
+        <button class="btn-check" onclick="showAnswersExo3()">▶ Voir les réponses</button>
+      </div>
+    </div>
+
+    <!-- EXO 4 : Dialogue à compléter -->
+    <div class="exo-block exo-t">
+      <h3 style="margin-top:0; color:var(--teal);">Exercice 4 — Dialogue à compléter</h3>
+      <p>Complétez les blancs en vous aidant du dialogue. <span style="font-size:0.9rem; color:var(--grey);">(Cliquez sur la réponse floutée pour la révéler)</span></p>
+
+      <div class="exo-line">
+        <span class="exo-text">Marie : Tu as passé un bon <strong>... ?</strong></span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">week-end</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Tu as passé un bon week-end ?')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo4a" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">Ivan : Oui, <strong>...</strong> toi ?</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">et</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Oui, et toi ?')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo4b" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">Marie : Voici Jean, mon <strong>...</strong></span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">ami</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Voici Jean, mon ami.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo4c" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">Ivan : Qu'est-ce que vous <strong>...</strong> faire le week-end ?</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">aimez</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Qu\'est-ce que vous aimez faire le week-end ?')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo4d" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">Marie : Je ne fais pas de <strong>...</strong>, mais j'adore les <strong>...</strong></span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">sport / films</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Je ne fais pas de sport, mais j\'adore les films.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo4e" class="feedback"></span>
+      </div>
+
+      <div class="exo-line">
+        <span class="exo-text">Jean : Je fais du <strong>...</strong> le samedi. Je préfère faire de la <strong>...</strong> le dimanche.</span>
+        <span class="blurred-answer" onclick="this.classList.toggle('revealed')">tennis / natation</span>
+        <button class="audio-btn audio-btn-sm" onclick="speak('Je fais du tennis le samedi. Je préfère faire de la natation le dimanche.')"><i class="fas fa-volume-up"></i></button>
+        <span id="fbExo4f" class="feedback"></span>
+      </div>
+
+      <div style="margin-top:12px;">
+        <button class="btn-check bc-gold" onclick="resetExercise('exo4')" style="background:var(--gold);color:var(--ink);">Recommencer ↺</button>
+        <button class="btn-check" onclick="showAnswersExo4()">▶ Voir les réponses</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Recap -->
+  <div class="recap-bar">
+    <div class="recap-item"><i class="fas fa-heart"></i> aimer / préférer / détester</div>
+    <div class="recap-item"><i class="fas fa-running"></i> faire du / de la / des</div>
+    <div class="recap-item"><i class="fas fa-tennis-ball"></i> le sport</div>
+    <div class="recap-item"><i class="fas fa-music"></i> la musique</div>
+  </div>
+
+  <footer>
+    <span class="badge">FLE A0 · Les bases 3 · Week-end et loisirs</span> — Parler de ses activités et de ses goûts
+    <div style="margin-top:8px; font-size:0.9rem;">🔊 Cliquez sur <i class="fas fa-volume-up"></i> pour écouter chaque phrase.</div>
+  </footer>
+</div>
+
+<script>
+  // ===== SPEECH SYNTHESIS =====
+  function speak(text) {
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'fr-FR';
+    utterance.rate = 0.85;
+    utterance.pitch = 1.0;
+    window.speechSynthesis.speak(utterance);
+  }
+
+  // ===== SCORE SYSTEM =====
+  let totalQuestions = 0;
+  let correctAnswers = 0;
+  const scoreDisplay = document.getElementById('scoreDisplay');
+
+  function updateScore() {
+    scoreDisplay.textContent = `Score : ${correctAnswers} / ${totalQuestions}`;
+    const pct = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
+    document.getElementById('progressBar').style.width = Math.min(pct, 100) + '%';
+  }
+
+  function markFeedback(id, isCorrect, correctText) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+    if (isCorrect) {
+      el.innerHTML = '✅ Correct ! <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correctText + '\')"><i class="fas fa-volume-up"></i></button>';
+    } else {
+      el.innerHTML = '❌ Essaie encore. La réponse est : <strong>' + correctText + '</strong> <button class="audio-btn audio-btn-sm" onclick="speak(\'' + correctText + '\')"><i class="fas fa-volume-up"></i></button>';
+    }
+    if (isCorrect) correctAnswers++;
+    totalQuestions++;
+    updateScore();
+  }
+
+  // ===== RESET EXERCISE =====
+  function resetExercise(exoId) {
+    location.reload();
+  }
+
+  // ===== SHOW ANSWERS =====
+  function showAnswersExo1() {
+    const answers = ['le', 'les', 'la', 'l\''];
+    const feedbackIds = ['fbExo1a', 'fbExo1b', 'fbExo1c', 'fbExo1d'];
+    feedbackIds.forEach((id, i) => {
+      const exoLine = document.querySelector(`#${id}`)?.closest('.exo-line');
+      if (exoLine) {
+        const blurredAnswer = exoLine.querySelector('.blurred-answer');
+        if (blurredAnswer) {
+          blurredAnswer.textContent = answers[i];
+          blurredAnswer.classList.add('revealed');
+        }
+      }
+    });
+  }
+
+  function showAnswersExo2() {
+    const answers = ['aime', 'aimons danser', 'préfère', 'aimez chanter'];
+    const feedbackIds = ['fbExo2a', 'fbExo2b', 'fbExo2c', 'fbExo2d'];
+    feedbackIds.forEach((id, i) => {
+      const exoLine = document.querySelector(`#${id}`)?.closest('.exo-line');
+      if (exoLine) {
+        const blurredAnswer = exoLine.querySelector('.blurred-answer');
+        if (blurredAnswer) {
+          blurredAnswer.textContent = answers[i];
+          blurredAnswer.classList.add('revealed');
+        }
+      }
+    });
+  }
+
+  function showAnswersExo3() {
+    const answers = ['fais', 'fait', 'faisons', 'faites'];
+    const feedbackIds = ['fbExo3a', 'fbExo3b', 'fbExo3c', 'fbExo3d'];
+    feedbackIds.forEach((id, i) => {
+      const exoLine = document.querySelector(`#${id}`)?.closest('.exo-line');
+      if (exoLine) {
+        const blurredAnswer = exoLine.querySelector('.blurred-answer');
+        if (blurredAnswer) {
+          blurredAnswer.textContent = answers[i];
+          blurredAnswer.classList.add('revealed');
+        }
+      }
+    });
+  }
+
+  function showAnswersExo4() {
+    const answers = ['week-end', 'et', 'ami', 'aimez', 'sport / films', 'tennis / natation'];
+    const feedbackIds = ['fbExo4a', 'fbExo4b', 'fbExo4c', 'fbExo4d', 'fbExo4e', 'fbExo4f'];
+    feedbackIds.forEach((id, i) => {
+      const exoLine = document.querySelector(`#${id}`)?.closest('.exo-line');
+      if (exoLine) {
+        const blurredAnswer = exoLine.querySelector('.blurred-answer');
+        if (blurredAnswer) {
+          blurredAnswer.textContent = answers[i];
+          blurredAnswer.classList.add('revealed');
+        }
+      }
+    });
+  }
+
+  // ===== INIT SCORE =====
+  const feedbackElements = document.querySelectorAll('.feedback');
+  totalQuestions = feedbackElements.length;
+  updateScore();
+</script>
+</body>
+</html>
