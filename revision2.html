@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Français · Révision A1-A2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0faf0;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            color: #1a2e1a;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 3rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d5ead5;
+        }
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #166534, #22c55e, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2rem;
+        }
+        .sous-titre {
+            font-size: 1.1rem;
+            color: #2d5a3d;
+            background: #eaf7ea;
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            border-left: 6px solid #22c55e;
+        }
+        .badge-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            margin-bottom: 2.5rem;
+            background: #f3fcf3;
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+        }
+        .badge {
+            background: white;
+            padding: 0.2rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1a4a2a;
+            border: 1px solid #b5dbb5;
+            font-size: 0.9rem;
+        }
+        .badge::before {
+            content: "✅ ";
+            color: #22c55e;
+        }
+        .section {
+            background: #fafffa;
+            border-radius: 2rem;
+            padding: 1.8rem 1.8rem 0.8rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #dfefdf;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #1a3a1a;
+            border-bottom: 3px dashed #b5dbb5;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title span {
+            background: #22c55e;
+            color: white;
+            width: 2.6rem;
+            height: 2.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.3rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.5rem 1.5rem;
+            border: 1px solid #dfefdf;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+        .card:hover {
+            border-color: #7dcd7d;
+            background: #f7fcf7;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            color: #1a3a1a;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .exo-box {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.2rem 0.5rem;
+            margin-top: 1.2rem;
+            border: 2px solid #e8f5e8;
+        }
+        .exo-box h4 {
+            font-size: 1.1rem;
+            color: #1a3a1a;
+            margin-bottom: 0.6rem;
+        }
+        .exo-item {
+            background: #f2fcf2;
+            padding: 0.7rem 1rem;
+            border-radius: 1.2rem;
+            margin-bottom: 0.7rem;
+            border-left: 6px solid #5cb85c;
+            font-size: 0.98rem;
+        }
+        .exo-item .translation {
+            color: #4a6a4a;
+            font-style: italic;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 0.15rem;
+        }
+        .answer-hidden {
+            background: #b5dbb5;
+            color: #b5dbb5;
+            padding: 0.1rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            transition: 0.1s;
+            border: none;
+            font-size: 0.9rem;
+        }
+        .answer-hidden.revealed {
+            background: #22c55e;
+            color: white;
+        }
+        .btn-group {
+            margin-top: 1.2rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .btn-reveal {
+            background: #22c55e;
+            border: none;
+            color: white;
+            padding: 0.4rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(34,197,94,0.2);
+            transition: 0.1s;
+        }
+        .btn-reveal:hover {
+            background: #16a34a;
+        }
+        .btn-reveal.secondary {
+            background: #3d6b3d;
+        }
+        .footnote {
+            margin-top: 2.5rem;
+            text-align: center;
+            color: #4a6a4a;
+            border-top: 1px solid #d5ead5;
+            padding-top: 1.8rem;
+            font-size: 0.95rem;
+        }
+        .explication {
+            background: #eaf7ea;
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            border-left: 4px solid #22c55e;
+        }
+        .explication strong {
+            color: #1a3a1a;
+        }
+        .production-box {
+            background: #edf7ed;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            border: 2px dashed #7dcd7d;
+            margin-top: 0.8rem;
+        }
+        .production-box textarea {
+            width: 100%;
+            border-radius: 1rem;
+            border: 1px solid #b5dbb5;
+            padding: 0.8rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+            background: #fafffa;
+        }
+        .heure-box {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin: 0.3rem 0;
+        }
+        .heure-box span {
+            background: #eaf7ea;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+        }
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 2.2rem; }
+            .container { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>📗 Révision · Français A1–A2</h1>
+    <div class="sous-titre">Prépositions · Heure · Démonstratifs · Pronominaux · Passé récent · Futur proche · Production</div>
+
+    <div class="badge-line">
+        <span class="badge">Prépositions de lieu</span>
+        <span class="badge">L'heure</span>
+        <span class="badge">Adjectifs démonstratifs</span>
+        <span class="badge">Verbes pronominaux</span>
+        <span class="badge">Passé récent</span>
+        <span class="badge">Futur proche</span>
+        <span class="badge">Production écrite</span>
+    </div>
+
+    <!-- ===== PRÉPOSITIONS DE LIEU ===== -->
+    <div class="section">
+        <div class="section-title"><span>📍</span> Prépositions de lieu</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">devant</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">derrière</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">à côté de</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">entre</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">sur</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">sous</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">dans</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">à côté de</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">près de</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">loin de</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Attention :</strong> devant vs. en face de.<br>
+                    <em>Le chat est <strong>devant</strong> la porte.</em> (juste avant)<br>
+                    <em>La boulangerie est <strong>en face</strong> du cinéma.</em> (de l'autre côté de la rue)
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complète</h3>
+                <div class="exo-item">a) Le livre est ______ la table. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sur</span>
+                    <span class="translation">The book is on the table.</span></div>
+                <div class="exo-item">b) Le chat dort ______ le canapé. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sur</span>
+                    <span class="translation">The cat sleeps on the sofa.</span></div>
+                <div class="exo-item">c) L'école est ______ la banque et le supermarché. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">entre</span>
+                    <span class="translation">The school is between the bank and the supermarket.</span></div>
+                <div class="exo-item">d) Le parc est ______ la mairie. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">devant</span>
+                    <span class="translation">The park is in front of the town hall.</span></div>
+                <div class="exo-item">e) Les clés sont ______ le tapis. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sous</span>
+                    <span class="translation">The keys are under the carpet.</span></div>
+                <div class="exo-item">f) Le cinéma est ______ la gare. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">à côté de</span>
+                    <span class="translation">The cinema is next to the station.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== L'HEURE ===== -->
+    <div class="section">
+        <div class="section-title"><span>⏰</span> L'heure</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div class="heure-box">
+                    <span>Il est 8h00 → huit heures</span>
+                    <span>8h15 → huit heures et quart</span>
+                    <span>8h30 → huit heures et demie</span>
+                    <span>8h45 → neuf heures moins le quart</span>
+                    <span>13h → une heure de l'après-midi</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Attention :</strong> On utilise <em>« et demie »</em> pour 30 min, <em>« et quart »</em> pour 15 min, <em>« moins le quart »</em> pour 45 min.
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Écris en français</h3>
+                <div class="exo-item">a) 7h00 → <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sept heures</span></div>
+                <div class="exo-item">b) 9h15 → <span class="answer-hidden" onclick="this.classList.toggle('revealed')">neuf heures et quart</span></div>
+                <div class="exo-item">c) 10h30 → <span class="answer-hidden" onclick="this.classList.toggle('revealed')">dix heures et demie</span></div>
+                <div class="exo-item">d) 11h45 → <span class="answer-hidden" onclick="this.classList.toggle('revealed')">midi moins le quart</span></div>
+                <div class="exo-item">e) 14h20 → <span class="answer-hidden" onclick="this.classList.toggle('revealed')">deux heures vingt de l'après-midi</span></div>
+                <div class="exo-item">f) 18h50 → <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sept heures moins dix</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ADJECTIFS DÉMONSTRATIFS ===== -->
+    <div class="section">
+        <div class="section-title"><span>👆</span> Adjectifs démonstratifs</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#eaf7ea; padding:0.2rem 1.2rem; border-radius:40px;">ce</span>
+                    <span style="background:#eaf7ea; padding:0.2rem 1.2rem; border-radius:40px;">cet (devant voyelle)</span>
+                    <span style="background:#eaf7ea; padding:0.2rem 1.2rem; border-radius:40px;">cette</span>
+                    <span style="background:#eaf7ea; padding:0.2rem 1.2rem; border-radius:40px;">ces</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>ce</strong> + masculin · <strong>cet</strong> + masculin commençant par voyelle · <strong>cette</strong> + féminin · <strong>ces</strong> + pluriel
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complète</h3>
+                <div class="exo-item">a) ______ livre est intéressant. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Ce</span>
+                    <span class="translation">This book is interesting.</span></div>
+                <div class="exo-item">b) ______ école est moderne. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Cette</span>
+                    <span class="translation">This school is modern.</span></div>
+                <div class="exo-item">c) ______ arbre est grand. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Cet</span> (devant voyelle)
+                    <span class="translation">This tree is tall.</span></div>
+                <div class="exo-item">d) ______ enfants sont sages. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Ces</span>
+                    <span class="translation">These children are well-behaved.</span></div>
+                <div class="exo-item">e) ______ voiture est rouge. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Cette</span>
+                    <span class="translation">This car is red.</span></div>
+                <div class="exo-item">f) ______ ami est espagnol. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Cet</span> (devant voyelle)
+                    <span class="translation">This friend is Spanish.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== VERBES PRONOMINAUX ===== -->
+    <div class="section">
+        <div class="section-title"><span>🔄</span> Verbes pronominaux</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">je me lève</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">tu te lèves</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">il/elle se lève</span>
+                </div>
+                <div>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">nous nous levons</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">vous vous levez</span>
+                    <span style="background:#eaf7ea; padding:0.1rem 1rem; border-radius:30px;">ils/elles se lèvent</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Verbes pronominaux courants :</strong> se lever, se coucher, se réveiller, s'habiller, se promener, se souvenir, s'appeler.
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue</h3>
+                <div class="exo-item">a) Je (se réveiller) ______ à 7h. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">me réveille</span>
+                    <span class="translation">I wake up at 7am.</span></div>
+                <div class="exo-item">b) Tu (s'habiller) ______ rapidement. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">t'habilles</span>
+                    <span class="translation">You get dressed quickly.</span></div>
+                <div class="exo-item">c) Elle (se coucher) ______ à 23h. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">se couche</span>
+                    <span class="translation">She goes to bed at 11pm.</span></div>
+                <div class="exo-item">d) Nous (se lever) ______ tôt. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">nous levons</span>
+                    <span class="translation">We get up early.</span></div>
+                <div class="exo-item">e) Ils (se promener) ______ dans le parc. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">se promènent</span>
+                    <span class="translation">They take a walk in the park.</span></div>
+                <div class="exo-item">f) Vous (se souvenir) ______ de cet endroit ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vous souvenez</span>
+                    <span class="translation">Do you remember this place?</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PASSÉ RÉCENT ===== -->
+    <div class="section">
+        <div class="section-title"><span>🆕</span> Passé récent (venir de + infinitif)</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#eaf7ea; padding:0.2rem 1.2rem; border-radius:40px;">je viens de + infinitif</span>
+                </div>
+                <div style="margin-top:0.5rem;">
+                    <span style="background:#d5ead5; padding:0.1rem 1rem; border-radius:30px;">Je viens de manger.</span>
+                    <span style="background:#d5ead5; padding:0.1rem 1rem; border-radius:30px;">Il vient d'arriver.</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Utilisation :</strong> action qui vient de se terminer.<br>
+                    Exemple : <em>Je <strong>viens de</strong> finir mes devoirs.</em> (je les ai finis il y a quelques minutes)
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Transforme</h3>
+                <div class="exo-item">a) Je mange. → Je ______ de manger. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">viens</span>
+                    <span class="translation">I have just eaten.</span></div>
+                <div class="exo-item">b) Elle part. → Elle ______ de partir. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vient</span>
+                    <span class="translation">She has just left.</span></div>
+                <div class="exo-item">c) Nous arrivons. → Nous ______ d'arriver. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">venons</span>
+                    <span class="translation">We have just arrived.</span></div>
+                <div class="exo-item">d) Vous finissez. → Vous ______ de finir. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">venez</span>
+                    <span class="translation">You have just finished.</span></div>
+                <div class="exo-item">e) Ils sortent. → Ils ______ de sortir. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">viennent</span>
+                    <span class="translation">They have just gone out.</span></div>
+                <div class="exo-item">f) Je commence. → Je ______ de commencer. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">viens</span>
+                    <span class="translation">I have just started.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FUTUR PROCHE ===== -->
+    <div class="section">
+        <div class="section-title"><span>🚀</span> Futur proche (aller + infinitif)</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#eaf7ea; padding:0.2rem 1.2rem; border-radius:40px;">je vais + infinitif</span>
+                </div>
+                <div style="margin-top:0.5rem;">
+                    <span style="background:#d5ead5; padding:0.1rem 1rem; border-radius:30px;">Je vais manger.</span>
+                    <span style="background:#d5ead5; padding:0.1rem 1rem; border-radius:30px;">Il va arriver.</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Utilisation :</strong> action proche dans le futur.<br>
+                    Exemple : <em>Je <strong>vais</strong> regarder un film ce soir.</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Transforme</h3>
+                <div class="exo-item">a) Je mange. → Je ______ manger. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vais</span>
+                    <span class="translation">I am going to eat.</span></div>
+                <div class="exo-item">b) Elle part. → Elle ______ partir. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">va</span>
+                    <span class="translation">She is going to leave.</span></div>
+                <div class="exo-item">c) Nous arrivons. → Nous ______ arriver. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allons</span>
+                    <span class="translation">We are going to arrive.</span></div>
+                <div class="exo-item">d) Vous finissez. → Vous ______ finir. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allez</span>
+                    <span class="translation">You are going to finish.</span></div>
+                <div class="exo-item">e) Ils sortent. → Ils ______ sortir. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vont</span>
+                    <span class="translation">They are going to go out.</span></div>
+                <div class="exo-item">f) Je commence. → Je ______ commencer. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vais</span>
+                    <span class="translation">I am going to start.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PASSÉ RÉCENT vs FUTUR PROCHE ===== -->
+    <div class="section">
+        <div class="section-title"><span>⚡</span> Passé récent vs Futur proche</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#d5ead5; padding:0.1rem 1rem; border-radius:30px;">Passé récent : <strong>venir de</strong> + infinitif</span>
+                </div>
+                <div>
+                    <span style="background:#d5ead5; padding:0.1rem 1rem; border-radius:30px;">Futur proche : <strong>aller</strong> + infinitif</span>
+                </div>
+                <div class="explication">
+                    💡 <em>Je <strong>viens de</strong> manger. (c'est fait)</em><br>
+                    <em>Je <strong>vais</strong> manger. (pas encore fait)</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Choisis</h3>
+                <div class="exo-item">a) Je (venir de / aller) ______ dîner maintenant. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vais</span> (futur proche)</div>
+                <div class="exo-item">b) Elle (venir de / aller) ______ finir son travail. Elle est libre. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vient de</span> (passé récent)</div>
+                <div class="exo-item">c) Nous (venir de / aller) ______ prendre le train dans 10 minutes. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allons</span> (futur proche)</div>
+                <div class="exo-item">d) Ils (venir de / aller) ______ arriver à l'aéroport. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">viennent de</span> (passé récent)</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PRODUCTION ÉCRITE ===== -->
+    <div class="section">
+        <div class="section-title"><span>✍️</span> Production écrite</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📝 Sujet 1</h3>
+                <p style="font-size:0.95rem; color:#2d4a2d; margin-bottom:0.5rem;">
+                    <strong>Décrivez votre journée type.</strong> Utilisez les verbes pronominaux et l'heure.<br>
+                    (au moins 60 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Je me réveille à 7h..."></textarea>
+                </div>
+                <div style="margin-top:0.5rem; font-size:0.85rem; color:#4a6a4a;">
+                    💡 Exemple : <em>Je me réveille à 7h. Je me lève et je prends une douche...</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📝 Sujet 2</h3>
+                <p style="font-size:0.95rem; color:#2d4a2d; margin-bottom:0.5rem;">
+                    <strong>Racontez ce que vous venez de faire et ce que vous allez faire.</strong> Utilisez passé récent et futur proche.<br>
+                    (au moins 60 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Je viens de... et je vais..."></textarea>
+                </div>
+                <div style="margin-top:0.5rem; font-size:0.85rem; color:#4a6a4a;">
+                    💡 Exemple : <em>Je viens de finir mes devoirs. Je vais regarder la télévision...</em>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:1rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+            <div class="card">
+                <h3>📝 Sujet 3</h3>
+                <p style="font-size:0.95rem; color:#2d4a2d; margin-bottom:0.5rem;">
+                    <strong>Décrivez votre ville ou votre quartier.</strong> Utilisez les prépositions de lieu.<br>
+                    (au moins 60 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Dans mon quartier, il y a..."></textarea>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📝 Sujet 4</h3>
+                <p style="font-size:0.95rem; color:#2d4a2d; margin-bottom:0.5rem;">
+                    <strong>Écrivez un petit texte sur votre famille.</strong> Utilisez les adjectifs démonstratifs et possessifs.<br>
+                    (au moins 60 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Ma famille..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOUTONS GLOBAUX ===== -->
+    <div class="btn-group">
+        <button class="btn-reveal" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.add('revealed'))">🔓 Révéler toutes les réponses</button>
+        <button class="btn-reveal secondary" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.remove('revealed'))">🙈 Tout cacher</button>
+    </div>
+
+    <div class="footnote">
+        ✨ Révision A1-A2 · Exercices variés · Cliquez sur les zones grisées pour voir la réponse.
+    </div>
+
+</div>
+</body>
+</html>

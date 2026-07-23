@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Français · Révision A2-B1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f4ff;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            color: #1a1a2e;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 3rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #dde7f5;
+        }
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #1e4a7a, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2rem;
+        }
+        .sous-titre {
+            font-size: 1.1rem;
+            color: #3d4f6a;
+            background: #eef4ff;
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            border-left: 6px solid #2563eb;
+        }
+        .badge-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            margin-bottom: 2.5rem;
+            background: #f5f9ff;
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+        }
+        .badge {
+            background: white;
+            padding: 0.2rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1e3a6b;
+            border: 1px solid #c5d6f0;
+            font-size: 0.9rem;
+        }
+        .badge::before {
+            content: "✅ ";
+            color: #2563eb;
+        }
+        .section {
+            background: #fafcff;
+            border-radius: 2rem;
+            padding: 1.8rem 1.8rem 0.8rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #e6edf8;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #1a2d4b;
+            border-bottom: 3px dashed #c5d6f0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title span {
+            background: #2563eb;
+            color: white;
+            width: 2.6rem;
+            height: 2.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.3rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.5rem 1.5rem;
+            border: 1px solid #e6edf8;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+        .card:hover {
+            border-color: #93b5f0;
+            background: #f8fbff;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            color: #1a2d4b;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .exo-box {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.2rem 0.5rem;
+            margin-top: 1.2rem;
+            border: 2px solid #eaf0fa;
+        }
+        .exo-box h4 {
+            font-size: 1.1rem;
+            color: #1a1a3e;
+            margin-bottom: 0.6rem;
+        }
+        .exo-item {
+            background: #f4f8ff;
+            padding: 0.7rem 1rem;
+            border-radius: 1.2rem;
+            margin-bottom: 0.7rem;
+            border-left: 6px solid #6b9bf5;
+            font-size: 0.98rem;
+        }
+        .exo-item .translation {
+            color: #5a6f8a;
+            font-style: italic;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 0.15rem;
+        }
+        .answer-hidden {
+            background: #c5d6f0;
+            color: #c5d6f0;
+            padding: 0.1rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            transition: 0.1s;
+            border: none;
+            font-size: 0.9rem;
+        }
+        .answer-hidden.revealed {
+            background: #2563eb;
+            color: white;
+        }
+        .color-tag {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 8px;
+            margin-right: 0.3rem;
+            vertical-align: middle;
+            border: 1px solid #ccc;
+        }
+        .btn-group {
+            margin-top: 1.2rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .btn-reveal {
+            background: #2563eb;
+            border: none;
+            color: white;
+            padding: 0.4rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(37,99,235,0.2);
+            transition: 0.1s;
+        }
+        .btn-reveal:hover {
+            background: #1d4ed8;
+        }
+        .btn-reveal.secondary {
+            background: #4b5a7a;
+        }
+        .footnote {
+            margin-top: 2.5rem;
+            text-align: center;
+            color: #5a6f8a;
+            border-top: 1px solid #dde7f5;
+            padding-top: 1.8rem;
+            font-size: 0.95rem;
+        }
+        .explication {
+            background: #eaf0fa;
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            border-left: 4px solid #2563eb;
+        }
+        .explication strong {
+            color: #1a2d4b;
+        }
+        .production-box {
+            background: #f0f7ff;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            border: 2px dashed #6b9bf5;
+            margin-top: 0.8rem;
+        }
+        .production-box textarea {
+            width: 100%;
+            border-radius: 1rem;
+            border: 1px solid #c5d6f0;
+            padding: 0.8rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+            background: #fafcff;
+        }
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 2.2rem; }
+            .container { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>📘 Révision · Français A2–B1</h1>
+    <div class="sous-titre">Pronoms compléments · Passé composé · Imparfait · Plus-que-parfait · Futur · Comparatifs · Subjonctif</div>
+
+    <div class="badge-line">
+        <span class="badge">Pronoms COD/COI</span>
+        <span class="badge">Passé composé</span>
+        <span class="badge">Imparfait</span>
+        <span class="badge">Plus-que-parfait</span>
+        <span class="badge">Futur simple</span>
+        <span class="badge">Comparatifs</span>
+        <span class="badge">Subjonctif présent</span>
+        <span class="badge">Production écrite</span>
+    </div>
+
+    <!-- ===== PRONOMS COMPLÉMENTS ===== -->
+    <div class="section">
+        <div class="section-title"><span>🔄</span> Pronoms compléments (COD / COI)</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">me / te / se / nous / vous</span></div>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">le / la / les (COD)</span></div>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">lui / leur (COI)</span></div>
+                <div style="margin-top:0.5rem;">
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">Je <strong>le</strong> vois.</span>
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">Je <strong>lui</strong> parle.</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Ordre des pronoms :</strong> me/te/se/nous/vous → le/la/les → lui/leur → y → en<br>
+                    Exemple : <em>Je <strong>le lui</strong> donne.</em> (je donne <strong>le</strong> livre à <strong>lui</strong>)
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Remplace par un pronom</h3>
+                <div class="exo-item">a) Je vois Marie. → Je ______ vois. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">la</span>
+                    <span class="translation">I see her.</span></div>
+                <div class="exo-item">b) Il parle à Pierre. → Il ______ parle. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">lui</span>
+                    <span class="translation">He speaks to him.</span></div>
+                <div class="exo-item">c) Nous écoutons les enfants. → Nous ______ écoutons. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">les</span>
+                    <span class="translation">We listen to them.</span></div>
+                <div class="exo-item">d) Tu donnes le livre à Marie. → Tu ______ ______ donnes. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">le lui</span>
+                    <span class="translation">You give it to her.</span></div>
+                <div class="exo-item">e) Je téléphone à mes parents. → Je ______ téléphone. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">leur</span>
+                    <span class="translation">I call them.</span></div>
+                <div class="exo-item">f) Elle regarde la télévision. → Elle ______ regarde. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">la</span>
+                    <span class="translation">She watches it.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PASSÉ COMPOSÉ ===== -->
+    <div class="section">
+        <div class="section-title"><span>⏳</span> Passé composé</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">avoir / être + participe passé</span></div>
+                <div style="margin-top:0.5rem;">
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">j'ai mangé</span>
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">je suis allé(e)</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Être :</strong> verbes de mouvement (venir, partir, entrer, sortir, aller, arriver, tomber, naître, mourir) + tous les verbes pronominaux.<br>
+                    <strong>Accord :</strong> avec être, le participe passé s'accorde en genre et en nombre.
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue au passé composé</h3>
+                <div class="exo-item">a) Je (manger) ______ une pomme. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ai mangé</span>
+                    <span class="translation">I ate an apple.</span></div>
+                <div class="exo-item">b) Elle (partir) ______ à 8h. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">est partie</span>
+                    <span class="translation">She left at 8am.</span></div>
+                <div class="exo-item">c) Nous (arriver) ______ en retard. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sommes arrivés</span>
+                    <span class="translation">We arrived late.</span></div>
+                <div class="exo-item">d) Tu (finir) ______ tes devoirs ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">as fini</span>
+                    <span class="translation">Did you finish your homework?</span></div>
+                <div class="exo-item">e) Ils (sortir) ______ du cinéma. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sont sortis</span>
+                    <span class="translation">They left the cinema.</span></div>
+                <div class="exo-item">f) Je (se lever) ______ à 7h. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">me suis levé(e)</span>
+                    <span class="translation">I got up at 7am.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== IMPARFAIT ===== -->
+    <div class="section">
+        <div class="section-title"><span>🕰️</span> Imparfait</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">je parlais · tu parlais · il parlait · nous parlions · vous parliez · ils parlaient</span></div>
+                <div class="explication">
+                    💡 <strong>Utilisation :</strong> description, habitude, action en cours dans le passé.<br>
+                    Exemple : <em>Quand j'étais petit, je <strong>jouais</strong> au parc.</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue à l'imparfait</h3>
+                <div class="exo-item">a) Je (être) ______ fatigué. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">étais</span>
+                    <span class="translation">I was tired.</span></div>
+                <div class="exo-item">b) Nous (jouer) ______ ensemble. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">jouions</span>
+                    <span class="translation">We were playing together.</span></div>
+                <div class="exo-item">c) Il (faire) ______ beau. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">faisait</span>
+                    <span class="translation">The weather was nice.</span></div>
+                <div class="exo-item">d) Vous (avoir) ______ raison. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">aviez</span>
+                    <span class="translation">You were right.</span></div>
+                <div class="exo-item">e) Elles (aller) ______ à l'école. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allaient</span>
+                    <span class="translation">They were going to school.</span></div>
+                <div class="exo-item">f) Tu (finir) ______ à 18h. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">finissais</span>
+                    <span class="translation">You were finishing at 6pm.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== IMPARFAIT VS PASSÉ COMPOSÉ ===== -->
+    <div class="section">
+        <div class="section-title"><span>⚖️</span> Imparfait vs Passé composé</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">Imparfait = description / habitude</span></div>
+                <div><span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">Passé composé = action ponctuelle</span></div>
+                <div class="explication">
+                    💡 <em>Il <strong>pleuvait</strong> (imparfait) quand je <strong>suis sorti</strong> (passé composé).</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Choisis le bon temps</h3>
+                <div class="exo-item">a) Quand j'étais petit, je (habiter) ______ à Paris. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">habitais</span> (imparfait)</div>
+                <div class="exo-item">b) Soudain, il (entrer) ______ dans la pièce. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">est entré</span> (passé composé)</div>
+                <div class="exo-item">c) Chaque matin, nous (prendre) ______ le petit-déjeuner ensemble. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">prenions</span> (imparfait)</div>
+                <div class="exo-item">d) Hier, je (voir) ______ un film. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ai vu</span> (passé composé)</div>
+                <div class="exo-item">e) Il (neiger) ______ quand nous (partir) ______. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">neigeait / sommes partis</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PLUS-QUE-PARFAIT ===== -->
+    <div class="section">
+        <div class="section-title"><span>⏮️</span> Plus-que-parfait</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">avoir/être à l'imparfait + participe passé</span></div>
+                <div style="margin-top:0.5rem;">
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">j'avais mangé</span>
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">j'étais parti(e)</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Utilisation :</strong> action antérieure à une autre action passée.<br>
+                    Exemple : <em>Quand je suis arrivé, il <strong>était déjà parti</strong>.</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue au plus-que-parfait</h3>
+                <div class="exo-item">a) Quand je suis arrivé, elle (déjà / partir) ______. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">était déjà partie</span>
+                    <span class="translation">When I arrived, she had already left.</span></div>
+                <div class="exo-item">b) Il (finir) ______ son travail avant de sortir. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">avait fini</span>
+                    <span class="translation">He had finished his work before going out.</span></div>
+                <div class="exo-item">c) Nous (manger) ______ déjà quand tu es venu. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">avions déjà mangé</span>
+                    <span class="translation">We had already eaten when you came.</span></div>
+                <div class="exo-item">d) Elles (aller) ______ à l'école avant de rentrer. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">étaient allées</span>
+                    <span class="translation">They had gone to school before coming back.</span></div>
+                <div class="exo-item">e) Je (ne jamais / voir) ______ ce film. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">n'avais jamais vu</span>
+                    <span class="translation">I had never seen this film.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FUTUR SIMPLE ===== -->
+    <div class="section">
+        <div class="section-title"><span>🔮</span> Futur simple</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">infinitif + ai / as / a / ons / ez / ont</span></div>
+                <div style="margin-top:0.5rem;">
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">je parlerai</span>
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">j'irai</span>
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">j'aurai</span>
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">je serai</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Verbes irréguliers :</strong> aller → j'irai · avoir → j'aurai · être → je serai · faire → je ferai · venir → je viendrai · voir → je verrai
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue au futur</h3>
+                <div class="exo-item">a) Demain, je (aller) ______ au marché. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">irai</span>
+                    <span class="translation">Tomorrow I will go to the market.</span></div>
+                <div class="exo-item">b) Nous (finir) ______ à 20h. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">finirons</span>
+                    <span class="translation">We will finish at 8pm.</span></div>
+                <div class="exo-item">c) Tu (être) ______ à la maison ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">seras</span>
+                    <span class="translation">Will you be at home?</span></div>
+                <div class="exo-item">d) Elles (faire) ______ du sport. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">feront</span>
+                    <span class="translation">They will do sports.</span></div>
+                <div class="exo-item">e) Je (avoir) ______ un nouvel ordinateur. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">aurai</span>
+                    <span class="translation">I will have a new computer.</span></div>
+                <div class="exo-item">f) Vous (venir) ______ à la fête ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">viendrez</span>
+                    <span class="translation">Will you come to the party?</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COMPARATIFS ===== -->
+    <div class="section">
+        <div class="section-title"><span>📊</span> Comparatifs</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">plus ... que</span></div>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">moins ... que</span></div>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">aussi ... que</span></div>
+                <div style="margin-top:0.5rem;">
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">Elle est <strong>plus</strong> grande <strong>que</strong> moi.</span>
+                    <span style="background:#dbeafe; padding:0.1rem 1rem; border-radius:30px;">Il est <strong>moins</strong> fort <strong>que</strong> son frère.</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Construis des phrases</h3>
+                <div class="exo-item">a) Marie / grande / Luc. → Marie est ______ Luc. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">plus grande que</span></div>
+                <div class="exo-item">b) Ce livre / intéressant / celui-ci. → Ce livre est ______ celui-ci. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">moins intéressant que</span></div>
+                <div class="exo-item">c) Paris / cher / Lyon. → Paris est ______ Lyon. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">plus cher que</span></div>
+                <div class="exo-item">d) Sophie / rapide / Julie. → Sophie est ______ Julie. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">aussi rapide que</span></div>
+                <div class="exo-item">e) Mon chat / petit / ton chien. → Mon chat est ______ ton chien. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">plus petit que</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== SUBJONCTIF PRÉSENT ===== -->
+    <div class="section">
+        <div class="section-title"><span>🌐</span> Subjonctif présent</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div><span style="background:#eaf0fa; padding:0.2rem 1rem; border-radius:40px;">que je parle · que tu parles · qu'il parle · que nous parlions · que vous parliez · qu'ils parlent</span></div>
+                <div class="explication">
+                    💡 <strong>Utilisation :</strong> après des expressions comme <em>il faut que, je veux que, il est important que, bien que, pour que, avant que</em>.<br>
+                    Exemple : <em>Il faut que <strong>tu viennes</strong>.</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue au subjonctif</h3>
+                <div class="exo-item">a) Il faut que je (finir) ______ mes devoirs. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">finisse</span>
+                    <span class="translation">I must finish my homework.</span></div>
+                <div class="exo-item">b) Je veux que tu (aller) ______ au marché. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ailles</span>
+                    <span class="translation">I want you to go to the market.</span></div>
+                <div class="exo-item">c) Il est important que nous (être) ______ à l'heure. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">soyons</span>
+                    <span class="translation">It's important that we are on time.</span></div>
+                <div class="exo-item">d) Bien qu'il (pleuvoir) ______, nous sortons. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">pleuve</span>
+                    <span class="translation">Although it's raining, we go out.</span></div>
+                <div class="exo-item">e) Je préfère que vous (prendre) ______ le train. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">preniez</span>
+                    <span class="translation">I prefer that you take the train.</span></div>
+                <div class="exo-item">f) Pour que je (comprendre) ______, parle plus lentement. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">comprenne</span>
+                    <span class="translation">So that I understand, speak more slowly.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PRODUCTION ÉCRITE ===== -->
+    <div class="section">
+        <div class="section-title"><span>✍️</span> Production écrite</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📝 Sujet 1</h3>
+                <p style="font-size:0.95rem; color:#2d3f5e; margin-bottom:0.5rem;">
+                    <strong>Racontez votre week-end dernier.</strong> Utilisez le passé composé et l'imparfait.<br>
+                    (au moins 80 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Écrivez votre texte ici..."></textarea>
+                </div>
+                <div style="margin-top:0.5rem; font-size:0.85rem; color:#5a6f8a;">
+                    💡 Exemple : <em>Le week-end dernier, il faisait beau. Je suis allé(e) au parc avec mes amis. Nous avons joué au football...</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📝 Sujet 2</h3>
+                <p style="font-size:0.95rem; color:#2d3f5e; margin-bottom:0.5rem;">
+                    <strong>Que ferez-vous pendant les prochaines vacances ?</strong> Utilisez le futur simple.<br>
+                    (au moins 80 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Écrivez votre texte ici..."></textarea>
+                </div>
+                <div style="margin-top:0.5rem; font-size:0.85rem; color:#5a6f8a;">
+                    💡 Exemple : <em>Pendant les prochaines vacances, j'irai à la mer. Je nagerai tous les jours...</em>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:1rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+            <div class="card">
+                <h3>📝 Sujet 3</h3>
+                <p style="font-size:0.95rem; color:#2d3f5e; margin-bottom:0.5rem;">
+                    <strong>Comparez deux villes ou deux pays.</strong> Utilisez les comparatifs.<br>
+                    (au moins 80 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Écrivez votre texte ici..."></textarea>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📝 Sujet 4</h3>
+                <p style="font-size:0.95rem; color:#2d3f5e; margin-bottom:0.5rem;">
+                    <strong>Écrivez un conseil à un ami.</strong> Utilisez le subjonctif.<br>
+                    (au moins 80 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Écrivez votre texte ici..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOUTONS GLOBAUX ===== -->
+    <div class="btn-group">
+        <button class="btn-reveal" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.add('revealed'))">🔓 Révéler toutes les réponses</button>
+        <button class="btn-reveal secondary" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.remove('revealed'))">🙈 Tout cacher</button>
+    </div>
+
+    <div class="footnote">
+        ✨ Révision A2-B1 · Exercices variés · Cliquez sur les zones grisées pour voir la réponse.
+    </div>
+
+</div>
+</body>
+</html>

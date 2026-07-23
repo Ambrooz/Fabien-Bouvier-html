@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Français · Révision Débutant +</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #fdf6f0;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            color: #2a1a10;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 3rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0ddd0;
+        }
+        h1 {
+            font-size: 2.8rem;
+            background: linear-gradient(135deg, #b45309, #d97706, #f59e0b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.2rem;
+        }
+        .sous-titre {
+            font-size: 1.1rem;
+            color: #7a4a2a;
+            background: #fdf0e6;
+            padding: 0.6rem 1.8rem;
+            border-radius: 60px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            border-left: 6px solid #d97706;
+        }
+        .badge-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+            margin-bottom: 2.5rem;
+            background: #fdf5ec;
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+        }
+        .badge {
+            background: white;
+            padding: 0.2rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #6a3a1a;
+            border: 1px solid #eaceb0;
+            font-size: 0.9rem;
+        }
+        .badge::before {
+            content: "✅ ";
+            color: #d97706;
+        }
+        .section {
+            background: #fefaf7;
+            border-radius: 2rem;
+            padding: 1.8rem 1.8rem 0.8rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #f0ddd0;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: #4a2a10;
+            border-bottom: 3px dashed #eaceb0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title span {
+            background: #d97706;
+            color: white;
+            width: 2.6rem;
+            height: 2.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.3rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.5rem 1.5rem;
+            border: 1px solid #f0ddd0;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+        .card:hover {
+            border-color: #f0b080;
+            background: #fef8f2;
+        }
+        .card h3 {
+            font-size: 1.3rem;
+            color: #4a2a10;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .exo-box {
+            background: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.2rem 0.5rem;
+            margin-top: 1.2rem;
+            border: 2px solid #f5e8da;
+        }
+        .exo-box h4 {
+            font-size: 1.1rem;
+            color: #3a2a10;
+            margin-bottom: 0.6rem;
+        }
+        .exo-item {
+            background: #fcf4ea;
+            padding: 0.7rem 1rem;
+            border-radius: 1.2rem;
+            margin-bottom: 0.7rem;
+            border-left: 6px solid #e8b080;
+            font-size: 0.98rem;
+        }
+        .exo-item .translation {
+            color: #7a5a3a;
+            font-style: italic;
+            font-size: 0.9rem;
+            display: block;
+            margin-top: 0.15rem;
+        }
+        .answer-hidden {
+            background: #eaceb0;
+            color: #eaceb0;
+            padding: 0.1rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            transition: 0.1s;
+            border: none;
+            font-size: 0.9rem;
+        }
+        .answer-hidden.revealed {
+            background: #d97706;
+            color: white;
+        }
+        .btn-group {
+            margin-top: 1.2rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .btn-reveal {
+            background: #d97706;
+            border: none;
+            color: white;
+            padding: 0.4rem 2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(217,119,6,0.2);
+            transition: 0.1s;
+        }
+        .btn-reveal:hover {
+            background: #b45309;
+        }
+        .btn-reveal.secondary {
+            background: #7a5a3a;
+        }
+        .footnote {
+            margin-top: 2.5rem;
+            text-align: center;
+            color: #7a5a3a;
+            border-top: 1px solid #f0ddd0;
+            padding-top: 1.8rem;
+            font-size: 0.95rem;
+        }
+        .explication {
+            background: #fcf4ea;
+            border-radius: 1rem;
+            padding: 0.8rem 1.2rem;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            border-left: 4px solid #d97706;
+        }
+        .explication strong {
+            color: #4a2a10;
+        }
+        .production-box {
+            background: #fcf4ea;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            border: 2px dashed #f0b080;
+            margin-top: 0.8rem;
+        }
+        .production-box textarea {
+            width: 100%;
+            border-radius: 1rem;
+            border: 1px solid #eaceb0;
+            padding: 0.8rem;
+            font-family: 'Segoe UI', sans-serif;
+            font-size: 0.95rem;
+            resize: vertical;
+            min-height: 80px;
+            background: #fefaf7;
+        }
+        .article-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin: 0.3rem 0;
+        }
+        .article-box span {
+            background: #fcf4ea;
+            padding: 0.1rem 0.8rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            border: 1px solid #eaceb0;
+        }
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 2.2rem; }
+            .container { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>📙 Révision · Français Débutant +</h1>
+    <div class="sous-titre">Articles · Adjectifs possessifs · Interrogation · Verbes du 2e/3e groupe · Quantité</div>
+
+    <div class="badge-line">
+        <span class="badge">Articles définis/indéfinis</span>
+        <span class="badge">Adjectifs possessifs</span>
+        <span class="badge">Forme interrogative</span>
+        <span class="badge">Verbes en -ir / -re</span>
+        <span class="badge">Être / Avoir / Aller / Faire</span>
+        <span class="badge">Expressions de quantité</span>
+        <span class="badge">Production écrite</span>
+    </div>
+
+    <!-- ===== ARTICLES DÉFINIS / INDÉFINIS ===== -->
+    <div class="section">
+        <div class="section-title"><span>📌</span> Articles définis / indéfinis</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.2rem 1rem; border-radius:30px;">Définis : le / la / l' / les</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.2rem 1rem; border-radius:30px;">Indéfinis : un / une / des</span>
+                </div>
+                <div class="article-box">
+                    <span>le livre</span>
+                    <span>la table</span>
+                    <span>l'école</span>
+                    <span>les enfants</span>
+                    <span>un chat</span>
+                    <span>une voiture</span>
+                    <span>des fleurs</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Définis :</strong> on parle d'une chose précise.<br>
+                    <strong>Indéfinis :</strong> on parle d'une chose non précisée.
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complète</h3>
+                <div class="exo-item">a) ______ livre est sur la table. (un livre précis) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Le</span>
+                    <span class="translation">The book is on the table.</span></div>
+                <div class="exo-item">b) J'ai ______ chat. (un chat quelconque) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">un</span>
+                    <span class="translation">I have a cat.</span></div>
+                <div class="exo-item">c) ______ enfants jouent dans le jardin. (des enfants précis) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Les</span>
+                    <span class="translation">The children are playing in the garden.</span></div>
+                <div class="exo-item">d) Elle achète ______ fleurs. (quelques fleurs) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">des</span>
+                    <span class="translation">She buys flowers.</span></div>
+                <div class="exo-item">e) ______ école est grande. (une école précise) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">L'</span>
+                    <span class="translation">The school is big.</span></div>
+                <div class="exo-item">f) Il y a ______ arbre dans le jardin. (un arbre quelconque) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">un</span>
+                    <span class="translation">There is a tree in the garden.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== ADJECTIFS POSSESSIFS (RÉVISION) ===== -->
+    <div class="section">
+        <div class="section-title"><span>👤</span> Adjectifs possessifs</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">mon / ma / mes</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">ton / ta / tes</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">son / sa / ses</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">notre / nos</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">votre / vos</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">leur / leurs</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Attention :</strong> Devant une voyelle, on utilise <strong>mon, ton, son</strong>.<br>
+                    <em>mon amie</em> (et non "ma amie")
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complète</h3>
+                <div class="exo-item">a) ______ père est ingénieur. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Mon</span>
+                    <span class="translation">My father is an engineer.</span></div>
+                <div class="exo-item">b) ______ mère est professeure. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Ma</span>
+                    <span class="translation">My mother is a teacher.</span></div>
+                <div class="exo-item">c) ______ amie est espagnole. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Mon</span> (devant voyelle)
+                    <span class="translation">My friend is Spanish.</span></div>
+                <div class="exo-item">d) ______ frères sont grands. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Mes</span>
+                    <span class="translation">My brothers are tall.</span></div>
+                <div class="exo-item">e) ______ école est moderne. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Mon</span> (devant voyelle)
+                    <span class="translation">My school is modern.</span></div>
+                <div class="exo-item">f) ______ enfants sont à la maison. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Leurs</span>
+                    <span class="translation">Their children are at home.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FORME INTERROGATIVE ===== -->
+    <div class="section">
+        <div class="section-title"><span>❓</span> Forme interrogative</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.2rem 1rem; border-radius:30px;">Est-ce que + sujet + verbe</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.2rem 1rem; border-radius:30px;">Sujet + verbe + ? (intonation)</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.2rem 1rem; border-radius:30px;">Verbe + -sujet + ? (inversion)</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>3 façons :</strong><br>
+                    <em>Est-ce que tu aimes le café ?</em><br>
+                    <em>Tu aimes le café ?</em><br>
+                    <em>Aimes-tu le café ?</em> (plus formel)
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Transforme en question</h3>
+                <div class="exo-item">a) Tu parles français. → ______ <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Est-ce que tu parles français ?</span>
+                    <span class="translation">Do you speak French?</span></div>
+                <div class="exo-item">b) Il habite à Paris. → ______ <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Est-ce qu'il habite à Paris ?</span>
+                    <span class="translation">Does he live in Paris?</span></div>
+                <div class="exo-item">c) Vous aimez le chocolat. → ______ <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Aimez-vous le chocolat ?</span>
+                    <span class="translation">Do you like chocolate?</span></div>
+                <div class="exo-item">d) Elles vont au cinéma. → ______ <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Vont-elles au cinéma ?</span>
+                    <span class="translation">Are they going to the cinema?</span></div>
+                <div class="exo-item">e) Nous finissons à 18h. → ______ <span class="answer-hidden" onclick="this.classList.toggle('revealed')">Est-ce que nous finissons à 18h ?</span>
+                    <span class="translation">Do we finish at 6pm?</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== VERBES EN -IR (2e GROUPE) ===== -->
+    <div class="section">
+        <div class="section-title"><span>📝</span> Verbes en -ir (2e groupe) : finir, choisir, réussir</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">je finis</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">tu finis</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">il/elle finit</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">nous finissons</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">vous finissez</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">ils/elles finissent</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Radical :</strong> fin- + terminaisons : -is, -is, -it, -issons, -issez, -issent
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue</h3>
+                <div class="exo-item">a) Je (finir) ______ à 18h. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">finis</span>
+                    <span class="translation">I finish at 6pm.</span></div>
+                <div class="exo-item">b) Tu (choisir) ______ un livre. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">choisis</span>
+                    <span class="translation">You choose a book.</span></div>
+                <div class="exo-item">c) Elle (réussir) ______ à son examen. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">réussit</span>
+                    <span class="translation">She passes her exam.</span></div>
+                <div class="exo-item">d) Nous (finir) ______ les devoirs. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">finissons</span>
+                    <span class="translation">We finish the homework.</span></div>
+                <div class="exo-item">e) Ils (choisir) ______ un restaurant. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">choisissent</span>
+                    <span class="translation">They choose a restaurant.</span></div>
+                <div class="exo-item">f) Vous (réussir) ______ toujours. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">réussissez</span>
+                    <span class="translation">You always succeed.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== VERBES EN -RE (3e GROUPE) ===== -->
+    <div class="section">
+        <div class="section-title"><span>📝</span> Verbes en -re : attendre, vendre, répondre</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">j'attends</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">tu attends</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">il/elle attend</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">nous attendons</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">vous attendez</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">ils/elles attendent</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Radical :</strong> attend- + terminaisons : -s, -s, -d, -ons, -ez, -ent
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Conjugue</h3>
+                <div class="exo-item">a) J' (attendre) ______ le bus. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">attends</span>
+                    <span class="translation">I am waiting for the bus.</span></div>
+                <div class="exo-item">b) Tu (vendre) ______ ta voiture ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vends</span>
+                    <span class="translation">Are you selling your car?</span></div>
+                <div class="exo-item">c) Il (répondre) ______ à la question. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">répond</span>
+                    <span class="translation">He answers the question.</span></div>
+                <div class="exo-item">d) Nous (attendre) ______ le train. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">attendons</span>
+                    <span class="translation">We are waiting for the train.</span></div>
+                <div class="exo-item">e) Elles (vendre) ______ des fruits. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vendent</span>
+                    <span class="translation">They sell fruit.</span></div>
+                <div class="exo-item">f) Vous (répondre) ______ au téléphone. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">répondez</span>
+                    <span class="translation">You answer the phone.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== VERBES IRRÉGULIERS (SUITE) ===== -->
+    <div class="section">
+        <div class="section-title"><span>⚡</span> Verbes irréguliers (suite)</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">Être : je suis, tu es, il est, nous sommes, vous êtes, ils sont</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">Avoir : j'ai, tu as, il a, nous avons, vous avez, ils ont</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">Aller : je vais, tu vas, il va, nous allons, vous allez, ils vont</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 0.8rem; border-radius:30px;">Faire : je fais, tu fais, il fait, nous faisons, vous faites, ils font</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complète</h3>
+                <div class="exo-item">a) Je (aller) ______ à l'école. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vais</span>
+                    <span class="translation">I go to school.</span></div>
+                <div class="exo-item">b) Nous (être) ______ fatigués. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sommes</span>
+                    <span class="translation">We are tired.</span></div>
+                <div class="exo-item">c) Ils (avoir) ______ faim. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ont</span>
+                    <span class="translation">They are hungry.</span></div>
+                <div class="exo-item">d) Tu (faire) ______ du sport ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">fais</span>
+                    <span class="translation">Do you do sports?</span></div>
+                <div class="exo-item">e) Vous (aller) ______ au cinéma ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allez</span>
+                    <span class="translation">Are you going to the cinema?</span></div>
+                <div class="exo-item">f) Elle (être) ______ médecin. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">est</span>
+                    <span class="translation">She is a doctor.</span></div>
+                <div class="exo-item">g) Je (avoir) ______ un chat. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ai</span>
+                    <span class="translation">I have a cat.</span></div>
+                <div class="exo-item">h) Nous (faire) ______ un gâteau. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">faisons</span>
+                    <span class="translation">We are making a cake.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXPRESSIONS DE QUANTITÉ ===== -->
+    <div class="section">
+        <div class="section-title"><span>📦</span> Expressions de quantité</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Rappel</h3>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">beaucoup de</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">peu de</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">assez de</span>
+                </div>
+                <div>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">trop de</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">un peu de</span>
+                    <span style="background:#fcf4ea; padding:0.1rem 1rem; border-radius:30px;">beaucoup de</span>
+                </div>
+                <div class="explication">
+                    💡 <strong>Forme :</strong> quantité + <strong>de</strong> + nom<br>
+                    <em>beaucoup d'enfants</em> · <em>peu de temps</em> · <em>assez d'argent</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complète</h3>
+                <div class="exo-item">a) Il y a ______ monde dans la rue. (beaucoup) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">beaucoup de</span>
+                    <span class="translation">There are a lot of people in the street.</span></div>
+                <div class="exo-item">b) J'ai ______ temps pour finir. (assez) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">assez de</span>
+                    <span class="translation">I have enough time to finish.</span></div>
+                <div class="exo-item">c) Elle a ______ argent. (peu) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">peu d'</span> (devant voyelle)
+                    <span class="translation">She has little money.</span></div>
+                <div class="exo-item">d) Il y a ______ bruit. (trop) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">trop de</span>
+                    <span class="translation">There is too much noise.</span></div>
+                <div class="exo-item">e) Je voudrais ______ pain. (un peu) <span class="answer-hidden" onclick="this.classList.toggle('revealed')">un peu de</span>
+                    <span class="translation">I would like a little bread.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PRODUCTION ÉCRITE ===== -->
+    <div class="section">
+        <div class="section-title"><span>✍️</span> Production écrite</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📝 Sujet 1</h3>
+                <p style="font-size:0.95rem; color:#5a3a1a; margin-bottom:0.5rem;">
+                    <strong>Présentez votre famille.</strong> Utilisez les adjectifs possessifs, les articles et les verbes être/avoir.<br>
+                    (au moins 50 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Ma famille..."></textarea>
+                </div>
+                <div style="margin-top:0.5rem; font-size:0.85rem; color:#7a5a3a;">
+                    💡 Exemple : <em>J'ai une sœur. Elle s'appelle Marie. Mon père est ingénieur...</em>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📝 Sujet 2</h3>
+                <p style="font-size:0.95rem; color:#5a3a1a; margin-bottom:0.5rem;">
+                    <strong>Décrivez votre journée.</strong> Utilisez les verbes en -er, -ir, -re et les expressions de quantité.<br>
+                    (au moins 50 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Le matin..."></textarea>
+                </div>
+                <div style="margin-top:0.5rem; font-size:0.85rem; color:#7a5a3a;">
+                    💡 Exemple : <em>Je me lève à 7h. Je prends un peu de pain...</em>
+                </div>
+            </div>
+        </div>
+        <div style="margin-top:1rem; display:grid; grid-template-columns:1fr 1fr; gap:1.5rem;">
+            <div class="card">
+                <h3>📝 Sujet 3</h3>
+                <p style="font-size:0.95rem; color:#5a3a1a; margin-bottom:0.5rem;">
+                    <strong>Racontez ce que vous aimez et ce que vous n'aimez pas.</strong> Utilisez la négation.<br>
+                    (au moins 50 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="J'aime..."></textarea>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📝 Sujet 4</h3>
+                <p style="font-size:0.95rem; color:#5a3a1a; margin-bottom:0.5rem;">
+                    <strong>Décrivez votre ville ou votre quartier.</strong> Utilisez les prépositions de lieu (devant, à côté de...).<br>
+                    (au moins 50 mots)
+                </p>
+                <div class="production-box">
+                    <textarea placeholder="Dans ma ville..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOUTONS GLOBAUX ===== -->
+    <div class="btn-group">
+        <button class="btn-reveal" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.add('revealed'))">🔓 Révéler toutes les réponses</button>
+        <button class="btn-reveal secondary" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.remove('revealed'))">🙈 Tout cacher</button>
+    </div>
+
+    <div class="footnote">
+        ✨ Révision Débutant + · Exercices variés · Cliquez sur les zones grisées pour voir la réponse.
+    </div>
+
+</div>
+</body>
+</html>
