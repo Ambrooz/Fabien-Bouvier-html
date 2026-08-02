@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Français · Être / Avoir / Aller / Faire · Automatisation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #eef4f8;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            padding: 2rem 1rem;
+            color: #0a1a2a;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 3.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 25px 50px -10px rgba(0, 20, 40, 0.1);
+            border: 1px solid #c8d8e8;
+        }
+        h1 {
+            font-size: 2.6rem;
+            background: linear-gradient(145deg, #0a4a7a, #1a6aaa, #3a8ac8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+            letter-spacing: -0.02em;
+            margin-bottom: 0.1rem;
+        }
+        .sous-titre {
+            font-size: 1.1rem;
+            color: #1a4a6a;
+            background: #e4eef8;
+            padding: 0.5rem 2rem;
+            border-radius: 60px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            border-left: 8px solid #2a7aba;
+            font-weight: 500;
+        }
+        .badge-line {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 0.8rem;
+            margin-bottom: 2.5rem;
+            background: #e8f0f8;
+            padding: 0.7rem 1.5rem;
+            border-radius: 60px;
+        }
+        .badge {
+            background: white;
+            padding: 0.2rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1a4a6a;
+            border: 1px solid #b8cce0;
+            font-size: 0.85rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+        .badge::before {
+            content: "🎯 ";
+            color: #2a7aba;
+        }
+        .section {
+            background: #f6faff;
+            border-radius: 2rem;
+            padding: 1.8rem 1.8rem 0.8rem;
+            margin-bottom: 2.5rem;
+            border: 1px solid #c8d8e8;
+        }
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0a2a4a;
+            border-bottom: 3px dashed #b8cce0;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .section-title span {
+            background: #2a7aba;
+            color: white;
+            width: 2.6rem;
+            height: 2.6rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 1.2rem;
+        }
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.8rem;
+        }
+        .card {
+            background: white;
+            border-radius: 1.8rem;
+            padding: 1.2rem 1.5rem 1.5rem;
+            border: 1px solid #c8d8e8;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            transition: 0.1s;
+        }
+        .card:hover {
+            border-color: #7aaad0;
+            background: #fafdff;
+        }
+        .card h3 {
+            font-size: 1.2rem;
+            color: #0a2a4a;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .exo-item {
+            background: #eaf2fa;
+            padding: 0.7rem 1rem;
+            border-radius: 1.2rem;
+            margin-bottom: 0.7rem;
+            border-left: 6px solid #7aaad0;
+            font-size: 0.98rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 0.3rem 0.6rem;
+        }
+        .exo-item .label {
+            color: #1a4a6a;
+            font-weight: 500;
+        }
+        .exo-item .translation {
+            color: #3a5a7a;
+            font-style: italic;
+            font-size: 0.85rem;
+            display: block;
+            width: 100%;
+            margin-top: 0.1rem;
+        }
+        .answer-hidden {
+            background: #b8cce0;
+            color: #b8cce0;
+            padding: 0.1rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 700;
+            cursor: pointer;
+            user-select: none;
+            display: inline-block;
+            transition: 0.1s;
+            border: none;
+            font-size: 0.9rem;
+            min-width: 60px;
+            text-align: center;
+        }
+        .answer-hidden.revealed {
+            background: #2a7aba;
+            color: white;
+        }
+        .btn-group {
+            margin-top: 1.5rem;
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .btn-reveal {
+            background: #2a7aba;
+            border: none;
+            color: white;
+            padding: 0.5rem 2.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(42,122,186,0.25);
+            transition: 0.1s;
+        }
+        .btn-reveal:hover {
+            background: #1a5a8a;
+        }
+        .btn-reveal.secondary {
+            background: #4a6a8a;
+            box-shadow: none;
+        }
+        .btn-reveal.secondary:hover {
+            background: #2a4a6a;
+        }
+        .footnote {
+            margin-top: 2.5rem;
+            text-align: center;
+            color: #3a5a7a;
+            border-top: 1px solid #c8d8e8;
+            padding-top: 1.8rem;
+            font-size: 0.95rem;
+        }
+        .explication {
+            background: #eaf2fa;
+            border-radius: 1rem;
+            padding: 0.6rem 1.2rem;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            border-left: 4px solid #2a7aba;
+        }
+        .explication strong {
+            color: #0a2a4a;
+        }
+        .verb-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 0.1rem 1rem;
+            font-size: 0.9rem;
+            background: #f0f6fc;
+            padding: 0.4rem 0.8rem;
+            border-radius: 1rem;
+            margin: 0.3rem 0;
+        }
+        .verb-grid .pronoun {
+            font-weight: 600;
+            color: #1a4a6a;
+        }
+        @media (max-width: 700px) {
+            .grid-2 { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+            .container { padding: 1.5rem 1rem; }
+        }
+        .confusion-box {
+            background: #e4eef8;
+            border-radius: 1rem;
+            padding: 0.5rem 1rem;
+            margin-bottom: 0.5rem;
+            border: 2px solid #b8cce0;
+        }
+        .confusion-box .title {
+            font-weight: 700;
+            color: #1a6aaa;
+            font-size: 0.9rem;
+        }
+        .true-false-btn {
+            display: inline-block;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            user-select: none;
+            background: #b8cce0;
+            color: #b8cce0;
+            transition: 0.1s;
+            min-width: 70px;
+            text-align: center;
+        }
+        .true-false-btn.revealed-true {
+            background: #1a7a4a;
+            color: white;
+        }
+        .true-false-btn.revealed-false {
+            background: #b34141;
+            color: white;
+        }
+        .correction-text {
+            display: none;
+            font-size: 0.9rem;
+            color: #0a2a4a;
+        }
+        .correction-text.show {
+            display: inline;
+        }
+        .correction-text .check {
+            color: #1a7a4a;
+            font-weight: 700;
+        }
+        .correction-text .cross {
+            color: #b34141;
+            font-weight: 700;
+        }
+        .correction-text .correct {
+            color: #1a6aaa;
+            font-weight: 600;
+        }
+        .exo-item .label-text {
+            color: #1a4a6a;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+
+    <h1>⚡ Être / Avoir / Aller / Faire</h1>
+    <div class="sous-titre">Exercices d'automatisation · A0→A1</div>
+
+    <div class="badge-line">
+        <span class="badge">Être / Avoir</span>
+        <span class="badge">Aller / Faire</span>
+        <span class="badge">Confusions</span>
+        <span class="badge">ont / sont / vont / font</span>
+        <span class="badge">ai / as / est / es</span>
+    </div>
+
+    <!-- ===== TABLEAU RÉCAPITULATIF ===== -->
+    <div class="section">
+        <div class="section-title"><span>📌</span> Verbes irréguliers · Rappel</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>ÊTRE (to be)</h3>
+                <div class="verb-grid"><span class="pronoun">je</span> suis</div>
+                <div class="verb-grid"><span class="pronoun">tu</span> es</div>
+                <div class="verb-grid"><span class="pronoun">il/elle/on</span> est</div>
+                <div class="verb-grid"><span class="pronoun">nous</span> sommes</div>
+                <div class="verb-grid"><span class="pronoun">vous</span> êtes</div>
+                <div class="verb-grid"><span class="pronoun">ils/elles</span> sont</div>
+            </div>
+            <div class="card">
+                <h3>AVOIR (to have)</h3>
+                <div class="verb-grid"><span class="pronoun">j'</span> ai</div>
+                <div class="verb-grid"><span class="pronoun">tu</span> as</div>
+                <div class="verb-grid"><span class="pronoun">il/elle/on</span> a</div>
+                <div class="verb-grid"><span class="pronoun">nous</span> avons</div>
+                <div class="verb-grid"><span class="pronoun">vous</span> avez</div>
+                <div class="verb-grid"><span class="pronoun">ils/elles</span> ont</div>
+            </div>
+            <div class="card">
+                <h3>ALLER (to go)</h3>
+                <div class="verb-grid"><span class="pronoun">je</span> vais</div>
+                <div class="verb-grid"><span class="pronoun">tu</span> vas</div>
+                <div class="verb-grid"><span class="pronoun">il/elle/on</span> va</div>
+                <div class="verb-grid"><span class="pronoun">nous</span> allons</div>
+                <div class="verb-grid"><span class="pronoun">vous</span> allez</div>
+                <div class="verb-grid"><span class="pronoun">ils/elles</span> vont</div>
+            </div>
+            <div class="card">
+                <h3>FAIRE (to do/make)</h3>
+                <div class="verb-grid"><span class="pronoun">je</span> fais</div>
+                <div class="verb-grid"><span class="pronoun">tu</span> fais</div>
+                <div class="verb-grid"><span class="pronoun">il/elle/on</span> fait</div>
+                <div class="verb-grid"><span class="pronoun">nous</span> faisons</div>
+                <div class="verb-grid"><span class="pronoun">vous</span> faites</div>
+                <div class="verb-grid"><span class="pronoun">ils/elles</span> font</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXERCICE 1 : ÊTRE ou AVOIR ? ===== -->
+    <div class="section">
+        <div class="section-title"><span>🔀</span> Exercice 1 · ÊTRE ou AVOIR ?</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">1.</span> Je ______ fatigué. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">suis</span> <span class="translation">I am tired.</span></div>
+                <div class="exo-item"><span class="label">2.</span> Tu ______ un chat. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">as</span> <span class="translation">You have a cat.</span></div>
+                <div class="exo-item"><span class="label">3.</span> Elle ______ professeure. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">est</span> <span class="translation">She is a teacher.</span></div>
+                <div class="exo-item"><span class="label">4.</span> Nous ______ faim. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">avons</span> <span class="translation">We are hungry.</span></div>
+                <div class="exo-item"><span class="label">5.</span> Vous ______ en France ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">êtes</span> <span class="translation">Are you in France?</span></div>
+                <div class="exo-item"><span class="label">6.</span> Elles ______ deux enfants. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ont</span> <span class="translation">They have two children.</span></div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">7.</span> Il ______ 20 ans. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">a</span> <span class="translation">He is 20 years old.</span></div>
+                <div class="exo-item"><span class="label">8.</span> Je ______ à Paris. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">suis</span> <span class="translation">I am in Paris.</span></div>
+                <div class="exo-item"><span class="label">9.</span> Tu ______ content ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">es</span> <span class="translation">Are you happy?</span></div>
+                <div class="exo-item"><span class="label">10.</span> Nous ______ une maison. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">avons</span> <span class="translation">We have a house.</span></div>
+                <div class="exo-item"><span class="label">11.</span> Vous ______ fatigués ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">êtes</span> <span class="translation">Are you tired?</span></div>
+                <div class="exo-item"><span class="label">12.</span> Elles ______ à la plage. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sont</span> <span class="translation">They are at the beach.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXERCICE 2 : FOCUS SUR LES CONFUSIONS ont/sont/vont/font ===== -->
+    <div class="section">
+        <div class="section-title"><span>🧩</span> Exercice 2 · Confusions : ont / sont / vont / font</div>
+        
+        <div class="confusion-box">
+            <div class="title">⚠️ Choisissez le bon verbe parmi : <strong>ont · sont · vont · font</strong></div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">1.</span> Ils ______ une voiture. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ont</span> <span class="translation">They have a car.</span></div>
+                <div class="exo-item"><span class="label">2.</span> Elles ______ du vélo. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">font</span> <span class="translation">They ride bikes.</span></div>
+                <div class="exo-item"><span class="label">3.</span> Ils ______ au parc. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vont</span> <span class="translation">They go to the park.</span></div>
+                <div class="exo-item"><span class="label">4.</span> Elles ______ à l'école. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sont</span> <span class="translation">They are at school.</span></div>
+                <div class="exo-item"><span class="label">5.</span> Ils ______ fatigués. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sont</span> <span class="translation">They are tired.</span></div>
+                <div class="exo-item"><span class="label">6.</span> Elles ______ des gâteaux. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">font</span> <span class="translation">They make cakes.</span></div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">7.</span> Ils ______ faim. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ont</span> <span class="translation">They are hungry.</span></div>
+                <div class="exo-item"><span class="label">8.</span> Elles ______ de la musique. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">font</span> <span class="translation">They play music.</span></div>
+                <div class="exo-item"><span class="label">9.</span> Ils ______ à la plage. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vont</span> <span class="translation">They go to the beach.</span></div>
+                <div class="exo-item"><span class="label">10.</span> Elles ______ en France. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sont</span> <span class="translation">They are in France.</span></div>
+                <div class="exo-item"><span class="label">11.</span> Ils ______ deux enfants. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ont</span> <span class="translation">They have two children.</span></div>
+                <div class="exo-item"><span class="label">12.</span> Elles ______ contentes. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sont</span> <span class="translation">They are happy.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXERCICE 3 : FOCUS ai/as/est/es/a/suis ===== -->
+    <div class="section">
+        <div class="section-title"><span>🧩</span> Exercice 3 · Confusions : ai / as / est / es / a / suis</div>
+        
+        <div class="confusion-box">
+            <div class="title">⚠️ Choisissez le bon verbe</div>
+        </div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">1.</span> J' ______ un livre. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ai</span> <span class="translation">I have a book.</span></div>
+                <div class="exo-item"><span class="label">2.</span> Tu ______ en France. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">es</span> <span class="translation">You are in France.</span></div>
+                <div class="exo-item"><span class="label">3.</span> Il ______ 20 ans. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">a</span> <span class="translation">He is 20 years old.</span></div>
+                <div class="exo-item"><span class="label">4.</span> Elle ______ professeure. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">est</span> <span class="translation">She is a teacher.</span></div>
+                <div class="exo-item"><span class="label">5.</span> Tu ______ une sœur ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">as</span> <span class="translation">Do you have a sister?</span></div>
+                <div class="exo-item"><span class="label">6.</span> Je ______ content. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">suis</span> <span class="translation">I am happy.</span></div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">7.</span> Il ______ un chat. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">a</span> <span class="translation">He has a cat.</span></div>
+                <div class="exo-item"><span class="label">8.</span> Tu ______ fatigué ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">es</span> <span class="translation">Are you tired?</span></div>
+                <div class="exo-item"><span class="label">9.</span> Elle ______ un vélo. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">a</span> <span class="translation">She has a bike.</span></div>
+                <div class="exo-item"><span class="label">10.</span> Il ______ médecin. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">est</span> <span class="translation">He is a doctor.</span></div>
+                <div class="exo-item"><span class="label">11.</span> J' ______ faim. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ai</span> <span class="translation">I am hungry.</span></div>
+                <div class="exo-item"><span class="label">12.</span> Tu ______ à Paris ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">es</span> <span class="translation">Are you in Paris?</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXERCICE 4 : ALLER ou AVOIR ? ===== -->
+    <div class="section">
+        <div class="section-title"><span>🔀</span> Exercice 4 · ALLER ou AVOIR ?</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">1.</span> Je ______ à la piscine. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vais</span> <span class="translation">I go to the pool.</span></div>
+                <div class="exo-item"><span class="label">2.</span> Tu ______ une voiture ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">as</span> <span class="translation">Do you have a car?</span></div>
+                <div class="exo-item"><span class="label">3.</span> Il ______ au supermarché. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">va</span> <span class="translation">He goes to the supermarket.</span></div>
+                <div class="exo-item"><span class="label">4.</span> Nous ______ froid. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">avons</span> <span class="translation">We are cold.</span></div>
+                <div class="exo-item"><span class="label">5.</span> Vous ______ en Italie ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allez</span> <span class="translation">Are you going to Italy?</span></div>
+                <div class="exo-item"><span class="label">6.</span> Elles ______ peur. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ont</span> <span class="translation">They are afraid.</span></div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">7.</span> Je ______ un rendez-vous. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ai</span> <span class="translation">I have an appointment.</span></div>
+                <div class="exo-item"><span class="label">8.</span> Tu ______ au cinéma ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vas</span> <span class="translation">Are you going to the cinema?</span></div>
+                <div class="exo-item"><span class="label">9.</span> Elle ______ au parc. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">va</span> <span class="translation">She goes to the park.</span></div>
+                <div class="exo-item"><span class="label">10.</span> Nous ______ soif. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">avons</span> <span class="translation">We are thirsty.</span></div>
+                <div class="exo-item"><span class="label">11.</span> Vous ______ un chat ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">avez</span> <span class="translation">Do you have a cat?</span></div>
+                <div class="exo-item"><span class="label">12.</span> Elles ______ à Londres. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vont</span> <span class="translation">They go to London.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXERCICE 5 : TOUS LES VERBES MÉLANGÉS ===== -->
+    <div class="section">
+        <div class="section-title"><span>🔄</span> Exercice 5 · Tous les verbes mélangés</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">1.</span> Je ______ à la boulangerie. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">vais</span> <span class="translation">I go to the bakery.</span></div>
+                <div class="exo-item"><span class="label">2.</span> Tu ______ un stylo ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">as</span> <span class="translation">Do you have a pen?</span></div>
+                <div class="exo-item"><span class="label">3.</span> Elle ______ sportive. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">est</span> <span class="translation">She is sporty.</span></div>
+                <div class="exo-item"><span class="label">4.</span> Nous ______ un gâteau. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">faisons</span> <span class="translation">We are making a cake.</span></div>
+                <div class="exo-item"><span class="label">5.</span> Vous ______ en vacances ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allez</span> <span class="translation">Are you going on holiday?</span></div>
+                <div class="exo-item"><span class="label">6.</span> Elles ______ une maison. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ont</span> <span class="translation">They have a house.</span></div>
+            </div>
+            <div class="card">
+                <h3>✏️ Complétez</h3>
+                <div class="exo-item"><span class="label">7.</span> Il ______ du piano. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">fait</span> <span class="translation">He plays the piano.</span></div>
+                <div class="exo-item"><span class="label">8.</span> Nous ______ à la plage. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">allons</span> <span class="translation">We are going to the beach.</span></div>
+                <div class="exo-item"><span class="label">9.</span> Tu ______ en Angleterre ? <span class="answer-hidden" onclick="this.classList.toggle('revealed')">es</span> <span class="translation">Are you in England?</span></div>
+                <div class="exo-item"><span class="label">10.</span> Je ______ un problème. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">ai</span> <span class="translation">I have a problem.</span></div>
+                <div class="exo-item"><span class="label">11.</span> Ils ______ des fruits. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">font</span> <span class="translation">They sell fruit.</span></div>
+                <div class="exo-item"><span class="label">12.</span> Elles ______ contentes. <span class="answer-hidden" onclick="this.classList.toggle('revealed')">sont</span> <span class="translation">They are happy.</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== EXERCICE 6 : VRAI/FAUX ===== -->
+    <div class="section">
+        <div class="section-title"><span>✅</span> Exercice 6 · Vrai ou Faux ?</div>
+        <div class="grid-2">
+            <div class="card">
+                <h3>📌 Cliquez sur ❓ pour voir la réponse</h3>
+                <div class="exo-item">
+                    <span class="label-text">1.</span> "Je suis une pomme." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-false'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="cross">✏️</span> Correct : <span class="correct">J'ai une pomme.</span></span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">2.</span> "Tu as à l'école." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-false'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="cross">✏️</span> Correct : <span class="correct">Tu vas à l'école.</span></span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">3.</span> "Il est médecin." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-true'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="check">✅</span> He is a doctor.</span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">4.</span> "Nous font du tennis." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-false'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="cross">✏️</span> Correct : <span class="correct">Nous faisons du tennis.</span></span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">5.</span> "Elles sont en Espagne." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-true'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="check">✅</span> They are in Spain.</span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">6.</span> "Ils vont faim." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-false'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="cross">✏️</span> Correct : <span class="correct">Ils ont faim.</span></span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>📌 Cliquez sur ❓ pour voir la réponse</h3>
+                <div class="exo-item">
+                    <span class="label-text">7.</span> "Elles ont une voiture." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-true'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="check">✅</span> They have a car.</span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">8.</span> "Ils sont à l'école." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-true'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="check">✅</span> They are at school.</span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">9.</span> "Elle va en France." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-false'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="cross">✏️</span> Correct : <span class="correct">Elle est en France.</span></span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">10.</span> "Nous allons à la plage." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-true'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="check">✅</span> We are going to the beach.</span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">11.</span> "Elles font du vélo." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-true'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="check">✅</span> They ride bikes.</span>
+                </div>
+                <div class="exo-item">
+                    <span class="label-text">12.</span> "Il a 20 ans." 
+                    <span class="true-false-btn" onclick="this.classList.toggle('revealed-true'); this.nextElementSibling.classList.toggle('show')">❓</span>
+                    <span class="correction-text"><span class="check">✅</span> He is 20 years old.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== BOUTONS ===== -->
+    <div class="btn-group">
+        <button class="btn-reveal" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.add('revealed')); document.querySelectorAll('.true-false-btn').forEach(el => { if(el.classList.contains('revealed-true') || el.classList.contains('revealed-false')) return; el.classList.add('revealed-true'); el.nextElementSibling.classList.add('show'); })">🔓 Révéler toutes les réponses</button>
+        <button class="btn-reveal secondary" onclick="document.querySelectorAll('.answer-hidden').forEach(el => el.classList.remove('revealed')); document.querySelectorAll('.true-false-btn').forEach(el => { el.classList.remove('revealed-true', 'revealed-false'); if(el.nextElementSibling) el.nextElementSibling.classList.remove('show'); })">🙈 Tout cacher</button>
+    </div>
+
+    <div class="footnote">
+        🧠 Exercices d'automatisation · Cliquez sur les zones grisées pour voir la réponse.
+    </div>
+
+</div>
+</body>
+</html>
