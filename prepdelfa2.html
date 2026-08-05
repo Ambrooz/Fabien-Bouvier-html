@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séance · Inviter un ami · A2→B1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+        body {
+            background: #f5f0e8;
+            font-family: 'Work Sans', sans-serif;
+            padding: 2rem 1rem;
+            color: #1e2b37;
+            display: flex;
+            justify-content: center;
+        }
+        .page {
+            max-width: 1000px;
+            width: 100%;
+            background: #fcfaf7;
+            border-radius: 2.8rem;
+            box-shadow: 0 20px 40px -12px rgba(20, 30, 40, 0.25);
+            padding: 2.5rem 2.2rem;
+        }
+        h1,
+        h2,
+        h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+        }
+        h1 {
+            font-size: 2.2rem;
+            border-bottom: 3px solid #d4c9b8;
+            padding-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #5f6f7a;
+            background: #edebe6;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+        }
+        .gloss {
+            color: #6b7b86;
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-left: 0.4rem;
+            font-weight: 400;
+        }
+        .badge-soft {
+            background: #eae6dd;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: #2e3f4b;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 1.8rem;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 1.8rem;
+            border: 1px solid #e3ddd2;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+            transition: 0.15s;
+        }
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+        }
+        .section-header h2 {
+            font-size: 1.5rem;
+        }
+        .section-header .step {
+            background: #2e6f60;
+            color: #fff;
+            border-radius: 30px;
+            padding: 0.1rem 0.9rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .dialogue-box {
+            background: #f3f0ea;
+            border-radius: 1.6rem;
+            padding: 1.4rem 1.8rem;
+            border-left: 6px solid #9b8b78;
+            line-height: 1.7;
+            color: #1d2c38;
+        }
+        .dialogue-box .speaker {
+            font-weight: 600;
+            font-style: normal;
+            color: #2e6f60;
+        }
+        .dialogue-box .message {
+            font-style: italic;
+        }
+        .traduction-badge {
+            background: #f0ede6;
+            border-radius: 40px;
+            padding: 0.3rem 1.2rem;
+            display: inline-block;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+        }
+        .reponse-box {
+            background: #e1ede7;
+            border-radius: 1.6rem;
+            padding: 1.4rem 1.8rem;
+            border-left: 6px solid #2e6f60;
+            line-height: 1.7;
+            color: #1d2c38;
+            margin-top: 1rem;
+        }
+        .reponse-box .speaker {
+            font-weight: 600;
+            font-style: normal;
+            color: #1b473c;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.6rem 1rem;
+            margin: 0.8rem 0 0.2rem;
+        }
+        .vocab-item {
+            background: #f4f1eb;
+            border-radius: 40px;
+            padding: 0.25rem 1.2rem 0.25rem 1.5rem;
+            border: 1px solid #d9d1c2;
+            font-size: 0.95rem;
+        }
+        .vocab-item .fr {
+            font-weight: 500;
+        }
+        .vocab-item .en {
+            color: #5f6f7a;
+            font-size: 0.82rem;
+            margin-left: 0.5rem;
+        }
+
+        .exo {
+            background: #f9f7f3;
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            margin-top: 1.2rem;
+            border: 1px solid #e3ddd2;
+        }
+        .exo .prompt {
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .exo .sub {
+            color: #5f6f7a;
+            font-size: 0.88rem;
+            margin-bottom: 0.6rem;
+        }
+        .exo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            align-items: center;
+            margin-top: 0.4rem;
+        }
+        .exo-row input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.6rem 1rem;
+            border-radius: 40px;
+            border: 1.5px solid #d4ccc0;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #fff;
+        }
+        .exo-row input:focus {
+            outline: 2px solid #2e6f60;
+            border-color: #2e6f60;
+        }
+        .btn {
+            border: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: #2e6f60;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #1b473c;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: #3d4f5a;
+            text-decoration: underline;
+            padding: 0.5rem 0.5rem;
+        }
+        .btn-ghost:hover {
+            color: #1b2a33;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #b6a48b;
+            color: #2e3f4b;
+        }
+        .btn-outline:hover {
+            background: #ece6da;
+        }
+        .btn-reveal {
+            background: #d6a23e;
+            color: #fff;
+        }
+        .btn-reveal:hover {
+            background: #a97c26;
+        }
+        .feedback {
+            margin-top: 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            min-height: 1.4rem;
+        }
+        .feedback.ok {
+            color: #1b6b4a;
+        }
+        .feedback.bad {
+            color: #b4503f;
+        }
+        .feedback .reveal {
+            display: block;
+            background: #f3efe8;
+            border-left: 4px solid #d6a23e;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            margin-top: 0.2rem;
+            font-weight: 400;
+        }
+
+        .choice-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin: 0.5rem 0;
+        }
+        .choice-btn {
+            background: #fff;
+            border: 1.5px solid #d9d1c2;
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            text-align: left;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.1s;
+            font-family: inherit;
+            color: #1e2b37;
+        }
+        .choice-btn:hover:not(:disabled) {
+            border-color: #2e6f60;
+            background: #f0f5f2;
+        }
+        .choice-btn.correct {
+            border-color: #2e6f60;
+            background: #e1ede7;
+            font-weight: 600;
+        }
+        .choice-btn.wrong {
+            border-color: #b4503f;
+            background: #f5e1db;
+        }
+        .choice-btn:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .progress-stamp {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 0.8rem;
+            justify-content: center;
+            margin: 0.8rem 0 1.6rem;
+        }
+        .stamp {
+            background: #fff;
+            border: 2px dashed #d4c9b8;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: 0.25s;
+        }
+        .stamp.done {
+            border-style: solid;
+            border-color: #d6a23e;
+            background: #d6a23e;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .recap {
+            background: linear-gradient(145deg, #2e6f60, #1b473c);
+            color: #fff;
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .recap h2 {
+            color: #fff;
+            font-size: 1.8rem;
+        }
+        .recap .score {
+            font-size: 2.8rem;
+            font-family: 'Fraunces', serif;
+        }
+        .recap .btn-reset {
+            background: #fff;
+            color: #1b473c;
+            border-radius: 40px;
+            padding: 0.5rem 1.8rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                padding: 1.5rem;
+            }
+            .section {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <!-- EN-TÊTE -->
+        <h1>📬 Inviter un ami <small>A2 → B1 · Poser des questions & répondre</small></h1>
+        <div style="display: flex; gap: 0.5rem 1rem; flex-wrap: wrap; margin: 0.4rem 0 0.2rem;">
+            <span class="badge-soft">🎯 Compréhension orale</span>
+            <span class="badge-soft">💬 Vocabulaire</span>
+            <span class="badge-soft">🧩 6 niveaux d'exercices</span>
+        </div>
+
+        <!-- PROGRESS STAMPS -->
+        <div class="progress-stamp">
+            <div class="stamp" data-sec="dialogue">📖</div>
+            <div class="stamp" data-sec="reponse">✉️</div>
+            <div class="stamp" data-sec="vocab">📝</div>
+            <div class="stamp" data-sec="exo1">1️⃣</div>
+            <div class="stamp" data-sec="exo2">2️⃣</div>
+            <div class="stamp" data-sec="exo3">3️⃣</div>
+            <div class="stamp" data-sec="exo4">4️⃣</div>
+            <div class="stamp" data-sec="exo5">5️⃣</div>
+            <div class="stamp" data-sec="exo6">6️⃣</div>
+        </div>
+
+        <!-- ===== 1. TEXTE DE DIALOGUE ===== -->
+        <div class="section" id="sec-dialogue">
+            <div class="section-header"><span class="step">Étape 1</span><h2>📖 Lecture · Ton ami français t’écrit</h2></div>
+            <div class="dialogue-box">
+                <p><span class="speaker">👤 Ton ami :</span></p>
+                <p class="message">« Bonjour ! J’espère que tu vas bien. J’aimerais beaucoup venir te voir en octobre, pendant une semaine. Pourrais-tu me donner quelques informations pratiques ? Quel temps fait-il généralement à cette période ? Quels sont les endroits incontournables à visiter ? Où est-ce qu’on peut bien manger dans ta région ? Est-ce que les transports en commun sont faciles à utiliser ? Et combien d’argent dois-je prévoir pour les activités et les repas ? Merci d’avance pour tes conseils ! »</p>
+            </div>
+            <div class="traduction-badge">🇬🇧 <span class="gloss">“Hello! I hope you're well. I'd really like to come see you in October for a week. Could you give me some practical info? What's the weather usually like? What are the must-see places? Where can we eat well? Are public transport links easy to use? And how much money should I budget for activities and meals? Thanks in advance for your advice!”</span></div>
+        </div>
+
+        <!-- ===== 1b. RÉPONSE MODÈLE ===== -->
+        <div class="section" id="sec-reponse">
+            <div class="section-header"><span class="step">Étape 1b</span><h2>✉️ Ta réponse modèle</h2></div>
+            <div class="reponse-box">
+                <p><span class="speaker">👤 Ta réponse :</span></p>
+                <p class="message">« Salut ! Je vais très bien, merci. À mon avis, octobre est une excellente période pour venir : il fait généralement doux, avec des températures autour de 15°C, et il y a parfois un peu de pluie, mais c'est agréable. Pour les visites, je te conseille de voir le vieux port et le musée d'art, qui sont vraiment magnifiques. En revanche, évite le parc d'attractions, il n'est pas très intéressant. Pour manger, il y a plein de bonnes adresses, par exemple le restaurant "Le Bouchon" où tu pourras goûter des plats locaux délicieux. Les transports en commun sont très pratiques : le métro est facile à utiliser et relie tous les quartiers. C'est pourquoi je te suggère de ne pas prendre de voiture. Pour le budget, prévois environ 80 euros par jour pour les repas, les musées et les déplacements. Selon moi, tu passeras une semaine géniale ! »</p>
+            </div>
+            <div class="traduction-badge" style="margin-top:0.4rem;">🇬🇧 <span class="gloss">“Hi! I'm very well, thanks. In my opinion, October is an excellent time to come: it's generally mild, around 15°C, with a little rain sometimes, but it's pleasant. For visits, I recommend the old port and the art museum, which are really beautiful. On the other hand, avoid the amusement park, it's not very interesting. For food, there are plenty of good places, for example the restaurant 'Le Bouchon' where you can taste delicious local dishes. Public transport is very convenient: the metro is easy to use and connects all neighborhoods. That's why I suggest you don't take a car. For the budget, plan about 80 euros per day for meals, museums and transport. In my opinion, you'll have a great week!”</span></div>
+            <div style="margin-top:0.6rem; background: #eae6dd; border-radius: 30px; padding: 0.2rem 1.2rem; display: inline-block; font-size:0.85rem;">💡 Cette réponse utilise le vocabulaire et les structures des exercices ci-dessous.</div>
+        </div>
+
+        <!-- ===== 2. VOCABULAIRE CLÉ ===== -->
+        <div class="section" id="sec-vocab">
+            <div class="section-header"><span class="step">Étape 2</span><h2>📝 Vocabulaire pour conseiller et décrire</h2></div>
+            <div class="vocab-grid">
+                <div class="vocab-item"><span class="fr">conseiller</span><span class="en">to recommend</span></div>
+                <div class="vocab-item"><span class="fr">visiter</span><span class="en">to visit</span></div>
+                <div class="vocab-item"><span class="fr">goûter</span><span class="en">to taste</span></div>
+                <div class="vocab-item"><span class="fr">prévoir</span><span class="en">to plan / budget</span></div>
+                <div class="vocab-item"><span class="fr">le moyen de transport</span><span class="en">means of transport</span></div>
+                <div class="vocab-item"><span class="fr">il fait (doux, chaud, froid)</span><span class="en">it is (mild, hot, cold)</span></div>
+                <div class="vocab-item"><span class="fr">à mon avis</span><span class="en">in my opinion</span></div>
+                <div class="vocab-item"><span class="fr">en revanche</span><span class="en">on the other hand</span></div>
+                <div class="vocab-item"><span class="fr">par exemple</span><span class="en">for example</span></div>
+                <div class="vocab-item"><span class="fr">c'est pourquoi</span><span class="en">that's why</span></div>
+            </div>
+            <div style="margin-top:0.6rem; font-size:0.9rem; background:#f4f1eb; border-radius:30px; padding:0.2rem 1.2rem; display:inline-block;">+ connecteurs : <strong>selon moi, en revanche, par exemple, à mon avis</strong></div>
+        </div>
+
+        <!-- ===== 3. EXERCICES PROGRESSIFS ===== -->
+
+        <!-- EXO 1 : CHOIX MULTIPLE (question → réponse) -->
+        <div class="section" id="sec-exo1">
+            <div class="section-header"><span class="step">Exercice 1</span><h2>🔍 Choisir la bonne réponse</h2></div>
+            <p style="color:#3d4f5a;">Pour chaque question, sélectionne la réponse la plus appropriée.</p>
+            <div id="mcq-container"></div>
+        </div>
+
+        <!-- EXO 2 : COMPLÉTER LA RÉPONSE (trou de texte) -->
+        <div class="section" id="sec-exo2">
+            <div class="section-header"><span class="step">Exercice 2</span><h2>✏️ Compléter la réponse</h2></div>
+            <p style="color:#3d4f5a;">Complète chaque phrase avec le mot ou l'expression qui manque.</p>
+            <div id="fill-container"></div>
+        </div>
+
+        <!-- EXO 3 : ÉCRIRE LA RÉPONSE (texte libre) -->
+        <div class="section" id="sec-exo3">
+            <div class="section-header"><span class="step">Exercice 3</span><h2>✍️ Répondre aux questions de ton ami</h2></div>
+            <p style="color:#3d4f5a;">Rédige une réponse complète pour chaque question. Utilise le vocabulaire et les connecteurs.</p>
+            <div id="write-container"></div>
+        </div>
+
+        <!-- EXO 4 : ASSOCIER QUESTION / RÉPONSE (cliquer) -->
+        <div class="section" id="sec-exo4">
+            <div class="section-header"><span class="step">Exercice 4</span><h2>🔗 Associer question et réponse</h2></div>
+            <p style="color:#3d4f5a;">Clique d'abord sur une question, puis sur sa réponse correspondante.</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.8rem;" id="match-container">
+                <div id="match-questions"></div>
+                <div id="match-answers"></div>
+            </div>
+            <div id="match-feedback" style="margin-top:0.5rem; font-weight:600;"></div>
+        </div>
+
+        <!-- EXO 5 : POSER LA QUESTION (inversion / est-ce que) -->
+        <div class="section" id="sec-exo5">
+            <div class="section-header"><span class="step">Exercice 5</span><h2>❓ Poser la question</h2></div>
+            <p style="color:#3d4f5a;">Transforme chaque affirmation en question. Utilise <strong>est-ce que</strong> ou l'<strong>inversion</strong>.</p>
+            <div id="question-transform-container"></div>
+        </div>
+
+        <!-- EXO 6 : QUESTIONS AVEC MOTS INTERROGATIFS -->
+        <div class="section" id="sec-exo6">
+            <div class="section-header"><span class="step">Exercice 6</span><h2>❓ Questions avec où, quand, combien, comment, pourquoi</h2></div>
+            <p style="color:#3d4f5a;">Transforme chaque phrase en question en utilisant le mot interrogatif indiqué.</p>
+            <div id="interro-container"></div>
+        </div>
+
+        <!-- RÉCAP -->
+        <div class="recap" id="recap" style="display:none;">
+            <h2>🎉 Félicitations !</h2>
+            <div class="score" id="scoreDisplay">0 / 0</div>
+            <p>Tu as complété tous les exercices. Continue à pratiquer pour maîtriser l’art de conseiller et répondre à un ami.</p>
+            <button class="btn btn-reset" onclick="location.reload()">↻ Recommencer</button>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // DONNÉES & ÉTAT
+        // ============================================================
+        const totalSections = 8;
+        let completed = { dialogue: false, reponse: false, vocab: false, exo1: false, exo2: false, exo3: false, exo4: false,
+            exo5: false, exo6: false };
+        let totalCorrect = 0;
+        let totalAttempted = 0;
+
+        function markDone(secId) {
+            if (!completed[secId]) {
+                completed[secId] = true;
+                document.querySelector(`.stamp[data-sec="${secId}"]`)?.classList.add('done');
+                updateRecap();
+            }
+        }
+
+        function updateRecap() {
+            const allDone = Object.values(completed).every(v => v === true);
+            if (allDone) {
+                document.getElementById('recap').style.display = 'block';
+                document.getElementById('scoreDisplay').textContent = totalCorrect + ' / ' + totalAttempted;
+                document.getElementById('recap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // ============================================================
+        // EXO 1 : CHOIX MULTIPLE (avec réponses aléatoires)
+        // ============================================================
+        const mcqData = [
+            { q: 'Quel temps fait-il en octobre ?', options: ['Il fait froid et neigeux.', 'Il fait doux, parfois pluvieux.',
+                    'Il fait très chaud et humide.'
+                ], correct: 1 },
+            { q: 'Que pouvons-nous visiter ?', options: ['La plage et le casino.', 'Le musée et le vieux port.',
+                    'Le parc d’attractions.'
+                ], correct: 1 },
+            { q: 'Où pouvons-nous manger ?', options: ['Dans un fast-food.', 'Dans le quartier des Halles.', 'À la maison.'],
+                correct: 1 },
+            { q: 'Est-ce que les transports sont faciles ?', options: ['Oui, mais c’est cher.',
+                    'Oui, le métro est très pratique.', 'Non, il n’y a pas de bus.'
+                ], correct: 1 },
+            { q: 'Combien d’argent faut-il prévoir ?', options: ['Environ 50 euros par jour.', 'Environ 80 euros par jour.',
+                    'Environ 150 euros par jour.'
+                ], correct: 1 },
+            { q: 'Quand est-il préférable de venir ?', options: ['En hiver, pour la neige.', 'Au printemps, pour les fleurs.',
+                    'En octobre, pour la douceur.'
+                ], correct: 2 },
+            { q: 'Pourquoi aimes-tu cette ville ?', options: ['Pour son histoire.', 'Pour sa gastronomie.',
+                    'Pour ses musées.'
+                ], correct: 1 }
+        ];
+
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function renderMCQ() {
+            const container = document.getElementById('mcq-container');
+            mcqData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.dataset.idx = i;
+                div.innerHTML = `<div class="prompt">${i+1}) ${item.q}</div>`;
+                const grid = document.createElement('div');
+                grid.className = 'choice-grid';
+                let answered = false;
+
+                const shuffledOptions = item.options.map((opt, idx) => ({ text: opt, idx }));
+                shuffleArray(shuffledOptions);
+
+                shuffledOptions.forEach((optObj) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.textContent = optObj.text;
+                    btn.addEventListener('click', () => {
+                        if (answered) return;
+                        answered = true;
+                        const isCorrect = (optObj.idx === item.correct);
+                        if (isCorrect) { btn.classList.add('correct');
+                            totalCorrect++; } else { btn.classList.add('wrong'); }
+                        totalAttempted++;
+                        grid.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+                        const fb = document.createElement('div');
+                        fb.className = 'feedback ' + (isCorrect ? 'ok' : 'bad');
+                        fb.textContent = isCorrect ? '✔ Parfait !' : '✗ Pas tout à fait. La bonne réponse était : ' + item
+                            .options[item.correct];
+                        div.appendChild(fb);
+                        markDone('exo1');
+                    });
+                    grid.appendChild(btn);
+                });
+                div.appendChild(grid);
+                container.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        // EXO 2 : COMPLÉTER (sans indices)
+        // ============================================================
+        const fillData = [
+            { q: 'Le métro est ________ à utiliser.', answer: ['facile', 'pratique'] },
+            { q: 'À mon avis, la meilleure saison est le ________.', answer: ['printemps', 'automne'] },
+            { q: 'En revanche, il faut ________ de l’argent pour les musées.', answer: ['prévoir', 'apporter'] },
+            { q: 'Les fruits de mer sont ________ à Marseille.', answer: ['délicieux', 'excellents'] },
+            { q: 'Le week-end, les transports sont ________.', answer: ['moins fréquents', 'plus calmes'] },
+            { q: 'Pour visiter la ville, il est ________ de prendre un plan.', answer: ['utile', 'pratique'] }
+        ];
+
+        function renderFill() {
+            const container = document.getElementById('fill-container');
+            fillData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) ${item.q}</div>
+              <div class="exo-row">
+                <input type="text" id="fill-${i}" placeholder="Écris le mot…">
+                <button class="btn btn-primary" data-idx="${i}">Vérifier</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir la réponse</button>
+              </div>
+              <div class="feedback" id="fill-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const checkBtn = div.querySelector('.btn-primary');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+
+                let resolved = false;
+                checkBtn.addEventListener('click', () => {
+                    if (resolved) return;
+                    const val = input.value.trim().toLowerCase().replace(/[^a-zéèêëàâçûôî ]/g, '');
+                    const ok = item.answer.some(a => val.includes(a.toLowerCase()));
+                    if (ok) {
+                        resolved = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Exact !';
+                        input.disabled = true;
+                        checkBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo2');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Réessaie ou consulte la réponse.';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Réponse : <span class="reveal">${item.answer[0]}</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // EXO 3 : ÉCRIRE (questions directes, sans indices)
+        // ============================================================
+        const writeData = [
+            { q: 'Quel temps fait-il en octobre dans ta région ?' },
+            { q: 'Quels plats typiques me conseilles-tu de goûter ?' },
+            { q: 'Quel est le meilleur moyen de transport pour se déplacer ?' },
+            { q: 'Que dois-je visiter en priorité ?' },
+            { q: 'Combien d’argent dois-je prévoir par jour ?' }
+        ];
+
+        function renderWrite() {
+            const container = document.getElementById('write-container');
+            writeData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) ${item.q}</div>
+              <div class="exo-row">
+                <input type="text" id="write-${i}" placeholder="Écris ta réponse…" style="flex:1;">
+                <button class="btn btn-outline" data-idx="${i}">Valider</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir un exemple</button>
+              </div>
+              <div class="feedback" id="write-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const valBtn = div.querySelector('.btn-outline');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+
+                let validated = false;
+                valBtn.addEventListener('click', () => {
+                    if (validated) return;
+                    const txt = input.value.trim();
+                    if (txt.length > 10) {
+                        validated = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Réponse enregistrée !';
+                        input.disabled = true;
+                        valBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo3');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Écris une phrase plus complète (au moins 10 caractères).';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    const examples = [
+                        'Il fait doux, environ 15°C, avec parfois un peu de pluie.',
+                        'Je te conseille de goûter la salade lyonnaise et les fruits de mer.',
+                        'Le métro est le moyen le plus pratique et rapide.',
+                        'Tu devrais visiter le vieux port et le musée d’art.',
+                        'Prévois environ 80 euros par jour pour les repas et les visites.'
+                    ];
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Exemple : <span class="reveal">${examples[i]}</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // EXO 4 : ASSOCIATION (plus de paires)
+        // ============================================================
+        const matchPairs = [
+            { q: 'Quel temps fait-il ?', a: 'Il fait doux et ensoleillé.' },
+            { q: 'Que pouvons-nous visiter ?', a: 'Le vieux port et le musée.' },
+            { q: 'Où pouvons-nous manger ?', a: 'Au restaurant Le Bouchon.' },
+            { q: 'Est-ce que les transports sont faciles ?', a: 'Oui, le métro est très pratique.' },
+            { q: 'Combien d’argent prévoir ?', a: 'Environ 80 euros par jour.' },
+            { q: 'Quand venir ?', a: 'En octobre, il fait parfait.' },
+            { q: 'Pourquoi visiter cette ville ?', a: 'Pour sa gastronomie et son charme.' },
+            { q: 'Quel est le meilleur moyen de transport ?', a: 'Le métro ou le bus.' }
+        ];
+
+        function renderMatch() {
+            const qCol = document.getElementById('match-questions');
+            const aCol = document.getElementById('match-answers');
+            const fb = document.getElementById('match-feedback');
+
+            const shuffledQ = [...matchPairs].map((p, id) => ({ id, text: p.q })).sort(() => Math.random() - 0.5);
+            const shuffledA = [...matchPairs].map((p, id) => ({ id, text: p.a })).sort(() => Math.random() - 0.5);
+
+            let selectedQ = null;
+            let found = 0;
+
+            function updateMatch() {
+                if (found === matchPairs.length) {
+                    fb.textContent = '🎉 Toutes les paires sont associées !';
+                    fb.style.color = '#1b6b4a';
+                    markDone('exo4');
+                }
+            }
+
+            shuffledQ.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = item.text;
+                btn.dataset.id = item.id;
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('correct')) return;
+                    qCol.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedQ = { id: item.id, el: btn };
+                });
+                qCol.appendChild(btn);
+            });
+
+            shuffledA.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = item.text;
+                btn.dataset.id = item.id;
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('correct') || !selectedQ) return;
+                    if (item.id === selectedQ.id) {
+                        btn.classList.add('correct');
+                        selectedQ.el.classList.add('correct');
+                        selectedQ.el.disabled = true;
+                        btn.disabled = true;
+                        found++;
+                        totalCorrect++;
+                        totalAttempted++;
+                        fb.textContent = '✔ Paire associée !';
+                        fb.style.color = '#1b6b4a';
+                        selectedQ = null;
+                        updateMatch();
+                    } else {
+                        btn.classList.add('wrong');
+                        selectedQ.el.classList.add('wrong');
+                        setTimeout(() => { btn.classList.remove('wrong');
+                            selectedQ.el.classList.remove('wrong'); }, 500);
+                        totalAttempted++;
+                    }
+                });
+                aCol.appendChild(btn);
+            });
+        }
+
+        // ============================================================
+        // EXO 5 : POSER LA QUESTION (inversion / est-ce que)
+        // ============================================================
+        const transformData = [
+            { phrase: 'Tu aimes le café.', answer: ['est-ce que tu aimes le café', 'aimes-tu le café'] },
+            { phrase: 'Il habite à Paris.', answer: ["est-ce qu'il habite à paris", "habite-t-il à paris"] },
+            { phrase: 'Vous voulez visiter le musée.', answer: ['est-ce que vous voulez visiter le musée',
+                    'voulez-vous visiter le musée'
+                ] },
+            { phrase: 'Tu prends le métro.', answer: ['est-ce que tu prends le métro', 'prends-tu le métro'] },
+            { phrase: 'Elle aime les fruits de mer.', answer: ["est-ce qu'elle aime les fruits de mer",
+                    "aime-t-elle les fruits de mer"
+                ] }
+        ];
+
+        function renderTransform() {
+            const container = document.getElementById('question-transform-container');
+            transformData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) Transforme en question : « ${item.phrase} »</div>
+              <div class="exo-row">
+                <input type="text" id="trans-${i}" placeholder="Écris la question…">
+                <button class="btn btn-primary" data-idx="${i}">Vérifier</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir la réponse</button>
+              </div>
+              <div class="feedback" id="trans-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const checkBtn = div.querySelector('.btn-primary');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+                let resolved = false;
+
+                checkBtn.addEventListener('click', () => {
+                    if (resolved) return;
+                    const val = input.value.trim().toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g, '');
+                    const ok = item.answer.some(a => val.includes(a.toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g,
+                        '')));
+                    if (ok) {
+                        resolved = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Parfait !';
+                        input.disabled = true;
+                        checkBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo5');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Réessaie ou consulte la réponse.';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Réponse : <span class="reveal">${item.answer[0]} ?</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // EXO 6 : QUESTIONS AVEC MOTS INTERROGATIFS
+        // ============================================================
+        const interroData = [
+            { phrase: 'Tu habites à Paris.', mot: 'Où', answer: ['où est-ce que tu habites', 'où habites-tu'] },
+            { phrase: 'Tu pars en vacances en juillet.', mot: 'Quand', answer: ['quand est-ce que tu pars en vacances',
+                    'quand pars-tu en vacances'
+                ] },
+            { phrase: 'Il faut 50 euros pour le musée.', mot: 'Combien', answer: ['combien est-ce qu\'il faut pour le musée',
+                    'combien faut-il pour le musée'
+                ] },
+            { phrase: 'Tu vas au travail en vélo.', mot: 'Comment', answer: ['comment est-ce que tu vas au travail',
+                    'comment vas-tu au travail'
+                ] },
+            { phrase: 'Tu apprends le français pour le travail.', mot: 'Pourquoi',
+                answer: ['pourquoi est-ce que tu apprends le français', 'pourquoi apprends-tu le français'] },
+            { phrase: 'Tu préfères le train ou la voiture.', mot: 'Quel', answer: ['quel est-ce que tu préfères',
+                    'lequel préfères-tu'
+                ] },
+            { phrase: 'Vous prenez le bus pour aller au centre.', mot: 'Où',
+                answer: ['où est-ce que vous prenez le bus', 'où prenez-vous le bus'] },
+            { phrase: 'Elle arrive à 9 heures.', mot: 'À quelle heure',
+                answer: ['à quelle heure est-ce qu\'elle arrive', 'à quelle heure arrive-t-elle'] }
+        ];
+
+        function renderInterro() {
+            const container = document.getElementById('interro-container');
+            interroData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) Mot interrogatif : <strong>${item.mot}</strong> — phrase : « ${item.phrase} »</div>
+              <div class="exo-row">
+                <input type="text" id="interro-${i}" placeholder="Écris la question…">
+                <button class="btn btn-primary" data-idx="${i}">Vérifier</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir la réponse</button>
+              </div>
+              <div class="feedback" id="interro-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const checkBtn = div.querySelector('.btn-primary');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+                let resolved = false;
+
+                checkBtn.addEventListener('click', () => {
+                    if (resolved) return;
+                    const val = input.value.trim().toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g, '');
+                    const ok = item.answer.some(a => val.includes(a.toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g,
+                        '')));
+                    if (ok) {
+                        resolved = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Parfait !';
+                        input.disabled = true;
+                        checkBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo6');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Réessaie ou consulte la réponse.';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Réponse : <span class="reveal">${item.answer[0]} ?</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        renderMCQ();
+        renderFill();
+        renderWrite();
+        renderMatch();
+        renderTransform();
+        renderInterro();
+
+        // mark dialogue, reponse & vocab as "done" when user interacts
+        document.getElementById('sec-dialogue').addEventListener('click', () => markDone('dialogue'), { once: true });
+        document.getElementById('sec-reponse').addEventListener('click', () => markDone('reponse'), { once: true });
+        document.getElementById('sec-vocab').addEventListener('click', () => markDone('vocab'), { once: true });
+    </script>
+</body>
+</html>
