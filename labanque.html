@@ -1,0 +1,1192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🏦 À la banque · French A2</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0d1b2a;
+    --blue: #1a4a7a;
+    --gold: #e8a020;
+    --cream: #fdf6ec;
+    --mint: #e8f7f5;
+    --rose: #fdecea;
+    --sage: #e7f3ea;
+    --card-shadow: 0 4px 30px rgba(13,27,42,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--navy);
+    min-height: 100vh;
+    color: var(--navy);
+  }
+  .page-bg {
+    background: linear-gradient(160deg, #0d1b2a 0%, #1a3a60 50%, #0d1b2a 100%);
+    min-height: 100vh;
+    padding: 40px 20px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-bg::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    left: -20%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(232,160,32,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .page-bg::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(26,74,122,0.2) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeDown 0.7s ease both;
+  }
+  .header-tag {
+    display: inline-block;
+    background: rgba(232,160,32,0.15);
+    color: var(--gold);
+    border: 1px solid rgba(232,160,32,0.4);
+    padding: 6px 20px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 14px;
+  }
+  .header h1 span { color: var(--gold); }
+  .header p {
+    color: rgba(255,255,255,0.55);
+    font-size: 1.1rem;
+    font-weight: 300;
+  }
+
+  /* CARDS */
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 36px 40px;
+    margin-bottom: 28px;
+    box-shadow: var(--card-shadow);
+    animation: fadeUp 0.6s ease both;
+  }
+  .card-accent {
+    background: var(--cream);
+    border: 1px solid rgba(232,160,32,0.2);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.7rem;
+    color: var(--navy);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-title .icon { font-size: 1.5rem; }
+  .section-title::after {
+    content: '';
+    flex: 1;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin-left: 12px;
+  }
+
+  /* VOCAB TABS */
+  .tabs {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .tab {
+    padding: 8px 20px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    background: #f0f4f8;
+    color: #5a7a9a;
+  }
+  .tab.active, .tab:hover {
+    background: var(--navy);
+    color: white;
+  }
+  .vocab-panel { display: none; }
+  .vocab-panel.active { display: block; }
+
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+    gap: 12px;
+  }
+  .vocab-card {
+    background: white;
+    border: 1.5px solid #e8eef5;
+    border-radius: 16px;
+    padding: 14px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    transition: all 0.2s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .vocab-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(13,27,42,0.1);
+  }
+  .vocab-card .fr {
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--navy);
+  }
+  .vocab-card .en {
+    font-size: 0.85rem;
+    color: #7a9ab0;
+  }
+  .vocab-card .emoji {
+    font-size: 1.4rem;
+    margin-bottom: 4px;
+  }
+  .vocab-card .category-dot {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* DIALOGUE */
+  .dialogue { display: flex; flex-direction: column; gap: 16px; }
+  .line {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    animation: fadeUp 0.5s ease both;
+  }
+  .speaker {
+    min-width: 80px;
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    flex-shrink: 0;
+  }
+  .speaker.you { background: var(--navy); color: white; }
+  .speaker.adv { background: var(--gold); color: var(--navy); }
+  .bubble {
+    background: #f5f9ff;
+    border-radius: 0 18px 18px 18px;
+    padding: 14px 20px;
+    font-size: 1.05rem;
+    line-height: 1.6;
+    border: 1px solid #e2ecf8;
+    flex: 1;
+  }
+  .line.adv-line .bubble {
+    background: #fffbf2;
+    border-color: #f0e0b8;
+    border-radius: 18px 0 18px 18px;
+  }
+  .bubble .fr { font-weight: 500; }
+  .bubble .en {
+    font-size: 0.85rem;
+    color: #7a9ab0;
+    margin-top: 3px;
+    font-style: italic;
+  }
+  .bubble em {
+    color: var(--blue);
+    font-style: normal;
+    font-weight: 600;
+    border-bottom: 2px solid rgba(26,74,122,0.2);
+  }
+
+  /* EXERCISES */
+  .exo-card {
+    background: white;
+    border-radius: 20px;
+    padding: 30px 34px;
+    margin-bottom: 22px;
+    border-left: 5px solid var(--gold);
+    box-shadow: 0 2px 20px rgba(13,27,42,0.07);
+  }
+  .exo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--navy);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .exo-subtitle {
+    font-size: 0.9rem;
+    color: #7a9ab0;
+    font-style: italic;
+    margin-bottom: 18px;
+    margin-top: -12px;
+  }
+  .fill-line {
+    margin: 14px 0;
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--navy);
+  }
+  input[type="text"] {
+    background: #f0f6ff;
+    border: 2px solid #d0e2f5;
+    border-radius: 10px;
+    padding: 7px 16px;
+    font-size: 1rem;
+    font-family: 'DM Sans', sans-serif;
+    width: 160px;
+    color: var(--navy);
+    transition: border-color 0.2s;
+    vertical-align: middle;
+  }
+  input[type="text"]:focus {
+    border-color: var(--gold);
+    outline: none;
+    background: #fffcf3;
+  }
+  input.small { width: 70px; }
+  input.mini { width: 50px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--navy);
+    color: white;
+    border: none;
+    padding: 11px 28px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    font-family: 'DM Sans', sans-serif;
+    cursor: pointer;
+    margin-top: 16px;
+    transition: all 0.2s;
+  }
+  .btn:hover {
+    background: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(13,27,42,0.2);
+  }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: #d4901a; }
+  .answer-box {
+    display: none;
+    background: linear-gradient(135deg, #fffbf0, #fff8e6);
+    border: 1.5px solid rgba(232,160,32,0.3);
+    border-radius: 16px;
+    padding: 20px 24px;
+    margin-top: 16px;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+  .answer-box.show { display: block; animation: fadeUp 0.3s ease; }
+  .answer-box .correct { color: #1a8040; font-weight: 600; }
+
+  /* MATCH TABLE */
+  .match-table { width: 100%; border-collapse: separate; border-spacing: 0 10px; }
+  .match-table td { padding: 8px 14px; vertical-align: middle; }
+  .match-table .fr-col {
+    background: #f0f6ff;
+    border-radius: 10px 0 0 10px;
+    font-weight: 600;
+    color: var(--navy);
+    padding: 12px 20px;
+  }
+  .match-table .en-col {
+    background: #f8fafb;
+    color: #5a7a9a;
+    padding: 12px 20px;
+  }
+  .match-table .inp-col {
+    background: #f8fafb;
+    border-radius: 0 10px 10px 0;
+    padding: 8px 14px;
+  }
+
+  /* FLASHCARD GAME */
+  .flashcard-wrap {
+    perspective: 1000px;
+    height: 200px;
+    margin: 20px auto;
+    max-width: 420px;
+    cursor: pointer;
+  }
+  .flashcard {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4,0,0.2,1);
+    border-radius: 20px;
+  }
+  .flashcard.flipped { transform: rotateY(180deg); }
+  .fc-face {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 8px 30px rgba(13,27,42,0.15);
+  }
+  .fc-front {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: white;
+  }
+  .fc-back {
+    background: linear-gradient(135deg, var(--gold), #f5b942);
+    color: var(--navy);
+    transform: rotateY(180deg);
+  }
+  .fc-face .word { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; }
+  .fc-face .hint { font-size: 0.85rem; opacity: 0.65; letter-spacing: 1px; }
+  .fc-face .emoji { font-size: 2.5rem; }
+  .fc-controls {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+  }
+  .fc-nav {
+    background: #f0f4f8;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+    color: var(--navy);
+  }
+  .fc-nav:hover { background: var(--navy); color: white; }
+  .fc-counter {
+    text-align: center;
+    color: #7a9ab0;
+    font-size: 0.9rem;
+    margin-top: 10px;
+  }
+  .word-bank {
+    background: #f0f6ff;
+    border-radius: 14px;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    color: var(--blue);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .word-bank strong { color: var(--navy); }
+
+  /* QUIZ MCQ */
+  .mcq-question {
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 18px 22px;
+    margin-bottom: 16px;
+    border: 1.5px solid #e2eaf5;
+  }
+  .mcq-q { font-weight: 600; margin-bottom: 12px; color: var(--navy); }
+  .mcq-options { display: flex; flex-wrap: wrap; gap: 8px; }
+  .mcq-opt {
+    background: white;
+    border: 2px solid #d0e2f5;
+    padding: 8px 18px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+    color: var(--navy);
+    font-family: 'DM Sans', sans-serif;
+  }
+  .mcq-opt:hover { border-color: var(--gold); background: #fffcf3; }
+  .mcq-opt.correct { background: #e8f7ee; border-color: #2ea05a; color: #1a6b3a; }
+  .mcq-opt.wrong { background: #fdecea; border-color: #e05050; color: #a02020; }
+  .mcq-feedback { font-size: 0.9rem; margin-top: 8px; min-height: 20px; }
+
+  /* SENTENCE ORDER */
+  .sentence-wrap { margin: 14px 0; }
+  .sentence-label { font-size: 0.85rem; color: #7a9ab0; margin-bottom: 8px; }
+  .words-pool { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+  .word-token {
+    background: var(--navy);
+    color: white;
+    padding: 7px 16px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .word-token:hover { background: var(--blue); transform: translateY(-2px); }
+  .word-token.used { opacity: 0.3; pointer-events: none; }
+  .sentence-answer {
+    min-height: 46px;
+    border: 2px dashed #c0d5ea;
+    border-radius: 12px;
+    padding: 10px 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .word-placed {
+    background: var(--gold);
+    color: var(--navy);
+    padding: 6px 14px;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .word-placed:hover { background: #d4901a; transform: scale(0.95); }
+
+  /* PHRASES UTILES */
+  .phrases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .phrase-card {
+    background: white;
+    border-radius: 16px;
+    padding: 18px 22px;
+    border-left: 4px solid var(--gold);
+    box-shadow: 0 2px 12px rgba(13,27,42,0.06);
+  }
+  .phrase-card .fr { font-weight: 600; font-size: 1.05rem; color: var(--navy); }
+  .phrase-card .en { font-size: 0.9rem; color: #7a9ab0; margin-top: 4px; }
+
+  /* PROGRESS BAR */
+  .score-display {
+    background: linear-gradient(135deg, var(--navy), var(--blue));
+    color: white;
+    border-radius: 20px;
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 22px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .score-display .label { font-size: 0.9rem; opacity: 0.7; }
+  .score-display .num { font-family: 'Playfair Display', serif; font-size: 2rem; }
+  .progress-bar {
+    height: 8px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50px;
+    flex: 1;
+    min-width: 100px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 50px;
+    transition: width 0.5s ease;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeDown { from { opacity:0; transform: translateY(-20px); } to { opacity:1; transform:none; } }
+  @keyframes fadeUp { from { opacity:0; transform: translateY(16px); } to { opacity:1; transform:none; } }
+
+  /* SECTION NAV */
+  .section-nav {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .nav-btn {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 22px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+  }
+  .nav-btn:hover, .nav-btn.active {
+    background: var(--gold);
+    color: var(--navy);
+    border-color: var(--gold);
+    font-weight: 700;
+  }
+
+  @media (max-width: 600px) {
+    .card { padding: 24px 20px; }
+    .phrases-grid { grid-template-columns: 1fr; }
+    .exo-card { padding: 24px 20px; }
+    input[type="text"] { width: 130px; }
+  }
+</style>
+</head>
+<body>
+<div class="page-bg">
+  <div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+      <div class="header-tag">📚 French A2 · For English Speakers</div>
+      <h1>🏦 À la <span>Banque</span></h1>
+      <p>Master French banking vocabulary · dialogues · exercises</p>
+    </div>
+
+    <!-- NAV -->
+    <div class="section-nav">
+      <button class="nav-btn active" onclick="scrollTo('vocab')">📚 Vocabulary</button>
+      <button class="nav-btn" onclick="scrollTo('dialogue')">💬 Dialogue</button>
+      <button class="nav-btn" onclick="scrollTo('phrases')">🗣️ Phrases</button>
+      <button class="nav-btn" onclick="scrollTo('flashcards')">🃏 Flashcards</button>
+      <button class="nav-btn" onclick="scrollTo('exercises')">✍️ Exercises</button>
+      <button class="nav-btn" onclick="scrollTo('quiz')">🎯 Quiz</button>
+    </div>
+
+    <!-- VOCABULARY -->
+    <div id="vocab" class="card card-accent">
+      <div class="section-title"><span class="icon">📚</span> Complete Vocabulary</div>
+      <div class="tabs">
+        <div class="tab active" onclick="showTab('v-all')">All</div>
+        <div class="tab" onclick="showTab('v-compte')">Account & Documents</div>
+        <div class="tab" onclick="showTab('v-argent')">Money & Payments</div>
+        <div class="tab" onclick="showTab('v-personne')">People & Places</div>
+        <div class="tab" onclick="showTab('v-actions')">Actions & Verbs</div>
+      </div>
+
+      <div class="vocab-panel active" id="v-all">
+        <div class="vocab-grid" id="all-grid"></div>
+      </div>
+      <div class="vocab-panel" id="v-compte">
+        <div class="vocab-grid" id="compte-grid"></div>
+      </div>
+      <div class="vocab-panel" id="v-argent">
+        <div class="vocab-grid" id="argent-grid"></div>
+      </div>
+      <div class="vocab-panel" id="v-personne">
+        <div class="vocab-grid" id="personne-grid"></div>
+      </div>
+      <div class="vocab-panel" id="v-actions">
+        <div class="vocab-grid" id="actions-grid"></div>
+      </div>
+    </div>
+
+    <!-- DIALOGUE -->
+    <div id="dialogue" class="card">
+      <div class="section-title"><span class="icon">💬</span> Dialogue at the Bank</div>
+      <div class="dialogue">
+        <div class="line">
+          <span class="speaker you">You</span>
+          <div class="bubble">
+            <div class="fr">Bonjour, je voudrais <em>ouvrir un compte courant</em>, s'il vous plaît.</div>
+            <div class="en">Hello, I'd like to open a current account, please.</div>
+          </div>
+        </div>
+        <div class="line adv-line">
+          <span class="speaker adv">Advisor</span>
+          <div class="bubble">
+            <div class="fr">Bonjour ! Bien sûr. Vous avez une <em>pièce d'identité</em> et un <em>justificatif de domicile</em> ?</div>
+            <div class="en">Hello! Of course. Do you have an ID and a proof of address?</div>
+          </div>
+        </div>
+        <div class="line">
+          <span class="speaker you">You</span>
+          <div class="bubble">
+            <div class="fr">Oui, voici mon <em>passeport</em> et ma facture d'électricité.</div>
+            <div class="en">Yes, here is my passport and my electricity bill.</div>
+          </div>
+        </div>
+        <div class="line adv-line">
+          <span class="speaker adv">Advisor</span>
+          <div class="bubble">
+            <div class="fr">Parfait. Vous voulez une <em>carte bancaire</em> ? Nous avons des cartes <em>Visa</em> et <em>Mastercard</em>.</div>
+            <div class="en">Perfect. Do you want a debit card? We have Visa and Mastercard.</div>
+          </div>
+        </div>
+        <div class="line">
+          <span class="speaker you">You</span>
+          <div class="bubble">
+            <div class="fr">Oui, une carte Visa, s'il vous plaît. Quel est le <em>tarif</em> mensuel ?</div>
+            <div class="en">Yes, a Visa card please. What is the monthly fee?</div>
+          </div>
+        </div>
+        <div class="line adv-line">
+          <span class="speaker adv">Advisor</span>
+          <div class="bubble">
+            <div class="fr">C'est <em>cinq euros par mois</em>. Vous voulez aussi un <em>chéquier</em> ?</div>
+            <div class="en">It's five euros per month. Do you also want a chequebook?</div>
+          </div>
+        </div>
+        <div class="line">
+          <span class="speaker you">You</span>
+          <div class="bubble">
+            <div class="fr">Non merci. Je préfère faire des <em>virements en ligne</em>. J'ai un <em>découvert autorisé</em> ?</div>
+            <div class="en">No thank you. I prefer to do online transfers. Do I have an overdraft facility?</div>
+          </div>
+        </div>
+        <div class="line adv-line">
+          <span class="speaker adv">Advisor</span>
+          <div class="bubble">
+            <div class="fr">Oui, un découvert de <em>200€</em> est possible. Il faut <em>signer ce formulaire</em>.</div>
+            <div class="en">Yes, an overdraft of €200 is possible. You need to sign this form.</div>
+          </div>
+        </div>
+        <div class="line">
+          <span class="speaker you">You</span>
+          <div class="bubble">
+            <div class="fr">D'accord. Et je peux <em>retirer de l'argent</em> au distributeur avec mon code ?</div>
+            <div class="en">OK. And I can withdraw money at the ATM with my PIN?</div>
+          </div>
+        </div>
+        <div class="line adv-line">
+          <span class="speaker adv">Advisor</span>
+          <div class="bubble">
+            <div class="fr">Oui, bien sûr. Vous recevrez votre <em>code secret</em> par courrier dans 5 jours.</div>
+            <div class="en">Yes, of course. You will receive your PIN code by post in 5 days.</div>
+          </div>
+        </div>
+        <div class="line">
+          <span class="speaker you">You</span>
+          <div class="bubble">
+            <div class="fr">Merci beaucoup ! À bientôt.</div>
+            <div class="en">Thank you very much! Goodbye.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- USEFUL PHRASES -->
+    <div id="phrases" class="card">
+      <div class="section-title"><span class="icon">🗣️</span> Essential Phrases at the Bank</div>
+      <div class="phrases-grid">
+        <div class="phrase-card">
+          <div class="fr">Je voudrais ouvrir un compte.</div>
+          <div class="en">I'd like to open an account.</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Quel est le solde de mon compte ?</div>
+          <div class="en">What is my account balance?</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Je voudrais faire un virement.</div>
+          <div class="en">I'd like to make a transfer.</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">J'ai perdu ma carte bancaire.</div>
+          <div class="en">I have lost my debit card.</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Je voudrais retirer de l'argent.</div>
+          <div class="en">I'd like to withdraw some money.</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Je voudrais déposer de l'argent.</div>
+          <div class="en">I'd like to deposit some money.</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Mon compte est à découvert.</div>
+          <div class="en">My account is overdrawn.</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Pouvez-vous bloquer ma carte ?</div>
+          <div class="en">Can you block my card?</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Je voudrais prendre rendez-vous.</div>
+          <div class="en">I'd like to make an appointment.</div>
+        </div>
+        <div class="phrase-card">
+          <div class="fr">Quels sont vos horaires d'ouverture ?</div>
+          <div class="en">What are your opening hours?</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FLASHCARDS -->
+    <div id="flashcards" class="card">
+      <div class="section-title"><span class="icon">🃏</span> Flashcard Practice</div>
+      <p style="color:#7a9ab0; margin-bottom:20px; font-size:0.95rem;">Click the card to reveal the English translation. Use the arrows to navigate.</p>
+      <div class="flashcard-wrap" onclick="flipCard()">
+        <div class="flashcard" id="flashcard">
+          <div class="fc-face fc-front">
+            <div class="fc-face-emoji" id="fc-emoji" style="font-size:2.5rem">🏦</div>
+            <div class="word" id="fc-fr">une banque</div>
+            <div class="hint">CLICK TO REVEAL ↓</div>
+          </div>
+          <div class="fc-face fc-back">
+            <div class="fc-face-emoji" id="fc-emoji2" style="font-size:2.5rem">🏦</div>
+            <div class="word" id="fc-en">a bank</div>
+            <div class="hint">CLICK TO FLIP BACK ↑</div>
+          </div>
+        </div>
+      </div>
+      <div class="fc-counter" id="fc-counter">Card 1 of 24</div>
+      <div class="fc-controls">
+        <button class="fc-nav" onclick="prevCard()">← Previous</button>
+        <button class="fc-nav" onclick="shuffleCards()">🔀 Shuffle</button>
+        <button class="fc-nav" onclick="nextCard()">Next →</button>
+      </div>
+    </div>
+
+    <!-- EXERCISES -->
+    <div id="exercises">
+      <div class="section-title" style="color:white; font-family:'Playfair Display',serif; font-size:1.7rem; margin-bottom:22px; padding-left:6px;">
+        <span>✍️</span> Exercises
+      </div>
+
+      <!-- EX 1 -->
+      <div class="exo-card">
+        <div class="exo-title">🔤 Exercise 1 · Fill in the gaps</div>
+        <div class="word-bank"><strong>Word bank:</strong> compte · carte · identité · rendez-vous · virement · solde · distributeur · formulaire · espèces · découvert</div>
+        <div class="fill-line">1. Je voudrais ouvrir un <input type="text" id="e1_1" placeholder="..."> à la banque.</div>
+        <div class="fill-line">2. Je paie avec ma <input type="text" id="e1_2" placeholder="..."> bancaire.</div>
+        <div class="fill-line">3. Vous avez une pièce d'<input type="text" id="e1_3" placeholder="..."> ?</div>
+        <div class="fill-line">4. Je veux prendre <input type="text" id="e1_4" placeholder="..."> avec le conseiller.</div>
+        <div class="fill-line">5. Je fais un <input type="text" id="e1_5" placeholder="..."> de 200€ en ligne.</div>
+        <div class="fill-line">6. Mon <input type="text" id="e1_6" placeholder="..."> est de 1 500€.</div>
+        <div class="fill-line">7. Je retire de l'argent au <input type="text" id="e1_7" placeholder="..."> automatique.</div>
+        <div class="fill-line">8. Il faut signer ce <input type="text" id="e1_8" placeholder="...">.</div>
+        <div class="fill-line">9. Je paie en <input type="text" id="e1_9" placeholder="..."> (cash).</div>
+        <div class="fill-line">10. Mon compte est à <input type="text" id="e1_10" placeholder="..."> de 50€.</div>
+        <button class="btn" onclick="toggle('ans1')">✅ See Answers</button>
+        <div id="ans1" class="answer-box">
+          <span class="correct">1. compte &nbsp; 2. carte &nbsp; 3. identité &nbsp; 4. rendez-vous &nbsp; 5. virement &nbsp; 6. solde &nbsp; 7. distributeur &nbsp; 8. formulaire &nbsp; 9. espèces &nbsp; 10. découvert</span>
+        </div>
+      </div>
+
+      <!-- EX 2 -->
+      <div class="exo-card">
+        <div class="exo-title">💬 Exercise 2 · Complete the Dialogue</div>
+        <p class="exo-subtitle">Fill in the blanks to complete the conversation at the bank.</p>
+        <div class="fill-line">You: Bonjour, je <input type="text" id="e2_1" placeholder="..."> ouvrir un compte.</div>
+        <div class="fill-line">Advisor: Vous avez une pièce d'identité ?</div>
+        <div class="fill-line">You: Oui, voici mon <input type="text" id="e2_2" placeholder="...">.</div>
+        <div class="fill-line">You: Je voudrais aussi une <input type="text" id="e2_3" placeholder="..."> bancaire.</div>
+        <div class="fill-line">Advisor: Bien sûr. Quel est votre justificatif de <input type="text" id="e2_4" placeholder="..."> ?</div>
+        <div class="fill-line">You: J'ai une <input type="text" id="e2_5" placeholder="..."> d'électricité.</div>
+        <div class="fill-line">Advisor: Parfait. Voulez-vous faire des <input type="text" id="e2_6" placeholder="..."> en ligne ?</div>
+        <div class="fill-line">You: Oui. Quel est le <input type="text" id="e2_7" placeholder="..."> mensuel ?</div>
+        <button class="btn" onclick="toggle('ans2')">🔍 See Suggested Answers</button>
+        <div id="ans2" class="answer-box">
+          <span class="correct">1. voudrais &nbsp; 2. passeport / titre de séjour &nbsp; 3. carte &nbsp; 4. domicile &nbsp; 5. facture &nbsp; 6. virements &nbsp; 7. tarif / prix</span>
+        </div>
+      </div>
+
+      <!-- EX 3 - MATCHING -->
+      <div class="exo-card">
+        <div class="exo-title">🔗 Exercise 3 · Match French → English</div>
+        <p class="exo-subtitle">Write the correct letter next to each French word.</p>
+        <table class="match-table">
+          <tr>
+            <td class="fr-col">1. un compte</td>
+            <td class="en-col">A. ATM</td>
+            <td class="inp-col"><input type="text" class="mini" id="m1" placeholder="?"></td>
+          </tr>
+          <tr>
+            <td class="fr-col">2. un virement</td>
+            <td class="en-col">B. checkbook</td>
+            <td class="inp-col"><input type="text" class="mini" id="m2" placeholder="?"></td>
+          </tr>
+          <tr>
+            <td class="fr-col">3. un chéquier</td>
+            <td class="en-col">C. PIN code</td>
+            <td class="inp-col"><input type="text" class="mini" id="m3" placeholder="?"></td>
+          </tr>
+          <tr>
+            <td class="fr-col">4. le solde</td>
+            <td class="en-col">D. proof of address</td>
+            <td class="inp-col"><input type="text" class="mini" id="m4" placeholder="?"></td>
+          </tr>
+          <tr>
+            <td class="fr-col">5. un distributeur</td>
+            <td class="en-col">E. transfer</td>
+            <td class="inp-col"><input type="text" class="mini" id="m5" placeholder="?"></td>
+          </tr>
+          <tr>
+            <td class="fr-col">6. le code secret</td>
+            <td class="en-col">F. balance</td>
+            <td class="inp-col"><input type="text" class="mini" id="m6" placeholder="?"></td>
+          </tr>
+          <tr>
+            <td class="fr-col">7. une carte bancaire</td>
+            <td class="en-col">G. account</td>
+            <td class="inp-col"><input type="text" class="mini" id="m7" placeholder="?"></td>
+          </tr>
+          <tr>
+            <td class="fr-col">8. un justificatif de domicile</td>
+            <td class="en-col">H. debit card</td>
+            <td class="inp-col"><input type="text" class="mini" id="m8" placeholder="?"></td>
+          </tr>
+        </table>
+        <button class="btn" onclick="toggle('ans3')">✅ See Answers</button>
+        <div id="ans3" class="answer-box">
+          <span class="correct">1→G &nbsp; 2→E &nbsp; 3→B &nbsp; 4→F &nbsp; 5→A &nbsp; 6→C &nbsp; 7→H &nbsp; 8→D</span>
+        </div>
+      </div>
+
+      <!-- EX 4 - TRUE/FALSE -->
+      <div class="exo-card">
+        <div class="exo-title">✔️ Exercise 4 · True (V) or False (F)?</div>
+        <div class="fill-line">a) Un conseiller bancaire travaille dans une banque. <input type="text" class="mini" id="vf1" placeholder="V/F"></div>
+        <div class="fill-line">b) Un distributeur (ATM) donne de l'argent. <input type="text" class="mini" id="vf2" placeholder="V/F"></div>
+        <div class="fill-line">c) « Le solde » = l'argent sur le compte. <input type="text" class="mini" id="vf3" placeholder="V/F"></div>
+        <div class="fill-line">d) « Un virement » = payer en espèces (cash). <input type="text" class="mini" id="vf4" placeholder="V/F"></div>
+        <div class="fill-line">e) Un chéquier est utilisé pour les paiements en ligne. <input type="text" class="mini" id="vf5" placeholder="V/F"></div>
+        <div class="fill-line">f) « Retirer » = prendre de l'argent du compte. <input type="text" class="mini" id="vf6" placeholder="V/F"></div>
+        <div class="fill-line">g) Un « découvert » signifie qu'on a trop d'argent. <input type="text" class="mini" id="vf7" placeholder="V/F"></div>
+        <button class="btn" onclick="toggle('ans4')">✅ Answers</button>
+        <div id="ans4" class="answer-box">
+          <span class="correct">a) V &nbsp; b) V &nbsp; c) V &nbsp; d) F (un virement = a bank transfer, not cash) &nbsp; e) F (un chéquier = checkbook, for writing cheques) &nbsp; f) V &nbsp; g) F (un découvert = overdraft = not enough money)</span>
+        </div>
+      </div>
+
+      <!-- EX 5 - TRANSLATION -->
+      <div class="exo-card">
+        <div class="exo-title">🌍 Exercise 5 · Translate into French</div>
+        <p class="exo-subtitle">Write the French phrase for each English sentence.</p>
+        <div class="fill-line">1. I'd like to open an account. <input type="text" id="tr1" placeholder="Je voudrais..."> </div>
+        <div class="fill-line">2. Here is my passport. <input type="text" id="tr2" placeholder="Voici..."></div>
+        <div class="fill-line">3. What is the monthly fee? <input type="text" id="tr3" placeholder="Quel est..."></div>
+        <div class="fill-line">4. I want to make a transfer. <input type="text" id="tr4" placeholder="Je veux..."></div>
+        <div class="fill-line">5. I lost my debit card. <input type="text" id="tr5" placeholder="J'ai perdu..."></div>
+        <div class="fill-line">6. My balance is €300. <input type="text" id="tr6" placeholder="Mon solde..."></div>
+        <button class="btn" onclick="toggle('ans5')">✅ Model Answers</button>
+        <div id="ans5" class="answer-box">
+          <span class="correct">1. Je voudrais ouvrir un compte. &nbsp; 2. Voici mon passeport. &nbsp; 3. Quel est le tarif mensuel ? &nbsp; 4. Je veux faire un virement. &nbsp; 5. J'ai perdu ma carte bancaire. &nbsp; 6. Mon solde est de 300€.</span>
+        </div>
+      </div>
+
+      <!-- EX 6 - PUT IN ORDER -->
+      <div class="exo-card">
+        <div class="exo-title">🔀 Exercise 6 · Reconstruct the Sentences</div>
+        <p class="exo-subtitle">Click the words in the correct order to form a sentence. Click a placed word to remove it.</p>
+        <div id="sentence-exercises"></div>
+        <button class="btn btn-gold" onclick="checkSentences()">✅ Check</button>
+        <div id="ans6" class="answer-box"></div>
+      </div>
+    </div>
+
+    <!-- QUIZ MCQ -->
+    <div id="quiz" class="card">
+      <div class="section-title"><span class="icon">🎯</span> Vocabulary Quiz</div>
+      <div id="quiz-container"></div>
+      <button class="btn btn-gold" onclick="checkQuiz()">🎯 Check All Answers</button>
+      <div id="quiz-result" class="answer-box" style="margin-top:14px;"></div>
+    </div>
+
+    <!-- GLOBAL BUTTONS -->
+    <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:20px;">
+      <button class="btn" onclick="showAllAnswers()">📚 Show All Answers</button>
+      <button class="btn" style="background:#555;" onclick="hideAllAnswers()">🔒 Hide All Answers</button>
+    </div>
+
+    <div style="text-align:center; margin-top:50px; color:rgba(255,255,255,0.35); font-size:0.85rem; padding-bottom:20px;">
+      ✨ French A2 · À la Banque · Banking Vocabulary & Exercises ✨
+    </div>
+  </div>
+</div>
+
+<script>
+// ===================== VOCABULARY DATA =====================
+const vocab = [
+  { fr: "une banque", en: "a bank", emoji: "🏦", cat: "personne" },
+  { fr: "un compte courant", en: "a current account", emoji: "💶", cat: "compte" },
+  { fr: "un compte épargne", en: "a savings account", emoji: "🐷", cat: "compte" },
+  { fr: "une carte bancaire", en: "a debit card", emoji: "💳", cat: "argent" },
+  { fr: "une carte de crédit", en: "a credit card", emoji: "💳", cat: "argent" },
+  { fr: "un chéquier", en: "a checkbook", emoji: "📒", cat: "compte" },
+  { fr: "un chèque", en: "a cheque", emoji: "🧾", cat: "argent" },
+  { fr: "une pièce d'identité", en: "an ID / passport", emoji: "🆔", cat: "compte" },
+  { fr: "un passeport", en: "a passport", emoji: "🛂", cat: "compte" },
+  { fr: "un justificatif de domicile", en: "proof of address", emoji: "🏠", cat: "compte" },
+  { fr: "une facture", en: "a bill / invoice", emoji: "📄", cat: "compte" },
+  { fr: "un rendez-vous", en: "an appointment", emoji: "📅", cat: "compte" },
+  { fr: "un virement", en: "a bank transfer", emoji: "💸", cat: "argent" },
+  { fr: "un prélèvement", en: "a direct debit", emoji: "🔄", cat: "argent" },
+  { fr: "l'argent", en: "money", emoji: "💰", cat: "argent" },
+  { fr: "les espèces", en: "cash", emoji: "💵", cat: "argent" },
+  { fr: "le solde", en: "the balance", emoji: "📉", cat: "argent" },
+  { fr: "un distributeur (ATM)", en: "an ATM / cash machine", emoji: "🏧", cat: "personne" },
+  { fr: "le code secret", en: "the PIN code", emoji: "🔢", cat: "compte" },
+  { fr: "un formulaire", en: "a form", emoji: "📋", cat: "compte" },
+  { fr: "un conseiller / une conseillère", en: "an advisor", emoji: "👔", cat: "personne" },
+  { fr: "un(e) client(e)", en: "a customer / client", emoji: "👤", cat: "personne" },
+  { fr: "un taux d'intérêt", en: "an interest rate", emoji: "📊", cat: "argent" },
+  { fr: "un découvert", en: "an overdraft", emoji: "⚠️", cat: "argent" },
+  { fr: "un prêt", en: "a loan", emoji: "🏦", cat: "argent" },
+  { fr: "une hypothèque", en: "a mortgage", emoji: "🏡", cat: "argent" },
+  { fr: "les frais", en: "the fees / charges", emoji: "💱", cat: "argent" },
+  { fr: "le tarif", en: "the fee / rate", emoji: "🏷️", cat: "argent" },
+  { fr: "un relevé de compte", en: "a bank statement", emoji: "📑", cat: "compte" },
+  { fr: "un IBAN", en: "IBAN number", emoji: "🔢", cat: "compte" },
+  { fr: "retirer", en: "to withdraw", emoji: "⬇️", cat: "actions" },
+  { fr: "déposer", en: "to deposit", emoji: "⬆️", cat: "actions" },
+  { fr: "virer", en: "to transfer", emoji: "↔️", cat: "actions" },
+  { fr: "signer", en: "to sign", emoji: "✍️", cat: "actions" },
+  { fr: "ouvrir un compte", en: "to open an account", emoji: "🔓", cat: "actions" },
+  { fr: "fermer un compte", en: "to close an account", emoji: "🔒", cat: "actions" },
+  { fr: "économiser", en: "to save money", emoji: "🐷", cat: "actions" },
+  { fr: "emprunter", en: "to borrow", emoji: "🤝", cat: "actions" },
+  { fr: "rembourser", en: "to repay", emoji: "🔙", cat: "actions" },
+  { fr: "bloquer", en: "to block", emoji: "🚫", cat: "actions" },
+];
+
+function buildVocabGrids() {
+  const all = document.getElementById('all-grid');
+  const compte = document.getElementById('compte-grid');
+  const argent = document.getElementById('argent-grid');
+  const personne = document.getElementById('personne-grid');
+  const actions = document.getElementById('actions-grid');
+
+  const dotColors = { compte: '#4a90e2', argent: '#e8a020', personne: '#4caf7d', actions: '#e25a4a' };
+
+  vocab.forEach(v => {
+    const card = `<div class="vocab-card">
+      <div class="category-dot" style="background:${dotColors[v.cat]}"></div>
+      <div class="emoji">${v.emoji}</div>
+      <div class="fr">${v.fr}</div>
+      <div class="en">${v.en}</div>
+    </div>`;
+    all.insertAdjacentHTML('beforeend', card);
+    if (v.cat === 'compte') compte.insertAdjacentHTML('beforeend', card);
+    else if (v.cat === 'argent') argent.insertAdjacentHTML('beforeend', card);
+    else if (v.cat === 'personne') personne.insertAdjacentHTML('beforeend', card);
+    else if (v.cat === 'actions') actions.insertAdjacentHTML('beforeend', card);
+  });
+}
+
+function showTab(id) {
+  document.querySelectorAll('.vocab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===================== FLASHCARDS =====================
+const flashcards = vocab.slice(0, 30);
+let fcIndex = 0;
+let fcOrder = [...Array(flashcards.length).keys()];
+
+function updateCard() {
+  const card = flashcards[fcOrder[fcIndex]];
+  document.getElementById('fc-fr').textContent = card.fr;
+  document.getElementById('fc-en').textContent = card.en;
+  document.getElementById('fc-emoji').textContent = card.emoji;
+  document.getElementById('fc-emoji2').textContent = card.emoji;
+  document.getElementById('fc-counter').textContent = `Card ${fcIndex + 1} of ${flashcards.length}`;
+  document.getElementById('flashcard').classList.remove('flipped');
+}
+function flipCard() {
+  document.getElementById('flashcard').classList.toggle('flipped');
+}
+function nextCard() {
+  document.getElementById('flashcard').classList.remove('flipped');
+  fcIndex = (fcIndex + 1) % flashcards.length;
+  setTimeout(updateCard, 150);
+}
+function prevCard() {
+  document.getElementById('flashcard').classList.remove('flipped');
+  fcIndex = (fcIndex - 1 + flashcards.length) % flashcards.length;
+  setTimeout(updateCard, 150);
+}
+function shuffleCards() {
+  for (let i = fcOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [fcOrder[i], fcOrder[j]] = [fcOrder[j], fcOrder[i]];
+  }
+  fcIndex = 0;
+  updateCard();
+}
+
+// ===================== SENTENCE EXERCISES =====================
+const sentences = [
+  { words: ["Je", "voudrais", "ouvrir", "un", "compte."], hint: "I'd like to open an account." },
+  { words: ["Voici", "mon", "passeport", "et", "ma", "facture."], hint: "Here is my passport and my bill." },
+  { words: ["Quel", "est", "le", "tarif", "mensuel", "?"], hint: "What is the monthly fee?" },
+  { words: ["Je", "veux", "faire", "un", "virement", "en", "ligne."], hint: "I want to make an online transfer." },
+];
+
+let sentenceState = sentences.map(s => ({ pool: [...s.words].sort(() => Math.random() - 0.5), placed: [] }));
+
+function buildSentences() {
+  const container = document.getElementById('sentence-exercises');
+  sentences.forEach((s, i) => {
+    const state = sentenceState[i];
+    const div = document.createElement('div');
+    div.className = 'sentence-wrap';
+    div.id = `sent_${i}`;
+    div.innerHTML = `
+      <div class="sentence-label">Sentence ${i + 1} · <em>${s.hint}</em></div>
+      <div class="words-pool" id="pool_${i}">
+        ${state.pool.map((w, wi) => `<div class="word-token" onclick="placeWord(${i}, ${wi}, this)">${w}</div>`).join('')}
+      </div>
+      <div class="sentence-answer" id="answer_${i}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function placeWord(si, wi, el) {
+  if (el.classList.contains('used')) return;
+  el.classList.add('used');
+  const word = el.textContent;
+  sentenceState[si].placed.push({ word, wi, el });
+  const ansDiv = document.getElementById(`answer_${si}`);
+  const placed = document.createElement('div');
+  placed.className = 'word-placed';
+  placed.textContent = word;
+  placed.onclick = () => {
+    const idx = sentenceState[si].placed.findIndex(p => p.el === el);
+    if (idx > -1) {
+      sentenceState[si].placed.splice(idx, 1);
+      el.classList.remove('used');
+      placed.remove();
+    }
+  };
+  ansDiv.appendChild(placed);
+}
+
+function checkSentences() {
+  const results = sentences.map((s, i) => {
+    const placed = sentenceState[i].placed.map(p => p.word).join(' ');
+    const correct = s.words.join(' ');
+    return placed === correct;
+  });
+  const correct = results.filter(Boolean).length;
+  const ans = document.getElementById('ans6');
+  ans.classList.add('show');
+  ans.innerHTML = `<strong>Score: ${correct}/${sentences.length}</strong><br>` +
+    sentences.map((s, i) => `<span style="color:${results[i] ? '#1a8040' : '#c0392b'}">${results[i] ? '✅' : '❌'} "${s.words.join(' ')}"</span>`).join('<br>');
+}
+
+// ===================== QUIZ =====================
+const quizData = [
+  { q: "What does « un virement » mean?", opts: ["a withdrawal", "a bank transfer", "cash", "a loan"], ans: 1 },
+  { q: "How do you say 'proof of address' in French?", opts: ["une pièce d'identité", "un formulaire", "un justificatif de domicile", "un relevé de compte"], ans: 2 },
+  { q: "What is « un distributeur » ?", opts: ["an advisor", "a bank counter", "a savings account", "an ATM"], ans: 3 },
+  { q: "What does « retirer de l'argent » mean?", opts: ["to deposit money", "to transfer money", "to withdraw money", "to save money"], ans: 2 },
+  { q: "Which word means 'balance' (amount in account)?", opts: ["le tarif", "le solde", "les espèces", "le prêt"], ans: 1 },
+  { q: "What is « un découvert » ?", opts: ["a savings plan", "an interest rate", "an overdraft", "a credit card"], ans: 2 },
+  { q: "How do you say 'to sign' in French?", opts: ["ouvrir", "virer", "déposer", "signer"], ans: 3 },
+  { q: "What does « économiser » mean?", opts: ["to borrow", "to repay", "to save money", "to block"], ans: 2 },
+];
+
+let quizAnswers = {};
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  quizData.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'mcq-question';
+    div.innerHTML = `<div class="mcq-q">${qi + 1}. ${q.q}</div>
+      <div class="mcq-options">
+        ${q.opts.map((o, oi) => `<button class="mcq-opt" id="q${qi}_${oi}" onclick="selectOpt(${qi}, ${oi})">${o}</button>`).join('')}
+      </div>
+      <div class="mcq-feedback" id="feedback_${qi}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function selectOpt(qi, oi) {
+  quizAnswers[qi] = oi;
+  quizData[qi].opts.forEach((_, i) => {
+    const btn = document.getElementById(`q${qi}_${i}`);
+    btn.classList.remove('correct', 'wrong');
+  });
+  document.getElementById(`q${qi}_${oi}`).style.borderColor = '#e8a020';
+}
+
+function checkQuiz() {
+  let score = 0;
+  quizData.forEach((q, qi) => {
+    const sel = quizAnswers[qi];
+    q.opts.forEach((_, oi) => {
+      const btn = document.getElementById(`q${qi}_${oi}`);
+      btn.classList.remove('correct', 'wrong');
+      if (oi === q.ans) btn.classList.add('correct');
+      else if (oi === sel) btn.classList.add('wrong');
+    });
+    const fb = document.getElementById(`feedback_${qi}`);
+    if (sel === undefined) { fb.textContent = '⚠️ Not answered'; fb.style.color = '#999'; }
+    else if (sel === q.ans) { fb.textContent = '✅ Correct!'; fb.style.color = '#1a8040'; score++; }
+    else { fb.textContent = `❌ Correct answer: ${q.opts[q.ans]}`; fb.style.color = '#c0392b'; }
+  });
+  const res = document.getElementById('quiz-result');
+  res.classList.add('show');
+  res.innerHTML = `<strong>Your score: ${score} / ${quizData.length}</strong> ${score === quizData.length ? ' 🎉 Perfect!' : score >= quizData.length * 0.7 ? ' 👍 Well done!' : ' 📚 Keep practicing!'}`;
+}
+
+// ===================== UTILS =====================
+function toggle(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('show');
+}
+function showAllAnswers() {
+  document.querySelectorAll('.answer-box').forEach(el => el.classList.add('show'));
+}
+function hideAllAnswers() {
+  document.querySelectorAll('.answer-box').forEach(el => el.classList.remove('show'));
+}
+function scrollTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// ===================== INIT =====================
+buildVocabGrids();
+updateCard();
+buildSentences();
+buildQuiz();
+</script>
+</body>
+</html>
