@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Napoléon Bonaparte — 1799–1815</title>
+<link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --noir:    #0E0C09;
+  --encre:   #1A1510;
+  --rouge:   #9B2020;
+  --rouge-vif: #C0392B;
+  --or:      #C9943A;
+  --or-pale: #E8C97A;
+  --parchemin: #F2EBD9;
+  --creme:   #FAF6EE;
+  --gris:    #8C8070;
+  --blanc:   #FDFAF4;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body {
+  background: var(--creme);
+  color: var(--encre);
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.88;
+}
+body::before {
+  content:''; position:fixed; inset:0; z-index:1000; pointer-events:none;
+  opacity:0.022;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:128px;
+}
+
+/* HEADER */
+header {
+  background:var(--noir);
+  color:var(--blanc);
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center;
+  padding:4rem 2rem;
+  position:relative; overflow:hidden;
+}
+.hbg {
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 80% 55% at 50% 40%, rgba(155,32,32,0.2) 0%, transparent 70%),
+    radial-gradient(ellipse 35% 35% at 15% 85%, rgba(201,148,58,0.07) 0%, transparent 60%);
+}
+.tri { position:absolute; top:0; left:0; right:0; height:5px; display:flex; }
+.tri span { flex:1; }
+.tri span:nth-child(1){background:#002395;}
+.tri span:nth-child(2){background:#fff;}
+.tri span:nth-child(3){background:#ED2939;}
+
+.hinner { position:relative; max-width:740px; }
+.eyebrow {
+  font-size:0.78rem; font-weight:300;
+  letter-spacing:0.32em; text-transform:uppercase;
+  color:var(--or-pale); margin-bottom:2.2rem;
+}
+header h1 {
+  font-family:'IM Fell English',serif;
+  font-size:clamp(3rem,9vw,6.5rem);
+  font-weight:400; line-height:1.05;
+  color:var(--blanc);
+  text-shadow:0 2px 50px rgba(155,32,32,0.5);
+  margin-bottom:0.3rem;
+}
+header h1 em { font-style:italic; color:var(--or-pale); }
+.hdates {
+  font-family:'IM Fell English',serif;
+  font-size:1.5rem; color:var(--or);
+  letter-spacing:0.22em; margin-bottom:2rem;
+}
+.hrule {
+  width:100px; height:1px;
+  background:linear-gradient(90deg,transparent,var(--or),transparent);
+  margin:0 auto 1.8rem;
+}
+header p.sub {
+  font-size:1.05rem; font-weight:300; font-style:italic;
+  color:rgba(255,255,255,0.55);
+  max-width:480px; margin:0 auto 3rem;
+}
+.scroll {
+  position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+  color:rgba(255,255,255,0.28); font-size:0.7rem; letter-spacing:0.22em; text-transform:uppercase;
+  animation:bob 2.8s ease-in-out infinite;
+}
+.scroll::after {
+  content:''; width:1px; height:34px;
+  background:linear-gradient(to bottom, rgba(255,255,255,0.28), transparent);
+}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
+/* NAV */
+nav {
+  background:var(--encre); position:sticky; top:0; z-index:200;
+  display:flex; flex-wrap:wrap; justify-content:center;
+  border-bottom:2px solid var(--or);
+}
+nav a {
+  color:rgba(255,255,255,0.62); text-decoration:none;
+  font-family:'Crimson Pro',serif;
+  font-size:0.79rem; letter-spacing:0.09em; text-transform:uppercase;
+  padding:0.82rem 1.2rem;
+  border-right:1px solid rgba(255,255,255,0.06);
+  transition:all 0.2s;
+}
+nav a:hover, nav a.on { color:var(--or-pale); background:rgba(255,255,255,0.04); }
+nav a .n { color:var(--or); font-family:'IM Fell English',serif; font-size:1.05rem; margin-right:0.3rem; }
+
+/* LAYOUT */
+.sep { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(155,32,32,0.18),transparent); }
+section.ch {
+  padding:5rem 0 3rem; position:relative;
+  opacity:0; transform:translateY(28px);
+  transition:opacity 0.75s ease, transform 0.75s ease;
+}
+section.ch.vis { opacity:1; transform:none; }
+.bign {
+  position:absolute; top:2.5rem; right:0;
+  font-family:'IM Fell English',serif;
+  font-size:16rem; line-height:1;
+  color:rgba(155,32,32,0.04);
+  pointer-events:none; user-select:none; z-index:0;
+}
+.wrap { max-width:820px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
+
+/* CHAPITRE HEADER */
+.clabel { display:flex; align-items:center; gap:0.7rem; margin-bottom:0.9rem; }
+.cnum {
+  font-family:'IM Fell English',serif; font-size:1rem;
+  background:var(--rouge); color:white;
+  width:2rem; height:2rem; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+}
+.cperiod {
+  font-size:0.7rem; font-weight:300; letter-spacing:0.2em;
+  text-transform:uppercase; color:var(--gris);
+  border:1px solid var(--gris); padding:0.15rem 0.6rem; border-radius:20px;
+}
+h2.ctitle {
+  font-family:'IM Fell English',serif;
+  font-size:clamp(1.9rem,4.5vw,3rem);
+  font-weight:400; color:var(--encre); line-height:1.15; margin-bottom:0.5rem;
+}
+h2.ctitle em { color:var(--rouge); font-style:italic; }
+.crule {
+  height:1px; margin:1.1rem 0 2rem;
+  background:linear-gradient(90deg,var(--rouge) 0%,var(--or) 28%,transparent 78%);
+}
+.prob {
+  font-family:'IM Fell English',serif; font-style:italic;
+  font-size:1.12rem; color:var(--rouge);
+  border-left:3px solid var(--rouge); padding:0.7rem 1.2rem;
+  background:rgba(155,32,32,0.04); border-radius:0 6px 6px 0;
+  margin-bottom:2.2rem; line-height:1.5;
+}
+
+/* RECIT */
+.recit p { margin-bottom:1.4rem; text-align:justify; hyphens:auto; font-weight:300; }
+.recit p:first-of-type::first-letter {
+  font-family:'IM Fell English',serif; font-size:4.2rem; font-weight:400;
+  float:left; line-height:0.7; margin:0.12rem 0.28rem 0 0; color:var(--rouge);
+}
+.recit strong { font-weight:600; color:var(--encre); }
+
+/* TIMELINE */
+.tl {
+  display:grid; grid-template-columns:repeat(5,1fr);
+  margin:2.5rem 0; position:relative;
+}
+.tl::before {
+  content:''; position:absolute;
+  top:1.5rem; left:1rem; right:1rem; height:1px;
+  background:linear-gradient(90deg,var(--rouge),var(--or),var(--rouge));
+}
+.ti { padding:0 0.4rem; padding-top:3rem; position:relative; text-align:center; }
+.tdot {
+  position:absolute; top:0.8rem; left:50%; transform:translateX(-50%);
+  width:1.35rem; height:1.35rem; border-radius:50%;
+  background:var(--creme); border:2px solid var(--rouge);
+  display:flex; align-items:center; justify-content:center;
+  font-family:'IM Fell English',serif; font-size:0.62rem; color:var(--rouge); z-index:1;
+}
+.tdate { font-size:0.68rem; font-weight:600; color:var(--rouge); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:0.25rem; }
+.tdesc { font-size:0.79rem; color:var(--gris); line-height:1.38; }
+
+/* ENCADRÉ */
+.enc {
+  background:var(--parchemin); border:1px solid rgba(201,148,58,0.28);
+  border-left:4px solid var(--or); border-radius:0 8px 8px 0;
+  padding:1.3rem 1.6rem; margin:2rem 0; font-size:0.97rem;
+}
+.enc-titre {
+  font-family:'IM Fell English',serif; font-size:0.85rem;
+  color:var(--or); text-transform:uppercase; letter-spacing:0.14em;
+  margin-bottom:0.6rem;
+}
+
+/* CITATION */
+.cit {
+  background:var(--encre); color:var(--blanc);
+  border-radius:8px; padding:2rem 2rem 1.5rem 3rem;
+  margin:2.5rem 0; position:relative;
+}
+.cit::before {
+  content:'\201C'; font-family:'IM Fell English',serif; font-size:5.5rem;
+  color:var(--or); position:absolute; top:0.1rem; left:0.8rem;
+  line-height:1; opacity:0.55;
+}
+.cit p { font-family:'IM Fell English',serif; font-style:italic; font-size:1.12rem; line-height:1.6; margin-bottom:0.6rem; }
+.cit .src { font-size:0.76rem; color:var(--or-pale); letter-spacing:0.11em; text-transform:uppercase; }
+
+/* STATS */
+.stats { display:flex; gap:1rem; margin:2rem 0; flex-wrap:wrap; }
+.stat { flex:1; min-width:120px; background:var(--encre); border-radius:8px; padding:1.2rem; text-align:center; border-top:3px solid var(--rouge); }
+.stat .nb { font-family:'IM Fell English',serif; font-size:2.2rem; color:var(--or-pale); display:block; }
+.stat .lb { font-size:0.76rem; color:rgba(255,255,255,0.6); line-height:1.35; }
+
+/* THEMES */
+.themes { display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:1.8rem 0; }
+.th {
+  background:white; border-radius:6px; padding:1rem 1.1rem;
+  border:1px solid rgba(0,0,0,0.07); font-size:0.9rem; line-height:1.5; color:var(--encre);
+}
+.th strong { display:block; margin-bottom:0.3rem; font-family:'IM Fell English',serif; font-size:0.97rem; color:var(--rouge); }
+.th:last-child:nth-child(odd) { grid-column:span 2; }
+
+/* TABLEAU */
+.tab { width:100%; border-collapse:collapse; margin:1.5rem 0; font-size:0.89rem; }
+.tab th { background:var(--encre); color:var(--or-pale); padding:0.7rem 1rem; text-align:left; font-family:'IM Fell English',serif; font-weight:400; font-size:0.94rem; }
+.tab td { padding:0.62rem 1rem; border-bottom:1px solid #E8E0D0; }
+.tab tr:nth-child(even) td { background:rgba(242,235,217,0.5); }
+
+/* QCM */
+.qcm {
+  background:white; border-radius:12px; border-top:5px solid var(--rouge);
+  padding:2.2rem 2rem 1.8rem; margin-top:3rem;
+  box-shadow:0 3px 28px rgba(0,0,0,0.06);
+}
+.qhead {
+  font-family:'IM Fell English',serif; font-size:1.2rem;
+  color:var(--rouge); margin-bottom:1.8rem;
+  display:flex; align-items:center; gap:0.5rem;
+}
+.qhead::before { content:'✦'; color:var(--or); font-size:0.85rem; }
+.qb { margin-bottom:2rem; }
+.qt { font-weight:600; margin-bottom:0.8rem; font-size:1rem; color:var(--encre); line-height:1.5; }
+.qn {
+  display:inline-block; background:var(--rouge); color:white;
+  font-size:0.7rem; font-weight:700; padding:0.1rem 0.5rem;
+  border-radius:20px; margin-right:0.3rem; font-family:'Crimson Pro',serif; vertical-align:middle;
+}
+.opts { display:flex; flex-direction:column; gap:0.4rem; }
+.opt {
+  display:flex; align-items:flex-start; gap:0.7rem;
+  padding:0.65rem 1rem; border:1.5px solid #E8E0D0;
+  border-radius:7px; cursor:pointer; transition:all 0.18s;
+  font-size:0.94rem; line-height:1.45; background:var(--creme);
+}
+.opt:hover { border-color:var(--rouge); background:#fff; }
+.opt input { accent-color:var(--rouge); margin-top:0.2rem; flex-shrink:0; }
+.opt.ok { background:#edf7ee; border-color:#3a9e47; color:#1a5020; }
+.opt.ko { background:#fdecea; border-color:var(--rouge); color:#8c1c1c; }
+.fb { margin-top:0.5rem; font-size:0.86rem; padding:0.5rem 0.9rem; border-radius:6px; display:none; }
+.fb.show { display:block; }
+.fb.ok2 { background:#edf7ee; color:#2a6630; }
+.fb.ko2 { background:#fdecea; color:#8c1c1c; }
+.btnv {
+  margin-top:0.9rem; background:var(--rouge); color:white;
+  border:none; padding:0.5rem 1.4rem; border-radius:6px;
+  font-family:'Crimson Pro',serif; font-size:0.95rem; cursor:pointer;
+  transition:background 0.2s;
+}
+.btnv:hover { background:#7a1818; }
+.btnv:disabled { opacity:0.5; cursor:default; }
+
+/* SCORE */
+#scoreS {
+  text-align:center; margin:4rem 2rem 2rem;
+  background:var(--encre); color:var(--blanc);
+  border-radius:12px; padding:3rem 2rem;
+  border:1px solid rgba(201,148,58,0.3);
+}
+#scoreS h2 { font-family:'IM Fell English',serif; font-size:1.6rem; margin-bottom:1rem; }
+#scoreN { font-family:'IM Fell English',serif; font-size:4.5rem; color:var(--or-pale); display:block; }
+#scoreM { color:rgba(255,255,255,0.7); margin-top:0.6rem; font-size:1.05rem; }
+.btnR {
+  margin-top:1.4rem; background:var(--or); color:var(--encre);
+  border:none; padding:0.6rem 2rem; border-radius:6px;
+  font-family:'Crimson Pro',serif; font-size:1rem; cursor:pointer;
+  font-weight:600; transition:transform 0.15s;
+}
+.btnR:hover { transform:scale(1.04); }
+
+/* FOOTER */
+footer {
+  text-align:center; padding:2rem;
+  font-size:0.8rem; color:var(--gris);
+  border-top:1px solid #E8E0D0; margin-top:2rem;
+}
+.ff { display:flex; justify-content:center; gap:6px; margin-bottom:0.6rem; }
+.ff span { width:14px; height:14px; border-radius:2px; }
+
+@media(max-width:640px){
+  .tl { grid-template-columns:1fr 1fr; }
+  .tl::before { display:none; }
+  .themes { grid-template-columns:1fr; }
+  .th:last-child:nth-child(odd){ grid-column:span 1; }
+  nav a { padding:0.6rem 0.7rem; font-size:0.72rem; }
+  .bign { font-size:7rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="tri"><span></span><span></span><span></span></div>
+  <div class="hbg"></div>
+  <div class="hinner">
+    <div class="eyebrow">Programme d'Histoire &middot; Classe de 4ème</div>
+    <h1>Napoléon <em>Bonaparte</em></h1>
+    <div class="hdates">1799 &mdash; 1815</div>
+    <div class="hrule"></div>
+    <p class="sub">Du Consulat à l'Empire, de la campagne d'Italie à Waterloo : seize années qui ont redessiné l'Europe.</p>
+  </div>
+  <div class="scroll">Défiler</div>
+</header>
+
+<nav id="nav">
+  <a href="#c1"><span class="n">I</span>L'ascension</a>
+  <a href="#c2"><span class="n">II</span>Le Consulat</a>
+  <a href="#c3"><span class="n">III</span>L'Empire</a>
+  <a href="#c4"><span class="n">IV</span>Les guerres</a>
+  <a href="#c5"><span class="n">V</span>La chute</a>
+</nav>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- I — L'ASCENSION -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c1"></div>
+<section class="ch">
+  <div class="bign">I</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">I</span>
+      <span class="cperiod">1769–1799</span>
+    </div>
+    <h2 class="ctitle">L'<em>ascension</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment un jeune Corse devient-il le maître de la France ?</div>
+
+    <div class="recit">
+      <p>Napoléon Bonaparte naît le <strong>15 août 1769</strong> à Ajaccio, en Corse, quelques mois après le rattachement de l'île à la France. Issu d'une famille de la petite noblesse, il bénéficie d'une bourse pour intégrer l'École militaire de Paris. En 1785, il en sort sous-lieutenant d'artillerie à seulement 16 ans. La Révolution le propulse : en 1793, il se distingue au siège de Toulon, alors aux mains des Anglais. Promu général de brigade à 24 ans, il écrase en 1795 une insurrection royaliste à Paris — c'est le <strong>coup de grâce du 13 Vendémiaire</strong>.</p>
+      <p>En 1796, il prend la tête de l'armée d'Italie. Il remporte une série de victoires éclatantes contre les Autrichiens, de Lodi à Arcole, et les contraint à signer le <strong>traité de Campo-Formio</strong> en 1797. L'Italie du Nord est conquise ; la France retrouve la gloire militaire. La campagne d'Égypte en 1798 est moins brillante — la flotte française est détruite par Nelson à Aboukir — mais l'expédition rapporte les découvertes de la pierre de Rosette et cultive la légende du général. Rentré en France en 1799, Napoléon est accueilli en héros.</p>
+      <p>Le Directoire, corrompu et incapable, s'effondre. Avec l'appui de l'abbé Sieyès et de son frère Lucien, Napoléon organise le <strong>coup d'État du 18 Brumaire</strong> (9 novembre 1799). Les assemblées sont dispersées par les grenadiers, les députés récalcitrants mis à la porte. Le Consulat est instauré : Bonaparte, Sieyès et Ducos sont consuls provisoires. Le pouvoir passe à un homme.</p>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">15 août 1769</span><div class="tdesc">Naissance à Ajaccio</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">1793</span><div class="tdesc">Siège de Toulon — général de brigade</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">13 Vendémiaire</span><div class="tdesc">Écrase l'insurrection royaliste (1795)</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">1796–1797</span><div class="tdesc">Campagne d'Italie — Campo-Formio</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">9 nov. 1799</span><div class="tdesc">18 Brumaire — coup d'État, Consulat</div></div>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — L'ascension de Bonaparte</div>
+
+      <div class="qb" id="q1">
+        <div class="qt"><span class="qn">1</span>Quel traité met fin à la campagne d'Italie de Bonaparte en 1797 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a">Le traité de Campo-Formio</label>
+          <label class="opt"><input type="radio" name="q1" value="b">Le traité de Paris</label>
+          <label class="opt"><input type="radio" name="q1" value="c">Le traité de Vienne</label>
+          <label class="opt"><input type="radio" name="q1" value="d">Le traité de Tilsit</label>
+        </div>
+        <button class="btnv" onclick="V('q1','a','Le traité de Campo-Formio (1797) met fin à la campagne d\'Italie. Bonaparte impose la paix à l\'Autriche et agrandit considérablement le territoire français.')">Valider</button>
+        <div class="fb" id="fb-q1"></div>
+      </div>
+
+      <div class="qb" id="q2">
+        <div class="qt"><span class="qn">2</span>Quel événement permet à Bonaparte de devenir général de brigade en 1793 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a">La victoire de Marengo</label>
+          <label class="opt"><input type="radio" name="q2" value="b">Le siège de Toulon</label>
+          <label class="opt"><input type="radio" name="q2" value="c">Le 18 Brumaire</label>
+          <label class="opt"><input type="radio" name="q2" value="d">La campagne d'Égypte</label>
+        </div>
+        <button class="btnv" onclick="V('q2','b','Au siège de Toulon (1793), Bonaparte, alors capitaine d\'artillerie, se fait remarquer par ses talents de stratège. Il est promu général de brigade à seulement 24 ans.')">Valider</button>
+        <div class="fb" id="fb-q2"></div>
+      </div>
+
+      <div class="qb" id="q3">
+        <div class="qt"><span class="qn">3</span>Que se passe-t-il le 18 Brumaire an VIII (9 novembre 1799) ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a">La proclamation de l'Empire</label>
+          <label class="opt"><input type="radio" name="q3" value="b">Le coup d'État de Bonaparte contre le Directoire</label>
+          <label class="opt"><input type="radio" name="q3" value="c">La défaite de Waterloo</label>
+          <label class="opt"><input type="radio" name="q3" value="d">Le mariage de Bonaparte avec Joséphine</label>
+        </div>
+        <button class="btnv" onclick="V('q3','b','Le 18 Brumaire est le coup d\'État par lequel Bonaparte, avec l\'aide de l\'armée et de son frère Lucien, dissout les assemblées et instaure le Consulat, mettant fin au Directoire.')">Valider</button>
+        <div class="fb" id="fb-q3"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- II — LE CONSULAT -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c2"></div>
+<section class="ch">
+  <div class="bign">II</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">II</span>
+      <span class="cperiod">1799–1804</span>
+    </div>
+    <h2 class="ctitle">Le <em>Consulat</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment Bonaparte réorganise-t-il la France après une décennie de révolution ?</div>
+
+    <div class="recit">
+      <p>Le Consulat marque la stabilisation de la France. La <strong>Constitution de l'an VIII</strong> (1799) fait de Bonaparte le <strong>Premier consul</strong>, investi de pouvoirs considérables : il gouverne par décret, nomme les ministres, les préfets, les généraux, les juges. Les deux autres consuls ne jouent qu'un rôle consultatif. Cette concentration des pouvoirs est plébiscitée par les Français, qui aspirent à la paix civile après dix ans de tourments révolutionnaires.</p>
+      <p>Bonaparte entreprend une œuvre de réorganisation profonde. Il rétablit la paix avec l'Église par le <strong>Concordat de 1801</strong> : le catholicisme redevient la religion de la majorité des Français, sans être religion d'État. Il crée la <strong>Banque de France</strong> en 1800 pour stabiliser la monnaie. En 1802, il institue la <strong>Légion d'honneur</strong>, qui récompense le mérite civil et militaire. Il signe la paix avec l'Angleterre à Amiens en 1802 — une fragile trêve.</p>
+      <p>Mais l'œuvre la plus durable est le <strong>Code civil</strong>, promulgué en 1804. Ce code unifie les lois françaises, garantit l'égalité civile, la liberté de conscience, la propriété privée, le divorce par consentement mutuel. Il demeure une des bases du droit moderne en France et dans le monde. Le 18 mai 1804, Bonaparte devient <strong>Napoléon Ier</strong>, empereur des Français — le Consulat s'achève, l'Empire commence.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="nb">1800</span><span class="lb">Banque de France créée</span></div>
+      <div class="stat"><span class="nb">1801</span><span class="lb">Concordat — paix avec l'Église</span></div>
+      <div class="stat"><span class="nb">1802</span><span class="lb">Légion d'honneur</span></div>
+      <div class="stat"><span class="nb">1804</span><span class="lb">Code civil — Napoléon Ier</span></div>
+    </div>
+
+    <div class="enc">
+      <div class="enc-titre">⚖️ Le Code civil (1804)</div>
+      <ul style="margin:0.5rem 0 0.5rem 1.2rem;font-size:0.95rem;line-height:1.7;">
+        <li>Égalité civile de tous les citoyens devant la loi</li>
+        <li>Liberté de conscience et de culte</li>
+        <li>Droit de propriété absolu</li>
+        <li>Divorce par consentement mutuel (prévu jusqu'en 1816)</li>
+        <li>Organisation de la famille, du mariage et de l'héritage</li>
+      </ul>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — Le Consulat</div>
+
+      <div class="qb" id="q4">
+        <div class="qt"><span class="qn">4</span>Quelle fonction Bonaparte occupe-t-il sous le Consulat ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a">Président de la République</label>
+          <label class="opt"><input type="radio" name="q4" value="b">Premier consul</label>
+          <label class="opt"><input type="radio" name="q4" value="c">Directeur général</label>
+          <label class="opt"><input type="radio" name="q4" value="d">Empereur</label>
+        </div>
+        <button class="btnv" onclick="V('q4','b','Sous le Consulat (1799–1804), Bonaparte est Premier consul. Il concentre l\'essentiel du pouvoir exécutif, nomme les ministres, les préfets, les généraux et les juges.')">Valider</button>
+        <div class="fb" id="fb-q4"></div>
+      </div>
+
+      <div class="qb" id="q5">
+        <div class="qt"><span class="qn">5</span>Quelle est la principale œuvre législative du Consulat ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q5" value="a">La Déclaration des droits de l'homme</label>
+          <label class="opt"><input type="radio" name="q5" value="b">Le Code civil</label>
+          <label class="opt"><input type="radio" name="q5" value="c">La Constitution de l'an I</label>
+          <label class="opt"><input type="radio" name="q5" value="d">La loi sur la liberté de la presse</label>
+        </div>
+        <button class="btnv" onclick="V('q5','b','Le Code civil, promulgué en 1804, est la plus grande œuvre législative du Consulat. Il unifie le droit français et garantit l\'égalité civile, la propriété privée et la liberté de conscience.')">Valider</button>
+        <div class="fb" id="fb-q5"></div>
+      </div>
+
+      <div class="qb" id="q6">
+        <div class="qt"><span class="qn">6</span>Quel accord Bonaparte signe-t-il avec le pape en 1801 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q6" value="a">Le traité de Tilsit</label>
+          <label class="opt"><input type="radio" name="q6" value="b">Le Concordat</label>
+          <label class="opt"><input type="radio" name="q6" value="c">La paix d'Amiens</label>
+          <label class="opt"><input type="radio" name="q6" value="d">Le pacte de Fontainebleau</label>
+        </div>
+        <button class="btnv" onclick="V('q6','b','Le Concordat de 1801 rétablit les relations entre l\'État français et le pape. Le catholicisme est reconnu comme religion de la majorité des Français, sans être religion d\'État.')">Valider</button>
+        <div class="fb" id="fb-q6"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- III — L'EMPIRE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c3"></div>
+<section class="ch">
+  <div class="bign">III</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">III</span>
+      <span class="cperiod">1804–1815</span>
+    </div>
+    <h2 class="ctitle">L'<em>Empire</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment Napoléon transforme-t-il la France en puissance hégémonique et la paix civile en gloire militaire ?</div>
+
+    <div class="recit">
+      <p>Le 2 décembre 1804, à Notre-Dame de Paris, <strong>Napoléon se sacre empereur</strong> en présence du pape Pie VII, qu'il a convoqué pour l'occasion. Il prend lui-même la couronne des mains du pape, un geste hautement symbolique : il affirme qu'il tient son pouvoir de lui-même et non de l'Église. Dans la foulée, il est couronné roi d'Italie en 1805.</p>
+      <p>L'Empire s'organise autour d'une <strong>administration centralisée</strong> et d'un État policé. Napoléon nomme <strong>préfets</strong> dans chaque département, <strong>maires</strong> dans chaque commune. Il crée l'<strong>Université impériale</strong> pour former les élites et contrôler l'enseignement. La censure est générale : la presse est muselée, les libraires contrôlés. La police de Fouché, omniprésente, réprime toute opposition.</p>
+      <p>Napoléon mène une politique ambitieuse d'<strong>urbanisme</strong> : il achève la colonne Vendôme, fait construire l'Arc de triomphe, la Bourse, le canal de l'Ourcq. Il modernise les routes et les ponts. La France rayonne, mais la paix ne dure pas. Les guerres reprennent dès 1803.</p>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">2 déc. 1804</span><div class="tdesc">Sacre à Notre-Dame — Napoléon Ier</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">1805</span><div class="tdesc">Couronné roi d'Italie — reprise des guerres</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">1806</span><div class="tdesc">Création de l'Université impériale</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">1808–1812</span><div class="tdesc">Apogée de l'Empire — contrôle de l'Europe</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">1812</span><div class="tdesc">Campagne de Russie — début du déclin</div></div>
+    </div>
+
+    <div class="cit">
+      <p>Je n'ai été souverain que par la force des choses. Je suis né de la volonté du peuple.</p>
+      <span class="src">— Napoléon Bonaparte &middot; Mémorial de Sainte-Hélène</span>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — L'Empire</div>
+
+      <div class="qb" id="q7">
+        <div class="qt"><span class="qn">7</span>Où et quand Napoléon se sacre-t-il empereur ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q7" value="a">À Rome, en 1799</label>
+          <label class="opt"><input type="radio" name="q7" value="b">À Notre-Dame de Paris, en 1804</label>
+          <label class="opt"><input type="radio" name="q7" value="c">À Aix-la-Chapelle, en 1806</label>
+          <label class="opt"><input type="radio" name="q7" value="d">À Milan, en 1805</label>
+        </div>
+        <button class="btnv" onclick="V('q7','b','Napoléon se sacre empereur le 2 décembre 1804 à Notre-Dame de Paris, en présence du pape Pie VII. Il prend la couronne lui-même, un geste symbolique fort.')">Valider</button>
+        <div class="fb" id="fb-q7"></div>
+      </div>
+
+      <div class="qb" id="q8">
+        <div class="qt"><span class="qn">8</span>Quelle institution Napoléon crée-t-il en 1806 pour contrôler l'éducation ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q8" value="a">Le Collège de France</label>
+          <label class="opt"><input type="radio" name="q8" value="b">L'Université impériale</label>
+          <label class="opt"><input type="radio" name="q8" value="c">L'École polytechnique</label>
+          <label class="opt"><input type="radio" name="q8" value="d">Le lycée Louis-le-Grand</label>
+        </div>
+        <button class="btnv" onclick="V('q8','b','L\'Université impériale, créée en 1806, centralise l\'enseignement et forme les cadres de l\'Empire. Elle est placée sous le contrôle direct de l\'État.')">Valider</button>
+        <div class="fb" id="fb-q8"></div>
+      </div>
+
+      <div class="qb" id="q9">
+        <div class="qt"><span class="qn">9</span>Quel événement marque le début du déclin de Napoléon ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q9" value="a">Le traité de Tilsit</label>
+          <label class="opt"><input type="radio" name="q9" value="b">La campagne de Russie (1812)</label>
+          <label class="opt"><input type="radio" name="q9" value="c">La bataille de Trafalgar</label>
+          <label class="opt"><input type="radio" name="q9" value="d">Le blocus continental</label>
+        </div>
+        <button class="btnv" onclick="V('q9','b','La campagne de Russie, menée en 1812, se solde par une retraite catastrophique et la quasi-destruction de la Grande Armée. C\'est le tournant décisif qui précipite la chute de Napoléon.')">Valider</button>
+        <div class="fb" id="fb-q9"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- IV — LES GUERRES -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c4"></div>
+<section class="ch">
+  <div class="bign">IV</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">IV</span>
+      <span class="cperiod">1805–1815</span>
+    </div>
+    <h2 class="ctitle">Les <em>guerres</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment Napoléon a-t-il révolutionné l'art de la guerre et dominé l'Europe ?</div>
+
+    <div class="recit">
+      <p>Napoléon est un stratège militaire exceptionnel. Il a révolutionné l'art de la guerre par l'utilisation massive de l'<strong>artillerie</strong>, la mobilité des troupes et la <strong>division en corps d'armée</strong>. Il remporte ses plus grandes victoires entre 1805 et 1809 : <strong>Austerlitz</strong> (2 décembre 1805) contre les Russes et les Autrichiens, <strong>Iéna</strong> (1806) contre les Prussiens, <strong>Friedland</strong> (1807) contre les Russes, <strong>Wagram</strong> (1809) contre les Autrichiens.</p>
+      <p>À la suite de ces victoires, Napoléon impose le <strong>traité de Tilsit</strong> (1807) : la Russie de Alexandre Ier accepte le blocus continental contre l'Angleterre. Le <strong>Grand Empire</strong> s'étend de l'Elbe au Rhin, incluant la Hollande, la Rhénanie, la Belgique et l'Italie du Nord. Des royaumes vassaux sont créés dans toute l'Europe, confiés à des membres de sa famille.</p>
+      <p>Mais l'<strong>Angleterre</strong> demeure invaincue. La flotte française est détruite à <strong>Trafalgar</strong> (1805) par Nelson. Pour affaiblir l'Angleterre, Napoléon impose le <strong>blocus continental</strong> : l'Europe est sommée de ne plus commencer avec l'Angleterre. Ce blocus ruine les économies continentales et mécontente les alliés, en particulier la Russie. La <strong>guerre d'Espagne</strong> (1808–1813) s'enlise dans une guérilla meurtrière. L'Europe s'épuise.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="nb">1805</span><span class="lb">Austerlitz — la victoire parfaite</span></div>
+      <div class="stat"><span class="nb">1806</span><span class="lb">Iéna — la Prusse anéantie</span></div>
+      <div class="stat"><span class="nb">1807</span><span class="lb">Tilsit — paix avec la Russie</span></div>
+      <div class="stat"><span class="nb">1812</span><span class="lb">Russie — la Grande Armée détruite</span></div>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">2 déc. 1805</span><div class="tdesc">Austerlitz — victoire sur les Russes et Autrichiens</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">1806</span><div class="tdesc">Iéna — écrasement de la Prusse</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">1807</span><div class="tdesc">Tilsit — paix avec Alexandre Ier</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">1808–1813</span><div class="tdesc">Guerre d'Espagne — guérilla</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">1812</span><div class="tdesc">Retraite de Russie — désastre</div></div>
+    </div>
+
+    <div class="cit">
+      <p>Le premier devoir d'un soldat est de vaincre. La gloire est une admirable chose.</p>
+      <span class="src">— Napoléon Bonaparte &middot; Campagne d'Italie</span>
+    </div>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — Les guerres napoléoniennes</div>
+
+      <div class="qb" id="q10">
+        <div class="qt"><span class="qn">10</span>Quelle bataille a valu à Napoléon le surnom de « victoire parfaite » ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q10" value="a">Waterloo</label>
+          <label class="opt"><input type="radio" name="q10" value="b">Austerlitz</label>
+          <label class="opt"><input type="radio" name="q10" value="c">Iéna</label>
+          <label class="opt"><input type="radio" name="q10" value="d">Trafalgar</label>
+        </div>
+        <button class="btnv" onclick="V('q10','b','La bataille d\'Austerlitz (2 décembre 1805) est considérée comme la plus grande victoire de Napoléon. Il y anéantit les armées russes et autrichiennes en une journée.')">Valider</button>
+        <div class="fb" id="fb-q10"></div>
+      </div>
+
+      <div class="qb" id="q11">
+        <div class="qt"><span class="qn">11</span>Quelle grande défaite navale française a lieu en 1805 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q11" value="a">Aboukir</label>
+          <label class="opt"><input type="radio" name="q11" value="b">Trafalgar</label>
+          <label class="opt"><input type="radio" name="q11" value="c">Lepante</label>
+          <label class="opt"><input type="radio" name="q11" value="d">La Hougue</label>
+        </div>
+        <button class="btnv" onclick="V('q11','b','La bataille de Trafalgar (1805) oppose la flotte française à la flotte anglaise. La France est anéantie par l\'amiral Nelson, qui y perd la vie. Ce désastre met fin aux ambitions navales de Napoléon.')">Valider</button>
+        <div class="fb" id="fb-q11"></div>
+      </div>
+
+      <div class="qb" id="q12">
+        <div class="qt"><span class="qn">12</span>Quelle est la conséquence directe du blocus continental ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q12" value="a">La prospérité économique de la France</label>
+          <label class="opt"><input type="radio" name="q12" value="b">La rupture de la paix avec la Russie</label>
+          <label class="opt"><input type="radio" name="q12" value="c">La ruine de l'économie anglaise</label>
+          <label class="opt"><input type="radio" name="q12" value="d">L'alliance durable entre la France et la Prusse</label>
+        </div>
+        <button class="btnv" onclick="V('q12','b','Le blocus continental, imposé par Napoléon pour affaiblir l\'Angleterre, ruine les économies continentales. La Russie ne le respecte plus à partir de 1810, ce qui conduit à la rupture avec Napoléon et à la campagne de Russie.')">Valider</button>
+        <div class="fb" id="fb-q12"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════ -->
+<!-- V — LA CHUTE -->
+<!-- ═══════════════════════════════════════ -->
+<div class="sep" id="c5"></div>
+<section class="ch">
+  <div class="bign">V</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">V</span>
+      <span class="cperiod">1812–1815</span>
+    </div>
+    <h2 class="ctitle">La <em>chute</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Comment l'Europe coalisée parvient-elle à renverser Napoléon ?</div>
+
+    <div class="recit">
+      <p>La <strong>campagne de Russie</strong> en 1812 est une catastrophe. Napoléon entre en Russie en juin avec une <strong>Grande Armée</strong> de près de 600 000 hommes. Il remporte la bataille de la Moskowa (Borodino) mais les Russes, en reculant, pratiquent la <strong>terre brûlée</strong> : ils brûlent Moscou et leurs récoltes. Napoléon reste un mois à Moscou, dans l'attente d'une capitulation qui ne vient pas. Il ordonne la retraite en octobre. Le froid est terrible ; les Cosaques harcèlent les colonnes. Sur les 600 000 soldats, à peine 40 000 rentrent en France.</p>
+      <p>L'Europe se soulève. La Prusse, l'Autriche, la Russie, l'Angleterre, la Suède s'unissent. En 1813, Napoléon est vaincu à <strong>Leipzig</strong> (« Bataille des Nations »), une immense défaite qui l'oblige à battre en retraite sur le Rhin. En 1814, les coalisés envahissent la France. Le 31 mars, ils entrent dans Paris. Napoléon abdique à <strong>Fontainebleau</strong> le 6 avril 1814, et est exilé à l'île d'Elbe.</p>
+      <p>Il s'évade en mars 1815, débarque à Golfe-Juan et remonte sur Paris. <strong>Les Cent-Jours</strong> commencent. Le 18 juin 1815, la coalition anglo-prussienne l'écrase à <strong>Waterloo</strong>. Le 22 juin, il abdique une seconde fois. Il est exilé à <strong>Sainte-Hélène</strong>, une île perdue de l'Atlantique sud, où il meurt le 5 mai 1821.</p>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">Juin–oct. 1812</span><div class="tdesc">Campagne de Russie — retraite catastrophique</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">16–19 oct. 1813</span><div class="tdesc">Leipzig — défaite des Nations</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">6 avr. 1814</span><div class="tdesc">Abdication à Fontainebleau — exil à Elbe</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">1er mars 1815</span><div class="tdesc">Retour d'Elbe — les Cent-Jours</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">18 juin 1815</span><div class="tdesc">Waterloo — abdication définitive</div></div>
+    </div>
+
+    <div class="enc">
+      <div class="enc-titre">📜 Le testament politique de Napoléon</div>
+      <p style="font-family:'IM Fell English',serif;font-style:italic;font-size:1rem;color:var(--encre);">« Je veux qu'on sache que j'ai été le législateur de la France, que j'ai fait des Codes qui seront éternels. »</p>
+      <p style="margin-top:0.6rem;font-size:0.93rem;">— Extrait des dernières volontés dictées à Sainte-Hélène.</p>
+    </div>
+
+    <div class="themes">
+      <div class="th"><strong>⚔️ L'héritage militaire</strong>La Grande Armée a révolutionné l'art de la guerre : corps d'armée, mobilité, artillerie. L'état-major moderne est né de Napoléon.</div>
+      <div class="th"><strong>🏛️ L'héritage administratif</strong>Préfets, Code civil, Banque de France, université impériale : une France moderne et centralisée.</div>
+      <div class="th"><strong>🌍 L'héritage européen</strong>Le nationalisme et les idées libérales se sont répandus avec les conquêtes napoléoniennes. La carte de l'Europe en a été bouleversée.</div>
+      <div class="th"><strong>📖 La légende napoléonienne</strong>Le Mémorial de Sainte-Hélène, écrit par Las Cases, a fait de lui une figure mythique, récupérée par tous les régimes.</div>
+    </div>
+
+    <h3 style="font-family:'IM Fell English',serif;font-size:1.3rem;margin:2.5rem 0 1rem;color:var(--encre);">Chronologie de la chute</h3>
+    <table class="tab">
+      <thead><tr><th>Date</th><th>Événement</th><th>Conséquence</th></tr></thead>
+      <tbody>
+        <tr><td>1812</td><td>Campagne de Russie</td><td>La Grande Armée est détruite</td></tr>
+        <tr><td>1813</td><td>Leipzig (Bataille des Nations)</td><td>Fin de la domination napoléonienne</td></tr>
+        <tr><td>1814</td><td>Invasion de la France</td><td>Abdication à Fontainebleau</td></tr>
+        <tr><td>1815</td><td>Les Cent-Jours</td><td>Retour d'Elbe — Waterloo</td></tr>
+        <tr><td>1821</td><td>Mort à Sainte-Hélène</td><td>Fin de la légende vivante</td></tr>
+      </tbody>
+    </table>
+
+    <div class="qcm">
+      <div class="qhead">Exercices — La chute de Napoléon</div>
+
+      <div class="qb" id="q13">
+        <div class="qt"><span class="qn">13</span>Quelle est la principale cause de la défaite de Napoléon en Russie en 1812 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q13" value="a">La supériorité numérique de l'armée russe</label>
+          <label class="opt"><input type="radio" name="q13" value="b">La stratégie de la terre brûlée et l'hiver russe</label>
+          <label class="opt"><input type="radio" name="q13" value="c">La désertion massive des soldats français</label>
+          <label class="opt"><input type="radio" name="q13" value="d">L'intervention de l'armée anglaise en Russie</label>
+        </div>
+        <button class="btnv" onclick="V('q13','b','Les Russes pratiquent la terre brûlée : ils brûlent les récoltes et Moscou. L\'hiver russe et les harcèlements des cosaques achèvent la retraite de la Grande Armée.')">Valider</button>
+        <div class="fb" id="fb-q13"></div>
+      </div>
+
+      <div class="qb" id="q14">
+        <div class="qt"><span class="qn">14</span>Quelle bataille marque la fin définitive de Napoléon en 1815 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q14" value="a">Leipzig</label>
+          <label class="opt"><input type="radio" name="q14" value="b">Austerlitz</label>
+          <label class="opt"><input type="radio" name="q14" value="c">Waterloo</label>
+          <label class="opt"><input type="radio" name="q14" value="d">Trafalgar</label>
+        </div>
+        <button class="btnv" onclick="V('q14','c','Waterloo, le 18 juin 1815, est la défaite décisive de Napoléon contre les armées anglo-prussiennes. Il abdique pour la seconde fois, mettant fin aux Cent-Jours.')">Valider</button>
+        <div class="fb" id="fb-q14"></div>
+      </div>
+
+      <div class="qb" id="q15">
+        <div class="qt"><span class="qn">15</span>Où Napoléon meurt-il en exil en 1821 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q15" value="a">À l'île d'Elbe</label>
+          <label class="opt"><input type="radio" name="q15" value="b">À Sainte-Hélène</label>
+          <label class="opt"><input type="radio" name="q15" value="c">À Fontainebleau</label>
+          <label class="opt"><input type="radio" name="q15" value="d">À Londres</label>
+        </div>
+        <button class="btnv" onclick="V('q15','b','Après sa seconde abdication, Napoléon est exilé sur l\'île de Sainte-Hélène, perdue dans l\'Atlantique Sud, où il meurt le 5 mai 1821.')">Valider</button>
+        <div class="fb" id="fb-q15"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORE -->
+<div id="scoreS" style="display:none;">
+  <h2>Résultat final</h2>
+  <span id="scoreN">—</span>
+  <p id="scoreM"></p>
+  <button class="btnR" onclick="resetAll()">↺ Recommencer depuis le début</button>
+</div>
+
+<footer>
+  <div class="ff">
+    <span style="background:#002395"></span>
+    <span style="background:#fff;border:1px solid #ddd"></span>
+    <span style="background:#ED2939"></span>
+  </div>
+  Napoléon Bonaparte (1799–1815) &middot; Programme d'Histoire 4ème &middot; Page éducative interactive
+</footer>
+
+<script>
+// SCROLL ANIMATIONS
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold:0.06 });
+document.querySelectorAll('section.ch').forEach(el => io.observe(el));
+
+// ACTIVE NAV
+const sids = ['c1','c2','c3','c4','c5'];
+const nls  = document.querySelectorAll('nav a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sids.forEach(id => {
+    const el = document.getElementById(id);
+    if(el && window.scrollY >= el.offsetTop - 130) cur = id;
+  });
+  nls.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#'+cur));
+});
+
+// QCM
+const rep = {}, done = {};
+const TOT = 15;
+
+function V(id, bonne, expl) {
+  if(done[id]) return;
+  const sel = document.querySelector(`input[name="${id}"]:checked`);
+  if(!sel){ alert('Veuillez sélectionner une réponse.'); return; }
+  const val = sel.value;
+  const fb = document.getElementById('fb-'+id);
+  const btn = document.querySelector('#'+id+' .btnv');
+
+  document.querySelectorAll(`input[name="${id}"]`).forEach(r => r.disabled=true);
+  btn.disabled = true;
+
+  document.querySelectorAll('#'+id+' .opt').forEach(l => {
+    const r = l.querySelector('input');
+    if(r.value===bonne) l.classList.add('ok');
+    else if(r.value===val && val!==bonne) l.classList.add('ko');
+  });
+
+  const ok = val===bonne;
+  rep[id]=ok; done[id]=true;
+  fb.textContent = ok ? '✔ Bonne réponse ! '+expl : '✘ Mauvaise réponse. '+expl;
+  fb.className = 'fb show '+(ok ? 'ok2' : 'ko2');
+
+  if(Object.keys(done).length===TOT) showScore();
+}
+
+function showScore(){
+  const s = Object.values(rep).filter(Boolean).length;
+  document.getElementById('scoreN').textContent = s+' / '+TOT;
+  let m = '';
+  if(s===TOT)  m='🎉 Parfait ! Vous maîtrisez parfaitement l\'épopée napoléonienne.';
+  else if(s>=12) m='👏 Excellent ! Quelques détails à approfondir.';
+  else if(s>=8)  m='🙂 Bien. Relisez les chapitres pour consolider.';
+  else           m='📖 Courage ! Revoyez le cours et réessayez.';
+  document.getElementById('scoreM').textContent = m;
+  const el = document.getElementById('scoreS');
+  el.style.display='block';
+  el.scrollIntoView({behavior:'smooth'});
+}
+
+function resetAll(){
+  document.querySelectorAll('input[type="radio"]').forEach(r=>{r.checked=false;r.disabled=false;});
+  document.querySelectorAll('.opt').forEach(l=>l.classList.remove('ok','ko'));
+  document.querySelectorAll('.fb').forEach(f=>{f.className='fb';f.textContent='';});
+  document.querySelectorAll('.btnv').forEach(b=>b.disabled=false);
+  Object.keys(rep).forEach(k=>delete rep[k]);
+  Object.keys(done).forEach(k=>delete done[k]);
+  document.getElementById('scoreS').style.display='none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>

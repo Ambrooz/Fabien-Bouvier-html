@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Napoléon · L'empreinte sur l'Europe</title>
+  <link href="https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      background: #F2EBD9;
+      color: #1A1510;
+      font-family: 'Crimson Pro', Georgia, serif;
+      font-size: 1.12rem;
+      line-height: 1.88;
+    }
+    body::before {
+      content:''; position:fixed; inset:0; z-index:1000; pointer-events:none;
+      opacity:0.022;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:128px;
+    }
+    :root {
+      --noir: #0E0C09; --encre: #1A1510; --rouge: #9B2020; --rouge-vif: #C0392B;
+      --or: #C9943A; --or-pale: #E8C97A; --parchemin: #F2EBD9; --creme: #FAF6EE;
+      --gris: #8C8070; --blanc: #FDFAF4;
+    }
+
+    /* header */
+    header {
+      background: var(--noir); color: var(--blanc);
+      min-height: 100vh; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 4rem 2rem; position: relative; overflow: hidden;
+    }
+    .hbg {
+      position: absolute; inset:0;
+      background: radial-gradient(ellipse 80% 55% at 50% 40%, rgba(155,32,32,0.2) 0%, transparent 70%),
+                  radial-gradient(ellipse 35% 35% at 15% 85%, rgba(201,148,58,0.07) 0%, transparent 60%);
+    }
+    .tri { position:absolute; top:0; left:0; right:0; height:5px; display:flex; }
+    .tri span { flex:1; }
+    .tri span:nth-child(1){ background:#002395; }
+    .tri span:nth-child(2){ background:#fff; }
+    .tri span:nth-child(3){ background:#ED2939; }
+    .hinner { position:relative; max-width:740px; }
+    .eyebrow { font-size:0.78rem; font-weight:300; letter-spacing:0.32em; text-transform:uppercase; color:var(--or-pale); margin-bottom:2.2rem; }
+    header h1 {
+      font-family:'IM Fell English',serif; font-size:clamp(3rem,9vw,6.5rem);
+      font-weight:400; line-height:1.05; color:var(--blanc);
+      text-shadow:0 2px 50px rgba(155,32,32,0.5); margin-bottom:0.3rem;
+    }
+    header h1 em { font-style:italic; color:var(--or-pale); }
+    .hdates { font-family:'IM Fell English',serif; font-size:1.5rem; color:var(--or); letter-spacing:0.22em; margin-bottom:2rem; }
+    .hrule { width:100px; height:1px; background:linear-gradient(90deg,transparent,var(--or),transparent); margin:0 auto 1.8rem; }
+    header p.sub { font-size:1.05rem; font-weight:300; font-style:italic; color:rgba(255,255,255,0.55); max-width:480px; margin:0 auto 3rem; }
+    .scroll {
+      position:absolute; bottom:2rem; left:50%; transform:translateX(-50%);
+      display:flex; flex-direction:column; align-items:center; gap:0.4rem;
+      color:rgba(255,255,255,0.28); font-size:0.7rem; letter-spacing:0.22em; text-transform:uppercase;
+      animation:bob 2.8s ease-in-out infinite;
+    }
+    .scroll::after { content:''; width:1px; height:34px; background:linear-gradient(to bottom, rgba(255,255,255,0.28), transparent); }
+    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
+    /* nav */
+    nav {
+      background: var(--encre); position:sticky; top:0; z-index:200;
+      display:flex; flex-wrap:wrap; justify-content:center;
+      border-bottom:2px solid var(--or);
+    }
+    nav a {
+      color:rgba(255,255,255,0.62); text-decoration:none;
+      font-family:'Crimson Pro',serif; font-size:0.79rem; letter-spacing:0.09em; text-transform:uppercase;
+      padding:0.82rem 1.2rem; border-right:1px solid rgba(255,255,255,0.06);
+      transition:all 0.2s;
+    }
+    nav a:hover, nav a.on { color:var(--or-pale); background:rgba(255,255,255,0.04); }
+    nav a .n { color:var(--or); font-family:'IM Fell English',serif; font-size:1.05rem; margin-right:0.3rem; }
+
+    /* sections */
+    .sep { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(155,32,32,0.18),transparent); }
+    section.ch {
+      padding:5rem 0 3rem; position:relative;
+      opacity:0; transform:translateY(28px);
+      transition:opacity 0.75s ease, transform 0.75s ease;
+    }
+    section.ch.vis { opacity:1; transform:none; }
+    .bign {
+      position:absolute; top:2.5rem; right:0;
+      font-family:'IM Fell English',serif; font-size:16rem; line-height:1;
+      color:rgba(155,32,32,0.04); pointer-events:none; user-select:none; z-index:0;
+    }
+    .wrap { max-width:820px; margin:0 auto; padding:0 2rem; position:relative; z-index:1; }
+    .clabel { display:flex; align-items:center; gap:0.7rem; margin-bottom:0.9rem; }
+    .cnum {
+      font-family:'IM Fell English',serif; font-size:1rem;
+      background:var(--rouge); color:white; width:2rem; height:2rem; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .cperiod { font-size:0.7rem; font-weight:300; letter-spacing:0.2em; text-transform:uppercase; color:var(--gris); border:1px solid var(--gris); padding:0.15rem 0.6rem; border-radius:20px; }
+    h2.ctitle {
+      font-family:'IM Fell English',serif; font-size:clamp(1.9rem,4.5vw,3rem);
+      font-weight:400; color:var(--encre); line-height:1.15; margin-bottom:0.5rem;
+    }
+    h2.ctitle em { color:var(--rouge); font-style:italic; }
+    .crule { height:1px; margin:1.1rem 0 2rem; background:linear-gradient(90deg,var(--rouge) 0%,var(--or) 28%,transparent 78%); }
+    .prob {
+      font-family:'IM Fell English',serif; font-style:italic;
+      font-size:1.12rem; color:var(--rouge);
+      border-left:3px solid var(--rouge); padding:0.7rem 1.2rem;
+      background:rgba(155,32,32,0.04); border-radius:0 6px 6px 0;
+      margin-bottom:2.2rem; line-height:1.5;
+    }
+    .recit p { margin-bottom:1.4rem; text-align:justify; hyphens:auto; font-weight:300; }
+    .recit p:first-of-type::first-letter {
+      font-family:'IM Fell English',serif; font-size:4.2rem; font-weight:400;
+      float:left; line-height:0.7; margin:0.12rem 0.28rem 0 0; color:var(--rouge);
+    }
+    .recit strong { font-weight:600; color:var(--encre); }
+
+    /* timelines */
+    .tl {
+      display:grid; grid-template-columns:repeat(5,1fr);
+      margin:2.5rem 0; position:relative;
+    }
+    .tl::before {
+      content:''; position:absolute;
+      top:1.5rem; left:1rem; right:1rem; height:1px;
+      background:linear-gradient(90deg,var(--rouge),var(--or),var(--rouge));
+    }
+    .ti { padding:0 0.4rem; padding-top:3rem; position:relative; text-align:center; }
+    .tdot {
+      position:absolute; top:0.8rem; left:50%; transform:translateX(-50%);
+      width:1.35rem; height:1.35rem; border-radius:50%;
+      background:var(--creme); border:2px solid var(--rouge);
+      display:flex; align-items:center; justify-content:center;
+      font-family:'IM Fell English',serif; font-size:0.62rem; color:var(--rouge); z-index:1;
+    }
+    .tdate { font-size:0.68rem; font-weight:600; color:var(--rouge); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:0.25rem; }
+    .tdesc { font-size:0.79rem; color:var(--gris); line-height:1.38; }
+
+    /* encadrés */
+    .enc {
+      background:var(--parchemin); border:1px solid rgba(201,148,58,0.28);
+      border-left:4px solid var(--or); border-radius:0 8px 8px 0;
+      padding:1.3rem 1.6rem; margin:2rem 0; font-size:0.97rem;
+    }
+    .enc-titre { font-family:'IM Fell English',serif; font-size:0.85rem; color:var(--or); text-transform:uppercase; letter-spacing:0.14em; margin-bottom:0.6rem; }
+
+    .cit {
+      background:var(--encre); color:var(--blanc);
+      border-radius:8px; padding:2rem 2rem 1.5rem 3rem;
+      margin:2.5rem 0; position:relative;
+    }
+    .cit::before { content:'\201C'; font-family:'IM Fell English',serif; font-size:5.5rem; color:var(--or); position:absolute; top:0.1rem; left:0.8rem; line-height:1; opacity:0.55; }
+    .cit p { font-family:'IM Fell English',serif; font-style:italic; font-size:1.12rem; line-height:1.6; margin-bottom:0.6rem; }
+    .cit .src { font-size:0.76rem; color:var(--or-pale); letter-spacing:0.11em; text-transform:uppercase; }
+
+    .stats { display:flex; gap:1rem; margin:2rem 0; flex-wrap:wrap; }
+    .stat { flex:1; min-width:120px; background:var(--encre); border-radius:8px; padding:1.2rem; text-align:center; border-top:3px solid var(--rouge); }
+    .stat .nb { font-family:'IM Fell English',serif; font-size:2.2rem; color:var(--or-pale); display:block; }
+    .stat .lb { font-size:0.76rem; color:rgba(255,255,255,0.6); line-height:1.35; }
+
+    .themes {
+      display:grid; grid-template-columns:1fr 1fr; gap:0.8rem; margin:1.8rem 0;
+    }
+    .th {
+      background:white; border-radius:6px; padding:1rem 1.1rem;
+      border:1px solid rgba(0,0,0,0.07); font-size:0.9rem; line-height:1.5; color:var(--encre);
+    }
+    .th strong { display:block; margin-bottom:0.3rem; font-family:'IM Fell English',serif; font-size:0.97rem; color:var(--rouge); }
+    .th:last-child:nth-child(odd) { grid-column:span 2; }
+
+    .tab { width:100%; border-collapse:collapse; margin:1.5rem 0; font-size:0.89rem; }
+    .tab th { background:var(--encre); color:var(--or-pale); padding:0.7rem 1rem; text-align:left; font-family:'IM Fell English',serif; font-weight:400; font-size:0.94rem; }
+    .tab td { padding:0.62rem 1rem; border-bottom:1px solid #E8E0D0; }
+    .tab tr:nth-child(even) td { background:rgba(242,235,217,0.5); }
+
+    /* QCM & jeux */
+    .qcm {
+      background:white; border-radius:12px; border-top:5px solid var(--rouge);
+      padding:2.2rem 2rem 1.8rem; margin-top:3rem;
+      box-shadow:0 3px 28px rgba(0,0,0,0.06);
+    }
+    .qhead { font-family:'IM Fell English',serif; font-size:1.2rem; color:var(--rouge); margin-bottom:1.8rem; display:flex; align-items:center; gap:0.5rem; }
+    .qhead::before { content:'✦'; color:var(--or); font-size:0.85rem; }
+    .qb { margin-bottom:2rem; }
+    .qt { font-weight:600; margin-bottom:0.8rem; font-size:1rem; color:var(--encre); line-height:1.5; }
+    .qn { display:inline-block; background:var(--rouge); color:white; font-size:0.7rem; font-weight:700; padding:0.1rem 0.5rem; border-radius:20px; margin-right:0.3rem; font-family:'Crimson Pro',serif; vertical-align:middle; }
+    .opts { display:flex; flex-direction:column; gap:0.4rem; }
+    .opt {
+      display:flex; align-items:flex-start; gap:0.7rem;
+      padding:0.65rem 1rem; border:1.5px solid #E8E0D0;
+      border-radius:7px; cursor:pointer; transition:all 0.18s;
+      font-size:0.94rem; line-height:1.45; background:var(--creme);
+    }
+    .opt:hover { border-color:var(--rouge); background:#fff; }
+    .opt input { accent-color:var(--rouge); margin-top:0.2rem; flex-shrink:0; }
+    .opt.ok { background:#edf7ee; border-color:#3a9e47; color:#1a5020; }
+    .opt.ko { background:#fdecea; border-color:var(--rouge); color:#8c1c1c; }
+    .fb { margin-top:0.5rem; font-size:0.86rem; padding:0.5rem 0.9rem; border-radius:6px; display:none; }
+    .fb.show { display:block; }
+    .fb.ok2 { background:#edf7ee; color:#2a6630; }
+    .fb.ko2 { background:#fdecea; color:#8c1c1c; }
+    .btnv { margin-top:0.9rem; background:var(--rouge); color:white; border:none; padding:0.5rem 1.4rem; border-radius:6px; font-family:'Crimson Pro',serif; font-size:0.95rem; cursor:pointer; transition:background 0.2s; }
+    .btnv:hover { background:#7a1818; }
+    .btnv:disabled { opacity:0.5; cursor:default; }
+
+    /* Jeux d'association */
+    .assoc-grid {
+      display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0;
+    }
+    .assoc-item {
+      background:var(--creme); border:2px solid #ddd; border-radius:8px;
+      padding:0.6rem 1rem; text-align:center; cursor:pointer;
+      transition:all 0.2s; font-size:0.95rem; user-select:none;
+    }
+    .assoc-item:hover { border-color:var(--or); background:white; }
+    .assoc-item.sel { border-color:var(--rouge); background:#fdecea; }
+    .assoc-item.pair { border-color:#3a9e47; background:#edf7ee; }
+    .assoc-item.wrong { border-color:var(--rouge); background:#fdecea; animation:shake 0.3s; }
+    @keyframes shake { 0%,100%{transform:translateX(0);} 25%{transform:translateX(-4px);} 75%{transform:translateX(4px);} }
+    .assoc-fb { margin-top:0.8rem; font-size:0.9rem; padding:0.5rem; border-radius:6px; display:none; }
+    .assoc-fb.show { display:block; }
+
+    /* Anecdotes */
+    .anecdote {
+      background:var(--parchemin); border-radius:12px; padding:1.2rem 1.6rem;
+      margin:1.8rem 0; border-left:6px solid var(--or);
+      position:relative;
+    }
+    .anecdote::before { content:'💡'; font-size:1.8rem; position:absolute; top:-0.6rem; left:-0.6rem; background:white; border-radius:50%; padding:0.2rem; }
+    .anecdote strong { color:var(--rouge); }
+
+    /* Vrai/Faux */
+    .vf-grid { display:flex; gap:1rem; flex-wrap:wrap; margin:0.8rem 0; }
+    .vf-btn {
+      padding:0.4rem 1.8rem; border-radius:30px; border:2px solid var(--gris);
+      background:transparent; font-family:'Crimson Pro',serif; font-size:1rem;
+      cursor:pointer; transition:all 0.2s; font-weight:600;
+    }
+    .vf-btn:hover { background:var(--creme); border-color:var(--or); }
+    .vf-btn.vrai { border-color:#3a9e47; color:#3a9e47; }
+    .vf-btn.vrai.on { background:#3a9e47; color:white; }
+    .vf-btn.faux { border-color:var(--rouge); color:var(--rouge); }
+    .vf-btn.faux.on { background:var(--rouge); color:white; }
+
+    #scoreS {
+      text-align:center; margin:4rem 2rem 2rem;
+      background:var(--encre); color:var(--blanc);
+      border-radius:12px; padding:3rem 2rem;
+      border:1px solid rgba(201,148,58,0.3);
+    }
+    #scoreS h2 { font-family:'IM Fell English',serif; font-size:1.6rem; margin-bottom:1rem; }
+    #scoreN { font-family:'IM Fell English',serif; font-size:4.5rem; color:var(--or-pale); display:block; }
+    #scoreM { color:rgba(255,255,255,0.7); margin-top:0.6rem; font-size:1.05rem; }
+    .btnR { margin-top:1.4rem; background:var(--or); color:var(--encre); border:none; padding:0.6rem 2rem; border-radius:6px; font-family:'Crimson Pro',serif; font-size:1rem; cursor:pointer; font-weight:600; transition:transform 0.15s; }
+    .btnR:hover { transform:scale(1.04); }
+
+    footer { text-align:center; padding:2rem; font-size:0.8rem; color:var(--gris); border-top:1px solid #E8E0D0; margin-top:2rem; }
+    .ff { display:flex; justify-content:center; gap:6px; margin-bottom:0.6rem; }
+    .ff span { width:14px; height:14px; border-radius:2px; }
+
+    @media(max-width:640px){
+      .tl { grid-template-columns:1fr 1fr; }
+      .tl::before { display:none; }
+      .themes { grid-template-columns:1fr; }
+      .th:last-child:nth-child(odd){ grid-column:span 1; }
+      nav a { padding:0.6rem 0.7rem; font-size:0.72rem; }
+      .bign { font-size:7rem; }
+      .assoc-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="tri"><span></span><span></span><span></span></div>
+  <div class="hbg"></div>
+  <div class="hinner">
+    <div class="eyebrow">Programme d'Histoire · Classe de 4ème</div>
+    <h1>Napoléon <em>en Europe</em></h1>
+    <div class="hdates">1799 — 1815 · Héritage &amp; fractures</div>
+    <div class="hrule"></div>
+    <p class="sub">Réformes, guerre, diffusion des idées, centralisation, nationalisme : l'empreinte contrastée de l'Empereur sur le continent.</p>
+  </div>
+  <div class="scroll">Défiler</div>
+</header>
+
+<nav id="nav">
+  <a href="#c1"><span class="n">I</span>L'Europe napoléonienne</a>
+  <a href="#c2"><span class="n">II</span>Héritages positifs</a>
+  <a href="#c3"><span class="n">III</span>Héritages négatifs</a>
+  <a href="#c4"><span class="n">IV</span>Bilan européen</a>
+</nav>
+
+<!-- ============================================================ -->
+<!-- CHAPITRE I — L'Europe napoléonienne -->
+<!-- ============================================================ -->
+<div class="sep" id="c1"></div>
+<section class="ch">
+  <div class="bign">I</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">I</span>
+      <span class="cperiod">1799–1815</span>
+    </div>
+    <h2 class="ctitle">L'<em>Europe</em> sous Napoléon</h2>
+    <div class="crule"></div>
+    <div class="prob">Un homme, une guerre, un ordre nouveau : comment Napoléon a-t-il remodelé le continent ?</div>
+
+    <div class="recit">
+      <p>Entre 1799 et 1815, Napoléon Bonaparte impose à l'Europe une transformation sans précédent. Par les armes ou par la diplomatie, il étend le <strong>Grand Empire</strong>, qui englobe la France, la Belgique, la Hollande, la Rhénanie, l'Italie du Nord, et une partie de l'Allemagne. Des royaumes vassaux sont créés : Westphalie, Naples, Espagne, confiés à sa famille. La <strong>confédération du Rhin</strong> (1806) regroupe une trentaine d'États allemands sous protectorat français, dissolvant le Saint-Empire romain germanique.</p>
+      <p>Napoléon exporte les principes de la Révolution : <strong>égalité civile</strong>, suppression des privilèges, abolitions des droits seigneuriaux, <strong>Code civil</strong>. Il modernise les administrations, instaure des préfets, des cours de justice, des systèmes fiscaux rationnels. Mais cette domination suscite des résistances : en Espagne, la guérilla ; en Allemagne, la poussée du nationalisme ; en Russie, le refus du blocus continental. L'Europe napoléonienne est un laboratoire de réformes, mais aussi un champ de bataille.</p>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">1801</span><div class="tdesc">Concordat · apaisement religieux</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">1806</span><div class="tdesc">Confédération du Rhin · fin du Saint-Empire</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">1807</span><div class="tdesc">Tilsit · partage de l'Europe</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">1808–1813</span><div class="tdesc">Guerre d'Espagne · guérilla et nationalisme</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">1815</span><div class="tdesc">Waterloo · fin de l'épopée</div></div>
+    </div>
+
+    <div class="anecdote">
+      <strong>Anecdote :</strong> Saviez-vous que Napoléon, à son apogée, contrôlait directement ou indirectement près de <strong>70 millions d'Européens</strong> ? C'est plus que l'ensemble de la population de l'Europe à l'époque ! Pourtant, il ne parlait que l'italien et le français, et il a dû apprendre l'allemand pour diriger ses États vassaux.
+    </div>
+
+    <div class="enc">
+      <div class="enc-titre">🌍 Le Grand Empire en 1812</div>
+      <ul style="margin:0.5rem 0 0.5rem 1.2rem;font-size:0.95rem;line-height:1.7;">
+        <li><strong>France</strong> : 130 départements, de Hambourg à Rome</li>
+        <li><strong>Royaumes vassaux</strong> : Westphalie (Jérôme), Naples (Joseph), Espagne (Joseph puis Murat)</li>
+        <li><strong>Confédération du Rhin</strong> : 39 États allemands sous protectorat</li>
+        <li><strong>Alliés forcés</strong> : Autriche, Prusse, Russie (jusqu'en 1810)</li>
+        <li>Population sous contrôle : près de 70 millions d'habitants</li>
+      </ul>
+    </div>
+
+    <!-- QCM I -->
+    <div class="qcm">
+      <div class="qhead">Exercices — L'Europe napoléonienne</div>
+
+      <div class="qb" id="q1">
+        <div class="qt"><span class="qn">1</span>Quelle entité politique disparaît en 1806 sous la pression de Napoléon ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q1" value="a">Le Saint-Empire romain germanique</label>
+          <label class="opt"><input type="radio" name="q1" value="b">L'Empire byzantin</label>
+          <label class="opt"><input type="radio" name="q1" value="c">La République de Venise</label>
+          <label class="opt"><input type="radio" name="q1" value="d">Le royaume de Prusse</label>
+        </div>
+        <button class="btnv" onclick="V('q1','a','En 1806, Napoléon crée la Confédération du Rhin et provoque la dissolution du Saint-Empire romain germanique, qui existait depuis 800.')">Valider</button>
+        <div class="fb" id="fb-q1"></div>
+      </div>
+
+      <div class="qb" id="q2">
+        <div class="qt"><span class="qn">2</span>Quel territoire est directement annexé à la France sous l'Empire ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q2" value="a">L'Espagne</label>
+          <label class="opt"><input type="radio" name="q2" value="b">La Belgique et la Rhénanie</label>
+          <label class="opt"><input type="radio" name="q2" value="c">La Prusse orientale</label>
+          <label class="opt"><input type="radio" name="q2" value="d">L'Angleterre</label>
+        </div>
+        <button class="btnv" onclick="V('q2','b','La Belgique et la Rhénanie sont annexées à l\'Empire français dès 1795 et le restent jusqu\'en 1814.')">Valider</button>
+        <div class="fb" id="fb-q2"></div>
+      </div>
+    </div>
+
+    <!-- Jeu d'association I -->
+    <div class="qcm" style="margin-top:1.5rem;">
+      <div class="qhead">🧩 Association — Dates et événements</div>
+      <p style="margin-bottom:1rem;font-size:0.95rem;">Cliquez sur une date, puis sur l'événement correspondant.</p>
+      <div class="assoc-grid" id="assoc1">
+        <div class="assoc-item" data-group="date" data-key="1801">1801</div>
+        <div class="assoc-item" data-group="event" data-key="concordat">Concordat</div>
+        <div class="assoc-item" data-group="date" data-key="1806">1806</div>
+        <div class="assoc-item" data-group="event" data-key="confederation">Confédération du Rhin</div>
+        <div class="assoc-item" data-group="date" data-key="1812">1812</div>
+        <div class="assoc-item" data-group="event" data-key="russie">Campagne de Russie</div>
+      </div>
+      <div class="assoc-fb" id="assoc1-fb"></div>
+      <button class="btnv" onclick="checkAssoc('assoc1', { '1801':'concordat', '1806':'confederation', '1812':'russie' }, 'Bravo ! Vous avez associé les dates clés.')">Vérifier l'association</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPITRE II — HÉRITAGES POSITIFS -->
+<!-- ============================================================ -->
+<div class="sep" id="c2"></div>
+<section class="ch">
+  <div class="bign">II</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">II</span>
+      <span class="cperiod">Apports</span>
+    </div>
+    <h2 class="ctitle">Héritages <em>positifs</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Quelles réformes durables Napoléon a‑t‑il insufflées à l'Europe ?</div>
+
+    <div class="recit">
+      <p>L'empreinte positive de Napoléon sur l'Europe est considérable. Il diffuse les acquis de la Révolution : <strong>égalité devant la loi</strong>, abolition des privilèges, liberté de conscience. Le <strong>Code civil</strong> est adopté ou imité dans toute l'Europe, de l'Italie aux Pays-Bas, en passant par la Pologne et la Confédération du Rhin. Il modernise les États : création de <strong>préfectures</strong>, de <strong>conseils d'État</strong>, de <strong>cours d'appel</strong>, d'un système fiscal cohérent.</p>
+      <p>Il stimule l'économie par la <strong>Banque de France</strong> et l'unification des poids et mesures (le système métrique). Il favorise les <strong>infrastructures</strong> : routes, ponts, canaux (canal de l'Ourcq). L'<strong>instruction publique</strong> est réorganisée avec l'<strong>Université impériale</strong> et les lycées. Il suscite un <strong>sentiment national</strong> en Allemagne et en Italie, qui prépare les unités du XIXe siècle. Enfin, il abolit le servage dans les territoires conquis, libérant les paysans.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="nb">Code civil</span><span class="lb">Adopté dans une dizaine de pays</span></div>
+      <div class="stat"><span class="nb">Système métrique</span><span class="lb">Unification des mesures</span></div>
+      <div class="stat"><span class="nb">Université</span><span class="lb">Lyricées et enseignement centralisé</span></div>
+      <div class="stat"><span class="nb">Abolition</span><span class="lb">Servage supprimé en Europe centrale</span></div>
+    </div>
+
+    <div class="anecdote">
+      <strong>Anecdote :</strong> Le système métrique, imposé par Napoléon, a rencontré une forte résistance en France, notamment chez les paysans qui préféraient les mesures anciennes. Mais il s'est finalement imposé dans toute l'Europe, devenant un des héritages les plus durables de l'Empereur. Aujourd'hui, seuls trois pays au monde ne l'utilisent pas officiellement !
+    </div>
+
+    <div class="cit">
+      <p>Ce qui survit de la Révolution, c'est le Code civil, c'est l'égalité, c'est la propriété.</p>
+      <span class="src">— Napoléon Bonaparte · Mémorial de Sainte-Hélène</span>
+    </div>
+
+    <div class="themes">
+      <div class="th"><strong>⚖️ Droit uniforme</strong> Le Code civil garantit l'égalité civile, la propriété privée, le divorce par consentement mutuel, une avancée majeure.</div>
+      <div class="th"><strong>🏛️ Administration moderne</strong> Préfets, conseils généraux, maires : un maillage territorial efficace qui inspire les États européens.</div>
+      <div class="th"><strong>📚 Éducation nationale</strong> Création des lycées, de l'École normale supérieure, de l'Université impériale : un système d'élite.</div>
+      <div class="th"><strong>🌾 Réformes agraires</strong> Abolition des droits seigneuriaux, redistribution des biens nationaux, fin du servage dans les pays annexés.</div>
+    </div>
+
+    <!-- QCM II -->
+    <div class="qcm">
+      <div class="qhead">Exercices — Héritages positifs</div>
+
+      <div class="qb" id="q3">
+        <div class="qt"><span class="qn">3</span>Quel code civil napoléonien a été imité dans de nombreux pays européens ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q3" value="a">Le Code de 1804</label>
+          <label class="opt"><input type="radio" name="q3" value="b">Le Code pénal</label>
+          <label class="opt"><input type="radio" name="q3" value="c">Le Code rural</label>
+          <label class="opt"><input type="radio" name="q3" value="d">Le Code du commerce</label>
+        </div>
+        <button class="btnv" onclick="V('q3','a','Le Code civil de 1804 (Code Napoléon) a été adopté ou a inspiré les codes civils de nombreux pays, notamment en Italie, aux Pays-Bas, en Pologne et en Allemagne.')">Valider</button>
+        <div class="fb" id="fb-q3"></div>
+      </div>
+
+      <div class="qb" id="q4">
+        <div class="qt"><span class="qn">4</span>Quelle innovation napoléonienne a unifié les mesures en Europe ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q4" value="a">Le système décimal</label>
+          <label class="opt"><input type="radio" name="q4" value="b">Le système métrique</label>
+          <label class="opt"><input type="radio" name="q4" value="c">Le calendrier républicain</label>
+          <label class="opt"><input type="radio" name="q4" value="d">La livre tournois</label>
+        </div>
+        <button class="btnv" onclick="V('q4','b','Le système métrique, déjà conçu pendant la Révolution, est imposé par Napoléon dans toute l\'Europe conquise.')">Valider</button>
+        <div class="fb" id="fb-q4"></div>
+      </div>
+
+      <div class="qb" id="q5">
+        <div class="qt"><span class="qn">5</span>Quel corps administratif Napoléon a‑t‑il créé pour contrôler les départements ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q5" value="a">Les préfets</label>
+          <label class="opt"><input type="radio" name="q5" value="b">Les intendants</label>
+          <label class="opt"><input type="radio" name="q5" value="c">Les sénéchaux</label>
+          <label class="opt"><input type="radio" name="q5" value="d">Les baillis</label>
+        </div>
+        <button class="btnv" onclick="V('q5','a','Napoléon instaure les préfets en 1800, représentants de l\'État dans chaque département.')">Valider</button>
+        <div class="fb" id="fb-q5"></div>
+      </div>
+    </div>
+
+    <!-- Vrai/Faux -->
+    <div class="qcm" style="margin-top:1.5rem;">
+      <div class="qhead">⚡ Vrai ou Faux ?</div>
+      <div class="qb" id="vf1">
+        <div class="qt"><span class="qn">VF</span>Le Code civil napoléonien a été adopté dans des pays comme l'Italie, les Pays-Bas et la Pologne.</div>
+        <div class="vf-grid">
+          <button class="vf-btn vrai" onclick="VF('vf1',true,'Vrai ! Le Code civil a été adopté ou a inspiré les codes civils de nombreux pays européens.')">Vrai</button>
+          <button class="vf-btn faux" onclick="VF('vf1',false,'Faux ! Il a effectivement été adopté dans de nombreux pays.')">Faux</button>
+        </div>
+        <div class="fb" id="fb-vf1"></div>
+      </div>
+      <div class="qb" id="vf2">
+        <div class="qt"><span class="qn">VF</span>Napoléon a aboli le servage dans tous les territoires qu'il a conquis.</div>
+        <div class="vf-grid">
+          <button class="vf-btn vrai" onclick="VF('vf2',true,'Vrai ! L\'abolition du servage a été une des mesures les plus radicales de l\'occupation napoléonienne, notamment en Allemagne et en Pologne.')">Vrai</button>
+          <button class="vf-btn faux" onclick="VF('vf2',false,'Faux ! Il l\'a effectivement aboli dans la plupart des territoires conquis.')">Faux</button>
+        </div>
+        <div class="fb" id="fb-vf2"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPITRE III — HÉRITAGES NÉGATIFS -->
+<!-- ============================================================ -->
+<div class="sep" id="c3"></div>
+<section class="ch">
+  <div class="bign">III</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">III</span>
+      <span class="cperiod">Fractures</span>
+    </div>
+    <h2 class="ctitle">Héritages <em>négatifs</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Guerres, répression, instabilité : le revers de la domination napoléonienne.</div>
+
+    <div class="recit">
+      <p>L'Europe napoléonienne est marquée par la <strong>guerre permanente</strong> : près de 15 ans de conflits ininterrompus, des millions de morts. Le <strong>blocus continental</strong> (1806) ruine les économies des pays vassaux, provoque des famines et des révoltes. La <strong>guerre d'Espagne</strong> est une guerre d'usure, une guérilla sanglante qui épuise la Grande Armée. La <strong>campagne de Russie</strong> (1812) coûte la vie à plus de 500 000 soldats.</p>
+      <p>Napoléon impose une <strong>dictature militaire</strong> et une <strong>police politique</strong> (Fouché) qui réprime toute opposition. La presse est muselée, les libraires contrôlés, les libertés individuelles restreintes. Il rétablit l'<strong>esclavage</strong> dans les colonies en 1802 (aboli en 1794). Il pratique une <strong>centralisation excessive</strong> qui étouffe les particularismes locaux. Enfin, il est à l'origine du <strong>nationalisme agressif</strong> qui se retournera contre la France : le réveil allemand, italien, espagnol, russe.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span class="nb">3,5 M</span><span class="lb">Morts pendant les guerres napoléoniennes</span></div>
+      <div class="stat"><span class="nb">1812</span><span class="lb">Retraite de Russie : 500 000 morts</span></div>
+      <div class="stat"><span class="nb">Censure</span><span class="lb">Presse muselée, police politique</span></div>
+      <div class="stat"><span class="nb">1802</span><span class="lb">Rétablissement de l'esclavage</span></div>
+    </div>
+
+    <div class="anecdote">
+      <strong>Anecdote :</strong> Napoléon a dit un jour : <em>"On ne fait pas de grandes choses sans de grands défauts."</em> Mais ses défauts ont coûté des millions de vies. Le blocus continental, par exemple, a provoqué une famine en Allemagne, où les gens ont dû manger des glands pour survivre. L'Empereur lui-même en était conscient : <em>"Je n'ai pas fait la guerre pour la guerre, mais pour la paix."</em> Pourtant, la paix ne vint jamais.
+    </div>
+
+    <div class="cit">
+      <p>Les peuples ne m'ont pas aimé. Ils m'ont craint, puis ils m'ont haï.</p>
+      <span class="src">— Napoléon Bonaparte · Sainte-Hélène</span>
+    </div>
+
+    <div class="themes">
+      <div class="th"><strong>💀 Guerres massives</strong> Les guerres napoléoniennes ont causé plus de 3 millions de morts, une hémorragie démographique en Europe.</div>
+      <div class="th"><strong>📉 Blocus continental</strong> Ruine des économies allemandes, italiennes, hollandaises ; favorise le développement du nationalisme anti-français.</div>
+      <div class="th"><strong>🔒 Autoritarisme</strong> Police secrète, censure, limitation des libertés : le régime napoléonien est une dictature militaire.</div>
+      <div class="th"><strong>🌊 Esclavage rétabli</strong> En 1802, Napoléon rétablit l'esclavage aux Antilles, rompant avec l'abolition de 1794.</div>
+    </div>
+
+    <!-- QCM III -->
+    <div class="qcm">
+      <div class="qhead">Exercices — Héritages négatifs</div>
+
+      <div class="qb" id="q6">
+        <div class="qt"><span class="qn">6</span>Quel événement militaire de 1812 a causé la mort de plus de 500 000 soldats ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q6" value="a">La bataille de Waterloo</label>
+          <label class="opt"><input type="radio" name="q6" value="b">La campagne de Russie</label>
+          <label class="opt"><input type="radio" name="q6" value="c">La guerre d'Espagne</label>
+          <label class="opt"><input type="radio" name="q6" value="d">Le siège de Toulon</label>
+        </div>
+        <button class="btnv" onclick="V('q6','b','La campagne de Russie en 1812 est un désastre humain : sur 600 000 hommes, moins de 40 000 rentrent.')">Valider</button>
+        <div class="fb" id="fb-q6"></div>
+      </div>
+
+      <div class="qb" id="q7">
+        <div class="qt"><span class="qn">7</span>Quelle décision de Napoléon contredit les idéaux révolutionnaires de 1789 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q7" value="a">La création de la Légion d'honneur</label>
+          <label class="opt"><input type="radio" name="q7" value="b">Le rétablissement de l'esclavage en 1802</label>
+          <label class="opt"><input type="radio" name="q7" value="c">La création de la Banque de France</label>
+          <label class="opt"><input type="radio" name="q7" value="d">Le Concordat</label>
+        </div>
+        <button class="btnv" onclick="V('q7','b','En 1802, Napoléon rétablit l\'esclavage dans les colonies françaises, aboli en 1794.')">Valider</button>
+        <div class="fb" id="fb-q7"></div>
+      </div>
+
+      <div class="qb" id="q8">
+        <div class="qt"><span class="qn">8</span>Quel instrument de répression Napoléon a‑t‑il mis en place ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q8" value="a">Le Comité de salut public</label>
+          <label class="opt"><input type="radio" name="q8" value="b">La police politique de Fouché</label>
+          <label class="opt"><input type="radio" name="q8" value="c">La Gestapo</label>
+          <label class="opt"><input type="radio" name="q8" value="d">La Garde nationale</label>
+        </div>
+        <button class="btnv" onclick="V('q8','b','Joseph Fouché, ministre de la police, met en place un système de surveillance et de répression des opposants.')">Valider</button>
+        <div class="fb" id="fb-q8"></div>
+      </div>
+    </div>
+
+    <!-- Association II -->
+    <div class="qcm" style="margin-top:1.5rem;">
+      <div class="qhead">🧩 Association — Conséquences négatives</div>
+      <p style="margin-bottom:1rem;font-size:0.95rem;">Associez chaque événement à sa conséquence.</p>
+      <div class="assoc-grid" id="assoc2">
+        <div class="assoc-item" data-group="event" data-key="russie2">Campagne de Russie</div>
+        <div class="assoc-item" data-group="conseq" data-key="morts">Demi-million de morts</div>
+        <div class="assoc-item" data-group="event" data-key="blocus">Blocus continental</div>
+        <div class="assoc-item" data-group="conseq" data-key="ruine">Ruine économique de l'Europe</div>
+        <div class="assoc-item" data-group="event" data-key="espagne">Guerre d'Espagne</div>
+        <div class="assoc-item" data-group="conseq" data-key="guerrilla">Guérilla sanglante</div>
+      </div>
+      <div class="assoc-fb" id="assoc2-fb"></div>
+      <button class="btnv" onclick="checkAssoc('assoc2', { 'russie2':'morts', 'blocus':'ruine', 'espagne':'guerrilla' }, 'Parfait ! Vous avez bien associé les événements à leurs conséquences.')">Vérifier l'association</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ -->
+<!-- CHAPITRE IV — BILAN EUROPÉEN -->
+<!-- ============================================================ -->
+<div class="sep" id="c4"></div>
+<section class="ch">
+  <div class="bign">IV</div>
+  <div class="wrap">
+    <div class="clabel">
+      <span class="cnum">IV</span>
+      <span class="cperiod">Bilan</span>
+    </div>
+    <h2 class="ctitle">Bilan <em>européen</em></h2>
+    <div class="crule"></div>
+    <div class="prob">Que reste‑t‑il de Napoléon en Europe ? Un héritage contrasté, entre modernité et blessures.</div>
+
+    <div class="recit">
+      <p>Le bilan de Napoléon pour l'Europe est profondément contrasté. Il a <strong>modernisé</strong> les États, diffusé l'égalité civile, le droit codifié, l'administration rationnelle. Il a <strong>aboli les privilèges</strong> et le servage. Il a <strong>stimulé les nationalités</strong> : l'Allemagne et l'Italie lui doivent leur éveil identitaire. Mais il a aussi <strong>saigné</strong> le continent, imposé la censure, le militarisme, le blocus, et préparé les révoltes nationales qui ont conduit à sa chute.</p>
+      <p>Le <strong>Congrès de Vienne</strong> (1814-1815) tente de restaurer l'ordre ancien, mais l'Europe napoléonienne a laissé des traces indélébiles : le Code civil reste en vigueur dans plusieurs pays, le système métrique s'impose, les préfets inspirent les administrations modernes. La <strong>légende napoléonienne</strong> nourrit le romantisme et les nationalismes du XIXe siècle. En définitive, Napoléon a accéléré l'entrée de l'Europe dans la modernité politique, au prix d'une violence inouïe.</p>
+    </div>
+
+    <div class="tl">
+      <div class="ti"><div class="tdot">1</div><span class="tdate">1804–1814</span><div class="tdesc">Apogée et déclin de l'Empire</div></div>
+      <div class="ti"><div class="tdot">2</div><span class="tdate">1815</span><div class="tdesc">Congrès de Vienne · restauration</div></div>
+      <div class="ti"><div class="tdot">3</div><span class="tdate">XIXe s.</span><div class="tdesc">Réveil des nationalités</div></div>
+      <div class="ti"><div class="tdot">4</div><span class="tdate">1821</span><div class="tdesc">Mort à Sainte-Hélène · légende</div></div>
+      <div class="ti"><div class="tdot">5</div><span class="tdate">Aujourd'hui</span><div class="tdesc">Code civil, préfets, métrique</div></div>
+    </div>
+
+    <div class="anecdote">
+      <strong>Anecdote :</strong> À Sainte-Hélène, Napoléon a dicté ses mémoires, qui ont façonné sa légende. Il y a déclaré : <em>"Je veux qu'on sache que j'ai été le législateur de la France, que j'ai fait des Codes qui seront éternels."</em> Il avait raison : le Code civil est toujours en vigueur en France aujourd'hui, et il a influencé le droit dans plus de 40 pays !
+    </div>
+
+    <table class="tab">
+      <thead><tr><th>Domaine</th><th>Apports positifs</th><th>Apports négatifs</th></tr></thead>
+      <tbody>
+        <tr><td>Politique</td><td>Égalité civile, fin des privilèges, codification</td><td>Dictature militaire, censure, police</td></tr>
+        <tr><td>Économie</td><td>Banque de France, système métrique</td><td>Blocus continental, ruine des économies vassales</td></tr>
+        <tr><td>Social</td><td>Abolition du servage, liberté de conscience</td><td>Rétablissement de l'esclavage (1802)</td></tr>
+        <tr><td>Culture</td><td>Éducation nationale, lycées, université</td><td>Propagande, contrôle des idées</td></tr>
+        <tr><td>National</td><td>Éveil des nationalismes (Allemagne, Italie)</td><td>Guerres dévastatrices, haines durables</td></tr>
+      </tbody>
+    </table>
+
+    <div class="enc">
+      <div class="enc-titre">📌 Synthèse</div>
+      <p style="font-size:1rem; line-height:1.7;">Napoléon a imposé à l'Europe une modernisation forcée, mêlant progrès juridique, administration efficace et violence guerrière. Son héritage est à double tranchant : il a semé les graines de l'État de droit et des nations modernes, mais aussi celles du nationalisme belliqueux et de la répression. L'Europe d'aujourd'hui porte encore les marques de ce passage.</p>
+    </div>
+
+    <!-- QCM IV -->
+    <div class="qcm">
+      <div class="qhead">Exercices — Bilan européen</div>
+
+      <div class="qb" id="q9">
+        <div class="qt"><span class="qn">9</span>Que consacre le Congrès de Vienne en 1815 ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q9" value="a">La naissance de la Société des Nations</label>
+          <label class="opt"><input type="radio" name="q9" value="b">La restauration de l'ordre européen d'avant 1789</label>
+          <label class="opt"><input type="radio" name="q9" value="c">La paix perpétuelle en Europe</label>
+          <label class="opt"><input type="radio" name="q9" value="d">La création de l'Union européenne</label>
+        </div>
+        <button class="btnv" onclick="V('q9','b','Le Congrès de Vienne (1814-1815) réorganise l\'Europe après la chute de Napoléon et tente de rétablir les monarchies et les frontières d\'avant 1789.')">Valider</button>
+        <div class="fb" id="fb-q9"></div>
+      </div>
+
+      <div class="qb" id="q10">
+        <div class="qt"><span class="qn">10</span>Quel est l'héritage durable de Napoléon dans le droit européen ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q10" value="a">Le droit romain</label>
+          <label class="opt"><input type="radio" name="q10" value="b">Le Code civil</label>
+          <label class="opt"><input type="radio" name="q10" value="c">La Charte des droits</label>
+          <label class="opt"><input type="radio" name="q10" value="d">Le droit canonique</label>
+        </div>
+        <button class="btnv" onclick="V('q10','b','Le Code civil napoléonien a été adopté ou a inspiré les législations civiles dans une grande partie de l\'Europe.')">Valider</button>
+        <div class="fb" id="fb-q10"></div>
+      </div>
+
+      <div class="qb" id="q11">
+        <div class="qt"><span class="qn">11</span>Quel sentiment national Napoléon a‑t‑il involontairement stimulé en Allemagne et en Italie ?</div>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="q11" value="a">Le régionalisme</label>
+          <label class="opt"><input type="radio" name="q11" value="b">Le nationalisme</label>
+          <label class="opt"><input type="radio" name="q11" value="c">Le fédéralisme</label>
+          <label class="opt"><input type="radio" name="q11" value="d">Le cosmopolitisme</label>
+        </div>
+        <button class="btnv" onclick="V('q11','b','Les guerres napoléoniennes et l\'occupation française ont réveillé les sentiments nationaux en Allemagne et en Italie, qui aboutiront à l\'unification au XIXe siècle.')">Valider</button>
+        <div class="fb" id="fb-q11"></div>
+      </div>
+    </div>
+
+    <!-- Association finale -->
+    <div class="qcm" style="margin-top:1.5rem;">
+      <div class="qhead">🧩 Association — Bilan contrasté</div>
+      <p style="margin-bottom:1rem;font-size:0.95rem;">Associez chaque héritage à son domaine.</p>
+      <div class="assoc-grid" id="assoc3">
+        <div class="assoc-item" data-group="heritage" data-key="code">Code civil</div>
+        <div class="assoc-item" data-group="domaine" data-key="droit">Droit</div>
+        <div class="assoc-item" data-group="heritage" data-key="prefets">Préfets</div>
+        <div class="assoc-item" data-group="domaine" data-key="admin">Administration</div>
+        <div class="assoc-item" data-group="heritage" data-key="metrique">Système métrique</div>
+        <div class="assoc-item" data-group="domaine" data-key="economie">Économie</div>
+      </div>
+      <div class="assoc-fb" id="assoc3-fb"></div>
+      <button class="btnv" onclick="checkAssoc('assoc3', { 'code':'droit', 'prefets':'admin', 'metrique':'economie' }, 'Félicitations ! Vous maîtrisez les héritages de Napoléon.')">Vérifier l'association</button>
+    </div>
+  </div>
+</section>
+
+<!-- SCORE -->
+<div id="scoreS" style="display:none;">
+  <h2>Résultat final · Influence de Napoléon</h2>
+  <span id="scoreN">—</span>
+  <p id="scoreM"></p>
+  <button class="btnR" onclick="resetAll()">↺ Recommencer</button>
+</div>
+
+<footer>
+  <div class="ff">
+    <span style="background:#002395"></span>
+    <span style="background:#fff;border:1px solid #ddd"></span>
+    <span style="background:#ED2939"></span>
+  </div>
+  Napoléon en Europe · Bilan contrasté · Programme d'Histoire 4ème
+</footer>
+
+<script>
+  // Animations
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+  }, { threshold:0.06 });
+  document.querySelectorAll('section.ch').forEach(el => io.observe(el));
+
+  // Nav active
+  const sids = ['c1','c2','c3','c4'];
+  const nls  = document.querySelectorAll('nav a');
+  window.addEventListener('scroll', () => {
+    let cur = '';
+    sids.forEach(id => {
+      const el = document.getElementById(id);
+      if(el && window.scrollY >= el.offsetTop - 130) cur = id;
+    });
+    nls.forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#'+cur));
+  });
+
+  // QCM
+  const rep = {}, done = {};
+  const TOT = 11;
+
+  function V(id, bonne, expl) {
+    if(done[id]) return;
+    const sel = document.querySelector(`input[name="${id}"]:checked`);
+    if(!sel){ alert('Veuillez sélectionner une réponse.'); return; }
+    const val = sel.value;
+    const fb = document.getElementById('fb-'+id);
+    const btn = document.querySelector('#'+id+' .btnv');
+
+    document.querySelectorAll(`input[name="${id}"]`).forEach(r => r.disabled=true);
+    btn.disabled = true;
+
+    document.querySelectorAll('#'+id+' .opt').forEach(l => {
+      const r = l.querySelector('input');
+      if(r.value===bonne) l.classList.add('ok');
+      else if(r.value===val && val!==bonne) l.classList.add('ko');
+    });
+
+    const ok = val===bonne;
+    rep[id]=ok; done[id]=true;
+    fb.textContent = ok ? '✔ Bonne réponse ! '+expl : '✘ Mauvaise réponse. '+expl;
+    fb.className = 'fb show '+(ok ? 'ok2' : 'ko2');
+
+    if(Object.keys(done).filter(k => k.startsWith('q')).length === TOT) showScore();
+  }
+
+  // Vrai/Faux
+  function VF(id, bonne, expl) {
+    if(done[id]) return;
+    const fb = document.getElementById('fb-'+id);
+    const btns = document.querySelectorAll('#'+id+' .vf-btn');
+    btns.forEach(b => { b.disabled = true; b.classList.remove('on'); });
+    const sel = document.querySelector('#'+id+' .vf-btn.on');
+    if(!sel) { alert('Veuillez choisir une réponse.'); return; }
+    const val = sel.textContent === 'Vrai';
+    if(val === bonne) { sel.classList.add('on'); }
+    else { document.querySelector('#'+id+' .vf-btn.'+(bonne?'vrai':'faux')).classList.add('on'); }
+    const ok = val===bonne;
+    rep[id]=ok; done[id]=true;
+    fb.textContent = ok ? '✔ Bonne réponse ! '+expl : '✘ Mauvaise réponse. '+expl;
+    fb.className = 'fb show '+(ok ? 'ok2' : 'ko2');
+    if(Object.keys(done).filter(k => k.startsWith('q')).length === TOT) showScore();
+  }
+
+  // Association
+  let assocSelections = {};
+
+  function initAssoc() {
+    document.querySelectorAll('.assoc-item').forEach(el => {
+      el.addEventListener('click', function() {
+        const container = this.closest('.assoc-grid');
+        const id = container.id;
+        if (!assocSelections[id]) assocSelections[id] = { date: null, event: null };
+        const group = this.dataset.group;
+        const key = this.dataset.key;
+        // Si déjà pairé, on ignore
+        if (this.classList.contains('pair')) return;
+        // On retire la sélection du même groupe
+        container.querySelectorAll(`.assoc-item[data-group="${group}"]`).forEach(item => item.classList.remove('sel'));
+        this.classList.add('sel');
+        assocSelections[id][group] = key;
+        // Si les deux sont sélectionnés, on vérifie automatiquement ?
+      });
+    });
+  }
+  initAssoc();
+
+  function checkAssoc(id, expected, msg) {
+    const sel = assocSelections[id];
+    if (!sel || !sel.date || !sel.event) {
+      document.getElementById(id+'-fb').textContent = '⚠️ Veuillez sélectionner une date et un événement.';
+      document.getElementById(id+'-fb').className = 'assoc-fb show ko2';
+      return;
+    }
+    const ok = (expected[sel.date] === sel.event);
+    const fb = document.getElementById(id+'-fb');
+    if (ok) {
+      document.querySelectorAll(`#${id} .assoc-item`).forEach(el => {
+        if (el.dataset.group === 'date' && el.dataset.key === sel.date) el.classList.add('pair');
+        if (el.dataset.group === 'event' && el.dataset.key === sel.event) el.classList.add('pair');
+        el.classList.remove('sel');
+      });
+      fb.textContent = '✔ '+msg;
+      fb.className = 'assoc-fb show ok2';
+      // Ajouter au score ?
+      const scoreKey = 'assoc_'+id;
+      if (!done[scoreKey]) { rep[scoreKey]=true; done[scoreKey]=true; }
+      if(Object.keys(done).filter(k => k.startsWith('q')).length === TOT) showScore();
+    } else {
+      fb.textContent = '✘ Mauvaise association. Essayez à nouveau.';
+      fb.className = 'assoc-fb show ko2';
+      document.querySelectorAll(`#${id} .assoc-item`).forEach(el => el.classList.remove('sel'));
+      assocSelections[id] = { date: null, event: null };
+    }
+  }
+
+  function showScore(){
+    let s = 0;
+    for (let k in rep) if (rep[k]) s++;
+    // compter les associations
+    document.getElementById('scoreN').textContent = s+' / '+(TOT+3);
+    let m = '';
+    if(s>=TOT+2)  m='🎉 Parfait ! Vous maîtrisez l\'héritage napoléonien en Europe.';
+    else if(s>=TOT-1) m='👏 Excellent ! Quelques détails à approfondir.';
+    else if(s>=TOT-3) m='🙂 Bien. Relisez les chapitres pour consolider.';
+    else          m='📖 Revoyez le cours et retentez votre chance.';
+    document.getElementById('scoreM').textContent = m;
+    const el = document.getElementById('scoreS');
+    el.style.display='block';
+    el.scrollIntoView({behavior:'smooth'});
+  }
+
+  function resetAll(){
+    document.querySelectorAll('input[type="radio"]').forEach(r=>{r.checked=false;r.disabled=false;});
+    document.querySelectorAll('.opt').forEach(l=>l.classList.remove('ok','ko'));
+    document.querySelectorAll('.fb').forEach(f=>{f.className='fb';f.textContent='';});
+    document.querySelectorAll('.btnv').forEach(b=>b.disabled=false);
+    document.querySelectorAll('.vf-btn').forEach(b=>{b.disabled=false;b.classList.remove('on');});
+    document.querySelectorAll('.assoc-item').forEach(el=>{el.classList.remove('sel','pair');});
+    document.querySelectorAll('.assoc-fb').forEach(f=>{f.className='assoc-fb';f.textContent='';});
+    assocSelections = {};
+    Object.keys(rep).forEach(k=>delete rep[k]);
+    Object.keys(done).forEach(k=>delete done[k]);
+    document.getElementById('scoreS').style.display='none';
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+</script>
+</body>
+</html>
