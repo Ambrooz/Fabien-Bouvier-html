@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Invitation · Défilé de mode · A2→B1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+        }
+        body {
+            background: #f2ede6;
+            font-family: 'Work Sans', sans-serif;
+            padding: 2rem 1rem;
+            color: #1a262f;
+            display: flex;
+            justify-content: center;
+        }
+        .page {
+            max-width: 1000px;
+            width: 100%;
+            background: #fcfaf7;
+            border-radius: 2.8rem;
+            box-shadow: 0 20px 40px -12px rgba(20, 30, 40, 0.25);
+            padding: 2.5rem 2.2rem;
+        }
+        h1,
+        h2,
+        h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+        }
+        h1 {
+            font-size: 2.2rem;
+            border-bottom: 3px solid #d4c9b8;
+            padding-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        h1 small {
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: #5f6f7a;
+            background: #edebe6;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+        }
+        .gloss {
+            color: #6b7b86;
+            font-size: 0.85rem;
+            font-style: italic;
+            margin-left: 0.4rem;
+            font-weight: 400;
+        }
+        .badge-soft {
+            background: #eae6dd;
+            padding: 0.1rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            color: #2e3f4b;
+        }
+
+        .section {
+            background: #ffffff;
+            border-radius: 1.8rem;
+            padding: 1.8rem 2rem;
+            margin: 2rem 0 1.8rem;
+            border: 1px solid #e3ddd2;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+            transition: 0.15s;
+        }
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+            margin-bottom: 0.8rem;
+        }
+        .section-header h2 {
+            font-size: 1.5rem;
+        }
+        .section-header .step {
+            background: #2e6f60;
+            color: #fff;
+            border-radius: 30px;
+            padding: 0.1rem 0.9rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .dialogue-box {
+            background: #f3f0ea;
+            border-radius: 1.6rem;
+            padding: 1.4rem 1.8rem;
+            border-left: 6px solid #9b8b78;
+            line-height: 1.7;
+            color: #1d2c38;
+        }
+        .dialogue-box .speaker {
+            font-weight: 600;
+            font-style: normal;
+            color: #2e6f60;
+        }
+        .dialogue-box .message {
+            font-style: italic;
+        }
+        .traduction-badge {
+            background: #f0ede6;
+            border-radius: 40px;
+            padding: 0.3rem 1.2rem;
+            display: inline-block;
+            font-size: 0.85rem;
+            margin-top: 0.4rem;
+        }
+        .reponse-box {
+            background: #e1ede7;
+            border-radius: 1.6rem;
+            padding: 1.4rem 1.8rem;
+            border-left: 6px solid #2e6f60;
+            line-height: 1.7;
+            color: #1d2c38;
+            margin-top: 1rem;
+        }
+        .reponse-box .speaker {
+            font-weight: 600;
+            font-style: normal;
+            color: #1b473c;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 0.6rem 1rem;
+            margin: 0.8rem 0 0.2rem;
+        }
+        .vocab-item {
+            background: #f4f1eb;
+            border-radius: 40px;
+            padding: 0.25rem 1.2rem 0.25rem 1.5rem;
+            border: 1px solid #d9d1c2;
+            font-size: 0.95rem;
+        }
+        .vocab-item .fr {
+            font-weight: 500;
+        }
+        .vocab-item .en {
+            color: #5f6f7a;
+            font-size: 0.82rem;
+            margin-left: 0.5rem;
+        }
+
+        .exo {
+            background: #f9f7f3;
+            border-radius: 1.2rem;
+            padding: 1.2rem 1.5rem;
+            margin-top: 1.2rem;
+            border: 1px solid #e3ddd2;
+        }
+        .exo .prompt {
+            font-weight: 500;
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+        .exo .sub {
+            color: #5f6f7a;
+            font-size: 0.88rem;
+            margin-bottom: 0.6rem;
+        }
+        .exo-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            align-items: center;
+            margin-top: 0.4rem;
+        }
+        .exo-row input[type="text"] {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.6rem 1rem;
+            border-radius: 40px;
+            border: 1.5px solid #d4ccc0;
+            font-size: 0.95rem;
+            font-family: inherit;
+            background: #fff;
+        }
+        .exo-row input:focus {
+            outline: 2px solid #2e6f60;
+            border-color: #2e6f60;
+        }
+        .btn {
+            border: none;
+            padding: 0.5rem 1.4rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.15s;
+            font-family: inherit;
+        }
+        .btn-primary {
+            background: #2e6f60;
+            color: #fff;
+        }
+        .btn-primary:hover {
+            background: #1b473c;
+        }
+        .btn-ghost {
+            background: transparent;
+            color: #3d4f5a;
+            text-decoration: underline;
+            padding: 0.5rem 0.5rem;
+        }
+        .btn-ghost:hover {
+            color: #1b2a33;
+        }
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid #b6a48b;
+            color: #2e3f4b;
+        }
+        .btn-outline:hover {
+            background: #ece6da;
+        }
+        .btn-reveal {
+            background: #d6a23e;
+            color: #fff;
+        }
+        .btn-reveal:hover {
+            background: #a97c26;
+        }
+        .feedback {
+            margin-top: 0.6rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            min-height: 1.4rem;
+        }
+        .feedback.ok {
+            color: #1b6b4a;
+        }
+        .feedback.bad {
+            color: #b4503f;
+        }
+        .feedback .reveal {
+            display: block;
+            background: #f3efe8;
+            border-left: 4px solid #d6a23e;
+            padding: 0.3rem 0.8rem;
+            border-radius: 8px;
+            margin-top: 0.2rem;
+            font-weight: 400;
+        }
+
+        .choice-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin: 0.5rem 0;
+        }
+        .choice-btn {
+            background: #fff;
+            border: 1.5px solid #d9d1c2;
+            border-radius: 40px;
+            padding: 0.5rem 1.2rem;
+            text-align: left;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: 0.1s;
+            font-family: inherit;
+            color: #1e2b37;
+        }
+        .choice-btn:hover:not(:disabled) {
+            border-color: #2e6f60;
+            background: #f0f5f2;
+        }
+        .choice-btn.correct {
+            border-color: #2e6f60;
+            background: #e1ede7;
+            font-weight: 600;
+        }
+        .choice-btn.wrong {
+            border-color: #b4503f;
+            background: #f5e1db;
+        }
+        .choice-btn:disabled {
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .progress-stamp {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem 0.8rem;
+            justify-content: center;
+            margin: 0.8rem 0 1.6rem;
+        }
+        .stamp {
+            background: #fff;
+            border: 2px dashed #d4c9b8;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: 0.25s;
+        }
+        .stamp.done {
+            border-style: solid;
+            border-color: #d6a23e;
+            background: #d6a23e;
+            color: #fff;
+            transform: scale(1.05);
+        }
+
+        .recap {
+            background: linear-gradient(145deg, #2e6f60, #1b473c);
+            color: #fff;
+            border-radius: 2rem;
+            padding: 2rem 1.8rem;
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+        .recap h2 {
+            color: #fff;
+            font-size: 1.8rem;
+        }
+        .recap .score {
+            font-size: 2.8rem;
+            font-family: 'Fraunces', serif;
+        }
+        .recap .btn-reset {
+            background: #fff;
+            color: #1b473c;
+            border-radius: 40px;
+            padding: 0.5rem 1.8rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            .page {
+                padding: 1.5rem;
+            }
+            .section {
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page">
+
+        <!-- EN-TÊTE -->
+        <h1>👗 Invitation · Défilé de mode <small>A2 → B1 · Décrire & convaincre</small></h1>
+        <div style="display: flex; gap: 0.5rem 1rem; flex-wrap: wrap; margin: 0.4rem 0 0.2rem;">
+            <span class="badge-soft">🎯 Compréhension écrite</span>
+            <span class="badge-soft">💬 Vocabulaire de la mode</span>
+            <span class="badge-soft">🧩 6 exercices progressifs</span>
+        </div>
+
+        <!-- PROGRESS STAMPS -->
+        <div class="progress-stamp">
+            <div class="stamp" data-sec="dialogue">📖</div>
+            <div class="stamp" data-sec="reponse">✉️</div>
+            <div class="stamp" data-sec="vocab">📝</div>
+            <div class="stamp" data-sec="exo1">1️⃣</div>
+            <div class="stamp" data-sec="exo2">2️⃣</div>
+            <div class="stamp" data-sec="exo3">3️⃣</div>
+            <div class="stamp" data-sec="exo4">4️⃣</div>
+            <div class="stamp" data-sec="exo5">5️⃣</div>
+            <div class="stamp" data-sec="exo6">6️⃣</div>
+        </div>
+
+        <!-- ===== 1. TEXTE DE DIALOGUE ===== -->
+        <div class="section" id="sec-dialogue">
+            <div class="section-header"><span class="step">Étape 1</span><h2>📖 Lecture · Ton ami te parle du défilé</h2></div>
+            <div class="dialogue-box">
+                <p><span class="speaker">👤 Ton ami·e :</span></p>
+                <p class="message">« Salut ! J’ai une nouvelle incroyable : j’ai reçu deux invitations pour le défilé de la collection automne-hiver du célèbre couturier <strong>Léopold Durand</strong>. La présentation aura lieu dans le <strong>Grand Salon du Musée des Arts Décoratifs</strong>, un lieu magnifique avec des lustres en cristal et des fresques au plafond. Je me demande si tu voudrais m’accompagner. Qu’est-ce que tu penses de cette occasion ? As-tu déjà assisté à un défilé ? Est-ce que tu aimes la haute couture ? J’aimerais connaître ton avis sur les créations de Durand : j’adore ses jeux de matières et ses coupes audacieuses. Et toi, qu’est-ce qui t’attire dans la mode ? Est-ce que le lieu te semble prestigieux ? Dis-moi tout ! »</p>
+            </div>
+            <div class="traduction-badge">🇬🇧 <span class="gloss">“Hi! I have amazing news: I received two invitations for the autumn-winter collection show by the famous designer Léopold Durand. The presentation will take place in the Grand Salon of the Museum of Decorative Arts, a magnificent venue with crystal chandeliers and ceiling frescoes. I’m wondering if you’d like to join me. What do you think of this opportunity? Have you ever been to a fashion show? Do you like haute couture? I’d like to know your opinion on Durand’s creations: I love his play with materials and bold cuts. What attracts you to fashion? Does the venue seem prestigious? Tell me everything!”</span></div>
+        </div>
+
+        <!-- ===== 1b. RÉPONSE MODÈLE ===== -->
+        <div class="section" id="sec-reponse">
+            <div class="section-header"><span class="step">Étape 1b</span><h2>✉️ Ta réponse modèle</h2></div>
+            <div class="reponse-box">
+                <p><span class="speaker">👤 Ta réponse :</span></p>
+                <p class="message">« Oh là là, c’est une chance incroyable ! Je n’ai jamais assisté à un défilé, mais j’en rêve. Le Grand Salon du Musée des Arts Décoratifs est un cadre absolument somptueux, avec ses lustres et ses fresques – je suis sûre que l’ambiance sera magique. En ce qui concerne Léopold Durand, j’admire beaucoup son travail : il mélange des tissus nobles comme la soie et le velours avec des coupes modernes et épurées. Ce que j’aime particulièrement, c’est sa façon de jouer avec les volumes et les couleurs profondes. Je suis très curieuse de voir sa nouvelle collection. Je serais ravie de t’accompagner, et en plus, ça me permettra de découvrir l’univers de la haute couture. À mon avis, ce défilé va être un événement mémorable ! »</p>
+            </div>
+            <div class="traduction-badge" style="margin-top:0.4rem;">🇬🇧 <span class="gloss">“Oh my, that's an incredible opportunity! I've never been to a fashion show, but I dream of it. The Grand Salon of the Museum of Decorative Arts is an absolutely sumptuous venue, with its chandeliers and frescoes – I'm sure the atmosphere will be magical. As for Léopold Durand, I really admire his work: he mixes noble fabrics like silk and velvet with modern, clean cuts. What I particularly like is his way of playing with volumes and deep colors. I'm very curious to see his new collection. I would be delighted to join you, and besides, it will allow me to discover the world of haute couture. In my opinion, this show is going to be a memorable event!”</span></div>
+            <div style="margin-top:0.6rem; background: #eae6dd; border-radius: 30px; padding: 0.2rem 1.2rem; display: inline-block; font-size:0.85rem;">💡 Cette réponse utilise le vocabulaire et les structures des exercices ci-dessous.</div>
+        </div>
+
+        <!-- ===== 2. VOCABULAIRE CLÉ ===== -->
+        <div class="section" id="sec-vocab">
+            <div class="section-header"><span class="step">Étape 2</span><h2>📝 Vocabulaire de la mode et du lieu</h2></div>
+            <div class="vocab-grid">
+                <div class="vocab-item"><span class="fr">le défilé de mode</span><span class="en">fashion show</span></div>
+                <div class="vocab-item"><span class="fr">le couturier / la couturière</span><span class="en">designer</span></div>
+                <div class="vocab-item"><span class="fr">la haute couture</span><span class="en">haute couture</span></div>
+                <div class="vocab-item"><span class="fr">un lieu prestigieux</span><span class="en">prestigious venue</span></div>
+                <div class="vocab-item"><span class="fr">un lustre en cristal</span><span class="en">crystal chandelier</span></div>
+                <div class="vocab-item"><span class="fr">une fresque au plafond</span><span class="en">ceiling fresco</span></div>
+                <div class="vocab-item"><span class="fr">une coupe audacieuse</span><span class="en">bold cut</span></div>
+                <div class="vocab-item"><span class="fr">un tissu noble</span><span class="en">luxury fabric</span></div>
+                <div class="vocab-item"><span class="fr">les accessoires</span><span class="en">accessories</span></div>
+                <div class="vocab-item"><span class="fr">être invité·e à</span><span class="en">to be invited to</span></div>
+            </div>
+            <div style="margin-top:0.6rem; font-size:0.9rem; background:#f4f1eb; border-radius:30px; padding:0.2rem 1.2rem; display:inline-block;">+ expressions : <strong>j’admire, je suis curieux·se, à mon avis, ce qui m’attire, je suis ravi·e</strong></div>
+        </div>
+
+        <!-- ===== 3. EXERCICES PROGRESSIFS ===== -->
+
+        <!-- EXO 1 : CHOIX MULTIPLE (compréhension) -->
+        <div class="section" id="sec-exo1">
+            <div class="section-header"><span class="step">Exercice 1</span><h2>🔍 Comprendre le message</h2></div>
+            <p style="color:#3d4f5a;">Choisis la réponse qui correspond au texte.</p>
+            <div id="mcq-container"></div>
+        </div>
+
+        <!-- EXO 2 : COMPLÉTER LA PHRASE (vocabulaire) -->
+        <div class="section" id="sec-exo2">
+            <div class="section-header"><span class="step">Exercice 2</span><h2>✏️ Compléter avec le bon mot</h2></div>
+            <p style="color:#3d4f5a;">Complète chaque phrase avec un mot de la liste ci-dessous.</p>
+            <div id="fill-container"></div>
+        </div>
+
+        <!-- EXO 3 : RÉDIGER UNE RÉPONSE (courte) -->
+        <div class="section" id="sec-exo3">
+            <div class="section-header"><span class="step">Exercice 3</span><h2>✍️ Répondre à ton ami·e</h2></div>
+            <p style="color:#3d4f5a;">Rédige une réponse pour chaque question posée par ton ami·e. Utilise le vocabulaire de la mode.</p>
+            <div id="write-container"></div>
+        </div>
+
+        <!-- EXO 4 : ASSOCIER QUESTION / RÉPONSE (défilé) -->
+        <div class="section" id="sec-exo4">
+            <div class="section-header"><span class="step">Exercice 4</span><h2>🔗 Associer question et réponse</h2></div>
+            <p style="color:#3d4f5a;">Clique d'abord sur une question, puis sur sa réponse correspondante.</p>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:0.8rem;" id="match-container">
+                <div id="match-questions"></div>
+                <div id="match-answers"></div>
+            </div>
+            <div id="match-feedback" style="margin-top:0.5rem; font-weight:600;"></div>
+        </div>
+
+        <!-- EXO 5 : POSER UNE QUESTION SUR LE DÉFILÉ -->
+        <div class="section" id="sec-exo5">
+            <div class="section-header"><span class="step">Exercice 5</span><h2>❓ Poser une question</h2></div>
+            <p style="color:#3d4f5a;">Transforme chaque affirmation en question pour en savoir plus sur le défilé. Utilise <strong>est-ce que</strong> ou l'<strong>inversion</strong>.</p>
+            <div id="question-transform-container"></div>
+        </div>
+
+        <!-- EXO 6 : QUESTIONS AVEC MOTS INTERROGATIFS (mode) -->
+        <div class="section" id="sec-exo6">
+            <div class="section-header"><span class="step">Exercice 6</span><h2>❓ Questions avec quel, où, quand, comment, pourquoi</h2></div>
+            <p style="color:#3d4f5a;">Transforme chaque phrase en question en utilisant le mot interrogatif indiqué.</p>
+            <div id="interro-container"></div>
+        </div>
+
+        <!-- RÉCAP -->
+        <div class="recap" id="recap" style="display:none;">
+            <h2>🎉 Félicitations !</h2>
+            <div class="score" id="scoreDisplay">0 / 0</div>
+            <p>Tu as complété tous les exercices sur le thème du défilé de mode. Continue à pratiquer pour devenir un·e expert·e de l'invitation et de la description !</p>
+            <button class="btn btn-reset" onclick="location.reload()">↻ Recommencer</button>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        // DONNÉES & ÉTAT
+        // ============================================================
+        const totalSections = 8;
+        let completed = { dialogue: false, reponse: false, vocab: false, exo1: false, exo2: false, exo3: false, exo4: false,
+            exo5: false, exo6: false };
+        let totalCorrect = 0;
+        let totalAttempted = 0;
+
+        function markDone(secId) {
+            if (!completed[secId]) {
+                completed[secId] = true;
+                document.querySelector(`.stamp[data-sec="${secId}"]`)?.classList.add('done');
+                updateRecap();
+            }
+        }
+
+        function updateRecap() {
+            const allDone = Object.values(completed).every(v => v === true);
+            if (allDone) {
+                document.getElementById('recap').style.display = 'block';
+                document.getElementById('scoreDisplay').textContent = totalCorrect + ' / ' + totalAttempted;
+                document.getElementById('recap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        // ============================================================
+        // UTILITAIRE : MÉLANGE
+        // ============================================================
+        function shuffleArray(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ============================================================
+        // EXO 1 : CHOIX MULTIPLE (compréhension)
+        // ============================================================
+        const mcqData = [
+            { q: 'Où se déroule le défilé ?', options: ['Au Louvre', 'Au Grand Salon du Musée des Arts Décoratifs',
+                    'À la Tour Eiffel'
+                ], correct: 1 },
+            { q: 'Quel est le nom du couturier ?', options: ['Léopold Durand', 'Pierre Cardin', 'Jean-Paul Gaultier'],
+                correct: 0 },
+            { q: 'Que trouve-t-on dans le salon ?', options: ['Des colonnes et des statues', 'Des lustres et des fresques',
+                    'Des miroirs et des tapis'
+                ], correct: 1 },
+            { q: 'Qu’est-ce que ton ami·e aime dans les créations de Durand ?', options: ['Les couleurs vives',
+                    'Les jeux de matières et les coupes audacieuses', 'Les imprimés floraux'
+                ], correct: 1 },
+            { q: 'Ton ami·e te demande si…', options: ['tu as déjà assisté à un défilé', 'tu aimes la danse',
+                    'tu connais le musée'
+                ], correct: 0 },
+            { q: 'Quel est le thème de la collection ?', options: ['Printemps-été', 'Automne-hiver', 'Haute couture'],
+                correct: 1 }
+        ];
+
+        function renderMCQ() {
+            const container = document.getElementById('mcq-container');
+            mcqData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.dataset.idx = i;
+                div.innerHTML = `<div class="prompt">${i+1}) ${item.q}</div>`;
+                const grid = document.createElement('div');
+                grid.className = 'choice-grid';
+                let answered = false;
+
+                const shuffledOptions = item.options.map((opt, idx) => ({ text: opt, idx }));
+                shuffleArray(shuffledOptions);
+
+                shuffledOptions.forEach((optObj) => {
+                    const btn = document.createElement('button');
+                    btn.className = 'choice-btn';
+                    btn.textContent = optObj.text;
+                    btn.addEventListener('click', () => {
+                        if (answered) return;
+                        answered = true;
+                        const isCorrect = (optObj.idx === item.correct);
+                        if (isCorrect) { btn.classList.add('correct');
+                            totalCorrect++; } else { btn.classList.add('wrong'); }
+                        totalAttempted++;
+                        grid.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+                        const fb = document.createElement('div');
+                        fb.className = 'feedback ' + (isCorrect ? 'ok' : 'bad');
+                        fb.textContent = isCorrect ? '✔ Exact !' : '✗ La bonne réponse était : ' + item
+                            .options[item.correct];
+                        div.appendChild(fb);
+                        markDone('exo1');
+                    });
+                    grid.appendChild(btn);
+                });
+                div.appendChild(grid);
+                container.appendChild(div);
+            });
+        }
+
+        // ============================================================
+        // EXO 2 : COMPLÉTER (vocabulaire) — avec liste aléatoire
+        // ============================================================
+        const fillData = [
+            { q: 'Le ________ de mode aura lieu dans un lieu prestigieux.', answer: ['défilé'] },
+            { q: 'Le célèbre ________ Léopold Durand présentera sa collection.', answer: ['couturier'] },
+            { q: 'Les ________ en cristal éclairent le Grand Salon.', answer: ['lustres'] },
+            { q: 'Les ________ au plafond représentent des scènes mythologiques.', answer: ['fresques'] },
+            { q: 'La coupe ________ de cette robe est très moderne.', answer: ['audacieuse'] },
+            { q: 'La soie est un tissu ________ utilisé en haute couture.', answer: ['noble'] }
+        ];
+
+        function renderFill() {
+            const container = document.getElementById('fill-container');
+
+            // Liste des mots à afficher en bas de l'exercice (mélangée)
+            const wordList = ['défilé', 'couturier', 'lustres', 'fresques', 'audacieuse', 'noble', 'accessoires', 'prestigieux'];
+            shuffleArray(wordList);
+
+            // Afficher la liste des mots
+            const wordListDiv = document.createElement('div');
+            wordListDiv.style.cssText =
+                'background:#f4f1eb; border-radius:40px; padding:0.4rem 1.2rem; margin-bottom:1rem; display:inline-block; font-size:0.95rem;';
+            wordListDiv.innerHTML = '📌 Mots disponibles : <strong>' + wordList.join(' • ') + '</strong>';
+            container.appendChild(wordListDiv);
+
+            fillData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) ${item.q}</div>
+              <div class="exo-row">
+                <input type="text" id="fill-${i}" placeholder="Écris le mot…">
+                <button class="btn btn-primary" data-idx="${i}">Vérifier</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir la réponse</button>
+              </div>
+              <div class="feedback" id="fill-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const checkBtn = div.querySelector('.btn-primary');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+
+                let resolved = false;
+                checkBtn.addEventListener('click', () => {
+                    if (resolved) return;
+                    const val = input.value.trim().toLowerCase().replace(/[^a-zéèêëàâçûôî ]/g, '');
+                    const ok = item.answer.some(a => val.includes(a.toLowerCase()));
+                    if (ok) {
+                        resolved = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Parfait !';
+                        input.disabled = true;
+                        checkBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo2');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Réessaie ou consulte la réponse.';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Réponse : <span class="reveal">${item.answer[0]}</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // EXO 3 : ÉCRIRE (réponses aux questions)
+        // ============================================================
+        const writeData = [
+            { q: 'As-tu déjà assisté à un défilé de mode ?' },
+            { q: 'Qu’est-ce qui t’attire dans la haute couture ?' },
+            { q: 'Que penses-tu du lieu : le Grand Salon du Musée des Arts Décoratifs ?' },
+            { q: 'Aimes-tu les créations de Léopold Durand ? Pourquoi ?' }
+        ];
+
+        function renderWrite() {
+            const container = document.getElementById('write-container');
+            writeData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) ${item.q}</div>
+              <div class="exo-row">
+                <input type="text" id="write-${i}" placeholder="Écris ta réponse…" style="flex:1;">
+                <button class="btn btn-outline" data-idx="${i}">Valider</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir un exemple</button>
+              </div>
+              <div class="feedback" id="write-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const valBtn = div.querySelector('.btn-outline');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+
+                let validated = false;
+                valBtn.addEventListener('click', () => {
+                    if (validated) return;
+                    const txt = input.value.trim();
+                    if (txt.length > 10) {
+                        validated = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Réponse enregistrée !';
+                        input.disabled = true;
+                        valBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo3');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Écris une phrase plus complète (au moins 10 caractères).';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    const examples = [
+                        'Non, je n’ai jamais assisté à un défilé, mais j’aimerais beaucoup découvrir cet univers.',
+                        'Ce qui m’attire, c’est la créativité et la beauté des tissus.',
+                        'Le Grand Salon est un cadre prestigieux, parfait pour un défilé de haute couture.',
+                        'Oui, j’admire ses coupes audacieuses et ses jeux de matières.'
+                    ];
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Exemple : <span class="reveal">${examples[i]}</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // EXO 4 : ASSOCIATION (défilé) — avec listes mélangées
+        // ============================================================
+        const matchPairs = [
+            { q: 'Qui est le couturier ?', a: 'Léopold Durand.' },
+            { q: 'Où a lieu le défilé ?', a: 'Au Grand Salon du Musée des Arts Décoratifs.' },
+            { q: 'Qu’est-ce que ton ami·e aime dans la mode ?', a: 'Les jeux de matières et les coupes audacieuses.' },
+            { q: 'Pourquoi le lieu est-il exceptionnel ?', a: 'Parce qu’il est prestigieux et magnifique.' },
+            { q: 'Qu’est-ce qui décore le salon ?', a: 'Des lustres en cristal et des fresques.' },
+            { q: 'Quelle collection est présentée ?', a: 'La collection automne-hiver.' }
+        ];
+
+        function renderMatch() {
+            const qCol = document.getElementById('match-questions');
+            const aCol = document.getElementById('match-answers');
+            const fb = document.getElementById('match-feedback');
+
+            // Mélange des questions et des réponses
+            const shuffledQ = [...matchPairs].map((p, id) => ({ id, text: p.q })).sort(() => Math.random() - 0.5);
+            const shuffledA = [...matchPairs].map((p, id) => ({ id, text: p.a })).sort(() => Math.random() - 0.5);
+
+            let selectedQ = null;
+            let found = 0;
+
+            function updateMatch() {
+                if (found === matchPairs.length) {
+                    fb.textContent = '🎉 Toutes les paires sont associées !';
+                    fb.style.color = '#1b6b4a';
+                    markDone('exo4');
+                }
+            }
+
+            shuffledQ.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = item.text;
+                btn.dataset.id = item.id;
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('correct')) return;
+                    qCol.querySelectorAll('.choice-btn').forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    selectedQ = { id: item.id, el: btn };
+                });
+                qCol.appendChild(btn);
+            });
+
+            shuffledA.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = 'choice-btn';
+                btn.textContent = item.text;
+                btn.dataset.id = item.id;
+                btn.addEventListener('click', () => {
+                    if (btn.classList.contains('correct') || !selectedQ) return;
+                    if (item.id === selectedQ.id) {
+                        btn.classList.add('correct');
+                        selectedQ.el.classList.add('correct');
+                        selectedQ.el.disabled = true;
+                        btn.disabled = true;
+                        found++;
+                        totalCorrect++;
+                        totalAttempted++;
+                        fb.textContent = '✔ Paire associée !';
+                        fb.style.color = '#1b6b4a';
+                        selectedQ = null;
+                        updateMatch();
+                    } else {
+                        btn.classList.add('wrong');
+                        selectedQ.el.classList.add('wrong');
+                        setTimeout(() => { btn.classList.remove('wrong');
+                            selectedQ.el.classList.remove('wrong'); }, 500);
+                        totalAttempted++;
+                    }
+                });
+                aCol.appendChild(btn);
+            });
+        }
+
+        // ============================================================
+        // EXO 5 : POSER UNE QUESTION (défilé)
+        // ============================================================
+        const transformData = [
+            { phrase: 'Tu aimes la haute couture.', answer: ['est-ce que tu aimes la haute couture',
+                    'aimes-tu la haute couture'
+                ] },
+            { phrase: 'Il a reçu deux invitations.', answer: ['est-ce qu\'il a reçu deux invitations',
+                    'a-t-il reçu deux invitations'
+                ] },
+            { phrase: 'Vous allez au défilé ensemble.', answer: ['est-ce que vous allez au défilé ensemble',
+                    'allez-vous au défilé ensemble'
+                ] },
+            { phrase: 'Elle admire les créations de Durand.', answer: ['est-ce qu\'elle admire les créations de durand',
+                    'admire-t-elle les créations de durand'
+                ] }
+        ];
+
+        function renderTransform() {
+            const container = document.getElementById('question-transform-container');
+            transformData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) Transforme en question : « ${item.phrase} »</div>
+              <div class="exo-row">
+                <input type="text" id="trans-${i}" placeholder="Écris la question…">
+                <button class="btn btn-primary" data-idx="${i}">Vérifier</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir la réponse</button>
+              </div>
+              <div class="feedback" id="trans-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const checkBtn = div.querySelector('.btn-primary');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+                let resolved = false;
+
+                checkBtn.addEventListener('click', () => {
+                    if (resolved) return;
+                    const val = input.value.trim().toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g, '');
+                    const ok = item.answer.some(a => val.includes(a.toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g,
+                        '')));
+                    if (ok) {
+                        resolved = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Parfait !';
+                        input.disabled = true;
+                        checkBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo5');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Réessaie ou consulte la réponse.';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Réponse : <span class="reveal">${item.answer[0]} ?</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // EXO 6 : QUESTIONS AVEC MOTS INTERROGATIFS (mode)
+        // ============================================================
+        const interroData = [
+            { phrase: 'Le défilé a lieu au musée.', mot: 'Où', answer: ['où est-ce que le défilé a lieu',
+                    'où a lieu le défilé'
+                ] },
+            { phrase: 'La collection est présentée en octobre.', mot: 'Quand', answer: ['quand est-ce que la collection est présentée',
+                    'quand la collection est-elle présentée'
+                ] },
+            { phrase: 'Il faut 200 euros pour la robe.', mot: 'Combien', answer: ['combien est-ce qu\'il faut pour la robe',
+                    'combien faut-il pour la robe'
+                ] },
+            { phrase: 'Tu vas au défilé en métro.', mot: 'Comment', answer: ['comment est-ce que tu vas au défilé',
+                    'comment vas-tu au défilé'
+                ] },
+            { phrase: 'Tu aimes la mode pour la créativité.', mot: 'Pourquoi',
+                answer: ['pourquoi est-ce que tu aimes la mode', 'pourquoi aimes-tu la mode'] },
+            { phrase: 'Tu préfères la soie ou le velours.', mot: 'Quel',
+                answer: ['quel est-ce que tu préfères', 'lequel préfères-tu'] }
+        ];
+
+        function renderInterro() {
+            const container = document.getElementById('interro-container');
+            interroData.forEach((item, i) => {
+                const div = document.createElement('div');
+                div.className = 'exo';
+                div.innerHTML = `
+              <div class="prompt">${i+1}) Mot interrogatif : <strong>${item.mot}</strong> — phrase : « ${item.phrase} »</div>
+              <div class="exo-row">
+                <input type="text" id="interro-${i}" placeholder="Écris la question…">
+                <button class="btn btn-primary" data-idx="${i}">Vérifier</button>
+                <button class="btn btn-reveal" data-idx="${i}" data-reveal="1">Voir la réponse</button>
+              </div>
+              <div class="feedback" id="interro-fb-${i}"></div>
+            `;
+                container.appendChild(div);
+
+                const input = div.querySelector('input');
+                const checkBtn = div.querySelector('.btn-primary');
+                const revealBtn = div.querySelector('.btn-reveal');
+                const fb = div.querySelector('.feedback');
+                let resolved = false;
+
+                checkBtn.addEventListener('click', () => {
+                    if (resolved) return;
+                    const val = input.value.trim().toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g, '');
+                    const ok = item.answer.some(a => val.includes(a.toLowerCase().replace(/[^a-zéèêëàâçûôî' ]/g,
+                        '')));
+                    if (ok) {
+                        resolved = true;
+                        fb.className = 'feedback ok';
+                        fb.textContent = '✔ Parfait !';
+                        input.disabled = true;
+                        checkBtn.disabled = true;
+                        totalCorrect++;
+                        totalAttempted++;
+                        markDone('exo6');
+                    } else {
+                        fb.className = 'feedback bad';
+                        fb.textContent = '✗ Réessaie ou consulte la réponse.';
+                        totalAttempted++;
+                    }
+                });
+                revealBtn.addEventListener('click', () => {
+                    fb.className = 'feedback';
+                    fb.innerHTML = `💡 Réponse : <span class="reveal">${item.answer[0]} ?</span>`;
+                });
+            });
+        }
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        renderMCQ();
+        renderFill();
+        renderWrite();
+        renderMatch();
+        renderTransform();
+        renderInterro();
+
+        // mark dialogue, reponse & vocab as "done" on interaction
+        document.getElementById('sec-dialogue').addEventListener('click', () => markDone('dialogue'), { once: true });
+        document.getElementById('sec-reponse').addEventListener('click', () => markDone('reponse'), { once: true });
+        document.getElementById('sec-vocab').addEventListener('click', () => markDone('vocab'), { once: true });
+    </script>
+</body>
+</html>
