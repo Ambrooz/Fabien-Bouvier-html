@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Café & Questions · Parler à un nouveau collègue</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+:root{
+  --paper:#F6F1E4;
+  --paper-dark:#ECE3CC;
+  --line:#D8CBA6;
+  --ink:#232E3B;
+  --ink-soft:#5C6B79;
+  --teal:#2E6F60;
+  --teal-dark:#1B473C;
+  --teal-pale:#E1EDE7;
+  --mustard:#D6A23E;
+  --mustard-dark:#A97C26;
+  --coral:#B4503F;
+  --coral-pale:#F5E1DB;
+  --card:#FFFFFF;
+  --shadow: 0 18px 40px -18px rgba(35,46,59,0.22);
+}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(35,46,59,0.05) 1px, transparent 0) 0 0/22px 22px,
+    var(--paper);
+  color:var(--ink);
+  font-family:'Work Sans', sans-serif;
+  padding:2.5rem 1rem 5rem;
+  line-height:1.5;
+}
+.page{max-width:920px; margin:0 auto;}
+h1,h2,h3{font-family:'Fraunces', serif; margin:0;}
+.hide-translation .gloss{display:none;}
+
+/* ===== Badge header ===== */
+.badge{
+  background:var(--card);
+  border-radius:20px;
+  box-shadow:var(--shadow);
+  border:1px solid var(--line);
+  padding:1.6rem 1.8rem;
+  position:relative;
+  display:flex;
+  align-items:center;
+  gap:1.3rem;
+  overflow:hidden;
+}
+.badge::before{
+  content:"";
+  position:absolute; top:0; left:0; right:0; height:10px;
+  background:repeating-linear-gradient(90deg, var(--teal) 0 14px, transparent 14px 24px);
+  opacity:0.9;
+}
+.badge::after{
+  content:"";
+  position:absolute; top:26px; left:50%; transform:translateX(-50%);
+  width:52px; height:14px; border-radius:0 0 10px 10px;
+  background:var(--paper-dark);
+  box-shadow: inset 0 -2px 4px rgba(0,0,0,0.08);
+}
+.badge-photo{
+  width:64px; height:64px; border-radius:50%;
+  background:var(--teal-pale);
+  display:flex; align-items:center; justify-content:center;
+  font-size:2rem; flex:none;
+  border:3px solid var(--teal);
+  margin-top:0.6rem;
+}
+.badge-info{margin-top:0.6rem;}
+.badge-info .eyebrow{
+  text-transform:uppercase; letter-spacing:0.14em; font-size:0.68rem;
+  color:var(--teal-dark); font-weight:700;
+}
+.badge-info h1{font-size:1.7rem; color:var(--ink); margin-top:0.15rem;}
+.badge-info p{margin:0.3rem 0 0; color:var(--ink-soft); font-size:0.92rem;}
+.translate-toggle{
+  margin-left:auto; margin-top:0.6rem; flex:none;
+  display:flex; align-items:center; gap:0.5rem;
+  font-size:0.78rem; color:var(--ink-soft); font-weight:600;
+  background:var(--paper-dark); padding:0.4rem 0.8rem; border-radius:30px;
+  cursor:pointer; user-select:none; border:1px solid var(--line);
+}
+.translate-toggle input{accent-color:var(--teal);}
+
+/* ===== Progress stamps ===== */
+.stamps{
+  display:flex; gap:0.6rem; margin:1.4rem 0 2rem; flex-wrap:wrap;
+  justify-content:center;
+}
+.stamp{
+  width:56px; height:56px; border-radius:50%;
+  background:var(--card); border:2.5px dashed var(--line);
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.3rem; color:var(--ink-soft);
+  transition:0.25s; position:relative;
+}
+.stamp.done{
+  border-style:solid; border-color:var(--mustard);
+  background:var(--mustard); color:#fff;
+  transform:scale(1.08) rotate(-4deg);
+  box-shadow:0 6px 14px -4px rgba(169,124,38,0.55);
+}
+.stamp-label{
+  position:absolute; top:64px; left:50%; transform:translateX(-50%);
+  font-size:0.6rem; color:var(--ink-soft); white-space:nowrap; font-weight:600;
+}
+
+/* ===== Sections ===== */
+.section{
+  background:var(--card);
+  border-radius:18px;
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  padding:1.6rem 1.7rem 1.8rem 2.4rem;
+  margin-bottom:1.8rem;
+  position:relative;
+}
+.section::before{
+  content:"";
+  position:absolute; left:0.9rem; top:1.6rem; bottom:1.6rem; width:1px;
+  background: repeating-linear-gradient(180deg, var(--line) 0 6px, transparent 6px 14px);
+}
+.section::after{
+  content:""; position:absolute; left:0.7rem; top:0.9rem;
+  width:9px; height:9px; border-radius:50%; background:var(--paper);
+  border:2px solid var(--line);
+  box-shadow: 0 34px 0 var(--paper), 0 34px 0 2px var(--line),
+              0 68px 0 var(--paper), 0 68px 0 2px var(--line);
+}
+.sec-head{display:flex; align-items:baseline; gap:0.7rem; margin-bottom:0.3rem; flex-wrap:wrap;}
+.sec-head .tag{
+  font-family:'Fraunces', serif; font-weight:700; font-size:1rem;
+  color:#fff; background:var(--teal); padding:0.15rem 0.7rem; border-radius:8px;
+}
+.sec-head h2{font-size:1.4rem;}
+.sec-sub{color:var(--ink-soft); font-size:0.88rem; margin:0.2rem 0 1.2rem;}
+
+/* ===== Reference card ===== */
+.ref-grid{display:grid; grid-template-columns:1fr 1fr; gap:1rem;}
+.ref-card{
+  background:var(--teal-pale); border-radius:12px; padding:0.9rem 1.1rem;
+  border-left:4px solid var(--teal);
+}
+.ref-card .method{font-weight:700; color:var(--teal-dark); font-size:0.86rem;}
+.ref-card .ex{font-family:'Fraunces', serif; font-size:1.02rem; margin-top:0.25rem;}
+.ref-card .gloss{color:var(--ink-soft); font-size:0.8rem; font-style:italic; margin-top:0.15rem;}
+.word-table{
+  width:100%; border-collapse:collapse; margin-top:0.4rem; font-size:0.9rem;
+}
+.word-table td{padding:0.35rem 0.5rem; border-bottom:1px dashed var(--line);}
+.word-table td:first-child{font-weight:700; color:var(--teal-dark); width:40%;}
+
+/* ===== Drill items ===== */
+.drill-item{
+  background:var(--paper); border-radius:12px; padding:0.9rem 1.1rem;
+  margin-bottom:0.8rem; border:1px solid var(--line);
+}
+.drill-prompt{font-size:1rem;}
+.drill-prompt .gloss{display:block; color:var(--ink-soft); font-size:0.78rem; font-style:italic; margin-top:0.1rem;}
+.drill-row{display:flex; gap:0.6rem; margin-top:0.55rem; flex-wrap:wrap; align-items:center;}
+.drill-row input[type=text]{
+  flex:1; min-width:180px; padding:0.55rem 0.8rem; border-radius:9px;
+  border:1.5px solid var(--line); font-size:0.95rem; font-family:inherit;
+  background:#fff;
+}
+.drill-row input[type=text]:focus{outline:2px solid var(--teal); border-color:var(--teal);}
+.btn{
+  border:none; border-radius:9px; padding:0.55rem 1.1rem; font-weight:600;
+  font-size:0.88rem; cursor:pointer; transition:0.15s; font-family:inherit;
+}
+.btn-check{background:var(--teal); color:#fff;}
+.btn-check:hover{background:var(--teal-dark);}
+.btn-ghost{background:transparent; color:var(--ink-soft); text-decoration:underline; padding:0.55rem 0.3rem;}
+.btn-ghost:hover{color:var(--ink);}
+.feedback{margin-top:0.5rem; font-size:0.88rem; font-weight:600; min-height:1.2em;}
+.feedback.ok{color:var(--teal-dark);}
+.feedback.bad{color:var(--coral);}
+.feedback .answer-reveal{
+  display:block; font-weight:500; color:var(--ink); margin-top:0.25rem;
+  background:var(--card); border-left:3px solid var(--mustard);
+  padding:0.3rem 0.6rem; border-radius:6px; font-family:'Fraunces',serif;
+}
+.drill-item.is-correct{border-color:var(--teal); background:var(--teal-pale);}
+.drill-item.is-revealed{border-color:var(--coral); background:var(--coral-pale);}
+@keyframes shake{
+  10%,90%{transform:translateX(-2px);} 20%,80%{transform:translateX(3px);}
+  30%,50%,70%{transform:translateX(-5px);} 40%,60%{transform:translateX(5px);}
+}
+.shake{animation:shake 0.45s;}
+
+/* ===== Dialogue simulator ===== */
+.chat{display:flex; flex-direction:column; gap:0.9rem;}
+.bubble{
+  max-width:82%; padding:0.7rem 1rem; border-radius:16px; font-size:0.95rem;
+  animation:pop 0.25s ease;
+}
+@keyframes pop{from{opacity:0; transform:translateY(6px);} to{opacity:1; transform:translateY(0);}}
+.bubble-lea{
+  background:var(--paper-dark); border-bottom-left-radius:4px; align-self:flex-start;
+  display:flex; gap:0.6rem; align-items:flex-start;
+}
+.bubble-lea .avatar{font-size:1.3rem; flex:none;}
+.bubble-you{
+  background:var(--teal); color:#fff; border-bottom-right-radius:4px; align-self:flex-end;
+}
+.bubble .gloss{display:block; font-size:0.75rem; opacity:0.75; font-style:italic; margin-top:0.15rem;}
+.turn-instruction{
+  align-self:center; text-align:center; font-size:0.84rem; color:var(--ink-soft);
+  background:var(--paper); border:1px dashed var(--line); border-radius:10px;
+  padding:0.5rem 0.9rem; max-width:90%;
+}
+.options{display:grid; grid-template-columns:1fr 1fr; gap:0.55rem; align-self:stretch;}
+.opt-btn{
+  text-align:left; background:#fff; border:1.5px solid var(--line); border-radius:10px;
+  padding:0.55rem 0.8rem; cursor:pointer; font-size:0.9rem; font-family:inherit; color:var(--ink);
+  transition:0.15s;
+}
+.opt-btn:hover:not(:disabled){border-color:var(--teal);}
+.opt-btn.correct{background:var(--teal-pale); border-color:var(--teal); color:var(--teal-dark); font-weight:700;}
+.opt-btn.wrong{background:var(--coral-pale); border-color:var(--coral); color:var(--coral);}
+.opt-btn:disabled{cursor:default;}
+.opt-note{
+  align-self:flex-start; font-size:0.8rem; color:var(--ink-soft); max-width:82%;
+  background:var(--paper); border-radius:10px; padding:0.45rem 0.8rem; border-left:3px solid var(--mustard);
+}
+
+/* ===== Association / matching ===== */
+.match-progress{
+  text-align:center; font-weight:700; font-size:0.9rem; color:var(--teal-dark);
+  background:var(--teal-pale); border-radius:30px; padding:0.45rem 1rem; margin-bottom:1.1rem;
+}
+.match-board{display:grid; grid-template-columns:1fr 1fr; gap:0.9rem;}
+.match-col{display:flex; flex-direction:column; gap:0.5rem;}
+.match-card{
+  background:#fff; border:1.5px solid var(--line); border-radius:11px;
+  padding:0.6rem 0.85rem; font-size:0.88rem; cursor:pointer; text-align:left;
+  font-family:inherit; color:var(--ink); transition:0.15s; line-height:1.35;
+}
+.match-card:hover:not(:disabled){border-color:var(--teal); transform:translateY(-1px);}
+.match-card.selected{border-color:var(--teal); background:var(--teal-pale); box-shadow:0 0 0 2px var(--teal) inset;}
+.match-card.matched{
+  background:var(--teal-pale); border-color:var(--teal); color:var(--teal-dark); font-weight:600;
+  cursor:default; opacity:0.85;
+}
+.match-card.wrong{background:var(--coral-pale); border-color:var(--coral);}
+.match-card:disabled{cursor:default;}
+
+/* ===== Recap ===== */
+.recap{
+  text-align:center; background:linear-gradient(160deg, var(--teal), var(--teal-dark));
+  color:#fff; border-radius:20px; padding:2.2rem 1.5rem; box-shadow:var(--shadow);
+}
+.recap h2{color:#fff; font-size:1.7rem;}
+.recap .score{font-size:2.6rem; font-family:'Fraunces',serif; margin:0.4rem 0;}
+.recap p{opacity:0.9; max-width:480px; margin:0.6rem auto 1.2rem; font-size:0.92rem;}
+.recap .btn-reset{background:#fff; color:var(--teal-dark); border-radius:30px; padding:0.6rem 1.4rem;}
+
+@media(max-width:640px){
+  .ref-grid{grid-template-columns:1fr;}
+  .options{grid-template-columns:1fr;}
+  .match-board{grid-template-columns:1fr;}
+  .badge{flex-wrap:wrap;}
+  .translate-toggle{margin-left:0;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="badge">
+    <div class="badge-photo">🧑‍💼</div>
+    <div class="badge-info">
+      <div class="eyebrow">Badge visiteur · Premier jour</div>
+      <h1>Café & Questions</h1>
+      <p>Apprenez à poser des questions à un nouveau/une nouvelle collègue<br><span class="gloss">Learn to ask a new colleague questions — French A1, for English speakers</span></p>
+    </div>
+    <label class="translate-toggle">
+      <input type="checkbox" id="toggleGloss" checked> Afficher l'anglais <span style="opacity:.6">/ Show English</span>
+    </label>
+  </div>
+
+  <div class="stamps" id="stamps">
+    <div class="stamp" data-sec="lesson">📖<span class="stamp-label">Fiche</span></div>
+    <div class="stamp" data-sec="intonation">🔊<span class="stamp-label">Intonation</span></div>
+    <div class="stamp" data-sec="estceque">❓<span class="stamp-label">Est-ce que</span></div>
+    <div class="stamp" data-sec="inversion">🔄<span class="stamp-label">Inversion</span></div>
+    <div class="stamp" data-sec="quest">🔍<span class="stamp-label">Qu'est-ce que</span></div>
+    <div class="stamp" data-sec="motsinterro">🔤<span class="stamp-label">Mots</span></div>
+    <div class="stamp" data-sec="dialogue">☕<span class="stamp-label">Dialogue</span></div>
+    <div class="stamp" data-sec="association">🔗<span class="stamp-label">Association</span></div>
+  </div>
+
+  <!-- ===== FICHE DE RÉFÉRENCE ===== -->
+  <div class="section" id="sec-lesson">
+    <div class="sec-head"><span class="tag">Fiche</span><h2>3 façons de poser une question</h2></div>
+    <p class="sec-sub gloss">Quick reference — three ways to ask a yes/no question, plus how to ask "what".</p>
+    <div class="ref-grid">
+      <div class="ref-card">
+        <div class="method">1 · Intonation (à l'oral)</div>
+        <div class="ex">Tu aimes le café&nbsp;? ↗</div>
+        <div class="gloss">Same word order as a statement, just raise your voice at the end. Casual, spoken.</div>
+      </div>
+      <div class="ref-card">
+        <div class="method">2 · Est-ce que (tous les jours)</div>
+        <div class="ex">Est-ce que tu aimes le café&nbsp;?</div>
+        <div class="gloss">Add "Est-ce que" (→ "Est-ce qu'" before a vowel) in front of the statement. Neutral, safe everywhere.</div>
+      </div>
+      <div class="ref-card">
+        <div class="method">3 · Inversion (plus formel)</div>
+        <div class="ex">Aimes-tu le café&nbsp;?</div>
+        <div class="gloss">Swap verb and subject, joined by a hyphen. Add "-t-" before il/elle if the verb ends in a vowel.</div>
+      </div>
+      <div class="ref-card">
+        <div class="method">4 · Qu'est-ce que (pour "quoi")</div>
+        <div class="ex">Qu'est-ce que tu aimes&nbsp;?</div>
+        <div class="gloss">"What do you like?" — use when you're asking about a thing, not just yes/no.</div>
+      </div>
+    </div>
+    <table class="word-table">
+      <tr><td>Qui&nbsp;?</td><td>Who? <span class="gloss">— e.g. "Qui est-ce ?"</span></td></tr>
+      <tr><td>Où&nbsp;?</td><td>Where? <span class="gloss">— "Où habites-tu ?"</span></td></tr>
+      <tr><td>Quand&nbsp;?</td><td>When? <span class="gloss">— "Quand pars-tu ?"</span></td></tr>
+      <tr><td>Pourquoi&nbsp;?</td><td>Why? <span class="gloss">— "Pourquoi es-tu ici ?"</span></td></tr>
+      <tr><td>Comment&nbsp;?</td><td>How? <span class="gloss">— "Comment ça va ?"</span></td></tr>
+      <tr><td>Combien&nbsp;?</td><td>How much/many? <span class="gloss">— "Combien de temps ?"</span></td></tr>
+    </table>
+  </div>
+
+  <!-- ===== DRILLS (injected by JS) ===== -->
+  <div class="section" id="sec-intonation">
+    <div class="sec-head"><span class="tag">1</span><h2>Intonation</h2></div>
+    <p class="sec-sub gloss">Type the question — same words, just add "?". Press Enter or click "Vérifier".</p>
+    <div id="drill-intonation" class="drill-list"></div>
+  </div>
+
+  <div class="section" id="sec-estceque">
+    <div class="sec-head"><span class="tag">2</span><h2>Est-ce que</h2></div>
+    <p class="sec-sub gloss">Type the same statement transformed with "Est-ce que" (watch for the elision "qu'").</p>
+    <div id="drill-estceque" class="drill-list"></div>
+  </div>
+
+  <div class="section" id="sec-inversion">
+    <div class="sec-head"><span class="tag">3</span><h2>Inversion</h2></div>
+    <p class="sec-sub gloss">Type the formal, inverted question. Don't forget "-t-" with il/elle before a vowel.</p>
+    <div id="drill-inversion" class="drill-list"></div>
+  </div>
+
+  <div class="section" id="sec-quest">
+    <div class="sec-head"><span class="tag">4</span><h2>Qu'est-ce que</h2></div>
+    <p class="sec-sub gloss">Ask "what" about the underlined idea — drop it from your question.</p>
+    <div id="drill-quest" class="drill-list"></div>
+  </div>
+
+  <div class="section" id="sec-motsinterro">
+    <div class="sec-head"><span class="tag">5</span><h2>Les mots interrogatifs</h2></div>
+    <p class="sec-sub gloss">Complete the question using « est-ce que ». Two expressions (qui / comment ça va) you just need to memorize.</p>
+
+    <p style="font-size:0.95rem; margin:0 0 1rem;">La règle simple : <strong>mot interrogatif</strong> + <strong>est-ce que</strong> + <strong>sujet</strong> + <strong>verbe</strong>.
+      <span class="gloss" style="display:block; margin-top:0.2rem;">Simple rule: interrogative word + est-ce que + subject + verb. Always in that order.</span></p>
+
+    <div class="ref-card" style="max-width:460px; margin:0 auto 1.3rem;">
+      <div class="method">La formule à retenir</div>
+      <div class="ex">[mot interrogatif] + est-ce que + sujet + verbe&nbsp;?</div>
+      <div class="gloss">Où est-ce que tu habites ? = Where do you live?</div>
+    </div>
+
+    <table class="word-table" style="margin-bottom:1.1rem;">
+      <tr><td>Où</td><td>Où est-ce que tu habites&nbsp;? <span class="gloss">Where do you live?</span></td></tr>
+      <tr><td>Quand</td><td>Quand est-ce que tu pars&nbsp;? <span class="gloss">When are you leaving?</span></td></tr>
+      <tr><td>Pourquoi</td><td>Pourquoi est-ce que tu es ici&nbsp;? <span class="gloss">Why are you here?</span></td></tr>
+      <tr><td>Combien de</td><td>Combien de temps&nbsp;? <span class="gloss">How much time? — always with "de".</span></td></tr>
+    </table>
+
+    <p style="font-size:0.88rem; color:var(--ink-soft); background:var(--paper); border-left:3px solid var(--mustard); padding:0.55rem 0.9rem; border-radius:8px; margin-bottom:1.3rem;">
+      💡 2 expressions à connaître par cœur, <strong>sans</strong> « est-ce que » : <strong>Qui est-ce&nbsp;?</strong> <span class="gloss">(Who is it?)</span> et <strong>Comment ça va&nbsp;?</strong> <span class="gloss">(How's it going?)</span>
+    </p>
+
+    <div id="drill-motsinterro" class="drill-list"></div>
+  </div>
+
+  <!-- ===== DIALOGUE ===== -->
+  <div class="section" id="sec-dialogue">
+    <div class="sec-head"><span class="tag">6</span><h2>À la machine à café, avec Léa</h2></div>
+    <p class="sec-sub gloss">A real conversation with a new colleague. Pick the question that fits — the next line only appears once you get it right.</p>
+    <div class="chat" id="dialogue-chat"></div>
+  </div>
+
+  <!-- ===== ASSOCIATION ===== -->
+  <div class="section" id="sec-association">
+    <div class="sec-head"><span class="tag">7</span><h2>Association · Questions & réponses</h2></div>
+    <p class="sec-sub gloss">Click a question, then click its matching answer. Wrong pairs flash red and reset — right pairs lock in green.</p>
+    <div class="match-progress" id="matchProgress">0 / 20 paires trouvées <span class="gloss">— 0 / 20 pairs found</span></div>
+    <div class="match-board">
+      <div class="match-col" id="matchQuestions"></div>
+      <div class="match-col" id="matchAnswers"></div>
+    </div>
+  </div>
+
+  <!-- ===== RECAP ===== -->
+  <div class="recap" id="recap" style="display:none;">
+    <h2>Bravo, vous avez fini&nbsp;! 🎉</h2>
+    <div class="score" id="scoreDisplay">0 / 0</div>
+    <p>Vous pouvez recommencer à tout moment pour renforcer votre mémoire — c'est en pratiquant régulièrement qu'on retient le mieux.
+    <span class="gloss">You can restart any time — spaced repetition is how this really sticks.</span></p>
+    <button class="btn btn-reset" onclick="location.reload()">↻ Recommencer</button>
+  </div>
+
+</div>
+
+<script>
+/* ---------- helpers ---------- */
+function normalize(s){
+  return s.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[’‘]/g,"'")
+    .replace(/[^a-z' ]/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+let totalItems = 0, correctItems = 0;
+const sectionCounts = {}; // secId -> {total, done}
+
+function registerSection(secId, count){
+  sectionCounts[secId] = {total: count, done: 0};
+  totalItems += count;
+}
+function markItemDone(secId, wasCorrect){
+  sectionCounts[secId].done++;
+  if(wasCorrect) correctItems++;
+  updateStamp(secId);
+  updateRecap();
+}
+function updateStamp(secId){
+  const s = sectionCounts[secId];
+  const stampEl = document.querySelector('.stamp[data-sec="'+secId+'"]');
+  if(s.done >= s.total){ stampEl.classList.add('done'); }
+}
+function updateRecap(){
+  const done = Object.values(sectionCounts).reduce((a,c)=>a+c.done,0);
+  if(done >= totalItems){
+    document.getElementById('scoreDisplay').textContent = correctItems + ' / ' + totalItems;
+    document.getElementById('recap').style.display = 'block';
+    document.getElementById('recap').scrollIntoView({behavior:'smooth', block:'center'});
+  }
+}
+
+/* ---------- drill data ---------- */
+const drills = {
+  intonation: {
+    secId:'intonation',
+    items:[
+      {p:'Tu travailles à Paris.', sg:'You work in Paris.', hint:'Do you work in Paris?', a:['tu travailles a paris']},
+      {p:'Il habite à Lyon.', sg:'He lives in Lyon.', hint:'Does he live in Lyon?', a:['il habite a lyon']},
+      {p:'Vous aimez le café.', sg:'You like coffee.', hint:'Do you like coffee?', a:['vous aimez le cafe']},
+      {p:'Elle vient de Madrid.', sg:'She comes from Madrid.', hint:'Does she come from Madrid?', a:['elle vient de madrid']},
+      {p:'Tu parles anglais.', sg:'You speak English.', hint:'Do you speak English?', a:['tu parles anglais']},
+    ]
+  },
+  estceque: {
+    secId:'estceque',
+    items:[
+      {p:'Tu travailles à Paris.', sg:'You work in Paris.', hint:'Do you work in Paris?', a:['est-ce que tu travailles a paris','est ce que tu travailles a paris']},
+      {p:'Il habite à Lyon.', sg:'He lives in Lyon.', hint:'Does he live in Lyon?', a:["est-ce qu'il habite a lyon","est ce quil habite a lyon"]},
+      {p:'Vous aimez le café.', sg:'You like coffee.', hint:'Do you like coffee?', a:['est-ce que vous aimez le cafe','est ce que vous aimez le cafe']},
+      {p:'Elle vient de Madrid.', sg:'She comes from Madrid.', hint:'Does she come from Madrid?', a:["est-ce qu'elle vient de madrid","est ce quelle vient de madrid"]},
+      {p:'Tu parles anglais.', sg:'You speak English.', hint:'Do you speak English?', a:['est-ce que tu parles anglais','est ce que tu parles anglais']},
+    ]
+  },
+  inversion: {
+    secId:'inversion',
+    items:[
+      {p:'Tu travailles à Paris.', sg:'You work in Paris.', hint:'Do you work in Paris?', a:['travailles-tu a paris','travailles tu a paris']},
+      {p:'Il habite à Lyon.', sg:'He lives in Lyon.', hint:'Does he live in Lyon?', a:['habite-t-il a lyon','habite t il a lyon']},
+      {p:'Vous aimez le café.', sg:'You like coffee.', hint:'Do you like coffee?', a:['aimez-vous le cafe','aimez vous le cafe']},
+      {p:'Elle vient de Madrid.', sg:'She comes from Madrid.', hint:'Does she come from Madrid?', a:['vient-elle de madrid','vient elle de madrid']},
+      {p:'Tu parles anglais.', sg:'You speak English.', hint:'Do you speak English?', a:['parles-tu anglais','parles tu anglais']},
+    ]
+  },
+  quest: {
+    secId:'quest',
+    items:[
+      {p:'Tu aimes le chocolat.', sg:'You like chocolate.', hint:'What do you like?', a:["qu'est-ce que tu aimes","quest ce que tu aimes"]},
+      {p:'Vous mangez ceci au déjeuner.', sg:'You eat this for lunch.', hint:'What do you eat for lunch?', a:["qu'est-ce que vous mangez au dejeuner","quest ce que vous mangez au dejeuner"]},
+      {p:'Il boit ceci au café.', sg:'He drinks this at the café.', hint:'What does he drink at the café?', a:["qu'est-ce qu'il boit au cafe","quest ce quil boit au cafe"]},
+      {p:'Elle regarde ceci à la télé.', sg:'She watches this on TV.', hint:'What does she watch on TV?', a:["qu'est-ce qu'elle regarde a la tele","quest ce quelle regarde a la tele"]},
+      {p:'Vous faites ceci le week-end.', sg:'You do this on the weekend.', hint:'What do you do on weekends?', a:["qu'est-ce que vous faites le week-end","quest ce que vous faites le week end"]},
+    ]
+  },
+  motsinterro: {
+    secId:'motsinterro',
+    items:[
+      {p:'On vous montre une photo. Demandez qui c\'est.', sg:'Ask who it is.', hint:'C\'est une expression à retenir, sans « est-ce que » : Qui est-ce ?', a:["qui est-ce","qui est ce"]},
+      {p:'Demandez à votre collègue où il/elle habite.', sg:'Ask where he/she lives.', hint:'Formule : Où est-ce que tu habites ?', a:['ou est-ce que tu habites','ou est ce que tu habites','ou habites-tu','ou habites tu']},
+      {p:'Demandez à votre collègue où il/elle travaille.', sg:'Ask where he/she works.', hint:'Formule : Où est-ce que tu travailles ?', a:['ou est-ce que tu travailles','ou est ce que tu travailles','ou travailles-tu','ou travailles tu']},
+      {p:'Demandez quand il/elle part en vacances.', sg:'Ask when he/she is leaving on vacation.', hint:'Formule : Quand est-ce que tu pars en vacances ?', a:['quand est-ce que tu pars en vacances','quand est ce que tu pars en vacances','quand pars-tu en vacances','quand pars tu en vacances']},
+      {p:'Demandez quand elle arrive au bureau.', sg:'Ask when she arrives at the office.', hint:'Formule : Quand est-ce qu\'elle arrive au bureau ?', a:["quand est-ce qu'elle arrive au bureau","quand est ce quelle arrive au bureau","quand arrive-t-elle au bureau","quand arrive t elle au bureau"]},
+      {p:'Vous êtes en retard. Votre collègue vous demande pourquoi — écrivez sa question.', sg:'Ask why (you\'re late).', hint:'Formule : Pourquoi est-ce que tu es en retard ?', a:['pourquoi est-ce que tu es en retard','pourquoi est ce que tu es en retard','pourquoi es-tu en retard','pourquoi es tu en retard']},
+      {p:'Demandez-lui pourquoi il/elle apprend le français.', sg:'Ask why he/she is learning French.', hint:'Formule : Pourquoi est-ce que tu apprends le français ?', a:['pourquoi est-ce que tu apprends le francais','pourquoi est ce que tu apprends le francais','pourquoi apprends-tu le francais','pourquoi apprends tu le francais']},
+      {p:'Saluez votre collègue et demandez comment ça va.', sg:'Ask how it\'s going.', hint:'C\'est une expression à retenir, sans « est-ce que » : Comment ça va ?', a:['comment ca va']},
+      {p:'Vous ne connaissez pas son prénom. Demandez comment il/elle s\'appelle.', sg:'Ask what his/her name is.', hint:'Deux façons courantes : Comment tu t\'appelles ? (familier) ou Comment vous appelez-vous ? (formel).', a:["comment tu t'appelles","comment tu tappelles","comment vous appelez-vous","comment vous appelez vous","comment t'appelles-tu","comment tappelles-tu","comment tappelles tu"]},
+      {p:'Demandez combien de temps il/elle travaille ici.', sg:'Ask how long he/she has worked here.', hint:'Formule : Combien de temps est-ce que tu travailles ici ? (n\'oubliez pas « de »)', a:['combien de temps est-ce que tu travailles ici','combien de temps est ce que tu travailles ici','combien de temps travailles-tu ici','combien de temps travailles tu ici']},
+    ]
+  }
+};
+
+function renderDrills(){
+  Object.entries(drills).forEach(([key, drill])=>{
+    registerSection(drill.secId, drill.items.length);
+    const container = document.getElementById('drill-'+key);
+    drill.items.forEach((item, idx)=>{
+      const wrap = document.createElement('div');
+      wrap.className = 'drill-item';
+      const inputId = key+'-'+idx;
+      wrap.innerHTML = `
+        <div class="drill-prompt">${String.fromCharCode(97+idx)}) ${item.p}
+          <span class="gloss">${item.sg}</span>
+        </div>
+        <div class="drill-row">
+          <input type="text" id="in-${inputId}" placeholder="Écrivez la question ici…" autocomplete="off">
+          <button class="btn btn-check" data-input="in-${inputId}">Vérifier</button>
+          <button class="btn btn-ghost" data-hint="${inputId}">Indice</button>
+        </div>
+        <div class="feedback" id="fb-${inputId}"></div>
+      `;
+      container.appendChild(wrap);
+
+      const input = wrap.querySelector('input');
+      const checkBtn = wrap.querySelector('.btn-check');
+      const hintBtn = wrap.querySelector('.btn-hint, [data-hint]');
+      const fb = wrap.querySelector('.feedback');
+      let tries = 0, resolved = false, hintUsed = false;
+
+      function doCheck(){
+        if(resolved) return;
+        const val = normalize(input.value);
+        const ok = item.a.some(ans => normalize(ans) === val);
+        tries++;
+        if(ok){
+          resolved = true;
+          wrap.classList.add('is-correct');
+          fb.className = 'feedback ok';
+          fb.textContent = '✔ Parfait !';
+          input.disabled = true; checkBtn.disabled = true;
+          markItemDone(drill.secId, true);
+        } else if(tries >= 2){
+          resolved = true;
+          wrap.classList.add('is-revealed');
+          fb.className = 'feedback bad';
+          fb.innerHTML = 'Pas tout à fait — voici la réponse :<span class="answer-reveal">'+item.a[0].replace(/^([a-z])/,(m)=>m.toUpperCase())+' ?</span>';
+          input.disabled = true; checkBtn.disabled = true;
+          markItemDone(drill.secId, false);
+        } else {
+          fb.className = 'feedback bad';
+          fb.textContent = '✗ Pas encore — réessayez (indice disponible).';
+          wrap.classList.add('shake');
+          setTimeout(()=>wrap.classList.remove('shake'), 450);
+        }
+      }
+      checkBtn.addEventListener('click', doCheck);
+      input.addEventListener('keydown', e => { if(e.key==='Enter'){ e.preventDefault(); doCheck(); } });
+      wrap.querySelector('[data-hint]').addEventListener('click', ()=>{
+        if(hintUsed) return;
+        hintUsed = true;
+        fb.className = 'feedback';
+        fb.style.color = 'var(--ink-soft)';
+        fb.textContent = '💡 ' + item.hint;
+      });
+    });
+  });
+}
+
+/* ---------- dialogue data ---------- */
+const dialogue = [
+  {
+    lea:"Salut ! Moi c'est Léa, je viens de rejoindre l'équipe marketing.",
+    leaG:"Hi! I'm Léa, I just joined the marketing team.",
+    instr:"Vous voulez lui demander comment elle va.",
+    instrG:"You want to ask how she's doing.",
+    options:[
+      {t:"Comment ça va ?", ok:true, note:"Parfait — la question la plus naturelle pour saluer quelqu'un."},
+      {t:"Qu'est-ce que tu vas ?", ok:false, note:"« Aller » comme ça ne se construit pas avec « qu'est-ce que »."},
+      {t:"Es-tu ça va ?", ok:false, note:"Mélange incorrect — « ça va » n'est pas un adjectif à inverser."},
+      {t:"Comment vous êtes ?", ok:false, note:"Mélange de « tu » et « vous », et construction incorrecte."}
+    ]
+  },
+  {
+    lea:"Ça va bien, merci ! Et toi ?",
+    leaG:"I'm good, thanks! And you?",
+    instr:"Vous voulez savoir d'où elle vient.",
+    instrG:"You want to know where she's from.",
+    options:[
+      {t:"D'où viens-tu ?", ok:true, note:"Exact — inversion avec le mot interrogatif « où »."},
+      {t:"Quand viens-tu ?", ok:false, note:"« Quand » = when, pas « where »."},
+      {t:"Qui viens-tu ?", ok:false, note:"« Qui » = who, ne fonctionne pas ici."},
+      {t:"Viens-tu où ?", ok:false, note:"Le mot interrogatif doit être placé en premier."}
+    ]
+  },
+  {
+    lea:"Je viens de Bordeaux, mais j'habite à Paris maintenant.",
+    leaG:"I'm from Bordeaux, but I live in Paris now.",
+    instr:"Vous voulez savoir ce qu'elle fait comme métier.",
+    instrG:"You want to know what she does for work.",
+    options:[
+      {t:"Qu'est-ce que tu fais dans la vie ?", ok:true, note:"C'est la façon standard de demander « what do you do for a living »."},
+      {t:"Qu'est-ce que tu es dans la vie ?", ok:false, note:"On utilise le verbe « faire », pas « être », pour le métier."},
+      {t:"Fais-tu la vie ?", ok:false, note:"Construction incorrecte — le sens n'est pas clair."},
+      {t:"Est-ce que tu fais ?", ok:false, note:"Question incomplète, il manque « dans la vie »."}
+    ]
+  },
+  {
+    lea:"Je suis designer graphique. Et toi, tu es ici depuis longtemps ?",
+    leaG:"I'm a graphic designer. And you, have you been here long?",
+    instr:"Vous n'êtes pas sûr(e) de votre français — demandez si elle parle anglais.",
+    instrG:"You're not confident in your French — ask if she speaks English.",
+    options:[
+      {t:"Est-ce que tu parles anglais ?", ok:true, note:"Correct — « Est-ce que » + sujet + verbe, dans l'ordre normal."},
+      {t:"Tu parles anglais est-ce que ?", ok:false, note:"« Est-ce que » se place toujours au début de la phrase."},
+      {t:"Parles anglais-tu ?", ok:false, note:"Ordre d'inversion incorrect — ce serait « Parles-tu anglais ? »."},
+      {t:"Qu'est-ce que tu parles anglais ?", ok:false, note:"« Qu'est-ce que » ne s'utilise pas pour une question oui/non."}
+    ]
+  },
+  {
+    lea:"Un peu, oui !",
+    leaG:"A little, yes!",
+    instr:"Demandez-lui ce qu'elle aime faire le week-end.",
+    instrG:"Ask what she likes to do on weekends.",
+    options:[
+      {t:"Qu'est-ce que tu aimes faire le week-end ?", ok:true, note:"Parfait — « qu'est-ce que » + sujet + verbe + infinitif."},
+      {t:"Qu'est-ce tu aimes faire le week-end ?", ok:false, note:"Il manque « que » : ce n'est pas « qu'est-ce » tout seul."},
+      {t:"Comment aimes-tu le week-end ?", ok:false, note:"« Comment » = how, ce n'est pas le bon mot ici."},
+      {t:"Aimes-tu que faire le week-end ?", ok:false, note:"Construction incorrecte — mélange d'inversion et de « que »."}
+    ]
+  },
+  {
+    lea:"J'aime faire de la randonnée et lire.",
+    leaG:"I like hiking and reading.",
+    instr:"Proposez-lui de prendre un café ensemble demain.",
+    instrG:"Suggest getting coffee together tomorrow.",
+    options:[
+      {t:"Est-ce que tu veux prendre un café demain ?", ok:true, note:"Belle façon amicale de proposer quelque chose."},
+      {t:"Veux-tu que prendre un café demain ?", ok:false, note:"Pas de « que » après « veux-tu » suivi d'un infinitif."},
+      {t:"Qu'est-ce que tu veux prendre un café demain ?", ok:false, note:"« Qu'est-ce que » ne convient pas pour une question oui/non."},
+      {t:"Tu veux prendre un café demain, est-ce que ?", ok:false, note:"« Est-ce que » doit être placé au début, pas à la fin."}
+    ]
+  }
+];
+
+function renderDialogue(){
+  registerSection('dialogue', dialogue.length);
+  const chat = document.getElementById('dialogue-chat');
+
+  function renderTurn(i){
+    if(i >= dialogue.length) return;
+    const turn = dialogue[i];
+
+    const leaBubble = document.createElement('div');
+    leaBubble.className = 'bubble bubble-lea';
+    leaBubble.innerHTML = `<span class="avatar">🧑‍🎨</span><div>${turn.lea}<span class="gloss">${turn.leaG}</span></div>`;
+    chat.appendChild(leaBubble);
+
+    const instr = document.createElement('div');
+    instr.className = 'turn-instruction';
+    instr.innerHTML = `${turn.instr}<span class="gloss" style="display:block;margin-top:.2rem;">${turn.instrG}</span>`;
+    chat.appendChild(instr);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+    const shuffled = turn.options.map((o,idx)=>({...o, idx})).sort(()=>Math.random()-0.5);
+    let answered = false;
+    shuffled.forEach(opt=>{
+      const b = document.createElement('button');
+      b.className = 'opt-btn';
+      b.textContent = opt.t;
+      b.addEventListener('click', ()=>{
+        if(answered) return;
+        if(opt.ok){
+          answered = true;
+          b.classList.add('correct');
+          [...opts.children].forEach(x=>x.disabled=true);
+          const note = document.createElement('div');
+          note.className = 'opt-note';
+          note.textContent = '✔ ' + opt.note;
+          chat.appendChild(opts);
+          chat.appendChild(note);
+
+          const youBubble = document.createElement('div');
+          youBubble.className = 'bubble bubble-you';
+          youBubble.textContent = opt.t;
+          chat.appendChild(youBubble);
+
+          markItemDone('dialogue', true);
+          setTimeout(()=>renderTurn(i+1), 350);
+        } else {
+          b.classList.add('wrong');
+          b.classList.add('shake');
+          setTimeout(()=>b.classList.remove('shake'),450);
+          const note = document.createElement('div');
+          note.className = 'opt-note';
+          note.textContent = '✗ ' + opt.note;
+          note.dataset.temp = "1";
+          chat.appendChild(note);
+          setTimeout(()=>note.remove(), 2600);
+        }
+      });
+      opts.appendChild(b);
+    });
+    chat.appendChild(opts);
+  }
+  renderTurn(0);
+}
+
+/* ---------- matching / association ---------- */
+const matchPairs = [
+  {q:"Comment ça va ?", a:"Ça va bien, merci !"},
+  {q:"D'où venez-vous ?", a:"Je viens de Belgique."},
+  {q:"Où habitez-vous ?", a:"J'habite à Paris."},
+  {q:"Que faites-vous dans la vie ?", a:"Je suis ingénieur."},
+  {q:"Est-ce que tu parles français ?", a:"Oui, je parle un peu français."},
+  {q:"Où travaillez-vous ?", a:"Je travaille à Lyon."},
+  {q:"Qu'est-ce que vous aimez faire ?", a:"J'aime voyager et lire."},
+  {q:"Aimez-vous le sport ?", a:"Oui, j'adore le tennis."},
+  {q:"Avez-vous des enfants ?", a:"Oui, j'ai deux enfants."},
+  {q:"Qu'est-ce que vous étudiez ?", a:"J'étudie le marketing."},
+  {q:"Pourquoi êtes-vous en France ?", a:"Pour mon travail."},
+  {q:"Est-ce que vous aimez la cuisine ?", a:"Oui, j'adore cuisiner."},
+  {q:"Quand partez-vous en vacances ?", a:"Je pars en juillet."},
+  {q:"Où avez-vous appris le français ?", a:"À l'école, en Belgique."},
+  {q:"Qu'est-ce que vous faites ce week-end ?", a:"Je vais visiter Paris."},
+  {q:"Qui est-ce ?", a:"C'est Marc, le nouveau stagiaire."},
+  {q:"Comment vous appelez-vous ?", a:"Je m'appelle Léa."},
+  {q:"Combien de temps travaillez-vous ici ?", a:"Depuis trois ans."},
+  {q:"Combien de frères et sœurs avez-vous ?", a:"J'ai un frère et une sœur."},
+  {q:"Pourquoi apprenez-vous le français ?", a:"Pour mon travail en France."},
+];
+
+function shuffle(arr){ return arr.map(v=>({v, r:Math.random()})).sort((a,b)=>a.r-b.r).map(o=>o.v); }
+
+function renderMatching(){
+  registerSection('association', matchPairs.length);
+  const qCol = document.getElementById('matchQuestions');
+  const aCol = document.getElementById('matchAnswers');
+  const progressEl = document.getElementById('matchProgress');
+
+  const questions = shuffle(matchPairs.map((p,id)=>({id, text:p.q})));
+  const answers = shuffle(matchPairs.map((p,id)=>({id, text:p.a})));
+
+  let selectedQ = null; // {id, el}
+  let foundCount = 0;
+
+  function updateProgress(){
+    progressEl.innerHTML = foundCount+' / '+matchPairs.length+' paires trouvées <span class="gloss">— '+foundCount+' / '+matchPairs.length+' pairs found</span>';
+    if(document.body.classList.contains('hide-translation')){
+      progressEl.querySelector('.gloss') && (progressEl.querySelector('.gloss').style.display='none');
+    }
+  }
+
+  questions.forEach(item=>{
+    const b = document.createElement('button');
+    b.className = 'match-card';
+    b.textContent = item.text;
+    b.addEventListener('click', ()=>{
+      if(b.classList.contains('matched')) return;
+      qCol.querySelectorAll('.match-card').forEach(c=>c.classList.remove('selected'));
+      b.classList.add('selected');
+      selectedQ = {id:item.id, el:b};
+    });
+    qCol.appendChild(b);
+  });
+
+  answers.forEach(item=>{
+    const b = document.createElement('button');
+    b.className = 'match-card';
+    b.textContent = item.text;
+    b.addEventListener('click', ()=>{
+      if(b.classList.contains('matched') || !selectedQ) return;
+      if(item.id === selectedQ.id){
+        b.classList.remove('selected','wrong');
+        b.classList.add('matched');
+        selectedQ.el.classList.remove('selected','wrong');
+        selectedQ.el.classList.add('matched');
+        selectedQ.el.disabled = true;
+        b.disabled = true;
+        selectedQ = null;
+        foundCount++;
+        updateProgress();
+        markItemDone('association', true);
+      } else {
+        b.classList.add('wrong');
+        selectedQ.el.classList.add('wrong');
+        const badQ = selectedQ.el, badA = b;
+        setTimeout(()=>{ badQ.classList.remove('selected','wrong'); badA.classList.remove('wrong'); }, 500);
+        selectedQ = null;
+      }
+    });
+    aCol.appendChild(b);
+  });
+
+  updateProgress();
+}
+
+/* ---------- init ---------- */
+renderDrills();
+renderDialogue();
+renderMatching();
+
+document.getElementById('toggleGloss').addEventListener('change', function(){
+  document.body.classList.toggle('hide-translation', !this.checked);
+});
+</script>
+</body>
+</html>
