@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 - Ma Routine Quotidienne (Jeux Interactifs)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #1a237e 0%, #0d47a1 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 4px solid #1a237e;
+            padding-bottom: 30px;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #1a237e, #0d47a1);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header .sub {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .main-content {
+            padding: 25px 30px;
+        }
+        
+        .instruction {
+            background: #E3F2FD;
+            padding: 15px;
+            border-left: 5px solid #1a237e;
+            margin-bottom: 20px;
+            border-radius: 0 10px 10px 0;
+            font-weight: bold;
+            color: #0d47a1;
+        }
+        
+        .instruction .en {
+            font-weight: normal;
+            color: #555;
+            font-size: 14px;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .section-title {
+            color: #0d47a1;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #1a237e;
+            padding-bottom: 10px;
+        }
+        
+        .section-title .en {
+            font-size: 14px;
+            color: #777;
+            font-weight: normal;
+        }
+        
+        .exercise-box {
+            background: #f8f9fa;
+            border: 2px solid #1a237e;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .exercise-title {
+            background: #1a237e;
+            color: white;
+            padding: 12px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 13px 13px 0 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .exercise-title .en {
+            font-weight: normal;
+            font-size: 13px;
+            opacity: 0.9;
+            display: block;
+        }
+        
+        .question {
+            margin: 12px 0;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #1a237e;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+        
+        .question .en {
+            color: #777;
+            font-size: 13px;
+            display: block;
+            margin-top: 3px;
+        }
+        
+        /* --- TEXTE + TRADUCTION --- */
+        .text-bubble {
+            background: #E3F2FD;
+            border-radius: 15px;
+            padding: 18px 22px;
+            margin: 15px 0;
+            border: 2px solid #1a237e;
+            line-height: 1.9;
+            font-size: 16px;
+        }
+        
+        .text-bubble .fr {
+            color: #0d47a1;
+        }
+        
+        .text-bubble .en-text {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+            font-size: 14px;
+            border: 1px dashed #1a237e;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #90caf9 0%, #64b5f6 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #0d47a1;
+        }
+        
+        .time-highlight {
+            background: linear-gradient(120deg, #ffccbc 0%, #ffab91 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #bf360c;
+        }
+        
+        /* --- VOCABULAIRE COMPACT --- */
+        .vocab-compact {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 10px 0 15px 0;
+            border: 1px solid #ddd;
+            font-size: 13px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4px 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .vocab-compact .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px dotted #eee;
+        }
+        
+        .vocab-compact .item .fr {
+            color: #0d47a1;
+            font-weight: bold;
+        }
+        
+        .vocab-compact .item .en {
+            color: #777;
+        }
+        
+        @media (max-width: 768px) {
+            .vocab-compact {
+                grid-template-columns: 1fr 1fr;
+                max-height: 300px;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .vocab-compact {
+                grid-template-columns: 1fr;
+                max-height: 400px;
+            }
+        }
+        
+        /* --- INPUTS --- */
+        input[type="text"] {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 15px;
+            font-family: inherit;
+            width: 140px;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        .answer-hidden {
+            background: #fff3cd;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #856404;
+            margin-left: 10px;
+            cursor: pointer;
+            border: 1px dashed #ffc107;
+            display: inline-block;
+        }
+        
+        .answer-hidden:hover {
+            background: #ffe69c;
+        }
+        
+        .answer-reveal {
+            display: none;
+            color: #0d47a1;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .answer-reveal.show {
+            display: inline;
+        }
+        
+        /* --- DRAG AND DROP --- */
+        .drag-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #E3F2FD;
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 250px;
+            border: 2px dashed #1a237e;
+        }
+        
+        .drag-item {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 2px solid #1a237e;
+            cursor: grab;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transition: all 0.2s;
+            user-select: none;
+        }
+        
+        .drag-item:active {
+            cursor: grabbing;
+            opacity: 0.7;
+        }
+        
+        .drag-item.dragging {
+            opacity: 0.4;
+            border-style: dashed;
+        }
+        
+        .drag-item .num {
+            background: #1a237e;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .drag-item .en {
+            color: #777;
+            font-size: 13px;
+        }
+        
+        .drag-item.dropped {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .drop-zone {
+            min-height: 60px;
+            border: 2px dashed #aaa;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .drop-zone .drag-item {
+            cursor: default;
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .btn-check {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        
+        .btn-check:hover {
+            background: #0d47a1;
+        }
+        
+        .btn-reset {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+        
+        .btn-reset:hover {
+            background: #e68900;
+        }
+        
+        .feedback {
+            margin-top: 12px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* --- TRANSLATION --- */
+        .translation-area {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 50px;
+        }
+        
+        .translation-area:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        .btn-reveal {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            margin-left: 10px;
+        }
+        
+        .btn-reveal:hover {
+            background: #0d47a1;
+        }
+        
+        .translation-answer {
+            background: #E3F2FD;
+            padding: 8px 14px;
+            border-radius: 6px;
+            margin-top: 6px;
+            display: none;
+            color: #0d47a1;
+            font-weight: bold;
+        }
+        
+        .translation-answer.show {
+            display: block;
+        }
+        
+        /* --- MATCHING --- */
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .match-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #1a237e;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .match-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .match-item.selected {
+            border-color: #FF9800;
+            background: #FFF3E0;
+        }
+        
+        .match-item.matched {
+            border-color: #28a745;
+            background: #d4edda;
+            cursor: default;
+            opacity: 0.7;
+        }
+        
+        .match-item.wrong {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        
+        /* --- PERSONAL QUESTIONS --- */
+        .personal-area {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 45px;
+            background: white;
+        }
+        
+        .personal-area:focus {
+            border-color: #1a237e;
+            outline: none;
+        }
+        
+        .btn-personal {
+            background: #1a237e;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            margin-left: 10px;
+        }
+        
+        .btn-personal:hover {
+            background: #0d47a1;
+        }
+        
+        .personal-answer {
+            background: #E3F2FD;
+            padding: 8px 14px;
+            border-radius: 6px;
+            margin-top: 6px;
+            display: none;
+            color: #0d47a1;
+            font-weight: bold;
+        }
+        
+        .personal-answer.show {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .match-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⏰ Ma Routine Quotidienne - Niveau A1 ⏰</h1>
+            <p>Apprenons à décrire notre journée type !</p>
+            <p class="sub">📘 Let's learn to describe our daily routine!</p>
+        </div>
+        
+        <div class="main-content">
+            
+            <!-- ===== INSTRUCTION ===== -->
+            <div class="instruction">
+                📖 Lisez le texte, puis faites les jeux ci-dessous.
+                <span class="en">📘 Read the text, then play the games below.</span>
+            </div>
+            
+            <!-- ===== TEXTE + TRADUCTION ===== -->
+            <div class="text-bubble">
+                <div class="fr">
+                    <strong>🌅 Ma routine quotidienne</strong><br>
+                    Tous les matins, <span class="highlight">je me réveille</span> à <span class="time-highlight">sept heures</span>. Je prends une douche, <span class="highlight">je m'habille</span>, puis je prends mon petit déjeuner. Je bois un café et je mange une tartine avec du beurre et de la confiture. Ensuite, <span class="highlight">je me brosse les dents</span> et <span class="highlight">je me prépare</span> pour partir au travail.<br><br>
+                    Je pars de la maison à <span class="time-highlight">huit heures</span>. Je prends le bus ou je marche si le temps est beau. Au travail, je commence à <span class="time-highlight">neuf heures</span>. Je travaille jusqu'à midi, puis je déjeune avec mes collègues. Après le déjeuner, je continue de travailler jusqu'à <span class="time-highlight">cinq heures</span>.<br><br>
+                    Le soir, je rentre à la maison et <span class="highlight">je me repose</span>. Je fais parfois un peu de sport, comme du jogging ou du yoga. Ensuite, je prépare le dîner et je mange avec ma famille. Après le dîner, je regarde un film ou je lis un livre. À <span class="time-highlight">dix heures</span>, <span class="highlight">je vais me coucher</span> pour bien dormir.
+                </div>
+                <div class="en-text">
+                    <strong>📘 English translation:</strong><br>
+                    Every morning, I wake up at seven o'clock. I take a shower, I get dressed, then I have breakfast. I drink coffee and eat a slice of bread with butter and jam. Then I brush my teeth and get ready to leave for work.<br><br>
+                    I leave home at eight o'clock. I take the bus or I walk if the weather is nice. At work, I start at nine o'clock. I work until noon, then I have lunch with my colleagues. After lunch, I continue working until five o'clock.<br><br>
+                    In the evening, I come home and rest. I sometimes do a bit of sport, like jogging or yoga. Then I prepare dinner and eat with my family. After dinner, I watch a movie or read a book. At ten o'clock, I go to bed to sleep well.
+                </div>
+            </div>
+            
+            <!-- ===== VOCABULAIRE COMPACT ===== -->
+            <div class="section-title">
+                📚 Vocabulaire <span class="en">/ Vocabulary</span>
+            </div>
+            
+            <div class="vocab-compact">
+                <div class="item"><span class="fr">se réveiller</span> <span class="en">to wake up</span></div>
+                <div class="item"><span class="fr">prendre une douche</span> <span class="en">to take a shower</span></div>
+                <div class="item"><span class="fr">s'habiller</span> <span class="en">to get dressed</span></div>
+                <div class="item"><span class="fr">prendre le petit déjeuner</span> <span class="en">to have breakfast</span></div>
+                <div class="item"><span class="fr">se préparer</span> <span class="en">to get ready</span></div>
+                <div class="item"><span class="fr">partir au travail</span> <span class="en">to leave for work</span></div>
+                <div class="item"><span class="fr">commencer à travailler</span> <span class="en">to start working</span></div>
+                <div class="item"><span class="fr">déjeuner</span> <span class="en">to have lunch</span></div>
+                <div class="item"><span class="fr">les collègues</span> <span class="en">colleagues</span></div>
+                <div class="item"><span class="fr">continuer</span> <span class="en">to continue</span></div>
+                <div class="item"><span class="fr">rentrer à la maison</span> <span class="en">to come home</span></div>
+                <div class="item"><span class="fr">se reposer</span> <span class="en">to rest</span></div>
+                <div class="item"><span class="fr">préparer le dîner</span> <span class="en">to prepare dinner</span></div>
+                <div class="item"><span class="fr">regarder un film</span> <span class="en">to watch a movie</span></div>
+                <div class="item"><span class="fr">parfois</span> <span class="en">sometimes</span></div>
+                <div class="item"><span class="fr">aller se coucher</span> <span class="en">to go to bed</span></div>
+                <div class="item"><span class="fr">se brosser les dents</span> <span class="en">to brush one's teeth</span></div>
+                <div class="item"><span class="fr">dormir / bien dormir</span> <span class="en">to sleep / to sleep well</span></div>
+                <div class="item"><span class="fr">la confiture</span> <span class="en">jam</span></div>
+            </div>
+            
+            <!-- ===== EXPRESSIONS ===== -->
+            <div class="section-title">
+                💬 Expressions utiles <span class="en">/ Useful Expressions</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="question">
+                    <strong>🏃 "Je suis toujours pressé(e) le matin"</strong><br>
+                    <span class="en">= I'm always in a hurry in the morning</span>
+                    <span style="display:block;font-size:13px;color:#888;">Exprimer le stress matinal / Express morning stress</span>
+                </div>
+                <div class="question">
+                    <strong>😴 "J'ai du mal à me lever"</strong><br>
+                    <span class="en">= I have trouble getting up</span>
+                    <span style="display:block;font-size:13px;color:#888;">Dire qu'on a des difficultés / Say you have difficulties</span>
+                </div>
+                <div class="question">
+                    <strong>🎯 "Métro, boulot, dodo"</strong><br>
+                    <span class="en">= Commute, work, sleep (routine expression)</span>
+                    <span style="display:block;font-size:13px;color:#888;">Expression pour décrire la routine / Expression to describe routine</span>
+                </div>
+                <div class="question">
+                    <strong>☕ "Je ne suis pas du matin"</strong><br>
+                    <span class="en">= I'm not a morning person</span>
+                    <span style="display:block;font-size:13px;color:#888;">Dire qu'on préfère le soir / Say you prefer the evening</span>
+                </div>
+            </div>
+            
+            <!-- ===== JEU 1 : DRAG & DROP ===== -->
+            <div class="section-title">
+                🧩 Jeu 1 : Ordre chronologique <span class="en">/ Chronological order</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    🎯 Glissez-déposez dans le bon ordre <span class="en">/ Drag & drop in the correct order</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <strong>FR :</strong> Mettez les actions dans l'ordre chronologique (du matin au soir).<br>
+                    <span class="en"><strong>EN :</strong> Put the actions in chronological order (from morning to evening).</span>
+                </p>
+                
+                <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
+                    <button class="btn-check" onclick="checkOrder()">✅ Vérifier / Check</button>
+                    <button class="btn-reset" onclick="resetOrder()">🔄 Recommencer / Reset</button>
+                </div>
+                
+                <div id="dragContainer" class="drag-container">
+                    <!-- Items inserted by JS -->
+                </div>
+                
+                <div id="dropZone" class="drop-zone">
+                    <span style="color:#999;font-style:italic;">Déposez ici dans l'ordre / Drop here in order...</span>
+                </div>
+                
+                <div id="orderFeedback" class="feedback"></div>
+            </div>
+            
+            <!-- ===== JEU 2 : CONJUGAISON ===== -->
+            <div class="section-title">
+                ✍️ Jeu 2 : Conjuguez <span class="en">/ Conjugate</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    📝 Remplissez les cases <span class="en">/ Fill in the blanks</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <span class="en"><strong>💡 Cliquez sur "Voir la réponse" pour vérifier.</strong></span>
+                </p>
+                
+                <div class="question">
+                    1. Je <input type="text" id="conj1" placeholder="..."> (se réveiller) à 7h tous les matins.<br>
+                    <span class="en">I <input type="text" id="conj1en" placeholder="..."> at 7am every morning.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj1','me réveille','conj1en','wake up')">Voir la réponse</button>
+                    <span id="conj1a" class="answer-reveal">✅ me réveille / wake up</span>
+                </div>
+                
+                <div class="question">
+                    2. Tu <input type="text" id="conj2" placeholder="..."> (se brosser) les dents après le repas ?<br>
+                    <span class="en">Do you <input type="text" id="conj2en" placeholder="..."> your teeth after the meal?</span>
+                    <button class="btn-reveal" onclick="revealConj('conj2','te brosses','conj2en','brush')">Voir la réponse</button>
+                    <span id="conj2a" class="answer-reveal">✅ te brosses / brush</span>
+                </div>
+                
+                <div class="question">
+                    3. Il <input type="text" id="conj3" placeholder="..."> (se préparer) rapidement le matin.<br>
+                    <span class="en">He <input type="text" id="conj3en" placeholder="..."> quickly in the morning.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj3','se prépare','conj3en','gets ready')">Voir la réponse</button>
+                    <span id="conj3a" class="answer-reveal">✅ se prépare / gets ready</span>
+                </div>
+                
+                <div class="question">
+                    4. Nous <input type="text" id="conj4" placeholder="..."> (se reposer) après le travail.<br>
+                    <span class="en">We <input type="text" id="conj4en" placeholder="..."> after work.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj4','nous reposons','conj4en','rest')">Voir la réponse</button>
+                    <span id="conj4a" class="answer-reveal">✅ nous reposons / rest</span>
+                </div>
+                
+                <div class="question">
+                    5. Vous <input type="text" id="conj5" placeholder="..."> (se coucher) à quelle heure ?<br>
+                    <span class="en">What time do you <input type="text" id="conj5en" placeholder="..."> ?</span>
+                    <button class="btn-reveal" onclick="revealConj('conj5','vous couchez','conj5en','go to bed')">Voir la réponse</button>
+                    <span id="conj5a" class="answer-reveal">✅ vous couchez / go to bed</span>
+                </div>
+                
+                <div class="question">
+                    6. Elles <input type="text" id="conj6" placeholder="..."> (s'habiller) élégamment pour le bureau.<br>
+                    <span class="en">They <input type="text" id="conj6en" placeholder="..."> elegantly for the office.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj6','s\'habillent','conj6en','get dressed')">Voir la réponse</button>
+                    <span id="conj6a" class="answer-reveal">✅ s'habillent / get dressed</span>
+                </div>
+                
+                <div class="question">
+                    7. Je <input type="text" id="conj7" placeholder="..."> (se lever) tôt le week-end aussi.<br>
+                    <span class="en">I <input type="text" id="conj7en" placeholder="..."> early on weekends too.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj7','me lève','conj7en','get up')">Voir la réponse</button>
+                    <span id="conj7a" class="answer-reveal">✅ me lève / get up</span>
+                </div>
+            </div>
+            
+            <!-- ===== JEU 3 : TRADUCTION ===== -->
+            <div class="section-title">
+                🌍 Jeu 3 : Traduisez <span class="en">/ Translate</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    📝 Traductions <span class="en">/ Translations</span>
+                </div>
+                
+                <div class="question">
+                    <strong>1.</strong> I wake up at 6:30.<br>
+                    <textarea class="translation-area" id="trans1" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans1','Je me réveille à 6h30.')">Voir la réponse</button>
+                    <div id="trans1a" class="translation-answer">✅ Je me réveille à 6h30.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>2.</strong> She gets dressed quickly.<br>
+                    <textarea class="translation-area" id="trans2" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans2','Elle s\'habille rapidement.')">Voir la réponse</button>
+                    <div id="trans2a" class="translation-answer">✅ Elle s'habille rapidement.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>3.</strong> We go to bed at 11pm.<br>
+                    <textarea class="translation-area" id="trans3" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans3','Nous nous couchons à 23h.')">Voir la réponse</button>
+                    <div id="trans3a" class="translation-answer">✅ Nous nous couchons à 23h.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>4.</strong> They rest after work.<br>
+                    <textarea class="translation-area" id="trans4" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans4','Ils/Elles se reposent après le travail.')">Voir la réponse</button>
+                    <div id="trans4a" class="translation-answer">✅ Ils/Elles se reposent après le travail.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>5.</strong> Do you brush your teeth every morning?<br>
+                    <textarea class="translation-area" id="trans5" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans5','Tu te brosses les dents tous les matins ?')">Voir la réponse</button>
+                    <div id="trans5a" class="translation-answer">✅ Tu te brosses les dents tous les matins ?</div>
+                </div>
+            </div>
+            
+            <!-- ===== JEU 4 : ASSOCIATION ===== -->
+            <div class="section-title">
+                🔗 Jeu 4 : Associez <span class="en">/ Match</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    🧩 Cliquez sur une expression française puis sur sa traduction anglaise <span class="en">/ Click a French expression then its English translation</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <span class="en"><strong>💡 Trouvez les paires ! / Find the pairs!</strong></span>
+                </p>
+                
+                <div id="matchContainer" class="match-grid">
+                    <!-- Generated by JS -->
+                </div>
+                <div id="matchFeedback" style="margin-top:12px;font-weight:bold;"></div>
+                <button class="btn-reset" onclick="resetMatch()" style="margin-top:15px;">🔄 Recommencer / Reset</button>
+            </div>
+            
+            <!-- ===== JEU 5 : QUESTIONS PERSONNELLES ===== -->
+            <div class="section-title">
+                🗣️ Jeu 5 : Parlez de vous ! <span class="en">/ Talk about yourself!</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    📝 Répondez aux questions <span class="en">/ Answer the questions</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <strong>FR :</strong> Répondez aux questions sur votre routine. Utilisez des phrases complètes !<br>
+                    <span class="en"><strong>EN :</strong> Answer the questions about your routine. Use complete sentences!</span>
+                </p>
+                
+                <!-- Question 1 -->
+                <div class="question">
+                    <strong>1. À quelle heure tu te lèves le matin ?</strong><br>
+                    <span class="en">What time do you wake up in the morning?</span>
+                    <textarea class="personal-area" id="pers1" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers1','Je me réveille à 7 heures. (exemple)','pers1a')">Voir un exemple</button>
+                    <div id="pers1a" class="personal-answer">💡 Exemple : Je me réveille à 7 heures.</div>
+                </div>
+                
+                <!-- Question 2 -->
+                <div class="question">
+                    <strong>2. Tu prends une douche le matin ou le soir ?</strong><br>
+                    <span class="en">Do you take a shower in the morning or in the evening?</span>
+                    <textarea class="personal-area" id="pers2" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers2','Je prends une douche le matin. (exemple)','pers2a')">Voir un exemple</button>
+                    <div id="pers2a" class="personal-answer">💡 Exemple : Je prends une douche le matin.</div>
+                </div>
+                
+                <!-- Question 3 -->
+                <div class="question">
+                    <strong>3. Qu'est-ce que tu manges au petit déjeuner ?</strong><br>
+                    <span class="en">What do you eat for breakfast?</span>
+                    <textarea class="personal-area" id="pers3" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers3','Je mange une tartine avec du beurre et je bois un café. (exemple)','pers3a')">Voir un exemple</button>
+                    <div id="pers3a" class="personal-answer">💡 Exemple : Je mange une tartine avec du beurre et je bois un café.</div>
+                </div>
+                
+                <!-- Question 4 -->
+                <div class="question">
+                    <strong>4. À quelle heure tu pars au travail ?</strong><br>
+                    <span class="en">What time do you leave for work?</span>
+                    <textarea class="personal-area" id="pers4" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers4','Je pars au travail à 8 heures. (exemple)','pers4a')">Voir un exemple</button>
+                    <div id="pers4a" class="personal-answer">💡 Exemple : Je pars au travail à 8 heures.</div>
+                </div>
+                
+                <!-- Question 5 -->
+                <div class="question">
+                    <strong>5. Tu déjeunes avec qui ?</strong><br>
+                    <span class="en">Who do you have lunch with?</span>
+                    <textarea class="personal-area" id="pers5" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers5','Je déjeune avec mes collègues / ma famille. (exemple)','pers5a')">Voir un exemple</button>
+                    <div id="pers5a" class="personal-answer">💡 Exemple : Je déjeune avec mes collègues.</div>
+                </div>
+                
+                <!-- Question 6 -->
+                <div class="question">
+                    <strong>6. Qu'est-ce que tu fais le soir après le dîner ?</strong><br>
+                    <span class="en">What do you do in the evening after dinner?</span>
+                    <textarea class="personal-area" id="pers6" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers6','Je regarde un film ou je lis un livre. (exemple)','pers6a')">Voir un exemple</button>
+                    <div id="pers6a" class="personal-answer">💡 Exemple : Je regarde un film ou je lis un livre.</div>
+                </div>
+                
+                <!-- Question 7 -->
+                <div class="question">
+                    <strong>7. À quelle heure tu te couches le soir ?</strong><br>
+                    <span class="en">What time do you go to bed in the evening?</span>
+                    <textarea class="personal-area" id="pers7" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers7','Je me couche à 22 heures. (exemple)','pers7a')">Voir un exemple</button>
+                    <div id="pers7a" class="personal-answer">💡 Exemple : Je me couche à 22 heures.</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script>
+        // =============================================
+        // JEU 1 : DRAG & DROP
+        // =============================================
+        const actions = [
+            { id: 0, fr: 'Je me réveille', en: 'I wake up' },
+            { id: 1, fr: 'Je prends une douche', en: 'I take a shower' },
+            { id: 2, fr: 'Je me brosse les dents', en: 'I brush my teeth' },
+            { id: 3, fr: 'Je prends le petit déjeuner', en: 'I have breakfast' },
+            { id: 4, fr: 'Je pars au travail', en: 'I leave for work' },
+            { id: 5, fr: 'Je déjeune', en: 'I have lunch' },
+            { id: 6, fr: 'Je regarde un film', en: 'I watch a movie' },
+            { id: 7, fr: 'Je me couche', en: 'I go to bed' }
+        ];
+        
+        const correctOrder = [0, 1, 2, 3, 4, 5, 6, 7];
+        let currentOrder = [];
+        let dragItem = null;
+        
+        function initDrag() {
+            const container = document.getElementById('dragContainer');
+            const dropZone = document.getElementById('dropZone');
+            
+            const shuffled = [...actions];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            container.innerHTML = '';
+            shuffled.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'drag-item';
+                div.draggable = true;
+                div.dataset.id = item.id;
+                div.innerHTML = `
+                    <span>${item.fr}</span>
+                    <span class="en">${item.en}</span>
+                `;
+                div.addEventListener('dragstart', onDragStart);
+                div.addEventListener('dragend', onDragEnd);
+                container.appendChild(div);
+            });
+            
+            dropZone.innerHTML = '<span style="color:#999;font-style:italic;">Déposez ici dans l\'ordre / Drop here in order...</span>';
+            dropZone.addEventListener('dragover', onDragOver);
+            dropZone.addEventListener('drop', onDrop);
+            
+            currentOrder = [];
+            document.getElementById('orderFeedback').textContent = '';
+            document.getElementById('orderFeedback').className = 'feedback';
+        }
+        
+        function onDragStart(e) {
+            dragItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+        
+        function onDragEnd(e) {
+            this.classList.remove('dragging');
+        }
+        
+        function onDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+        
+        function onDrop(e) {
+            e.preventDefault();
+            const dropZone = document.getElementById('dropZone');
+            if (dragItem && dragItem.parentNode.id === 'dragContainer') {
+                const id = parseInt(dragItem.dataset.id);
+                if (currentOrder.includes(id)) return;
+                
+                const clone = dragItem.cloneNode(true);
+                clone.draggable = false;
+                clone.classList.add('dropped');
+                clone.querySelector('.en').style.display = 'inline';
+                if (dropZone.querySelector('span[style]')) {
+                    dropZone.innerHTML = '';
+                }
+                const numSpan = document.createElement('span');
+                numSpan.className = 'num';
+                numSpan.textContent = currentOrder.length + 1;
+                clone.prepend(numSpan);
+                dropZone.appendChild(clone);
+                
+                currentOrder.push(id);
+                dragItem.remove();
+                dragItem = null;
+            }
+        }
+        
+        function checkOrder() {
+            const feedback = document.getElementById('orderFeedback');
+            if (currentOrder.length !== correctOrder.length) {
+                feedback.textContent = '❌ Placez toutes les actions ! / Place all actions!';
+                feedback.className = 'feedback wrong';
+                return;
+            }
+            let correct = true;
+            for (let i = 0; i < currentOrder.length; i++) {
+                if (currentOrder[i] !== correctOrder[i]) {
+                    correct = false;
+                    break;
+                }
+            }
+            if (correct) {
+                feedback.textContent = '🎉 Parfait ! C\'est le bon ordre ! / Perfect! That\'s the right order!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = '❌ Ce n\'est pas le bon ordre. Essayez encore ! / That\'s not the right order. Try again!';
+                feedback.className = 'feedback wrong';
+            }
+        }
+        
+        function resetOrder() {
+            const dropZone = document.getElementById('dropZone');
+            const container = document.getElementById('dragContainer');
+            const items = dropZone.querySelectorAll('.drag-item');
+            items.forEach(item => {
+                const id = parseInt(item.dataset.id);
+                const original = actions.find(a => a.id === id);
+                const newDiv = document.createElement('div');
+                newDiv.className = 'drag-item';
+                newDiv.draggable = true;
+                newDiv.dataset.id = id;
+                newDiv.innerHTML = `
+                    <span>${original.fr}</span>
+                    <span class="en">${original.en}</span>
+                `;
+                newDiv.addEventListener('dragstart', onDragStart);
+                newDiv.addEventListener('dragend', onDragEnd);
+                container.appendChild(newDiv);
+            });
+            dropZone.innerHTML = '<span style="color:#999;font-style:italic;">Déposez ici dans l\'ordre / Drop here in order...</span>';
+            currentOrder = [];
+            document.getElementById('orderFeedback').textContent = '';
+            document.getElementById('orderFeedback').className = 'feedback';
+        }
+        
+        // =============================================
+        // JEU 2 : CONJUGAISON
+        // =============================================
+        function revealConj(inputId, answer, enInputId, enAnswer) {
+            const input = document.getElementById(inputId);
+            const answerSpan = document.getElementById(inputId + 'a');
+            const enInput = document.getElementById(enInputId);
+            
+            if (answerSpan.classList.contains('show')) {
+                answerSpan.classList.remove('show');
+                input.value = '';
+                if (enInput) enInput.value = '';
+                return;
+            }
+            
+            input.value = answer;
+            answerSpan.classList.add('show');
+            if (enInput) enInput.value = enAnswer;
+        }
+        
+        // =============================================
+        // JEU 3 : TRADUCTION
+        // =============================================
+        function showTrans(textareaId, answer) {
+            const textarea = document.getElementById(textareaId);
+            const answerDiv = document.getElementById(textareaId + 'a');
+            
+            if (answerDiv.classList.contains('show')) {
+                answerDiv.classList.remove('show');
+                textarea.value = '';
+                return;
+            }
+            
+            textarea.value = answer;
+            answerDiv.classList.add('show');
+        }
+        
+        // =============================================
+        // JEU 4 : ASSOCIATION
+        // =============================================
+        const matchPairs = [
+            { fr: 'Je suis pressé(e) le matin', en: 'I\'m in a hurry in the morning' },
+            { fr: 'J\'ai du mal à me lever', en: 'I have trouble getting up' },
+            { fr: 'Métro, boulot, dodo', en: 'Commute, work, sleep' },
+            { fr: 'Je ne suis pas du matin', en: 'I\'m not a morning person' }
+        ];
+        
+        let matchSelected = null;
+        let matchMatched = [];
+        
+        function initMatch() {
+            const container = document.getElementById('matchContainer');
+            const pairs = [...matchPairs];
+            for (let i = pairs.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+            }
+            
+            const allItems = [];
+            pairs.forEach((p, idx) => {
+                allItems.push({ type: 'fr', text: p.fr, pairIdx: idx, id: `fr-${idx}` });
+                allItems.push({ type: 'en', text: p.en, pairIdx: idx, id: `en-${idx}` });
+            });
+            
+            for (let i = allItems.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
+            }
+            
+            container.innerHTML = '';
+            allItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item';
+                div.dataset.type = item.type;
+                div.dataset.pairIdx = item.pairIdx;
+                div.dataset.id = item.id;
+                div.textContent = item.text;
+                div.addEventListener('click', onMatchClick);
+                container.appendChild(div);
+            });
+            
+            matchSelected = null;
+            matchMatched = [];
+            document.getElementById('matchFeedback').textContent = '';
+        }
+        
+        function onMatchClick(e) {
+            const el = this;
+            if (el.classList.contains('matched')) return;
+            
+            const type = el.dataset.type;
+            const pairIdx = parseInt(el.dataset.pairIdx);
+            
+            if (matchSelected === null) {
+                matchSelected = el;
+                el.classList.add('selected');
+                document.getElementById('matchFeedback').textContent = '🔍 Choisissez la traduction / Choose the translation';
+                return;
+            }
+            
+            const first = matchSelected;
+            const firstPairIdx = parseInt(first.dataset.pairIdx);
+            const firstType = first.dataset.type;
+            
+            if (first === el) {
+                first.classList.remove('selected');
+                matchSelected = null;
+                document.getElementById('matchFeedback').textContent = '';
+                return;
+            }
+            
+            if (firstPairIdx === pairIdx && firstType !== type) {
+                first.classList.remove('selected');
+                first.classList.add('matched');
+                el.classList.add('matched');
+                matchMatched.push(pairIdx);
+                matchSelected = null;
+                document.getElementById('matchFeedback').textContent = '✅ Bonne paire ! / Good pair!';
+                document.getElementById('matchFeedback').style.color = '#155724';
+                
+                if (matchMatched.length === matchPairs.length) {
+                    document.getElementById('matchFeedback').textContent = '🎉 Félicitations ! Toutes les paires sont trouvées ! / Congratulations! All pairs found!';
+                    document.getElementById('matchFeedback').style.color = '#155724';
+                }
+            } else {
+                first.classList.remove('selected');
+                first.classList.add('wrong');
+                el.classList.add('wrong');
+                document.getElementById('matchFeedback').textContent = '❌ Ce n\'est pas la bonne paire. Réessayez ! / That\'s not the right pair. Try again!';
+                document.getElementById('matchFeedback').style.color = '#721c24';
+                setTimeout(() => {
+                    first.classList.remove('wrong');
+                    el.classList.remove('wrong');
+                }, 600);
+                matchSelected = null;
+            }
+        }
+        
+        function resetMatch() {
+            document.querySelectorAll('.match-item').forEach(el => {
+                el.className = 'match-item';
+            });
+            matchSelected = null;
+            matchMatched = [];
+            document.getElementById('matchFeedback').textContent = '';
+            initMatch();
+        }
+        
+        // =============================================
+        // JEU 5 : QUESTIONS PERSONNELLES
+        // =============================================
+        function showPersonal(textareaId, answer, answerDivId) {
+            const textarea = document.getElementById(textareaId);
+            const answerDiv = document.getElementById(answerDivId);
+            
+            if (answerDiv.classList.contains('show')) {
+                answerDiv.classList.remove('show');
+                textarea.value = '';
+                return;
+            }
+            
+            textarea.value = answer;
+            answerDiv.classList.add('show');
+        }
+        
+        // =============================================
+        // INIT
+        // =============================================
+        initDrag();
+        initMatch();
+    </script>
+</body>
+</html>
