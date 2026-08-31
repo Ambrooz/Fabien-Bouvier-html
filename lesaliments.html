@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 - Les repas & les aliments (Jeux interactifs)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+            border: 4px solid #1b5e20;
+            padding-bottom: 30px;
+        }
+        
+        .header {
+            background: linear-gradient(45deg, #1b5e20, #2e7d32);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header .sub {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .main-content {
+            padding: 25px 30px;
+        }
+        
+        .instruction {
+            background: #E8F5E9;
+            padding: 15px;
+            border-left: 5px solid #1b5e20;
+            margin-bottom: 20px;
+            border-radius: 0 10px 10px 0;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+        
+        .instruction .en {
+            font-weight: normal;
+            color: #555;
+            font-size: 14px;
+            display: block;
+            margin-top: 5px;
+        }
+        
+        .section-title {
+            color: #1b5e20;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #1b5e20;
+            padding-bottom: 10px;
+        }
+        
+        .section-title .en {
+            font-size: 14px;
+            color: #777;
+            font-weight: normal;
+        }
+        
+        .exercise-box {
+            background: #f8f9fa;
+            border: 2px solid #1b5e20;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .exercise-title {
+            background: #1b5e20;
+            color: white;
+            padding: 12px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 13px 13px 0 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+        
+        .exercise-title .en {
+            font-weight: normal;
+            font-size: 13px;
+            opacity: 0.9;
+            display: block;
+        }
+        
+        .question {
+            margin: 12px 0;
+            padding: 12px 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 3px solid #1b5e20;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+        }
+        
+        .question .en {
+            color: #777;
+            font-size: 13px;
+            display: block;
+            margin-top: 3px;
+        }
+        
+        .text-bubble {
+            background: #E8F5E9;
+            border-radius: 15px;
+            padding: 18px 22px;
+            margin: 15px 0;
+            border: 2px solid #1b5e20;
+            line-height: 1.9;
+            font-size: 16px;
+        }
+        
+        .text-bubble .fr {
+            color: #1b5e20;
+        }
+        
+        .text-bubble .en-text {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+            font-size: 14px;
+            border: 1px dashed #1b5e20;
+        }
+        
+        .highlight {
+            background: linear-gradient(120deg, #a5d6a7 0%, #66bb6a 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #1b5e20;
+        }
+        
+        .time-highlight {
+            background: linear-gradient(120deg, #ffccbc 0%, #ffab91 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #bf360c;
+        }
+        
+        .vocab-compact {
+            background: #f5f5f5;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 10px 0 15px 0;
+            border: 1px solid #ddd;
+            font-size: 13px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4px 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .vocab-compact .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px dotted #eee;
+        }
+        
+        .vocab-compact .item .fr {
+            color: #1b5e20;
+            font-weight: bold;
+        }
+        
+        .vocab-compact .item .en {
+            color: #777;
+        }
+        
+        @media (max-width: 768px) {
+            .vocab-compact {
+                grid-template-columns: 1fr 1fr;
+                max-height: 300px;
+            }
+        }
+        
+        @media (max-width: 500px) {
+            .vocab-compact {
+                grid-template-columns: 1fr;
+                max-height: 400px;
+            }
+        }
+        
+        /* Style pour la leçon de conjugaison */
+        .conj-lesson {
+            background: #E8F5E9;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin: 15px 0;
+            border: 2px solid #1b5e20;
+        }
+        
+        .conj-lesson table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        
+        .conj-lesson th {
+            background: #1b5e20;
+            color: white;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        
+        .conj-lesson td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #c8e6c9;
+        }
+        
+        .conj-lesson tr:nth-child(even) {
+            background: #f1f8e9;
+        }
+        
+        .conj-lesson .verb-title {
+            font-weight: bold;
+            color: #1b5e20;
+            font-size: 17px;
+        }
+        
+        .conj-lesson .en {
+            color: #777;
+            font-size: 13px;
+        }
+        
+        input[type="text"] {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 15px;
+            font-family: inherit;
+            width: 140px;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus {
+            border-color: #1b5e20;
+            outline: none;
+        }
+        
+        .answer-hidden {
+            background: #fff3cd;
+            padding: 4px 10px;
+            border-radius: 5px;
+            font-size: 13px;
+            color: #856404;
+            margin-left: 10px;
+            cursor: pointer;
+            border: 1px dashed #ffc107;
+            display: inline-block;
+        }
+        
+        .answer-hidden:hover {
+            background: #ffe69c;
+        }
+        
+        .answer-reveal {
+            display: none;
+            color: #1b5e20;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .answer-reveal.show {
+            display: inline;
+        }
+        
+        .drag-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background: #E8F5E9;
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 250px;
+            border: 2px dashed #1b5e20;
+        }
+        
+        .drag-item {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 2px solid #1b5e20;
+            cursor: grab;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+            transition: all 0.2s;
+            user-select: none;
+        }
+        
+        .drag-item:active {
+            cursor: grabbing;
+            opacity: 0.7;
+        }
+        
+        .drag-item.dragging {
+            opacity: 0.4;
+            border-style: dashed;
+        }
+        
+        .drag-item .num {
+            background: #1b5e20;
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        
+        .drag-item .en {
+            color: #777;
+            font-size: 13px;
+        }
+        
+        .drag-item.dropped {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .drop-zone {
+            min-height: 60px;
+            border: 2px dashed #aaa;
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 10px;
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .drop-zone .drag-item {
+            cursor: default;
+            border-color: #28a745;
+            background: #d4edda;
+        }
+        
+        .btn-check {
+            background: #1b5e20;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        
+        .btn-check:hover {
+            background: #2e7d32;
+        }
+        
+        .btn-reset {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            margin-top: 15px;
+            margin-left: 10px;
+            transition: background 0.3s;
+        }
+        
+        .btn-reset:hover {
+            background: #e68900;
+        }
+        
+        .feedback {
+            margin-top: 12px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .translation-area {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 50px;
+        }
+        
+        .translation-area:focus {
+            border-color: #1b5e20;
+            outline: none;
+        }
+        
+        .btn-reveal {
+            background: #1b5e20;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            margin-left: 10px;
+        }
+        
+        .btn-reveal:hover {
+            background: #2e7d32;
+        }
+        
+        .translation-answer {
+            background: #E8F5E9;
+            padding: 8px 14px;
+            border-radius: 6px;
+            margin-top: 6px;
+            display: none;
+            color: #1b5e20;
+            font-weight: bold;
+        }
+        
+        .translation-answer.show {
+            display: block;
+        }
+        
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .match-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #1b5e20;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        
+        .match-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        
+        .match-item.selected {
+            border-color: #FF9800;
+            background: #FFF3E0;
+        }
+        
+        .match-item.matched {
+            border-color: #28a745;
+            background: #d4edda;
+            cursor: default;
+            opacity: 0.7;
+        }
+        
+        .match-item.wrong {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        
+        .personal-area {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 45px;
+            background: white;
+        }
+        
+        .personal-area:focus {
+            border-color: #1b5e20;
+            outline: none;
+        }
+        
+        .btn-personal {
+            background: #1b5e20;
+            color: white;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            margin-left: 10px;
+        }
+        
+        .btn-personal:hover {
+            background: #2e7d32;
+        }
+        
+        .personal-answer {
+            background: #E8F5E9;
+            padding: 8px 14px;
+            border-radius: 6px;
+            margin-top: 6px;
+            display: none;
+            color: #1b5e20;
+            font-weight: bold;
+        }
+        
+        .personal-answer.show {
+            display: block;
+        }
+        
+        /* Style pour le jeu de vocabulaire flouté */
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        
+        .vocab-pair {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 2px solid #1b5e20;
+            gap: 15px;
+        }
+        
+        .vocab-pair .en-word {
+            font-weight: bold;
+            color: #1b5e20;
+            min-width: 80px;
+        }
+        
+        .vocab-pair .fr-blur {
+            background: #e0e0e0;
+            color: #e0e0e0;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+            min-width: 120px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .vocab-pair .fr-blur.revealed {
+            background: #E8F5E9;
+            color: #1b5e20;
+        }
+        
+        .vocab-pair .fr-blur:hover {
+            background: #c8e6c9;
+            color: #1b5e20;
+        }
+        
+        .vocab-pair .fr-blur.revealed:hover {
+            background: #a5d6a7;
+        }
+        
+        .btn-vocab-reset {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        
+        .btn-vocab-reset:hover {
+            background: #e68900;
+        }
+        
+        @media (max-width: 768px) {
+            .match-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 15px;
+            }
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🍽️ Les repas & les aliments - Niveau A1 🍽️</h1>
+            <p>Apprenons à parler de ce que nous mangeons et buvons !</p>
+            <p class="sub">📘 Let's learn to talk about what we eat and drink!</p>
+        </div>
+        
+        <div class="main-content">
+            
+            <div class="instruction">
+                📖 Lisez le texte, puis faites les jeux ci-dessous.
+                <span class="en">📘 Read the text, then play the games below.</span>
+            </div>
+            
+            <!-- ===== TEXTE + TRADUCTION ===== -->
+            <div class="text-bubble">
+                <div class="fr">
+                    <strong>🍳 Les repas de la journée</strong><br>
+                    Le matin, <span class="highlight">je prends</span> un petit-déjeuner. <span class="highlight">Je bois</span> un grand verre de jus d'orange et <span class="highlight">je mange</span> des céréales avec du lait. Parfois, <span class="highlight">je prends</span> une tartine avec de la confiture. Après le petit-déjeuner, <span class="highlight">je me lave</span> les dents.<br><br>
+                    À midi, <span class="highlight">je déjeune</span> à la cantine ou chez moi. <span class="highlight">Je mange</span> une entrée, un plat principal et un dessert. <span class="highlight">Je bois</span> de l'eau ou un soda. Après le déjeuner, <span class="highlight">je fais</span> la vaisselle ou <span class="highlight">je range</span> la table. Puis je vais dans la <span class="highlight">cuisine</span> pour ranger les aliments.<br><br>
+                    Le soir, <span class="highlight">je dîne</span> avec ma famille. <span class="highlight">Je prends</span> une soupe, puis un plat avec des légumes et de la viande ou du poisson. <span class="highlight">Je bois</span> un verre de vin ou de l'eau. Après le dîner, <span class="highlight">je fais</span> la vaisselle et <span class="highlight">je mets</span> les restes au <span class="highlight">frigo</span>. Parfois, je <span class="highlight">chauffe</span> un plat au <span class="highlight">micro-ondes</span> pour le lendemain. Ensuite, <span class="highlight">je me brosse</span> les dents avant de me coucher.
+                </div>
+                <div class="en-text">
+                    <strong>📘 English translation:</strong><br>
+                    In the morning, I have breakfast. I drink a large glass of orange juice and I eat cereal with milk. Sometimes, I have a slice of bread with jam. After breakfast, I brush my teeth.<br><br>
+                    At noon, I have lunch at the cafeteria or at home. I eat a starter, a main course and a dessert. I drink water or a soda. After lunch, I do the dishes or I clear the table. Then I go to the kitchen to put away the food.<br><br>
+                    In the evening, I have dinner with my family. I have a soup, then a dish with vegetables and meat or fish. I drink a glass of wine or water. After dinner, I do the dishes and I put the leftovers in the fridge. Sometimes, I heat up a dish in the microwave for the next day. Then I brush my teeth before going to bed.
+                </div>
+            </div>
+            
+            <!-- ===== VOCABULAIRE COMPACT ===== -->
+            <div class="section-title">
+                📚 Vocabulaire <span class="en">/ Vocabulary</span>
+            </div>
+            
+            <div class="vocab-compact">
+                <div class="item"><span class="fr">prendre (petit-déjeuner)</span> <span class="en">to have (breakfast)</span></div>
+                <div class="item"><span class="fr">manger</span> <span class="en">to eat</span></div>
+                <div class="item"><span class="fr">boire</span> <span class="en">to drink</span></div>
+                <div class="item"><span class="fr">déjeuner</span> <span class="en">to have lunch</span></div>
+                <div class="item"><span class="fr">dîner</span> <span class="en">to have dinner</span></div>
+                <div class="item"><span class="fr">faire la vaisselle</span> <span class="en">to do the dishes</span></div>
+                <div class="item"><span class="fr">se laver les dents</span> <span class="en">to brush one's teeth</span></div>
+                <div class="item"><span class="fr">mettre (les restes)</span> <span class="en">to put (leftovers)</span></div>
+                <div class="item"><span class="fr">ranger la table</span> <span class="en">to clear the table</span></div>
+                <div class="item"><span class="fr">prendre (un verre)</span> <span class="en">to have (a glass)</span></div>
+                <div class="item"><span class="fr">le petit-déjeuner</span> <span class="en">breakfast</span></div>
+                <div class="item"><span class="fr">le déjeuner</span> <span class="en">lunch</span></div>
+                <div class="item"><span class="fr">le dîner</span> <span class="en">dinner</span></div>
+                <div class="item"><span class="fr">la confiture</span> <span class="en">jam</span></div>
+                <div class="item"><span class="fr">les céréales</span> <span class="en">cereal</span></div>
+                <div class="item"><span class="fr">le jus d'orange</span> <span class="en">orange juice</span></div>
+                <div class="item"><span class="fr">la soupe</span> <span class="en">soup</span></div>
+                <div class="item"><span class="fr">les légumes</span> <span class="en">vegetables</span></div>
+                <div class="item"><span class="fr">la viande / le poisson</span> <span class="en">meat / fish</span></div>
+                <div class="item"><span class="fr">le frigo</span> <span class="en">fridge</span></div>
+                <div class="item"><span class="fr">la cuisine</span> <span class="en">kitchen</span></div>
+                <div class="item"><span class="fr">le micro-ondes</span> <span class="en">microwave</span></div>
+                <div class="item"><span class="fr">chauffer</span> <span class="en">to heat up</span></div>
+            </div>
+            
+            <!-- ===== LEÇON DE CONJUGAISON : PRENDRE, METTRE, BOIRE ===== -->
+            <div class="section-title">
+                📘 Conjugaison : prendre, mettre, boire <span class="en">/ Conjugation</span>
+            </div>
+            
+            <div class="conj-lesson">
+                <div class="verb-title">🔹 PRENDRE <span class="en">(to take / to have)</span></div>
+                <table>
+                    <tr><th>Pronom</th><th>Conjugaison</th><th>Exemple</th></tr>
+                    <tr><td>je</td><td><strong>prends</strong></td><td>Je prends un café.</td></tr>
+                    <tr><td>tu</td><td><strong>prends</strong></td><td>Tu prends du sucre ?</td></tr>
+                    <tr><td>il / elle / on</td><td><strong>prend</strong></td><td>Elle prend une tartine.</td></tr>
+                    <tr><td>nous</td><td><strong>prenons</strong></td><td>Nous prenons le petit-déjeuner.</td></tr>
+                    <tr><td>vous</td><td><strong>prenez</strong></td><td>Vous prenez un verre ?</td></tr>
+                    <tr><td>ils / elles</td><td><strong>prennent</strong></td><td>Ils prennent le bus.</td></tr>
+                </table>
+                
+                <div class="verb-title" style="margin-top:18px;">🔹 METTRE <span class="en">(to put / to set)</span></div>
+                <table>
+                    <tr><th>Pronom</th><th>Conjugaison</th><th>Exemple</th></tr>
+                    <tr><td>je</td><td><strong>mets</strong></td><td>Je mets la table.</td></tr>
+                    <tr><td>tu</td><td><strong>mets</strong></td><td>Tu mets les restes au frigo.</td></tr>
+                    <tr><td>il / elle / on</td><td><strong>met</strong></td><td>Elle met du sel.</td></tr>
+                    <tr><td>nous</td><td><strong>mettons</strong></td><td>Nous mettons la nappe.</td></tr>
+                    <tr><td>vous</td><td><strong>mettez</strong></td><td>Vous mettez les couverts ?</td></tr>
+                    <tr><td>ils / elles</td><td><strong>mettent</strong></td><td>Ils mettent les assiettes.</td></tr>
+                </table>
+                
+                <div class="verb-title" style="margin-top:18px;">🔹 BOIRE <span class="en">(to drink)</span></div>
+                <table>
+                    <tr><th>Pronom</th><th>Conjugaison</th><th>Exemple</th></tr>
+                    <tr><td>je</td><td><strong>bois</strong></td><td>Je bois de l'eau.</td></tr>
+                    <tr><td>tu</td><td><strong>bois</strong></td><td>Tu bois du vin ?</td></tr>
+                    <tr><td>il / elle / on</td><td><strong>boit</strong></td><td>Il boit un jus d'orange.</td></tr>
+                    <tr><td>nous</td><td><strong>buvons</strong></td><td>Nous buvons du café.</td></tr>
+                    <tr><td>vous</td><td><strong>buvez</strong></td><td>Vous buvez un soda ?</td></tr>
+                    <tr><td>ils / elles</td><td><strong>boivent</strong></td><td>Elles boivent du thé.</td></tr>
+                </table>
+            </div>
+            
+            <!-- ===== EXPRESSIONS UTILES ===== -->
+            <div class="section-title">
+                💬 Expressions utiles <span class="en">/ Useful Expressions</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="question">
+                    <strong>🍞 "J'ai faim !"</strong><br>
+                    <span class="en">= I'm hungry!</span>
+                    <span style="display:block;font-size:13px;color:#888;">Dire qu'on a envie de manger / Say you want to eat</span>
+                </div>
+                <div class="question">
+                    <strong>🥤 "J'ai soif."</strong><br>
+                    <span class="en">= I'm thirsty.</span>
+                    <span style="display:block;font-size:13px;color:#888;">Dire qu'on a envie de boire / Say you want to drink</span>
+                </div>
+                <div class="question">
+                    <strong>🍽️ "Bon appétit !"</strong><br>
+                    <span class="en">= Enjoy your meal!</span>
+                    <span style="display:block;font-size:13px;color:#888;">Souhaiter un bon repas / Wish a good meal</span>
+                </div>
+                <div class="question">
+                    <strong>🧼 "Je fais la vaisselle."</strong><br>
+                    <span class="en">= I do the dishes.</span>
+                    <span style="display:block;font-size:13px;color:#888;">Action après le repas / Action after the meal</span>
+                </div>
+            </div>
+            
+            <!-- ===== JEU 1 : DRAG & DROP ===== -->
+            <div class="section-title">
+                🧩 Jeu 1 : Ordre chronologique <span class="en">/ Chronological order</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    🎯 Glissez-déposez dans le bon ordre <span class="en">/ Drag & drop in the correct order</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <strong>FR :</strong> Mettez les actions dans l'ordre chronologique (du matin au soir).<br>
+                    <span class="en"><strong>EN :</strong> Put the actions in chronological order (from morning to evening).</span>
+                </p>
+                
+                <div style="display:flex;flex-wrap:wrap;gap:10px;margin-bottom:15px;">
+                    <button class="btn-check" onclick="checkOrder()">✅ Vérifier / Check</button>
+                    <button class="btn-reset" onclick="resetOrder()">🔄 Recommencer / Reset</button>
+                </div>
+                
+                <div id="dragContainer" class="drag-container"></div>
+                
+                <div id="dropZone" class="drop-zone">
+                    <span style="color:#999;font-style:italic;">Déposez ici dans l'ordre / Drop here in order...</span>
+                </div>
+                
+                <div id="orderFeedback" class="feedback"></div>
+            </div>
+            
+            <!-- ===== JEU 2 : CONJUGAISON ===== -->
+            <div class="section-title">
+                ✍️ Jeu 2 : Conjuguez <span class="en">/ Conjugate</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    📝 Remplissez les cases <span class="en">/ Fill in the blanks</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <span class="en"><strong>💡 Cliquez sur "Voir la réponse" pour vérifier.</strong></span>
+                </p>
+                
+                <div class="question">
+                    1. Je <input type="text" id="conj1" placeholder="..."> (prendre) un café le matin.<br>
+                    <span class="en">I <input type="text" id="conj1en" placeholder="..."> a coffee in the morning.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj1','prends','conj1en','have')">Voir la réponse</button>
+                    <span id="conj1a" class="answer-reveal">✅ prends / have</span>
+                </div>
+                
+                <div class="question">
+                    2. Tu <input type="text" id="conj2" placeholder="..."> (manger) des céréales ?<br>
+                    <span class="en">Do you <input type="text" id="conj2en" placeholder="..."> cereal?</span>
+                    <button class="btn-reveal" onclick="revealConj('conj2','manges','conj2en','eat')">Voir la réponse</button>
+                    <span id="conj2a" class="answer-reveal">✅ manges / eat</span>
+                </div>
+                
+                <div class="question">
+                    3. Il <input type="text" id="conj3" placeholder="..."> (boire) un jus d'orange.<br>
+                    <span class="en">He <input type="text" id="conj3en" placeholder="..."> orange juice.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj3','boit','conj3en','drinks')">Voir la réponse</button>
+                    <span id="conj3a" class="answer-reveal">✅ boit / drinks</span>
+                </div>
+                
+                <div class="question">
+                    4. Nous <input type="text" id="conj4" placeholder="..."> (déjeuner) à midi.<br>
+                    <span class="en">We <input type="text" id="conj4en" placeholder="..."> at noon.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj4','déjeunons','conj4en','have lunch')">Voir la réponse</button>
+                    <span id="conj4a" class="answer-reveal">✅ déjeunons / have lunch</span>
+                </div>
+                
+                <div class="question">
+                    5. Vous <input type="text" id="conj5" placeholder="..."> (faire) la vaisselle après le repas ?<br>
+                    <span class="en">Do you <input type="text" id="conj5en" placeholder="..."> the dishes after the meal?</span>
+                    <button class="btn-reveal" onclick="revealConj('conj5','faites','conj5en','do')">Voir la réponse</button>
+                    <span id="conj5a" class="answer-reveal">✅ faites / do</span>
+                </div>
+                
+                <div class="question">
+                    6. Elles <input type="text" id="conj6" placeholder="..."> (mettre) la table.<br>
+                    <span class="en">They <input type="text" id="conj6en" placeholder="..."> the table.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj6','mettent','conj6en','set')">Voir la réponse</button>
+                    <span id="conj6a" class="answer-reveal">✅ mettent / set</span>
+                </div>
+                
+                <div class="question">
+                    7. Je <input type="text" id="conj7" placeholder="..."> (se laver) les dents après le dîner.<br>
+                    <span class="en">I <input type="text" id="conj7en" placeholder="..."> my teeth after dinner.</span>
+                    <button class="btn-reveal" onclick="revealConj('conj7','me lave','conj7en','brush')">Voir la réponse</button>
+                    <span id="conj7a" class="answer-reveal">✅ me lave / brush</span>
+                </div>
+            </div>
+            
+            <!-- ===== JEU 3 : VOCABULAIRE FLOUTÉ ===== -->
+            <div class="section-title">
+                🧩 Jeu 3 : Vocabulaire <span class="en">/ Vocabulary</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    🔍 Cliquez sur les mots floutés pour les révéler <span class="en">/ Click on the blurred words to reveal them</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <strong>FR :</strong> Trouvez la traduction française de chaque mot anglais. Cliquez sur la case floutée pour voir la réponse.<br>
+                    <span class="en"><strong>EN :</strong> Find the French translation of each English word. Click on the blurred box to see the answer.</span>
+                </p>
+                
+                <div id="vocabGameContainer" class="vocab-grid">
+                    <!-- Généré par JS -->
+                </div>
+                
+                <button class="btn-vocab-reset" onclick="resetVocabGame()">🔄 Tout flouter / Reset all</button>
+                <div id="vocabFeedback" style="margin-top:10px;font-weight:bold;color:#1b5e20;"></div>
+            </div>
+            
+            <!-- ===== JEU 4 : TRADUCTION ===== -->
+            <div class="section-title">
+                🌍 Jeu 4 : Traduisez <span class="en">/ Translate</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    📝 Traductions <span class="en">/ Translations</span>
+                </div>
+                
+                <div class="question">
+                    <strong>1.</strong> I drink a glass of water.<br>
+                    <textarea class="translation-area" id="trans1" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans1','Je bois un verre d\'eau.')">Voir la réponse</button>
+                    <div id="trans1a" class="translation-answer">✅ Je bois un verre d'eau.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>2.</strong> She eats vegetables.<br>
+                    <textarea class="translation-area" id="trans2" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans2','Elle mange des légumes.')">Voir la réponse</button>
+                    <div id="trans2a" class="translation-answer">✅ Elle mange des légumes.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>3.</strong> We do the dishes after dinner.<br>
+                    <textarea class="translation-area" id="trans3" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans3','Nous faisons la vaisselle après le dîner.')">Voir la réponse</button>
+                    <div id="trans3a" class="translation-answer">✅ Nous faisons la vaisselle après le dîner.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>4.</strong> They put the leftovers in the fridge.<br>
+                    <textarea class="translation-area" id="trans4" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans4','Ils/Elles mettent les restes au frigo.')">Voir la réponse</button>
+                    <div id="trans4a" class="translation-answer">✅ Ils/Elles mettent les restes au frigo.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>5.</strong> Do you have breakfast at home?<br>
+                    <textarea class="translation-area" id="trans5" placeholder="Écrivez votre traduction ici..."></textarea>
+                    <button class="btn-reveal" onclick="showTrans('trans5','Tu prends le petit-déjeuner à la maison ?')">Voir la réponse</button>
+                    <div id="trans5a" class="translation-answer">✅ Tu prends le petit-déjeuner à la maison ?</div>
+                </div>
+            </div>
+            
+            <!-- ===== JEU 5 : ASSOCIATION ===== -->
+            <div class="section-title">
+                🔗 Jeu 5 : Associez <span class="en">/ Match</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    🧩 Cliquez sur une expression française puis sur sa traduction anglaise <span class="en">/ Click a French expression then its English translation</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <span class="en"><strong>💡 Trouvez les paires ! / Find the pairs!</strong></span>
+                </p>
+                
+                <div id="matchContainer" class="match-grid"></div>
+                <div id="matchFeedback" style="margin-top:12px;font-weight:bold;"></div>
+                <button class="btn-reset" onclick="resetMatch()" style="margin-top:15px;">🔄 Recommencer / Reset</button>
+            </div>
+            
+            <!-- ===== JEU 6 : QUESTIONS PERSONNELLES ===== -->
+            <div class="section-title">
+                🗣️ Jeu 6 : Parlez de vous ! <span class="en">/ Talk about yourself!</span>
+            </div>
+            
+            <div class="exercise-box">
+                <div class="exercise-title">
+                    📝 Répondez aux questions <span class="en">/ Answer the questions</span>
+                </div>
+                <p style="margin-bottom:12px;color:#555;">
+                    <strong>FR :</strong> Répondez aux questions sur votre routine. Utilisez des phrases complètes !<br>
+                    <span class="en"><strong>EN :</strong> Answer the questions about your routine. Use complete sentences!</span>
+                </p>
+                
+                <div class="question">
+                    <strong>1. Que manges-tu au petit-déjeuner ?</strong><br>
+                    <span class="en">What do you eat for breakfast?</span>
+                    <textarea class="personal-area" id="pers1" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers1','Je mange des céréales et je bois du jus d\'orange.','pers1a')">Voir un exemple</button>
+                    <div id="pers1a" class="personal-answer">💡 Exemple : Je mange des céréales et je bois du jus d'orange.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>2. Où est-ce que tu déjeunes ?</strong><br>
+                    <span class="en">Where do you have lunch?</span>
+                    <textarea class="personal-area" id="pers2" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers2','Je déjeune à la cantine.','pers2a')">Voir un exemple</button>
+                    <div id="pers2a" class="personal-answer">💡 Exemple : Je déjeune à la cantine.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>3. Qu'est-ce que tu bois pendant les repas ?</strong><br>
+                    <span class="en">What do you drink during meals?</span>
+                    <textarea class="personal-area" id="pers3" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers3','Je bois de l\'eau et parfois un soda.','pers3a')">Voir un exemple</button>
+                    <div id="pers3a" class="personal-answer">💡 Exemple : Je bois de l'eau et parfois un soda.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>4. Est-ce que tu fais la vaisselle après le dîner ?</strong><br>
+                    <span class="en">Do you do the dishes after dinner?</span>
+                    <textarea class="personal-area" id="pers4" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers4','Oui, je fais la vaisselle après le dîner.','pers4a')">Voir un exemple</button>
+                    <div id="pers4a" class="personal-answer">💡 Exemple : Oui, je fais la vaisselle après le dîner.</div>
+                </div>
+                
+                <div class="question">
+                    <strong>5. Qu'est-ce que tu préfères manger le soir ?</strong><br>
+                    <span class="en">What do you prefer to eat in the evening?</span>
+                    <textarea class="personal-area" id="pers5" placeholder="Écrivez votre réponse ici..."></textarea>
+                    <button class="btn-personal" onclick="showPersonal('pers5','Je préfère manger une soupe et du poisson.','pers5a')">Voir un exemple</button>
+                    <div id="pers5a" class="personal-answer">💡 Exemple : Je préfère manger une soupe et du poisson.</div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <script>
+        // =============================================
+        // JEU 1 : DRAG & DROP (repas)
+        // =============================================
+        const actions = [
+            { id: 0, fr: 'Je prends le petit-déjeuner', en: 'I have breakfast' },
+            { id: 1, fr: 'Je me lave les dents', en: 'I brush my teeth' },
+            { id: 2, fr: 'Je déjeune', en: 'I have lunch' },
+            { id: 3, fr: 'Je fais la vaisselle', en: 'I do the dishes' },
+            { id: 4, fr: 'Je dîne', en: 'I have dinner' },
+            { id: 5, fr: 'Je mets les restes au frigo', en: 'I put leftovers in the fridge' }
+        ];
+        
+        const correctOrder = [0, 1, 2, 3, 4, 5];
+        let currentOrder = [];
+        let dragItem = null;
+        
+        function initDrag() {
+            const container = document.getElementById('dragContainer');
+            const dropZone = document.getElementById('dropZone');
+            
+            const shuffled = [...actions];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            
+            container.innerHTML = '';
+            shuffled.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'drag-item';
+                div.draggable = true;
+                div.dataset.id = item.id;
+                div.innerHTML = `
+                    <span>${item.fr}</span>
+                    <span class="en">${item.en}</span>
+                `;
+                div.addEventListener('dragstart', onDragStart);
+                div.addEventListener('dragend', onDragEnd);
+                container.appendChild(div);
+            });
+            
+            dropZone.innerHTML = '<span style="color:#999;font-style:italic;">Déposez ici dans l\'ordre / Drop here in order...</span>';
+            dropZone.addEventListener('dragover', onDragOver);
+            dropZone.addEventListener('drop', onDrop);
+            
+            currentOrder = [];
+            document.getElementById('orderFeedback').textContent = '';
+            document.getElementById('orderFeedback').className = 'feedback';
+        }
+        
+        function onDragStart(e) {
+            dragItem = this;
+            this.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+        
+        function onDragEnd(e) {
+            this.classList.remove('dragging');
+        }
+        
+        function onDragOver(e) {
+            e.preventDefault();
+            e.dataTransfer.dropEffect = 'move';
+        }
+        
+        function onDrop(e) {
+            e.preventDefault();
+            const dropZone = document.getElementById('dropZone');
+            if (dragItem && dragItem.parentNode.id === 'dragContainer') {
+                const id = parseInt(dragItem.dataset.id);
+                if (currentOrder.includes(id)) return;
+                
+                const clone = dragItem.cloneNode(true);
+                clone.draggable = false;
+                clone.classList.add('dropped');
+                clone.querySelector('.en').style.display = 'inline';
+                if (dropZone.querySelector('span[style]')) {
+                    dropZone.innerHTML = '';
+                }
+                const numSpan = document.createElement('span');
+                numSpan.className = 'num';
+                numSpan.textContent = currentOrder.length + 1;
+                clone.prepend(numSpan);
+                dropZone.appendChild(clone);
+                
+                currentOrder.push(id);
+                dragItem.remove();
+                dragItem = null;
+            }
+        }
+        
+        function checkOrder() {
+            const feedback = document.getElementById('orderFeedback');
+            if (currentOrder.length !== correctOrder.length) {
+                feedback.textContent = '❌ Placez toutes les actions ! / Place all actions!';
+                feedback.className = 'feedback wrong';
+                return;
+            }
+            let correct = true;
+            for (let i = 0; i < currentOrder.length; i++) {
+                if (currentOrder[i] !== correctOrder[i]) {
+                    correct = false;
+                    break;
+                }
+            }
+            if (correct) {
+                feedback.textContent = '🎉 Parfait ! C\'est le bon ordre ! / Perfect! That\'s the right order!';
+                feedback.className = 'feedback correct';
+            } else {
+                feedback.textContent = '❌ Ce n\'est pas le bon ordre. Essayez encore ! / That\'s not the right order. Try again!';
+                feedback.className = 'feedback wrong';
+            }
+        }
+        
+        function resetOrder() {
+            const dropZone = document.getElementById('dropZone');
+            const container = document.getElementById('dragContainer');
+            const items = dropZone.querySelectorAll('.drag-item');
+            items.forEach(item => {
+                const id = parseInt(item.dataset.id);
+                const original = actions.find(a => a.id === id);
+                const newDiv = document.createElement('div');
+                newDiv.className = 'drag-item';
+                newDiv.draggable = true;
+                newDiv.dataset.id = id;
+                newDiv.innerHTML = `
+                    <span>${original.fr}</span>
+                    <span class="en">${original.en}</span>
+                `;
+                newDiv.addEventListener('dragstart', onDragStart);
+                newDiv.addEventListener('dragend', onDragEnd);
+                container.appendChild(newDiv);
+            });
+            dropZone.innerHTML = '<span style="color:#999;font-style:italic;">Déposez ici dans l\'ordre / Drop here in order...</span>';
+            currentOrder = [];
+            document.getElementById('orderFeedback').textContent = '';
+            document.getElementById('orderFeedback').className = 'feedback';
+        }
+        
+        // =============================================
+        // JEU 2 : CONJUGAISON
+        // =============================================
+        function revealConj(inputId, answer, enInputId, enAnswer) {
+            const input = document.getElementById(inputId);
+            const answerSpan = document.getElementById(inputId + 'a');
+            const enInput = document.getElementById(enInputId);
+            
+            if (answerSpan.classList.contains('show')) {
+                answerSpan.classList.remove('show');
+                input.value = '';
+                if (enInput) enInput.value = '';
+                return;
+            }
+            
+            input.value = answer;
+            answerSpan.classList.add('show');
+            if (enInput) enInput.value = enAnswer;
+        }
+        
+        // =============================================
+        // JEU 3 : VOCABULAIRE FLOUTÉ
+        // =============================================
+        const vocabPairs = [
+            { en: 'breakfast', fr: 'le petit-déjeuner' },
+            { en: 'lunch', fr: 'le déjeuner' },
+            { en: 'dinner', fr: 'le dîner' },
+            { en: 'water', fr: 'l\'eau' },
+            { en: 'vegetables', fr: 'les légumes' },
+            { en: 'jam', fr: 'la confiture' },
+            { en: 'soup', fr: 'la soupe' },
+            { en: 'orange juice', fr: 'le jus d\'orange' },
+            { en: 'fridge', fr: 'le frigo' },
+            { en: 'kitchen', fr: 'la cuisine' },
+            { en: 'microwave', fr: 'le micro-ondes' },
+            { en: 'to heat up', fr: 'chauffer' }
+        ];
+        
+        let vocabRevealed = [];
+        
+        function initVocabGame() {
+            const container = document.getElementById('vocabGameContainer');
+            container.innerHTML = '';
+            vocabRevealed = new Array(vocabPairs.length).fill(false);
+            
+            vocabPairs.forEach((pair, index) => {
+                const div = document.createElement('div');
+                div.className = 'vocab-pair';
+                
+                const enSpan = document.createElement('span');
+                enSpan.className = 'en-word';
+                enSpan.textContent = pair.en;
+                
+                const frSpan = document.createElement('span');
+                frSpan.className = 'fr-blur';
+                frSpan.textContent = '■ ■ ■ ■ ■';
+                frSpan.dataset.index = index;
+                frSpan.addEventListener('click', function() {
+                    revealVocab(index);
+                });
+                
+                div.appendChild(enSpan);
+                div.appendChild(frSpan);
+                container.appendChild(div);
+            });
+            
+            document.getElementById('vocabFeedback').textContent = '💡 Cliquez sur les cases grisées pour révéler la traduction.';
+        }
+        
+        function revealVocab(index) {
+            if (vocabRevealed[index]) {
+                vocabRevealed[index] = false;
+                const frSpans = document.querySelectorAll('.fr-blur');
+                frSpans.forEach(span => {
+                    if (parseInt(span.dataset.index) === index) {
+                        span.textContent = '■ ■ ■ ■ ■';
+                        span.classList.remove('revealed');
+                    }
+                });
+                document.getElementById('vocabFeedback').textContent = '🔒 Mot flouté ! Cliquez à nouveau pour le révéler.';
+                return;
+            }
+            
+            vocabRevealed[index] = true;
+            const frSpans = document.querySelectorAll('.fr-blur');
+            frSpans.forEach(span => {
+                if (parseInt(span.dataset.index) === index) {
+                    span.textContent = vocabPairs[index].fr;
+                    span.classList.add('revealed');
+                }
+            });
+            
+            if (vocabRevealed.every(v => v === true)) {
+                document.getElementById('vocabFeedback').textContent = '🎉 Félicitations ! Tout le vocabulaire est révélé !';
+            } else {
+                document.getElementById('vocabFeedback').textContent = '✅ Traduction révélée ! Cliquez à nouveau pour flouter.';
+            }
+        }
+        
+        function resetVocabGame() {
+            vocabRevealed = new Array(vocabPairs.length).fill(false);
+            const frSpans = document.querySelectorAll('.fr-blur');
+            frSpans.forEach(span => {
+                span.textContent = '■ ■ ■ ■ ■';
+                span.classList.remove('revealed');
+            });
+            document.getElementById('vocabFeedback').textContent = '🔄 Tout est flouté ! Cliquez sur les cases pour révéler.';
+        }
+        
+        // =============================================
+        // JEU 4 : TRADUCTION
+        // =============================================
+        function showTrans(textareaId, answer) {
+            const textarea = document.getElementById(textareaId);
+            const answerDiv = document.getElementById(textareaId + 'a');
+            
+            if (answerDiv.classList.contains('show')) {
+                answerDiv.classList.remove('show');
+                textarea.value = '';
+                return;
+            }
+            
+            textarea.value = answer;
+            answerDiv.classList.add('show');
+        }
+        
+        // =============================================
+        // JEU 5 : ASSOCIATION
+        // =============================================
+        const matchPairs = [
+            { fr: 'Je prends le petit-déjeuner', en: 'I have breakfast' },
+            { fr: 'Je fais la vaisselle', en: 'I do the dishes' },
+            { fr: 'Je me lave les dents', en: 'I brush my teeth' },
+            { fr: 'Je mets les restes au frigo', en: 'I put leftovers in the fridge' }
+        ];
+        
+        let matchSelected = null;
+        let matchMatched = [];
+        
+        function initMatch() {
+            const container = document.getElementById('matchContainer');
+            const pairs = [...matchPairs];
+            for (let i = pairs.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+            }
+            
+            const allItems = [];
+            pairs.forEach((p, idx) => {
+                allItems.push({ type: 'fr', text: p.fr, pairIdx: idx, id: `fr-${idx}` });
+                allItems.push({ type: 'en', text: p.en, pairIdx: idx, id: `en-${idx}` });
+            });
+            
+            for (let i = allItems.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
+            }
+            
+            container.innerHTML = '';
+            allItems.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'match-item';
+                div.dataset.type = item.type;
+                div.dataset.pairIdx = item.pairIdx;
+                div.dataset.id = item.id;
+                div.textContent = item.text;
+                div.addEventListener('click', onMatchClick);
+                container.appendChild(div);
+            });
+            
+            matchSelected = null;
+            matchMatched = [];
+            document.getElementById('matchFeedback').textContent = '';
+        }
+        
+        function onMatchClick(e) {
+            const el = this;
+            if (el.classList.contains('matched')) return;
+            
+            const type = el.dataset.type;
+            const pairIdx = parseInt(el.dataset.pairIdx);
+            
+            if (matchSelected === null) {
+                matchSelected = el;
+                el.classList.add('selected');
+                document.getElementById('matchFeedback').textContent = '🔍 Choisissez la traduction / Choose the translation';
+                return;
+            }
+            
+            const first = matchSelected;
+            const firstPairIdx = parseInt(first.dataset.pairIdx);
+            const firstType = first.dataset.type;
+            
+            if (first === el) {
+                first.classList.remove('selected');
+                matchSelected = null;
+                document.getElementById('matchFeedback').textContent = '';
+                return;
+            }
+            
+            if (firstPairIdx === pairIdx && firstType !== type) {
+                first.classList.remove('selected');
+                first.classList.add('matched');
+                el.classList.add('matched');
+                matchMatched.push(pairIdx);
+                matchSelected = null;
+                document.getElementById('matchFeedback').textContent = '✅ Bonne paire ! / Good pair!';
+                document.getElementById('matchFeedback').style.color = '#155724';
+                
+                if (matchMatched.length === matchPairs.length) {
+                    document.getElementById('matchFeedback').textContent = '🎉 Félicitations ! Toutes les paires sont trouvées ! / Congratulations! All pairs found!';
+                    document.getElementById('matchFeedback').style.color = '#155724';
+                }
+            } else {
+                first.classList.remove('selected');
+                first.classList.add('wrong');
+                el.classList.add('wrong');
+                document.getElementById('matchFeedback').textContent = '❌ Ce n\'est pas la bonne paire. Réessayez ! / That\'s not the right pair. Try again!';
+                document.getElementById('matchFeedback').style.color = '#721c24';
+                setTimeout(() => {
+                    first.classList.remove('wrong');
+                    el.classList.remove('wrong');
+                }, 600);
+                matchSelected = null;
+            }
+        }
+        
+        function resetMatch() {
+            document.querySelectorAll('.match-item').forEach(el => {
+                el.className = 'match-item';
+            });
+            matchSelected = null;
+            matchMatched = [];
+            document.getElementById('matchFeedback').textContent = '';
+            initMatch();
+        }
+        
+        // =============================================
+        // JEU 6 : QUESTIONS PERSONNELLES
+        // =============================================
+        function showPersonal(textareaId, answer, answerDivId) {
+            const textarea = document.getElementById(textareaId);
+            const answerDiv = document.getElementById(answerDivId);
+            
+            if (answerDiv.classList.contains('show')) {
+                answerDiv.classList.remove('show');
+                textarea.value = '';
+                return;
+            }
+            
+            textarea.value = answer;
+            answerDiv.classList.add('show');
+        }
+        
+        // =============================================
+        // INIT
+        // =============================================
+        initDrag();
+        initMatch();
+        initVocabGame();
+    </script>
+</body>
+</html>
