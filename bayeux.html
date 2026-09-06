@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🇫🇷 Tapisserie de Bayeux – Leçon FLE B2-C1</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sand: #f5e6c8;
+      --sand-dark: #e8d0a0;
+      --ink: #1a1a2e;
+      --ink-light: #2d3561;
+      --blood: #a52a2a;
+      --blood-light: #c0392b;
+      --olive: #6b7c47;
+      --olive-light: #8fa45a;
+      --sky: #1f618d;
+      --sky-light: #5dade2;
+      --gold: #b8860b;
+      --cream: #fdf6e3;
+      --parchment: #f9f0d8;
+      --green-ok: #27ae60;
+      --red-err: #c0392b;
+      --orange-warn: #e67e22;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #1a1a2e;
+      color: var(--ink);
+      min-height: 100vh;
+    }
+    .page-bg {
+      background: linear-gradient(180deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+    .hero {
+      text-align: center;
+      padding: 3rem 2rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(165,42,42,0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-flag { font-size: 3.5rem; letter-spacing: 0.3rem; margin-bottom: 1rem; animation: fadein 1s; }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 5vw, 3rem);
+      color: var(--sand);
+      text-shadow: 0 2px 12px rgba(0,0,0,0.5);
+      line-height: 1.2;
+      animation: fadein 1.2s;
+    }
+    .hero-sub {
+      margin-top: 0.8rem;
+      font-size: 1rem;
+      color: #aab4d0;
+      letter-spacing: 0.1rem;
+      animation: fadein 1.5s;
+    }
+    .level-badge {
+      display: inline-block;
+      margin-top: 1.2rem;
+      background: var(--blood);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 1.2rem;
+      border-radius: 2rem;
+      letter-spacing: 0.15rem;
+      text-transform: uppercase;
+    }
+    @keyframes fadein { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    .section {
+      max-width: 860px;
+      margin: 2rem auto;
+      background: var(--parchment);
+      border-radius: 1.5rem;
+      overflow: hidden;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+      animation: fadein 0.8s;
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      padding: 1.2rem 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.05rem;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .section-header .icon { font-size: 1.3rem; }
+    .header-blood { background: linear-gradient(135deg, #6b1e1e, #a52a2a); }
+    .header-olive { background: linear-gradient(135deg, #4a5c2a, #6b7c47); }
+    .header-sky { background: linear-gradient(135deg, #1a5276, #1f618d); }
+    .header-gold { background: linear-gradient(135deg, #7d6608, #b8860b); }
+    .header-ink { background: linear-gradient(135deg, #1a1a2e, #2d3561); }
+    .section-body { padding: 1.8rem 2rem; }
+    .letter-paper {
+      background: #fffef7;
+      border: 1px solid #d4c4a0;
+      border-radius: 0.8rem;
+      padding: 2rem 2.2rem;
+      position: relative;
+      box-shadow: inset 0 0 30px rgba(180,150,80,0.08);
+    }
+    .letter-paper::before {
+      content: "";
+      position: absolute;
+      left: 2.8rem; top: 0; bottom: 0;
+      width: 1px;
+      background: rgba(200,160,100,0.4);
+    }
+    .letter-lines {
+      background-image: repeating-linear-gradient(transparent, transparent 31px, #e8d8b8 31px, #e8d8b8 32px);
+      line-height: 2rem;
+    }
+    .letter-meta {
+      font-style: italic;
+      color: #7a6040;
+      font-size: 0.88rem;
+      margin-bottom: 1.2rem;
+    }
+    .letter-text { font-size: 1rem; line-height: 2rem; color: #2a1f10; }
+    .letter-text p { margin-bottom: 0.5rem; }
+    .neg { color: var(--blood); font-weight: 600; cursor: help; position: relative; border-radius: 3px; padding: 0 2px; }
+    .neg:hover { background: rgba(165,42,42,0.12); }
+    .neg-tooltip {
+      position: absolute;
+      bottom: 130%;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--blood);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: 0.5rem;
+      white-space: nowrap;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.2s;
+      z-index: 10;
+    }
+    .neg:hover .neg-tooltip { opacity: 1; }
+    .letter-sig {
+      text-align: right;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      color: #5a3e20;
+      margin-top: 1rem;
+    }
+    .letter-stamp {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: 0.8rem;
+      color: #9a8060;
+      letter-spacing: 0.05rem;
+      border-top: 1px dashed #c8b080;
+      padding-top: 0.8rem;
+    }
+    .grammar-intro {
+      background: #fff8e8;
+      border-left: 5px solid var(--gold);
+      border-radius: 0 0.8rem 0.8rem 0;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .grammar-intro strong { color: var(--ink-light); }
+    .formula-box {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    .f-part { padding: 0.4rem 0.9rem; border-radius: 0.5rem; color: #fff; font-family: 'DM Sans', monospace; }
+    .f-ne { background: var(--blood); }
+    .f-aux { background: var(--sky); }
+    .f-pas { background: var(--blood); }
+    .f-pp { background: var(--olive); }
+    .f-arrow { color: var(--ink); font-size: 1.2rem; }
+    .f-neutral { background: #7f8c8d; }
+    .grammar-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .gram-tab {
+      padding: 0.5rem 1.1rem;
+      border-radius: 2rem;
+      border: 2px solid transparent;
+      cursor: pointer;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+    .gram-tab.avoir { border-color: var(--sky); color: var(--sky); }
+    .gram-tab.etre { border-color: var(--olive); color: var(--olive); }
+    .gram-tab.pronom { border-color: var(--blood); color: var(--blood); }
+    .gram-tab.active.avoir { background: var(--sky); color: #fff; }
+    .gram-tab.active.etre { background: var(--olive); color: #fff; }
+    .gram-tab.active.pronom { background: var(--blood); color: #fff; }
+    .gram-panel { display: none; }
+    .gram-panel.active { display: block; }
+    .gram-card {
+      background: #fff;
+      border-radius: 0.8rem;
+      padding: 1.2rem;
+      border: 1px solid #ddd;
+    }
+    .gram-card h4 { margin-bottom: 0.8rem; font-size: 0.95rem; }
+    .gram-example {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 0.5rem 0;
+      font-size: 0.92rem;
+      flex-wrap: wrap;
+    }
+    .ex-plus { background: #eafaf1; color: var(--green-ok); padding: 0.3rem 0.8rem; border-radius: 0.5rem; font-weight: 600; }
+    .ex-minus { background: #fdecea; color: var(--blood); padding: 0.3rem 0.8rem; border-radius: 0.5rem; font-weight: 600; }
+    .vocab-intro { font-size: 0.92rem; color: #555; margin-bottom: 1.2rem; }
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.8rem;
+      margin-bottom: 1rem;
+    }
+    .vcard {
+      background: #fff;
+      border: 2px solid #e0d0b0;
+      border-radius: 1rem;
+      padding: 0.9rem 0.7rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      min-height: 90px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+    .vcard:hover { border-color: var(--gold); transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+    .vcard.revealed { border-color: var(--olive); background: #f0f7e8; }
+    .vcard .v-en { font-size: 0.85rem; color: #888; }
+    .vcard .v-fr { font-size: 1rem; font-weight: 600; color: var(--olive); filter: blur(6px); transition: filter 0.3s; user-select: none; }
+    .vcard.revealed .v-fr { filter: none; }
+    .game-intro { font-size: 0.92rem; color: #555; margin-bottom: 1rem; background: #fff9ee; padding: 0.8rem 1rem; border-radius: 0.6rem; border-left: 3px solid var(--gold); }
+    .match-arena { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+    .match-col { flex: 1; min-width: 200px; }
+    .match-col h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1rem; color: #888; margin-bottom: 0.8rem; }
+    .drag-item {
+      background: #fff;
+      border: 2px solid #ddd;
+      border-radius: 0.7rem;
+      padding: 0.6rem 1rem;
+      margin-bottom: 0.6rem;
+      cursor: grab;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      color: var(--sky);
+      user-select: none;
+    }
+    .drag-item:hover { border-color: var(--sky); transform: scale(1.02); }
+    .drag-item.dragging { opacity: 0.4; }
+    .drop-zone {
+      background: #f9f4e8;
+      border: 2px dashed #c8b080;
+      border-radius: 0.7rem;
+      padding: 0.6rem 1rem;
+      margin-bottom: 0.6rem;
+      min-height: 42px;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .drop-zone .fr-label { color: #888; font-size: 0.88rem; }
+    .drop-zone.over { background: #e8f4fd; border-color: var(--sky); }
+    .drop-zone.correct { background: #eafaf1; border-color: var(--green-ok); border-style: solid; }
+    .drop-zone.wrong { background: #fdecea; border-color: var(--red-err); border-style: solid; animation: shake 0.3s; }
+    .drop-zone .placed { color: var(--ink); font-weight: 600; }
+    @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+    .fill-text {
+      background: #fffef7;
+      border: 1px solid #d4c4a0;
+      border-radius: 0.8rem;
+      padding: 1.5rem;
+      font-size: 1rem;
+      line-height: 2.4;
+      color: #2a1f10;
+    }
+    .blank-input {
+      display: inline-block;
+      border: none;
+      border-bottom: 2px solid var(--gold);
+      background: transparent;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--blood);
+      padding: 0 4px;
+      min-width: 140px;
+      text-align: center;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .blank-input:focus { border-color: var(--sky); }
+    .blank-input.correct { border-color: var(--green-ok); color: var(--green-ok); }
+    .blank-input.wrong { border-color: var(--red-err); color: var(--red-err); animation: shake 0.3s; }
+    .hint-inf { font-size: 0.82rem; color: var(--sky); font-style: italic; font-weight: 600; margin-left: 0.4rem; }
+    .vf-grid { display: flex; flex-direction: column; gap: 0.8rem; }
+    .vf-item {
+      background: #fff;
+      border-radius: 0.8rem;
+      border: 1px solid #ddd;
+      padding: 0.9rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .vf-statement { flex: 1; font-size: 0.95rem; color: #333; }
+    .vf-btns { display: flex; gap: 0.5rem; }
+    .vf-btn {
+      padding: 0.35rem 1rem;
+      border-radius: 2rem;
+      border: 2px solid;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+      background: #fff;
+    }
+    .vf-btn.vrai { border-color: var(--green-ok); color: var(--green-ok); }
+    .vf-btn.faux { border-color: var(--red-err); color: var(--red-err); }
+    .vf-btn.vrai.selected { background: var(--green-ok); color: #fff; }
+    .vf-btn.faux.selected { background: var(--red-err); color: #fff; }
+    .vf-result { font-size: 0.85rem; font-weight: 700; min-width: 24px; }
+    .transform-list { display: flex; flex-direction: column; gap: 0.9rem; }
+    .transform-item {
+      background: #fff;
+      border-radius: 0.8rem;
+      border: 1px solid #ddd;
+      padding: 1rem 1.2rem;
+    }
+    .transform-original { font-size: 0.9rem; color: #666; margin-bottom: 0.6rem; }
+    .transform-original strong { color: var(--ink); }
+    .transform-row {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      flex-wrap: wrap;
+    }
+    .transform-arrow { color: var(--blood); font-weight: 700; font-size: 1rem; }
+    .transform-input {
+      flex: 1;
+      border: 2px solid #e0d0b0;
+      border-radius: 0.5rem;
+      padding: 0.45rem 0.8rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--ink);
+      min-width: 180px;
+      background: #fdfaf2;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .transform-input:focus { border-color: var(--sky); }
+    .transform-input.correct { border-color: var(--green-ok); background: #eafaf1; color: var(--green-ok); }
+    .transform-input.wrong { border-color: var(--red-err); background: #fdecea; animation: shake 0.3s; }
+    .transform-fb { font-size: 0.82rem; font-weight: 700; }
+    .production-area {
+      width: 100%;
+      background: #fffef7;
+      border: 2px solid #d4c4a0;
+      border-radius: 0.8rem;
+      padding: 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--ink);
+      resize: vertical;
+      min-height: 120px;
+      outline: none;
+      line-height: 1.8;
+      transition: border-color 0.2s;
+    }
+    .production-area:focus { border-color: var(--sky); }
+    .prod-example {
+      display: none;
+      background: #eafaf1;
+      border-left: 4px solid var(--green-ok);
+      border-radius: 0 0.6rem 0.6rem 0;
+      padding: 1rem;
+      margin-top: 1rem;
+      font-size: 0.92rem;
+      color: #1e4a30;
+      line-height: 1.7;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.55rem 1.4rem;
+      border-radius: 2rem;
+      border: none;
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      margin-top: 1rem;
+      margin-right: 0.5rem;
+    }
+    .btn-check { background: var(--olive); color: #fff; }
+    .btn-check:hover { background: #556038; transform: scale(0.97); }
+    .btn-reveal { background: var(--sky); color: #fff; }
+    .btn-reveal:hover { background: #1a6a9a; }
+    .btn-reset { background: #7f8c8d; color: #fff; font-size: 0.82rem; padding: 0.4rem 1rem; }
+    .btn-reset:hover { background: #5d6d6e; }
+    .score-result {
+      margin-top: 1rem;
+      padding: 0.9rem 1.2rem;
+      border-radius: 0.8rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      display: none;
+    }
+    .score-result.show { display: block; }
+    .score-good { background: #eafaf1; border-left: 5px solid var(--green-ok); color: #1e4a30; }
+    .score-mid { background: #fff8e0; border-left: 5px solid var(--gold); color: #5a3e00; }
+    .score-low { background: #fdecea; border-left: 5px solid var(--blood); color: #6b1e1e; }
+    .discussion-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding: 0.9rem 0;
+      border-bottom: 1px solid #e8d8b8;
+    }
+    .discussion-item:last-child { border-bottom: none; }
+    .disc-num {
+      width: 32px; height: 32px;
+      background: var(--ink-light);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.85rem;
+      flex-shrink: 0;
+    }
+    .disc-q { font-size: 0.95rem; color: #333; line-height: 1.6; }
+    .footer {
+      text-align: center;
+      padding: 2rem;
+      color: #4a5580;
+      font-size: 0.85rem;
+    }
+    @media (max-width: 600px) {
+      .section-body { padding: 1.2rem; }
+      .letter-paper { padding: 1.2rem; }
+      .match-arena { flex-direction: column; }
+    }
+    .vocab-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.92rem;
+    }
+    .vocab-table th {
+      background: var(--olive);
+      color: #fff;
+      padding: 0.6rem 1rem;
+      text-align: left;
+      font-weight: 600;
+    }
+    .vocab-table td {
+      padding: 0.55rem 1rem;
+      border-bottom: 1px solid #e8d8b8;
+      color: #2a1f10;
+      vertical-align: top;
+    }
+    .vocab-table tr.alt td { background: #f4edd8; }
+    .vocab-table tr:hover td { background: #ffe8c0; }
+    .vocab-table td:first-child { min-width: 160px; }
+    .vocab-table td:nth-child(2) { color: var(--sky); min-width: 180px; }
+    .vocab-table td:nth-child(3) { color: #666; font-size: 0.85rem; font-style: italic; }
+  </style>
+</head>
+<body>
+<div class="page-bg">
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-flag">🇫🇷 🧵 🇬🇧</div>
+  <h1>La Tapisserie de Bayeux<br>Objets de propagande et chef-d'œuvre</h1>
+  <div class="hero-sub">Leçon FLE · La négation au passé composé</div>
+  <div class="level-badge">B2-C1 · Niveau avancé</div>
+</div>
+
+<!-- ══ TEXTE 1 : ARTICLE BELGE ══ -->
+<div class="section">
+  <div class="section-header header-blood">
+    <span class="icon">📰</span>
+    Vu de Belgique — « Pure propagande »
+  </div>
+  <div class="section-body">
+    <p class="letter-meta">Résumé de l’article de <em>De Standaard</em> (10 juillet 2026) — la tapisserie vue par la presse belge.</p>
+    <div class="letter-paper letter-lines">
+      <div class="letter-text">
+        <p><strong>La tapisserie de Bayeux est arrivée à Londres</strong> le 10 juillet 2026, prêtée par la France pour un an au British Museum. Ce voyage, dans une caisse climatisée, contraste avec les périlleux déplacements du passé.</p>
+        <p>Le quotidien belge <em>De Standaard</em> la qualifie de <strong>« chat à neuf vies »</strong> : elle a survécu à la Révolution, failli être découpée pour un char, puis utilisée par <span class="neg">Napoléon<span class="neg-tooltip">Empereur français, 1803</span></span> qui l’exposa à Paris pour justifier son projet d’invasion de l’Angleterre. Plus tard, <span class="neg">Himmler<span class="neg-tooltip">Dignitaire nazi</span></span> en fit un « monument germanique » pour prouver la supériorité aryenne.</p>
+        <p>L’œuvre, brodée entre 1066 et 1083, montre la bataille de Hastings de manière <strong>« tout sauf impartiale »</strong> : <span class="neg">de la pure propagande<span class="neg-tooltip">selon De Standaard</span></span>. Son origine reste floue : un moine de Canterbury ? Des religieuses ? Elle a passé des siècles dans la cathédrale de Bayeux, exposée seulement neuf jours par an.</p>
+        <p>Le prêt actuel est un <strong>« exemple controversé de diplomatie culturelle »</strong> voulu par Emmanuel Macron pour resserrer les liens post-Brexit. Mais la tapisserie « y est habituée » : depuis l’origine, elle avait un objectif politique.</p>
+      </div>
+      <div class="letter-sig">— D’après <em>De Standaard</em>, traduit et résumé.</div>
+      <div class="letter-stamp">📌 Mots clés : propagande · Himmler · Napoléon · résilience · diplomatie</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ TEXTE 2 : THE GUARDIAN ══ -->
+<div class="section">
+  <div class="section-header header-gold">
+    <span class="icon">🎨</span>
+    « Elle ne devrait même pas exister » — The Guardian
+  </div>
+  <div class="section-body">
+    <p class="letter-meta">Extraits du billet de Jonathan Jones (4 septembre 2026) — une expérience esthétique et émotionnelle.</p>
+    <div class="letter-paper letter-lines">
+      <div class="letter-text">
+        <p><strong>« Ça ne tient pas debout. Elle ne devrait même pas exister. »</strong> Ainsi commence le critique du <em>Guardian</em> devant la tapisserie au British Museum. Il admire son génie malgré l’absence de perspective, de portrait ou de paysage : <span class="neg">des brodeurs du XIe siècle<span class="neg-tooltip">artisans anonymes, peut-être des femmes</span></span> ont créé un récit universel sur la guerre.</p>
+        <p>La bataille de Hastings (14 octobre 1066) est <strong>« claire et définitive »</strong> : Harold, roi d’Angleterre, meurt sous une flèche ; Guillaume le Conquérant l’emporte. La tapisserie, sous un éclairage parfait, donne l’impression que <span class="neg">la terre tremble<span class="neg-tooltip">effet de mouvement saisissant</span></span> sous les sabots des chevaux normands.</p>
+        <p>Le critique souligne les <strong>détails émouvants</strong> : un serviteur porte le chien du roi pour ne pas lui mouiller les pattes ; des paysans continuent de labourer pendant la bataille ; une femme et son enfant voient leur maison brûler. La broderie montre aussi <span class="neg">la violence réaliste<span class="neg-tooltip">cadavres nus, soldats dépouillés</span></span>, une tragédie qui infuse la victoire.</p>
+        <p>Jones conclut : <strong>« Cette conclusion abrupte me paraît parfaite. »</strong> La tapisserie est une œuvre d’art totale, à la fois comédie et tragédie, qui transcende son statut de relique médiévale.</p>
+      </div>
+      <div class="letter-sig">— D’après <em>The Guardian</em>, traduit et résumé.</div>
+      <div class="letter-stamp">🎭 Mots clés : génie · émotion · violence · réalisme · universalité</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ VOCABULAIRE ══ -->
+<div class="section">
+  <div class="section-header header-olive">
+    <span class="icon">📖</span>
+    Vocabulaire des textes
+  </div>
+  <div class="section-body">
+    <div style="overflow-x:auto;">
+      <table class="vocab-table">
+        <thead><tr><th>🇫🇷 Français</th><th>🇬🇧 English</th><th>📝 Contexte</th></tr></thead>
+        <tbody>
+          <tr><td><strong>la tapisserie</strong></td><td>tapestry</td><td>La tapisserie de Bayeux est brodée sur lin.</td></tr>
+          <tr class="alt"><td><strong>brodé(e)</strong></td><td>embroidered</td><td>L’œuvre est brodée avec des fils de laine.</td></tr>
+          <tr><td><strong>la propagande</strong></td><td>propaganda</td><td>Selon De Standaard, c’est de la pure propagande.</td></tr>
+          <tr class="alt"><td><strong>le prêt</strong></td><td>loan</td><td>Le prêt de la tapisserie à Londres dure un an.</td></tr>
+          <tr><td><strong>la diplomatie culturelle</strong></td><td>cultural diplomacy</td><td>Macron utilise la tapisserie pour resserrer les liens.</td></tr>
+          <tr class="alt"><td><strong>survivre à</strong></td><td>to survive (something)</td><td>Elle a survécu à la Révolution française.</td></tr>
+          <tr><td><strong>un dignitaire</strong></td><td>dignitary</td><td>Himmler était un dignitaire nazi.</td></tr>
+          <tr class="alt"><td><strong>la supériorité</strong></td><td>superiority</td><td>La supériorité aryenne selon Himmler.</td></tr>
+          <tr><td><strong>impartial(e)</strong></td><td>impartial</td><td>La tapisserie n’est pas impartiale.</td></tr>
+          <tr class="alt"><td><strong>un moine</strong></td><td>monk</td><td>Un moine de Canterbury aurait conçu la tapisserie.</td></tr>
+          <tr><td><strong>une religieuse</strong></td><td>nun</td><td>Peut-être brodée par des religieuses.</td></tr>
+          <tr class="alt"><td><strong>la perspective</strong></td><td>perspective</td><td>Les brodeurs ne maîtrisaient pas la perspective.</td></tr>
+          <tr><td><strong>un paysage</strong></td><td>landscape</td><td>Il n’y a pas de paysage dans la tapisserie.</td></tr>
+          <tr class="alt"><td><strong>un récit</strong></td><td>narrative</td><td>La tapisserie raconte un récit de bataille.</td></tr>
+          <tr><td><strong>la violence réaliste</strong></td><td>realistic violence</td><td>Les cadavres nus montrent une violence réaliste.</td></tr>
+          <tr class="alt"><td><strong>un cadavre</strong></td><td>corpse</td><td>Les cadavres s’entassent après la bataille.</td></tr>
+          <tr><td><strong>dépouiller</strong></td><td>to strip</td><td>On dépouille les chevaliers morts.</td></tr>
+          <tr class="alt"><td><strong>une relique</strong></td><td>relic</td><td>Ce n’est pas seulement une relique médiévale.</td></tr>
+          <tr><td><strong>universel(le)</strong></td><td>universal</td><td>C’est un récit universel sur la folie de la guerre.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══ GRAMMAIRE ══ -->
+<div class="section">
+  <div class="section-header header-gold">
+    <span class="icon">📚</span>
+    Grammaire — La négation au passé composé
+  </div>
+  <div class="section-body">
+    <div class="grammar-intro">
+      <strong>Règle :</strong> <em>ne … pas</em> encadre <strong>l’auxiliaire</strong> (avoir ou être), jamais le participe passé.
+    </div>
+    <div class="formula-box">
+      <span class="f-part f-ne">ne / n'</span><span class="f-arrow">+</span>
+      <span class="f-part f-aux">auxiliaire</span><span class="f-arrow">+</span>
+      <span class="f-part f-pas">pas</span><span class="f-arrow">+</span>
+      <span class="f-part f-pp">participe passé</span>
+    </div>
+    <div class="grammar-tabs">
+      <button class="gram-tab avoir active" onclick="showTab('avoir', this)">🔵 AVOIR</button>
+      <button class="gram-tab etre" onclick="showTab('etre', this)">🟢 ÊTRE</button>
+      <button class="gram-tab pronom" onclick="showTab('pronom', this)">🔴 PRONOMINAUX</button>
+    </div>
+    <div id="tab-avoir" class="gram-panel active">
+      <div class="gram-card">
+        <h4 style="color:var(--sky);">Verbes avec AVOIR (utiliser, montrer, broder…)</h4>
+        <div class="gram-example"><span class="ex-plus">Napoléon a utilisé la tapisserie.</span> <span>→</span> <span class="ex-minus">Napoléon n’a pas utilisé la tapisserie.</span></div>
+        <div class="gram-example"><span class="ex-plus">Les brodeurs ont montré la bataille.</span> <span>→</span> <span class="ex-minus">Ils n’ont pas montré la bataille.</span></div>
+      </div>
+    </div>
+    <div id="tab-etre" class="gram-panel">
+      <div class="gram-card">
+        <h4 style="color:var(--olive);">Verbes avec ÊTRE (arriver, partir, tomber…)</h4>
+        <div class="gram-example"><span class="ex-plus">La tapisserie est arrivée à Londres.</span> <span>→</span> <span class="ex-minus">Elle n’est pas arrivée à Londres.</span></div>
+        <div class="gram-example"><span class="ex-plus">Les soldats sont tombés.</span> <span>→</span> <span class="ex-minus">Ils ne sont pas tombés.</span></div>
+      </div>
+    </div>
+    <div id="tab-pronom" class="gram-panel">
+      <div class="gram-card">
+        <h4 style="color:var(--blood);">Pronominaux (se souvenir, se battre, se plaindre…)</h4>
+        <div class="gram-example"><span class="ex-plus">Les Anglo-Saxons se sont battus.</span> <span>→</span> <span class="ex-minus">Ils ne se sont pas battus.</span></div>
+        <div class="gram-example"><span class="ex-plus">Elle s’est souvenue de la scène.</span> <span>→</span> <span class="ex-minus">Elle ne s’est pas souvenue de la scène.</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ JEU 1 : DRAG & DROP ══ -->
+<div class="section">
+  <div class="section-header header-sky">
+    <span class="icon">🎯</span>
+    Jeu 1 — Associe l’anglais au français
+  </div>
+  <div class="section-body">
+    <div class="game-intro">Fais glisser chaque mot anglais vers sa traduction française (vocabulaire des textes).</div>
+    <div class="match-arena">
+      <div class="match-col"><h4>🇬🇧 English</h4><div id="dragItems"></div></div>
+      <div class="match-col"><h4>🇫🇷 Français</h4><div id="dropZones"></div></div>
+    </div>
+    <button class="btn btn-check" onclick="checkMatch()">✅ Vérifier</button>
+    <button class="btn btn-reset" onclick="resetMatch()">↺ Recommencer</button>
+    <div id="matchScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ JEU 2 : FILL IN THE BLANKS ══ -->
+<div class="section">
+  <div class="section-header header-blood">
+    <span class="icon">✏️</span>
+    Jeu 2 — Complète avec la négation au passé composé
+  </div>
+  <div class="section-body">
+    <div class="game-intro">Complète chaque phrase avec la forme négative correcte.</div>
+    <div class="fill-text">
+      <p>📌 Napoléon <input class="blank-input" id="b1" placeholder=""> la tapisserie pour son invasion. <span class="hint-inf">(utiliser / avoir)</span></p>
+      <p>📌 La tapisserie <input class="blank-input" id="b2" placeholder=""> de la Révolution française. <span class="hint-inf">(être détruite / être)</span></p>
+      <p>📌 Les historiens anglais <input class="blank-input" id="b3" placeholder=""> sur l’origine de l’œuvre. <span class="hint-inf">(se mettre d'accord / être)</span></p>
+      <p>📌 Himmler <input class="blank-input" id="b4" placeholder=""> la tapisserie en Allemagne. <span class="hint-inf">(ramener / avoir)</span></p>
+      <p>📌 Les brodeurs <input class="blank-input" id="b5" placeholder=""> de perspective. <span class="hint-inf">(ne pas savoir / avoir — attention à la négation !)</span></p>
+      <p>📌 Les paysans <input class="blank-input" id="b6" placeholder=""> de labourer pendant la bataille. <span class="hint-inf">(s'arrêter / être)</span></p>
+    </div>
+    <button class="btn btn-check" onclick="checkFill()">✅ Vérifier</button>
+    <button class="btn btn-reset" onclick="resetFill()">↺ Effacer</button>
+    <div id="fillScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ JEU 3 : VRAI / FAUX ══ -->
+<div class="section">
+  <div class="section-header header-olive">
+    <span class="icon">💡</span>
+    Jeu 3 — Vrai ou Faux ? Compréhension des textes
+  </div>
+  <div class="section-body">
+    <div class="game-intro">D’après les deux articles, ces affirmations sont-elles vraies ou fausses ?</div>
+    <div class="vf-grid" id="vfGrid"></div>
+    <button class="btn btn-check" onclick="checkVF()">✅ Vérifier</button>
+    <button class="btn btn-reset" onclick="resetVF()">↺ Recommencer</button>
+    <div id="vfScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ JEU 4 : TRANSFORM ══ -->
+<div class="section">
+  <div class="section-header header-ink">
+    <span class="icon">🔄</span>
+    Jeu 4 — Transforme à la forme négative
+  </div>
+  <div class="section-body">
+    <div class="game-intro">Réécris chaque phrase affirmative à la forme négative du passé composé.</div>
+    <div class="transform-list" id="transformList"></div>
+    <button class="btn btn-check" onclick="checkTransform()">✅ Vérifier tout</button>
+    <button class="btn btn-reset" onclick="resetTransform()">↺ Effacer</button>
+    <div id="transformScore" class="score-result"></div>
+  </div>
+</div>
+
+<!-- ══ PRODUCTION ÉCRITE ══ -->
+<div class="section">
+  <div class="section-header header-blood">
+    <span class="icon">✍️</span>
+    Production libre — Un commentaire critique
+  </div>
+  <div class="section-body">
+    <div class="game-intro">
+      Imagine que tu es un critique d’art. Rédige <strong>5 à 7 phrases</strong> sur la tapisserie de Bayeux en utilisant le passé composé et <strong>au moins 3 négations</strong> (avec avoir, être et un pronominal). Inspire-toi des deux textes.
+    </div>
+    <textarea class="production-area" id="productionText" placeholder="Ex. : « Je ne me suis pas attendu à une telle émotion… »"></textarea>
+    <br>
+    <button class="btn btn-reveal" onclick="toggleExample()">📖 Voir un exemple</button>
+    <div id="prodExample" class="prod-example">
+      🌟 <strong>Exemple :</strong><br>
+      « Je ne me suis pas rendu compte de la puissance de cette œuvre avant de la voir. Les brodeurs n’ont pas utilisé la perspective, mais ils ont créé un récit bouleversant. Les soldats ne se sont pas arrêtés de combattre. La tapisserie n’est pas restée à Bayeux tout ce temps. Elle n’a pas été détruite par les nazis. Les paysans ne se sont pas reposés pendant la bataille. C’est une œuvre qui ne laisse personne indifférent. »
+    </div>
+  </div>
+</div>
+
+<!-- ══ DISCUSSION ══ -->
+<div class="section">
+  <div class="section-header header-gold">
+    <span class="icon">💬</span>
+    Discussion — Questions ouvertes
+  </div>
+  <div class="section-body">
+    <div class="discussion-item"><div class="disc-num">1</div><div class="disc-q">Pourquoi la tapisserie de Bayeux est-elle qualifiée de « chat à neuf vies » ? Quels dangers a-t-elle traversés ?</div></div>
+    <div class="discussion-item"><div class="disc-num">2</div><div class="disc-q">En quoi la tapisserie est-elle « de la pure propagande » selon <em>De Standaard</em> ?</div></div>
+    <div class="discussion-item"><div class="disc-num">3</div><div class="disc-q">Pourquoi le critique du <em>Guardian</em> dit-il qu’elle « ne devrait même pas exister » ?</div></div>
+    <div class="discussion-item"><div class="disc-num">4</div><div class="disc-q">Quels détails de la tapisserie rendent la violence <strong>réaliste</strong> ? Pourquoi cela touche-t-il le spectateur ?</div></div>
+    <div class="discussion-item"><div class="disc-num">5</div><div class="disc-q">Le prêt de la tapisserie à Londres est-il un acte de <strong>diplomatie culturelle</strong> efficace ?</div></div>
+  </div>
+</div>
+
+<div class="footer">🇫🇷 Tapisserie de Bayeux · FLE B2-C1 · Négation au passé composé</div>
+</div>
+
+<script>
+// ── ONGLETS GRAMMAIRE ──
+function showTab(name, btn) {
+  document.querySelectorAll('.gram-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.gram-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── DRAG & DROP ──
+const matchPairs = [
+  {en:"tapestry", fr:"la tapisserie"},
+  {en:"propaganda", fr:"la propagande"},
+  {en:"loan", fr:"le prêt"},
+  {en:"survive", fr:"survivre à"},
+  {en:"nun", fr:"une religieuse"},
+  {en:"corpse", fr:"un cadavre"},
+  {en:"relic", fr:"une relique"},
+  {en:"dignitary", fr:"un dignitaire"},
+];
+let dragged = null;
+let dropAnswers = {};
+
+function shuffled(arr) { let a = [...arr]; for (let i = a.length-1; i>0; i--) { let j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+
+function buildMatch() {
+  dropAnswers = {};
+  const di = document.getElementById('dragItems');
+  const dz = document.getElementById('dropZones');
+  di.innerHTML = ''; dz.innerHTML = '';
+  shuffled(matchPairs).forEach(p => {
+    const d = document.createElement('div');
+    d.className = 'drag-item'; d.draggable = true; d.textContent = p.en; d.dataset.en = p.en;
+    d.addEventListener('dragstart', e => { dragged = d; d.classList.add('dragging'); });
+    d.addEventListener('dragend', () => d.classList.remove('dragging'));
+    di.appendChild(d);
+  });
+  shuffled(matchPairs).forEach(p => {
+    const zone = document.createElement('div');
+    zone.className = 'drop-zone'; zone.dataset.fr = p.fr;
+    zone.innerHTML = `<span class="fr-label">${p.fr}</span><span class="placed"></span>`;
+    zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+    zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+    zone.addEventListener('drop', e => {
+      e.preventDefault(); zone.classList.remove('over');
+      zone.querySelector('.placed').textContent = dragged.dataset.en;
+      zone.classList.remove('correct','wrong');
+      dropAnswers[zone.dataset.fr] = dragged.dataset.en;
+    });
+    dz.appendChild(zone);
+  });
+}
+function checkMatch() {
+  let correct=0; document.querySelectorAll('.drop-zone').forEach(zone => {
+    const placed = zone.querySelector('.placed').textContent;
+    const expected = matchPairs.find(p => p.fr === zone.dataset.fr)?.en;
+    if(!placed) return;
+    zone.classList.remove('correct','wrong');
+    if(placed === expected) { zone.classList.add('correct'); correct++; } else zone.classList.add('wrong');
+  });
+  showScore('matchScore', correct, matchPairs.length);
+}
+function resetMatch() { buildMatch(); document.getElementById('matchScore').classList.remove('show'); }
+buildMatch();
+
+// ── FILL IN THE BLANKS ──
+const fillAnswers = [
+  {id:'b1', correct:["n'a pas utilisé","n a pas utilise"]},
+  {id:'b2', correct:["n'a pas été détruite","n a pas ete detruite"]},
+  {id:'b3', correct:["ne se sont pas mis d'accord","ne se sont pas mis d accord"]},
+  {id:'b4', correct:["n'a pas ramené","n a pas ramene"]},
+  {id:'b5', correct:["n'avaient pas","n avaient pas"]},
+  {id:'b6', correct:["ne se sont pas arrêtés","ne se sont pas arretes"]},
+];
+function normalize(s) { return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/['']/g,"'").trim(); }
+function checkFill() {
+  let correct=0; fillAnswers.forEach(a => {
+    const el = document.getElementById(a.id); const ok = a.correct.some(c => normalize(c) === normalize(el.value));
+    el.classList.remove('correct','wrong'); if(ok) { el.classList.add('correct'); correct++; } else el.classList.add('wrong');
+  });
+  showScore('fillScore', correct, fillAnswers.length, fillAnswers.map(a=>a.correct[0]));
+}
+function resetFill() { fillAnswers.forEach(a => { const el=document.getElementById(a.id); el.value=''; el.classList.remove('correct','wrong'); }); document.getElementById('fillScore').classList.remove('show'); }
+
+// ── VRAI / FAUX ──
+const vfData = [
+  {statement:"La tapisserie de Bayeux a été détruite pendant la Révolution française.", answer:"Faux"},
+  {statement:"Napoléon a utilisé la tapisserie pour justifier son projet d'invasion de l'Angleterre.", answer:"Vrai"},
+  {statement:"Himmler considérait la tapisserie comme un monument germanique.", answer:"Vrai"},
+  {statement:"Le critique du Guardian a trouvé la tapisserie décevante et sans intérêt.", answer:"Faux"},
+  {statement:"La tapisserie montre la bataille de Hastings de manière totalement impartiale.", answer:"Faux"},
+  {statement:"Le prêt actuel à Londres est un acte de diplomatie culturelle.", answer:"Vrai"},
+];
+function buildVF() {
+  const grid = document.getElementById('vfGrid'); grid.innerHTML = '';
+  vfData.forEach((item,i) => {
+    const d = document.createElement('div'); d.className = 'vf-item';
+    d.innerHTML = `<div class="vf-statement">${item.statement}</div><div class="vf-btns">
+      <button class="vf-btn vrai" data-idx="${i}" data-val="Vrai" onclick="selectVF(this)">✓ Vrai</button>
+      <button class="vf-btn faux" data-idx="${i}" data-val="Faux" onclick="selectVF(this)">✗ Faux</button></div>
+      <div class="vf-result" id="vfr${i}"></div>`;
+    grid.appendChild(d);
+  });
+}
+function selectVF(btn) { const idx=btn.dataset.idx; document.querySelectorAll(`.vf-btn[data-idx="${idx}"]`).forEach(b=>b.classList.remove('selected')); btn.classList.add('selected'); }
+function checkVF() { let correct=0; vfData.forEach((item,i) => { const sel = document.querySelector(`.vf-btn[data-idx="${i}"].selected`); const res=document.getElementById('vfr'+i); if(!sel) return; if(sel.dataset.val === item.answer) { res.textContent='✅'; correct++; } else res.textContent=`❌ (${item.answer})`; }); showScore('vfScore', correct, vfData.length); }
+function resetVF() { buildVF(); document.getElementById('vfScore').classList.remove('show'); }
+buildVF();
+
+// ── TRANSFORM ──
+const transformData = [
+  {original:"Napoléon a utilisé la tapisserie.", correct:"Napoléon n'a pas utilisé la tapisserie."},
+  {original:"La tapisserie est arrivée à Londres.", correct:"La tapisserie n'est pas arrivée à Londres."},
+  {original:"Les brodeurs se sont souvenus de la bataille.", correct:"Les brodeurs ne se sont pas souvenus de la bataille."},
+  {original:"Himmler a ramené la tapisserie en Allemagne.", correct:"Himmler n'a pas ramené la tapisserie en Allemagne."},
+  {original:"Les soldats se sont battus avec courage.", correct:"Les soldats ne se sont pas battus avec courage."},
+  {original:"Les paysans ont continué de labourer.", correct:"Les paysans n'ont pas continué de labourer."},
+];
+function buildTransform() {
+  const list = document.getElementById('transformList'); list.innerHTML = '';
+  transformData.forEach((item,i) => {
+    const d = document.createElement('div'); d.className = 'transform-item';
+    d.innerHTML = `<div class="transform-original">✔️ <strong>${item.original}</strong></div>
+      <div class="transform-row"><span class="transform-arrow">→ Négatif :</span>
+      <input type="text" class="transform-input" id="tr${i}" placeholder="Écris la phrase négative…">
+      <span class="transform-fb" id="trfb${i}"></span></div>`;
+    list.appendChild(d);
+  });
+}
+function checkTransform() { let correct=0; transformData.forEach((item,i) => { const el=document.getElementById('tr'+i); const fb=document.getElementById('trfb'+i); el.classList.remove('correct','wrong'); if(normalize(el.value)===normalize(item.correct)) { el.classList.add('correct'); fb.innerHTML='✅'; correct++; } else { el.classList.add('wrong'); fb.innerHTML=`❌ <span style="font-size:0.78rem;color:#888">${item.correct}</span>`; } }); showScore('transformScore', correct, transformData.length); }
+function resetTransform() { buildTransform(); document.getElementById('transformScore').classList.remove('show'); }
+buildTransform();
+
+// ── SCORE ──
+function showScore(id, correct, total, corrections) {
+  const el = document.getElementById(id);
+  const pct = correct/total;
+  el.classList.add('show'); el.classList.remove('score-good','score-mid','score-low');
+  let msg = '';
+  if(pct === 1) { el.classList.add('score-good'); msg = `🎉 Parfait ! ${correct}/${total} — Excellent travail !`; }
+  else if(pct >= 0.6) { el.classList.add('score-mid'); msg = `💪 Bien ! ${correct}/${total} — Encore un effort !`; }
+  else { el.classList.add('score-low'); msg = `📖 ${correct}/${total} — Relis la grammaire et réessaie.`; }
+  if(corrections && pct < 1) msg += '<br><span style="font-size:0.85rem; opacity:0.85">Réponses : ' + corrections.join(' · ') + '</span>';
+  el.innerHTML = msg;
+}
+
+// ── PRODUCTION ──
+function toggleExample() { const ex = document.getElementById('prodExample'); ex.style.display = ex.style.display === 'block' ? 'none' : 'block'; }
+</script>
+</body>
+</html>
