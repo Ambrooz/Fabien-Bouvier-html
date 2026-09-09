@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 - Au restaurant : réserver & commander (sans alcool)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background: linear-gradient(135deg, #f9f3c5 0%, #f7e68a 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fffef5;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border: 4px solid #d4a017;
+            padding-bottom: 30px;
+        }
+        .header {
+            background: linear-gradient(45deg, #d4a017, #f0c94d);
+            color: #3d2b00;
+            padding: 20px;
+            text-align: center;
+        }
+        .header .sub {
+            font-size: 14px;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        .main-content {
+            padding: 25px 30px;
+        }
+        .instruction {
+            background: #fdf6d5;
+            padding: 15px;
+            border-left: 5px solid #d4a017;
+            margin-bottom: 20px;
+            border-radius: 0 10px 10px 0;
+            font-weight: bold;
+            color: #3d2b00;
+        }
+        .instruction .en {
+            font-weight: normal;
+            color: #555;
+            font-size: 14px;
+            display: block;
+            margin-top: 5px;
+        }
+        .section-title {
+            color: #3d2b00;
+            font-size: 22px;
+            margin: 25px 0 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 3px solid #d4a017;
+            padding-bottom: 10px;
+        }
+        .section-title .en {
+            font-size: 14px;
+            color: #777;
+            font-weight: normal;
+        }
+        .exercise-box {
+            background: #fdf8e7;
+            border: 2px solid #d4a017;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .exercise-title {
+            background: #d4a017;
+            color: #3d2b00;
+            padding: 12px;
+            margin: -20px -20px 15px -20px;
+            border-radius: 13px 13px 0 0;
+            font-weight: bold;
+            text-align: center;
+            font-size: 18px;
+        }
+        .exercise-title .en {
+            font-weight: normal;
+            font-size: 13px;
+            opacity: 0.9;
+            display: block;
+        }
+        .question {
+            margin: 12px 0;
+            padding: 12px 15px;
+            background: #fffdf3;
+            border-radius: 8px;
+            border-left: 3px solid #d4a017;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+        }
+        .question .en {
+            color: #777;
+            font-size: 13px;
+            display: block;
+            margin-top: 3px;
+        }
+        .text-bubble {
+            background: #fdf6d5;
+            border-radius: 15px;
+            padding: 18px 22px;
+            margin: 15px 0;
+            border: 2px solid #d4a017;
+            line-height: 1.9;
+            font-size: 16px;
+        }
+        .text-bubble .fr {
+            color: #3d2b00;
+        }
+        .text-bubble .en-text {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-style: italic;
+            color: #555;
+            font-size: 14px;
+            border: 1px dashed #d4a017;
+        }
+        .highlight {
+            background: linear-gradient(120deg, #f7e68a 0%, #f0c94d 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #3d2b00;
+        }
+        .conditionnel-highlight {
+            background: linear-gradient(120deg, #ffe0b2 0%, #ffcc80 100%);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            color: #bf360c;
+        }
+        .vocab-compact {
+            background: #fdf6d5;
+            border-radius: 10px;
+            padding: 12px 16px;
+            margin: 10px 0 15px 0;
+            border: 1px solid #e8c84a;
+            font-size: 13px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4px 20px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .vocab-compact .item {
+            display: flex;
+            justify-content: space-between;
+            padding: 3px 0;
+            border-bottom: 1px dotted #eee;
+        }
+        .vocab-compact .item .fr {
+            color: #3d2b00;
+            font-weight: bold;
+        }
+        .vocab-compact .item .en {
+            color: #777;
+        }
+        @media (max-width: 768px) {
+            .vocab-compact {
+                grid-template-columns: 1fr 1fr;
+                max-height: 300px;
+            }
+        }
+        @media (max-width: 500px) {
+            .vocab-compact {
+                grid-template-columns: 1fr;
+                max-height: 400px;
+            }
+        }
+        .conj-lesson {
+            background: #fdf6d5;
+            border-radius: 12px;
+            padding: 18px 22px;
+            margin: 15px 0;
+            border: 2px solid #d4a017;
+        }
+        .conj-lesson table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0;
+            font-size: 15px;
+        }
+        .conj-lesson th {
+            background: #d4a017;
+            color: #3d2b00;
+            padding: 8px 12px;
+            text-align: left;
+        }
+        .conj-lesson td {
+            padding: 8px 12px;
+            border-bottom: 1px solid #f0d68a;
+        }
+        .conj-lesson tr:nth-child(even) {
+            background: #fdf8e7;
+        }
+        .conj-lesson .verb-title {
+            font-weight: bold;
+            color: #3d2b00;
+            font-size: 17px;
+        }
+        .conj-lesson .en {
+            color: #777;
+            font-size: 13px;
+        }
+        input[type="text"] {
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 6px 12px;
+            font-size: 15px;
+            font-family: inherit;
+            width: 140px;
+            transition: border 0.3s;
+        }
+        input[type="text"]:focus {
+            border-color: #d4a017;
+            outline: none;
+        }
+        .answer-reveal {
+            display: none;
+            color: #3d2b00;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        .answer-reveal.show {
+            display: inline;
+        }
+        .btn-reveal {
+            background: #d4a017;
+            color: #3d2b00;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .btn-reveal:hover {
+            background: #b8890e;
+        }
+        .btn-reset {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn-reset:hover {
+            background: #e68900;
+        }
+        .btn-check {
+            background: #d4a017;
+            color: #3d2b00;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .btn-check:hover {
+            background: #b8890e;
+        }
+        .feedback {
+            margin-top: 12px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 8px;
+        }
+        .feedback.correct {
+            background: #d4edda;
+            color: #155724;
+        }
+        .feedback.wrong {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .translation-area {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 50px;
+        }
+        .translation-area:focus {
+            border-color: #d4a017;
+            outline: none;
+        }
+        .translation-answer {
+            background: #fdf6d5;
+            padding: 8px 14px;
+            border-radius: 6px;
+            margin-top: 6px;
+            display: none;
+            color: #3d2b00;
+            font-weight: bold;
+        }
+        .translation-answer.show {
+            display: block;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin: 10px 0;
+        }
+        .vocab-pair {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 2px solid #d4a017;
+            gap: 15px;
+        }
+        .vocab-pair .en-word {
+            font-weight: bold;
+            color: #3d2b00;
+            min-width: 80px;
+        }
+        .vocab-pair .fr-blur {
+            background: #e8e0c8;
+            color: #e8e0c8;
+            padding: 4px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            user-select: none;
+            min-width: 120px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .vocab-pair .fr-blur.revealed {
+            background: #fdf6d5;
+            color: #3d2b00;
+        }
+        .vocab-pair .fr-blur:hover {
+            background: #f0d68a;
+            color: #3d2b00;
+        }
+        .vocab-pair .fr-blur.revealed:hover {
+            background: #d4a017;
+            color: white;
+        }
+        .btn-vocab-reset {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            font-size: 14px;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+        .btn-vocab-reset:hover {
+            background: #e68900;
+        }
+        .match-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .match-item {
+            background: white;
+            padding: 10px 15px;
+            border-radius: 8px;
+            border: 2px solid #d4a017;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .match-item:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .match-item.selected {
+            border-color: #ff9800;
+            background: #fff3e0;
+        }
+        .match-item.matched {
+            border-color: #28a745;
+            background: #d4edda;
+            cursor: default;
+            opacity: 0.7;
+        }
+        .match-item.wrong {
+            border-color: #f44336;
+            background: #ffebee;
+        }
+        .personal-area {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 15px;
+            resize: vertical;
+            min-height: 45px;
+            background: white;
+        }
+        .personal-area:focus {
+            border-color: #d4a017;
+            outline: none;
+        }
+        .btn-personal {
+            background: #d4a017;
+            color: #3d2b00;
+            border: none;
+            padding: 6px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+        .btn-personal:hover {
+            background: #b8890e;
+        }
+        .personal-answer {
+            background: #fdf6d5;
+            padding: 8px 14px;
+            border-radius: 6px;
+            margin-top: 6px;
+            display: none;
+            color: #3d2b00;
+            font-weight: bold;
+        }
+        .personal-answer.show {
+            display: block;
+        }
+        .conditionnel-box {
+            background: #fff8e1;
+            border: 2px solid #ffb300;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+        .conditionnel-box .exemple {
+            background: #ffecb3;
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin: 5px 0;
+            font-style: italic;
+        }
+        @media (max-width: 768px) {
+            .match-grid {
+                grid-template-columns: 1fr;
+            }
+            .main-content {
+                padding: 15px;
+            }
+            .vocab-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🍽️ Au restaurant : réserver & commander 🍽️</h1>
+        <p>Apprenons à prendre rendez-vous et à commander au restaurant (sans alcool) !</p>
+        <p class="sub">📘 Let's learn to book a table and order at a restaurant (alcohol-free)!</p>
+    </div>
+
+    <div class="main-content">
+
+        <div class="instruction">
+            📖 Lisez le dialogue, puis faites les jeux ci-dessous.
+            <span class="en">📘 Read the dialogue, then play the games below.</span>
+        </div>
+
+        <!-- ===== DIALOGUE SANS ALCOOL + CONDITIONNEL ===== -->
+        <div class="text-bubble">
+            <div class="fr">
+                <strong>🍽️ Au restaurant – Dialogue</strong><br>
+                <span class="highlight">Client</span> : Bonjour, <span class="conditionnel-highlight">je voudrais</span> réserver une table pour deux personnes, ce soir à 20 heures.<br>
+                <span class="highlight">Serveur</span> : Très bien. Vous avez un nom ?<br>
+                <span class="highlight">Client</span> : Dupont. <span class="conditionnel-highlight">J'aimerais</span> savoir si vous avez une table près de la fenêtre ?<br>
+                <span class="highlight">Serveur</span> : <span class="conditionnel-highlight">Je pourrais</span> vérifier... Oui, c'est possible.<br>
+                <span class="highlight">Client</span> : Parfait. <span class="highlight">Je ne comprends pas</span> le menu, <span class="highlight">vous pouvez répéter</span> le plat du jour ?<br>
+                <span class="highlight">Serveur</span> : C'est du saumon grillé avec des légumes de saison et du riz.<br>
+                <span class="highlight">Client</span> : <span class="highlight">2 minutes, s'il vous plaît</span>, je regarde la carte. <span class="conditionnel-highlight">Je prendrais</span> le saumon et une salade verte. <span class="conditionnel-highlight">Je voudrais</span> aussi une soupe à l'oignon en entrée.<br>
+                <span class="highlight">Serveur</span> : Et comme boisson ?<br>
+                <span class="highlight">Client</span> : <span class="conditionnel-highlight">Je prendrais</span> un grand verre d'eau citronnée, s'il vous plaît. Et <span class="conditionnel-highlight">j'aimerais</span> un jus de fruits frais.<br>
+                <span class="highlight">Serveur</span> : <span class="highlight">D'accord</span>, <span class="conditionnel-highlight">je vais vous apporter</span> ça tout de suite.<br>
+                <span style="display:block;margin-top:8px;font-size:14px;color:#bf360c;">💡 <strong>Conditionnel</strong> : je voudrais, j'aimerais, je pourrais, je prendrais, je vais vous apporter (futur proche)</span>
+            </div>
+            <div class="en-text">
+                <strong>📘 English translation:</strong><br>
+                <strong>Customer</strong>: Hello, I would like to book a table for two, tonight at 8 PM.<br>
+                <strong>Waiter</strong>: Very well. Do you have a name?<br>
+                <strong>Customer</strong>: Dupont. I would like to know if you have a table near the window?<br>
+                <strong>Waiter</strong>: I could check... Yes, it's possible.<br>
+                <strong>Customer</strong>: Perfect. I don't understand the menu, can you repeat the dish of the day?<br>
+                <strong>Waiter</strong>: It's grilled salmon with seasonal vegetables and rice.<br>
+                <strong>Customer</strong>: 2 minutes please, I'm looking at the menu. I would take the salmon and a green salad. I would also like onion soup as a starter.<br>
+                <strong>Waiter</strong>: And to drink?<br>
+                <strong>Customer</strong>: I would take a large glass of lemon water, please. And I would like some fresh fruit juice.<br>
+                <strong>Waiter</strong>: Okay, I'll bring that right away.
+            </div>
+        </div>
+
+        <!-- ===== VOCABULAIRE ===== -->
+        <div class="section-title">
+            📚 Vocabulaire <span class="en">/ Vocabulary</span>
+        </div>
+        <div class="vocab-compact">
+            <div class="item"><span class="fr">réserver une table</span> <span class="en">to book a table</span></div>
+            <div class="item"><span class="fr">commander</span> <span class="en">to order</span></div>
+            <div class="item"><span class="fr">le menu / la carte</span> <span class="en">the menu</span></div>
+            <div class="item"><span class="fr">le plat du jour</span> <span class="en">dish of the day</span></div>
+            <div class="item"><span class="fr">l'addition (f)</span> <span class="en">the bill</span></div>
+            <div class="item"><span class="fr">le serveur / la serveuse</span> <span class="en">waiter / waitress</span></div>
+            <div class="item"><span class="fr">le client / la cliente</span> <span class="en">customer</span></div>
+            <div class="item"><span class="fr">je ne sais pas</span> <span class="en">I don't know</span></div>
+            <div class="item"><span class="fr">je ne comprends pas</span> <span class="en">I don't understand</span></div>
+            <div class="item"><span class="fr">vous pouvez répéter ?</span> <span class="en">can you repeat?</span></div>
+            <div class="item"><span class="fr">2 minutes, s'il vous plaît</span> <span class="en">2 minutes please</span></div>
+            <div class="item"><span class="fr">d'accord</span> <span class="en">okay / alright</span></div>
+            <div class="item"><span class="fr">une table pour deux</span> <span class="en">a table for two</span></div>
+            <div class="item"><span class="fr">près de la fenêtre</span> <span class="en">near the window</span></div>
+            <div class="item"><span class="fr">je voudrais</span> <span class="en">I would like</span></div>
+            <div class="item"><span class="fr">j'aimerais</span> <span class="en">I would like</span></div>
+            <div class="item"><span class="fr">je pourrais</span> <span class="en">I could</span></div>
+            <div class="item"><span class="fr">je prendrais</span> <span class="en">I would take</span></div>
+        </div>
+
+        <!-- ===== CONJUGAISON : PRÉSENT (comme avant) ===== -->
+        <div class="section-title">
+            📘 Conjugaison : vouloir, pouvoir, prendre <span class="en">/ Conjugation (present)</span>
+        </div>
+        <div class="conj-lesson">
+            <div class="verb-title">🔹 VOULOIR <span class="en">(to want)</span></div>
+            <table>
+                <tr><th>Pronom</th><th>Conjugaison</th><th>Exemple</th></tr>
+                <tr><td>je</td><td><strong>veux</strong></td><td>Je veux réserver.</td></tr>
+                <tr><td>tu</td><td><strong>veux</strong></td><td>Tu veux commander ?</td></tr>
+                <tr><td>il / elle / on</td><td><strong>veut</strong></td><td>Elle veut une table.</td></tr>
+                <tr><td>nous</td><td><strong>voulons</strong></td><td>Nous voulons le menu.</td></tr>
+                <tr><td>vous</td><td><strong>voulez</strong></td><td>Vous voulez de l'eau ?</td></tr>
+                <tr><td>ils / elles</td><td><strong>veulent</strong></td><td>Ils veulent payer.</td></tr>
+            </table>
+
+            <div class="verb-title" style="margin-top:18px;">🔹 POUVOIR <span class="en">(can / to be able to)</span></div>
+            <table>
+                <tr><th>Pronom</th><th>Conjugaison</th><th>Exemple</th></tr>
+                <tr><td>je</td><td><strong>peux</strong></td><td>Je peux avoir une carafe d'eau ?</td></tr>
+                <tr><td>tu</td><td><strong>peux</strong></td><td>Tu peux répéter ?</td></tr>
+                <tr><td>il / elle / on</td><td><strong>peut</strong></td><td>Il peut commander.</td></tr>
+                <tr><td>nous</td><td><strong>pouvons</strong></td><td>Nous pouvons choisir.</td></tr>
+                <tr><td>vous</td><td><strong>pouvez</strong></td><td>Vous pouvez nous aider ?</td></tr>
+                <tr><td>ils / elles</td><td><strong>peuvent</strong></td><td>Elles peuvent s'asseoir.</td></tr>
+            </table>
+
+            <div class="verb-title" style="margin-top:18px;">🔹 PRENDRE <span class="en">(to take / to have)</span></div>
+            <table>
+                <tr><th>Pronom</th><th>Conjugaison</th><th>Exemple</th></tr>
+                <tr><td>je</td><td><strong>prends</strong></td><td>Je prends le poisson.</td></tr>
+                <tr><td>tu</td><td><strong>prends</strong></td><td>Tu prends un dessert ?</td></tr>
+                <tr><td>il / elle / on</td><td><strong>prend</strong></td><td>Il prend un café.</td></tr>
+                <tr><td>nous</td><td><strong>prenons</strong></td><td>Nous prenons l'addition.</td></tr>
+                <tr><td>vous</td><td><strong>prenez</strong></td><td>Vous prenez du vin ?</td></tr>
+                <tr><td>ils / elles</td><td><strong>prennent</strong></td><td>Ils prennent la carte.</td></tr>
+            </table>
+        </div>
+
+        <!-- ===== EXPRESSIONS UTILES ===== -->
+        <div class="section-title">
+            💬 Expressions clés <span class="en">/ Key Expressions</span>
+        </div>
+        <div class="exercise-box">
+            <div class="question"><strong>❓ Je ne sais pas.</strong><br><span class="en">I don't know.</span></div>
+            <div class="question"><strong>❓ Je ne comprends pas.</strong><br><span class="en">I don't understand.</span></div>
+            <div class="question"><strong>🔁 Vous pouvez répéter ?</strong><br><span class="en">Can you repeat?</span></div>
+            <div class="question"><strong>⏳ 2 minutes, s'il vous plaît.</strong><br><span class="en">2 minutes please.</span></div>
+            <div class="question"><strong>✅ D'accord.</strong><br><span class="en">Okay / Alright.</span></div>
+            <div class="question"><strong>💡 Je voudrais...</strong><br><span class="en">I would like...</span></div>
+            <div class="question"><strong>💡 J'aimerais...</strong><br><span class="en">I would like...</span></div>
+            <div class="question"><strong>💡 Je pourrais...</strong><br><span class="en">I could...</span></div>
+            <div class="question"><strong>💡 Je prendrais...</strong><br><span class="en">I would take...</span></div>
+        </div>
+
+        <!-- ===== JEU 1 : VOCABULAIRE FLOUTÉ ===== -->
+        <div class="section-title">
+            🧩 Jeu 1 : Vocabulaire <span class="en">/ Vocabulary</span>
+        </div>
+        <div class="exercise-box">
+            <div class="exercise-title">
+                🔍 Cliquez sur les mots floutés <span class="en">/ Click on the blurred words</span>
+            </div>
+            <div id="vocabGameContainer" class="vocab-grid"></div>
+            <button class="btn-vocab-reset" onclick="resetVocabGame()">🔄 Tout flouter / Reset all</button>
+            <div id="vocabFeedback" style="margin-top:10px;font-weight:bold;color:#3d2b00;"></div>
+        </div>
+
+        <!-- ===== JEU 2 : CONJUGAISON (présent) ===== -->
+        <div class="section-title">
+            ✍️ Jeu 2 : Conjuguez au présent <span class="en">/ Conjugate in present</span>
+        </div>
+        <div class="exercise-box">
+            <div class="exercise-title">
+                📝 Remplissez les cases <span class="en">/ Fill in the blanks</span>
+            </div>
+            <p style="margin-bottom:12px;color:#555;">
+                <span class="en"><strong>💡 Cliquez sur "Voir la réponse" pour vérifier.</strong></span>
+            </p>
+            <div class="question">
+                1. Je <input type="text" id="conj1" placeholder="..."> (vouloir) réserver une table.<br>
+                <span class="en">I <input type="text" id="conj1en" placeholder="..."> to book a table.</span>
+                <button class="btn-reveal" onclick="revealConj('conj1','veux','conj1en','want')">Voir</button>
+                <span id="conj1a" class="answer-reveal">✅ veux / want</span>
+            </div>
+            <div class="question">
+                2. Tu <input type="text" id="conj2" placeholder="..."> (pouvoir) répéter ?<br>
+                <span class="en">Can you <input type="text" id="conj2en" placeholder="..."> repeat?</span>
+                <button class="btn-reveal" onclick="revealConj('conj2','peux','conj2en','can')">Voir</button>
+                <span id="conj2a" class="answer-reveal">✅ peux / can</span>
+            </div>
+            <div class="question">
+                3. Il <input type="text" id="conj3" placeholder="..."> (prendre) du poisson.<br>
+                <span class="en">He <input type="text" id="conj3en" placeholder="..."> fish.</span>
+                <button class="btn-reveal" onclick="revealConj('conj3','prend','conj3en','takes')">Voir</button>
+                <span id="conj3a" class="answer-reveal">✅ prend / takes</span>
+            </div>
+            <div class="question">
+                4. Nous <input type="text" id="conj4" placeholder="..."> (vouloir) l'addition.<br>
+                <span class="en">We <input type="text" id="conj4en" placeholder="..."> the bill.</span>
+                <button class="btn-reveal" onclick="revealConj('conj4','voulons','conj4en','want')">Voir</button>
+                <span id="conj4a" class="answer-reveal">✅ voulons / want</span>
+            </div>
+            <div class="question">
+                5. Vous <input type="text" id="conj5" placeholder="..."> (pouvoir) nous apporter de l'eau ?<br>
+                <span class="en">Can you <input type="text" id="conj5en" placeholder="..."> us some water?</span>
+                <button class="btn-reveal" onclick="revealConj('conj5','pouvez','conj5en','bring')">Voir</button>
+                <span id="conj5a" class="answer-reveal">✅ pouvez / bring</span>
+            </div>
+            <div class="question">
+                6. Elles <input type="text" id="conj6" placeholder="..."> (prendre) un dessert.<br>
+                <span class="en">They <input type="text" id="conj6en" placeholder="..."> a dessert.</span>
+                <button class="btn-reveal" onclick="revealConj('conj6','prennent','conj6en','have')">Voir</button>
+                <span id="conj6a" class="answer-reveal">✅ prennent / have</span>
+            </div>
+            <div class="question">
+                7. Je <input type="text" id="conj7" placeholder="..."> (prendre) une soupe à l'oignon.<br>
+                <span class="en">I <input type="text" id="conj7en" placeholder="..."> onion soup.</span>
+                <button class="btn-reveal" onclick="revealConj('conj7','prends','conj7en','take')">Voir</button>
+                <span id="conj7a" class="answer-reveal">✅ prends / take</span>
+            </div>
+        </div>
+
+        <!-- ===== JEU 3 : ASSOCIATION ===== -->
+        <div class="section-title">
+            🔗 Jeu 3 : Associez <span class="en">/ Match</span>
+        </div>
+        <div class="exercise-box">
+            <div class="exercise-title">
+                🧩 Cliquez sur une expression puis sa traduction <span class="en">/ Click an expression then its translation</span>
+            </div>
+            <div id="matchContainer" class="match-grid"></div>
+            <div id="matchFeedback" style="margin-top:12px;font-weight:bold;"></div>
+            <button class="btn-reset" onclick="resetMatch()" style="margin-top:15px;">🔄 Recommencer / Reset</button>
+        </div>
+
+        <!-- ===== JEU 4 : CONDITIONNEL (transformation) ===== -->
+        <div class="section-title">
+            🧠 Jeu 4 : Le conditionnel de politesse <span class="en">/ Polite conditional</span>
+        </div>
+        <div class="exercise-box">
+            <div class="exercise-title">
+                📝 Transformez les phrases au conditionnel <span class="en">/ Transform sentences into conditional</span>
+            </div>
+            <p style="margin-bottom:12px;color:#555;">
+                <strong>FR :</strong> Mettez les verbes au conditionnel (je voudrais, j'aimerais, je pourrais, je prendrais).<br>
+                <span class="en"><strong>EN :</strong> Put the verbs in the conditional (I would like, I would love, I could, I would take).</span>
+            </p>
+
+            <div class="question">
+                <strong>1.</strong> Je veux une table près de la fenêtre. → Je <input type="text" id="cond1" placeholder="..."> une table près de la fenêtre.<br>
+                <span class="en">I want a table near the window. → I <input type="text" id="cond1en" placeholder="..."> a table near the window.</span>
+                <button class="btn-reveal" onclick="revealConj('cond1','voudrais','cond1en','would like')">Voir</button>
+                <span id="cond1a" class="answer-reveal">✅ voudrais / would like</span>
+            </div>
+
+            <div class="question">
+                <strong>2.</strong> J'aime commander du saumon. → J'<input type="text" id="cond2" placeholder="..."> commander du saumon.<br>
+                <span class="en">I like to order salmon. → I <input type="text" id="cond2en" placeholder="..."> to order salmon.</span>
+                <button class="btn-reveal" onclick="revealConj('cond2','aimerais','cond2en','would love')">Voir</button>
+                <span id="cond2a" class="answer-reveal">✅ aimerais / would love</span>
+            </div>
+
+            <div class="question">
+                <strong>3.</strong> Je peux vérifier la carte. → Je <input type="text" id="cond3" placeholder="..."> vérifier la carte.<br>
+                <span class="en">I can check the menu. → I <input type="text" id="cond3en" placeholder="..."> check the menu.</span>
+                <button class="btn-reveal" onclick="revealConj('cond3','pourrais','cond3en','could')">Voir</button>
+                <span id="cond3a" class="answer-reveal">✅ pourrais / could</span>
+            </div>
+
+            <div class="question">
+                <strong>4.</strong> Je prends une soupe à l'oignon. → Je <input type="text" id="cond4" placeholder="..."> une soupe à l'oignon.<br>
+                <span class="en">I take onion soup. → I <input type="text" id="cond4en" placeholder="..."> onion soup.</span>
+                <button class="btn-reveal" onclick="revealConj('cond4','prendrais','cond4en','would take')">Voir</button>
+                <span id="cond4a" class="answer-reveal">✅ prendrais / would take</span>
+            </div>
+
+            <div class="question">
+                <strong>5.</strong> Nous voulons des légumes de saison. → Nous <input type="text" id="cond5" placeholder="..."> des légumes de saison.<br>
+                <span class="en">We want seasonal vegetables. → We <input type="text" id="cond5en" placeholder="..."> seasonal vegetables.</span>
+                <button class="btn-reveal" onclick="revealConj('cond5','voudrions','cond5en','would like')">Voir</button>
+                <span id="cond5a" class="answer-reveal">✅ voudrions / would like</span>
+            </div>
+        </div>
+
+        <!-- ===== JEU 5 : TRADUCTION ===== -->
+        <div class="section-title">
+            🌍 Jeu 5 : Traduisez <span class="en">/ Translate</span>
+        </div>
+        <div class="exercise-box">
+            <div class="exercise-title">
+                📝 Traductions <span class="en">/ Translations</span>
+            </div>
+            <div class="question">
+                <strong>1.</strong> I would like to book a table for two.<br>
+                <textarea class="translation-area" id="trans1" placeholder="Écrivez votre traduction..."></textarea>
+                <button class="btn-reveal" onclick="showTrans('trans1','Je voudrais réserver une table pour deux.')">Voir</button>
+                <div id="trans1a" class="translation-answer">✅ Je voudrais réserver une table pour deux.</div>
+            </div>
+            <div class="question">
+                <strong>2.</strong> I would like to know if you have a table near the window.<br>
+                <textarea class="translation-area" id="trans2" placeholder="Écrivez votre traduction..."></textarea>
+                <button class="btn-reveal" onclick="showTrans('trans2','J\'aimerais savoir si vous avez une table près de la fenêtre.')">Voir</button>
+                <div id="trans2a" class="translation-answer">✅ J'aimerais savoir si vous avez une table près de la fenêtre.</div>
+            </div>
+            <div class="question">
+                <strong>3.</strong> I don't understand the menu, can you repeat the dish of the day?<br>
+                <textarea class="translation-area" id="trans3" placeholder="Écrivez votre traduction..."></textarea>
+                <button class="btn-reveal" onclick="showTrans('trans3','Je ne comprends pas le menu, vous pouvez répéter le plat du jour ?')">Voir</button>
+                <div id="trans3a" class="translation-answer">✅ Je ne comprends pas le menu, vous pouvez répéter le plat du jour ?</div>
+            </div>
+            <div class="question">
+                <strong>4.</strong> I would take the salmon and a green salad.<br>
+                <textarea class="translation-area" id="trans4" placeholder="Écrivez votre traduction..."></textarea>
+                <button class="btn-reveal" onclick="showTrans('trans4','Je prendrais le saumon et une salade verte.')">Voir</button>
+                <div id="trans4a" class="translation-answer">✅ Je prendrais le saumon et une salade verte.</div>
+            </div>
+            <div class="question">
+                <strong>5.</strong> I would like a large glass of lemon water and some fresh fruit juice.<br>
+                <textarea class="translation-area" id="trans5" placeholder="Écrivez votre traduction..."></textarea>
+                <button class="btn-reveal" onclick="showTrans('trans5','Je voudrais un grand verre d\'eau citronnée et un jus de fruits frais.')">Voir</button>
+                <div id="trans5a" class="translation-answer">✅ Je voudrais un grand verre d'eau citronnée et un jus de fruits frais.</div>
+            </div>
+        </div>
+
+        <!-- ===== JEU 6 : QUESTIONS PERSONNELLES ===== -->
+        <div class="section-title">
+            🗣️ Jeu 6 : Parlez de vous ! <span class="en">/ Talk about yourself!</span>
+        </div>
+        <div class="exercise-box">
+            <div class="exercise-title">
+                📝 Répondez aux questions <span class="en">/ Answer the questions</span>
+            </div>
+            <div class="question">
+                <strong>1. Qu'est-ce que vous aimeriez commander au restaurant ?</strong><br>
+                <span class="en">What would you like to order at a restaurant?</span>
+                <textarea class="personal-area" id="pers1" placeholder="Écrivez votre réponse..."></textarea>
+                <button class="btn-personal" onclick="showPersonal('pers1','J\'aimerais commander du saumon avec des légumes.','pers1a')">Exemple</button>
+                <div id="pers1a" class="personal-answer">💡 J'aimerais commander du saumon avec des légumes.</div>
+            </div>
+            <div class="question">
+                <strong>2. Qu'est-ce que vous voudriez boire (sans alcool) ?</strong><br>
+                <span class="en">What would you like to drink (alcohol-free)?</span>
+                <textarea class="personal-area" id="pers2" placeholder="Écrivez votre réponse..."></textarea>
+                <button class="btn-personal" onclick="showPersonal('pers2','Je voudrais un grand verre d\'eau citronnée.','pers2a')">Exemple</button>
+                <div id="pers2a" class="personal-answer">💡 Je voudrais un grand verre d'eau citronnée.</div>
+            </div>
+            <div class="question">
+                <strong>3. Quelle entrée prendriez-vous ?</strong><br>
+                <span class="en">What starter would you take?</span>
+                <textarea class="personal-area" id="pers3" placeholder="Écrivez votre réponse..."></textarea>
+                <button class="btn-personal" onclick="showPersonal('pers3','Je prendrais une soupe à l\'oignon.','pers3a')">Exemple</button>
+                <div id="pers3a" class="personal-answer">💡 Je prendrais une soupe à l'oignon.</div>
+            </div>
+            <div class="question">
+                <strong>4. Pourriez-vous répéter si vous ne comprenez pas ?</strong><br>
+                <span class="en">Could you repeat if you don't understand?</span>
+                <textarea class="personal-area" id="pers4" placeholder="Écrivez votre réponse..."></textarea>
+                <button class="btn-personal" onclick="showPersonal('pers4','Oui, je pourrais demander au serveur de répéter.','pers4a')">Exemple</button>
+                <div id="pers4a" class="personal-answer">💡 Oui, je pourrais demander au serveur de répéter.</div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    // =============================================
+    // JEU 1 : VOCABULAIRE FLOUTÉ
+    // =============================================
+    const vocabPairs = [
+        { en: 'to book a table', fr: 'réserver une table' },
+        { en: 'to order', fr: 'commander' },
+        { en: 'the menu', fr: 'le menu / la carte' },
+        { en: 'the bill', fr: 'l\'addition' },
+        { en: 'waiter', fr: 'le serveur' },
+        { en: 'I don\'t know', fr: 'je ne sais pas' },
+        { en: 'I don\'t understand', fr: 'je ne comprends pas' },
+        { en: 'can you repeat?', fr: 'vous pouvez répéter ?' },
+        { en: '2 minutes please', fr: '2 minutes s\'il vous plaît' },
+        { en: 'okay', fr: 'd\'accord' },
+        { en: 'I would like', fr: 'je voudrais' },
+        { en: 'I could', fr: 'je pourrais' },
+        { en: 'I would take', fr: 'je prendrais' }
+    ];
+    let vocabRevealed = [];
+
+    function initVocabGame() {
+        const container = document.getElementById('vocabGameContainer');
+        container.innerHTML = '';
+        vocabRevealed = new Array(vocabPairs.length).fill(false);
+        vocabPairs.forEach((pair, index) => {
+            const div = document.createElement('div');
+            div.className = 'vocab-pair';
+            const enSpan = document.createElement('span');
+            enSpan.className = 'en-word';
+            enSpan.textContent = pair.en;
+            const frSpan = document.createElement('span');
+            frSpan.className = 'fr-blur';
+            frSpan.textContent = '■ ■ ■ ■ ■';
+            frSpan.dataset.index = index;
+            frSpan.addEventListener('click', function() { revealVocab(index); });
+            div.appendChild(enSpan);
+            div.appendChild(frSpan);
+            container.appendChild(div);
+        });
+        document.getElementById('vocabFeedback').textContent = '💡 Cliquez sur les cases grisées pour révéler.';
+    }
+
+    function revealVocab(index) {
+        if (vocabRevealed[index]) {
+            vocabRevealed[index] = false;
+            const frSpans = document.querySelectorAll('.fr-blur');
+            frSpans.forEach(span => {
+                if (parseInt(span.dataset.index) === index) {
+                    span.textContent = '■ ■ ■ ■ ■';
+                    span.classList.remove('revealed');
+                }
+            });
+            document.getElementById('vocabFeedback').textContent = '🔒 Mot flouté !';
+            return;
+        }
+        vocabRevealed[index] = true;
+        const frSpans = document.querySelectorAll('.fr-blur');
+        frSpans.forEach(span => {
+            if (parseInt(span.dataset.index) === index) {
+                span.textContent = vocabPairs[index].fr;
+                span.classList.add('revealed');
+            }
+        });
+        if (vocabRevealed.every(v => v === true)) {
+            document.getElementById('vocabFeedback').textContent = '🎉 Tout le vocabulaire est révélé !';
+        } else {
+            document.getElementById('vocabFeedback').textContent = '✅ Traduction révélée ! Cliquez à nouveau pour flouter.';
+        }
+    }
+
+    function resetVocabGame() {
+        vocabRevealed = new Array(vocabPairs.length).fill(false);
+        const frSpans = document.querySelectorAll('.fr-blur');
+        frSpans.forEach(span => {
+            span.textContent = '■ ■ ■ ■ ■';
+            span.classList.remove('revealed');
+        });
+        document.getElementById('vocabFeedback').textContent = '🔄 Tout est flouté !';
+    }
+
+    // =============================================
+    // JEU 2, 4 : CONJUGAISON (fonction générique)
+    // =============================================
+    function revealConj(inputId, answer, enInputId, enAnswer) {
+        const input = document.getElementById(inputId);
+        const answerSpan = document.getElementById(inputId + 'a');
+        const enInput = document.getElementById(enInputId);
+        if (answerSpan.classList.contains('show')) {
+            answerSpan.classList.remove('show');
+            input.value = '';
+            if (enInput) enInput.value = '';
+            return;
+        }
+        input.value = answer;
+        answerSpan.classList.add('show');
+        if (enInput) enInput.value = enAnswer;
+    }
+
+    // =============================================
+    // JEU 3 : ASSOCIATION
+    // =============================================
+    const matchPairs = [
+        { fr: 'Je ne sais pas', en: 'I don\'t know' },
+        { fr: 'Je ne comprends pas', en: 'I don\'t understand' },
+        { fr: 'Vous pouvez répéter ?', en: 'Can you repeat?' },
+        { fr: '2 minutes s\'il vous plaît', en: '2 minutes please' },
+        { fr: 'D\'accord', en: 'Okay' },
+        { fr: 'Je voudrais', en: 'I would like' },
+        { fr: 'Je pourrais', en: 'I could' }
+    ];
+    let matchSelected = null;
+    let matchMatched = [];
+
+    function initMatch() {
+        const container = document.getElementById('matchContainer');
+        const pairs = [...matchPairs];
+        for (let i = pairs.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+        }
+        const allItems = [];
+        pairs.forEach((p, idx) => {
+            allItems.push({ type: 'fr', text: p.fr, pairIdx: idx, id: `fr-${idx}` });
+            allItems.push({ type: 'en', text: p.en, pairIdx: idx, id: `en-${idx}` });
+        });
+        for (let i = allItems.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [allItems[i], allItems[j]] = [allItems[j], allItems[i]];
+        }
+        container.innerHTML = '';
+        allItems.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'match-item';
+            div.dataset.type = item.type;
+            div.dataset.pairIdx = item.pairIdx;
+            div.dataset.id = item.id;
+            div.textContent = item.text;
+            div.addEventListener('click', onMatchClick);
+            container.appendChild(div);
+        });
+        matchSelected = null;
+        matchMatched = [];
+        document.getElementById('matchFeedback').textContent = '';
+    }
+
+    function onMatchClick(e) {
+        const el = this;
+        if (el.classList.contains('matched')) return;
+        const type = el.dataset.type;
+        const pairIdx = parseInt(el.dataset.pairIdx);
+        if (matchSelected === null) {
+            matchSelected = el;
+            el.classList.add('selected');
+            document.getElementById('matchFeedback').textContent = '🔍 Choisissez la traduction';
+            return;
+        }
+        const first = matchSelected;
+        const firstPairIdx = parseInt(first.dataset.pairIdx);
+        const firstType = first.dataset.type;
+        if (first === el) {
+            first.classList.remove('selected');
+            matchSelected = null;
+            document.getElementById('matchFeedback').textContent = '';
+            return;
+        }
+        if (firstPairIdx === pairIdx && firstType !== type) {
+            first.classList.remove('selected');
+            first.classList.add('matched');
+            el.classList.add('matched');
+            matchMatched.push(pairIdx);
+            matchSelected = null;
+            document.getElementById('matchFeedback').textContent = '✅ Bonne paire !';
+            document.getElementById('matchFeedback').style.color = '#155724';
+            if (matchMatched.length === matchPairs.length) {
+                document.getElementById('matchFeedback').textContent = '🎉 Toutes les paires sont trouvées !';
+            }
+        } else {
+            first.classList.remove('selected');
+            first.classList.add('wrong');
+            el.classList.add('wrong');
+            document.getElementById('matchFeedback').textContent = '❌ Pas la bonne paire. Réessayez !';
+            document.getElementById('matchFeedback').style.color = '#721c24';
+            setTimeout(() => {
+                first.classList.remove('wrong');
+                el.classList.remove('wrong');
+            }, 600);
+            matchSelected = null;
+        }
+    }
+
+    function resetMatch() {
+        document.querySelectorAll('.match-item').forEach(el => el.className = 'match-item');
+        matchSelected = null;
+        matchMatched = [];
+        document.getElementById('matchFeedback').textContent = '';
+        initMatch();
+    }
+
+    // =============================================
+    // JEU 5 : TRADUCTION
+    // =============================================
+    function showTrans(textareaId, answer) {
+        const textarea = document.getElementById(textareaId);
+        const answerDiv = document.getElementById(textareaId + 'a');
+        if (answerDiv.classList.contains('show')) {
+            answerDiv.classList.remove('show');
+            textarea.value = '';
+            return;
+        }
+        textarea.value = answer;
+        answerDiv.classList.add('show');
+    }
+
+    // =============================================
+    // JEU 6 : PERSONNELLES
+    // =============================================
+    function showPersonal(textareaId, answer, answerDivId) {
+        const textarea = document.getElementById(textareaId);
+        const answerDiv = document.getElementById(answerDivId);
+        if (answerDiv.classList.contains('show')) {
+            answerDiv.classList.remove('show');
+            textarea.value = '';
+            return;
+        }
+        textarea.value = answer;
+        answerDiv.classList.add('show');
+    }
+
+    // INIT
+    initVocabGame();
+    initMatch();
+</script>
+</body>
+</html>
