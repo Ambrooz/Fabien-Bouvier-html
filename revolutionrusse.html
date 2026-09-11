@@ -43,8 +43,8 @@
     .hero::before {
       content: '';
       position: absolute; inset: 0;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/93/Lenin_1917_color.jpg/1280px-Lenin_1917_color.jpg') center/cover no-repeat;
-      opacity: 0.15;
+      background: url('https://commons.wikimedia.org/wiki/Special:FilePath/Winter%20Palace%20in%20St%20petersburg.jpg') center/cover no-repeat;
+      opacity: 0.16;
     }
     .hero-inner { position: relative; z-index: 1; max-width: 860px; margin: 0 auto; }
     .hero-eyebrow {
@@ -203,8 +203,14 @@
       background: #0d1f33;
       position: relative;
     }
-    .card-img .imgwrap { aspect-ratio: 4/3; overflow: hidden; background:#0d1f33; }
+    .card-img .imgwrap { aspect-ratio: 4/3; overflow: hidden; background:#0d1f33; position: relative; }
     .card-img img { width: 100%; height:100%; object-fit:cover; display: block; }
+    .card-img .fallback {
+      display: none; position:absolute; inset:0; align-items:center; justify-content:center;
+      flex-direction: column; gap:0.5rem; color:#e7d3a0; text-align:center; padding:1rem;
+      font-size:0.85rem; font-style: italic; background: linear-gradient(160deg,#0d1f33,#1b3a5c);
+    }
+    .card-img .fallback .emoji { font-size: 2.2rem; font-style: normal; }
     .card-img figcaption {
       background: var(--parchemin);
       font-size: 0.8rem;
@@ -241,6 +247,15 @@
       height: 180px;
       object-fit: cover;
       display: block;
+    }
+    .portrait .fallback {
+      display: none;
+      position: absolute; inset: 0;
+      align-items: center; justify-content: center;
+      color: #f0e8d8;
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
     }
     .portrait .nom {
       font-family: 'Playfair Display', serif;
@@ -580,6 +595,17 @@
       min-width: 80px;
     }
 
+    /* Analyse de photo */
+    .photo-analyse {
+      background: var(--papier);
+      border: 1px dashed var(--sepia);
+      border-radius: 14px;
+      padding: 0.9rem 1.2rem;
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+    }
+    .photo-analyse strong { color: var(--bleu); }
+
     .qcm-bloc {
       background: linear-gradient(160deg, #0d1f33 0%, #1a0d0d 70%);
       border-radius: 24px;
@@ -710,6 +736,7 @@
     <a href="#contrastes">📉 Crise</a>
     <a href="#octobre">🎖️ Octobre 1917</a>
     <a href="#jeux">🎮 Jeux & exercices</a>
+    <a href="#qcm">❓ QCM</a>
   </div>
 </nav>
 
@@ -729,11 +756,11 @@
 
     <div class="citation-bloc">
       <blockquote>
-        « À Petrograd, la faim et le froid descendent dans la rue. Les ouvriers des usines Poutilov se mettent en grève. Les femmes, les soldats, les étudiants se joignent au cortège. Le 23 février, une foule immense envahit la perspective Nevski. »
+        À Petrograd, la faim et le froid poussent la population dans la rue. Les ouvrières des usines Poutilov entament une grève qui s'étend en quelques jours à toute la ville. Le 23 février, une foule immense envahit la perspective Nevski en réclamant du pain.
         <br><br>
-        « Le tsar Nicolas II, qui croit encore à l'obéissance de son peuple, ordonne de tirer. Mais les soldats fraternisent avec les manifestants. Le régime vacille. En quelques jours, la monarchie millénaire s'effondre. »
+        Le tsar Nicolas II, convaincu que l'armée lui obéira, ordonne de tirer sur les manifestants. Mais les soldats, épuisés par la guerre, fraternisent avec la foule au lieu de la réprimer. En quelques jours à peine, une monarchie vieille de plusieurs siècles s'effondre.
       </blockquote>
-      <p class="auteur">— Orlando Figes, <em>La Révolution russe</em> (1996)<br><em>La révolution de Février, spontanée et inattendue</em></p>
+      <p class="auteur">— Repère historique, d'après le récit de la révolution de Février 1917</p>
     </div>
 
     <div class="grid-2">
@@ -743,14 +770,18 @@
         <p>Mais ce gouvernement est contesté par les <strong>soviets</strong> (conseils d'ouvriers et de soldats). Le <strong>double pouvoir</strong> s'installe : le Gouvernement provisoire et le Soviet de Petrograd.</p>
       </div>
       <figure class="card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/1905_russe_revolution.jpg/1280px-1905_russe_revolution.jpg" alt="Manifestation à Petrograd, février 1917" loading="lazy">
-        <figcaption>Manifestation sur la perspective Nevski, février 1917 — la foule réclame du pain et la fin de la guerre</figcaption>
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Patrol%20of%20the%20February%20revolution.jpg" alt="Patrouille pendant la révolution de Février 1917 à Petrograd" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback"><span class="emoji">🔥</span>Photo indisponible</div>
+        </div>
+        <figcaption>Une patrouille armée pendant la révolution de Février, Petrograd, 1917</figcaption>
       </figure>
     </div>
+    <div class="photo-analyse"><strong>🔎 Lecture de photo :</strong> Observe la tenue des hommes sur la photo : soldats et civils sont mélangés. Que cela nous apprend-il sur la nature de l'insurrection de Février ?</div>
 
     <div class="encadre soviet">
       <strong>👑 Nicolas II (1868-1918)</strong>
-      Dernier tsar de Russie. Faible et isolé, il laisse son épouse Alexandra et Raspoutine influencer la cour. Son impopularité grandit avec la guerre. Il abdique le 2 mars 1917 et sera fusillé avec sa famille en 1918.
+      Dernier tsar de Russie. Affaibli par la guerre et coupé du peuple, il laisse son épouse Alexandra et le mystique Grigori Raspoutine influencer la cour. Son impopularité grandit. Il abdique le 2 mars 1917 et sera fusillé avec sa famille en juillet 1918.
     </div>
 
     <div class="encadre olive">
@@ -760,16 +791,25 @@
 
     <div class="galerie-portraits" style="grid-template-columns: repeat(3, minmax(200px,1fr));">
       <figure class="card-img" style="margin:0;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Tsar_Nicholas_II_%26_Queen_Alexandra.jpg/800px-Tsar_Nicholas_II_%26_Queen_Alexandra.jpg" alt="Nicolas II et Alexandra" loading="lazy">
-        <figcaption>Nicolas II et l'impératrice Alexandra — le couple tsariste isolé du peuple</figcaption>
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Nicholas%20II%20of%20Russia.jpg" alt="Le tsar Nicolas II" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback"><span class="emoji">👑</span>Photo indisponible</div>
+        </div>
+        <figcaption>Le tsar Nicolas II, dernier souverain de la dynastie des Romanov</figcaption>
       </figure>
       <figure class="card-img" style="margin:0;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Russian_Revolution_of_1917_%28Peterhof%29.jpg/1280px-Russian_Revolution_of_1917_%28Peterhof%29.jpg" alt="Soldats fraternisant avec les manifestants" loading="lazy">
-        <figcaption>Soldats et manifestants fraternisent — la mutinerie de l'armée</figcaption>
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Rasputin%201907.jpg" alt="Grigori Raspoutine" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback"><span class="emoji">🕯️</span>Photo indisponible</div>
+        </div>
+        <figcaption>Grigori Raspoutine, mystique influent à la cour impériale, 1907</figcaption>
       </figure>
       <figure class="card-img" style="margin:0;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Petrograd_1917_workers_demonstration.jpg/1280px-Petrograd_1917_workers_demonstration.jpg" alt="Grève ouvrière à Petrograd" loading="lazy">
-        <figcaption>Grève des ouvriers de Poutilov — le moteur de l'insurrection</figcaption>
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/1917petrogradsoviet%20assembly.jpg" alt="Assemblée du Soviet de Petrograd, 1917" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback"><span class="emoji">🏛️</span>Photo indisponible</div>
+        </div>
+        <figcaption>Assemblée du Soviet de Petrograd, 1917 — le « double pouvoir » face au Gouvernement provisoire</figcaption>
       </figure>
     </div>
 
@@ -822,6 +862,11 @@
         <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
         <div class="reponse">Le Gouvernement provisoire (libéral) et le Soviet de Petrograd (ouvriers/soldats) se partagent l'autorité.</div>
       </div>
+      <div class="question">
+        <p><strong>Q4.</strong> Qui est Raspoutine et pourquoi a-t-il nui à l'image du tsar ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Un mystique qui exerçait une grande influence sur la tsarine Alexandra ; son emprise sur la cour a discrédité la monarchie aux yeux de nombreux Russes.</div>
+      </div>
     </div>
   </section>
 
@@ -841,34 +886,36 @@
 
     <div class="galerie-portraits">
       <div class="portrait">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Lenin_1917-8.jpg/800px-Lenin_1917-8.jpg" alt="Lénine" loading="lazy">
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Lenin%20in%201920.jpg" alt="Lénine" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback">Л</div>
+        </div>
         <div class="nom">Vladimir Lénine</div>
         <div class="desc">Chef des bolcheviks, « paix, terre, pain »</div>
       </div>
       <div class="portrait">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/42/Trotsky_1918.jpg/800px-Trotsky_1918.jpg" alt="Trotski" loading="lazy">
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Trotzky%20(i.e.%20Trotsky)%20LCCN2014713396.jpg" alt="Léon Trotski" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback">Т</div>
+        </div>
         <div class="nom">Léon Trotski</div>
         <div class="desc">Organisateur du soulèvement d'Octobre</div>
       </div>
       <div class="portrait">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Kerensky_Alexander.jpg/800px-Kerensky_Alexander.jpg" alt="Kerenski" loading="lazy">
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Kerensky.jpg" alt="Alexandre Kerenski" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback">К</div>
+        </div>
         <div class="nom">Alexandre Kerenski</div>
         <div class="desc">Chef du Gouvernement provisoire</div>
       </div>
       <div class="portrait">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Stalin_1917.jpg/800px-Stalin_1917.jpg" alt="Staline" loading="lazy">
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Stalin%20face.jpg" alt="Joseph Staline" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback">С</div>
+        </div>
         <div class="nom">Joseph Staline</div>
-        <div class="desc">Futur dirigeant, alors rédacteur</div>
-      </div>
-      <div class="portrait">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Rasputin.jpg/800px-Rasputin.jpg" alt="Raspoutine" loading="lazy">
-        <div class="nom">Grigori Raspoutine</div>
-        <div class="desc">Mystique influent à la cour</div>
-      </div>
-      <div class="portrait">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Soldiers_1917_rus.jpg/800px-Soldiers_1917_rus.jpg" alt="Soldats russes" loading="lazy">
-        <div class="nom">Les soldats</div>
-        <div class="desc">Les mutins de 1917</div>
+        <div class="desc">Militant bolchevik, futur dirigeant</div>
       </div>
     </div>
 
@@ -922,15 +969,19 @@
 
     <div class="grid-2">
       <div>
-        <p>Entre février et octobre 1917, la Russie connaît une profonde <strong>crise politique, sociale et économique</strong>. Le Gouvernement provisoire ne parvient pas à sortir du pays de la guerre ni à résoudre la question agraire.</p>
-        <p>Les <strong>« journées de Juillet »</strong> (3-5 juillet) voient des manifestations réprimées par le gouvernement. Lénine s'enfuit en Finlande. Le <strong>général Kornilov</strong> tente un coup d'État en septembre, mais il est arrêté par les bolcheviks et les ouvriers.</p>
+        <p>Entre février et octobre 1917, la Russie connaît une profonde <strong>crise politique, sociale et économique</strong>. Le Gouvernement provisoire ne parvient pas à sortir le pays de la guerre ni à résoudre la question agraire.</p>
+        <p>Les <strong>« journées de Juillet »</strong> (3-5 juillet) voient des manifestations réprimées dans le sang par le gouvernement : le 4 juillet, des tirs contre une manifestation ouvrière font plusieurs dizaines de morts sur la perspective Nevski. Lénine s'enfuit en Finlande. Le <strong>général Kornilov</strong> tente un coup d'État en septembre, mais il est arrêté par les bolcheviks et les ouvriers.</p>
         <p>Les bolcheviks, dirigés par Lénine et Trotski, gagnent en popularité dans les <strong>soviets</strong>. Leur slogan : <strong>« Tout le pouvoir aux soviets ! »</strong></p>
       </div>
       <figure class="card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Lenin_July_1917.jpg/800px-Lenin_July_1917.jpg" alt="Lénine en juillet 1917" loading="lazy">
-        <figcaption>Lénine lors des journées de Juillet, avant sa fuite en Finlande</figcaption>
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/19170704%20Riot%20on%20Nevsky%20prosp%20Petrograd.jpg" alt="Manifestation dispersée par les tirs sur la perspective Nevski, 4 juillet 1917" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback"><span class="emoji">💥</span>Photo indisponible</div>
+        </div>
+        <figcaption>Manifestation dispersée par les tirs, perspective Nevski, Petrograd, 4 juillet 1917</figcaption>
       </figure>
     </div>
+    <div class="photo-analyse"><strong>🔎 Lecture de photo :</strong> Cette photo est datée avec précision (4 juillet 1917). En quoi montre-t-elle que le Gouvernement provisoire est prêt à réprimer son propre peuple ?</div>
 
     <div class="deux-camps">
       <div class="camp rouge-camp">
@@ -957,6 +1008,14 @@
       <strong>⚔️ L'affaire Kornilov (septembre 1917)</strong>
       Le général Kornilov, soutenu par les conservateurs, tente un coup d'État militaire contre le Gouvernement provisoire. Kerenski appelle les bolcheviks à l'aider. Les ouvriers et la Garde rouge arrêtent Kornilov, renforçant leur prestige.
     </div>
+
+    <figure class="card-img" style="max-width:480px;margin:1.5rem auto;">
+      <div class="imgwrap">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Red%20guard%20unit%20Petrograd%201917.jpg" alt="Unité de la Garde rouge à Petrograd, 1917" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="fallback"><span class="emoji">🚩</span>Photo indisponible</div>
+      </div>
+      <figcaption>Une unité de la Garde rouge à Petrograd, 1917 — la force armée des bolcheviks</figcaption>
+    </figure>
 
     <!-- STATS -->
     <div class="stats-row">
@@ -987,6 +1046,11 @@
         <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
         <div class="reponse">Le général Kornilov tente un coup d'État, mais les bolcheviks et la Garde rouge l'arrêtent, renforçant leur influence.</div>
       </div>
+      <div class="question">
+        <p><strong>Q3.</strong> Qu'est-ce que la Garde rouge ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Une milice armée organisée par les bolcheviks parmi les ouvriers, qui jouera un rôle décisif lors de la révolution d'Octobre.</div>
+      </div>
     </div>
   </section>
 
@@ -1004,23 +1068,31 @@
 
     <div class="citation-bloc">
       <blockquote>
-        « Dans la nuit du 24 au 25 octobre 1917, les croiseurs de la flotte de la Baltique remontent la Neva. Le croiseur <em>Aurore</em> donne le signal : un coup de canon à blanc. Les Gardes rouges investissent le Palais d'Hiver. Le Gouvernement provisoire est arrêté. »
+        Dans la nuit du 24 au 25 octobre 1917, les Gardes rouges et des marins de la flotte de la Baltique investissent les points stratégiques de Petrograd : gares, ponts, centrale téléphonique. Le croiseur <em>Aurore</em>, ancré sur la Neva, tire un coup de canon à blanc, signal convenu de l'assaut final contre le Palais d'Hiver.
         <br><br>
-        « Lénine proclame la victoire de la révolution socialiste. Le Congrès des soviets approuve immédiatement les premiers décrets : la paix, la terre, le contrôle ouvrier. La Russie entre dans une ère nouvelle. »
+        Les ministres du Gouvernement provisoire, quasiment sans défense, sont arrêtés dans la nuit. Le lendemain, le Congrès des soviets approuve les premiers décrets du nouveau pouvoir : la paix, la terre, le contrôle ouvrier. La Russie entre dans une ère nouvelle.
       </blockquote>
-      <p class="auteur">— Richard Pipes, <em>La Révolution russe</em> (1990)<br><em>La prise du pouvoir par les Bolcheviks</em></p>
+      <p class="auteur">— Repère historique, d'après le récit de la prise du pouvoir par les bolcheviks</p>
     </div>
 
     <div class="grid-2">
       <div>
         <p>Le <strong>25 octobre 1917</strong> (calendrier julien), les bolcheviks, dirigés par <strong>Lénine</strong> et <strong>Trotski</strong>, s'emparent du <strong>Palais d'Hiver</strong>, siège du gouvernement provisoire. La prise est quasi sans effusion de sang.</p>
-        <p>Le <strong>IIe Congrès des soviets</strong> approuve le <strong>décret sur la paix</strong> (sortie de la guerre) et le <strong>décret sur la terre</strong> (abolition de la propriété privée des terres). Un nouveau gouvernement est formé : le <strong>Conseil des commissaires du peuple</strong>, présidé par Lénine.</p>
+        <p>Le <strong>II<sup>e</sup> Congrès des soviets</strong> approuve le <strong>décret sur la paix</strong> (sortie de la guerre) et le <strong>décret sur la terre</strong> (abolition de la propriété privée des terres). Un nouveau gouvernement est formé : le <strong>Conseil des commissaires du peuple</strong>, présidé par Lénine.</p>
         <p>La révolution d'Octobre ouvre la voie à la <strong>guerre civile</strong> (1918-1921) entre les Rouges (bolcheviks) et les Blancs (anti-bolcheviks). Elle aboutit à la fondation de l'<strong>URSS</strong> en 1922.</p>
       </div>
       <figure class="card-img">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/Winter_Palace_1917.jpg/1280px-Winter_Palace_1917.jpg" alt="Prise du Palais d'Hiver" loading="lazy">
-        <figcaption>L'assaut du Palais d'Hiver, 25 octobre 1917</figcaption>
+        <div class="imgwrap">
+          <img src="https://commons.wikimedia.org/wiki/Special:FilePath/After%20the%20capture%20of%20the%20Winter%20Palace%2026%20October%201917.jpg" alt="Après la prise du Palais d'Hiver, 26 octobre 1917" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+          <div class="fallback"><span class="emoji">🏰</span>Photo indisponible</div>
+        </div>
+        <figcaption>Devant le Palais d'Hiver au lendemain de sa prise, Petrograd, 26 octobre 1917</figcaption>
       </figure>
+    </div>
+
+    <div class="encadre or">
+      <strong>🎬 Attention aux images trompeuses !</strong>
+      La plupart des photos spectaculaires de « l'assaut du Palais d'Hiver » que l'on trouve sur internet ne sont pas des photos de 1917 : elles proviennent d'une reconstitution théâtrale organisée en 1920 pour le troisième anniversaire de la révolution, puis du film muet <em>Octobre</em> (1927) de Sergueï Eisenstein. La prise réelle du Palais, dans la nuit du 24 au 25 octobre 1917, a fait très peu de victimes et n'a pas été photographiée en direct.
     </div>
 
     <div class="encadre soviet">
@@ -1034,8 +1106,17 @@
 
     <div class="encadre rouge">
       <strong>⚔️ La guerre civile (1918-1921)</strong>
-      Les bolcheviks affrontent les armées blanches (tsaristes, libéraux, socialistes modérés) soutenues par les puissances étrangères. La Tchéka (police politique) instaure la « terreur rouge ». La guerre civile cause des millions de morts.
+      Les bolcheviks (Rouges) affrontent les armées blanches (tsaristes, libéraux, socialistes modérés), soutenues par des puissances étrangères (France, Royaume-Uni, États-Unis, Japon). La Tchéka (police politique) instaure la « terreur rouge ». La guerre civile cause plusieurs millions de morts, avant la victoire des Rouges vers 1921.
     </div>
+
+    <figure class="card-img" style="max-width:600px;margin:1.5rem auto;">
+      <div class="imgwrap" style="aspect-ratio:3/2;">
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Russian%20civil%20war%20West%201918-20.png" alt="Carte de la guerre civile russe à l'ouest, 1918-1920" loading="lazy" onerror="this.onerror=null;this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="fallback"><span class="emoji">🗺️</span>Carte indisponible</div>
+      </div>
+      <figcaption>Carte de la guerre civile russe (1918-1920) : en orange, l'extension du contrôle bolchevik en 1918 ; en bleu, l'avancée maximale des armées blanches</figcaption>
+    </figure>
+    <div class="photo-analyse"><strong>🔎 Lecture de carte :</strong> D'après la carte, les bolcheviks contrôlent-ils une zone centrale ou périphérique du territoire russe ? En quoi cela peut-il expliquer leur victoire finale ?</div>
 
     <!-- SCHÉMA -->
     <div class="schema-bloc" style="border:1px solid var(--parchemin);border-radius:20px;padding:1.8rem;margin:2rem 0;background:#fff;">
@@ -1082,7 +1163,12 @@
       <div class="question">
         <p><strong>Q3.</strong> Qui sont les « Rouges » et les « Blancs » ?</p>
         <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
-        <div class="reponse">Les Rouges sont les bolcheviks ; les Blancs sont leurs adversaires (tsaristes, libéraux, etc.).</div>
+        <div class="reponse">Les Rouges sont les bolcheviks ; les Blancs sont leurs adversaires (tsaristes, libéraux, etc.), parfois soutenus par des puissances étrangères.</div>
+      </div>
+      <div class="question">
+        <p><strong>Q4.</strong> Les photos « d'assaut » du Palais d'Hiver que l'on trouve le plus souvent sont-elles authentiques ?</p>
+        <button class="reponse-btn" onclick="this.nextElementSibling.style.display='block';this.style.display='none'">Voir la réponse</button>
+        <div class="reponse">Non : la plupart proviennent d'une reconstitution organisée en 1920 ou du film « Octobre » d'Eisenstein (1927), et non d'une photographie prise en 1917.</div>
       </div>
     </div>
   </section>
@@ -1253,6 +1339,13 @@
           <button class="btn-jeu vf-btn" data-correct="vrai" style="padding:0.3rem 1.2rem;font-size:0.85rem;background:var(--rouge);">❌ Faux</button>
           <span class="vf-feedback" style="margin-left:0.5rem;font-style:italic;"></span>
         </div>
+
+        <div class="conjugaison-item" style="flex-wrap:wrap;">
+          <label style="min-width:auto;flex:0 0 100%;margin-bottom:0.2rem;"><strong>9.</strong> La plupart des photos connues de « l'assaut » du Palais d'Hiver datent réellement de 1917.</label>
+          <button class="btn-jeu vf-btn" data-correct="faux" style="padding:0.3rem 1.2rem;font-size:0.85rem;background:var(--vert);">✅ Vrai</button>
+          <button class="btn-jeu vf-btn" data-correct="vrai" style="padding:0.3rem 1.2rem;font-size:0.85rem;background:var(--rouge);">❌ Faux</button>
+          <span class="vf-feedback" style="margin-left:0.5rem;font-style:italic;"></span>
+        </div>
       </div>
     </div>
 
@@ -1414,7 +1507,7 @@
   <!-- CONCLUSION -->
   <section style="border-bottom: none; text-align: center; padding-bottom: 3rem;">
     <p style="font-family: 'Playfair Display', serif; font-size: 1.4rem; font-style: italic; color: var(--bleu); max-width: 700px; margin: 0 auto 1rem;">
-      « La révolution est un cyclone qui balaie tout sur son passage. »
+      « En quelques mois, une monarchie millénaire s'efface et un État socialiste inédit voit le jour. »
     </p>
     <p style="color: var(--gris); font-size: 0.92rem;">En quelques mois, la Russie a vu s'effondrer la monarchie puis naître le premier État socialiste de l'histoire. Une onde de choc pour le monde entier.</p>
   </section>
@@ -1424,8 +1517,8 @@
 <footer>
   <p><strong>🎓 Page pédagogique — Séquence 1H3</strong><br>
   La Révolution russe de 1917 : de la chute du tsar à la prise du pouvoir par les bolcheviks.<br>
-  Sources : archives historiques, Wikimedia Commons, archives d'État russes.</p>
-  <p style="margin-top: 1rem; opacity: 0.6;">⚡ « Le peuple a soif de justice. » — Lénine</p>
+  Sources iconographiques : Wikimedia Commons (Library of Congress, archives PD-Russia, domaine public / licences libres).</p>
+  <p style="margin-top: 1rem; opacity: 0.6;">⚡ « Le peuple a soif de justice. » — mot d'ordre attribué à Lénine</p>
 </footer>
 
 <script>
@@ -1658,7 +1751,7 @@ document.querySelectorAll('.vf-btn').forEach(btn => {
       const feedback = input.parentElement.querySelector('.event-feedback');
       const expectedVariants = variants[expected] || [expected];
       const isCorrect = expectedVariants.some(v => user === normalize(v));
-      
+
       if (isCorrect && user.length > 0) {
         input.classList.remove('incorrect');
         input.classList.add('correct');
