@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📘 Le Petit Nicolas – vacances & copains (A2)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f3f2ee;
+            color: #2c3e3f;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            padding: 2rem 2rem 3rem;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #b45f3b;
+            border-left: 6px solid #e2a07c;
+            padding-left: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #6d4f3f;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+            scroll-margin-top: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: #f0ddd0;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            margin-bottom: 1rem;
+            color: #5d3e2b;
+        }
+
+        .card {
+            background: #fefefe;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #e1d5cb;
+            margin-bottom: 1.5rem;
+        }
+
+        .lecture {
+            background: #fbf7f2;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background-color: #fae1c7;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .vocab-item {
+            background: #f3ede8;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .vocab-chinois {
+            font-weight: 600;
+            color: #8b5e3c;
+        }
+
+        .vocab-reveal {
+            background: #dacbc1;
+            border-radius: 2rem;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            user-select: none;
+            font-weight: 500;
+            color: #3d2c1f;
+        }
+
+        .vocab-reveal:hover {
+            background: #b58f76;
+            color: white;
+        }
+
+        .vocab-reponse {
+            display: none;
+            background: #e2cfbe;
+            border-radius: 2rem;
+            padding: 0.3rem 1rem;
+            font-weight: 500;
+            color: #3f2b1b;
+        }
+
+        .vocab-reponse.visible {
+            display: inline-block;
+        }
+
+        .conjug-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 1rem;
+        }
+
+        th {
+            background: #e7d5c6;
+            padding: 0.6rem;
+        }
+
+        td {
+            border: 1px solid #ddcebf;
+            padding: 0.6rem;
+            text-align: center;
+        }
+
+        .exercise {
+            background: #faf5f0;
+            padding: 1.2rem;
+            border-radius: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        input, select {
+            padding: 0.5rem;
+            margin: 0.3rem;
+            border-radius: 1rem;
+            border: 1px solid #c7b3a2;
+            font-family: inherit;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        button {
+            background: #b68c71;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background: #8f6d55;
+        }
+
+        .feedback {
+            margin-top: 0.7rem;
+            font-style: italic;
+            color: #7b5a43;
+        }
+
+        .exemple-case {
+            background: #f1e8e0;
+            border-left: 4px solid #b68c71;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .vocab-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🎒 Le Petit Nicolas · les vacances</h1>
+    <div class="subhead">Un récit de copains · Révision A2 : présent, futur, passé composé, imparfait</div>
+
+    <!-- TEXTE : LE PETIT NICOLAS ET LES VACANCES -->
+    <div class="section">
+        <div class="section-title">📖 1. Lecture : « Nicolas va en colonie de vacances »</div>
+        <div class="card lecture">
+            <p><strong>Nicolas, 9 ans, raconte ses vacances d’été</strong></p>
+            <p>Cet été, Nicolas <span class="highlight">va en colonie de vacances</span> dans les Alpes. Il est très content. Il part avec ses copains Geoffroy, Alceste et Clotaire. « <span class="highlight">J’adore les montagnes et les randonnées</span> », dit Nicolas.</p>
+            <p>Ils <span class="highlight">arrivent le samedi matin</span>. Le premier jour, ils <span class="highlight">ont fait une grande course en forêt</span>. Nicolas a gagné ! Après, ils ont pique-niqué au bord d’un lac. « <span class="highlight">C’était génial</span> », raconte Nicolas.</p>
+            <p>Chaque matin, le moniteur <span class="highlight">leur racontait</span> une histoire sur les animaux. Les enfants <span class="highlight">écoutaient</span> très attentivement. <span class="highlight">L’après-midi, ils construisaient des cabanes</span> avec des branches.</p>
+            <p>La semaine prochaine, Nicolas <span class="highlight">partira</span> en famille au bord de la mer. Il <span class="highlight">nagera</span> tous les jours et <span class="highlight">mangera</span> des glaces. « <span class="highlight">Je suis vraiment chanceux</span> », dit-il en souriant. L’année dernière, il <span class="highlight">a appris à faire du cheval</span> pendant les vacances.</p>
+            <p>📖 <strong>Mots clés :</strong> une colonie de vacances → 夏令营 · un moniteur → 辅导员 · une randonnée → 徒步 · une cabane → 小木屋 · une branche → 树枝 · une glace → 冰淇淋 · un lac → 湖 · une forêt → 森林 · un copain → 朋友 · une histoire → 故事</p>
+        </div>
+    </div>
+
+    <!-- COMPRÉHENSION -->
+    <div class="section">
+        <div class="section-title">📝 2. Compréhension – réponds par une phrase</div>
+        <div class="card">
+            <ol>
+                <li>Où Nicolas va-t-il cet été ?<br><input type="text" id="comp1" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Qu’ont-ils fait le premier jour ?<br><input type="text" id="comp2" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Que faisaient-ils chaque après-midi ? (imparfait)<br><input type="text" id="comp3" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Que fera Nicolas la semaine prochaine ? (futur)<br><input type="text" id="comp4" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Qu’a-t-il appris l’année dernière ?<br><input type="text" id="comp5" placeholder="Écris ta réponse" style="width: 100%;"></li>
+            </ol>
+            <button onclick="corrigerComprehension()">Vérifier compréhension</button>
+            <div id="feedbackComp" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- VOCABULAIRE -->
+    <div class="section">
+        <div class="section-title">📖 3. Vocabulaire (chinois → français) – cliquez pour révéler</div>
+        <div class="card">
+            <div class="vocab-grid">
+                <div class="vocab-item"><span class="vocab-chinois">🏕️ 夏令营</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une colonie de vacances</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🧑‍🏫 辅导员</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un moniteur</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🥾 徒步</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une randonnée</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🛖 小木屋</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une cabane</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🌿 树枝</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une branche</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🍦 冰淇淋</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une glace</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🏞️ 湖</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un lac</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🌲 森林</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une forêt</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🤝 朋友</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un copain</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">📖 故事</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une histoire</span></div>
+            </div>
+            <p><em>💡 Cliquez sur chaque « [mot flouté] » pour voir la réponse.</em></p>
+        </div>
+    </div>
+
+    <!-- RAPPEL DES TEMPS -->
+    <div class="section">
+        <div class="section-title">⏰ 4. Révision : présent, futur, passé composé, imparfait</div>
+        <div class="card">
+            <div class="conjug-table">
+                <table>
+                    <thead><tr><th>TEMPS</th><th>UTILISATION</th><th>EXEMPLE (dans le texte)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Présent</strong></td><td>habitude, goût, description</td><td>Nicolas <strong>va</strong> en colonie.</td></tr>
+                        <tr><td><strong>Futur simple</strong></td><td>action future, projet</td><td>Il <strong>partira</strong> en famille.</td></tr>
+                        <tr><td><strong>Passé composé</strong></td><td>action ponctuelle passée</td><td>Ils <strong>ont fait</strong> une course.</td></tr>
+                        <tr><td><strong>Imparfait</strong></td><td>description, habitude passée</td><td>Ils <strong>écoutaient</strong> le moniteur.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>💡 <strong>Astuce :</strong> Imparfait = ce qui durait / Passé composé = l’événement précis. Présent = maintenant ou routine. Futur = plus tard.</p>
+        </div>
+    </div>
+
+    <!-- EXERCICE 1 : PRÉSENT ou FUTUR -->
+    <div class="section">
+        <div class="section-title">✏️ Exercice 1 – Complète au présent ou au futur simple</div>
+        <div class="exercise">
+            <p>① Pendant les vacances, Nicolas ______________ (adorer) les randonnées. <br><input type="text" id="ex1_1" placeholder="ta réponse"></p>
+            <p>② La semaine prochaine, nous ______________ (partir) à la montagne. <br><input type="text" id="ex1_2" placeholder="ta réponse"></p>
+            <p>③ Chaque jour, les enfants ______________ (construire) une cabane. <br><input type="text" id="ex1_3" placeholder="ta réponse"></p>
+            <p>④ Demain, je ______________ (manger) une glace au chocolat. <br><input type="text" id="ex1_4" placeholder="ta réponse"></p>
+            <p>⑤ En ce moment, mon copain ______________ (lire) une bande dessinée. <br><input type="text" id="ex1_5" placeholder="ta réponse"></p>
+            <button onclick="corrigePresFut()">Vérifier</button>
+            <div id="feedbackPresFut" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 2 : PC / IMPARFAIT -->
+    <div class="section">
+        <div class="section-title">⏳ Exercice 2 – Passé composé ou imparfait ?</div>
+        <div class="exercise">
+            <p>① Quand Nicolas ______________ (être) petit, il ______________ (passer) ses vacances à la campagne. <br><input type="text" id="ex2_1" placeholder="verbe 1">  <input type="text" id="ex2_2" placeholder="verbe 2"></p>
+            <p>② Hier, ils ______________ (découvrir) un lac magnifique. <br><input type="text" id="ex2_3" placeholder="ta réponse"></p>
+            <p>③ Soudain, le moniteur ______________ (crier) et ______________ (appeler) les enfants. <br><input type="text" id="ex2_4" placeholder="verbe 1">  <input type="text" id="ex2_5" placeholder="verbe 2"></p>
+            <p>④ Chaque soir, ils ______________ (écouter) des histoires. <br><input type="text" id="ex2_6" placeholder="ta réponse"></p>
+            <p>⑤ L’été dernier, nous ______________ (apprendre) à nager. <br><input type="text" id="ex2_7" placeholder="ta réponse"></p>
+            <button onclick="corrigePcImparfait()">Vérifier</button>
+            <div id="feedbackPcImparfait" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 3 : TRANSFORMATION -->
+    <div class="section">
+        <div class="section-title">🔄 Exercice 3 – Transforme les phrases</div>
+        <div class="exercise">
+            <div class="exemple-case">
+                📌 <strong>Modèle :</strong><br>
+                « Les enfants jouent au foot. »<br>
+                👉 au passé composé : <em>ex: Les enfants ont joué au foot.</em><br>
+                👉 au futur simple : <em>ex: Les enfants joueront au foot.</em>
+            </div>
+            <p><strong>Phrase originale : « Nicolas construit une cabane. »</strong></p>
+            <p>👉 au passé composé : <input type="text" id="transfoPC1" placeholder="ta réponse" style="width: 100%;"></p>
+            <p>👉 au futur simple : <input type="text" id="transfoFut1" placeholder="ta réponse" style="width: 100%;"></p>
+
+            <div class="exemple-case">
+                📌 <strong>Modèle :</strong><br>
+                « Le moniteur raconte une histoire. »<br>
+                👉 à l’imparfait : <em>ex: Le moniteur racontait une histoire.</em><br>
+                👉 au passé composé : <em>ex: Le moniteur a raconté une histoire.</em>
+            </div>
+            <p><strong>Phrase originale : « Les copains vont au lac. »</strong></p>
+            <p>👉 à l’imparfait : <input type="text" id="transfoImparfait" placeholder="ta réponse" style="width: 100%;"></p>
+            <p>👉 au passé composé : <input type="text" id="transfoPC2" placeholder="ta réponse" style="width: 100%;"></p>
+            <button onclick="corrigeTransfo()">Vérifier transformation</button>
+            <div id="feedbackTransfo" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 4 : IDENTIFIER -->
+    <div class="section">
+        <div class="section-title">🔎 Exercice 4 – Identifie le temps souligné</div>
+        <div class="exercise">
+            <p>① « Chaque été, Nicolas <u>allait</u> en colonie. » → temps : <input type="text" id="idTemps1" placeholder="ex: imparfait"></p>
+            <p>② « La semaine prochaine, ils <u>nageront</u> dans le lac. » → <input type="text" id="idTemps2" placeholder="réponse"></p>
+            <p>③ « Ce matin, Alceste <u>a trouvé</u> une plume. » → <input type="text" id="idTemps3" placeholder="réponse"></p>
+            <p>④ « En ce moment, je <u>prépare</u> mon sac. » → <input type="text" id="idTemps4" placeholder="réponse"></p>
+            <button onclick="corrigeIdTemps()">Vérifier</button>
+            <div id="feedbackIdTemps" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 5 : ORDRE -->
+    <div class="section">
+        <div class="section-title">🧩 Exercice 5 – Remets les mots dans l’ordre</div>
+        <div class="exercise">
+            <p>a) colonie / Nicolas / vacances / en / va / de / chaque / été</p>
+            <input type="text" id="ordrePhrase1" style="width:100%" placeholder="Votre phrase">
+
+            <p>b) copains / ils / une / construisent / cabane / avec / leurs</p>
+            <input type="text" id="ordrePhrase2" style="width:100%" placeholder="Votre phrase">
+
+            <p>c) petit / elle / avait / Léa / quand / peur / était / des / ours</p>
+            <input type="text" id="ordrePhrase3" style="width:100%" placeholder="Votre phrase">
+
+            <button onclick="corrigeOrdre()">Vérifier l’ordre</button>
+            <div id="feedbackOrdre" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- QCM -->
+    <div class="section">
+        <div class="section-title">✅ Exercice 6 – Mini-test</div>
+        <div class="exercise">
+            <p>1. « La semaine dernière, nous ________ à la montagne. » (aller)</p>
+            <select id="qcm1"><option>--Choisir--</option><option>allons</option><option>irons</option><option>sommes allés</option><option>allions</option></select>
+
+            <p>2. « Quand il faisait beau, les enfants ________ des cabanes. » (construire – habitude)</p>
+            <select id="qcm2"><option>--Choisir--</option><option>ont construit</option><option>construisaient</option><option>construiront</option><option>construisent</option></select>
+
+            <p>3. « Demain, je ________ une énorme glace ! » (manger)</p>
+            <select id="qcm3"><option>--Choisir--</option><option>mange</option><option>mangerai</option><option>mangeais</option><option>ai mangé</option></select>
+
+            <p>4. « Chaque été, Nicolas ________ en colonie. » (présent – aller)</p>
+            <select id="qcm4"><option>--Choisir--</option><option>allait</option><option>est allé</option><option>va</option><option>ira</option></select>
+
+            <button onclick="corrigeQCM()">Valider QCM</button>
+            <div id="feedbackQCM" class="feedback"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function revealVocab(element) {
+        const reponseSpan = element.nextElementSibling;
+        if (reponseSpan) {
+            reponseSpan.classList.add('visible');
+            element.style.display = 'none';
+        }
+    }
+
+    function corrigerComprehension() {
+        document.getElementById('feedbackComp').innerHTML = "✅ Réponses suggérées : 1. en colonie de vacances / dans les Alpes. 2. une grande course en forêt. 3. Ils construisaient des cabanes. 4. Il partira en famille, nagera et mangera des glaces. 5. Il a appris à faire du cheval.";
+    }
+
+    function corrigePresFut() {
+        const rep = ["adore", "partirons", "construisent", "mangerai", "lit"];
+        let msg = "";
+        for(let i=1; i<=5; i++) {
+            let val = document.getElementById('ex1_'+i).value.trim().toLowerCase();
+            msg += (val === rep[i-1]) ? `✅ ${i} ` : `❌ ${i} (attendu : ${rep[i-1]}) `;
+        }
+        document.getElementById('feedbackPresFut').innerHTML = msg;
+    }
+
+    function corrigePcImparfait() {
+        const correct = ["était", "passait", "ont découvert", "a crié", "a appelé", "écoutaient", "avons appris"];
+        let msg = "";
+        for(let i=1; i<=7; i++) {
+            let val = document.getElementById('ex2_'+i)?.value.trim().toLowerCase() || "";
+            msg += (val === correct[i-1]) ? `✔️${i} ` : `❌${i} (${correct[i-1]}) `;
+        }
+        document.getElementById('feedbackPcImparfait').innerHTML = msg;
+    }
+
+    function corrigeTransfo() {
+        let pc1 = document.getElementById('transfoPC1').value.trim().toLowerCase();
+        let fut1 = document.getElementById('transfoFut1').value.trim().toLowerCase();
+        let imp = document.getElementById('transfoImparfait').value.trim().toLowerCase();
+        let pc2 = document.getElementById('transfoPC2').value.trim().toLowerCase();
+        let msg = "";
+        if(pc1.includes("nicolas a construit") || pc1 === "nicolas a construit une cabane") msg += "✅ PC cabane ";
+        else msg += "❌ PC cabane → 'Nicolas a construit une cabane' ";
+        if(fut1.includes("nicolas construira") || fut1 === "nicolas construira une cabane") msg += "✅ Futur ";
+        else msg += "❌ Futur → 'Nicolas construira une cabane' ";
+        if(imp.includes("copains allaient") || imp === "les copains allaient au lac") msg += "✅ Imparfait ";
+        else msg += "❌ Imparfait → 'Les copains allaient au lac' ";
+        if(pc2.includes("sont allés") || pc2 === "les copains sont allés au lac") msg += "✅ PC lac";
+        else msg += "❌ PC lac → 'Les copains sont allés au lac' ";
+        document.getElementById('feedbackTransfo').innerHTML = msg;
+    }
+
+    function corrigeIdTemps() {
+        let corrects = ["imparfait", "futur simple", "passé composé", "présent"];
+        let msg = "";
+        for(let i=1; i<=4; i++) {
+            let val = document.getElementById('idTemps'+i).value.trim().toLowerCase();
+            msg += (val === corrects[i-1]) ? `✅ ${i} ` : `❌ ${i} (${corrects[i-1]}) `;
+        }
+        document.getElementById('feedbackIdTemps').innerHTML = msg;
+    }
+
+    function corrigeOrdre() {
+        let p1 = document.getElementById('ordrePhrase1').value.trim().toLowerCase();
+        let p2 = document.getElementById('ordrePhrase2').value.trim().toLowerCase();
+        let p3 = document.getElementById('ordrePhrase3').value.trim().toLowerCase();
+        let msg = "";
+        if(p1 === "chaque été nicolas va en colonie de vacances") msg += "✅ a. ";
+        else msg += "❌ a : 'Chaque été, Nicolas va en colonie de vacances.' ";
+        if(p2 === "ils construisent une cabane avec leurs copains") msg += "✅ b. ";
+        else msg += "❌ b : 'Ils construisent une cabane avec leurs copains.' ";
+        if(p3 === "quand léa était petite elle avait peur des ours") msg += "✅ c.";
+        else msg += "❌ c : 'Quand Léa était petite, elle avait peur des ours.' ";
+        document.getElementById('feedbackOrdre').innerHTML = msg;
+    }
+
+    function corrigeQCM() {
+        let q1 = document.getElementById('qcm1').value;
+        let q2 = document.getElementById('qcm2').value;
+        let q3 = document.getElementById('qcm3').value;
+        let q4 = document.getElementById('qcm4').value;
+        let score = 0;
+        if(q1 === "sommes allés") score++;
+        if(q2 === "construisaient") score++;
+        if(q3 === "mangerai") score++;
+        if(q4 === "va") score++;
+        document.getElementById('feedbackQCM').innerHTML = `🔎 Résultat : ${score}/4. ${score===4 ? "Parfait ! 🎉" : "Revois les corrigés."}`;
+    }
+</script>
+</body>
+</html>

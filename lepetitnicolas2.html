@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📘 Le Petit Nicolas – suite : la rentrée des classes (A2)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: #f0ece6;
+            color: #2c3e3f;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.12);
+            overflow: hidden;
+            padding: 2rem 2rem 3rem;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #b45f3b;
+            border-left: 6px solid #e2a07c;
+            padding-left: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .subhead {
+            font-size: 1.2rem;
+            color: #6d4f3f;
+            margin-bottom: 2rem;
+            font-style: italic;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+            scroll-margin-top: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: #d4c5b8;
+            display: inline-block;
+            padding: 0.2rem 1.2rem;
+            border-radius: 40px;
+            margin-bottom: 1rem;
+            color: #3d2b1e;
+        }
+
+        .card {
+            background: #fefefe;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+            border: 1px solid #d6c9bd;
+            margin-bottom: 1.5rem;
+        }
+
+        .lecture {
+            background: #f8f3ed;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            font-family: 'Georgia', serif;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            background-color: #fadbc0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .vocab-item {
+            background: #f3ede8;
+            padding: 0.8rem 1rem;
+            border-radius: 1rem;
+            font-size: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .vocab-chinois {
+            font-weight: 600;
+            color: #8b5e3c;
+        }
+
+        .vocab-reveal {
+            background: #dacbc1;
+            border-radius: 2rem;
+            padding: 0.3rem 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            user-select: none;
+            font-weight: 500;
+            color: #3d2c1f;
+        }
+
+        .vocab-reveal:hover {
+            background: #b58f76;
+            color: white;
+        }
+
+        .vocab-reponse {
+            display: none;
+            background: #e2cfbe;
+            border-radius: 2rem;
+            padding: 0.3rem 1rem;
+            font-weight: 500;
+            color: #3f2b1b;
+        }
+
+        .vocab-reponse.visible {
+            display: inline-block;
+        }
+
+        .conjug-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 1rem;
+        }
+
+        th {
+            background: #e7d5c6;
+            padding: 0.6rem;
+        }
+
+        td {
+            border: 1px solid #ddcebf;
+            padding: 0.6rem;
+            text-align: center;
+        }
+
+        .exercise {
+            background: #faf5f0;
+            padding: 1.2rem;
+            border-radius: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        input, select {
+            padding: 0.5rem;
+            margin: 0.3rem;
+            border-radius: 1rem;
+            border: 1px solid #c7b3a2;
+            font-family: inherit;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        button {
+            background: #b68c71;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 0.5rem;
+        }
+
+        button:hover {
+            background: #8f6d55;
+        }
+
+        .feedback {
+            margin-top: 0.7rem;
+            font-style: italic;
+            color: #7b5a43;
+        }
+
+        .exemple-case {
+            background: #f1e8e0;
+            border-left: 4px solid #b68c71;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 1rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .vocab-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📚 Le Petit Nicolas · la rentrée</h1>
+    <div class="subhead">Une nouvelle aventure de Nicolas et ses copains · Révision A2 : présent, futur, passé composé, imparfait + nouveaux verbes</div>
+
+    <!-- TEXTE : LA RENTRÉE DES CLASSES -->
+    <div class="section">
+        <div class="section-title">📖 1. Lecture : « La rentrée de Nicolas »</div>
+        <div class="card lecture">
+            <p><strong>Nicolas raconte son premier jour d’école après les vacances</strong></p>
+            <p>Ce matin, Nicolas <span class="highlight">se réveille</span> très tôt. Il est excité car <span class="highlight">c’est la rentrée des classes</span>. Il met son cartable sur le dos et <span class="highlight">rejoint</span> ses copains devant l’école.</p>
+            <p>Geoffroy <span class="highlight">a apporté</span> une nouvelle trousse avec des stylos de toutes les couleurs. Alceste <span class="highlight">mangeait</span> déjà un pain au chocolat. Clotaire <span class="highlight">a oublié</span> son cahier de devoirs. « <span class="highlight">Tu es vraiment distrait</span> ! », lui dit Nicolas en rigolant.</p>
+            <p>La maîtresse, Mademoiselle Blanchard, <span class="highlight">les a accueillis</span> avec un grand sourire. Elle <span class="highlight">a distribué</span> les nouveaux livres. « <span class="highlight">Cette année, nous allons lire des histoires passionnantes</span> », a-t-elle annoncé.</p>
+            <p>Pendant la récréation, les copains <span class="highlight">ont joué</span> au football. Nicolas a marqué un but magnifique. Clotaire <span class="highlight">courait</span> dans tous les sens et Geoffroy <span class="highlight">criait</span> très fort. À la fin de la journée, Nicolas <span class="highlight">est rentré</span> chez lui, fatigué mais très heureux. « <span class="highlight">Je suis content d’être en classe avec mes copains</span> », a-t-il pensé.</p>
+            <p>📖 <strong>Mots clés :</strong> un cartable → 书包 · une trousse → 铅笔盒 · un cahier → 练习本 · un devoir → 作业 · une maîtresse → 女老师 · une récréation → 课间休息 · un but → 进球 · un sourire → 微笑 · un stylo → 笔 · un pain au chocolat → 巧克力面包</p>
+        </div>
+    </div>
+
+    <!-- COMPRÉHENSION -->
+    <div class="section">
+        <div class="section-title">📝 2. Compréhension – réponds par une phrase</div>
+        <div class="card">
+            <ol>
+                <li>Pourquoi Nicolas est-il excité ce matin ?<br><input type="text" id="comp1" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Qu'a apporté Geoffroy ?<br><input type="text" id="comp2" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Qu'est-ce qu'Alceste faisait devant l'école ? (imparfait)<br><input type="text" id="comp3" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Qu'a distribué la maîtresse ?<br><input type="text" id="comp4" placeholder="Écris ta réponse" style="width: 100%;"></li>
+                <li>Qu'est-ce que Nicolas a fait pendant la récréation ?<br><input type="text" id="comp5" placeholder="Écris ta réponse" style="width: 100%;"></li>
+            </ol>
+            <button onclick="corrigerComprehension()">Vérifier compréhension</button>
+            <div id="feedbackComp" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- VOCABULAIRE -->
+    <div class="section">
+        <div class="section-title">📖 3. Vocabulaire (chinois → français) – cliquez pour révéler</div>
+        <div class="card">
+            <div class="vocab-grid">
+                <div class="vocab-item"><span class="vocab-chinois">🎒 书包</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un cartable</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">✏️ 铅笔盒</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une trousse</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">📓 练习本</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un cahier</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">📝 作业</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un devoir</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">👩‍🏫 女老师</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une maîtresse</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">⚽ 进球</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un but</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">😊 微笑</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un sourire</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🖊️ 笔</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un stylo</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🍫 巧克力面包</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">un pain au chocolat</span></div>
+                <div class="vocab-item"><span class="vocab-chinois">🏃 课间休息</span><span class="vocab-reveal" onclick="revealVocab(this)">[mot flouté]</span><span class="vocab-reponse">une récréation</span></div>
+            </div>
+            <p><em>💡 Cliquez sur chaque « [mot flouté] » pour voir la réponse.</em></p>
+        </div>
+    </div>
+
+    <!-- NOUVEAUX VERBES -->
+    <div class="section">
+        <div class="section-title">🧠 4. Nouveaux verbes à connaître</div>
+        <div class="card">
+            <div class="conjug-table">
+                <table>
+                    <thead><tr><th>VERBE</th><th>PRÉSENT (je)</th><th>PASSÉ COMPOSÉ</th><th>FUTUR SIMPLE (je)</th><th>IMPARFAIT (je)</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>se réveiller</strong> (醒来)</td><td>je me réveille</td><td>je me suis réveillé</td><td>je me réveillerai</td><td>je me réveillais</td></tr>
+                        <tr><td><strong>apporter</strong> (带来)</td><td>j'apporte</td><td>j'ai apporté</td><td>j'apporterai</td><td>j'apportais</td></tr>
+                        <tr><td><strong>oublier</strong> (忘记)</td><td>j'oublie</td><td>j'ai oublié</td><td>j'oublierai</td><td>j'oubliais</td></tr>
+                        <tr><td><strong>distribuer</strong> (分发)</td><td>je distribue</td><td>j'ai distribué</td><td>je distribuerai</td><td>je distribuais</td></tr>
+                        <tr><td><strong>accueillir</strong> (接待)</td><td>j'accueille</td><td>j'ai accueilli</td><td>j'accueillerai</td><td>j'accueillais</td></tr>
+                        <tr><td><strong>réveiller</strong> (叫醒)</td><td>je réveille</td><td>j'ai réveillé</td><td>je réveillerai</td><td>je réveillais</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>💡 <strong>Astuce :</strong> « se réveiller » est un verbe pronominal (je me réveille). Attention à l'auxiliaire « être » au passé composé !</p>
+        </div>
+    </div>
+
+    <!-- EXERCICE 1 : PRÉSENT / FUTUR -->
+    <div class="section">
+        <div class="section-title">✏️ Exercice 1 – Complète au présent ou au futur simple</div>
+        <div class="exercise">
+            <p>① Chaque matin, Nicolas ______________ (se réveiller) à sept heures. <br><input type="text" id="ex1_1" placeholder="ta réponse"></p>
+            <p>② Demain, la maîtresse ______________ (distribuer) les livres. <br><input type="text" id="ex1_2" placeholder="ta réponse"></p>
+            <p>③ Les copains ______________ (apporter) leurs jeux pour la récréation. <br><input type="text" id="ex1_3" placeholder="ta réponse"></p>
+            <p>④ Plus tard, je ______________ (oublier) mon cartable. <br><input type="text" id="ex1_4" placeholder="ta réponse"></p>
+            <p>⑤ En ce moment, le directeur ______________ (accueillir) les parents. <br><input type="text" id="ex1_5" placeholder="ta réponse"></p>
+            <button onclick="corrigePresFut()">Vérifier</button>
+            <div id="feedbackPresFut" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 2 : PC / IMPARFAIT -->
+    <div class="section">
+        <div class="section-title">⏳ Exercice 2 – Passé composé ou imparfait ?</div>
+        <div class="exercise">
+            <p>① Hier, Nicolas ______________ (se réveiller) à six heures. <br><input type="text" id="ex2_1" placeholder="ta réponse"></p>
+            <p>② Quand il ______________ (être) petit, il ______________ (avoir) peur de la maîtresse. <br><input type="text" id="ex2_2" placeholder="verbe 1">  <input type="text" id="ex2_3" placeholder="verbe 2"></p>
+            <p>③ Soudain, Geoffroy ______________ (crier) très fort. <br><input type="text" id="ex2_4" placeholder="ta réponse"></p>
+            <p>④ Chaque jour, ils ______________ (jouer) au football. <br><input type="text" id="ex2_5" placeholder="ta réponse"></p>
+            <p>⑤ La maîtresse ______________ (accueillir) les enfants avec un sourire. <br><input type="text" id="ex2_6" placeholder="ta réponse"></p>
+            <button onclick="corrigePcImparfait()">Vérifier</button>
+            <div id="feedbackPcImparfait" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 3 : TRANSFORMATION -->
+    <div class="section">
+        <div class="section-title">🔄 Exercice 3 – Transforme les phrases</div>
+        <div class="exercise">
+            <div class="exemple-case">
+                📌 <strong>Modèle :</strong><br>
+                « Nicolas apporte son cahier. »<br>
+                👉 au passé composé : <em>Nicolas a apporté son cahier.</em><br>
+                👉 au futur simple : <em>Nicolas apportera son cahier.</em>
+            </div>
+            <p><strong>Phrase originale : « La maîtresse distribue les livres. »</strong></p>
+            <p>👉 au passé composé : <input type="text" id="transfoPC1" placeholder="ta réponse" style="width: 100%;"></p>
+            <p>👉 au futur simple : <input type="text" id="transfoFut1" placeholder="ta réponse" style="width: 100%;"></p>
+
+            <div class="exemple-case">
+                📌 <strong>Modèle :</strong><br>
+                « Les enfants jouent au foot. »<br>
+                👉 à l’imparfait : <em>Les enfants jouaient au foot.</em><br>
+                👉 au passé composé : <em>Les enfants ont joué au foot.</em>
+            </div>
+            <p><strong>Phrase originale : « Les copains courent dans la cour. »</strong></p>
+            <p>👉 à l’imparfait : <input type="text" id="transfoImparfait" placeholder="ta réponse" style="width: 100%;"></p>
+            <p>👉 au passé composé : <input type="text" id="transfoPC2" placeholder="ta réponse" style="width: 100%;"></p>
+            <button onclick="corrigeTransfo()">Vérifier transformation</button>
+            <div id="feedbackTransfo" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 4 : IDENTIFIER -->
+    <div class="section">
+        <div class="section-title">🔎 Exercice 4 – Identifie le temps souligné</div>
+        <div class="exercise">
+            <p>① « Chaque jour, Nicolas <u>se réveillait</u> à six heures. » → temps : <input type="text" id="idTemps1" placeholder="ex: imparfait"></p>
+            <p>② « Demain, ils <u>joueront</u> au football. » → <input type="text" id="idTemps2" placeholder="réponse"></p>
+            <p>③ « Ce matin, Alceste <u>a oublié</u> son cahier. » → <input type="text" id="idTemps3" placeholder="réponse"></p>
+            <p>④ « En ce moment, je <u>prépare</u> mon cartable. » → <input type="text" id="idTemps4" placeholder="réponse"></p>
+            <button onclick="corrigeIdTemps()">Vérifier</button>
+            <div id="feedbackIdTemps" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- EXERCICE 5 : ORDRE -->
+    <div class="section">
+        <div class="section-title">🧩 Exercice 5 – Remets les mots dans l’ordre</div>
+        <div class="exercise">
+            <p>a) Nicolas / réveille / matin / se / chaque / tôt</p>
+            <input type="text" id="ordrePhrase1" style="width:100%" placeholder="Votre phrase">
+
+            <p>b) copains / une / ont / ils / cabane / construite</p>
+            <input type="text" id="ordrePhrase2" style="width:100%" placeholder="Votre phrase">
+
+            <p>c) maîtresse / la / livres / distribué / les / a</p>
+            <input type="text" id="ordrePhrase3" style="width:100%" placeholder="Votre phrase">
+
+            <button onclick="corrigeOrdre()">Vérifier l’ordre</button>
+            <div id="feedbackOrdre" class="feedback"></div>
+        </div>
+    </div>
+
+    <!-- QCM -->
+    <div class="section">
+        <div class="section-title">✅ Exercice 6 – Mini-test</div>
+        <div class="exercise">
+            <p>1. « La semaine dernière, nous ________ à l’école. » (aller)</p>
+            <select id="qcm1"><option>--Choisir--</option><option>allons</option><option>irons</option><option>sommes allés</option><option>allions</option></select>
+
+            <p>2. « Pendant la récré, les enfants ________ du foot. » (jouer – habitude)</p>
+            <select id="qcm2"><option>--Choisir--</option><option>ont joué</option><option>jouaient</option><option>joueront</option><option>jouent</option></select>
+
+            <p>3. « Demain, je ________ mon cartable. » (oublier)</p>
+            <select id="qcm3"><option>--Choisir--</option><option>oublie</option><option>oublierai</option><option>oubliais</option><option>ai oublié</option></select>
+
+            <p>4. « Chaque jour, Nicolas ________ à sept heures. » (se réveiller – présent)</p>
+            <select id="qcm4"><option>--Choisir--</option><option>se réveillait</option><option>s'est réveillé</option><option>se réveille</option><option>se réveillera</option></select>
+
+            <button onclick="corrigeQCM()">Valider QCM</button>
+            <div id="feedbackQCM" class="feedback"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function revealVocab(element) {
+        const reponseSpan = element.nextElementSibling;
+        if (reponseSpan) {
+            reponseSpan.classList.add('visible');
+            element.style.display = 'none';
+        }
+    }
+
+    function corrigerComprehension() {
+        document.getElementById('feedbackComp').innerHTML = "✅ Réponses suggérées : 1. parce que c'est la rentrée. 2. une nouvelle trousse. 3. Il mangeait un pain au chocolat. 4. les nouveaux livres. 5. il a joué au football / a marqué un but.";
+    }
+
+    function corrigePresFut() {
+        const rep = ["se réveille", "distribuera", "apportent", "oublierai", "accueille"];
+        let msg = "";
+        for(let i=1; i<=5; i++) {
+            let val = document.getElementById('ex1_'+i).value.trim().toLowerCase();
+            msg += (val === rep[i-1]) ? `✅ ${i} ` : `❌ ${i} (attendu : ${rep[i-1]}) `;
+        }
+        document.getElementById('feedbackPresFut').innerHTML = msg;
+    }
+
+    function corrigePcImparfait() {
+        const correct = ["s'est réveillé", "était", "avait", "a crié", "jouaient", "a accueilli"];
+        let msg = "";
+        for(let i=1; i<=6; i++) {
+            let val = document.getElementById('ex2_'+i)?.value.trim().toLowerCase() || "";
+            msg += (val === correct[i-1]) ? `✔️${i} ` : `❌${i} (${correct[i-1]}) `;
+        }
+        document.getElementById('feedbackPcImparfait').innerHTML = msg;
+    }
+
+    function corrigeTransfo() {
+        let pc1 = document.getElementById('transfoPC1').value.trim().toLowerCase();
+        let fut1 = document.getElementById('transfoFut1').value.trim().toLowerCase();
+        let imp = document.getElementById('transfoImparfait').value.trim().toLowerCase();
+        let pc2 = document.getElementById('transfoPC2').value.trim().toLowerCase();
+        let msg = "";
+        if(pc1.includes("maîtresse a distribué") || pc1 === "la maîtresse a distribué les livres") msg += "✅ PC livres ";
+        else msg += "❌ PC livres → 'La maîtresse a distribué les livres.' ";
+        if(fut1.includes("maîtresse distribuera") || fut1 === "la maîtresse distribuera les livres") msg += "✅ Futur ";
+        else msg += "❌ Futur → 'La maîtresse distribuera les livres.' ";
+        if(imp.includes("copains couraient") || imp === "les copains couraient dans la cour") msg += "✅ Imparfait ";
+        else msg += "❌ Imparfait → 'Les copains couraient dans la cour.' ";
+        if(pc2.includes("ont couru") || pc2 === "les copains ont couru dans la cour") msg += "✅ PC cour";
+        else msg += "❌ PC cour → 'Les copains ont couru dans la cour.' ";
+        document.getElementById('feedbackTransfo').innerHTML = msg;
+    }
+
+    function corrigeIdTemps() {
+        let corrects = ["imparfait", "futur simple", "passé composé", "présent"];
+        let msg = "";
+        for(let i=1; i<=4; i++) {
+            let val = document.getElementById('idTemps'+i).value.trim().toLowerCase();
+            msg += (val === corrects[i-1]) ? `✅ ${i} ` : `❌ ${i} (${corrects[i-1]}) `;
+        }
+        document.getElementById('feedbackIdTemps').innerHTML = msg;
+    }
+
+    function corrigeOrdre() {
+        let p1 = document.getElementById('ordrePhrase1').value.trim().toLowerCase();
+        let p2 = document.getElementById('ordrePhrase2').value.trim().toLowerCase();
+        let p3 = document.getElementById('ordrePhrase3').value.trim().toLowerCase();
+        let msg = "";
+        if(p1 === "chaque matin nicolas se réveille tôt") msg += "✅ a. ";
+        else msg += "❌ a : 'Chaque matin, Nicolas se réveille tôt.' ";
+        if(p2 === "ils ont construit une cabane") msg += "✅ b. ";
+        else msg += "❌ b : 'Ils ont construit une cabane.' ";
+        if(p3 === "la maîtresse a distribué les livres") msg += "✅ c.";
+        else msg += "❌ c : 'La maîtresse a distribué les livres.' ";
+        document.getElementById('feedbackOrdre').innerHTML = msg;
+    }
+
+    function corrigeQCM() {
+        let q1 = document.getElementById('qcm1').value;
+        let q2 = document.getElementById('qcm2').value;
+        let q3 = document.getElementById('qcm3').value;
+        let q4 = document.getElementById('qcm4').value;
+        let score = 0;
+        if(q1 === "sommes allés") score++;
+        if(q2 === "jouaient") score++;
+        if(q3 === "oublierai") score++;
+        if(q4 === "se réveille") score++;
+        document.getElementById('feedbackQCM').innerHTML = `🔎 Résultat : ${score}/4. ${score===4 ? "Parfait ! 🎉" : "Revois les corrigés."}`;
+    }
+</script>
+</body>
+</html>
