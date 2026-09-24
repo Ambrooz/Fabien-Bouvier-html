@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Cours C1 – Canal du Midi | Leçon interactive</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF5;--ink:#1C1917;--muted:#6B6159;
+  --coral:#D85A30;--coral-l:#FAECE7;--coral-m:#F0997B;--coral-d:#993C1D;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;--teal-d:#085041;
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;--amber-d:#854F0B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:2rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1C1917 55%,#0F6E56 100%);color:white;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(93,202,165,0.12);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#5DCAA5;text-transform:uppercase;margin-bottom:0.5rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:2.1rem;line-height:1.2;margin-bottom:0.6rem}
+.hero h1 em{color:#FAC775;font-style:italic}
+.hero-sub{font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.25rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:40px;padding:5px 14px;font-size:0.78rem;color:rgba(255,255,255,0.85)}
+
+/* LAYOUT */
+.wrap{padding:1.5rem 1.75rem;max-width:760px;margin:0 auto}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;gap:10px;margin:2.5rem 0 1.1rem;padding-top:1.5rem;border-top:0.5px solid rgba(0,0,0,0.08)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;flex-shrink:0}
+.sec-head h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400}
+
+/* TEXTE */
+.text-story{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;line-height:1.8;font-size:0.95rem;position:relative;overflow:hidden}
+.text-story::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--teal),var(--blue))}
+.text-story strong{color:var(--teal-d)}
+.text-story em{color:var(--blue);font-style:italic}
+
+/* VOCAB */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:1rem}
+.vocab-card{background:white;border-radius:12px;border:0.5px solid rgba(0,0,0,0.08);padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06);border-color:var(--teal-m)}
+.vocab-card .vocab-en{opacity:0;transition:opacity 0.25s;font-size:0.82rem;color:var(--muted);text-align:right}
+.vocab-card.revealed .vocab-en{opacity:1}
+.vocab-card::after{content:'👆';position:absolute;bottom:4px;right:8px;font-size:0.7rem;opacity:0.3}
+.vocab-card.revealed::after{content:'✓';color:var(--teal);opacity:0.7}
+.vocab-fr{font-weight:500;font-size:0.9rem}
+
+/* FORMULES */
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:1rem}
+.formula-card{border-radius:14px;padding:1rem 1.125rem;border:0.5px solid transparent}
+.fc-coral{background:var(--coral-l);border-color:var(--coral-m)}.fc-coral strong{color:var(--coral-d)}
+.fc-teal{background:var(--teal-l);border-color:var(--teal-m)}.fc-teal strong{color:var(--teal-d)}
+.fc-purple{background:var(--purple-l);border-color:var(--purple-m)}.fc-purple strong{color:var(--purple-d)}
+.fc-amber{background:var(--amber-l);border-color:var(--amber-m)}.fc-amber strong{color:var(--amber-d)}
+.fc-blue{background:var(--blue-l);border-color:var(--blue-m)}.fc-blue strong{color:var(--blue)}
+.fc-green{background:var(--green-l);border-color:var(--green-m)}.fc-green strong{color:var(--green)}
+.formula-card strong{font-size:0.95rem;display:block;margin-bottom:4px}
+.formula-ex{font-size:0.82rem;margin-top:8px;font-style:italic;opacity:0.85}
+
+/* ADJECTIFS / RÈGLES */
+.adj-rule{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.adj-rule p{font-size:0.9rem;color:var(--muted);margin-bottom:1rem;line-height:1.6}
+.adj-rule p strong{color:var(--ink)}
+.adj-table{width:100%;border-collapse:collapse;font-size:0.87rem}
+.adj-table th{background:var(--teal-l);color:var(--teal-d);font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid var(--teal-m)}
+.adj-table td{padding:10px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.adj-table tr:last-child td{border-bottom:none}
+.adj-table td strong{color:var(--teal)}
+.badge-cons{background:var(--coral-l);color:var(--coral-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-voy{background:var(--teal-l);color:var(--teal-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.adj-examples{background:var(--amber-l);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem;font-size:0.88rem;line-height:2.1}
+.adj-examples strong{color:var(--amber-d)}
+
+/* TEST DE VOCABULAIRE — MOTS FLOUTÉS */
+.vocab-test{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.4rem 1.5rem;margin-top:1rem}
+.vocab-test-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1rem}
+.vocab-test-head h3{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400;color:var(--teal-d)}
+.vocab-test-hint{font-size:0.78rem;color:var(--muted);background:var(--amber-l);padding:5px 12px;border-radius:20px;border:0.5px solid var(--amber-m)}
+.vocab-test-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:580px){.vocab-test-grid{grid-template-columns:1fr}}
+.vocab-test-row{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:12px;padding:10px 14px;border:0.5px solid rgba(0,0,0,0.06);transition:all 0.2s}
+.vocab-test-en{font-size:0.85rem;color:var(--muted);flex:1;font-weight:500}
+.vocab-test-arrow{color:var(--teal-m);font-size:0.9rem}
+.vocab-test-fr{font-size:0.9rem;font-weight:600;color:var(--teal-d);cursor:pointer;padding:4px 10px;border-radius:20px;background:white;border:1px dashed var(--teal-m);transition:all 0.25s;flex:1;text-align:center;user-select:none}
+.vocab-test-fr.blurred{filter:blur(6px);color:var(--teal);background:var(--teal-l);border-style:solid;cursor:pointer}
+.vocab-test-fr.blurred:hover{filter:blur(4px);background:#d9f2e8}
+.vocab-test-fr.revealed{filter:blur(0);background:var(--teal-l);color:var(--teal-d);border-color:var(--teal-m);border-style:solid;animation:popIn 0.35s}
+.vocab-test-counter{font-size:0.78rem;color:var(--muted);text-align:right;margin-top:0.75rem}
+
+/* BARRE DE PROGRESSION GLOBALE */
+.progress-bar{position:sticky;top:0;z-index:50;background:rgba(255,251,245,0.95);backdrop-filter:blur(8px);padding:0.75rem 1.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:10px;background:rgba(0,0,0,0.07);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--blue),var(--purple));border-radius:20px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-score{font-size:0.82rem;font-weight:700;color:var(--teal-d);min-width:70px;text-align:right}
+.progress-emoji{font-size:1.2rem;transition:transform 0.3s}
+.progress-emoji.pop{transform:scale(1.5) rotate(10deg)}
+
+/* EXERCICES */
+.exercise-wrap{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);overflow:hidden;margin-top:1rem}
+.ex-head{padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ex-head-1{background:linear-gradient(90deg,var(--teal-d),var(--teal))}
+.ex-head-2{background:linear-gradient(90deg,var(--blue),#3a7fc4)}
+.ex-head-3{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.ex-head-4{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.ex-head p{color:rgba(255,255,255,0.9);font-size:0.83rem;margin:0}
+.ex-head strong{color:#FAC775}
+.ex-badge{background:rgba(255,255,255,0.15);color:white;font-size:0.75rem;padding:3px 12px;border-radius:20px;font-weight:600}
+
+.q-list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+.q-item{border:0.5px solid rgba(0,0,0,0.07);border-radius:12px;padding:1rem 1.1rem;background:var(--cream);transition:all 0.3s;position:relative;overflow:hidden}
+.q-item.solved{background:linear-gradient(135deg,var(--teal-l),#f0fdf4);border-color:var(--teal-m)}
+.q-item.shake{animation:shake 0.4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-num{font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+.q-text{font-size:0.92rem;margin-bottom:0.5rem;line-height:1.55}
+.q-text strong{color:var(--teal)}
+.q-sentence{font-family:monospace;font-size:0.83rem;padding:7px 12px;border-radius:8px;margin-bottom:0.65rem;border:0.5px solid}
+.q-sentence-1{background:var(--teal-l);color:var(--teal-d);border-color:var(--teal-m)}
+.q-sentence-2{background:var(--blue-l);color:var(--blue);border-color:var(--blue-m)}
+.q-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.q-input{padding:8px 16px;font-size:0.9rem;border:1.5px solid rgba(0,0,0,0.15);border-radius:40px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);width:210px;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.q-input-1:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,110,86,0.15)}
+.q-input-2:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.15)}
+.q-btn{color:white;border:none;padding:8px 20px;border-radius:40px;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s,transform 0.1s}
+.q-btn-1{background:var(--teal)}.q-btn-1:hover{background:var(--teal-d);transform:scale(0.97)}
+.q-btn-2{background:var(--blue)}.q-btn-2:hover{background:#124a82;transform:scale(0.97)}
+.q-fb{margin-top:8px;font-size:0.83rem;min-height:1.4rem}
+.ok{background:var(--teal-l);color:var(--teal-d);padding:5px 14px;border-radius:20px;display:inline-block;font-weight:500;animation:popIn 0.3s}
+.nope{background:var(--coral-l);color:var(--coral-d);padding:5px 14px;border-radius:20px;display:inline-block;animation:popIn 0.3s}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* CHOIX MULTIPLES LUDIQUES */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem}
+@media(max-width:520px){.choice-grid{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid rgba(0,0,0,0.1);border-radius:14px;padding:12px 14px;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.88rem;cursor:pointer;transition:all 0.18s;color:var(--ink);position:relative;overflow:hidden}
+.choice-btn:hover{border-color:var(--teal-m);transform:translateY(-2px);box-shadow:0 4px 12px rgba(15,110,86,0.1)}
+.choice-btn.selected{border-color:var(--teal);background:var(--teal-l);font-weight:500}
+.choice-btn.correct{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d);font-weight:600;animation:popIn 0.3s}
+.choice-btn.correct::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--teal);font-weight:700;font-size:1.1rem}
+.choice-btn.wrong{border-color:var(--coral-m);background:var(--coral-l);color:var(--coral-d);animation:shake 0.4s}
+.choice-btn.wrong::after{content:'✗';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--coral);font-weight:700;font-size:1.1rem}
+.choice-btn:disabled{cursor:default;opacity:0.9}
+
+/* MATCHING */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.match-cols{grid-template-columns:1fr}}
+.match-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.5rem}
+.match-item{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.87rem;cursor:pointer;transition:all 0.18s;margin-bottom:8px}
+.match-item:hover{border-color:var(--teal-m)}
+.match-item.active{border-color:var(--teal);background:var(--teal-l);box-shadow:0 0 0 3px rgba(15,110,86,0.15)}
+.match-item.matched{background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d);cursor:default;opacity:0.85}
+.match-item.matched::after{content:' ✓';color:var(--teal);font-weight:700}
+.match-item.wrong-pair{animation:shake 0.4s}
+
+/* CONFETTIS */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0.9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* MEMO */
+.memo{background:var(--ink);color:white;border-radius:16px;padding:1.5rem;margin-top:2rem}
+.memo h3{font-family:'DM Serif Display',serif;font-size:1.1rem;font-weight:400;color:#FAC775;margin-bottom:1rem}
+.memo-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.memo-col h4{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.memo-row{font-size:0.84rem;color:rgba(255,255,255,0.8);margin-bottom:6px;line-height:1.5}
+.memo-row strong{color:#5DCAA5}
+.memo-row em{color:#FAC775;font-style:italic}
+
+/* RESET + FOOTER */
+.reset-bar{display:flex;justify-content:flex-end;padding:0.75rem 1.75rem 0}
+.reset-btn{background:white;border:0.5px solid rgba(0,0,0,0.15);padding:8px 20px;border-radius:40px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.83rem;color:var(--muted);transition:background 0.15s}
+.reset-btn:hover{background:#f1f0eb}
+footer{text-align:center;font-size:0.78rem;color:var(--muted);padding:1.5rem 1.75rem;border-top:0.5px solid rgba(0,0,0,0.07);line-height:1.7;margin-top:2rem}
+
+@media(max-width:580px){
+  .hero h1{font-size:1.55rem}
+  .memo-cols{grid-template-columns:1fr}
+  .wrap{padding:1rem 1.1rem}
+  .progress-bar{padding:0.6rem 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Cours personnalisé · Niveau C1</div>
+  <h1>Le canal du Midi<br><em>de Toulouse à Sète</em></h1>
+  <div class="hero-sub">Niveau C1 — compréhension écrite · vocabulaire du voyage · conseils pratiques</div>
+  <div class="pills">
+    <span class="pill">canal du Midi · UNESCO</span>
+    <span class="pill">Toulouse · Carcassonne · Narbonne</span>
+    <span class="pill">vélo · bateau · écluses</span>
+  </div>
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar">
+  <span class="progress-emoji" id="progressEmoji">🎯</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-score" id="progressScore">0 / 18</span>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. TEXTE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">1</div>
+    <h2>Texte : un voyage le long du canal du Midi</h2>
+  </div>
+  <div class="text-story">
+    <strong>Un journaliste autrichien</strong> du quotidien <em>Der Standard</em> a parcouru 240 kilomètres à vélo le long du canal du Midi. Au départ de Toulouse, il découvre un paysage qui ressemble à une « succession de tableaux impressionnistes » : des ponts en pierre, des écluses et des villages aux ports animés. Son voyage le mène jusqu'à la mer Méditerranée, en passant par Carcassonne.
+    <br><br>
+    Autrefois, dans les années 1970, le maire de Toulouse voulait combler le canal pour y construire une autoroute à six voies. Heureusement, les protestations des citoyens et un changement politique ont empêché ce projet. Depuis trente ans, le canal du Midi est classé au <strong>patrimoine mondial de l'UNESCO</strong>. Avec ses 600 kilomètres de pistes cyclables, Toulouse est aujourd'hui réputée pour être une ville favorable au vélo.
+    <br><br>
+    Le journaliste commence sa visite de Toulouse à vélo. Il passe par la place de la Daurade, l'ancien port sur la Garonne, puis continue jusqu'au Capitole, l'hôtel de ville baroque avec son immense place. Il admire aussi le couvent des Jacobins et la basilique Saint-Sernin, la plus grande église romane de France. Mais Toulouse n'est que le point de départ : il prévoit de parcourir 240 kilomètres en quatre jours, un objectif qu'il trouvera finalement trop ambitieux.
+    <br><br>
+    Il lui faut du temps pour quitter la banlieue toulousaine et adopter le rythme plus tranquille du canal. Peu à peu, les joggeurs et les promeneurs se font rares. Le journaliste croise parfois d'autres cyclistes et quelques <em>house-boats</em>. Il admire le paysage : l'eau tantôt brune, tantôt verte, les platanes qui s'y reflètent, les ponts en pierre et les écluses avec leurs maisons d'éclusier, dont certaines abritent de petits cafés-restaurants.
+    <br><br>
+    <strong>Un ancien chemin de halage.</strong> Les amateurs de technique apprécieront ces ouvrages d'ingénierie en fonte, en pierre et en bois, dont la forme remonte au XVII<sup>e</sup> siècle. Le canal compte plus de 60 écluses, dont la moitié environ est automatique. À qui doit-on tout cela ? À <strong>Pierre-Paul Riquet</strong>, un homme du XVII<sup>e</sup> siècle qui s'était enrichi en collectant la gabelle (l'impôt sur le sel). Il remarque que les eaux se divisent en un point précis, le seuil de Naurouze : une partie coule vers l'Atlantique, l'autre vers la Méditerranée. Il imagine alors de construire deux canaux et un réservoir pour relier Toulouse à la Méditerranée. Riquet investit toute sa fortune dans le projet, mais meurt en 1680 avant de le voir achevé. Ses fils reprennent le flambeau et le canal royal du Languedoc est inauguré en 1681.
+    <br><br>
+    Le canal serpente doucement à travers le paysage. La piste cyclable le suit de près, car c'est l'<strong>ancien chemin de halage</strong> : autrefois, les bateaux étaient tirés vers l'amont par des hommes ou des animaux. La piste est asphaltée sur les 50 premiers kilomètres, puis devient terre et gravier. Le vent contraire qui souffle de la mer peut être violent. Heureusement, le journaliste peut acheter un coupe-vent et un pantalon de cyclisme à Castelnaudary.
+    <br><br>
+    Les platanes, décimés par un champignon, ont été remplacés par d'autres variétés plus résistantes. En se dirigeant vers Carcassonne, le journaliste fait un détour par Bram, un ancien bastion fortifié des cathares construit en rond. Les maisons serrées le long de ruelles étroites semblent se blottir autour de l'église Saint-Julien.
+    <br><br>
+    <strong>Atmosphère claire et sereine.</strong> La Cité de Carcassonne est la vedette du parcours : cette magnifique citadelle médiévale est construite sur une colline d'où l'on voit toute la plaine de l'Aude. Son enceinte de trois kilomètres comprend 52 tours de guet. Le lendemain, il traverse de jolies communes aux ports animés, comme Trèbes et Homps, et longe deux régions viticoles : le Minervois au nord et les Corbières au sud. Il s'arrête au Somail, un hameau ravissant avec sa grande place, son pont de pierre, sa glacière circulaire et ses restaurants. Il y a même une librairie de livres anciens appelée « Le Trouve Tout du Livre ».
+    <br><br>
+    Le quatrième jour, il renonce au parcours prévu (Béziers puis Sète) et poursuit sa route à travers le vignoble jusqu'à Narbonne, en suivant le canal de Jonction et le canal de la Robine. Il apprécie ce détour et se réjouit de l'atmosphère claire et sereine de cette ville proche de la mer. Il se promène sur les larges boulevards et le quai du canal de la Robine, où les platanes refont leur apparition. Une chaude tramontane fait bruisser les feuilles. Les touristes s'affairent sur leurs house-boats ; dans les cafés, on mange, on bavarde et on regarde — le tout très « relax », comme disent les adolescents français.
+  </div>
+
+  <!-- 2. VOCABULAIRE INTERACTIF -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">2</div>
+    <h2>Vocabulaire du voyage <span style="font-size:0.7rem;color:var(--muted);font-family:'DM Sans'">(cliquez pour révéler)</span></h2>
+  </div>
+  <div class="vocab-grid" id="vocabGrid">
+    <div class="vocab-card"><span class="vocab-fr">une virée</span><span class="vocab-en">a trip / an outing</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un chemin de halage</span><span class="vocab-en">a towpath</span></div>
+    <div class="vocab-card"><span class="vocab-fr">l'amont</span><span class="vocab-en">upstream</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un sas</span><span class="vocab-en">a lock chamber</span></div>
+    <div class="vocab-card"><span class="vocab-fr">la gabelle</span><span class="vocab-en">the salt tax</span></div>
+    <div class="vocab-card"><span class="vocab-fr">engloutir sa fortune</span><span class="vocab-en">to sink one's fortune</span></div>
+    <div class="vocab-card"><span class="vocab-fr">reprendre le flambeau</span><span class="vocab-en">to take up the torch</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un hameau</span><span class="vocab-en">a hamlet</span></div>
+    <div class="vocab-card"><span class="vocab-fr">une glacière</span><span class="vocab-en">an icehouse</span></div>
+    <div class="vocab-card"><span class="vocab-fr">la tramontane</span><span class="vocab-en">the tramontane</span></div>
+    <div class="vocab-card"><span class="vocab-fr">bruisser</span><span class="vocab-en">to rustle</span></div>
+    <div class="vocab-card"><span class="vocab-fr">s'affairer</span><span class="vocab-en">to bustle about</span></div>
+    <div class="vocab-card"><span class="vocab-fr">une écluse</span><span class="vocab-en">a lock</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un éclusier</span><span class="vocab-en">a lock-keeper</span></div>
+  </div>
+
+  <!-- 3. TEST DE VOCABULAIRE — MOTS FLOUTÉS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">3</div>
+    <h2>Test de vocabulaire · trouve le mot français</h2>
+  </div>
+  <div class="vocab-test">
+    <div class="vocab-test-head">
+      <h3>🇬🇧 → 🇫🇷 Clique sur le mot flouté pour le révéler</h3>
+      <span class="vocab-test-hint">💡 Devine avant de cliquer !</span>
+    </div>
+    <div class="vocab-test-grid" id="vocabTestGrid"></div>
+    <div class="vocab-test-counter" id="vocabTestCounter">0 / 14 mots révélés</div>
+  </div>
+
+  <!-- 4. FORMULES / STRUCTURES -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">4</div>
+    <h2>Structures clés pour raconter un voyage</h2>
+  </div>
+  <div class="formula-grid">
+    <div class="formula-card fc-teal"><strong>au départ de</strong> + lieu<div class="formula-ex">📌 Au départ de Toulouse, il découvre un paysage magnifique.</div></div>
+    <div class="formula-card fc-blue"><strong>il lui faut</strong> + nom / infinitif<div class="formula-ex">📌 Il lui faut du temps pour quitter la ville.</div></div>
+    <div class="formula-card fc-purple"><strong>peu à peu</strong> → progression lente<div class="formula-ex">📌 Peu à peu, les promeneurs se font rares.</div></div>
+    <div class="formula-card fc-amber"><strong>se réjouir de</strong> + nom<div class="formula-ex">📌 Je me réjouis de l'atmosphère sereine.</div></div>
+    <div class="formula-card fc-coral"><strong>renoncer à</strong> + nom / infinitif<div class="formula-ex">📌 Il renonce au parcours prévu.</div></div>
+    <div class="formula-card fc-green"><strong>être classé au patrimoine mondial</strong><div class="formula-ex">📌 Le canal est classé au patrimoine mondial de l'UNESCO.</div></div>
+  </div>
+
+  <!-- 5. RÈGLE ILLUSTRÉE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">5</div>
+    <h2>Raconter un voyage : temps et expressions</h2>
+  </div>
+  <div class="adj-rule">
+    <p><strong>Le passé composé</strong> et <strong>l'imparfait</strong> sont les temps principaux du récit de voyage. Le passé composé exprime les actions ponctuelles, l'imparfait décrit le décor et les habitudes.</p>
+    <table class="adj-table">
+      <thead>
+        <tr><th>Emploi</th><th>Temps</th><th>Exemple</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Action ponctuelle</td><td><strong>passé composé</strong></td><td>Il <strong>a parcouru</strong> 240 kilomètres.</td></tr>
+        <tr><td>Description / décor</td><td><strong>imparfait</strong></td><td>L'eau <strong>était</strong> tantôt brune, tantôt verte.</td></tr>
+        <tr><td>Action en cours</td><td><strong>imparfait</strong></td><td>Les touristes <strong>s'affairaient</strong> sur leurs bateaux.</td></tr>
+        <tr><td>Succession d'actions</td><td><strong>passé composé</strong></td><td>Il <strong>a visité</strong> Toulouse, puis <strong>a continué</strong> vers Carcassonne.</td></tr>
+        <tr><td>Antériorité</td><td><strong>plus-que-parfait</strong></td><td>Le maire <strong>avait voulu</strong> combler le canal.</td></tr>
+      </tbody>
+    </table>
+    <div class="adj-examples">
+      <strong>Expressions utiles pour raconter :</strong><br>
+      au départ de · le long de · peu à peu · ensuite · finalement · en passant par · après avoir + participe passé
+    </div>
+  </div>
+
+  <!-- 6. EXERCICE 1 — QCM -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">6</div>
+    <h2>Exercice 1 — compréhension du texte (QCM)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Cliquez sur la bonne réponse. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge1">0 / 3</span>
+    </div>
+    <div class="q-list" id="qlist1"></div>
+  </div>
+
+  <!-- 7. EXERCICE 2 — TEXTE À TROUS (CONSEILS) -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">7</div>
+    <h2>Exercice 2 — complétez les conseils pour visiter en bateau</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Écrivez le mot qui manque puis cliquez sur <strong>Vérifier</strong>.</p>
+      <span class="ex-badge" id="badge2">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist2"></div>
+  </div>
+
+  <!-- 8. EXERCICE 3 — RELIER -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">8</div>
+    <h2>Exercice 3 — relie les paires</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-3">
+      <p>Cliquez sur un <strong>début</strong> puis sur la <strong>fin</strong> qui correspond.</p>
+      <span class="ex-badge" id="badge3">0 / 4</span>
+    </div>
+    <div class="q-list" id="qlist3"></div>
+  </div>
+
+  <!-- 9. EXERCICE 4 — TRI -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">9</div>
+    <h2>Exercice 4 — range les expressions</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-4">
+      <p>Glisse chaque étiquette dans la bonne catégorie.</p>
+      <span class="ex-badge" id="badge4">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist4"></div>
+  </div>
+
+  <!-- 10. EXERCICE 5 — PRODUCTION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">10</div>
+    <h2>Exercice 5 — à toi de jouer !</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head" style="background:linear-gradient(90deg,var(--coral-d),var(--coral))">
+      <p>Production libre — utilise le vocabulaire du texte et les temps du récit.</p>
+    </div>
+    <div class="q-list">
+      <div class="q-item" style="background:var(--coral-l);border-color:var(--coral-m)">
+        <div class="q-text" style="color:var(--coral-d)">
+          <strong>🎤 À l'oral ou à l'écrit :</strong>
+          <ol style="margin-top:0.6rem;padding-left:1.3rem;line-height:2">
+            <li>Racontez une journée de votre voyage le long du canal du Midi (à vélo ou en bateau).</li>
+            <li>Quels <strong>conseils</strong> donneriez-vous à un ami qui veut visiter le canal en bateau ?</li>
+            <li>Qu'avez-vous <strong>préféré</strong> dans le texte : le paysage, l'histoire ou les villages ? Pourquoi ?</li>
+            <li>Si vous pouviez refaire ce voyage, <strong>que changeriez-vous</strong> ?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" id="resetBtn">⟳ Réinitialiser tous les exercices</button>
+  </div>
+
+  <!-- MEMO -->
+  <div class="memo">
+    <h3>Récapitulatif</h3>
+    <div class="memo-cols">
+      <div class="memo-col">
+        <h4>Structures clés</h4>
+        <div class="memo-row"><strong>au départ de</strong> + lieu</div>
+        <div class="memo-row"><strong>il lui faut</strong> + nom / infinitif</div>
+        <div class="memo-row"><strong>peu à peu</strong> → progression</div>
+        <div class="memo-row"><strong>se réjouir de</strong> + nom</div>
+        <div class="memo-row"><strong>renoncer à</strong> + nom / infinitif</div>
+        <div class="memo-row"><strong>être classé au patrimoine mondial</strong></div>
+      </div>
+      <div class="memo-col">
+        <h4>Vocabulaire du voyage</h4>
+        <div class="memo-row"><strong>une virée</strong> · <strong>un chemin de halage</strong></div>
+        <div class="memo-row"><strong>l'amont</strong> · <strong>un sas</strong> · <strong>une écluse</strong></div>
+        <div class="memo-row"><strong>un éclusier</strong> · <strong>un hameau</strong></div>
+        <div class="memo-row"><strong>une glacière</strong> · <strong>la tramontane</strong></div>
+        <div class="memo-row"><strong>bruisser</strong> · <strong>s'affairer</strong></div>
+        <div class="memo-row" style="margin-top:8px;font-style:italic;color:rgba(255,255,255,0.5)">« Le canal serpente doucement à travers le paysage. »</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Cours personnalisé · Le canal du Midi · Niveau C1<br>
+  « De Toulouse à Sète, une série de tableaux impressionnistes »
+</footer>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+
+// TEST DE VOCABULAIRE — mots anglais → mots français floutés
+const vocabTest = [
+  { en: "a trip / an outing", fr: "une virée" },
+  { en: "a towpath", fr: "un chemin de halage" },
+  { en: "upstream", fr: "l'amont" },
+  { en: "a lock chamber", fr: "un sas" },
+  { en: "the salt tax", fr: "la gabelle" },
+  { en: "to sink one's fortune", fr: "engloutir sa fortune" },
+  { en: "to take up the torch", fr: "reprendre le flambeau" },
+  { en: "a hamlet", fr: "un hameau" },
+  { en: "an icehouse", fr: "une glacière" },
+  { en: "the tramontane", fr: "la tramontane" },
+  { en: "to rustle", fr: "bruisser" },
+  { en: "to bustle about", fr: "s'affairer" },
+  { en: "a lock", fr: "une écluse" },
+  { en: "a lock-keeper", fr: "un éclusier" }
+];
+
+// EXERCICE 1 — QCM compréhension
+const qcm = [
+  { q: "Pourquoi le projet de combler le canal dans les années 1970 a-t-il été abandonné ?",
+    options: ["À cause des protestations des citoyens et d'un changement politique", "Parce que le canal était trop profond", "Parce que le maire a changé d'avis"],
+    correct: 0, hint: "Le texte dit : « Les protestations des citoyens et le changement politique qui a suivi ont pu éviter ça. »" },
+  { q: "Qu'est-ce que le seuil de Naurouze ?",
+    options: ["Un point où les eaux se divisent entre Atlantique et Méditerranée", "Une écluse automatique", "Un village près de Toulouse"],
+    correct: 0, hint: "C'est le point de partage des eaux découvert par Pierre-Paul Riquet." },
+  { q: "Pourquoi la piste cyclable suit-elle exactement le canal ?",
+    options: ["Parce que c'est l'ancien chemin de halage", "Parce que c'est plus court", "Parce que la route est interdite aux vélos"],
+    correct: 0, hint: "Autrefois, les bateaux étaient tirés le long du canal : c'était le chemin de halage." }
+];
+
+// EXERCICE 2 — Texte à trous (conseils pour visiter en bateau)
+const completer = [
+  { text: "Pour visiter le canal en bateau, il faut d'abord choisir son ______ : house-boat, bateau-promenade ou location sans permis.",
+    ans: ["embarcation", "bateau"], hint: "Le mot désigne le bateau lui-même." },
+  { text: "Le canal compte plus de 60 ______ ; chaque passage prend environ 15 à 20 minutes.",
+    ans: ["écluses", "ecluses"], hint: "Ouvrages qui permettent aux bateaux de franchir un dénivelé." },
+  { text: "La vitesse est limitée à 8 km/h, et à 3 km/h près des ______.",
+    ans: ["berges"], hint: "Les bords du canal." },
+  { text: "Il est recommandé de porter un ______ de sauvetage, surtout pour les enfants.",
+    ans: ["gilet"], hint: "Vêtement de sécurité qui flotte." },
+  { text: "En été, il faut réserver sa location de bateau plusieurs ______ à l'avance.",
+    ans: ["semaines", "mois"], hint: "Unité de temps." }
+];
+
+// EXERCICE 3 — Relier
+const paires = [
+  { left: "Au départ de Toulouse,", right: "il découvre un paysage de tableaux impressionnistes." },
+  { left: "Il lui faut du temps", right: "pour quitter la banlieue toulousaine." },
+  { left: "Peu à peu,", right: "les promeneurs se font rares." },
+  { left: "Le canal est classé", right: "au patrimoine mondial de l'UNESCO." }
+];
+
+// EXERCICE 4 — Tri par catégorie
+const triData = {
+  categories: [
+    { id: "paysage", label: "Paysage / description" },
+    { id: "histoire", label: "Histoire / patrimoine" },
+    { id: "pratique", label: "Conseil pratique" }
+  ],
+  chips: [
+    { text: "des tableaux impressionnistes", cat: "paysage" },
+    { text: "le seuil de Naurouze", cat: "histoire" },
+    { text: "réserver à l'avance", cat: "pratique" },
+    { text: "les platanes se reflètent", cat: "paysage" },
+    { text: "Pierre-Paul Riquet", cat: "histoire" },
+    { text: "porter un gilet de sauvetage", cat: "pratique" }
+  ]
+};
+
+/* ============================================================
+   PROGRESSION GLOBALE
+   ============================================================ */
+const TOTAL_POINTS = 3 + 5 + 4 + 6; // 18 points
+let score = { ex1: 0, ex2: 0, ex3: 0, ex4: 0 };
+const solvedItems = { ex1: new Set(), ex2: new Set(), ex3: new Set(), ex4: new Set() };
+
+function updateProgress() {
+  const totalSolved = solvedItems.ex1.size + solvedItems.ex2.size + solvedItems.ex3.size + solvedItems.ex4.size;
+  const maxPoints = TOTAL_POINTS;
+  const pct = Math.min(100, (totalSolved / maxPoints) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressScore').textContent = totalSolved + ' / ' + maxPoints;
+  const emoji = document.getElementById('progressEmoji');
+  if (pct >= 100) { emoji.textContent = '🏆'; emoji.classList.add('pop'); setTimeout(()=>emoji.classList.remove('pop'), 600); }
+  else if (pct >= 75) emoji.textContent = '🔥';
+  else if (pct >= 50) emoji.textContent = '💪';
+  else if (pct >= 25) emoji.textContent = '📚';
+  else emoji.textContent = '🎯';
+
+  document.getElementById('badge1').textContent = solvedItems.ex1.size + ' / 3';
+  document.getElementById('badge2').textContent = solvedItems.ex2.size + ' / 5';
+  document.getElementById('badge3').textContent = solvedItems.ex3.size + ' / 4';
+  document.getElementById('badge4').textContent = solvedItems.ex4.size + ' / 6';
+
+  if (pct >= 100 && !window._confettiDone) {
+    window._confettiDone = true;
+    launchConfetti();
+  }
+}
+
+/* ============================================================
+   CONFETTIS
+   ============================================================ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#0F6E56','#185FA5','#534AB7','#BA7517','#D85A30','#FAC775'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = c.style.width;
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   TEST DE VOCABULAIRE — MOTS FLOUTÉS
+   ============================================================ */
+const vocabTestGrid = document.getElementById('vocabTestGrid');
+const vocabTestCounter = document.getElementById('vocabTestCounter');
+let vocabRevealed = 0;
+
+vocabTest.forEach((item, idx) => {
+  const row = document.createElement('div');
+  row.className = 'vocab-test-row';
+  row.innerHTML = `
+    <span class="vocab-test-en">${item.en}</span>
+    <span class="vocab-test-arrow">→</span>
+    <span class="vocab-test-fr blurred" data-idx="${idx}">${item.fr}</span>
+  `;
+  vocabTestGrid.appendChild(row);
+});
+
+vocabTestGrid.querySelectorAll('.vocab-test-fr').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('revealed')) return;
+    this.classList.remove('blurred');
+    this.classList.add('revealed');
+    vocabRevealed++;
+    vocabTestCounter.textContent = vocabRevealed + ' / ' + vocabTest.length + ' mots révélés';
+    if (vocabRevealed === vocabTest.length) {
+      vocabTestCounter.textContent = '🎉 Bravo ! Tous les mots sont révélés.';
+      vocabTestCounter.style.color = 'var(--teal-d)';
+      vocabTestCounter.style.fontWeight = '600';
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 1 — QCM
+   ============================================================ */
+const qlist1 = document.getElementById('qlist1');
+qcm.forEach((item, idx) => {
+  const div = document.createElement('div');
+  div.className = 'q-item';
+  div.id = 'qcm-' + idx;
+  div.innerHTML = `
+    <div class="q-num"><span>Question ${idx+1} / ${qcm.length}</span><span class="qcm-status"></span></div>
+    <div class="q-text q-text-1">${item.q}</div>
+    <div class="choice-grid">
+      ${item.options.map((opt, i) => `<button class="choice-btn" data-idx="${idx}" data-opt="${i}">${opt}</button>`).join('')}
+    </div>
+    <div class="q-fb"></div>
+  `;
+  qlist1.appendChild(div);
+});
+
+qlist1.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const idx = parseInt(this.dataset.idx);
+    const opt = parseInt(this.dataset.opt);
+    const parent = this.closest('.q-item');
+    if (parent.classList.contains('solved')) return;
+
+    parent.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('selected','correct','wrong');
+      b.disabled = false;
+    });
+    this.classList.add('selected');
+
+    const item = qcm[idx];
+    const fb = parent.querySelector('.q-fb');
+    const status = parent.querySelector('.qcm-status');
+
+    if (opt === item.correct) {
+      this.classList.add('correct');
+      this.disabled = true;
+      parent.classList.add('solved');
+      parent.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+      status.textContent = '✅';
+      fb.innerHTML = `<span class="ok">✓ Exact ! ${item.hint}</span>`;
+      if (!solvedItems.ex1.has(idx)) {
+        solvedItems.ex1.add(idx);
+        updateProgress();
+      }
+    } else {
+      this.classList.add('wrong');
+      parent.classList.add('shake');
+      setTimeout(() => parent.classList.remove('shake'), 400);
+      fb.innerHTML = `<span class="nope">✗ Pas tout à fait… Réessaie !</span>`;
+      setTimeout(() => this.classList.remove('wrong'), 800);
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 2 — COMPLÉTER
+   ============================================================ */
+const qlist2 = document.getElementById('qlist2');
+completer.forEach((item, idx) => {
+  const div = document.createElement('div');
+  div.className = 'q-item';
+  div.id = 'comp-' + idx;
+  div.innerHTML = `
+    <div class="q-num"><span>Question ${idx+1} / ${completer.length}</span><span class="comp-status"></span></div>
+    <div class="q-text q-text-2">${item.text}</div>
+    <div class="q-row">
+      <input class="q-input q-input-2" type="text" placeholder="Votre réponse" autocomplete="off">
+      <button class="q-btn q-btn-2">Vérifier</button>
+    </div>
+    <div class="q-fb"></div>
+  `;
+  qlist2.appendChild(div);
+});
+
+qlist2.querySelectorAll('.q-item').forEach((item, idx) => {
+  const inp = item.querySelector('.q-input');
+  const btn = item.querySelector('.q-btn');
+  const fb = item.querySelector('.q-fb');
+  const status = item.querySelector('.comp-status');
+
+  function check() {
+    if (item.classList.contains('solved')) return;
+    const v = inp.value.trim();
+    if (!v) { fb.innerHTML = '<span class="nope">✏️ Écris une réponse avant de vérifier.</span>'; return; }
+    const norm = s => s.trim().toLowerCase().replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const good = completer[idx].ans.some(a => norm(a) === norm(v));
+    if (good) {
+      item.classList.add('solved');
+      status.textContent = '✅';
+      inp.disabled = true;
+      btn.disabled = true;
+      btn.textContent = '✓';
+      btn.style.background = 'var(--teal)';
+      fb.innerHTML = `<span class="ok">✓ Bravo ! ${completer[idx].hint}</span>`;
+      if (!solvedItems.ex2.has(idx)) {
+        solvedItems.ex2.add(idx);
+        updateProgress();
+      }
+    } else {
+      item.classList.add('shake');
+      setTimeout(() => item.classList.remove('shake'), 400);
+      fb.innerHTML = `<span class="nope">✗ Incorrect. Indice : ${completer[idx].hint}</span>`;
+    }
+  }
+  btn.addEventListener('click', check);
+  inp.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+});
+
+/* ============================================================
+   EXERCICE 3 — RELIER
+   ============================================================ */
+const qlist3 = document.getElementById('qlist3');
+const matchWrap = document.createElement('div');
+matchWrap.className = 'q-item';
+matchWrap.innerHTML = `
+  <div class="q-num"><span>Relie les paires</span><span class="match-status"></span></div>
+  <div class="match-cols">
+    <div class="match-col"><h5>Débuts</h5><div id="matchLeft"></div></div>
+    <div class="match-col"><h5>Fins</h5><div id="matchRight"></div></div>
+  </div>
+  <div class="q-fb"></div>
+`;
+qlist3.appendChild(matchWrap);
+
+const leftCol = matchWrap.querySelector('#matchLeft');
+const rightCol = matchWrap.querySelector('#matchRight');
+const shuffledRight = [...paires].sort(() => Math.random() - 0.5);
+
+paires.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'left';
+  el.dataset.idx = i;
+  el.textContent = p.left;
+  leftCol.appendChild(el);
+});
+shuffledRight.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'right';
+  el.dataset.idx = paires.indexOf(p);
+  el.textContent = p.right;
+  rightCol.appendChild(el);
+});
+
+let selectedLeft = null;
+let matchedCount = 0;
+
+matchWrap.querySelectorAll('.match-item').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('matched')) return;
+    const side = this.dataset.side;
+
+    if (side === 'left') {
+      matchWrap.querySelectorAll('.match-item[data-side="left"]').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+      selectedLeft = this;
+      return;
+    }
+
+    if (!selectedLeft) {
+      this.classList.add('wrong-pair');
+      setTimeout(() => this.classList.remove('wrong-pair'), 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">👈 Choisis d\'abord un début de phrase à gauche.</span>';
+      return;
+    }
+
+    if (selectedLeft.dataset.idx === this.dataset.idx) {
+      selectedLeft.classList.remove('active');
+      selectedLeft.classList.add('matched');
+      this.classList.add('matched');
+      matchedCount++;
+      matchWrap.querySelector('.match-status').textContent = matchedCount + ' / 4';
+      matchWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien joué ! ${matchedCount}/4 paires trouvées.</span>`;
+      if (!solvedItems.ex3.has(parseInt(this.dataset.idx))) {
+        solvedItems.ex3.add(parseInt(this.dataset.idx));
+        updateProgress();
+      }
+      selectedLeft = null;
+      if (matchedCount === 4) {
+        matchWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les paires sont reliées ! Excellent travail.</span>';
+      }
+    } else {
+      this.classList.add('wrong-pair');
+      selectedLeft.classList.add('wrong-pair');
+      setTimeout(() => {
+        this.classList.remove('wrong-pair');
+        selectedLeft && selectedLeft.classList.remove('wrong-pair');
+      }, 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">✗ Ce n\'est pas la bonne paire. Réessaie !</span>';
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 4 — TRI / GLISSER-DÉPOSER
+   ============================================================ */
+const qlist4 = document.getElementById('qlist4');
+const triWrap = document.createElement('div');
+triWrap.className = 'q-item';
+triWrap.innerHTML = `
+  <div class="q-num"><span>Glisse les étiquettes dans la bonne catégorie</span><span class="tri-status"></span></div>
+  <div class="sort-zone" id="chipsZone"></div>
+  <div id="catZones"></div>
+  <div class="q-fb"></div>
+`;
+qlist4.appendChild(triWrap);
+
+const chipsZone = triWrap.querySelector('#chipsZone');
+const catZones = triWrap.querySelector('#catZones');
+
+triData.categories.forEach(cat => {
+  const zone = document.createElement('div');
+  zone.innerHTML = `<div class="sort-label">${cat.label}</div>`;
+  const z = document.createElement('div');
+  z.className = 'sort-zone';
+  z.dataset.cat = cat.id;
+  z.id = 'zone-' + cat.id;
+  zone.appendChild(z);
+  catZones.appendChild(zone);
+});
+
+const shuffledChips = [...triData.chips].sort(() => Math.random() - 0.5);
+shuffledChips.forEach(chip => {
+  const el = document.createElement('div');
+  el.className = 'sort-chip';
+  el.draggable = true;
+  el.dataset.cat = chip.cat;
+  el.textContent = chip.text;
+  chipsZone.appendChild(el);
+});
+
+let draggedChip = null;
+document.querySelectorAll('.sort-chip').forEach(chip => {
+  chip.addEventListener('dragstart', function(e) {
+    draggedChip = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  chip.addEventListener('dragend', function() {
+    this.classList.remove('dragging');
+    draggedChip = null;
+  });
+});
+
+document.querySelectorAll('.sort-zone').forEach(zone => {
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('over');
+  });
+  zone.addEventListener('dragleave', function() {
+    this.classList.remove('over');
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('over');
+    if (!draggedChip) return;
+    const cat = this.dataset.cat;
+    if (draggedChip.dataset.cat === cat) {
+      draggedChip.classList.add('placed');
+      draggedChip.draggable = false;
+      this.appendChild(draggedChip);
+      this.classList.add('correct-zone');
+      setTimeout(() => this.classList.remove('correct-zone'), 600);
+      const chipText = draggedChip.textContent;
+      if (!solvedItems.ex4.has(chipText)) {
+        solvedItems.ex4.add(chipText);
+        updateProgress();
+      }
+      triWrap.querySelector('.tri-status').textContent = solvedItems.ex4.size + ' / 6';
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien classé ! ${solvedItems.ex4.size}/6.</span>`;
+      if (solvedItems.ex4.size === 6) {
+        triWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les étiquettes sont bien rangées !</span>';
+      }
+    } else {
+      this.classList.add('wrong-zone');
+      setTimeout(() => this.classList.remove('wrong-zone'), 500);
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="nope">✗ Cette expression n'appartient pas à « ${triData.categories.find(c=>c.id===cat).label} ».</span>`;
+    }
+  });
+});
+
+/* ============================================================
+   VOCABULAIRE INTERACTIF (cartes du haut)
+   ============================================================ */
+document.querySelectorAll('.vocab-card').forEach(card => {
+  card.addEventListener('click', function() {
+    this.classList.toggle('revealed');
+  });
+});
+
+/* ============================================================
+   RESET
+   ============================================================ */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  // reset QCM
+  qlist1.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('solved');
+    item.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('selected','correct','wrong');
+      b.disabled = false;
+    });
+    item.querySelector('.q-fb').innerHTML = '';
+    item.querySelector('.qcm-status').textContent = '';
+  });
+  // reset compléter
+  qlist2.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('solved');
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    inp.value = '';
+    inp.disabled = false;
+    btn.disabled = false;
+    btn.textContent = 'Vérifier';
+    btn.style.background = '';
+    item.querySelector('.q-fb').innerHTML = '';
+    item.querySelector('.comp-status').textContent = '';
+  });
+  // reset relier
+  matchWrap.querySelectorAll('.match-item').forEach(el => {
+    el.classList.remove('matched','active','wrong-pair');
+    el.style.cursor = '';
+  });
+  selectedLeft = null;
+  matchedCount = 0;
+  matchWrap.querySelector('.match-status').textContent = '';
+  matchWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset tri
+  const allChips = triWrap.querySelectorAll('.sort-chip');
+  allChips.forEach(chip => {
+    chip.classList.remove('placed');
+    chip.draggable = true;
+    chipsZone.appendChild(chip);
+  });
+  const chipsArr = [...chipsZone.querySelectorAll('.sort-chip')];
+  chipsArr.sort(() => Math.random() - 0.5).forEach(c => chipsZone.appendChild(c));
+  triWrap.querySelector('.tri-status').textContent = '';
+  triWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset score
+  score = { ex1: 0, ex2: 0, ex3: 0, ex4: 0 };
+  solvedItems.ex1.clear();
+  solvedItems.ex2.clear();
+  solvedItems.ex3.clear();
+  solvedItems.ex4.clear();
+  window._confettiDone = false;
+  updateProgress();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateProgress();
+</script>
+</body>
+</html>

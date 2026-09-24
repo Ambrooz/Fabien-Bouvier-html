@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Cours B2 – Hésitation professionnelle | Léa</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF5;--ink:#1C1917;--muted:#6B6159;
+  --coral:#D85A30;--coral-l:#FAECE7;--coral-m:#F0997B;--coral-d:#993C1D;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;--teal-d:#085041;
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;--amber-d:#854F0B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:2rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1C1917 55%,#3C3489 100%);color:white;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(175,169,236,0.12);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#AFA9EC;text-transform:uppercase;margin-bottom:0.5rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:2.1rem;line-height:1.2;margin-bottom:0.6rem}
+.hero h1 em{color:#FAC775;font-style:italic}
+.hero-sub{font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.25rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:40px;padding:5px 14px;font-size:0.78rem;color:rgba(255,255,255,0.85)}
+
+/* LAYOUT */
+.wrap{padding:1.5rem 1.75rem;max-width:760px;margin:0 auto}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;gap:10px;margin:2.5rem 0 1.1rem;padding-top:1.5rem;border-top:0.5px solid rgba(0,0,0,0.08)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;flex-shrink:0}
+.sec-head h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400}
+
+/* TEXTE */
+.text-story{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;line-height:1.8;font-size:0.95rem;position:relative;overflow:hidden}
+.text-story::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--coral),var(--purple))}
+.text-story strong{color:var(--coral-d)}
+.text-story em{color:var(--purple);font-style:italic}
+
+/* VOCAB */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:1rem}
+.vocab-card{background:white;border-radius:12px;border:0.5px solid rgba(0,0,0,0.08);padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06);border-color:var(--purple-m)}
+.vocab-card .vocab-en{opacity:0;transition:opacity 0.25s;font-size:0.82rem;color:var(--muted);text-align:right}
+.vocab-card.revealed .vocab-en{opacity:1}
+.vocab-card::after{content:'👆';position:absolute;bottom:4px;right:8px;font-size:0.7rem;opacity:0.3}
+.vocab-card.revealed::after{content:'✓';color:var(--teal);opacity:0.7}
+.vocab-fr{font-weight:500;font-size:0.9rem}
+
+/* FORMULES */
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:1rem}
+.formula-card{border-radius:14px;padding:1rem 1.125rem;border:0.5px solid transparent}
+.fc-coral{background:var(--coral-l);border-color:var(--coral-m)}.fc-coral strong{color:var(--coral-d)}
+.fc-teal{background:var(--teal-l);border-color:var(--teal-m)}.fc-teal strong{color:var(--teal-d)}
+.fc-purple{background:var(--purple-l);border-color:var(--purple-m)}.fc-purple strong{color:var(--purple-d)}
+.fc-amber{background:var(--amber-l);border-color:var(--amber-m)}.fc-amber strong{color:var(--amber-d)}
+.fc-blue{background:var(--blue-l);border-color:var(--blue-m)}.fc-blue strong{color:var(--blue)}
+.fc-green{background:var(--green-l);border-color:var(--green-m)}.fc-green strong{color:var(--green)}
+.formula-card strong{font-size:0.95rem;display:block;margin-bottom:4px}
+.formula-ex{font-size:0.82rem;margin-top:8px;font-style:italic;opacity:0.85}
+
+/* ADJECTIFS / RÈGLES */
+.adj-rule{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.adj-rule p{font-size:0.9rem;color:var(--muted);margin-bottom:1rem;line-height:1.6}
+.adj-rule p strong{color:var(--ink)}
+.adj-table{width:100%;border-collapse:collapse;font-size:0.87rem}
+.adj-table th{background:var(--purple-l);color:var(--purple-d);font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid var(--purple-m)}
+.adj-table td{padding:10px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.adj-table tr:last-child td{border-bottom:none}
+.adj-table td strong{color:var(--purple)}
+.badge-cons{background:var(--coral-l);color:var(--coral-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-voy{background:var(--teal-l);color:var(--teal-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.adj-examples{background:var(--amber-l);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem;font-size:0.88rem;line-height:2.1}
+.adj-examples strong{color:var(--amber-d)}
+
+/* TEST DE VOCABULAIRE — MOTS FLOUTÉS */
+.vocab-test{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.4rem 1.5rem;margin-top:1rem}
+.vocab-test-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1rem}
+.vocab-test-head h3{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400;color:var(--purple-d)}
+.vocab-test-hint{font-size:0.78rem;color:var(--muted);background:var(--amber-l);padding:5px 12px;border-radius:20px;border:0.5px solid var(--amber-m)}
+.vocab-test-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:580px){.vocab-test-grid{grid-template-columns:1fr}}
+.vocab-test-row{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:12px;padding:10px 14px;border:0.5px solid rgba(0,0,0,0.06);transition:all 0.2s}
+.vocab-test-en{font-size:0.85rem;color:var(--muted);flex:1;font-weight:500}
+.vocab-test-arrow{color:var(--purple-m);font-size:0.9rem}
+.vocab-test-fr{font-size:0.9rem;font-weight:600;color:var(--purple-d);cursor:pointer;padding:4px 10px;border-radius:20px;background:white;border:1px dashed var(--purple-m);transition:all 0.25s;flex:1;text-align:center;user-select:none}
+.vocab-test-fr.blurred{filter:blur(6px);color:var(--purple);background:var(--purple-l);border-style:solid;cursor:pointer}
+.vocab-test-fr.blurred:hover{filter:blur(4px);background:#e3e0fc}
+.vocab-test-fr.revealed{filter:blur(0);background:var(--teal-l);color:var(--teal-d);border-color:var(--teal-m);border-style:solid;animation:popIn 0.35s}
+.vocab-test-counter{font-size:0.78rem;color:var(--muted);text-align:right;margin-top:0.75rem}
+
+/* BARRE DE PROGRESSION GLOBALE */
+.progress-bar{position:sticky;top:0;z-index:50;background:rgba(255,251,245,0.95);backdrop-filter:blur(8px);padding:0.75rem 1.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:10px;background:rgba(0,0,0,0.07);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--coral),var(--purple),var(--teal));border-radius:20px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-score{font-size:0.82rem;font-weight:700;color:var(--purple-d);min-width:70px;text-align:right}
+.progress-emoji{font-size:1.2rem;transition:transform 0.3s}
+.progress-emoji.pop{transform:scale(1.5) rotate(10deg)}
+
+/* EXERCICES */
+.exercise-wrap{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);overflow:hidden;margin-top:1rem}
+.ex-head{padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ex-head-1{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.ex-head-2{background:linear-gradient(90deg,var(--teal-d),var(--teal))}
+.ex-head-3{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.ex-head p{color:rgba(255,255,255,0.9);font-size:0.83rem;margin:0}
+.ex-head strong{color:#FAC775}
+.ex-badge{background:rgba(255,255,255,0.15);color:white;font-size:0.75rem;padding:3px 12px;border-radius:20px;font-weight:600}
+
+.q-list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+.q-item{border:0.5px solid rgba(0,0,0,0.07);border-radius:12px;padding:1rem 1.1rem;background:var(--cream);transition:all 0.3s;position:relative;overflow:hidden}
+.q-item.solved{background:linear-gradient(135deg,var(--teal-l),#f0fdf4);border-color:var(--teal-m)}
+.q-item.shake{animation:shake 0.4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-num{font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+.q-text{font-size:0.92rem;margin-bottom:0.5rem;line-height:1.55}
+.q-text strong{color:var(--purple)}
+.q-text-2 strong{color:var(--teal)}
+.q-sentence{font-family:monospace;font-size:0.83rem;padding:7px 12px;border-radius:8px;margin-bottom:0.65rem;border:0.5px solid}
+.q-sentence-1{background:var(--purple-l);color:var(--purple-d);border-color:var(--purple-m)}
+.q-sentence-2{background:var(--teal-l);color:var(--teal-d);border-color:var(--teal-m)}
+.q-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.q-input{padding:8px 16px;font-size:0.9rem;border:1.5px solid rgba(0,0,0,0.15);border-radius:40px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);width:210px;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.q-input-1:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(83,74,183,0.15)}
+.q-input-2:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,110,86,0.15)}
+.q-btn{color:white;border:none;padding:8px 20px;border-radius:40px;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s,transform 0.1s}
+.q-btn-1{background:var(--purple)}.q-btn-1:hover{background:var(--purple-d);transform:scale(0.97)}
+.q-btn-2{background:var(--teal)}.q-btn-2:hover{background:var(--teal-d);transform:scale(0.97)}
+.q-fb{margin-top:8px;font-size:0.83rem;min-height:1.4rem}
+.ok{background:var(--teal-l);color:var(--teal-d);padding:5px 14px;border-radius:20px;display:inline-block;font-weight:500;animation:popIn 0.3s}
+.nope{background:var(--coral-l);color:var(--coral-d);padding:5px 14px;border-radius:20px;display:inline-block;animation:popIn 0.3s}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* CHOIX MULTIPLES LUDIQUES */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem}
+@media(max-width:520px){.choice-grid{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid rgba(0,0,0,0.1);border-radius:14px;padding:12px 14px;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.88rem;cursor:pointer;transition:all 0.18s;color:var(--ink);position:relative;overflow:hidden}
+.choice-btn:hover{border-color:var(--purple-m);transform:translateY(-2px);box-shadow:0 4px 12px rgba(83,74,183,0.1)}
+.choice-btn.selected{border-color:var(--purple);background:var(--purple-l);font-weight:500}
+.choice-btn.correct{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d);font-weight:600;animation:popIn 0.3s}
+.choice-btn.correct::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--teal);font-weight:700;font-size:1.1rem}
+.choice-btn.wrong{border-color:var(--coral-m);background:var(--coral-l);color:var(--coral-d);animation:shake 0.4s}
+.choice-btn.wrong::after{content:'✗';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--coral);font-weight:700;font-size:1.1rem}
+.choice-btn:disabled{cursor:default;opacity:0.9}
+
+/* TRI / GLISSER DÉPOSER */
+.sort-zone{display:flex;flex-wrap:wrap;gap:10px;margin:0.75rem 0;min-height:52px;padding:10px;background:var(--cream);border-radius:12px;border:2px dashed rgba(0,0,0,0.1)}
+.sort-zone.over{border-color:var(--purple);background:var(--purple-l)}
+.sort-chip{background:white;border:1.5px solid rgba(0,0,0,0.12);border-radius:40px;padding:7px 16px;font-size:0.85rem;cursor:grab;transition:all 0.15s;user-select:none;font-family:'DM Sans',sans-serif}
+.sort-chip:hover{border-color:var(--purple-m);transform:translateY(-2px);box-shadow:0 3px 8px rgba(0,0,0,0.08)}
+.sort-chip.dragging{opacity:0.4;cursor:grabbing}
+.sort-chip.placed{cursor:default;background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d);font-weight:500}
+.sort-chip.placed::before{content:'✓ ';color:var(--teal)}
+.sort-zone.correct-zone{border-color:var(--teal);background:var(--teal-l)}
+.sort-zone.wrong-zone{border-color:var(--coral-m);background:var(--coral-l)}
+.sort-label{font-size:0.85rem;font-weight:600;color:var(--muted);margin-top:0.5rem}
+
+/* MATCHING */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.match-cols{grid-template-columns:1fr}}
+.match-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.5rem}
+.match-item{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.87rem;cursor:pointer;transition:all 0.18s;margin-bottom:8px}
+.match-item:hover{border-color:var(--purple-m)}
+.match-item.active{border-color:var(--purple);background:var(--purple-l);box-shadow:0 0 0 3px rgba(83,74,183,0.15)}
+.match-item.matched{background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d);cursor:default;opacity:0.85}
+.match-item.matched::after{content:' ✓';color:var(--teal);font-weight:700}
+.match-item.wrong-pair{animation:shake 0.4s}
+
+/* CONFETTIS */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0.9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* MEMO */
+.memo{background:var(--ink);color:white;border-radius:16px;padding:1.5rem;margin-top:2rem}
+.memo h3{font-family:'DM Serif Display',serif;font-size:1.1rem;font-weight:400;color:#FAC775;margin-bottom:1rem}
+.memo-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.memo-col h4{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.memo-row{font-size:0.84rem;color:rgba(255,255,255,0.8);margin-bottom:6px;line-height:1.5}
+.memo-row strong{color:#AFA9EC}
+.memo-row em{color:#FAC775;font-style:italic}
+
+/* RESET + FOOTER */
+.reset-bar{display:flex;justify-content:flex-end;padding:0.75rem 1.75rem 0}
+.reset-btn{background:white;border:0.5px solid rgba(0,0,0,0.15);padding:8px 20px;border-radius:40px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.83rem;color:var(--muted);transition:background 0.15s}
+.reset-btn:hover{background:#f1f0eb}
+footer{text-align:center;font-size:0.78rem;color:var(--muted);padding:1.5rem 1.75rem;border-top:0.5px solid rgba(0,0,0,0.07);line-height:1.7;margin-top:2rem}
+
+@media(max-width:580px){
+  .hero h1{font-size:1.55rem}
+  .memo-cols{grid-template-columns:1fr}
+  .wrap{padding:1rem 1.1rem}
+  .progress-bar{padding:0.6rem 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Cours personnalisé · Léa</div>
+  <h1>Hésitation professionnelle<br><em>trois offres, une décision</em></h1>
+  <div class="hero-sub">Niveau B2 — conditionnel · hypothèses avec « si » · vocabulaire du choix de carrière</div>
+  <div class="pills">
+    <span class="pill">conditionnel présent &amp; passé</span>
+    <span class="pill">si + imparfait / plus-que-parfait</span>
+    <span class="pill">data centers · Deloitte · luxe en Asie</span>
+  </div>
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar">
+  <span class="progress-emoji" id="progressEmoji">🎯</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-score" id="progressScore">0 / 22</span>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. TEXTE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">1</div>
+    <h2>Texte : trois chemins, une décision</h2>
+  </div>
+  <div class="text-story">
+    <strong>Léa a 29 ans.</strong> Diplômée d'une grande école de commerce, elle travaille depuis quatre ans dans le conseil à Paris. Aujourd'hui, elle reçoit <strong>trois offres d'emploi en même temps</strong>. Impossible de choisir sans réfléchir.
+    <br><br>
+    <em>La première offre d'emploi : chef de projet pour des data centers à Londres.</em> Une entreprise technologique américaine lui propose de gérer la construction de centres de données en Europe. Le salaire est très attractif : 95 000 livres par an. « C'est un poste passionnant, dit-elle. Mais je <strong>devrais</strong> déménager à Londres, et je ne parle pas encore très bien anglais. »
+    <br><br>
+    <em>La deuxième offre d'emploi : consultante chez Deloitte.</em> Son entreprise lui propose une promotion interne. Elle <strong>deviendrait</strong> consultante senior en stratégie digitale. « Le poste est prestigieux, mais les horaires sont très longs. Je <strong>travaillerais</strong> 60 heures par semaine. Je ne sais pas si je <strong>pourrais</strong> supporter ce rythme. »
+    <br><br>
+    <em>La troisième offre d'emploi : ambassadrice d'une marque de luxe en Asie.</em> Une maison française de haute couture lui propose de représenter la marque à Singapour, Tokyo et Séoul. Le poste inclut de nombreux voyages, des événements prestigieux et un appartement de fonction. « C'est un rêve ! s'exclame-t-elle. Mais je <strong>serais</strong> loin de ma famille. Et je ne parle pas un mot de japonais. »
+    <br><br>
+    Avant de décider, Léa a passé <strong>un entretien d'embauche</strong> pour chaque poste. Elle a ensuite dressé une liste des <strong>avantages et inconvénients</strong> de chaque option. Sa mère lui dit : « <strong>Si j'étais toi, j'accepterais</strong> le poste à Londres. C'est le plus stable. » Son meilleur ami pense qu'elle devrait partir en Asie : « Tu n'as que 29 ans ! Si tu ne le fais pas maintenant, tu ne le feras jamais. » Son ancien professeur, lui, conseille Deloitte : « <strong>Il faudrait</strong> penser à ta carrière à long terme. »
+    <br><br>
+    « <strong>Si j'avais su</strong> que ce serait aussi difficile, dit-elle en riant, <strong>j'aurais peut-être arrêté</strong> de chercher une nouvelle offre d'emploi ! Mais au fond, je sais que c'est une chance incroyable. <strong>Il faut</strong> juste que je choisisse. »
+  </div>
+
+  <!-- 2. VOCABULAIRE INTERACTIF -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">2</div>
+    <h2>Vocabulaire professionnel <span style="font-size:0.7rem;color:var(--muted);font-family:'DM Sans'">(cliquez pour révéler)</span></h2>
+  </div>
+  <div class="vocab-grid" id="vocabGrid">
+    <div class="vocab-card"><span class="vocab-fr">une offre d'emploi</span><span class="vocab-en">a job offer</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un entretien d'embauche</span><span class="vocab-en">a job interview</span></div>
+    <div class="vocab-card"><span class="vocab-fr">les avantages et inconvénients</span><span class="vocab-en">the pros and cons</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un poste</span><span class="vocab-en">a position</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un data center</span><span class="vocab-en">a data center</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un consultant / une consultante</span><span class="vocab-en">a consultant</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un ambassadeur / une ambassadrice</span><span class="vocab-en">an ambassador</span></div>
+    <div class="vocab-card"><span class="vocab-fr">la haute couture</span><span class="vocab-en">haute couture</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un appartement de fonction</span><span class="vocab-en">a company apartment</span></div>
+    <div class="vocab-card"><span class="vocab-fr">le rythme</span><span class="vocab-en">the pace</span></div>
+    <div class="vocab-card"><span class="vocab-fr">déménager</span><span class="vocab-en">to move (house)</span></div>
+    <div class="vocab-card"><span class="vocab-fr">à long terme</span><span class="vocab-en">in the long term</span></div>
+    <div class="vocab-card"><span class="vocab-fr">peser le pour et le contre</span><span class="vocab-en">to weigh the pros and cons</span></div>
+    <div class="vocab-card"><span class="vocab-fr">une promotion interne</span><span class="vocab-en">an internal promotion</span></div>
+  </div>
+
+  <!-- 3. FORMULES / STRUCTURES -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">3</div>
+    <h2>Structures clés</h2>
+  </div>
+  <div class="formula-grid">
+    <div class="formula-card fc-coral"><strong>si + imparfait → conditionnel présent</strong><div class="formula-ex">📌 Si j'étais toi, j'accepterais le poste.</div></div>
+    <div class="formula-card fc-purple"><strong>si + plus-que-parfait → conditionnel passé</strong><div class="formula-ex">📌 Si j'avais su, j'aurais arrêté.</div></div>
+    <div class="formula-card fc-teal"><strong>devoir au conditionnel</strong> → conseil<div class="formula-ex">📌 Tu devrais partir en Asie.</div></div>
+    <div class="formula-card fc-amber"><strong>il faudrait</strong> + infinitif<div class="formula-ex">📌 Il faudrait réfléchir aux conséquences.</div></div>
+    <div class="formula-card fc-blue"><strong>j'aurais aimé / pu / dû</strong> → regret<div class="formula-ex">📌 J'aurais aimé avoir plus de temps.</div></div>
+    <div class="formula-card fc-green"><strong>je ne sais pas si</strong> + conditionnel<div class="formula-ex">📌 Je ne sais pas si je pourrais supporter.</div></div>
+  </div>
+
+  <!-- 4. RÈGLE ILLUSTRÉE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">4</div>
+    <h2>Conditionnel : présent &amp; passé</h2>
+  </div>
+  <div class="adj-rule">
+    <p><strong>Conditionnel présent</strong> : infinitif + terminaisons de l'imparfait (<em>-ais, -ais, -ait, -ions, -iez, -aient</em>).</p>
+    <table class="adj-table">
+      <thead>
+        <tr><th>Personne</th><th>Travailler</th><th>Être</th><th>Avoir</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>je</td><td><strong>travaillerais</strong></td><td><strong>serais</strong></td><td><strong>aurais</strong></td></tr>
+        <tr><td>tu</td><td><strong>travaillerais</strong></td><td><strong>serais</strong></td><td><strong>aurais</strong></td></tr>
+        <tr><td>il / elle</td><td><strong>travaillerait</strong></td><td><strong>serait</strong></td><td><strong>aurait</strong></td></tr>
+        <tr><td>nous</td><td><strong>travaillerions</strong></td><td><strong>serions</strong></td><td><strong>aurions</strong></td></tr>
+        <tr><td>vous</td><td><strong>travailleriez</strong></td><td><strong>seriez</strong></td><td><strong>auriez</strong></td></tr>
+        <tr><td>ils / elles</td><td><strong>travailleraient</strong></td><td><strong>seraient</strong></td><td><strong>auraient</strong></td></tr>
+      </tbody>
+    </table>
+    <div class="adj-examples">
+      <strong>Conditionnel passé</strong> = avoir / être au conditionnel présent + participe passé<br>
+      j'<strong>aurais aimé</strong> · tu <strong>serais parti</strong> · elle <strong>aurait pu</strong> · nous <strong>aurions dû</strong>
+    </div>
+  </div>
+
+  <!-- 4 bis. TEST DE VOCABULAIRE — MOTS FLOUTÉS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">4★</div>
+    <h2>Test de vocabulaire · trouve le mot français</h2>
+  </div>
+  <div class="vocab-test">
+    <div class="vocab-test-head">
+      <h3>🇬🇧 → 🇫🇷 Clique sur le mot flouté pour le révéler</h3>
+      <span class="vocab-test-hint">💡 Devine avant de cliquer !</span>
+    </div>
+    <div class="vocab-test-grid" id="vocabTestGrid"></div>
+    <div class="vocab-test-counter" id="vocabTestCounter">0 / 14 mots révélés</div>
+  </div>
+
+  <!-- 5. EXERCICE 1 — CHOIX MULTIPLES LUDIQUES -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">5</div>
+    <h2>Exercice 1 — la bonne forme (QCM interactif)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Cliquez sur la bonne réponse. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge1">0 / 3</span>
+    </div>
+    <div class="q-list" id="qlist1"></div>
+  </div>
+
+  <!-- 6. EXERCICE 2 — TEXTE À TROUS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">6</div>
+    <h2>Exercice 2 — complétez au conditionnel</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Écrivez la forme correcte puis cliquez sur <strong>Vérifier</strong>.</p>
+      <span class="ex-badge" id="badge2">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist2"></div>
+  </div>
+
+  <!-- 7. EXERCICE 3 — RELIER -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">7</div>
+    <h2>Exercice 3 — relie les paires</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-3">
+      <p>Cliquez sur un <strong>début</strong> puis sur la <strong>fin</strong> qui correspond.</p>
+      <span class="ex-badge" id="badge3">0 / 4</span>
+    </div>
+    <div class="q-list" id="qlist3"></div>
+  </div>
+
+  <!-- 8. EXERCICE 4 — TRI / GLISSER-DÉPOSER -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green-d,#3B6D11)">8</div>
+    <h2>Exercice 4 — range les expressions</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head" style="background:linear-gradient(90deg,var(--green),#5a9e1f)">
+      <p>Glisse chaque étiquette dans la bonne catégorie.</p>
+      <span class="ex-badge" id="badge4">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist4"></div>
+  </div>
+
+  <!-- 9. EXERCICE 5 — PRODUCTION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">9</div>
+    <h2>Exercice 5 — à toi de jouer !</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head" style="background:linear-gradient(90deg,var(--coral-d),var(--coral))">
+      <p>Production libre — utilise le conditionnel et le vocabulaire du texte.</p>
+    </div>
+    <div class="q-list">
+      <div class="q-item" style="background:var(--coral-l);border-color:var(--coral-m)">
+        <div class="q-text" style="color:var(--coral-d)">
+          <strong>🎤 À l'oral ou à l'écrit :</strong>
+          <ol style="margin-top:0.6rem;padding-left:1.3rem;line-height:2">
+            <li>Si tu étais à la place de Léa, quel poste <strong>choisirais-tu</strong> ? Pourquoi ?</li>
+            <li>Quels <strong>seraient</strong> les avantages et inconvénients de chaque offre d'emploi ?</li>
+            <li>Comment <strong>préparerais-tu</strong> un entretien d'embauche pour l'un de ces postes ?</li>
+            <li>Qu'est-ce que tu <strong>aurais fait</strong> à sa place il y a cinq ans ?</li>
+            <li>Quel conseil <strong>donnerais-tu</strong> à un ami qui hésite entre plusieurs offres d'emploi ?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" id="resetBtn">⟳ Réinitialiser tous les exercices</button>
+  </div>
+
+  <!-- MEMO -->
+  <div class="memo">
+    <h3>Récapitulatif</h3>
+    <div class="memo-cols">
+      <div class="memo-col">
+        <h4>Structures clés</h4>
+        <div class="memo-row"><strong>si + imparfait</strong> → conditionnel présent</div>
+        <div class="memo-row"><strong>si + plus-que-parfait</strong> → conditionnel passé</div>
+        <div class="memo-row"><strong>devoir au cond.</strong> → conseil</div>
+        <div class="memo-row"><strong>il faudrait</strong> → recommandation</div>
+        <div class="memo-row"><strong>j'aurais aimé / pu / dû</strong> → regret</div>
+        <div class="memo-row"><strong>je ne sais pas si</strong> → hésitation</div>
+      </div>
+      <div class="memo-col">
+        <h4>Vocabulaire du choix</h4>
+        <div class="memo-row"><strong>une offre d'emploi</strong> · <strong>un poste</strong></div>
+        <div class="memo-row"><strong>un entretien d'embauche</strong></div>
+        <div class="memo-row"><strong>les avantages et inconvénients</strong></div>
+        <div class="memo-row"><strong>un data center</strong> · <strong>la haute couture</strong></div>
+        <div class="memo-row"><strong>déménager</strong> · <strong>le rythme</strong> · <strong>à long terme</strong></div>
+        <div class="memo-row" style="margin-top:8px;font-style:italic;color:rgba(255,255,255,0.5)">« Si j'étais toi, j'accepterais. »</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Cours personnalisé pour Léa · hésitation professionnelle · B2<br>
+  « trois offres d'emploi, une décision — si j'étais toi… »
+</footer>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+
+// TEST DE VOCABULAIRE — mots anglais → mots français floutés
+const vocabTest = [
+  { en: "a job offer", fr: "une offre d'emploi" },
+  { en: "a job interview", fr: "un entretien d'embauche" },
+  { en: "the pros and cons", fr: "les avantages et inconvénients" },
+  { en: "a position", fr: "un poste" },
+  { en: "a data center", fr: "un data center" },
+  { en: "a consultant", fr: "un consultant" },
+  { en: "an ambassador", fr: "un ambassadeur" },
+  { en: "haute couture", fr: "la haute couture" },
+  { en: "a company apartment", fr: "un appartement de fonction" },
+  { en: "the pace", fr: "le rythme" },
+  { en: "to move (house)", fr: "déménager" },
+  { en: "in the long term", fr: "à long terme" },
+  { en: "to weigh the pros and cons", fr: "peser le pour et le contre" },
+  { en: "an internal promotion", fr: "une promotion interne" }
+];
+
+// EXERCICE 1 — QCM conditionnel
+const qcm = [
+  { q: "Si j'étais toi, je ______ l'offre d'emploi à Londres.",
+    options: ["accepterais", "accepte", "accepterai"],
+    correct: 0, hint: "si + imparfait → conditionnel présent : j'accepterais" },
+  { q: "Elle ______ loin de sa famille si elle partait en Asie.",
+    options: ["serait", "sera", "est"],
+    correct: 0, hint: "si + imparfait → conditionnel présent : elle serait" },
+  { q: "Si j'avais su, j'______ peut-être arrêté de chercher.",
+    options: ["aurais", "avais", "ai"],
+    correct: 0, hint: "si + plus-que-parfait → conditionnel passé : j'aurais arrêté" }
+];
+
+// EXERCICE 2 — Compléter au conditionnel
+const completer = [
+  { text: "Je ne sais pas si je (pouvoir) ______ supporter ce rythme.",
+    ans: ["pourrais"], hint: "conditionnel présent de pouvoir : je pourrais" },
+  { text: "Tu (devoir) ______ passer un entretien d'embauche avant de partir en Asie.",
+    ans: ["devrais"], hint: "conditionnel présent de devoir : tu devrais" },
+  { text: "Si j'avais su, j'(arrêter) ______ de chercher.",
+    ans: ["aurais arrêté", "aurais arrete"], hint: "conditionnel passé : j'aurais arrêté" },
+  { text: "À ta place, je (choisir) ______ la stabilité.",
+    ans: ["choisirais"], hint: "conditionnel présent : je choisirais" },
+  { text: "J'(aimer) ______ avoir plus de temps pour peser le pour et le contre.",
+    ans: ["aurais aimé", "aurais aime"], hint: "conditionnel passé : j'aurais aimé" }
+];
+
+// EXERCICE 3 — Relier
+const paires = [
+  { left: "Si j'étais toi,", right: "j'accepterais l'offre d'emploi à Londres." },
+  { left: "Elle serait loin de sa famille", right: "si elle partait en Asie." },
+  { left: "Si j'avais su,", right: "j'aurais choisi plus tôt." },
+  { left: "Il faudrait", right: "réfléchir aux avantages et inconvénients." }
+];
+
+// EXERCICE 4 — Tri par catégorie
+const triData = {
+  categories: [
+    { id: "cond-present", label: "Conditionnel présent" },
+    { id: "cond-passe", label: "Conditionnel passé" },
+    { id: "conseil", label: "Conseil / hypothèse" }
+  ],
+  chips: [
+    { text: "je choisirais", cat: "cond-present" },
+    { text: "j'aurais aimé", cat: "cond-passe" },
+    { text: "tu devrais", cat: "conseil" },
+    { text: "nous aurions dû", cat: "cond-passe" },
+    { text: "il faudrait", cat: "conseil" },
+    { text: "elle serait", cat: "cond-present" }
+  ]
+};
+
+/* ============================================================
+   PROGRESSION GLOBALE
+   ============================================================ */
+const TOTAL_POINTS = 3 + 5 + 4 + 6; // 18 points d'exercices
+let score = { ex1: 0, ex2: 0, ex3: 0, ex4: 0 };
+const solvedItems = { ex1: new Set(), ex2: new Set(), ex3: new Set(), ex4: new Set() };
+
+function updateProgress() {
+  const totalSolved = solvedItems.ex1.size + solvedItems.ex2.size + solvedItems.ex3.size + solvedItems.ex4.size;
+  const maxPoints = TOTAL_POINTS;
+  const pct = Math.min(100, (totalSolved / maxPoints) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressScore').textContent = totalSolved + ' / ' + maxPoints;
+  const emoji = document.getElementById('progressEmoji');
+  if (pct >= 100) { emoji.textContent = '🏆'; emoji.classList.add('pop'); setTimeout(()=>emoji.classList.remove('pop'), 600); }
+  else if (pct >= 75) emoji.textContent = '🔥';
+  else if (pct >= 50) emoji.textContent = '💪';
+  else if (pct >= 25) emoji.textContent = '📚';
+  else emoji.textContent = '🎯';
+
+  document.getElementById('badge1').textContent = solvedItems.ex1.size + ' / 3';
+  document.getElementById('badge2').textContent = solvedItems.ex2.size + ' / 5';
+  document.getElementById('badge3').textContent = solvedItems.ex3.size + ' / 4';
+  document.getElementById('badge4').textContent = solvedItems.ex4.size + ' / 6';
+
+  if (pct >= 100 && !window._confettiDone) {
+    window._confettiDone = true;
+    launchConfetti();
+  }
+}
+
+/* ============================================================
+   CONFETTIS
+   ============================================================ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#D85A30','#534AB7','#0F6E56','#BA7517','#185FA5','#FAC775'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = c.style.width;
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   TEST DE VOCABULAIRE — MOTS FLOUTÉS
+   ============================================================ */
+const vocabTestGrid = document.getElementById('vocabTestGrid');
+const vocabTestCounter = document.getElementById('vocabTestCounter');
+let vocabRevealed = 0;
+
+vocabTest.forEach((item, idx) => {
+  const row = document.createElement('div');
+  row.className = 'vocab-test-row';
+  row.innerHTML = `
+    <span class="vocab-test-en">${item.en}</span>
+    <span class="vocab-test-arrow">→</span>
+    <span class="vocab-test-fr blurred" data-idx="${idx}">${item.fr}</span>
+  `;
+  vocabTestGrid.appendChild(row);
+});
+
+vocabTestGrid.querySelectorAll('.vocab-test-fr').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('revealed')) return;
+    this.classList.remove('blurred');
+    this.classList.add('revealed');
+    vocabRevealed++;
+    vocabTestCounter.textContent = vocabRevealed + ' / ' + vocabTest.length + ' mots révélés';
+    if (vocabRevealed === vocabTest.length) {
+      vocabTestCounter.textContent = '🎉 Bravo ! Tous les mots sont révélés.';
+      vocabTestCounter.style.color = 'var(--teal-d)';
+      vocabTestCounter.style.fontWeight = '600';
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 1 — QCM LUDIQUE
+   ============================================================ */
+const qlist1 = document.getElementById('qlist1');
+qcm.forEach((item, idx) => {
+  const div = document.createElement('div');
+  div.className = 'q-item';
+  div.id = 'qcm-' + idx;
+  div.innerHTML = `
+    <div class="q-num"><span>Question ${idx+1} / ${qcm.length}</span><span class="qcm-status"></span></div>
+    <div class="q-text q-text-1">${item.q}</div>
+    <div class="choice-grid">
+      ${item.options.map((opt, i) => `<button class="choice-btn" data-idx="${idx}" data-opt="${i}">${opt}</button>`).join('')}
+    </div>
+    <div class="q-fb"></div>
+  `;
+  qlist1.appendChild(div);
+});
+
+qlist1.querySelectorAll('.choice-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const idx = parseInt(this.dataset.idx);
+    const opt = parseInt(this.dataset.opt);
+    const parent = this.closest('.q-item');
+    if (parent.classList.contains('solved')) return;
+
+    parent.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('selected','correct','wrong');
+      b.disabled = false;
+    });
+    this.classList.add('selected');
+
+    const item = qcm[idx];
+    const fb = parent.querySelector('.q-fb');
+    const status = parent.querySelector('.qcm-status');
+
+    if (opt === item.correct) {
+      this.classList.add('correct');
+      this.disabled = true;
+      parent.classList.add('solved');
+      parent.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+      status.textContent = '✅';
+      fb.innerHTML = `<span class="ok">✓ Exact ! ${item.hint}</span>`;
+      if (!solvedItems.ex1.has(idx)) {
+        solvedItems.ex1.add(idx);
+        updateProgress();
+      }
+    } else {
+      this.classList.add('wrong');
+      parent.classList.add('shake');
+      setTimeout(() => parent.classList.remove('shake'), 400);
+      fb.innerHTML = `<span class="nope">✗ Pas tout à fait… Réessaie !</span>`;
+      setTimeout(() => this.classList.remove('wrong'), 800);
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 2 — COMPLÉTER
+   ============================================================ */
+const qlist2 = document.getElementById('qlist2');
+completer.forEach((item, idx) => {
+  const div = document.createElement('div');
+  div.className = 'q-item';
+  div.id = 'comp-' + idx;
+  div.innerHTML = `
+    <div class="q-num"><span>Question ${idx+1} / ${completer.length}</span><span class="comp-status"></span></div>
+    <div class="q-text q-text-2">${item.text}</div>
+    <div class="q-row">
+      <input class="q-input q-input-2" type="text" placeholder="Votre réponse" autocomplete="off">
+      <button class="q-btn q-btn-2">Vérifier</button>
+    </div>
+    <div class="q-fb"></div>
+  `;
+  qlist2.appendChild(div);
+});
+
+qlist2.querySelectorAll('.q-item').forEach((item, idx) => {
+  const inp = item.querySelector('.q-input');
+  const btn = item.querySelector('.q-btn');
+  const fb = item.querySelector('.q-fb');
+  const status = item.querySelector('.comp-status');
+
+  function check() {
+    if (item.classList.contains('solved')) return;
+    const v = inp.value.trim();
+    if (!v) { fb.innerHTML = '<span class="nope">✏️ Écris une réponse avant de vérifier.</span>'; return; }
+    const norm = s => s.trim().toLowerCase().replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+    const good = completer[idx].ans.some(a => norm(a) === norm(v));
+    if (good) {
+      item.classList.add('solved');
+      status.textContent = '✅';
+      inp.disabled = true;
+      btn.disabled = true;
+      btn.textContent = '✓';
+      btn.style.background = 'var(--teal)';
+      fb.innerHTML = `<span class="ok">✓ Bravo ! ${completer[idx].hint}</span>`;
+      if (!solvedItems.ex2.has(idx)) {
+        solvedItems.ex2.add(idx);
+        updateProgress();
+      }
+    } else {
+      item.classList.add('shake');
+      setTimeout(() => item.classList.remove('shake'), 400);
+      fb.innerHTML = `<span class="nope">✗ Incorrect. Indice : ${completer[idx].hint}</span>`;
+    }
+  }
+  btn.addEventListener('click', check);
+  inp.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+});
+
+/* ============================================================
+   EXERCICE 3 — RELIER
+   ============================================================ */
+const qlist3 = document.getElementById('qlist3');
+const matchWrap = document.createElement('div');
+matchWrap.className = 'q-item';
+matchWrap.innerHTML = `
+  <div class="q-num"><span>Relie les paires</span><span class="match-status"></span></div>
+  <div class="match-cols">
+    <div class="match-col"><h5>Débuts</h5><div id="matchLeft"></div></div>
+    <div class="match-col"><h5>Fins</h5><div id="matchRight"></div></div>
+  </div>
+  <div class="q-fb"></div>
+`;
+qlist3.appendChild(matchWrap);
+
+const leftCol = matchWrap.querySelector('#matchLeft');
+const rightCol = matchWrap.querySelector('#matchRight');
+const shuffledRight = [...paires].sort(() => Math.random() - 0.5);
+
+paires.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'left';
+  el.dataset.idx = i;
+  el.textContent = p.left;
+  leftCol.appendChild(el);
+});
+shuffledRight.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'right';
+  el.dataset.idx = paires.indexOf(p);
+  el.textContent = p.right;
+  rightCol.appendChild(el);
+});
+
+let selectedLeft = null;
+let matchedCount = 0;
+
+matchWrap.querySelectorAll('.match-item').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('matched')) return;
+    const side = this.dataset.side;
+
+    if (side === 'left') {
+      matchWrap.querySelectorAll('.match-item[data-side="left"]').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+      selectedLeft = this;
+      return;
+    }
+
+    if (!selectedLeft) {
+      this.classList.add('wrong-pair');
+      setTimeout(() => this.classList.remove('wrong-pair'), 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">👈 Choisis d\'abord un début de phrase à gauche.</span>';
+      return;
+    }
+
+    if (selectedLeft.dataset.idx === this.dataset.idx) {
+      selectedLeft.classList.remove('active');
+      selectedLeft.classList.add('matched');
+      this.classList.add('matched');
+      matchedCount++;
+      matchWrap.querySelector('.match-status').textContent = matchedCount + ' / 4';
+      matchWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien joué ! ${matchedCount}/4 paires trouvées.</span>`;
+      if (!solvedItems.ex3.has(parseInt(this.dataset.idx))) {
+        solvedItems.ex3.add(parseInt(this.dataset.idx));
+        updateProgress();
+      }
+      selectedLeft = null;
+      if (matchedCount === 4) {
+        matchWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les paires sont reliées ! Excellent travail.</span>';
+      }
+    } else {
+      this.classList.add('wrong-pair');
+      selectedLeft.classList.add('wrong-pair');
+      setTimeout(() => {
+        this.classList.remove('wrong-pair');
+        selectedLeft && selectedLeft.classList.remove('wrong-pair');
+      }, 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">✗ Ce n\'est pas la bonne paire. Réessaie !</span>';
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 4 — TRI / GLISSER-DÉPOSER
+   ============================================================ */
+const qlist4 = document.getElementById('qlist4');
+const triWrap = document.createElement('div');
+triWrap.className = 'q-item';
+triWrap.innerHTML = `
+  <div class="q-num"><span>Glisse les étiquettes dans la bonne catégorie</span><span class="tri-status"></span></div>
+  <div class="sort-zone" id="chipsZone"></div>
+  <div id="catZones"></div>
+  <div class="q-fb"></div>
+`;
+qlist4.appendChild(triWrap);
+
+const chipsZone = triWrap.querySelector('#chipsZone');
+const catZones = triWrap.querySelector('#catZones');
+
+triData.categories.forEach(cat => {
+  const zone = document.createElement('div');
+  zone.innerHTML = `<div class="sort-label">${cat.label}</div>`;
+  const z = document.createElement('div');
+  z.className = 'sort-zone';
+  z.dataset.cat = cat.id;
+  z.id = 'zone-' + cat.id;
+  zone.appendChild(z);
+  catZones.appendChild(zone);
+});
+
+const shuffledChips = [...triData.chips].sort(() => Math.random() - 0.5);
+shuffledChips.forEach(chip => {
+  const el = document.createElement('div');
+  el.className = 'sort-chip';
+  el.draggable = true;
+  el.dataset.cat = chip.cat;
+  el.textContent = chip.text;
+  chipsZone.appendChild(el);
+});
+
+let draggedChip = null;
+document.querySelectorAll('.sort-chip').forEach(chip => {
+  chip.addEventListener('dragstart', function(e) {
+    draggedChip = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  chip.addEventListener('dragend', function() {
+    this.classList.remove('dragging');
+    draggedChip = null;
+  });
+});
+
+document.querySelectorAll('.sort-zone').forEach(zone => {
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('over');
+  });
+  zone.addEventListener('dragleave', function() {
+    this.classList.remove('over');
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('over');
+    if (!draggedChip) return;
+    const cat = this.dataset.cat;
+    if (draggedChip.dataset.cat === cat) {
+      draggedChip.classList.add('placed');
+      draggedChip.draggable = false;
+      this.appendChild(draggedChip);
+      this.classList.add('correct-zone');
+      setTimeout(() => this.classList.remove('correct-zone'), 600);
+      const chipText = draggedChip.textContent;
+      if (!solvedItems.ex4.has(chipText)) {
+        solvedItems.ex4.add(chipText);
+        updateProgress();
+      }
+      triWrap.querySelector('.tri-status').textContent = solvedItems.ex4.size + ' / 6';
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien classé ! ${solvedItems.ex4.size}/6.</span>`;
+      if (solvedItems.ex4.size === 6) {
+        triWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les étiquettes sont bien rangées !</span>';
+      }
+    } else {
+      this.classList.add('wrong-zone');
+      setTimeout(() => this.classList.remove('wrong-zone'), 500);
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="nope">✗ Cette expression n'appartient pas à « ${triData.categories.find(c=>c.id===cat).label} ».</span>`;
+    }
+  });
+});
+
+/* ============================================================
+   VOCABULAIRE INTERACTIF (cartes du haut)
+   ============================================================ */
+document.querySelectorAll('.vocab-card').forEach(card => {
+  card.addEventListener('click', function() {
+    this.classList.toggle('revealed');
+  });
+});
+
+/* ============================================================
+   RESET
+   ============================================================ */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  // reset QCM
+  qlist1.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('solved');
+    item.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('selected','correct','wrong');
+      b.disabled = false;
+    });
+    item.querySelector('.q-fb').innerHTML = '';
+    item.querySelector('.qcm-status').textContent = '';
+  });
+  // reset compléter
+  qlist2.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('solved');
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    inp.value = '';
+    inp.disabled = false;
+    btn.disabled = false;
+    btn.textContent = 'Vérifier';
+    btn.style.background = '';
+    item.querySelector('.q-fb').innerHTML = '';
+    item.querySelector('.comp-status').textContent = '';
+  });
+  // reset relier
+  matchWrap.querySelectorAll('.match-item').forEach(el => {
+    el.classList.remove('matched','active','wrong-pair');
+    el.style.cursor = '';
+  });
+  selectedLeft = null;
+  matchedCount = 0;
+  matchWrap.querySelector('.match-status').textContent = '';
+  matchWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset tri — remettre toutes les chips dans la zone principale
+  const allChips = triWrap.querySelectorAll('.sort-chip');
+  allChips.forEach(chip => {
+    chip.classList.remove('placed');
+    chip.draggable = true;
+    chipsZone.appendChild(chip);
+  });
+  const chipsArr = [...chipsZone.querySelectorAll('.sort-chip')];
+  chipsArr.sort(() => Math.random() - 0.5).forEach(c => chipsZone.appendChild(c));
+  triWrap.querySelector('.tri-status').textContent = '';
+  triWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset score
+  score = { ex1: 0, ex2: 0, ex3: 0, ex4: 0 };
+  solvedItems.ex1.clear();
+  solvedItems.ex2.clear();
+  solvedItems.ex3.clear();
+  solvedItems.ex4.clear();
+  window._confettiDone = false;
+  updateProgress();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateProgress();
+</script>
+</body>
+</html>
