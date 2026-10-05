@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Articles Partitifs — Leçon FLE pour anglophones</title>
+<style>
+  :root {
+    --cream: #fdf8f0;
+    --parchment: #ece4d0;
+    --ink: #1a1208;
+    --brown: #5c3d1e;
+    --shadow: rgba(60,30,10,0.13);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(160deg, #fff8ee 0%, #eef4fb 50%, #f5f0fb 100%);
+    font-family: Georgia, 'Times New Roman', serif;
+    color: var(--ink);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  header {
+    background: linear-gradient(120deg, #c0622f 0%, #c8952a 45%, #3a7a45 100%);
+    color: #fff; text-align: center;
+    padding: 3rem 2rem 2.5rem;
+    position: relative; overflow: hidden;
+  }
+  header::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(60deg, transparent, transparent 30px,
+      rgba(255,255,255,0.03) 30px, rgba(255,255,255,0.03) 31px);
+  }
+  header .flag { font-size: 2.4rem; letter-spacing: 0.4rem; margin-bottom: 0.7rem; position: relative; z-index:1; }
+  header h1 {
+    font-size: clamp(2.2rem, 7vw, 3.8rem); letter-spacing: 0.06em; color: #fff;
+    text-shadow: 0 3px 18px rgba(0,0,0,0.35); position: relative; z-index:1;
+  }
+  header p {
+    margin-top: 0.6rem; font-size: 1.05rem; font-style: italic;
+    color: rgba(255,255,255,0.85); letter-spacing: 0.1em; position: relative; z-index:1;
+  }
+
+  /* NAV */
+  nav {
+    background: linear-gradient(90deg, #8a4a1e, #c0622f, #c8952a, #3a7a45, #1d7a72);
+    display: flex; justify-content: center; gap: 0.4rem; padding: 0.65rem 1rem; flex-wrap: wrap;
+    position: sticky; top: 0; z-index: 10;
+  }
+  nav a {
+    color: #fff; text-decoration: none; font-size: 0.88rem; letter-spacing: 0.05em;
+    padding: 0.3rem 1rem; border: 1px solid rgba(255,255,255,0.4);
+    border-radius: 20px; transition: background 0.2s, transform 0.1s;
+    background: rgba(255,255,255,0.1);
+  }
+  nav a:hover { background: rgba(255,255,255,0.27); transform: translateY(-1px); }
+
+  main { max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-size: 1.7rem; padding: 0.5rem 1.2rem; margin: 2.8rem 0 1.3rem;
+    display: flex; align-items: center; gap: 0.6rem; border-radius: 6px;
+  }
+  .st-red    { background: linear-gradient(90deg,#ffe2d6,#fff5f0); color:#8a2010; border-left:5px solid #c0622f; }
+  .st-blue   { background: linear-gradient(90deg,#d5e9fc,#f0f7ff); color:#14387a; border-left:5px solid #1e4d8c; }
+  .st-violet { background: linear-gradient(90deg,#e4daf8,#f5f0ff); color:#50258a; border-left:5px solid #6b3fa0; }
+  .st-gold   { background: linear-gradient(90deg,#fcefd5,#fffbf0); color:#7a5000; border-left:5px solid #c8952a; }
+  .st-teal   { background: linear-gradient(90deg,#ccf0ec,#f0fffd); color:#105a52; border-left:5px solid #1d7a72; }
+  .st-green  { background: linear-gradient(90deg,#d8f5dc,#f2fff5); color:#1a5220; border-left:5px solid #3a7a45; }
+
+  /* CONSEIL */
+  .conseil-box {
+    background: linear-gradient(135deg,#fdf3dc,#fff9f0);
+    border-left: 6px solid #c8952a; border-radius: 4px 10px 10px 4px;
+    padding: 1.1rem 1.5rem; font-size: 0.95rem; line-height: 1.8;
+    box-shadow: 0 2px 12px var(--shadow); margin-bottom: 1.5rem;
+  }
+  .conseil-box strong { color:#7a5000; }
+
+  /* DIALOGUE */
+  .scene-card {
+    background: white; border-radius: 10px; padding: 1.6rem 1.9rem;
+    box-shadow: 0 4px 24px var(--shadow); margin-bottom: 1.4rem;
+  }
+  .scene-title {
+    font-size: 1.15rem; color: #8a2010; margin-bottom: 1.1rem;
+    display:flex; align-items:center; gap:0.5rem;
+  }
+  .scene-title.blue { color:#14387a; }
+  .replique { margin: 0.75rem 0; font-size: 1rem; line-height: 1.85; }
+  .replique .speaker { font-weight: 700; color: #5c3d1e; }
+  .part { color: #b03020; font-weight: 700; border-bottom: 2px dotted #c8952a; padding-bottom: 1px; }
+  .quant { color: #1d7a72; font-weight: 700; border-bottom: 2px dotted #1d7a72; padding-bottom: 1px; }
+  .neg { color: #6b3fa0; font-weight: 700; }
+
+  /* VOCAB */
+  .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 0.75rem; }
+  .vocab-item {
+    background: white; border-radius: 6px; padding: 0.7rem 1rem;
+    box-shadow: 0 2px 10px var(--shadow); border-top: 4px solid var(--vc,#1e4d8c);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .vocab-item:hover { transform: translateY(-3px); box-shadow: 0 6px 18px var(--shadow); }
+  .vocab-fr { color: var(--vc,#1e4d8c); font-size: 1rem; }
+  .vocab-en { font-style: italic; color: #777; font-size: 0.87rem; margin-top: 0.18rem; }
+
+  /* LEÇON */
+  .lecon-box {
+    border-radius: 10px; padding: 1.7rem 2rem; margin-bottom: 1.3rem;
+    border: 1px solid rgba(0,0,0,0.06); box-shadow: 0 3px 14px var(--shadow);
+    font-size: 0.98rem; line-height: 1.9;
+  }
+  .lb-blue   { background: linear-gradient(135deg,#dff0fc,#f2f9ff); }
+  .lb-violet { background: linear-gradient(135deg,#ede8f8,#f8f5ff); }
+  .lb-amber  { background: linear-gradient(135deg,#fdf3dc,#fff9f0); }
+  .lb-green  { background: linear-gradient(135deg,#dff5e4,#f2fff5); }
+  .lb-red    { background: linear-gradient(135deg,#ffe8dc,#fff6f2); }
+  .lecon-box h3 { font-size:1.2rem; margin-bottom:0.9rem; }
+  .lb-blue h3   { color:#1e4d8c; }
+  .lb-violet h3 { color:#5a30a0; }
+  .lb-amber h3  { color:#7a5000; }
+  .lb-green h3  { color:#2a6a30; }
+  .lb-red h3    { color:#a03520; }
+  .lecon-box ul, .lecon-box ol { padding-left:1.3rem; line-height:2.1; }
+  .lecon-box .en-note { font-style:italic; color:#888; font-size:0.9rem; }
+
+  /* TABLE */
+  .table-wrapper { overflow-x:auto; margin:1rem 0; border-radius:8px; overflow:hidden; box-shadow:0 3px 16px var(--shadow); }
+  table { width:100%; border-collapse:collapse; font-size:0.94rem; background:#fff; }
+  thead { background:linear-gradient(90deg,#c0622f,#c8952a); color:white; }
+  thead th { padding:0.65rem 1rem; text-align:left; font-weight:400; letter-spacing:0.04em; }
+  tbody tr:nth-child(odd) { background:#fff; }
+  tbody tr:nth-child(even) { background:#fdf6ee; }
+  tbody tr:hover { background:#fdf3dc; }
+  tbody td { padding:0.55rem 1rem; }
+  .art { color:#b03020; font-weight:800; }
+  .ok  { color:#1a6a20; font-weight:700; }
+  .ko  { color:#c0392b; font-weight:700; }
+
+  /* CARTES FORMULES */
+  .formula-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; margin:1rem 0 1.6rem; }
+  .formula-card {
+    border-radius:10px; padding:1.05rem 1.2rem; box-shadow:0 3px 16px var(--shadow);
+    transition:transform 0.15s, box-shadow 0.15s;
+  }
+  .formula-card:hover { transform:translateY(-3px); box-shadow:0 8px 24px var(--shadow); }
+  .fc1 { background:linear-gradient(135deg,#ffeee4,#fff8f4); border-top:4px solid #c0622f; }
+  .fc2 { background:linear-gradient(135deg,#ddeeff,#f2f8ff); border-top:4px solid #2980b9; }
+  .fc3 { background:linear-gradient(135deg,#e0f8e2,#f2fff4); border-top:4px solid #3a7a45; }
+  .fc4 { background:linear-gradient(135deg,#f0e8ff,#faf5ff); border-top:4px solid #6b3fa0; }
+  .fc5 { background:linear-gradient(135deg,#fff8d8,#fffef0); border-top:4px solid #c8952a; }
+  .fc6 { background:linear-gradient(135deg,#ffe8f0,#fff0f7); border-top:4px solid #d63f6a; }
+  .formula-fr { font-size:1.05rem; font-weight:700; margin-bottom:0.2rem; }
+  .fc1 .formula-fr { color:#8a2010; } .fc2 .formula-fr { color:#14387a; }
+  .fc3 .formula-fr { color:#1a5220; } .fc4 .formula-fr { color:#4a2090; }
+  .fc5 .formula-fr { color:#6a4400; } .fc6 .formula-fr { color:#8a1440; }
+  .formula-en { font-style:italic; font-size:0.85rem; color:#777; margin-bottom:0.5rem; }
+  .formula-ex { font-size:0.89rem; line-height:1.7; color:#333; border-top:1px dashed rgba(0,0,0,0.13); padding-top:0.5rem; }
+  .formula-ex em { color:#b03020; }
+
+  /* EXERCICES */
+  .exo-block {
+    background:white; border-radius:10px; padding:1.6rem 1.8rem;
+    margin-bottom:1.6rem; box-shadow:0 3px 18px var(--shadow);
+  }
+  .exo-block.exo-gold   { border-top:5px solid #c8952a; }
+  .exo-block.exo-teal   { border-top:5px solid #1d7a72; }
+  .exo-block.exo-violet { border-top:5px solid #6b3fa0; }
+  .exo-block.exo-green  { border-top:5px solid #3a7a45; }
+  .exo-block.exo-red    { border-top:5px solid #c0622f; }
+  .exo-block h3 { color:var(--brown); font-size:1.15rem; margin-bottom:1rem; }
+  .exo-consigne { font-size:0.87rem; color:#999; margin-bottom:1rem; font-style:italic; }
+
+  .fill-item { display:flex; align-items:baseline; flex-wrap:wrap; gap:0.4rem; margin:0.7rem 0; font-size:0.98rem; line-height:1.8; }
+  .fill-item .num { color:#c8952a; font-weight:700; min-width:1.4rem; }
+  .fill-input {
+    border:none; border-bottom:2.5px solid #c0622f;
+    background:#fff9f4; padding:0.1rem 0.5rem;
+    font-family:inherit; font-size:0.97rem; color:var(--ink); min-width:80px; outline:none;
+    border-radius:3px 3px 0 0; transition:all 0.2s;
+  }
+  .fill-input:focus { background:#fdf3dc; border-color:#c8952a; }
+  .fill-input.correct   { border-color:#2a8a35; background:#e2f5e4; color:#1a6a20; }
+  .fill-input.incorrect { border-color:#c0392b; background:#fde8ec; color:#a02020; }
+  .phrase-input { min-width:150px; }
+
+  .choix-item { margin:0.85rem 0; font-size:0.97rem; }
+  .choix-item p { margin-bottom:0.38rem; }
+  .choix-item label {
+    display:inline-flex; align-items:center; gap:0.35rem;
+    margin-right:0.9rem; cursor:pointer; font-size:0.93rem;
+    padding:0.22rem 0.6rem; border-radius:4px; transition:background 0.15s;
+    border:1px solid transparent;
+  }
+  .choix-item label:hover { background:#f0eafa; border-color:#c5aeed; }
+  .choix-item input[type=radio] { accent-color:#c0622f; }
+
+  .btn-group { display:flex; gap:0.8rem; flex-wrap:wrap; margin-top:1.2rem; }
+  .btn {
+    padding:0.55rem 1.4rem; border:none; border-radius:20px;
+    font-family:inherit; font-size:0.95rem; cursor:pointer;
+    letter-spacing:0.04em; transition:all 0.2s; box-shadow:0 2px 8px rgba(0,0,0,0.12);
+  }
+  .btn-check { background:linear-gradient(90deg,#c0622f,#c8952a); color:white; }
+  .btn-check:hover { transform:translateY(-1px); box-shadow:0 4px 14px rgba(192,98,47,0.35); }
+  .btn-reset { background:var(--parchment); color:var(--brown); border:1px solid #cbb898; }
+  .btn-reset:hover { background:#ddd0b8; }
+
+  .reponse-box { margin-top:1rem; background:#f7f3ff; border-radius:8px; overflow:hidden; border:1px solid #d0c2f0; }
+  .toggle-btn {
+    width:100%; background:none; border:none; padding:0.7rem 1rem;
+    text-align:left; cursor:pointer; font-family:inherit;
+    font-size:0.91rem; color:#5a30a0; display:flex; align-items:center; gap:0.5rem; font-style:italic;
+  }
+  .toggle-btn:hover { background:rgba(107,63,160,0.08); }
+  .toggle-btn .arrow { transition:transform 0.3s; }
+  .toggle-btn.open .arrow { transform:rotate(90deg); display:inline-block; }
+  .reponse-content { display:none; padding:0.8rem 1.2rem 1rem; border-top:1px solid #d0c2f0; font-size:0.92rem; line-height:2; color:#4a2a80; }
+  .reponse-content.visible { display:block; }
+  .reponse-content strong { color:#b03020; }
+
+  .score-banner { display:none; border-radius:8px; font-size:1rem; margin-top:1rem; font-style:italic; text-align:center; padding:0.8rem 1.4rem; }
+  .score-perfect { background:linear-gradient(90deg,#2a6a30,#1d7a72); color:#fff; }
+  .score-good    { background:linear-gradient(90deg,#b07a10,#c8952a); color:#fff; }
+  .score-try     { background:linear-gradient(90deg,#9a2018,#c0622f); color:#fff; }
+
+  /* TEST VOCABULAIRE */
+  .vocabtest-list { display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:0.7rem; margin:1rem 0; }
+  .vt-item {
+    background:white; border-radius:8px; padding:0.75rem 1rem;
+    box-shadow:0 2px 10px var(--shadow); border-left:4px solid #c0622f;
+    display:flex; align-items:center; gap:0.7rem; flex-wrap:wrap;
+  }
+  .vt-num { color:#c0622f; font-weight:700; min-width:1.3rem; }
+  .vt-en { font-style:italic; color:#14387a; min-width:100px; }
+  .vt-input {
+    border:none; border-bottom:2px solid #c0622f; background:#fff9f4;
+    padding:0.1rem 0.5rem; font-family:inherit; font-size:0.95rem;
+    color:var(--ink); outline:none; border-radius:3px 3px 0 0;
+    flex:1; min-width:110px; transition:all 0.2s;
+  }
+  .vt-input:focus { background:#fdf3dc; }
+  .vt-input.correct   { border-color:#2a8a35; background:#e2f5e4; color:#1a6a20; }
+  .vt-input.incorrect { border-color:#c0392b; background:#fde8ec; color:#a02020; }
+  .vt-hint {
+    font-size:0.95rem; color:#7a5000; cursor:pointer; user-select:none;
+    filter:blur(5px); transition:filter 0.35s; font-weight:600;
+    padding:0 0.3rem;
+  }
+  .vt-hint.revealed { filter:blur(0); cursor:default; }
+  .vt-hint:hover { filter:blur(2.5px); }
+  .vt-hint.revealed:hover { filter:blur(0); }
+
+  footer {
+    text-align:center; padding:1.5rem; color:#8a7055; font-size:0.85rem; font-style:italic;
+    border-top:1px solid var(--parchment);
+    background:linear-gradient(90deg,#fff8ee,#eef4ff,#f5f0ff,#fff0f5);
+  }
+
+  @media (max-width:600px) {
+    .lecon-box,.exo-block,.scene-card { padding:1.2rem; }
+    .formula-card { padding:0.9rem 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="flag">🇫🇷 🇬🇧</div>
+  <h1>Les Articles Partitifs</h1>
+  <p>du · de la · de l' · des — Leçon complète pour anglophones · Niveau A1-A2</p>
+</header>
+
+<nav>
+  <a href="#dialogue">💬 Dialogue</a>
+  <a href="#vocabulaire">📚 Vocabulaire</a>
+  <a href="#lecon">📝 La règle</a>
+  <a href="#negation">➖ La négation</a>
+  <a href="#quantite">➕ Quantités</a>
+  <a href="#expressions">💬 Expressions</a>
+  <a href="#exercices">✏️ Exercices</a>
+  <a href="#testvocab">🧠 Test de vocab</a>
+</nav>
+
+<main>
+
+<div class="conseil-box">
+  💡 <strong>Learning tip :</strong> Read the dialogue aloud several times first. Then study the grammar and do the exercises. Repetition is the key to success!
+  <br><em style="color:#a8802a;">Astuce : lisez le dialogue à voix haute plusieurs fois, puis étudiez la grammaire et faites les exercices.</em>
+</div>
+
+<!-- ═══ DIALOGUE ═══ -->
+<h2 class="section-title st-red" id="dialogue">💬 Au marché et au restaurant · At the market & at the restaurant</h2>
+
+<div class="scene-card">
+  <div class="scene-title">📍 Scène 1 — Au marché · At the market</div>
+  <p class="replique"><span class="speaker">Le vendeur :</span> Bonjour Madame ! Qu'est-ce que vous désirez aujourd'hui ?</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Bonjour ! Il y a <span class="part">du</span> pain frais ?</p>
+  <p class="replique"><span class="speaker">Le vendeur :</span> Oui, il y a <span class="part">du</span> pain de ce matin. C'est bien pour vous ?</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Oui, c'est parfait ! Je voudrais aussi <span class="part">de la</span> confiture et <span class="part">des</span> fruits, s'il vous plaît.</p>
+  <p class="replique"><span class="speaker">Le vendeur :</span> D'accord. Il y a <span class="part">des</span> pommes, <span class="part">des</span> bananes, <span class="part">des</span> oranges et <span class="part">des</span> fraises.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> C'est bien ! Je voudrais <span class="quant">plus de</span> pommes que <span class="quant">de</span> bananes. Deux kilos de pommes et un kilo de bananes.</p>
+  <p class="replique"><span class="speaker">Le vendeur :</span> Pas de problème ! Vous voulez aussi <span class="part">des</span> légumes ? Il y a <span class="part">des</span> tomates, <span class="part">des</span> carottes et <span class="part">du</span> brocoli.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Oui, je prends <span class="part">des</span> tomates. Mais je voudrais <span class="quant">moins de</span> brocoli, s'il vous plaît. Juste <span class="quant">un peu</span>.</p>
+  <p class="replique"><span class="speaker">Le vendeur :</span> Très bien ! Et <span class="part">de la</span> viande ? Il y a <span class="part">du</span> poulet et <span class="part">du</span> bœuf aujourd'hui.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Non merci, je ne mange <span class="neg">pas de</span> viande. Je suis végétarienne.</p>
+  <p class="replique"><span class="speaker">Le vendeur :</span> Ah d'accord, pas de problème ! Alors, il y a <span class="part">du</span> fromage et <span class="part">des</span> œufs si vous voulez.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Oui, je prends <span class="part">du</span> fromage. Vous avez <span class="part">du</span> fromage de chèvre ?</p>
+  <p class="replique"><span class="speaker">Le vendeur :</span> Oui, nous avons <span class="part">du</span> fromage de chèvre et <span class="part">du</span> fromage de brebis.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> C'est combien en tout ?</p>
+  <p class="replique"><span class="speaker">Le vendeur :</span> Ça fait 32 euros, s'il vous plaît.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Ah oui, merci ! Voilà. Bonne journée !</p>
+</div>
+
+<div class="scene-card">
+  <div class="scene-title blue">📍 Scène 2 — Au restaurant · At the restaurant</div>
+  <p class="replique"><span class="speaker">Le serveur :</span> Bonjour ! Vous êtes combien ?</p>
+  <p class="replique"><span class="speaker">Le client :</span> Bonjour, nous sommes deux personnes.</p>
+  <p class="replique"><span class="speaker">Le serveur :</span> D'accord, suivez-moi. Voici votre table. Vous voulez boire quelque chose ?</p>
+  <p class="replique"><span class="speaker">Le client :</span> Oui, il y a <span class="part">de l'</span>eau gazeuse ?</p>
+  <p class="replique"><span class="speaker">Le serveur :</span> Oui, il y a <span class="part">de l'</span>eau gazeuse et <span class="part">de l'</span>eau plate. Vous préférez quoi ?</p>
+  <p class="replique"><span class="speaker">Le client :</span> <span class="part">De l'</span>eau plate, s'il vous plaît. Et aussi <span class="part">du</span> vin rouge.</p>
+  <p class="replique"><span class="speaker">Le client :</span> Il y a <span class="part">du</span> poisson aujourd'hui ?</p>
+  <p class="replique"><span class="speaker">Le serveur :</span> Oui, il y a <span class="part">du</span> saumon grillé avec <span class="part">des</span> légumes et <span class="part">de la</span> sauce.</p>
+  <p class="replique"><span class="speaker">Le client :</span> C'est bien ! Je voudrais <span class="part">du</span> saumon, mais avec <span class="quant">plus de</span> sauce et <span class="quant">moins de</span> légumes, s'il vous plaît.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Moi, je voudrais <span class="part">du</span> poulet avec <span class="part">de la</span> salade. Mais je ne veux <span class="neg">pas de</span> sauce. C'est mal pour mon régime.</p>
+  <p class="replique"><span class="speaker">Le serveur :</span> Très bien, pas de sauce pour le poulet. Et en dessert ?</p>
+  <p class="replique"><span class="speaker">Le serveur :</span> Il y a <span class="part">de la</span> tarte aux pommes, <span class="part">du</span> gâteau au chocolat, <span class="part">de la</span> mousse au citron et <span class="part">des</span> fruits frais.</p>
+  <p class="replique"><span class="speaker">La cliente :</span> Hmm... je ne sais pas. Pas maintenant. On décide après le plat principal.</p>
+  <p class="replique"><span class="speaker">Le serveur :</span> D'accord, pas de problème ! Je reviens avec vos boissons. Bon appétit !</p>
+</div>
+
+<!-- ═══ VOCABULAIRE ═══ -->
+<h2 class="section-title st-blue" id="vocabulaire">📚 Vocabulaire de la nourriture · Food vocabulary</h2>
+<div class="vocab-grid">
+  <div class="vocab-item" style="--vc:#1e4d8c"><div class="vocab-fr">le pain</div><div class="vocab-en">bread</div></div>
+  <div class="vocab-item" style="--vc:#3a7a45"><div class="vocab-fr">la confiture</div><div class="vocab-en">jam</div></div>
+  <div class="vocab-item" style="--vc:#1d7a72"><div class="vocab-fr">le fromage</div><div class="vocab-en">cheese</div></div>
+  <div class="vocab-item" style="--vc:#c0622f"><div class="vocab-fr">les fruits</div><div class="vocab-en">fruit</div></div>
+  <div class="vocab-item" style="--vc:#c8952a"><div class="vocab-fr">les légumes</div><div class="vocab-en">vegetables</div></div>
+  <div class="vocab-item" style="--vc:#d63f6a"><div class="vocab-fr">la viande</div><div class="vocab-en">meat</div></div>
+  <div class="vocab-item" style="--vc:#6b3fa0"><div class="vocab-fr">le poisson</div><div class="vocab-en">fish</div></div>
+  <div class="vocab-item" style="--vc:#1e4d8c"><div class="vocab-fr">l'eau (fém.)</div><div class="vocab-en">water</div></div>
+  <div class="vocab-item" style="--vc:#3a7a45"><div class="vocab-fr">le jus d'orange</div><div class="vocab-en">orange juice</div></div>
+  <div class="vocab-item" style="--vc:#1d7a72"><div class="vocab-fr">l'huile d'olive (fém.)</div><div class="vocab-en">olive oil</div></div>
+  <div class="vocab-item" style="--vc:#c0622f"><div class="vocab-fr">le beurre</div><div class="vocab-en">butter</div></div>
+  <div class="vocab-item" style="--vc:#c8952a"><div class="vocab-fr">les œufs</div><div class="vocab-en">eggs</div></div>
+  <div class="vocab-item" style="--vc:#d63f6a"><div class="vocab-fr">le poulet</div><div class="vocab-en">chicken</div></div>
+  <div class="vocab-item" style="--vc:#6b3fa0"><div class="vocab-fr">la salade</div><div class="vocab-en">salad</div></div>
+  <div class="vocab-item" style="--vc:#1e4d8c"><div class="vocab-fr">la sauce</div><div class="vocab-en">sauce</div></div>
+  <div class="vocab-item" style="--vc:#3a7a45"><div class="vocab-fr">le sucre</div><div class="vocab-en">sugar</div></div>
+</div>
+
+<!-- ═══ LA RÈGLE ═══ -->
+<h2 class="section-title st-violet" id="lecon">📝 Les articles partitifs · The partitive article</h2>
+
+<div class="lecon-box lb-blue">
+  <h3>🇬🇧 What is it? The English speaker's problem</h3>
+  <p>English says <em>"I eat <strong>bread</strong>"</em> or <em>"I drink <strong>water</strong>"</em> with no article.
+  French <strong>always needs one</strong>: you don't eat "pain", you eat <span class="ok">du pain</span> — literally "<em>some</em> bread", an unspecified amount of it.
+  </p>
+  <p class="en-note">Les partitifs servent à parler d'une quantité indéterminée, d'une partie d'un tout. En français, l'article est obligatoire !</p>
+</div>
+
+<div class="table-wrapper">
+  <table>
+    <thead>
+      <tr><th>Article</th><th>Use · Utilisation</th><th>Exemple</th><th>English</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="art">du</span></td><td>masculin singulier</td><td><span class="art">du</span> pain, <span class="art">du</span> fromage, <span class="art">du</span> chocolat</td><td>(some) bread, cheese, chocolate</td></tr>
+      <tr><td><span class="art">de la</span></td><td>féminin singulier</td><td><span class="art">de la</span> confiture, <span class="art">de la</span> viande, <span class="art">de la</span> salade</td><td>(some) jam, meat, salad</td></tr>
+      <tr><td><span class="art">de l'</span></td><td>devant voyelle ou h muet</td><td><span class="art">de l'</span>eau, <span class="art">de l'</span>huile, <span class="art">de l'</span>argent</td><td>(some) water, oil, money</td></tr>
+      <tr><td><span class="art">des</span></td><td>pluriel (masc. et fém.)</td><td><span class="art">des</span> fruits, <span class="art">des</span> légumes, <span class="art">des</span> œufs</td><td>(some) fruits, vegetables, eggs</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="lecon-box lb-green">
+  <h3>✅ Exemples positifs · Positive examples</h3>
+  <ul>
+    <li>Je mange <strong>du</strong> chocolat tous les jours. <span class="en-note">— I eat chocolate every day.</span></li>
+    <li>Tu bois <strong>de la</strong> limonade avec tes amis. <span class="en-note">— You drink lemonade with your friends.</span></li>
+    <li>Il achète <strong>des</strong> pommes au marché. <span class="en-note">— He buys apples at the market.</span></li>
+    <li>Nous voulons <strong>de l'</strong>eau, s'il vous plaît. <span class="en-note">— We want some water, please.</span></li>
+    <li>Vous prenez <strong>du</strong> café ou <strong>du</strong> thé ? <span class="en-note">— Will you have coffee or tea?</span></li>
+    <li>Il y a <strong>des</strong> fleurs dans le jardin. <span class="en-note">— There are flowers in the garden.</span></li>
+  </ul>
+</div>
+
+<!-- ═══ NÉGATION ═══ -->
+<h2 class="section-title st-red" id="negation">➖ La négation : toujours « de »</h2>
+
+<div class="lecon-box lb-red">
+  <h3>🇬🇧 The golden rule of negation</h3>
+  <p>In the <strong>negative</strong>, <em>du, de la, de l', des</em> all become <span class="ko">de / d'</span> — never anything else.</p>
+  <p class="en-note">À la forme négative, on utilise toujours « de » ou « d' » (jamais du, de la, des).</p>
+</div>
+
+<div class="formula-grid">
+  <div class="formula-card fc1">
+    <div class="formula-fr">du pain → pas DE pain</div>
+    <div class="formula-ex">Je ne mange pas <em>de</em> viande. <br><span class="en-note">I don't eat meat.</span></div>
+  </div>
+  <div class="formula-card fc2">
+    <div class="formula-fr">de la viande → pas DE viande</div>
+    <div class="formula-ex">Il n'y a pas <em>d'</em>eau dans la bouteille.<br><span class="en-note">There's no water in the bottle.</span></div>
+  </div>
+  <div class="formula-card fc3">
+    <div class="formula-fr">des légumes → pas DE légumes</div>
+    <div class="formula-ex">Elle ne veut pas <em>de</em> légumes.<br><span class="en-note">She doesn't want vegetables.</span></div>
+  </div>
+  <div class="formula-card fc4">
+    <div class="formula-fr">de l'huile → pas D'huile</div>
+    <div class="formula-ex">Ils ne prennent pas <em>d'</em>huile d'olive.<br><span class="en-note">They don't take olive oil.</span></div>
+  </div>
+</div>
+
+<div class="lecon-box lb-violet">
+  <h3>⚠️ Exception : avec le verbe être, on garde l'article</h3>
+  <p>
+    C'est <strong>du</strong> poulet. → Ce n'est pas <strong>du</strong> poulet. <span class="en-note">(not "pas de poulet")</span><br>
+    C'est <strong>une</strong> bonne marque. → Ce n'est pas <strong>une</strong> bonne marque.
+  </p>
+  <p style="margin-top:0.5rem;font-size:0.93rem;">💡 <strong>Astuce · Memory trick :</strong> positive → <em>du / de la / de l' / des</em> · negative → <em>pas de / pas d'</em> (except after <em>être</em>!).</p>
+</div>
+
+<!-- ═══ QUANTITÉS ═══ -->
+<h2 class="section-title st-teal" id="quantite">➕ Plus de, moins de, beaucoup de… · Quantity expressions</h2>
+
+<div class="lecon-box lb-amber">
+  <h3>🇬🇧 After a quantity word, use just « de » (+ no article!)</h3>
+  <p>English: "<em>much</em> bread, <em>more</em> water" → French: <strong>beaucoup DE pain, plus DE l'eau ❌ → plus DE eau ❌… plus d'eau ✅</strong>. The rule: quantity word + <strong>de</strong> + noun, <strong>no article</strong> — never "beaucoup <span class="ko">du</span>" or "plus <span class="ko">de la</span>".</p>
+</div>
+
+<div class="table-wrapper">
+  <table>
+    <thead><tr><th>Expression</th><th>Meaning</th><th>Exemple</th><th>English</th></tr></thead>
+    <tbody>
+      <tr><td><span class="art">plus de</span></td><td>more</td><td>Je veux <span class="art">plus de</span> café.</td><td>I want more coffee.</td></tr>
+      <tr><td><span class="art">moins de</span></td><td>less / fewer</td><td>Il mange <span class="art">moins de</span> pain.</td><td>He eats less bread.</td></tr>
+      <tr><td><span class="art">beaucoup de</span></td><td>a lot of</td><td>Il y a <span class="art">beaucoup de</span> gens.</td><td>There are a lot of people.</td></tr>
+      <tr><td><span class="art">un peu de</span></td><td>a little</td><td>Je prends <span class="art">un peu de</span> sucre.</td><td>I take a little sugar.</td></tr>
+      <tr><td><span class="art">trop de</span></td><td>too much / too many</td><td>Tu bois <span class="art">trop de</span> soda.</td><td>You drink too much soda.</td></tr>
+      <tr><td><span class="art">assez de</span></td><td>enough</td><td>Nous avons <span class="art">assez d'</span>argent.</td><td>We have enough money.</td></tr>
+      <tr><td><span class="art">pas mal de</span></td><td>quite a lot of</td><td>Il y a <span class="art">pas mal de</span> monde.</td><td>There are quite a lot of people.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="lecon-box lb-green">
+  <h3>✅ En phrases complètes · In full sentences</h3>
+  <ul>
+    <li>Elle veut plus de temps pour étudier le français. <span class="en-note">— She wants more time to study French.</span></li>
+    <li>Tu as beaucoup de chance d'habiter à Paris ! <span class="en-note">— You're so lucky to live in Paris!</span></li>
+    <li>Je mets un peu de sel dans la soupe. <span class="en-note">— I put a little salt in the soup.</span></li>
+    <li>Il faut boire moins de café et plus d'eau. <span class="en-note">— You should drink less coffee and more water.</span></li>
+  </ul>
+</div>
+
+<!-- ═══ EXPRESSIONS ═══ -->
+<h2 class="section-title st-gold" id="expressions">💬 Expressions de base · Survival phrases</h2>
+
+<div class="formula-grid">
+  <div class="formula-card fc3"><div class="formula-fr">Il y a…</div><div class="formula-en">There is / there are</div><div class="formula-ex">Il y a du pain sur la table.</div></div>
+  <div class="formula-card fc2"><div class="formula-fr">Je voudrais…</div><div class="formula-en">I would like…</div><div class="formula-ex">Je voudrais de la confiture, s'il vous plaît.</div></div>
+  <div class="formula-card fc1"><div class="formula-fr">C'est combien ?</div><div class="formula-en">How much is it?</div><div class="formula-ex">C'est combien en tout ?</div></div>
+  <div class="formula-card fc5"><div class="formula-fr">Vous pouvez répéter ?</div><div class="formula-en">Can you repeat?</div><div class="formula-ex">Pardon, vous pouvez répéter ?</div></div>
+  <div class="formula-card fc4"><div class="formula-fr">Je ne comprends pas</div><div class="formula-en">I don't understand</div><div class="formula-ex">Pardon, je ne comprends pas.</div></div>
+  <div class="formula-card fc6"><div class="formula-fr">Je ne sais pas</div><div class="formula-en">I don't know</div><div class="formula-ex">Quelle heure est-il ? Je ne sais pas.</div></div>
+  <div class="formula-card fc3"><div class="formula-fr">C'est bien / C'est mal</div><div class="formula-en">It's good / It's bad</div><div class="formula-ex">C'est bien de manger des légumes.</div></div>
+  <div class="formula-card fc2"><div class="formula-fr">D'accord / Pas de problème</div><div class="formula-en">OK / No problem</div><div class="formula-ex">Pas de problème !</div></div>
+  <div class="formula-card fc1"><div class="formula-fr">Pas maintenant</div><div class="formula-en">Not now</div><div class="formula-ex">On décide après ? Pas maintenant.</div></div>
+  <div class="formula-card fc5"><div class="formula-fr">Bon appétit !</div><div class="formula-en">Enjoy your meal!</div><div class="formula-ex">Merci ! À vous aussi !</div></div>
+</div>
+
+<!-- ═══ EXERCICES ═══ -->
+<h2 class="section-title st-green" id="exercices">✏️ Exercices</h2>
+
+<!-- EXO 1 -->
+<div class="exo-block exo-red">
+  <h3>Exercice 1 — Complétez avec du, de la, de l' ou des</h3>
+  <p class="exo-consigne">Fill in with the correct partitive article · Complétez avec le bon article partitif</p>
+  <div class="fill-item"><span class="num">1.</span> Au petit-déjeuner, je mange <input class="fill-input" id="e1a" data-answer="du"> pain avec <input class="fill-input" id="e1b" data-answer="de la"> confiture.</div>
+  <div class="fill-item"><span class="num">2.</span> Tu bois <input class="fill-input" id="e2a" data-answer="de l'">eau ou <input class="fill-input" id="e2b" data-answer="du"> jus d'orange le matin ?</div>
+  <div class="fill-item"><span class="num">3.</span> Il achète <input class="fill-input" id="e3a" data-answer="de la"> viande, <input class="fill-input" id="e3b" data-answer="des"> légumes et <input class="fill-input" id="e3c" data-answer="des"> fruits au marché.</div>
+  <div class="fill-item"><span class="num">4.</span> Nous mangeons <input class="fill-input" id="e4" data-answer="du"> fromage après le dîner.</div>
+  <div class="fill-item"><span class="num">5.</span> Vous voulez <input class="fill-input" id="e5a" data-answer="du"> café ou <input class="fill-input" id="e5b" data-answer="du"> thé ?</div>
+  <div class="fill-item"><span class="num">6.</span> Elle met <input class="fill-input" id="e6" data-answer="de l'"> huile d'olive dans la salade.</div>
+  <div class="fill-item"><span class="num">7.</span> Ils boivent <input class="fill-input" id="e7" data-answer="du"> lait tous les matins.</div>
+  <div class="fill-item"><span class="num">8.</span> Au restaurant, je commande <input class="fill-input" id="e8a" data-answer="de la"> soupe et <input class="fill-input" id="e8b" data-answer="du"> poulet.</div>
+  <div class="fill-item"><span class="num">9.</span> Il y a <input class="fill-input" id="e9a" data-answer="du"> beurre et <input class="fill-input" id="e9b" data-answer="des"> œufs dans le réfrigérateur.</div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo1()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo1()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score1"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep1',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep1">
+      1. <strong>du</strong> pain, <strong>de la</strong> confiture &nbsp;|&nbsp; 2. <strong>de l'</strong>eau, <strong>du</strong> jus &nbsp;|&nbsp; 3. <strong>de la</strong> viande, <strong>des</strong> légumes, <strong>des</strong> fruits<br>
+      4. <strong>du</strong> fromage &nbsp;|&nbsp; 5. <strong>du</strong> café, <strong>du</strong> thé &nbsp;|&nbsp; 6. <strong>de l'</strong>huile &nbsp;|&nbsp; 7. <strong>du</strong> lait &nbsp;|&nbsp; 8. <strong>de la</strong> soupe, <strong>du</strong> poulet &nbsp;|&nbsp; 9. <strong>du</strong> beurre, <strong>des</strong> œufs
+    </div>
+  </div>
+</div>
+
+<!-- EXO 2 : négation -->
+<div class="exo-block exo-violet">
+  <h3>Exercice 2 — Transformez à la forme négative · Make it negative</h3>
+  <p class="exo-consigne">Rewrite with the correct negative form (ne… pas de / pas d') · Récrivez à la forme négative</p>
+  <div class="fill-item"><span class="num">1.</span> Je bois du café. → Je ne bois pas <input class="fill-input" id="n1" data-answer="de"> café.</div>
+  <div class="fill-item"><span class="num">2.</span> Il a de la chance. → Il n'a pas <input class="fill-input" id="n2" data-answer="de"> chance.</div>
+  <div class="fill-item"><span class="num">3.</span> Nous avons des baskets. → Nous n'avons pas <input class="fill-input" id="n3" data-answer="de"> baskets.</div>
+  <div class="fill-item"><span class="num">4.</span> Elle prend de l'énergie. → Elle ne prend pas <input class="fill-input" id="n4" data-answer="d'"> énergie.</div>
+  <div class="fill-item"><span class="num">5.</span> Ils mangent du fromage. → Ils ne mangent pas <input class="fill-input" id="n5" data-answer="de"> fromage.</div>
+  <div class="fill-item"><span class="num">6.</span> Tu veux de la sauce. → Tu ne veux pas <input class="fill-input" id="n6" data-answer="de"> sauce.</div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo2()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo2()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score2"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep2',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep2">
+      À la forme négative → toujours <strong>de / d'</strong> : pas <strong>de</strong> café, pas <strong>de</strong> chance, pas <strong>de</strong> baskets, pas <strong>d'</strong>énergie, pas <strong>de</strong> fromage, pas <strong>de</strong> sauce.
+    </div>
+  </div>
+</div>
+
+<!-- EXO 3 : quantités -->
+<div class="exo-block exo-teal">
+  <h3>Exercice 3 — Plus de, moins de, beaucoup de…</h3>
+  <p class="exo-consigne">Complete with the right quantity expression · Complétez avec la bonne expression de quantité</p>
+  <div class="choix-item">
+    <p><strong>1.</strong> Je voudrais ___ sauce, s'il vous plaît. (je veux une quantité supérieure)</p>
+    <label><input type="radio" name="q1" value="a"> moins de</label>
+    <label><input type="radio" name="q1" value="b"> plus de</label>
+    <label><input type="radio" name="q1" value="c"> peu de</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>2.</strong> Il y a ___ monde au marché aujourd'hui ! (une très grande quantité)</p>
+    <label><input type="radio" name="q2" value="a"> beaucoup de</label>
+    <label><input type="radio" name="q2" value="b"> un peu de</label>
+    <label><input type="radio" name="q2" value="c"> moins de</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>3.</strong> Je mets seulement ___ sel dans la soupe. (une petite quantité)</p>
+    <label><input type="radio" name="q3" value="a"> trop de</label>
+    <label><input type="radio" name="q3" value="b"> un peu de</label>
+    <label><input type="radio" name="q3" value="c"> beaucoup de</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>4.</strong> Tu bois ___ soda : c'est mauvais pour la santé ! (une quantité excessive)</p>
+    <label><input type="radio" name="q4" value="a"> assez de</label>
+    <label><input type="radio" name="q4" value="b"> un peu de</label>
+    <label><input type="radio" name="q4" value="c"> trop de</label>
+  </div>
+  <div class="choix-item">
+    <p><strong>5.</strong> On a ___ pain pour tout le monde, ne vous inquiétez pas. (quantité suffisante)</p>
+    <label><input type="radio" name="q5" value="a"> assez de</label>
+    <label><input type="radio" name="q5" value="b"> plus de</label>
+    <label><input type="radio" name="q5" value="c"> moins de</label>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo3()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo3()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score3"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep3',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep3">
+      1. <strong>plus de</strong> &nbsp;|&nbsp; 2. <strong>beaucoup de</strong> &nbsp;|&nbsp; 3. <strong>un peu de</strong> &nbsp;|&nbsp; 4. <strong>trop de</strong> &nbsp;|&nbsp; 5. <strong>assez de</strong>
+    </div>
+  </div>
+</div>
+
+<!-- EXO 4 : partitif ou "de" ? -->
+<div class="exo-block exo-green">
+  <h3>Exercice 4 — Article partitif ou « de » ? · Partitive or plain "de"?</h3>
+  <p class="exo-consigne">Choose the correct form: du / de la / de l' / des / de / d' · Choisissez la forme correcte</p>
+  <div class="fill-item"><span class="num">1.</span> Je mange <input class="fill-input" id="p1" data-answer="du"> fromage, mais je ne mange pas <input class="fill-input" id="p2" data-answer="de"> viande.</div>
+  <div class="fill-item"><span class="num">2.</span> Il y a <input class="fill-input" id="p3" data-answer="de l'"> eau dans la bouteille ? Non, il n'y a pas <input class="fill-input" id="p4" data-answer="d'"> eau.</div>
+  <div class="fill-item"><span class="num">3.</span> Elle veut <input class="fill-input" id="p5" data-answer="des"> fraises, mais pas <input class="fill-input" id="p6" data-answer="de"> bananes.</div>
+  <div class="fill-item"><span class="num">4.</span> Nous buvons <input class="fill-input" id="p7" data-answer="du"> thé avec <input class="fill-input" id="p8" data-answer="un peu de"> sucre.</div>
+  <div class="fill-item"><span class="num">5.</span> C'est <input class="fill-input" id="p9" data-answer="du"> poulet ? Non, ce n'est pas <input class="fill-input" id="p10" data-answer="du"> poulet, c'est du poisson ! <em>(⚠️ verbe être)</em></div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo4()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo4()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score4"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep4',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep4">
+      1. <strong>du</strong> / pas <strong>de</strong> &nbsp;|&nbsp; 2. <strong>de l'</strong> / pas <strong>d'</strong> &nbsp;|&nbsp; 3. <strong>des</strong> / pas <strong>de</strong> &nbsp;|&nbsp; 4. <strong>du</strong> thé, <strong>un peu de</strong> sucre &nbsp;|&nbsp; 5. <strong>du</strong> poulet… ce n'est pas <strong>du</strong> poulet (exception avec <strong>être</strong> !)
+    </div>
+  </div>
+</div>
+
+<!-- EXO 5 : traduction -->
+<div class="exo-block exo-gold">
+  <h3>Exercice 5 — Translate into French · Traduisez en français</h3>
+  <p class="exo-consigne">Write the full sentence in French · Écrivez la phrase entière en français</p>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;">
+    <span><span class="num">1.</span> <em>I eat some bread with some butter.</em></span>
+    <input class="fill-input phrase-input" id="s1" placeholder="Écrivez la phrase en français…" data-answers="je mange du pain avec du beurre" style="width:100%;max-width:480px">
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.7rem;">
+    <span><span class="num">2.</span> <em>She drinks a lot of water.</em></span>
+    <input class="fill-input phrase-input" id="s2" placeholder="Écrivez la phrase en français…" data-answers="elle boit beaucoup d'eau|elle boit beaucoup de eau" style="width:100%;max-width:480px">
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.7rem;">
+    <span><span class="num">3.</span> <em>We don't want any meat.</em></span>
+    <input class="fill-input phrase-input" id="s3" placeholder="Écrivez la phrase en français…" data-answers="nous ne voulons pas de viande|on ne veut pas de viande" style="width:100%;max-width:480px">
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.7rem;">
+    <span><span class="num">4.</span> <em>There is some jam and some eggs in the fridge.</em></span>
+    <input class="fill-input phrase-input" id="s4" placeholder="Écrivez la phrase en français…" data-answers="il y a de la confiture et des oeufs dans le frigo|il y a de la confiture et des œufs dans le refrigerateur|il y a de la confiture et des œufs dans le frigo|il y a de la confiture et des oeufs dans le refrigerateur" style="width:100%;max-width:480px">
+  </div>
+  <div class="fill-item" style="flex-direction:column;align-items:flex-start;gap:0.3rem;margin-top:0.7rem;">
+    <span><span class="num">5.</span> <em>I would like a little sugar, please.</em></span>
+    <input class="fill-input phrase-input" id="s5" placeholder="Écrivez la phrase en français…" data-answers="je voudrais un peu de sucre s'il vous plait|je voudrais un peu de sucre" style="width:100%;max-width:480px">
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkExo5()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetExo5()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="score5"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('rep5',this)"><span class="arrow">▶</span> Voir les réponses · Show answers</button>
+    <div class="reponse-content" id="rep5">
+      1. Je mange <strong>du</strong> pain avec <strong>du</strong> beurre.<br>
+      2. Elle boit <strong>beaucoup d'</strong>eau.<br>
+      3. Nous ne voulons pas <strong>de</strong> viande.<br>
+      4. Il y a <strong>de la</strong> confiture et <strong>des</strong> œufs dans le frigo.<br>
+      5. Je voudrais <strong>un peu de</strong> sucre, s'il vous plaît.
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TEST VOCABULAIRE EN→FR ═══ -->
+<h2 class="section-title st-teal" id="testvocab">🧠 Test de vocabulaire : de l'anglais vers le français</h2>
+
+<div class="exo-block exo-teal">
+  <h3>Traduisez · Translate into French</h3>
+  <p class="exo-consigne">Écrivez le mot français. Bloqué·e ? Cliquez sur le mot flouté pour le révéler (essayez d'abord sans !) · Write the French word. Stuck? Click the blurred word to reveal it.</p>
+  <div class="vocabtest-list">
+    <div class="vt-item"><span class="vt-num">1.</span><span class="vt-en">bread</span><input class="vt-input" id="w1" placeholder="français…" data-answers="le pain|du pain|pain"><span class="vt-hint" onclick="this.classList.add('revealed')">le pain</span></div>
+    <div class="vt-item"><span class="vt-num">2.</span><span class="vt-en">cheese</span><input class="vt-input" id="w2" placeholder="français…" data-answers="le fromage|du fromage|fromage"><span class="vt-hint" onclick="this.classList.add('revealed')">le fromage</span></div>
+    <div class="vt-item"><span class="vt-num">3.</span><span class="vt-en">water</span><input class="vt-input" id="w3" placeholder="français…" data-answers="l'eau|de l'eau|l'eau|eau"><span class="vt-hint" onclick="this.classList.add('revealed')">l'eau</span></div>
+    <div class="vt-item"><span class="vt-num">4.</span><span class="vt-en">jam</span><input class="vt-input" id="w4" placeholder="français…" data-answers="la confiture|de la confiture|confiture"><span class="vt-hint" onclick="this.classList.add('revealed')">la confiture</span></div>
+    <div class="vt-item"><span class="vt-num">5.</span><span class="vt-en">meat</span><input class="vt-input" id="w5" placeholder="français…" data-answers="la viande|de la viande|viande"><span class="vt-hint" onclick="this.classList.add('revealed')">la viande</span></div>
+    <div class="vt-item"><span class="vt-num">6.</span><span class="vt-en">eggs</span><input class="vt-input" id="w6" placeholder="français…" data-answers="les oeufs|les œufs|des oeufs|des œufs|oeufs|œufs"><span class="vt-hint" onclick="this.classList.add('revealed')">les œufs</span></div>
+    <div class="vt-item"><span class="vt-num">7.</span><span class="vt-en">olive oil</span><input class="vt-input" id="w7" placeholder="français…" data-answers="l'huile d'olive|de l'huile d'olive|huile d'olive"><span class="vt-hint" onclick="this.classList.add('revealed')">l'huile d'olive</span></div>
+    <div class="vt-item"><span class="vt-num">8.</span><span class="vt-en">vegetables</span><input class="vt-input" id="w8" placeholder="français…" data-answers="les legumes|les légumes|des legumes|des légumes|legumes|légumes"><span class="vt-hint" onclick="this.classList.add('revealed')">les légumes</span></div>
+    <div class="vt-item"><span class="vt-num">9.</span><span class="vt-en">butter</span><input class="vt-input" id="w9" placeholder="français…" data-answers="le beurre|du beurre|beurre"><span class="vt-hint" onclick="this.classList.add('revealed')">le beurre</span></div>
+    <div class="vt-item"><span class="vt-num">10.</span><span class="vt-en">fish</span><input class="vt-input" id="w10" placeholder="français…" data-answers="le poisson|du poisson|poisson"><span class="vt-hint" onclick="this.classList.add('revealed')">le poisson</span></div>
+    <div class="vt-item"><span class="vt-num">11.</span><span class="vt-en">sugar</span><input class="vt-input" id="w11" placeholder="français…" data-answers="le sucre|du sucre|sucre"><span class="vt-hint" onclick="this.classList.add('revealed')">le sucre</span></div>
+    <div class="vt-item"><span class="vt-num">12.</span><span class="vt-en">chicken</span><input class="vt-input" id="w12" placeholder="français…" data-answers="le poulet|du poulet|poulet"><span class="vt-hint" onclick="this.classList.add('revealed')">le poulet</span></div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-check" onclick="checkVocab()">Vérifier ✓</button>
+    <button class="btn btn-reset" onclick="resetVocab()">Recommencer ↺</button>
+  </div>
+  <div class="score-banner" id="scoreV"></div>
+  <div class="reponse-box">
+    <button class="toggle-btn" onclick="toggleRep('repV',this)"><span class="arrow">▶</span> Voir toutes les réponses · Show all answers</button>
+    <div class="reponse-content" id="repV">
+      1. <strong>le pain</strong> &nbsp;|&nbsp; 2. <strong>le fromage</strong> &nbsp;|&nbsp; 3. <strong>l'eau</strong> &nbsp;|&nbsp; 4. <strong>la confiture</strong> &nbsp;|&nbsp; 5. <strong>la viande</strong> &nbsp;|&nbsp; 6. <strong>les œufs</strong><br>
+      7. <strong>l'huile d'olive</strong> &nbsp;|&nbsp; 8. <strong>les légumes</strong> &nbsp;|&nbsp; 9. <strong>le beurre</strong> &nbsp;|&nbsp; 10. <strong>le poisson</strong> &nbsp;|&nbsp; 11. <strong>le sucre</strong> &nbsp;|&nbsp; 12. <strong>le poulet</strong>
+    </div>
+  </div>
+</div>
+
+<!-- BILAN -->
+<div class="lecon-box lb-amber">
+  <h3>🧾 À retenir · Takeaway</h3>
+  <p style="font-size:0.96rem;line-height:2;">
+    ✅ Une quantité indéterminée → <strong>du / de la / de l' / des</strong> (jamais l'article zéro comme en anglais !).<br>
+    ✅ Forme négative → toujours <strong>pas de / pas d'</strong>… sauf après le verbe <strong>être</strong> (ce n'est pas <em>du</em> poulet).<br>
+    ✅ Après une expression de quantité → <strong>de</strong> seulement : <em>plus de, moins de, beaucoup de, un peu de, trop de, assez de</em>.<br>
+    ✅ Au marché et au restaurant : <em>je voudrais…, il y a…, c'est combien ?</em> sont vos alliés !
+  </p>
+</div>
+
+</main>
+
+<footer>
+  🇫🇷 Leçon FLE · Les articles partitifs pour anglophones · du, de la, de l', des · © 2025
+</footer>
+
+<script>
+function toggleRep(id, btn) {
+  document.getElementById(id).classList.toggle('visible');
+  btn.classList.toggle('open');
+}
+function showScore(id, correct, total) {
+  const el = document.getElementById(id);
+  const pct = Math.round(correct/total*100);
+  if (pct===100) { el.textContent='🏆 Parfait ! Perfect ! Score : '+correct+'/'+total; el.className='score-banner score-perfect'; }
+  else if (pct>=60){ el.textContent='👍 Bien ! Good job ! '+correct+'/'+total+' ('+pct+'%)'; el.className='score-banner score-good'; }
+  else { el.textContent='💪 Continuez ! Keep going ! '+correct+'/'+total+' ('+pct+'%)'; el.className='score-banner score-try'; }
+  el.style.display='block';
+}
+function normalize(s) {
+  return s.toLowerCase()
+    .replace(/[’‘]/g, "'")
+    .replace(/[.,!?;:]/g, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+function checkMulti(ids) {
+  let c=0;
+  ids.forEach(id=>{
+    const i=document.getElementById(id);
+    const v=normalize(i.value);
+    const accepted=i.dataset.answers ? i.dataset.answers.split('|').map(normalize) : [normalize(i.dataset.answer)];
+    i.classList.remove('correct','incorrect');
+    if(accepted.includes(v) && v!==''){i.classList.add('correct');c++;}
+    else if(v!=='') i.classList.add('incorrect');
+  });
+  return c;
+}
+function resetMulti(ids,sid){
+  ids.forEach(id=>{const i=document.getElementById(id);i.value='';i.classList.remove('correct','incorrect');});
+  const s=document.getElementById(sid);s.style.display='none';s.className='score-banner';
+}
+const exo1=['e1a','e1b','e2a','e2b','e3a','e3b','e3c','e4','e5a','e5b','e6','e7','e8a','e8b','e9a','e9b'];
+const exo2=['n1','n2','n3','n4','n5','n6'];
+const exo4=['p1','p2','p3','p4','p5','p6','p7','p8','p9','p10'];
+const exo5=['s1','s2','s3','s4','s5'];
+function checkExo1(){ showScore('score1',checkMulti(exo1),exo1.length); }
+function resetExo1(){ resetMulti(exo1,'score1'); }
+function checkExo2(){ showScore('score2',checkMulti(exo2),exo2.length); }
+function resetExo2(){ resetMulti(exo2,'score2'); }
+function checkExo4(){ showScore('score4',checkMulti(exo4),exo4.length); }
+function resetExo4(){ resetMulti(exo4,'score4'); }
+function checkExo5(){ showScore('score5',checkMulti(exo5),exo5.length); }
+function resetExo5(){ resetMulti(exo5,'score5'); }
+
+const ans3={q1:'b',q2:'a',q3:'b',q4:'c',q5:'a'};
+function checkExo3(){
+  let c=0;
+  Object.entries(ans3).forEach(([n,a])=>{
+    const rs=document.querySelectorAll('input[name="'+n+'"]');
+    rs.forEach(r=>{r.parentElement.style.background='';r.parentElement.style.color='';});
+    const sel=document.querySelector('input[name="'+n+'"]:checked');
+    if(sel){
+      if(sel.value===a){sel.parentElement.style.background='#c8f0cc';sel.parentElement.style.color='#1a5020';c++;}
+      else{
+        sel.parentElement.style.background='#fcc8d0';sel.parentElement.style.color='#801020';
+        rs.forEach(r=>{if(r.value===a){r.parentElement.style.background='#c8f0cc';r.parentElement.style.color='#1a5020';}});
+      }
+    }
+  });
+  showScore('score3',c,5);
+}
+function resetExo3(){
+  Object.keys(ans3).forEach(n=>{
+    document.querySelectorAll('input[name="'+n+'"]').forEach(r=>{r.checked=false;r.parentElement.style.background='';r.parentElement.style.color='';});
+  });
+  const s=document.getElementById('score3');s.style.display='none';s.className='score-banner';
+}
+
+const vocabIds=['w1','w2','w3','w4','w5','w6','w7','w8','w9','w10','w11','w12'];
+function checkVocab(){ showScore('scoreV',checkMulti(vocabIds),vocabIds.length); }
+function resetVocab(){
+  resetMulti(vocabIds,'scoreV');
+  document.querySelectorAll('.vt-hint').forEach(h=>h.classList.remove('revealed'));
+}
+</script>
+</body>
+</html>
