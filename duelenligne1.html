@@ -1,0 +1,1120 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Chronoduel en ligne - Conjugaison</title>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: linear-gradient(145deg, #1a2a4f 0%, #0f1a2f 100%);
+    min-height: 100vh; display: flex; justify-content: center; align-items: center;
+    padding: 16px; color: white;
+}
+.game-container {
+    max-width: 900px; width: 100%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: 48px; border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.1);
+    padding: 32px 24px; transition: all .3s ease;
+}
+h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0.5px;
+     text-shadow: 0 4px 8px rgba(0,0,0,0.5); display: flex; align-items: center;
+     justify-content: center; gap: 15px; margin-bottom: 8px; }
+.sub-header { display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
+    font-size: 1.1rem; background: rgba(0,0,0,0.3); border-radius: 60px; padding: 12px 24px;
+    margin: 20px 0 25px 0; border: 1px solid rgba(255,255,255,0.15); gap: 10px; }
+.badge { background: #ffd966; color: #1f2a44; font-weight: 700; padding: 6px 18px;
+    border-radius: 40px; font-size: .9rem; box-shadow: 0 2px 4px rgba(0,0,0,.3); }
+.hidden { display: none !important; }
+
+.mode-choice { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
+.mode-card { flex: 1 1 280px; background: rgba(0,0,0,0.3); border-radius: 32px; padding: 28px 20px;
+    text-align: center; border: 2px solid rgba(255,255,255,0.25); cursor: pointer; transition: .2s; }
+.mode-card:hover { transform: translateY(-4px); border-color: #2dd4bf; }
+.mode-card .big { font-size: 3rem; }
+.mode-card h2 { margin: 10px 0 8px; font-size: 1.4rem; }
+.mode-card p { color: #b0c4de; font-size: 1.05rem; line-height: 1.5; }
+
+.players-setup { background: rgba(255,255,255,0.05); border-radius: 40px; padding: 25px;
+    margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.2);
+    display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
+.player-card { flex: 1 1 250px; background: rgba(0,0,0,0.3); border-radius: 32px;
+    padding: 20px; text-align: center; border: 2px solid; transition: .2s; }
+.player-card.blue { border-color: #3b82f6; box-shadow: 0 8px 0 #1e3a8a; }
+.player-card.red { border-color: #ef4444; box-shadow: 0 8px 0 #991b1b; }
+.player-card input { width: 100%; padding: 14px 20px; border-radius: 60px; background: white;
+    font-size: 1.1rem; font-weight: 600; text-align: center; margin: 15px 0 5px 0;
+    border: 3px solid transparent; }
+.player-card.blue input:focus { border-color: #3b82f6; outline: none; }
+.player-card.red input:focus { border-color: #ef4444; outline: none; }
+.btn-join { background: #2dd4bf; border: none; color: #0b1e33; font-weight: bold; font-size: 1.2rem;
+    padding: 14px 30px; border-radius: 60px; cursor: pointer; transition: .2s;
+    box-shadow: 0 6px 0 #0f766e; margin-top: 10px; width: 100%; }
+.btn-join:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #0f766e; background: #2abfaa; }
+.btn-join:disabled { opacity: .5; cursor: wait; }
+.center-note { text-align: center; font-size: 1.3rem; margin: 10px 0 20px; }
+.room-code { font-size: 2.6rem; font-weight: 900; letter-spacing: 8px; color: #ffd966;
+    background: rgba(0,0,0,0.4); border: 2px dashed #ffd966; border-radius: 30px;
+    padding: 15px 30px; display: inline-block; margin: 15px 0; }
+.status-line { text-align: center; font-size: 1.15rem; color: #b0c4de; margin: 10px 0 5px; }
+.status-line.err { color: #fca5a5; }
+
+.scoreboard { display: flex; justify-content: space-between; align-items: center;
+    background: rgba(0,0,0,0.4); border-radius: 120px; padding: 12px 30px; margin: 20px 0 25px 0;
+    font-size: 1.4rem; font-weight: 700; border: 1px solid #ffffff30; gap: 8px; flex-wrap: wrap; }
+.score { background: white; color: #0d1b2e; padding: 8px 28px; border-radius: 60px;
+    font-size: 2rem; min-width: 90px; text-align: center; }
+.question-panel { background: rgba(255,255,255,0.08); border-radius: 48px; padding: 35px 20px;
+    text-align: center; border: 3px dashed #fbbf24; margin-bottom: 30px; }
+.consigne { font-size: 1.4rem; background: #2d3b5a; display: inline-block; padding: 8px 35px;
+    border-radius: 60px; color: #fde047; border: 2px solid #fde047; margin-bottom: 20px; font-weight: 600; }
+.phrase-a-deviner { font-size: 2.2rem; font-weight: 700; line-height: 1.4;
+    text-shadow: 0 4px 0 #0f172a; margin: 15px 0 10px 0; word-break: break-word; }
+.verbe-indication { font-size: 1.3rem; color: #93c5fd; margin-bottom: 5px; font-style: italic; }
+.boutons-reponse { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 30px 0 20px; }
+.btn-reponse { flex: 1 1 180px; padding: 24px 15px; font-size: 1.5rem; font-weight: 700; border: none;
+    border-radius: 80px; background: white; color: #0f172a; cursor: pointer; transition: .1s ease;
+    box-shadow: 0 10px 0 #64748b, 0 4px 12px black; border: 2px solid rgba(255,255,255,0.5);
+    min-height: 85px; display: flex; align-items: center; justify-content: center; }
+.btn-reponse.c1 { background: #d9f0e1; }
+.btn-reponse.c2 { background: #f8d7da; }
+.btn-reponse.c3 { background: #fff3cd; }
+.btn-reponse:active { transform: translateY(6px); box-shadow: 0 4px 0 #334155; }
+.btn-reponse:disabled { opacity: 0.4; transform: none; pointer-events: none; }
+.btn-reponse.attente { opacity: .55; pointer-events: none; }
+.timer-info { font-size: 1.8rem; background: #1e2a47; display: inline-block; padding: 12px 40px;
+    border-radius: 60px; color: #ffd966; border: 2px solid #ffd966; margin: 15px auto 5px; font-weight: 600; }
+.feedback-message { min-height: 60px; font-size: 1.5rem; font-weight: 500; color: #fde047; margin: 10px 0; }
+.footer-stats { display: flex; justify-content: space-between; color: #b0c4de; margin-top: 20px;
+    font-size: 1.3rem; flex-wrap: wrap; gap: 8px; }
+.restart-btn { background: none; border: 2px solid white; color: white; padding: 10px 30px;
+    border-radius: 40px; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: .2s; margin-top: 20px; }
+.restart-btn:hover { background: white; color: #0f172a; }
+.back-btn { background: none; border: none; color: #b0c4de; font-size: 1.1rem; cursor: pointer;
+    text-decoration: underline; margin-top: 15px; }
+.back-btn:hover { color: white; }
+@media (max-width: 600px) {
+    .phrase-a-deviner { font-size: 1.4rem; }
+    .scoreboard { font-size: 1rem; padding: 10px 15px; }
+    .score { font-size: 1.4rem; min-width: 60px; padding: 6px 16px; }
+    h1 { font-size: 1.7rem; }
+    .btn-reponse { font-size: 1.15rem; padding: 16px 10px; min-height: 70px; }
+}
+</style>
+</head>
+<body>
+<div class="game-container">
+    <h1><span>⚡</span> CHRONODUEL <span>⏳</span></h1>
+    <div class="sub-header">
+        <span class="badge">80 phrases</span>
+        <span class="badge">Présent</span>
+        <span class="badge">Passé composé</span>
+        <span class="badge">Futur proche</span>
+        <span class="badge">Futur simple</span>
+    </div>
+
+    <div id="modeScreen">
+        <div class="mode-choice">
+            <div class="mode-card" id="btnOnline">
+                <div class="big">🌐</div>
+                <h2>Jouer en ligne</h2>
+                <p>Chacun sur son appareil (ordinateur ou téléphone).<br>Tu crées une partie et tu donnes le code à ton élève.</p>
+            </div>
+            <div class="mode-card" id="btnLocal">
+                <div class="big">👥</div>
+                <h2>Jouer sur le même écran</h2>
+                <p>Deux joueurs devant le même ordinateur,<br>ou chacun chez soi en visio (partage d'écran).</p>
+            </div>
+            <div class="mode-card" id="btnSolo">
+                <div class="big">🎯</div>
+                <h2>Jouer seul</h2>
+                <p>Entraîne-toi à ton rythme,<br>ton meilleur score est mémorisé.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="onlineScreen" class="hidden">
+        <div class="players-setup">
+            <div class="player-card blue">
+                <div style="font-size:3rem;">🧑‍🏫</div>
+                <h2>Prof / Hébergeur</h2>
+                <input type="text" id="hostName" placeholder="Ton prénom" value="Prof">
+                <button class="btn-join" id="createBtn">🎮 Créer la partie</button>
+            </div>
+            <div class="player-card red">
+                <div style="font-size:3rem;">🧑‍🎓</div>
+                <h2>Élève</h2>
+                <input type="text" id="guestName" placeholder="Ton prénom" value="Élève">
+                <input type="text" id="joinCode" placeholder="Code de la partie" maxlength="4" style="text-transform:uppercase; letter-spacing:6px;">
+                <button class="btn-join" id="joinBtn">👉 Rejoindre la partie</button>
+            </div>
+        </div>
+        <div class="center-note">La personne qui crée la partie reçoit un <b>code à 4 lettres</b> à communiquer (téléphone, SMS, mail…).</div>
+        <div class="status-line" id="onlineStatus"></div>
+        <div class="status-line"><button class="back-btn" id="backFromOnline">← Retour</button></div>
+    </div>
+
+    <div id="localScreen" class="hidden">
+        <div class="players-setup">
+            <div class="player-card blue">
+                <div style="font-size:3rem;">🔵</div>
+                <h2>Joueur 1</h2>
+                <input type="text" id="p1Name" placeholder="Nom du joueur 1" value="Alex">
+            </div>
+            <div class="player-card red">
+                <div style="font-size:3rem;">🔴</div>
+                <h2>Joueur 2</h2>
+                <input type="text" id="p2Name" placeholder="Nom du joueur 2" value="Sam">
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn-join" style="max-width:400px;" id="localStartBtn">🚀 Commencer le duel</button>
+        </div>
+        <div class="status-line"><button class="back-btn" id="backFromLocal">← Retour</button></div>
+    </div>
+
+    <div id="soloScreen" class="hidden">
+        <div class="players-setup">
+            <div class="player-card blue" style="flex:0 1 340px;">
+                <div style="font-size:3rem;">🎯</div>
+                <h2>Joueur solo</h2>
+                <input type="text" id="soloName" placeholder="Ton prénom" value="Champion">
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn-join" style="max-width:400px;" id="soloStartBtn">🚀 Commencer l'entraînement</button>
+        </div>
+        <div class="status-line" id="soloBest"></div>
+        <div class="status-line"><button class="back-btn" id="backFromSolo">← Retour</button></div>
+    </div>
+
+    <div id="gameScreen" class="hidden">
+        <div class="scoreboard">
+            <span id="p1Label">🔵 Joueur 1</span>
+            <span class="score" id="score1">0</span>
+            <span style="font-size:1.6rem;">⚔️</span>
+            <span class="score" id="score2">0</span>
+            <span id="p2Label">🔴 Joueur 2</span>
+        </div>
+        <div class="question-panel">
+            <div class="consigne" id="tourIndicator">…</div>
+            <div class="verbe-indication" id="verbeIndication"></div>
+            <div class="phrase-a-deviner" id="phraseActuelle">…</div>
+            <div class="boutons-reponse" id="boutonsReponse"></div>
+            <div class="timer-info" id="timerDisplay">⏱️ 25s</div>
+            <div class="feedback-message" id="feedbackMessage">…</div>
+        </div>
+        <div class="footer-stats">
+            <span id="compteurPhrases">Défi 1/60</span>
+            <span id="onlineInfo" class="hidden">🌐 Connectés !</span>
+        </div>
+        <div style="text-align:center;">
+            <button class="restart-btn" id="restartBtn">🔄 Nouveau duel</button>
+        </div>
+        <div class="status-line"><button class="back-btn" id="backFromGame">← Quitter la partie</button></div>
+    </div>
+</div>
+
+<script>
+(function () {
+    // ---------- 80 PHRASES : 3 PROPOSITIONS = 3 TEMPS DIFFÉRENTS ----------
+    const phrasesListe = [
+        // ===== PRÉSENT (20) =====
+        { phrase: "Je ... une pomme.", infinitif: "manger", temps: "present",
+          options: [
+            { forme: "mange", temps: "present" },
+            { forme: "ai mangé", temps: "passe" },
+            { forme: "mangerai", temps: "futursimple" }
+          ]},
+        { phrase: "Il ... très bien.", infinitif: "chanter", temps: "present",
+          options: [
+            { forme: "chante", temps: "present" },
+            { forme: "a chanté", temps: "passe" },
+            { forme: "va chanter", temps: "futur" }
+          ]},
+        { phrase: "Nous ... chaque soir.", infinitif: "danser", temps: "present",
+          options: [
+            { forme: "dansons", temps: "present" },
+            { forme: "avons dansé", temps: "passe" },
+            { forme: "danserons", temps: "futursimple" }
+          ]},
+        { phrase: "Vous ... le café.", infinitif: "prendre", temps: "present",
+          options: [
+            { forme: "prenez", temps: "present" },
+            { forme: "avez pris", temps: "passe" },
+            { forme: "allez prendre", temps: "futur" }
+          ]},
+        { phrase: "Tu ... une lettre.", infinitif: "écrire", temps: "present",
+          options: [
+            { forme: "écris", temps: "present" },
+            { forme: "as écrit", temps: "passe" },
+            { forme: "écriras", temps: "futursimple" }
+          ]},
+        { phrase: "On ... français.", infinitif: "parler", temps: "present",
+          options: [
+            { forme: "parle", temps: "present" },
+            { forme: "a parlé", temps: "passe" },
+            { forme: "va parler", temps: "futur" }
+          ]},
+        { phrase: "Elle ... un magazine.", infinitif: "lire", temps: "present",
+          options: [
+            { forme: "lit", temps: "present" },
+            { forme: "a lu", temps: "passe" },
+            { forme: "lira", temps: "futursimple" }
+          ]},
+        { phrase: "Nous ... ensemble.", infinitif: "réfléchir", temps: "present",
+          options: [
+            { forme: "réfléchissons", temps: "present" },
+            { forme: "avons réfléchi", temps: "passe" },
+            { forme: "allons réfléchir", temps: "futur" }
+          ]},
+        { phrase: "Il ... beaucoup.", infinitif: "pleuvoir", temps: "present",
+          options: [
+            { forme: "pleut", temps: "present" },
+            { forme: "a plu", temps: "passe" },
+            { forme: "pleuvra", temps: "futursimple" }
+          ]},
+        { phrase: "Nous ... un gâteau.", infinitif: "vouloir", temps: "present",
+          options: [
+            { forme: "voulons", temps: "present" },
+            { forme: "avons voulu", temps: "passe" },
+            { forme: "voudrons", temps: "futursimple" }
+          ]},
+        { phrase: "Vous ... en vacances.", infinitif: "partir", temps: "present",
+          options: [
+            { forme: "partez", temps: "present" },
+            { forme: "êtes partis", temps: "passe" },
+            { forme: "allez partir", temps: "futur" }
+          ]},
+        { phrase: "Tu ... un paysage.", infinitif: "dessiner", temps: "present",
+          options: [
+            { forme: "dessines", temps: "present" },
+            { forme: "as dessiné", temps: "passe" },
+            { forme: "dessineras", temps: "futursimple" }
+          ]},
+        { phrase: "On ... la fenêtre.", infinitif: "ouvrir", temps: "present",
+          options: [
+            { forme: "ouvre", temps: "present" },
+            { forme: "a ouvert", temps: "passe" },
+            { forme: "va ouvrir", temps: "futur" }
+          ]},
+        { phrase: "Je ... le métro.", infinitif: "prendre", temps: "present",
+          options: [
+            { forme: "prends", temps: "present" },
+            { forme: "ai pris", temps: "passe" },
+            { forme: "prendrai", temps: "futursimple" }
+          ]},
+        { phrase: "Ils ... de la musique.", infinitif: "écouter", temps: "present",
+          options: [
+            { forme: "écoutent", temps: "present" },
+            { forme: "ont écouté", temps: "passe" },
+            { forme: "vont écouter", temps: "futur" }
+          ]},
+        { phrase: "Je ... tous les jours.", infinitif: "courir", temps: "present",
+          options: [
+            { forme: "cours", temps: "present" },
+            { forme: "ai couru", temps: "passe" },
+            { forme: "courrai", temps: "futursimple" }
+          ]},
+        { phrase: "Il ... en montagne.", infinitif: "neiger", temps: "present",
+          options: [
+            { forme: "neige", temps: "present" },
+            { forme: "a neigé", temps: "passe" },
+            { forme: "va neiger", temps: "futur" }
+          ]},
+        { phrase: "Nous ... profondément.", infinitif: "dormir", temps: "present",
+          options: [
+            { forme: "dormons", temps: "present" },
+            { forme: "avons dormi", temps: "passe" },
+            { forme: "dormirons", temps: "futursimple" }
+          ]},
+        { phrase: "Tu ... avec nous ?", infinitif: "venir", temps: "present",
+          options: [
+            { forme: "viens", temps: "present" },
+            { forme: "es venu", temps: "passe" },
+            { forme: "vas venir", temps: "futur" }
+          ]},
+        { phrase: "Je ... du sport.", infinitif: "faire", temps: "present",
+          options: [
+            { forme: "fais", temps: "present" },
+            { forme: "ai fait", temps: "passe" },
+            { forme: "ferai", temps: "futursimple" }
+          ]},
+
+        // ===== PASSÉ COMPOSÉ (20) =====
+        { phrase: "Tu ... ton travail.", infinitif: "finir", temps: "passe",
+          options: [
+            { forme: "finis", temps: "present" },
+            { forme: "as fini", temps: "passe" },
+            { forme: "finiras", temps: "futursimple" }
+          ]},
+        { phrase: "Elle ... en vacances.", infinitif: "partir", temps: "passe",
+          options: [
+            { forme: "part", temps: "present" },
+            { forme: "est partie", temps: "passe" },
+            { forme: "va partir", temps: "futur" }
+          ]},
+        { phrase: "J'... du pain.", infinitif: "acheter", temps: "passe",
+          options: [
+            { forme: "achète", temps: "present" },
+            { forme: "ai acheté", temps: "passe" },
+            { forme: "achèterai", temps: "futursimple" }
+          ]},
+        { phrase: "Elles ... tôt.", infinitif: "arriver", temps: "passe",
+          options: [
+            { forme: "arrivent", temps: "present" },
+            { forme: "sont arrivées", temps: "passe" },
+            { forme: "vont arriver", temps: "futur" }
+          ]},
+        { phrase: "Nous ... un spectacle.", infinitif: "voir", temps: "passe",
+          options: [
+            { forme: "voyons", temps: "present" },
+            { forme: "avons vu", temps: "passe" },
+            { forme: "verrons", temps: "futursimple" }
+          ]},
+        { phrase: "Ils ... par l'escalier.", infinitif: "descendre", temps: "passe",
+          options: [
+            { forme: "descendent", temps: "present" },
+            { forme: "sont descendus", temps: "passe" },
+            { forme: "vont descendre", temps: "futur" }
+          ]},
+        { phrase: "J'... mes clés.", infinitif: "perdre", temps: "passe",
+          options: [
+            { forme: "perds", temps: "present" },
+            { forme: "ai perdu", temps: "passe" },
+            { forme: "perdrai", temps: "futursimple" }
+          ]},
+        { phrase: "Tu ... le train.", infinitif: "prendre", temps: "passe",
+          options: [
+            { forme: "prends", temps: "present" },
+            { forme: "as pris", temps: "passe" },
+            { forme: "vas prendre", temps: "futur" }
+          ]},
+        { phrase: "Je ... dans la rue.", infinitif: "tomber", temps: "passe",
+          options: [
+            { forme: "tombe", temps: "present" },
+            { forme: "suis tombé", temps: "passe" },
+            { forme: "tomberai", temps: "futursimple" }
+          ]},
+        { phrase: "Elles ... tôt.", infinitif: "se lever", temps: "passe",
+          options: [
+            { forme: "se lèvent", temps: "present" },
+            { forme: "se sont levées", temps: "passe" },
+            { forme: "vont se lever", temps: "futur" }
+          ]},
+        { phrase: "J'... un poème.", infinitif: "écrire", temps: "passe",
+          options: [
+            { forme: "écris", temps: "present" },
+            { forme: "ai écrit", temps: "passe" },
+            { forme: "écrirai", temps: "futursimple" }
+          ]},
+        { phrase: "Elle ... à pied.", infinitif: "venir", temps: "passe",
+          options: [
+            { forme: "vient", temps: "present" },
+            { forme: "est venue", temps: "passe" },
+            { forme: "va venir", temps: "futur" }
+          ]},
+        { phrase: "Ils ... au football.", infinitif: "jouer", temps: "passe",
+          options: [
+            { forme: "jouent", temps: "present" },
+            { forme: "ont joué", temps: "passe" },
+            { forme: "joueront", temps: "futursimple" }
+          ]},
+        { phrase: "Vous ... longtemps.", infinitif: "rester", temps: "passe",
+          options: [
+            { forme: "restez", temps: "present" },
+            { forme: "êtes restés", temps: "passe" },
+            { forme: "allez rester", temps: "futur" }
+          ]},
+        { phrase: "Tu ... bien ?", infinitif: "dormir", temps: "passe",
+          options: [
+            { forme: "dors", temps: "present" },
+            { forme: "as dormi", temps: "passe" },
+            { forme: "dormiras", temps: "futursimple" }
+          ]},
+        { phrase: "Elle ... son dessert.", infinitif: "finir", temps: "passe",
+          options: [
+            { forme: "finit", temps: "present" },
+            { forme: "a fini", temps: "passe" },
+            { forme: "va finir", temps: "futur" }
+          ]},
+        { phrase: "Nous ... chez nous.", infinitif: "rester", temps: "passe",
+          options: [
+            { forme: "restons", temps: "present" },
+            { forme: "sommes restés", temps: "passe" },
+            { forme: "resterons", temps: "futursimple" }
+          ]},
+        { phrase: "J'... mon téléphone.", infinitif: "oublier", temps: "passe",
+          options: [
+            { forme: "oublie", temps: "present" },
+            { forme: "ai oublié", temps: "passe" },
+            { forme: "oublierai", temps: "futursimple" }
+          ]},
+        { phrase: "Vous ... !", infinitif: "réussir", temps: "passe",
+          options: [
+            { forme: "réussissez", temps: "present" },
+            { forme: "avez réussi", temps: "passe" },
+            { forme: "allez réussir", temps: "futur" }
+          ]},
+        { phrase: "Je ... les mains.", infinitif: "se laver", temps: "passe",
+          options: [
+            { forme: "me lave", temps: "present" },
+            { forme: "me suis lavé", temps: "passe" },
+            { forme: "me laverai", temps: "futursimple" }
+          ]},
+
+        // ===== FUTUR PROCHE (20) =====
+        { phrase: "Nous ... Paris.", infinitif: "visiter", temps: "futur",
+          options: [
+            { forme: "visitons", temps: "present" },
+            { forme: "avons visité", temps: "passe" },
+            { forme: "allons visiter", temps: "futur" }
+          ]},
+        { phrase: "Ils ... un film.", infinitif: "regarder", temps: "futur",
+          options: [
+            { forme: "regardent", temps: "present" },
+            { forme: "ont regardé", temps: "passe" },
+            { forme: "vont regarder", temps: "futur" }
+          ]},
+        { phrase: "Tu ... ta sœur.", infinitif: "rencontrer", temps: "futur",
+          options: [
+            { forme: "rencontres", temps: "present" },
+            { forme: "as rencontré", temps: "passe" },
+            { forme: "vas rencontrer", temps: "futur" }
+          ]},
+        { phrase: "On ... le dîner.", infinitif: "préparer", temps: "futur",
+          options: [
+            { forme: "prépare", temps: "present" },
+            { forme: "a préparé", temps: "passe" },
+            { forme: "va préparer", temps: "futur" }
+          ]},
+        { phrase: "Elle ... l'italien.", infinitif: "apprendre", temps: "futur",
+          options: [
+            { forme: "apprend", temps: "present" },
+            { forme: "a appris", temps: "passe" },
+            { forme: "va apprendre", temps: "futur" }
+          ]},
+        { phrase: "Vous ... au Japon.", infinitif: "voyager", temps: "futur",
+          options: [
+            { forme: "voyagez", temps: "present" },
+            { forme: "avez voyagé", temps: "passe" },
+            { forme: "allez voyager", temps: "futur" }
+          ]},
+        { phrase: "Nous ... .", infinitif: "déménager", temps: "futur",
+          options: [
+            { forme: "déménageons", temps: "present" },
+            { forme: "avons déménagé", temps: "passe" },
+            { forme: "allons déménager", temps: "futur" }
+          ]},
+        { phrase: "Ils ... une voiture.", infinitif: "acheter", temps: "futur",
+          options: [
+            { forme: "achètent", temps: "present" },
+            { forme: "ont acheté", temps: "passe" },
+            { forme: "vont acheter", temps: "futur" }
+          ]},
+        { phrase: "Vous ... ce livre.", infinitif: "adorer", temps: "futur",
+          options: [
+            { forme: "adorez", temps: "present" },
+            { forme: "avez adoré", temps: "passe" },
+            { forme: "allez adorer", temps: "futur" }
+          ]},
+        { phrase: "Tu ... ton examen.", infinitif: "réussir", temps: "futur",
+          options: [
+            { forme: "réussis", temps: "present" },
+            { forme: "as réussi", temps: "passe" },
+            { forme: "vas réussir", temps: "futur" }
+          ]},
+        { phrase: "Il ... beau demain.", infinitif: "faire", temps: "futur",
+          options: [
+            { forme: "fait", temps: "present" },
+            { forme: "a fait", temps: "passe" },
+            { forme: "va faire", temps: "futur" }
+          ]},
+        { phrase: "Nous ... ton anniversaire.", infinitif: "fêter", temps: "futur",
+          options: [
+            { forme: "fêtons", temps: "present" },
+            { forme: "avons fêté", temps: "passe" },
+            { forme: "allons fêter", temps: "futur" }
+          ]},
+        { phrase: "Je ... me promener.", infinitif: "aller", temps: "futur",
+          options: [
+            { forme: "vais", temps: "present" },
+            { forme: "suis allé", temps: "passe" },
+            { forme: "vais aller", temps: "futur" }
+          ]},
+        { phrase: "Elle ... des fleurs.", infinitif: "acheter", temps: "futur",
+          options: [
+            { forme: "achète", temps: "present" },
+            { forme: "a acheté", temps: "passe" },
+            { forme: "va acheter", temps: "futur" }
+          ]},
+        { phrase: "Nous ... en montagne.", infinitif: "skier", temps: "futur",
+          options: [
+            { forme: "skions", temps: "present" },
+            { forme: "avons skié", temps: "passe" },
+            { forme: "allons skier", temps: "futur" }
+          ]},
+        { phrase: "Vous ... !", infinitif: "gagner", temps: "futur",
+          options: [
+            { forme: "gagnez", temps: "present" },
+            { forme: "avez gagné", temps: "passe" },
+            { forme: "allez gagner", temps: "futur" }
+          ]},
+        { phrase: "Tu ... célèbre.", infinitif: "devenir", temps: "futur",
+          options: [
+            { forme: "deviens", temps: "present" },
+            { forme: "es devenu", temps: "passe" },
+            { forme: "vas devenir", temps: "futur" }
+          ]},
+        { phrase: "Elles ... à la fête.", infinitif: "chanter", temps: "futur",
+          options: [
+            { forme: "chantent", temps: "present" },
+            { forme: "ont chanté", temps: "passe" },
+            { forme: "vont chanter", temps: "futur" }
+          ]},
+        { phrase: "Il ... ce soir.", infinitif: "pleuvoir", temps: "futur",
+          options: [
+            { forme: "pleut", temps: "present" },
+            { forme: "a plu", temps: "passe" },
+            { forme: "va pleuvoir", temps: "futur" }
+          ]},
+        { phrase: "On ... au restaurant.", infinitif: "manger", temps: "futur",
+          options: [
+            { forme: "mange", temps: "present" },
+            { forme: "a mangé", temps: "passe" },
+            { forme: "va manger", temps: "futur" }
+          ]},
+
+        // ===== FUTUR SIMPLE (20) =====
+        { phrase: "Je ... au restaurant.", infinitif: "manger", temps: "futursimple",
+          options: [
+            { forme: "mange", temps: "present" },
+            { forme: "ai mangé", temps: "passe" },
+            { forme: "mangerai", temps: "futursimple" }
+          ]},
+        { phrase: "Tu ... tes devoirs demain.", infinitif: "finir", temps: "futursimple",
+          options: [
+            { forme: "finis", temps: "present" },
+            { forme: "as fini", temps: "passe" },
+            { forme: "finiras", temps: "futursimple" }
+          ]},
+        { phrase: "Nous ... à la plage cet été.", infinitif: "aller", temps: "futursimple",
+          options: [
+            { forme: "allons", temps: "present" },
+            { forme: "sommes allés", temps: "passe" },
+            { forme: "irons", temps: "futursimple" }
+          ]},
+        { phrase: "Elle ... sur scène.", infinitif: "chanter", temps: "futursimple",
+          options: [
+            { forme: "chante", temps: "present" },
+            { forme: "a chanté", temps: "passe" },
+            { forme: "chantera", temps: "futursimple" }
+          ]},
+        { phrase: "Ils ... très tôt.", infinitif: "partir", temps: "futursimple",
+          options: [
+            { forme: "partent", temps: "present" },
+            { forme: "sont partis", temps: "passe" },
+            { forme: "partiront", temps: "futursimple" }
+          ]},
+        { phrase: "Vous ... la leçon.", infinitif: "comprendre", temps: "futursimple",
+          options: [
+            { forme: "comprenez", temps: "present" },
+            { forme: "avez compris", temps: "passe" },
+            { forme: "comprendrez", temps: "futursimple" }
+          ]},
+        { phrase: "On ... bien.", infinitif: "voir", temps: "futursimple",
+          options: [
+            { forme: "voit", temps: "present" },
+            { forme: "a vu", temps: "passe" },
+            { forme: "verra", temps: "futursimple" }
+          ]},
+        { phrase: "Je ... te voir samedi.", infinitif: "venir", temps: "futursimple",
+          options: [
+            { forme: "viens", temps: "present" },
+            { forme: "suis venu", temps: "passe" },
+            { forme: "viendrai", temps: "futursimple" }
+          ]},
+        { phrase: "Tu ... en retard.", infinitif: "être", temps: "futursimple",
+          options: [
+            { forme: "es", temps: "present" },
+            { forme: "as été", temps: "passe" },
+            { forme: "seras", temps: "futursimple" }
+          ]},
+        { phrase: "Nous ... une surprise.", infinitif: "avoir", temps: "futursimple",
+          options: [
+            { forme: "avons", temps: "present" },
+            { forme: "avons eu", temps: "passe" },
+            { forme: "aurons", temps: "futursimple" }
+          ]},
+        { phrase: "Il ... beau demain.", infinitif: "faire", temps: "futursimple",
+          options: [
+            { forme: "fait", temps: "present" },
+            { forme: "a fait", temps: "passe" },
+            { forme: "fera", temps: "futursimple" }
+          ]},
+        { phrase: "Elle ... le japonais.", infinitif: "apprendre", temps: "futursimple",
+          options: [
+            { forme: "apprend", temps: "present" },
+            { forme: "a appris", temps: "passe" },
+            { forme: "apprendra", temps: "futursimple" }
+          ]},
+        { phrase: "Vous ... le premier train.", infinitif: "prendre", temps: "futursimple",
+          options: [
+            { forme: "prenez", temps: "present" },
+            { forme: "avez pris", temps: "passe" },
+            { forme: "prendrez", temps: "futursimple" }
+          ]},
+        { phrase: "Je ... la vérité.", infinitif: "dire", temps: "futursimple",
+          options: [
+            { forme: "dis", temps: "present" },
+            { forme: "ai dit", temps: "passe" },
+            { forme: "dirai", temps: "futursimple" }
+          ]},
+        { phrase: "Ils ... une maison.", infinitif: "construire", temps: "futursimple",
+          options: [
+            { forme: "construisent", temps: "present" },
+            { forme: "ont construit", temps: "passe" },
+            { forme: "construiront", temps: "futursimple" }
+          ]},
+        { phrase: "Tu ... travailler plus.", infinitif: "devoir", temps: "futursimple",
+          options: [
+            { forme: "dois", temps: "present" },
+            { forme: "as dû", temps: "passe" },
+            { forme: "devras", temps: "futursimple" }
+          ]},
+        { phrase: "Nous ... tard ce soir.", infinitif: "rentrer", temps: "futursimple",
+          options: [
+            { forme: "rentrons", temps: "present" },
+            { forme: "sommes rentrés", temps: "passe" },
+            { forme: "rentrerons", temps: "futursimple" }
+          ]},
+        { phrase: "Elle ... nager très vite.", infinitif: "savoir", temps: "futursimple",
+          options: [
+            { forme: "sait", temps: "present" },
+            { forme: "a su", temps: "passe" },
+            { forme: "saura", temps: "futursimple" }
+          ]},
+        { phrase: "J'... des fleurs à maman.", infinitif: "offrir", temps: "futursimple",
+          options: [
+            { forme: "offre", temps: "present" },
+            { forme: "ai offert", temps: "passe" },
+            { forme: "offrirai", temps: "futursimple" }
+          ]},
+        { phrase: "Ils ... la réponse.", infinitif: "savoir", temps: "futursimple",
+          options: [
+            { forme: "savent", temps: "present" },
+            { forme: "ont su", temps: "passe" },
+            { forme: "sauront", temps: "futursimple" }
+          ]}
+    ];
+
+    const TEMPS_LABEL = { present: "présent", passe: "passé composé", futur: "futur proche", futursimple: "futur simple" };
+    const NB_DEFI = 60;
+    const TEMPS_PAR_DEFI = 25;
+
+    // ---------- ÉTAT ----------
+    let mode = "local";
+    let role = null;
+    let phrases = [];
+    let currentIndex = 0;
+    let scores = [0, 0];
+    let currentPlayer = 0;
+    let gameActive = false;
+    let timerInterval = null;
+    let timeLeft = TEMPS_PAR_DEFI;
+    let canAnswer = false;
+    let mySlot = 0;
+    let names = ["Joueur 1", "Joueur 2"];
+
+    let peer = null;
+    let conn = null;
+
+    // ---------- DOM ----------
+    const $ = id => document.getElementById(id);
+    const screens = { mode: $("modeScreen"), online: $("onlineScreen"), local: $("localScreen"), solo: $("soloScreen"), game: $("gameScreen") };
+    const els = {
+        p1Label: $("p1Label"), p2Label: $("p2Label"), score1: $("score1"), score2: $("score2"),
+        tourIndicator: $("tourIndicator"), phraseActuelle: $("phraseActuelle"),
+        verbeIndication: $("verbeIndication"),
+        boutonsReponse: $("boutonsReponse"), feedbackMessage: $("feedbackMessage"),
+        compteurPhrases: $("compteurPhrases"), timerDisplay: $("timerDisplay"),
+        onlineStatus: $("onlineStatus"), onlineInfo: $("onlineInfo")
+    };
+
+    function showScreen(name) {
+        Object.values(screens).forEach(s => s.classList.add("hidden"));
+        screens[name].classList.remove("hidden");
+    }
+    function status(msg, err) {
+        els.onlineStatus.textContent = msg;
+        els.onlineStatus.className = "status-line" + (err ? " err" : "");
+    }
+
+    // ---------- NAVIGATION ----------
+    $("btnOnline").addEventListener("click", () => { mode = "online"; showScreen("online"); });
+    $("btnLocal").addEventListener("click", () => { mode = "local"; showScreen("local"); });
+    $("btnSolo").addEventListener("click", () => { mode = "solo"; updateSoloBest(); showScreen("solo"); });
+    $("backFromOnline").addEventListener("click", () => showScreen("mode"));
+    $("backFromLocal").addEventListener("click", () => showScreen("mode"));
+    $("backFromSolo").addEventListener("click", () => showScreen("mode"));
+    $("backFromGame").addEventListener("click", () => {
+        stopTimer(); gameActive = false;
+        if (conn) { try { conn.close(); } catch(e){} }
+        if (peer) { try { peer.destroy(); } catch(e){} }
+        conn = null; peer = null;
+        showScreen("mode");
+    });
+
+    // ---------- MODE LOCAL ----------
+    $("localStartBtn").addEventListener("click", () => {
+        names = [($("p1Name").value.trim() || "Joueur 1"), ($("p2Name").value.trim() || "Joueur 2")];
+        mySlot = 0; role = null;
+        startMatch(Math.random() < 0.5 ? 0 : 1);
+    });
+
+    // ---------- MODE SOLO ----------
+    function soloBestScore() {
+        try { return parseInt(localStorage.getItem("chronoduel-best-conj3") || "0", 10) || 0; }
+        catch (e) { return 0; }
+    }
+    function saveSoloBest(v) {
+        try { localStorage.setItem("chronoduel-best-conj3", String(v)); } catch (e) {}
+    }
+    function updateSoloBest() {
+        const b = soloBestScore();
+        $("soloBest").textContent = b > 0 ? "🏅 Ton meilleur score : " + b + "/" + NB_DEFI : "";
+    }
+    function startSolo() {
+        phrases = phrasesListe.slice();
+        shuffleArray(phrases);
+        phrases = phrases.slice(0, NB_DEFI);
+        currentIndex = 0; scores = [0, 0]; currentPlayer = 0;
+        gameActive = true; mySlot = 0; role = null;
+        names = [($("soloName").value.trim() || "Champion"), "—"];
+        showScreen("game");
+        updateScoreboard();
+        nextPhrase();
+    }
+    $("soloStartBtn").addEventListener("click", startSolo);
+
+    // ---------- MODE EN LIGNE (PeerJS) ----------
+    function randomCode() {
+        const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+        let c = "";
+        for (let i = 0; i < 4; i++) c += alphabet[Math.floor(Math.random() * alphabet.length)];
+        return c;
+    }
+    function peerIdFor(code) { return "chronoduel-conj-2026-" + code.toUpperCase(); }
+
+    $("createBtn").addEventListener("click", () => {
+        const myName = ($("hostName").value.trim() || "Prof");
+        const code = randomCode();
+        role = "host"; mySlot = 0;
+        $("createBtn").disabled = true;
+        status("⏳ Création de la partie…");
+        peer = new Peer(peerIdFor(code), { debug: 0 });
+        peer.on("open", () => {
+            status("✅ Partie créée ! Communique ce code à ton élève puis attends sa connexion :");
+            const div = document.createElement("div");
+            div.className = "room-code"; div.id = "codeBox";
+            div.textContent = code;
+            els.onlineStatus.insertAdjacentElement("afterend", div);
+        });
+        peer.on("error", err => {
+            status("❌ Erreur : " + err.type + " — vérifie la connexion internet, puis réessaie.", true);
+            $("createBtn").disabled = false;
+        });
+        peer.on("connection", c => {
+            if (conn) { try { c.close(); } catch(e){} return; }
+            conn = c;
+            conn.on("open", () => {
+                send({ type: "hello", name: myName });
+            });
+            conn.on("data", onData);
+            conn.on("close", () => {
+                conn = null;
+                if (gameActive) { gameActive = false; stopTimer(); status("🔌 L'élève s'est déconnecté.", true); showScreen("online"); }
+            });
+        });
+    });
+
+    $("joinBtn").addEventListener("click", () => {
+        const code = $("joinCode").value.trim().toUpperCase();
+        const myName = ($("guestName").value.trim() || "Élève");
+        if (code.length !== 4) { status("Entre le code à 4 lettres donné par le prof.", true); return; }
+        role = "guest"; mySlot = 1;
+        names[1] = myName;
+        $("joinBtn").disabled = true;
+        status("⏳ Connexion à la partie " + code + "…");
+        peer = new Peer(null, { debug: 0 });
+        peer.on("open", () => {
+            conn = peer.connect(peerIdFor(code), { reliable: true });
+            conn.on("open", () => { send({ type: "hello", name: myName }); status("✅ Connecté ! En attente du prof…"); });
+            conn.on("data", onData);
+            conn.on("close", () => {
+                conn = null;
+                if (gameActive) { gameActive = false; stopTimer(); status("🔌 Le prof s'est déconnecté.", true); showScreen("online"); }
+            });
+        });
+        peer.on("error", err => {
+            status("❌ Impossible de rejoindre (" + err.type + "). Vérifie le code et que le prof ait bien créé la partie.", true);
+            $("joinBtn").disabled = false;
+        });
+    });
+
+    function send(obj) { if (conn && conn.open) { try { conn.send(obj); } catch(e){} } }
+
+    function onData(msg) {
+        switch (msg.type) {
+            case "hello":
+                if (role === "host") {
+                    names[1] = msg.name || "Élève";
+                    names[0] = ($("hostName").value.trim() || "Prof");
+                    status("✅ " + names[1] + " est connecté ! La partie démarre…");
+                    setTimeout(() => startMatch(Math.random() < 0.5 ? 0 : 1), 800);
+                } else {
+                    names[0] = msg.name || "Prof";
+                }
+                break;
+            case "state":
+                names = msg.names; scores = msg.scores; currentIndex = msg.currentIndex;
+                currentPlayer = msg.currentPlayer; timeLeft = msg.timeLeft;
+                gameActive = msg.gameActive;
+                phrases = msg.phrases;
+                if (screens.game.classList.contains("hidden")) showScreen("game");
+                renderFromState(msg.feedback, msg.finished);
+                break;
+            case "answer":
+                if (role === "host" && gameActive && currentPlayer === 1 && canAnswer) {
+                    handleAnswer(msg.index);
+                }
+                break;
+            case "restart":
+                if (role === "guest") {
+                    phrases = msg.phrases;
+                    startGuestMatch();
+                }
+                break;
+        }
+    }
+
+    // ---------- LOGIQUE DE JEU ----------
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+
+    function startMatch(firstPlayer) {
+        phrases = phrasesListe.slice();
+        shuffleArray(phrases);
+        phrases = phrases.slice(0, NB_DEFI);
+        currentIndex = 0; scores = [0, 0]; currentPlayer = firstPlayer;
+        gameActive = true;
+        if (role === "host") send({ type: "restart", phrases: phrases });
+        showScreen("game");
+        updateScoreboard();
+        nextPhrase();
+    }
+
+    function startGuestMatch() {
+        scores = [0, 0]; currentIndex = 0; gameActive = true; currentPlayer = 0;
+        showScreen("game");
+        updateScoreboard();
+        nextPhrase();
+    }
+
+    function updateScoreboard() {
+        if (mode === "solo") {
+            els.p1Label.textContent = "⭐ " + names[0];
+            els.p2Label.textContent = "🏅 Record";
+            els.score1.textContent = scores[0];
+            els.score2.textContent = soloBestScore();
+        } else {
+            els.p1Label.textContent = "🔵 " + names[0];
+            els.p2Label.textContent = "🔴 " + names[1];
+            els.score1.textContent = scores[0];
+            els.score2.textContent = scores[1];
+        }
+        els.compteurPhrases.textContent = "Défi " + Math.min(currentIndex + 1, phrases.length) + "/" + phrases.length;
+    }
+
+    function isMyTurn() {
+        if (mode !== "online") return true;
+        return currentPlayer === mySlot;
+    }
+
+    // Affiche 3 boutons (formes conjuguées seulement, sans nom de temps), mélangés
+    function renderButtons(active) {
+        els.boutonsReponse.innerHTML = "";
+        const p = phrases[currentIndex];
+        if (!p) return;
+        const indices = [0, 1, 2];
+        shuffleArray(indices);
+        indices.forEach((originalIdx, pos) => {
+            const opt = p.options[originalIdx];
+            const btn = document.createElement("button");
+            btn.className = "btn-reponse c" + (pos + 1) + (active ? "" : " attente");
+            btn.textContent = opt.forme;
+            btn.disabled = !active;
+            btn.addEventListener("click", () => handleAnswer(originalIdx));
+            els.boutonsReponse.appendChild(btn);
+        });
+    }
+
+    function nextPhrase() {
+        if (!gameActive) return;
+        canAnswer = true;
+        stopTimer();
+        const p = phrases[currentIndex];
+        els.phraseActuelle.textContent = p.phrase.replace("...", "…");
+        els.verbeIndication.textContent = "Verbe : " + p.infinitif + " — Temps demandé : " + TEMPS_LABEL[p.temps];
+        els.feedbackMessage.textContent = "Choisis la forme conjuguée au bon temps !";
+        const jn = names[currentPlayer];
+        els.tourIndicator.textContent = (mode === "online" && !isMyTurn())
+            ? "📡 " + jn + " joue… regarde bien !"
+            : "🎤 À " + jn + " de jouer !";
+        updateScoreboard();
+        const active = (mode === "local") || isMyTurn();
+        renderButtons(active);
+        timeLeft = TEMPS_PAR_DEFI;
+        els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
+        if (mode === "online" && role === "host") broadcastState(null);
+        startTimer();
+    }
+
+    function broadcastState(feedback, finished) {
+        if (mode !== "online" || role !== "host") return;
+        send({
+            type: "state",
+            names: names, scores: scores, currentIndex: currentIndex,
+            currentPlayer: currentPlayer, timeLeft: timeLeft,
+            gameActive: gameActive, phrases: phrases,
+            feedback: feedback, finished: !!finished
+        });
+    }
+
+    function renderFromState(feedback, finished) {
+        if (phrases && phrases[currentIndex]) {
+            const p = phrases[currentIndex];
+            els.phraseActuelle.textContent = p.phrase.replace("...", "…");
+            els.verbeIndication.textContent = "Verbe : " + p.infinitif + " — Temps demandé : " + TEMPS_LABEL[p.temps];
+        }
+        const jn = names[currentPlayer];
+        els.tourIndicator.textContent = isMyTurn() ? "🎤 À toi de jouer !" : "📡 " + jn + " joue… regarde bien !";
+        els.feedbackMessage.textContent = feedback || "Choisis la forme conjuguée au bon temps !";
+        els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
+        updateScoreboard();
+        renderButtons(isMyTurn() && gameActive && !finished);
+    }
+
+    function handleAnswer(indexChoisi) {
+        if (!gameActive || !canAnswer) return;
+        if (mode === "online" && !isMyTurn()) return;
+        if (mode === "online" && role === "guest") {
+            canAnswer = false;
+            renderButtons(false);
+            send({ type: "answer", index: indexChoisi });
+            els.feedbackMessage.textContent = "📡 Réponse envoyée…";
+            return;
+        }
+        canAnswer = false;
+        stopTimer();
+        const p = phrases[currentIndex];
+        const correct = p.options[indexChoisi].temps === p.temps;
+        let feedback;
+        if (correct) {
+            scores[currentPlayer]++;
+            feedback = "✅ Bravo " + names[currentPlayer] + " ! +1 point";
+        } else {
+            const bonneOpt = p.options.find(o => o.temps === p.temps);
+            feedback = "❌ C'était : « " + bonneOpt.forme + " » (" + TEMPS_LABEL[p.temps] + ")";
+        }
+        els.feedbackMessage.textContent = feedback;
+        updateScoreboard();
+        renderButtons(false);
+        if (mode === "online" && role === "host") broadcastState(feedback);
+        setTimeout(advance, 2000);
+    }
+
+    function advance() {
+        if (!gameActive) return;
+        if (currentIndex < phrases.length - 1) {
+            currentIndex++;
+            if (mode !== "solo") currentPlayer = 1 - currentPlayer;
+            nextPhrase();
+        } else {
+            endGame();
+        }
+    }
+
+    function endGame() {
+        gameActive = false;
+        stopTimer();
+        let msg;
+        if (mode === "solo") {
+            const record = soloBestScore();
+            const nouveau = scores[0] > record;
+            saveSoloBest(Math.max(record, scores[0]));
+            msg = "🏆 Terminé, " + names[0] + " ! Score : " + scores[0] + "/" + phrases.length;
+            msg += nouveau ? " 🏅 Nouveau record !" : " (record à battre : " + Math.max(record, scores[0]) + ")";
+        } else if (scores[0] > scores[1]) msg = "🏆 Duel terminé ! " + names[0] + " gagne " + scores[0] + " à " + scores[1] + " !";
+        else if (scores[1] > scores[0]) msg = "🏆 Duel terminé ! " + names[1] + " gagne " + scores[1] + " à " + scores[0] + " !";
+        else msg = "🏆 Duel terminé ! Égalité " + scores[0] + " partout !";
+        els.feedbackMessage.textContent = msg;
+        els.tourIndicator.textContent = "🏁 Fin du duel";
+        renderButtons(false);
+        if (mode === "online" && role === "host") broadcastState(msg, true);
+    }
+
+    function startTimer() {
+        stopTimer();
+        timerInterval = setInterval(() => {
+            if (!gameActive) { stopTimer(); return; }
+            timeLeft--;
+            els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
+            if (mode !== "online" || role === "host") {
+                if (timeLeft <= 0 && canAnswer) {
+                    canAnswer = false;
+                    stopTimer();
+                    const p = phrases[currentIndex];
+                    const bonneOpt = p.options.find(o => o.temps === p.temps);
+                    const fb = "⏰ Temps écoulé ! C'était : « " + bonneOpt.forme + " » (" + TEMPS_LABEL[p.temps] + ")";
+                    els.feedbackMessage.textContent = fb;
+                    renderButtons(false);
+                    if (mode === "online" && role === "host") { broadcastState(fb); }
+                    setTimeout(advance, 2000);
+                } else if (mode === "online" && role === "host" && timeLeft % 5 === 0) {
+                    broadcastState(null);
+                }
+            }
+        }, 1000);
+    }
+
+    function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+    $("restartBtn").addEventListener("click", () => {
+        stopTimer();
+        if (mode === "online") {
+            if (role === "host") {
+                startMatch(Math.random() < 0.5 ? 0 : 1);
+            } else {
+                els.feedbackMessage.textContent = "⏳ Demande une nouvelle partie au prof !";
+            }
+        } else if (mode === "solo") {
+            startSolo();
+        } else {
+            startMatch(Math.random() < 0.5 ? 0 : 1);
+        }
+    });
+
+    showScreen("mode");
+})();
+</script>
+</body>
+</html>
