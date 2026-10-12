@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Évaluation 6ème – Langue et Grammaire</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF5;--ink:#1C1917;--muted:#6B6159;
+  --coral:#D85A30;--coral-l:#FAECE7;--coral-m:#F0997B;--coral-d:#993C1D;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;--teal-d:#085041;
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;--amber-d:#854F0B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+  --rose:#C2185B;--rose-l:#FCE4EC;--rose-m:#F48FB1;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:2rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0D2B45 0%,#1C1917 55%,#5B2C6F 100%);color:white;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'📝';position:absolute;top:10px;right:20px;font-size:4rem;opacity:0.15;transform:rotate(15deg)}
+.hero::after{content:'📚';position:absolute;bottom:-10px;left:15px;font-size:4rem;opacity:0.12;transform:rotate(-10deg)}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#F48FB1;text-transform:uppercase;margin-bottom:0.5rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:2.1rem;line-height:1.2;margin-bottom:0.6rem}
+.hero h1 em{color:#FFD54F;font-style:italic}
+.hero-sub{font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.25rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:40px;padding:5px 14px;font-size:0.78rem;color:rgba(255,255,255,0.85)}
+
+/* LAYOUT */
+.wrap{padding:1.5rem 1.75rem;max-width:760px;margin:0 auto}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;gap:10px;margin:2.5rem 0 1.1rem;padding-top:1.5rem;border-top:0.5px solid rgba(0,0,0,0.08)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;flex-shrink:0}
+.sec-head h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400}
+
+/* TEXTE */
+.text-story{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;line-height:1.9;font-size:0.95rem;position:relative;overflow:hidden}
+.text-story::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--rose),var(--purple))}
+.text-story strong{color:var(--coral-d)}
+.text-story em{color:var(--purple);font-style:italic}
+.text-story .adj{background:var(--amber-l);border-radius:4px;padding:0 3px;font-weight:600;color:var(--amber-d)}
+.text-story .nom{background:var(--teal-l);border-radius:4px;padding:0 3px;font-weight:500;color:var(--teal-d)}
+
+/* RAPPELS */
+.rappel{background:var(--blue-l);border-radius:14px;border:0.5px solid var(--blue-m);padding:1.1rem 1.3rem;margin-top:1rem;font-size:0.88rem;line-height:1.8}
+.rappel h4{color:var(--blue);font-size:0.95rem;margin-bottom:0.5rem;font-family:'DM Serif Display',serif;font-weight:400}
+.rappel ul{padding-left:1.2rem;margin:0.4rem 0}
+.rappel li{margin-bottom:0.35rem}
+.rappel code{background:white;padding:1px 6px;border-radius:5px;font-size:0.85rem;color:var(--purple-d);font-weight:600}
+
+/* BARRE DE PROGRESSION */
+.progress-bar{position:sticky;top:0;z-index:50;background:rgba(255,251,245,0.95);backdrop-filter:blur(8px);padding:0.75rem 1.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:10px;background:rgba(0,0,0,0.07);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--rose),var(--purple),var(--coral));border-radius:20px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-score{font-size:0.82rem;font-weight:700;color:var(--rose);min-width:70px;text-align:right}
+.progress-emoji{font-size:1.2rem;transition:transform 0.3s}
+.progress-emoji.pop{transform:scale(1.5) rotate(10deg)}
+
+/* EXERCICES */
+.exercise-wrap{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);overflow:hidden;margin-top:1rem}
+.ex-head{padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ex-head-1{background:linear-gradient(90deg,var(--rose),#e91e63)}
+.ex-head-2{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.ex-head-3{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.ex-head-4{background:linear-gradient(90deg,var(--green),#5a9e1f)}
+.ex-head-5{background:linear-gradient(90deg,var(--blue),#2196f3)}
+.ex-head-6{background:linear-gradient(90deg,var(--teal-d),var(--teal))}
+.ex-head p{color:rgba(255,255,255,0.9);font-size:0.83rem;margin:0}
+.ex-head strong{color:#FFD54F}
+.ex-badge{background:rgba(255,255,255,0.15);color:white;font-size:0.75rem;padding:3px 12px;border-radius:20px;font-weight:600}
+
+.q-list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+.q-item{border:0.5px solid rgba(0,0,0,0.07);border-radius:12px;padding:1rem 1.1rem;background:var(--cream);transition:all 0.3s;position:relative;overflow:hidden}
+.q-item.solved{background:linear-gradient(135deg,var(--teal-l),#f0fdf4);border-color:var(--teal-m)}
+.q-item.shake{animation:shake 0.4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-num{font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+.q-text{font-size:0.92rem;margin-bottom:0.5rem;line-height:1.55}
+.q-text strong{color:var(--rose)}
+.q-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.q-input{padding:8px 16px;font-size:0.9rem;border:1.5px solid rgba(0,0,0,0.15);border-radius:40px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);width:230px;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.q-input-1:focus{border-color:var(--rose);box-shadow:0 0 0 3px rgba(194,24,91,0.15)}
+.q-input-5:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.15)}
+.q-input-6:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(15,110,86,0.15)}
+.q-btn{color:white;border:none;padding:8px 20px;border-radius:40px;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s,transform 0.1s}
+.q-btn-1{background:var(--rose)}.q-btn-1:hover{background:var(--rose);opacity:0.9;transform:scale(0.97)}
+.q-btn-5{background:var(--blue)}.q-btn-5:hover{background:var(--blue);opacity:0.9;transform:scale(0.97)}
+.q-btn-6{background:var(--teal)}.q-btn-6:hover{background:var(--teal-d);transform:scale(0.97)}
+.q-fb{margin-top:8px;font-size:0.83rem;min-height:1.4rem}
+.ok{background:var(--teal-l);color:var(--teal-d);padding:5px 14px;border-radius:20px;display:inline-block;font-weight:500;animation:popIn 0.3s}
+.nope{background:var(--coral-l);color:var(--coral-d);padding:5px 14px;border-radius:20px;display:inline-block;animation:popIn 0.3s}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* CHOIX MULTIPLES */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem}
+@media(max-width:520px){.choice-grid{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid rgba(0,0,0,0.1);border-radius:14px;padding:12px 14px;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.88rem;cursor:pointer;transition:all 0.18s;color:var(--ink);position:relative;overflow:hidden}
+.choice-btn:hover{border-color:var(--rose-m);transform:translateY(-2px);box-shadow:0 4px 12px rgba(194,24,91,0.1)}
+.choice-btn.selected{border-color:var(--rose);background:var(--rose-l);font-weight:500}
+.choice-btn.correct{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d);font-weight:600;animation:popIn 0.3s}
+.choice-btn.correct::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--teal);font-weight:700;font-size:1.1rem}
+.choice-btn.wrong{border-color:var(--coral-m);background:var(--coral-l);color:var(--coral-d);animation:shake 0.4s}
+.choice-btn.wrong::after{content:'✗';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--coral);font-weight:700;font-size:1.1rem}
+.choice-btn:disabled{cursor:default;opacity:0.9}
+
+/* MATCHING */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.match-cols{grid-template-columns:1fr}}
+.match-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.5rem}
+.match-item{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.87rem;cursor:pointer;transition:all 0.18s;margin-bottom:8px}
+.match-item:hover{border-color:var(--rose-m)}
+.match-item.active{border-color:var(--rose);background:var(--rose-l);box-shadow:0 0 0 3px rgba(194,24,91,0.15)}
+.match-item.matched{background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d);cursor:default;opacity:0.85}
+.match-item.matched::after{content:' ✓';color:var(--teal);font-weight:700}
+.match-item.wrong-pair{animation:shake 0.4s}
+
+/* CONFETTIS */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0.9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* MEMO */
+.memo{background:var(--ink);color:white;border-radius:16px;padding:1.5rem;margin-top:2rem}
+.memo h3{font-family:'DM Serif Display',serif;font-size:1.1rem;font-weight:400;color:#F48FB1;margin-bottom:1rem}
+.memo-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.memo-col h4{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.memo-row{font-size:0.84rem;color:rgba(255,255,255,0.8);margin-bottom:6px;line-height:1.5}
+.memo-row strong{color:#AFA9EC}
+.memo-row em{color:#FFD54F;font-style:italic}
+
+/* RESET + FOOTER */
+.reset-bar{display:flex;justify-content:flex-end;padding:0.75rem 1.75rem 0}
+.reset-btn{background:white;border:0.5px solid rgba(0,0,0,0.15);padding:8px 20px;border-radius:40px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.83rem;color:var(--muted);transition:background 0.15s}
+.reset-btn:hover{background:#f1f0eb}
+footer{text-align:center;font-size:0.78rem;color:var(--muted);padding:1.5rem 1.75rem;border-top:0.5px solid rgba(0,0,0,0.07);line-height:1.7;margin-top:2rem}
+
+@media(max-width:580px){
+  .hero h1{font-size:1.55rem}
+  .memo-cols{grid-template-columns:1fr}
+  .wrap{padding:1rem 1.1rem}
+  .progress-bar{padding:0.6rem 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Évaluation · Niveau 6ème</div>
+  <h1>Langue et Grammaire<br><em>révision complète</em></h1>
+  <div class="hero-sub">Temps de l'indicatif · Formation des mots · Nature des mots · GN · Accord de l'adjectif</div>
+  <div class="pills">
+    <span class="pill">présent</span>
+    <span class="pill">imparfait</span>
+    <span class="pill">futur simple</span>
+    <span class="pill">passé composé</span>
+    <span class="pill">préfixe / suffixe</span>
+    <span class="pill">mots variables / invariables</span>
+    <span class="pill">GN / nom noyau</span>
+    <span class="pill">accord adjectif</span>
+  </div>
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar">
+  <span class="progress-emoji" id="progressEmoji">📝</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-score" id="progressScore">0 / 46</span>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. TEXTE DE RÉFÉRENCE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--rose-l);color:var(--rose)">1</div>
+    <h2>Texte de référence : la cabane au fond du jardin</h2>
+  </div>
+  <div class="text-story">
+    <strong>Le petit garçon</strong> <span class="nom">ouvre</span> la porte de la <span class="nom">cabane</span>. <span class="nom">Elle</span> est <span class="adj">vieille</span> et <span class="adj">abandonnée</span> depuis des années. <span class="nom">Il</span> <span class="nom">découvre</span> une <span class="adj">magnifique</span> <span class="nom">boîte</span> en bois, <span class="adj">couverte</span> de poussière. <span class="nom">Soudain</span>, <span class="nom">il</span> <span class="nom">entend</span> un <span class="nom">bruit</span> <span class="adj">étrange</span> derrière <span class="nom">lui</span>. <span class="nom">Il</span> <span class="nom">se retourne</span> <span class="adj">rapidement</span>, mais <span class="nom">il</span> ne <span class="nom">voit</span> <span class="nom">rien</span>. <span class="nom">Le</span> <span class="nom">vent</span> <span class="nom">souffle</span> <span class="adj">fort</span> et <span class="nom">les</span> <span class="nom">feuilles</span> <span class="adj">mortes</span> <span class="nom">tourbillonnent</span> dans <span class="nom">le</span> <span class="nom">jardin</span>.
+  </div>
+
+  <!-- 2. RAPPELS DE COURS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">2</div>
+    <h2>Rappels essentiels</h2>
+  </div>
+
+  <div class="rappel">
+    <h4>🔵 Rappel 1 — Les temps de l'indicatif</h4>
+    <ul>
+      <li><strong>Présent</strong> : action en cours. <em>Je mange.</em></li>
+      <li><strong>Imparfait</strong> : action longue, description. <em>Je mangeais.</em></li>
+      <li><strong>Futur simple</strong> : action à venir. <em>Je mangerai.</em></li>
+      <li><strong>Passé composé</strong> : action passée terminée. <em>J'ai mangé.</em></li>
+    </ul>
+  </div>
+
+  <!-- RAPPEL 2 ENRICHI -->
+  <div class="rappel" style="background:var(--purple-l);border-color:var(--purple-m)">
+    <h4 style="color:var(--purple-d)">🟣 Rappel 2 — La formation des mots</h4>
+    <p style="margin-bottom:0.75rem">Un mot peut être construit à partir d'un <strong>radical</strong> (la base) auquel on ajoute :</p>
+
+    <!-- PRÉFIXE -->
+    <div style="background:white;border-radius:12px;padding:1rem 1.25rem;margin-bottom:0.75rem;border-left:5px solid var(--rose)">
+      <h5 style="color:var(--rose);font-family:'DM Serif Display',serif;font-size:1rem;margin-bottom:0.5rem">🔴 Le PRÉFIXE → devant le radical</h5>
+      <p style="font-size:0.88rem;margin-bottom:0.75rem">Il se place <strong style="color:var(--rose)">devant</strong> le radical. Il <strong style="color:var(--rose)">change le sens</strong> du mot, mais <em>ne change pas sa nature</em>.</p>
+
+      <div style="background:var(--rose-l);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.5rem;text-align:center;font-size:0.95rem">
+        <span style="background:var(--rose);color:white;padding:2px 10px;border-radius:20px;font-weight:700">im-</span>
+        <span style="font-size:1.1rem"> + </span>
+        <span style="background:var(--teal-l);color:var(--teal-d);padding:2px 10px;border-radius:20px;font-weight:600">possible</span>
+        <span style="font-size:1.1rem"> = </span>
+        <span style="background:var(--purple-l);color:var(--purple-d);padding:2px 10px;border-radius:20px;font-weight:700">impossible</span>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-bottom:0.75rem">
+        <em>possible</em> (adjectif) → <em>impossible</em> (adjectif) : la nature ne change pas, mais le sens devient négatif.
+      </p>
+
+      <p style="font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">Autres exemples :</p>
+      <ul style="font-size:0.85rem;line-height:2;margin-left:0.5rem">
+        <li><strong style="color:var(--rose)">re-</strong> + lire = <strong>relire</strong> (lire de nouveau)</li>
+        <li><strong style="color:var(--rose)">mal-</strong> + heureux = <strong>malheureux</strong> (pas heureux)</li>
+        <li><strong style="color:var(--rose)">in-</strong> + visible = <strong>invisible</strong> (qu'on ne voit pas)</li>
+        <li><strong style="color:var(--rose)">dé-</strong> + faire = <strong>défaire</strong> (enlever ce qui est fait)</li>
+        <li><strong style="color:var(--rose)">pré-</strong> + histoire = <strong>préhistoire</strong> (avant l'histoire)</li>
+      </ul>
+    </div>
+
+    <!-- SUFFIXE -->
+    <div style="background:white;border-radius:12px;padding:1rem 1.25rem;border-left:5px solid var(--teal)">
+      <h5 style="color:var(--teal);font-family:'DM Serif Display',serif;font-size:1rem;margin-bottom:0.5rem">🟢 Le SUFFIXE → derrière le radical</h5>
+      <p style="font-size:0.88rem;margin-bottom:0.75rem">Il se place <strong style="color:var(--teal)">derrière</strong> le radical. Il <strong style="color:var(--teal)">change la nature</strong> du mot et apporte une nuance de sens.</p>
+
+      <div style="background:var(--teal-l);border-radius:8px;padding:0.75rem 1rem;margin-bottom:0.5rem;text-align:center;font-size:0.95rem">
+        <span style="background:var(--amber-l);color:var(--amber-d);padding:2px 10px;border-radius:20px;font-weight:600">laver</span>
+        <span style="font-size:1.1rem"> + </span>
+        <span style="background:var(--teal);color:white;padding:2px 10px;border-radius:20px;font-weight:700">-age</span>
+        <span style="font-size:1.1rem"> = </span>
+        <span style="background:var(--purple-l);color:var(--purple-d);padding:2px 10px;border-radius:20px;font-weight:700">lavage</span>
+      </div>
+      <p style="font-size:0.8rem;color:var(--muted);text-align:center;margin-bottom:0.75rem">
+        <em>laver</em> (verbe) → <em>lavage</em> (nom) : la nature change !
+      </p>
+
+      <p style="font-size:0.85rem;font-weight:600;margin-bottom:0.4rem">Autres exemples :</p>
+      <ul style="font-size:0.85rem;line-height:2;margin-left:0.5rem">
+        <li>blanc + <strong style="color:var(--teal)">-ir</strong> = <strong>blanchir</strong> (adjectif → verbe)</li>
+        <li>dent + <strong style="color:var(--teal)">-iste</strong> = <strong>dentiste</strong> (nom → nom de métier)</li>
+        <li>rapide + <strong style="color:var(--teal)">-ment</strong> = <strong>rapidement</strong> (adjectif → adverbe)</li>
+        <li>laver + <strong style="color:var(--teal)">-able</strong> = <strong>lavable</strong> (verbe → adjectif)</li>
+        <li>jardin + <strong style="color:var(--teal)">-ier</strong> = <strong>jardinier</strong> (nom → nom de métier)</li>
+      </ul>
+    </div>
+
+    <!-- RÉSUMÉ VISUEL -->
+    <div style="background:white;border-radius:12px;padding:1rem 1.25rem;margin-top:0.75rem;border:1.5px dashed var(--purple-m)">
+      <p style="font-size:0.88rem;text-align:center;margin-bottom:0.5rem"><strong>À retenir</strong></p>
+      <div style="display:flex;justify-content:center;align-items:center;gap:8px;flex-wrap:wrap;font-size:0.9rem">
+        <span style="background:var(--rose);color:white;padding:4px 12px;border-radius:20px;font-weight:700">PRÉFIXE</span>
+        <span>+</span>
+        <span style="background:var(--amber-l);color:var(--amber-d);padding:4px 12px;border-radius:20px;font-weight:600">RADICAL</span>
+        <span>+</span>
+        <span style="background:var(--teal);color:white;padding:4px 12px;border-radius:20px;font-weight:700">SUFFIXE</span>
+      </div>
+      <p style="font-size:0.82rem;color:var(--muted);text-align:center;margin-top:0.6rem">
+        Exemple complet : <strong style="color:var(--rose)">in-</strong> + <strong style="color:var(--amber-d)">lav</strong> + <strong style="color:var(--teal)">-able</strong> = <strong style="color:var(--purple-d)">inlavable</strong> (qui ne peut pas être lavé)
+      </p>
+    </div>
+  </div>
+
+  <div class="rappel" style="background:var(--green-l);border-color:var(--green-m)">
+    <h4 style="color:var(--green)">🟢 Rappel 3 — La nature des mots</h4>
+    <ul>
+      <li><strong>Mots variables</strong> : nom, adjectif, verbe, déterminant, pronom.</li>
+      <li><strong>Mots invariables</strong> : adverbe, préposition, conjonction.</li>
+    </ul>
+  </div>
+
+  <div class="rappel" style="background:var(--amber-l);border-color:var(--amber-m)">
+    <h4 style="color:var(--amber-d)">🟠 Rappel 4 — Le GN et l'accord de l'adjectif</h4>
+    <ul>
+      <li><strong>GN</strong> : déterminant + nom noyau (+ adjectifs). <em>une belle cabane</em></li>
+      <li><strong>Nom noyau</strong> : le nom principal du GN.</li>
+      <li><strong>Accord de l'adjectif</strong> : en genre et en nombre avec le nom. <em>des feuilles mortes</em></li>
+    </ul>
+  </div>
+
+  <!-- 3. EXERCICE 1 — QCM Temps de l'indicatif -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--rose-l);color:var(--rose)">3</div>
+    <h2>Exercice 1 — les temps de l'indicatif (QCM)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Clique sur la bonne réponse. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge1">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist1"></div>
+  </div>
+
+  <!-- 4. EXERCICE 2 — QCM Formation des mots -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">4</div>
+    <h2>Exercice 2 — formation des mots (QCM)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Clique sur la bonne réponse. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge2">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist2"></div>
+  </div>
+
+  <!-- 5. EXERCICE 3 — QCM Nature des mots -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green)">5</div>
+    <h2>Exercice 3 — la nature des mots (QCM)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-4">
+      <p>Clique sur la bonne nature du mot souligné. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge3">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist3"></div>
+  </div>
+
+  <!-- 6. EXERCICE 4 — COMPLÉTER Temps -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">6</div>
+    <h2>Exercice 4 — conjugue au temps demandé</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-3">
+      <p>Écris le verbe entre parenthèses au <strong>temps demandé</strong> puis clique sur <strong>Vérifier</strong>.</p>
+      <span class="ex-badge" id="badge4">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist4"></div>
+  </div>
+
+  <!-- 7. EXERCICE 5 — COMPLÉTER Formation des mots -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green)">7</div>
+    <h2>Exercice 5 — préfixes et suffixes</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-4">
+      <p>Trouve le mot dérivé puis clique sur <strong>Vérifier</strong>.</p>
+      <span class="ex-badge" id="badge5">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist5"></div>
+  </div>
+
+  <!-- 8. EXERCICE 6 — RELIER GN et nom noyau -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">8</div>
+    <h2>Exercice 6 — relie le GN à son nom noyau</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-6">
+      <p>Clique sur un <strong>GN</strong> puis sur son <strong>nom noyau</strong>.</p>
+      <span class="ex-badge" id="badge6">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist6"></div>
+  </div>
+
+  <!-- 9. EXERCICE 7 — QCM Accord de l'adjectif -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">9</div>
+    <h2>Exercice 7 — accord de l'adjectif (QCM)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Clique sur la forme correcte de l'adjectif. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge7">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist7"></div>
+  </div>
+
+  <!-- 10. EXERCICE 8 — PRODUCTION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">10</div>
+    <h2>Exercice 8 — à toi de jouer !</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head" style="background:linear-gradient(90deg,var(--coral-d),var(--coral))">
+      <p>Production libre — utilise tout ce que tu as appris.</p>
+    </div>
+    <div class="q-list">
+      <div class="q-item" style="background:var(--coral-l);border-color:var(--coral-m)">
+        <div class="q-text" style="color:var(--coral-d)">
+          <strong>🎤 À l'écrit :</strong>
+          <ol style="margin-top:0.6rem;padding-left:1.3rem;line-height:2">
+            <li>Écris 3 phrases sur la cabane au <strong>présent</strong>.</li>
+            <li>Écris 2 phrases au <strong>futur simple</strong> sur ce que tu feras demain.</li>
+            <li>Trouve 2 mots avec un <strong>préfixe</strong> et 2 mots avec un <strong>suffixe</strong>.</li>
+            <li>Écris un GN avec <strong>3 adjectifs</strong> bien accordés.</li>
+            <li>Donne la nature de 3 mots de ton choix (variable ou invariable).</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" id="resetBtn">⟳ Réinitialiser tous les exercices</button>
+  </div>
+
+  <!-- MEMO -->
+  <div class="memo">
+    <h3>Récapitulatif</h3>
+    <div class="memo-cols">
+      <div class="memo-col">
+        <h4>Temps de l'indicatif</h4>
+        <div class="memo-row"><strong>Présent</strong> → je mange</div>
+        <div class="memo-row"><strong>Imparfait</strong> → je mangeais</div>
+        <div class="memo-row"><strong>Futur simple</strong> → je mangerai</div>
+        <div class="memo-row"><strong>Passé composé</strong> → j'ai mangé</div>
+      </div>
+      <div class="memo-col">
+        <h4>Formation des mots</h4>
+        <div class="memo-row"><strong>Préfixe</strong> → devant : impossible</div>
+        <div class="memo-row"><strong>Suffixe</strong> → derrière : lavage</div>
+        <div class="memo-row" style="margin-top:8px"><strong>Mots variables :</strong> nom, adj, verbe, dét., pronom</div>
+        <div class="memo-row"><strong>Mots invariables :</strong> adverbe, prép., conj.</div>
+        <div class="memo-row" style="margin-top:8px"><strong>GN :</strong> dét. + nom noyau + adj.</div>
+        <div class="memo-row"><strong>Accord adj. :</strong> genre + nombre du nom</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Évaluation 6ème · Langue et Grammaire<br>
+  « La cabane au fond du jardin »
+</footer>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+
+// EXERCICE 1 — QCM Temps de l'indicatif
+const qcm1 = [
+  { q: "« Le petit garçon ouvre la porte. » Quel temps ?",
+    options: ["Imparfait", "Présent", "Futur simple"],
+    correct: 1, hint: "Ouvre = présent de l'indicatif (action en cours)." },
+  { q: "« Elle est vieille et abandonnée. » Quel temps ?",
+    options: ["Imparfait", "Passé composé", "Présent"],
+    correct: 2, hint: "Est = présent du verbe être (description actuelle)." },
+  { q: "« Il découvrira une magnifique boîte. » Quel temps ?",
+    options: ["Présent", "Futur simple", "Imparfait"],
+    correct: 1, hint: "Découvrira = futur simple (action à venir)." },
+  { q: "« Il a entendu un bruit étrange. » Quel temps ?",
+    options: ["Passé composé", "Imparfait", "Présent"],
+    correct: 0, hint: "A entendu = passé composé (auxiliaire avoir + participe)." },
+  { q: "« Le vent soufflait fort. » Quel temps ?",
+    options: ["Présent", "Imparfait", "Futur simple"],
+    correct: 1, hint: "Soufflait = imparfait (action longue, description)." },
+  { q: "« Les feuilles tourbillonnent dans le jardin. » Quel temps ?",
+    options: ["Présent", "Futur simple", "Imparfait"],
+    correct: 0, hint: "Tourbillonnent = présent de l'indicatif." }
+];
+
+// EXERCICE 2 — QCM Formation des mots
+const qcm2 = [
+  { q: "Dans « impossible », le préfixe est :",
+    options: ["im-", "possible", "-ible"],
+    correct: 0, hint: "Le préfixe im- se place devant le radical possible." },
+  { q: "Dans « lavage », le suffixe est :",
+    options: ["lav-", "-age", "la-"],
+    correct: 1, hint: "Le suffixe -age transforme le verbe laver en nom." },
+  { q: "« Relire » est formé avec :",
+    options: ["un suffixe", "un préfixe", "aucun affixe"],
+    correct: 1, hint: "Re- est un préfixe qui signifie « de nouveau »." },
+  { q: "« Malheureux » est formé avec :",
+    options: ["un préfixe", "un suffixe", "deux suffixes"],
+    correct: 0, hint: "Mal- est un préfixe qui donne un sens négatif." },
+  { q: "« Rapidement » est formé avec :",
+    options: ["un préfixe", "un suffixe", "rien"],
+    correct: 1, hint: "-ment est un suffixe qui forme un adverbe." },
+  { q: "« Invisible » signifie :",
+    options: ["très visible", "qui ne peut pas être vu", "qui voit bien"],
+    correct: 1, hint: "Le préfixe in- donne un sens négatif : non visible." }
+];
+
+// EXERCICE 3 — QCM Nature des mots
+const qcm3 = [
+  { q: "Quelle est la nature du mot « cabane » ?",
+    options: ["adjectif", "nom commun", "verbe"],
+    correct: 1, hint: "Cabane est un nom commun (mot variable)." },
+  { q: "Quelle est la nature du mot « vieille » ?",
+    options: ["adjectif qualificatif", "nom", "adverbe"],
+    correct: 0, hint: "Vieille qualifie le nom cabane → adjectif." },
+  { q: "Quelle est la nature du mot « ouvre » ?",
+    options: ["nom", "verbe", "adjectif"],
+    correct: 1, hint: "Ouvre est un verbe conjugué au présent." },
+  { q: "Quelle est la nature du mot « il » ?",
+    options: ["déterminant", "pronom personnel", "adverbe"],
+    correct: 1, hint: "Il remplace un nom → pronom personnel." },
+  { q: "Quelle est la nature du mot « soudain » ?",
+    options: ["adverbe", "adjectif", "préposition"],
+    correct: 0, hint: "Soudain est un adverbe (mot invariable)." },
+  { q: "Quelle est la nature du mot « dans » ?",
+    options: ["conjonction", "préposition", "adverbe"],
+    correct: 1, hint: "Dans est une préposition (mot invariable)." },
+  { q: "Quelle est la nature du mot « le » ?",
+    options: ["pronom", "déterminant", "adjectif"],
+    correct: 1, hint: "Le accompagne un nom → déterminant." },
+  { q: "Quelle est la nature du mot « mais » ?",
+    options: ["adverbe", "préposition", "conjonction"],
+    correct: 2, hint: "Mais relie deux propositions → conjonction." }
+];
+
+// EXERCICE 4 — Compléter conjugaison
+const completerTemps = [
+  { text: "Présent : Nous (aller) ______ à la piscine chaque mardi.", ans: ["allons"], hint: "Présent d'aller → nous allons" },
+  { text: "Imparfait : Tu (être) ______ en train de lire quand je suis arrivé.", ans: ["étais"], hint: "Imparfait d'être → tu étais" },
+  { text: "Futur simple : Demain, vous (voir) ______ un magnifique spectacle.", ans: ["verrez"], hint: "Futur simple de voir → vous verrez" },
+  { text: "Présent : Ils (dire) ______ toujours la vérité.", ans: ["disent"], hint: "Présent de dire → ils disent" },
+  { text: "Passé composé : J'(avoir) ______ une très bonne note.", ans: ["ai eu"], hint: "Passé composé d'avoir → j'ai eu" },
+  { text: "Imparfait : Le vent (souffler) ______ fort ce jour-là.", ans: ["soufflait"], hint: "Imparfait de souffler → il soufflait" }
+];
+
+// EXERCICE 5 — Compléter formation des mots
+const completerMots = [
+  { text: "Blanc + suffixe de transformation = ______ (verbe)", ans: ["blanchir"], hint: "Blanc → blanchir (verbe)" },
+  { text: "Dent + suffixe de métier = ______ (nom)", ans: ["dentiste"], hint: "Dent → dentiste (métier)" },
+  { text: "Rapide + suffixe de manière = ______ (adverbe)", ans: ["rapidement"], hint: "Rapide → rapidement (adverbe)" },
+  { text: "Laver + suffixe de possibilité = ______ (adjectif)", ans: ["lavable"], hint: "Laver → lavable (adjectif)" },
+  { text: "Possible + préfixe négatif = ______", ans: ["impossible"], hint: "Possible → impossible" }
+];
+
+// EXERCICE 6 — Relier GN et nom noyau (8 paires)
+const pairesGN = [
+  { left: "le petit garçon", right: "garçon" },
+  { left: "une magnifique boîte", right: "boîte" },
+  { left: "la vieille cabane", right: "cabane" },
+  { left: "un bruit étrange", right: "bruit" },
+  { left: "les feuilles mortes", right: "feuilles" },
+  { left: "le vent fort", right: "vent" },
+  { left: "une grande maison", right: "maison" },
+  { left: "des enfants joyeux", right: "enfants" }
+];
+
+// EXERCICE 7 — QCM Accord de l'adjectif
+const qcm4 = [
+  { q: "« Des feuilles ______ » (mort)",
+    options: ["mort", "morte", "mortes"],
+    correct: 2, hint: "Feuilles = féminin pluriel → mortes." },
+  { q: "« Une ______ maison » (grand)",
+    options: ["grand", "grande", "grands"],
+    correct: 1, hint: "Maison = féminin singulier → grande." },
+  { q: "« Un ______ garçon » (petit)",
+    options: ["petit", "petite", "petits"],
+    correct: 0, hint: "Garçon = masculin singulier → petit." },
+  { q: "« Des enfants ______ » (joyeux)",
+    options: ["joyeux", "joyeuse", "joyeuses"],
+    correct: 0, hint: "Joyeux = masculin pluriel (invariable ici)." },
+  { q: "« Une boîte ______ » (couvert)",
+    options: ["couvert", "couverte", "couverts"],
+    correct: 1, hint: "Boîte = féminin singulier → couverte." },
+  { q: "« Les fenêtres ______ » (ouvert)",
+    options: ["ouvert", "ouverte", "ouvertes"],
+    correct: 2, hint: "Fenêtres = féminin pluriel → ouvertes." }
+];
+
+/* ============================================================
+   UTILITAIRE : MÉLANGE ALÉATOIRE
+   ============================================================ */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function shuffleQCM(data) {
+  return data.map(item => {
+    const correctText = item.options[item.correct];
+    const shuffled = shuffle(item.options);
+    return { ...item, options: shuffled, correct: shuffled.indexOf(correctText) };
+  });
+}
+
+/* ============================================================
+   PROGRESSION
+   ============================================================ */
+const TOTAL_POINTS = 6 + 6 + 8 + 6 + 5 + 8 + 6;
+const solvedItems = { ex1: new Set(), ex2: new Set(), ex3: new Set(), ex4: new Set(), ex5: new Set(), ex6: new Set(), ex7: new Set() };
+
+function updateProgress() {
+  const totalSolved = solvedItems.ex1.size + solvedItems.ex2.size + solvedItems.ex3.size + solvedItems.ex4.size + solvedItems.ex5.size + solvedItems.ex6.size + solvedItems.ex7.size;
+  const pct = Math.min(100, (totalSolved / TOTAL_POINTS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressScore').textContent = totalSolved + ' / ' + TOTAL_POINTS;
+  const emoji = document.getElementById('progressEmoji');
+  if (pct >= 100) { emoji.textContent = '🏆'; emoji.classList.add('pop'); setTimeout(()=>emoji.classList.remove('pop'), 600); }
+  else if (pct >= 75) emoji.textContent = '📝';
+  else if (pct >= 50) emoji.textContent = '💪';
+  else if (pct >= 25) emoji.textContent = '📚';
+  else emoji.textContent = '📝';
+
+  document.getElementById('badge1').textContent = solvedItems.ex1.size + ' / 6';
+  document.getElementById('badge2').textContent = solvedItems.ex2.size + ' / 6';
+  document.getElementById('badge3').textContent = solvedItems.ex3.size + ' / 8';
+  document.getElementById('badge4').textContent = solvedItems.ex4.size + ' / 6';
+  document.getElementById('badge5').textContent = solvedItems.ex5.size + ' / 5';
+  document.getElementById('badge6').textContent = solvedItems.ex6.size + ' / 8';
+  document.getElementById('badge7').textContent = solvedItems.ex7.size + ' / 6';
+
+  if (pct >= 100 && !window._confettiDone) {
+    window._confettiDone = true;
+    launchConfetti();
+  }
+}
+
+/* ============================================================
+   CONFETTIS
+   ============================================================ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#C2185B','#534AB7','#D85A30','#BA7517','#185FA5','#F48FB1'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = c.style.width;
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   FONCTION GÉNÉRIQUE POUR LES QCM
+   ============================================================ */
+function buildQCM(listId, rawData, solvedSet) {
+  const list = document.getElementById(listId);
+  const data = shuffleQCM(rawData);
+  list.innerHTML = '';
+
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="qcm-status"></span></div>
+      <div class="q-text">${item.q}</div>
+      <div class="choice-grid">
+        ${item.options.map((opt, i) => `<button class="choice-btn" data-idx="${idx}" data-opt="${i}">${opt}</button>`).join('')}
+      </div>
+      <div class="q-fb"></div>
+    `;
+    list.appendChild(div);
+  });
+
+  list.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = parseInt(this.dataset.idx);
+      const opt = parseInt(this.dataset.opt);
+      const parent = this.closest('.q-item');
+      if (parent.classList.contains('solved')) return;
+
+      parent.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected','correct','wrong');
+        b.disabled = false;
+      });
+      this.classList.add('selected');
+
+      const item = data[idx];
+      const fb = parent.querySelector('.q-fb');
+      const status = parent.querySelector('.qcm-status');
+
+      if (opt === item.correct) {
+        this.classList.add('correct');
+        this.disabled = true;
+        parent.classList.add('solved');
+        parent.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+        status.textContent = '✅';
+        fb.innerHTML = `<span class="ok">✓ Exact ! ${item.hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        this.classList.add('wrong');
+        parent.classList.add('shake');
+        setTimeout(() => parent.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Pas tout à fait… Réessaie !</span>`;
+        setTimeout(() => this.classList.remove('wrong'), 800);
+      }
+    });
+  });
+}
+
+/* ============================================================
+   FONCTION GÉNÉRIQUE POUR COMPLÉTER
+   ============================================================ */
+function buildCompleter(listId, data, solvedSet, inputClass, btnClass) {
+  const list = document.getElementById(listId);
+  list.innerHTML = '';
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="comp-status"></span></div>
+      <div class="q-text">${item.text}</div>
+      <div class="q-row">
+        <input class="q-input ${inputClass}" type="text" placeholder="Votre réponse" autocomplete="off">
+        <button class="q-btn ${btnClass}">Vérifier</button>
+      </div>
+      <div class="q-fb"></div>
+    `;
+    list.appendChild(div);
+  });
+
+  list.querySelectorAll('.q-item').forEach((item, idx) => {
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    const fb = item.querySelector('.q-fb');
+    const status = item.querySelector('.comp-status');
+
+    function check() {
+      if (item.classList.contains('solved')) return;
+      const v = inp.value.trim().toLowerCase();
+      if (!v) { fb.innerHTML = '<span class="nope">✏️ Écris une réponse avant de vérifier.</span>'; return; }
+      const norm = s => s.trim().toLowerCase().replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const good = data[idx].ans.some(a => norm(a) === norm(v));
+      if (good) {
+        item.classList.add('solved');
+        status.textContent = '✅';
+        inp.disabled = true;
+        btn.disabled = true;
+        btn.textContent = '✓';
+        btn.style.background = 'var(--teal)';
+        fb.innerHTML = `<span class="ok">✓ Bravo ! ${data[idx].hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        item.classList.add('shake');
+        setTimeout(() => item.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Incorrect. Indice : ${data[idx].hint}</span>`;
+      }
+    }
+    btn.addEventListener('click', check);
+    inp.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  });
+}
+
+/* ============================================================
+   FONCTION GÉNÉRIQUE POUR RELIER
+   ============================================================ */
+function buildMatching(listId, data, solvedSet) {
+  const list = document.getElementById(listId);
+  list.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'q-item';
+  wrap.innerHTML = `
+    <div class="q-num"><span>Relie les paires</span><span class="match-status"></span></div>
+    <div class="match-cols">
+      <div class="match-col"><h5>Colonne A</h5><div class="match-left"></div></div>
+      <div class="match-col"><h5>Colonne B</h5><div class="match-right"></div></div>
+    </div>
+    <div class="q-fb"></div>
+  `;
+  list.appendChild(wrap);
+
+  const leftCol = wrap.querySelector('.match-left');
+  const rightCol = wrap.querySelector('.match-right');
+  const shuffledLeft = shuffle(data);
+  const shuffledRight = shuffle(data);
+
+  shuffledLeft.forEach((p) => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.side = 'left';
+    el.dataset.idx = data.indexOf(p);
+    el.textContent = p.left;
+    leftCol.appendChild(el);
+  });
+  shuffledRight.forEach((p) => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.side = 'right';
+    el.dataset.idx = data.indexOf(p);
+    el.textContent = p.right;
+    rightCol.appendChild(el);
+  });
+
+  let selectedLeft = null;
+  let matchedCount = 0;
+
+  wrap.querySelectorAll('.match-item').forEach(el => {
+    el.addEventListener('click', function() {
+      if (this.classList.contains('matched')) return;
+      const side = this.dataset.side;
+
+      if (side === 'left') {
+        wrap.querySelectorAll('.match-item[data-side="left"]').forEach(x => x.classList.remove('active'));
+        this.classList.add('active');
+        selectedLeft = this;
+        return;
+      }
+
+      if (!selectedLeft) {
+        this.classList.add('wrong-pair');
+        setTimeout(() => this.classList.remove('wrong-pair'), 400);
+        wrap.querySelector('.q-fb').innerHTML = '<span class="nope">👈 Choisis d\'abord un élément à gauche.</span>';
+        return;
+      }
+
+      if (selectedLeft.dataset.idx === this.dataset.idx) {
+        selectedLeft.classList.remove('active');
+        selectedLeft.classList.add('matched');
+        this.classList.add('matched');
+        matchedCount++;
+        wrap.querySelector('.match-status').textContent = matchedCount + ' / ' + data.length;
+        wrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien joué ! ${matchedCount}/${data.length} paires trouvées.</span>`;
+        if (!solvedSet.has(parseInt(this.dataset.idx))) {
+          solvedSet.add(parseInt(this.dataset.idx));
+          updateProgress();
+        }
+        selectedLeft = null;
+        if (matchedCount === data.length) {
+          wrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les paires sont reliées ! Excellent travail.</span>';
+        }
+      } else {
+        this.classList.add('wrong-pair');
+        selectedLeft.classList.add('wrong-pair');
+        setTimeout(() => {
+          this.classList.remove('wrong-pair');
+          selectedLeft && selectedLeft.classList.remove('wrong-pair');
+        }, 400);
+        wrap.querySelector('.q-fb').innerHTML = '<span class="nope">✗ Ce n\'est pas la bonne paire. Réessaie !</span>';
+      }
+    });
+  });
+}
+
+/* ============================================================
+   CONSTRUCTION INITIALE
+   ============================================================ */
+function buildAll() {
+  buildQCM('qlist1', qcm1, solvedItems.ex1);
+  buildQCM('qlist2', qcm2, solvedItems.ex2);
+  buildQCM('qlist3', qcm3, solvedItems.ex3);
+  buildCompleter('qlist4', completerTemps, solvedItems.ex4, 'q-input-1', 'q-btn-1');
+  buildCompleter('qlist5', completerMots, solvedItems.ex5, 'q-input-6', 'q-btn-6');
+  buildMatching('qlist6', pairesGN, solvedItems.ex6);
+  buildQCM('qlist7', qcm4, solvedItems.ex7);
+}
+
+/* ============================================================
+   RESET
+   ============================================================ */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  solvedItems.ex1.clear();
+  solvedItems.ex2.clear();
+  solvedItems.ex3.clear();
+  solvedItems.ex4.clear();
+  solvedItems.ex5.clear();
+  solvedItems.ex6.clear();
+  solvedItems.ex7.clear();
+  window._confettiDone = false;
+  buildAll();
+  updateProgress();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+buildAll();
+updateProgress();
+</script>
+<style>body{margin:0}</style><script>window.parent.postMessage({previewContentReady:true},"*")</script></body>
+</html>
