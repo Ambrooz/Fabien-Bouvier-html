@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚡ Chronoduel en ligne - Futur proche / Futur simple</title>
+<script src="https://unpkg.com/peerjs@1.5.4/dist/peerjs.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    background: linear-gradient(145deg, #1a2a4f 0%, #0f1a2f 100%);
+    min-height: 100vh; display: flex; justify-content: center; align-items: center;
+    padding: 16px; color: white;
+}
+.game-container {
+    max-width: 1000px; width: 100%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    border-radius: 48px; border: 2px solid rgba(255,255,255,0.2);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 2px 4px rgba(255,255,255,0.1);
+    padding: 32px 24px; transition: all .3s ease;
+}
+h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0.5px;
+     text-shadow: 0 4px 8px rgba(0,0,0,0.5); display: flex; align-items: center;
+     justify-content: center; gap: 15px; margin-bottom: 8px; }
+.sub-header { display: flex; justify-content: center; align-items: center; flex-wrap: wrap;
+    font-size: 1.1rem; background: rgba(0,0,0,0.3); border-radius: 60px; padding: 12px 24px;
+    margin: 20px 0 25px 0; border: 1px solid rgba(255,255,255,0.15); gap: 10px; }
+.badge { background: #ffd966; color: #1f2a44; font-weight: 700; padding: 6px 18px;
+    border-radius: 40px; font-size: .9rem; box-shadow: 0 2px 4px rgba(0,0,0,.3); }
+.hidden { display: none !important; }
+
+.mode-choice { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
+.mode-card { flex: 1 1 280px; background: rgba(0,0,0,0.3); border-radius: 32px; padding: 28px 20px;
+    text-align: center; border: 2px solid rgba(255,255,255,0.25); cursor: pointer; transition: .2s; }
+.mode-card:hover { transform: translateY(-4px); border-color: #2dd4bf; }
+.mode-card .big { font-size: 3rem; }
+.mode-card h2 { margin: 10px 0 8px; font-size: 1.4rem; }
+.mode-card p { color: #b0c4de; font-size: 1.05rem; line-height: 1.5; }
+
+.players-setup { background: rgba(255,255,255,0.05); border-radius: 40px; padding: 25px;
+    margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.2);
+    display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
+.player-card { flex: 1 1 250px; background: rgba(0,0,0,0.3); border-radius: 32px;
+    padding: 20px; text-align: center; border: 2px solid; transition: .2s; }
+.player-card.blue { border-color: #3b82f6; box-shadow: 0 8px 0 #1e3a8a; }
+.player-card.red { border-color: #ef4444; box-shadow: 0 8px 0 #991b1b; }
+.player-card input { width: 100%; padding: 14px 20px; border-radius: 60px; background: white;
+    font-size: 1.1rem; font-weight: 600; text-align: center; margin: 15px 0 5px 0;
+    border: 3px solid transparent; }
+.player-card.blue input:focus { border-color: #3b82f6; outline: none; }
+.player-card.red input:focus { border-color: #ef4444; outline: none; }
+.btn-join { background: #2dd4bf; border: none; color: #0b1e33; font-weight: bold; font-size: 1.2rem;
+    padding: 14px 30px; border-radius: 60px; cursor: pointer; transition: .2s;
+    box-shadow: 0 6px 0 #0f766e; margin-top: 10px; width: 100%; }
+.btn-join:hover { transform: translateY(-2px); box-shadow: 0 8px 0 #0f766e; background: #2abfaa; }
+.btn-join:disabled { opacity: .5; cursor: wait; }
+.center-note { text-align: center; font-size: 1.3rem; margin: 10px 0 20px; }
+.room-code { font-size: 2.6rem; font-weight: 900; letter-spacing: 8px; color: #ffd966;
+    background: rgba(0,0,0,0.4); border: 2px dashed #ffd966; border-radius: 30px;
+    padding: 15px 30px; display: inline-block; margin: 15px 0; }
+.status-line { text-align: center; font-size: 1.15rem; color: #b0c4de; margin: 10px 0 5px; }
+.status-line.err { color: #fca5a5; }
+
+.scoreboard { display: flex; justify-content: space-between; align-items: center;
+    background: rgba(0,0,0,0.4); border-radius: 120px; padding: 12px 30px; margin: 20px 0 25px 0;
+    font-size: 1.4rem; font-weight: 700; border: 1px solid #ffffff30; gap: 8px; flex-wrap: wrap; }
+.score { background: white; color: #0d1b2e; padding: 8px 28px; border-radius: 60px;
+    font-size: 2rem; min-width: 90px; text-align: center; }
+.question-panel { background: rgba(255,255,255,0.08); border-radius: 48px; padding: 35px 20px;
+    text-align: center; border: 3px dashed #fbbf24; margin-bottom: 30px; }
+.consigne { font-size: 1.5rem; background: #2d3b5a; display: inline-block; padding: 8px 35px;
+    border-radius: 60px; color: #fde047; border: 2px solid #fde047; margin-bottom: 20px; font-weight: 600; }
+.phrase-a-deviner { font-size: 3rem; font-weight: 800; line-height: 1.2;
+    text-shadow: 0 8px 0 #0f172a; margin: 15px 0 25px 0; word-break: break-word; }
+.boutons-reponse { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; margin: 30px 0 20px; }
+.btn-reponse { flex: 1 1 180px; padding: 24px 15px; font-size: 2rem; font-weight: 700; border: none;
+    border-radius: 80px; background: white; color: #0f172a; cursor: pointer; transition: .1s ease;
+    box-shadow: 0 10px 0 #64748b, 0 4px 12px black; border: 2px solid rgba(255,255,255,0.5); }
+.btn-reponse.futur { background: #fff3cd; }
+.btn-reponse.futursimple { background: #d9f0e1; }
+.btn-reponse:active { transform: translateY(6px); box-shadow: 0 4px 0 #334155; }
+.btn-reponse:disabled { opacity: 0.4; transform: none; pointer-events: none; }
+.btn-reponse.attente { opacity: .55; pointer-events: none; }
+.timer-info { font-size: 1.8rem; background: #1e2a47; display: inline-block; padding: 12px 40px;
+    border-radius: 60px; color: #ffd966; border: 2px solid #ffd966; margin: 15px auto 5px; font-weight: 600; }
+.feedback-message { min-height: 60px; font-size: 1.7rem; font-weight: 500; color: #fde047; margin: 10px 0; }
+.footer-stats { display: flex; justify-content: space-between; color: #b0c4de; margin-top: 20px;
+    font-size: 1.3rem; flex-wrap: wrap; gap: 8px; }
+.restart-btn { background: none; border: 2px solid white; color: white; padding: 10px 30px;
+    border-radius: 40px; font-size: 1.3rem; font-weight: bold; cursor: pointer; transition: .2s; margin-top: 20px; }
+.restart-btn:hover { background: white; color: #0f172a; }
+.back-btn { background: none; border: none; color: #b0c4de; font-size: 1.1rem; cursor: pointer;
+    text-decoration: underline; margin-top: 15px; }
+.back-btn:hover { color: white; }
+
+.player-zone { background: rgba(0,0,0,0.3); border-radius: 32px; padding: 18px;
+    margin: 10px 0; border: 2px solid rgba(255,255,255,0.15); }
+.player-zone.blue { border-color: #3b82f6; }
+.player-zone.red { border-color: #ef4444; }
+.player-zone .zone-header { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px;
+    display: flex; justify-content: space-between; align-items: center; }
+.player-zone .zone-status { font-size: .9rem; font-weight: 500; color: #b0c4de; }
+.player-zone .zone-status.done { color: #86efac; }
+.player-zone .zone-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.player-zone .zone-buttons .btn-reponse { flex: 1 1 140px; padding: 14px 8px; font-size: 1.1rem;
+    box-shadow: 0 6px 0 #64748b; min-height: 60px; }
+@media (max-width: 600px) {
+    .phrase-a-deviner { font-size: 2rem; }
+    .scoreboard { font-size: 1rem; padding: 10px 15px; }
+    .score { font-size: 1.4rem; min-width: 60px; padding: 6px 16px; }
+    h1 { font-size: 1.7rem; }
+}
+</style>
+</head>
+<body>
+<div class="game-container">
+    <h1><span>⚡</span> CHRONODUEL <span>⏳</span></h1>
+    <div class="sub-header">
+        <span class="badge">80 phrases</span>
+        <span class="badge">Futur proche</span>
+        <span class="badge">Futur simple</span>
+    </div>
+
+    <div id="modeScreen">
+        <div class="mode-choice">
+            <div class="mode-card" id="btnOnline">
+                <div class="big">🌐</div>
+                <h2>Jouer en ligne</h2>
+                <p>Chacun sur son appareil (ordinateur ou téléphone).<br>Tu crées une partie et tu donnes le code à ton élève.</p>
+            </div>
+            <div class="mode-card" id="btnLocal">
+                <div class="big">👥</div>
+                <h2>Jouer sur le même écran</h2>
+                <p>Deux joueurs devant le même ordinateur,<br>ou chacun chez soi en visio (partage d'écran).</p>
+            </div>
+            <div class="mode-card" id="btnSolo">
+                <div class="big">🎯</div>
+                <h2>Jouer seul</h2>
+                <p>Entraîne-toi à ton rythme,<br>ton meilleur score est mémorisé.</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="onlineScreen" class="hidden">
+        <div class="players-setup">
+            <div class="player-card blue">
+                <div style="font-size:3rem;">🧑‍🏫</div>
+                <h2>Prof / Hébergeur</h2>
+                <input type="text" id="hostName" placeholder="Ton prénom" value="Prof">
+                <button class="btn-join" id="createBtn">🎮 Créer la partie</button>
+            </div>
+            <div class="player-card red">
+                <div style="font-size:3rem;">🧑‍🎓</div>
+                <h2>Élève</h2>
+                <input type="text" id="guestName" placeholder="Ton prénom" value="Élève">
+                <input type="text" id="joinCode" placeholder="Code de la partie" maxlength="4" style="text-transform:uppercase; letter-spacing:6px;">
+                <button class="btn-join" id="joinBtn">👉 Rejoindre la partie</button>
+            </div>
+        </div>
+        <div class="center-note">La personne qui crée la partie reçoit un <b>code à 4 lettres</b> à communiquer (téléphone, SMS, mail…).</div>
+        <div class="status-line" id="onlineStatus"></div>
+        <div class="status-line"><button class="back-btn" id="backFromOnline">← Retour</button></div>
+    </div>
+
+    <div id="localScreen" class="hidden">
+        <div class="players-setup">
+            <div class="player-card blue">
+                <div style="font-size:3rem;">🔵</div>
+                <h2>Joueur 1</h2>
+                <input type="text" id="p1Name" placeholder="Nom du joueur 1" value="Alex">
+            </div>
+            <div class="player-card red">
+                <div style="font-size:3rem;">🔴</div>
+                <h2>Joueur 2</h2>
+                <input type="text" id="p2Name" placeholder="Nom du joueur 2" value="Sam">
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn-join" style="max-width:400px;" id="localStartBtn">🚀 Commencer le duel</button>
+        </div>
+        <div class="status-line"><button class="back-btn" id="backFromLocal">← Retour</button></div>
+    </div>
+
+    <div id="soloScreen" class="hidden">
+        <div class="players-setup">
+            <div class="player-card blue" style="flex:0 1 340px;">
+                <div style="font-size:3rem;">🎯</div>
+                <h2>Joueur solo</h2>
+                <input type="text" id="soloName" placeholder="Ton prénom" value="Champion">
+            </div>
+        </div>
+        <div style="text-align:center;">
+            <button class="btn-join" style="max-width:400px;" id="soloStartBtn">🚀 Commencer l'entraînement</button>
+        </div>
+        <div class="status-line" id="soloBest"></div>
+        <div class="status-line"><button class="back-btn" id="backFromSolo">← Retour</button></div>
+    </div>
+
+    <div id="gameScreen" class="hidden">
+        <div class="scoreboard">
+            <span id="p1Label">🔵 Joueur 1</span>
+            <span class="score" id="score1">0</span>
+            <span style="font-size:1.6rem;">⚔️</span>
+            <span class="score" id="score2">0</span>
+            <span id="p2Label">🔴 Joueur 2</span>
+        </div>
+        <div class="question-panel">
+            <div class="consigne" id="tourIndicator">…</div>
+            <div class="phrase-a-deviner" id="phraseActuelle">…</div>
+            <div id="boutonsReponse"></div>
+            <div class="timer-info" id="timerDisplay">⏱️ 25s</div>
+            <div class="feedback-message" id="feedbackMessage">…</div>
+        </div>
+        <div class="footer-stats">
+            <span id="compteurPhrases">Défi 1/60</span>
+            <span id="onlineInfo" class="hidden">🌐 Connectés !</span>
+        </div>
+        <div style="text-align:center;">
+            <button class="restart-btn" id="restartBtn">🔄 Nouveau duel</button>
+        </div>
+        <div class="status-line"><button class="back-btn" id="backFromGame">← Quitter la partie</button></div>
+    </div>
+</div>
+
+<script>
+(function () {
+    // ---------- 80 PHRASES COMPLÈTES : FUTUR PROCHE vs FUTUR SIMPLE ----------
+    // La phrase est déjà conjuguée. Le joueur doit cliquer sur le bon temps.
+    const phrasesListe = [
+        // ===== FUTUR PROCHE (40) =====
+        { phrase: "Je vais perdre mes clés.", temps: "futur" },
+        { phrase: "Tu vas finir tes devoirs ce soir.", temps: "futur" },
+        { phrase: "Nous allons visiter Paris demain.", temps: "futur" },
+        { phrase: "Elle va chanter sur scène ce soir.", temps: "futur" },
+        { phrase: "Ils vont partir très tôt demain matin.", temps: "futur" },
+        { phrase: "Vous allez comprendre la leçon ce soir.", temps: "futur" },
+        { phrase: "On va voir ce qui se passera.", temps: "futur" },
+        { phrase: "Je vais venir te voir samedi.", temps: "futur" },
+        { phrase: "Tu vas être en retard.", temps: "futur" },
+        { phrase: "Nous allons avoir une surprise bientôt.", temps: "futur" },
+        { phrase: "Il va faire beau demain.", temps: "futur" },
+        { phrase: "Elle va apprendre le japonais l'année prochaine.", temps: "futur" },
+        { phrase: "Vous allez prendre le premier train demain.", temps: "futur" },
+        { phrase: "Je vais dire la vérité plus tard.", temps: "futur" },
+        { phrase: "Ils vont construire une maison bientôt.", temps: "futur" },
+        { phrase: "Tu vas devoir travailler plus.", temps: "futur" },
+        { phrase: "Nous allons rentrer tard ce soir.", temps: "futur" },
+        { phrase: "Elle va savoir nager très vite.", temps: "futur" },
+        { phrase: "Je vais offrir des fleurs à maman demain.", temps: "futur" },
+        { phrase: "Ils vont savoir la réponse bientôt.", temps: "futur" },
+        { phrase: "Je vais visiter mes grands-parents ce week-end.", temps: "futur" },
+        { phrase: "Tu vas chanter cette chanson bientôt.", temps: "futur" },
+        { phrase: "Nous allons préparer un gâteau ce soir.", temps: "futur" },
+        { phrase: "Elle va inviter ses amies demain.", temps: "futur" },
+        { phrase: "Ils vont aller au cinéma ce soir.", temps: "futur" },
+        { phrase: "Vous allez visiter le musée demain.", temps: "futur" },
+        { phrase: "Je vais lire ce livre cet été.", temps: "futur" },
+        { phrase: "Tu vas voir tes grands-parents bientôt.", temps: "futur" },
+        { phrase: "On va organiser une fête samedi.", temps: "futur" },
+        { phrase: "Elles vont faire leurs valises ce soir.", temps: "futur" },
+        { phrase: "Je vais acheter une nouvelle voiture bientôt.", temps: "futur" },
+        { phrase: "Tu vas venir à la fête samedi ?", temps: "futur" },
+        { phrase: "Nous allons regarder ce film ce soir.", temps: "futur" },
+        { phrase: "Il va faire ses devoirs après le dîner.", temps: "futur" },
+        { phrase: "Vous allez rester chez vous ce week-end ?", temps: "futur" },
+        { phrase: "Je vais retrouver mes clés bientôt.", temps: "futur" },
+        { phrase: "Elle va préparer son repas ce soir.", temps: "futur" },
+        { phrase: "Nous allons acheter un cadeau pour Marie.", temps: "futur" },
+        { phrase: "Tu vas fermer la porte en sortant.", temps: "futur" },
+        { phrase: "Ils vont partir en vacances en juillet.", temps: "futur" },
+
+        // ===== FUTUR SIMPLE (40) =====
+        { phrase: "Je perdrai mes clés.", temps: "futursimple" },
+        { phrase: "Tu finiras tes devoirs ce soir.", temps: "futursimple" },
+        { phrase: "Nous visiterons Paris cet été.", temps: "futursimple" },
+        { phrase: "Elle chantera sur scène l'année prochaine.", temps: "futursimple" },
+        { phrase: "Ils partiront très tôt demain matin.", temps: "futursimple" },
+        { phrase: "Vous comprendrez la leçon bientôt.", temps: "futursimple" },
+        { phrase: "On verra bien ce qui se passera.", temps: "futursimple" },
+        { phrase: "Je viendrai te voir samedi prochain.", temps: "futursimple" },
+        { phrase: "Tu seras en retard.", temps: "futursimple" },
+        { phrase: "Nous aurons une surprise dans quelques jours.", temps: "futursimple" },
+        { phrase: "Il fera beau demain après-midi.", temps: "futursimple" },
+        { phrase: "Elle apprendra le japonais l'année prochaine.", temps: "futursimple" },
+        { phrase: "Vous prendrez le premier train demain matin.", temps: "futursimple" },
+        { phrase: "Je dirai la vérité un jour.", temps: "futursimple" },
+        { phrase: "Ils construiront une maison l'année prochaine.", temps: "futursimple" },
+        { phrase: "Tu devras travailler plus.", temps: "futursimple" },
+        { phrase: "Nous rentrerons tard ce soir.", temps: "futursimple" },
+        { phrase: "Elle saura nager très vite un jour.", temps: "futursimple" },
+        { phrase: "J'offrirai des fleurs à maman demain.", temps: "futursimple" },
+        { phrase: "Ils sauront la réponse un jour.", temps: "futursimple" },
+        { phrase: "Je visiterai mes grands-parents le week-end prochain.", temps: "futursimple" },
+        { phrase: "Tu chanteras cette chanson un jour.", temps: "futursimple" },
+        { phrase: "Nous préparerons un gâteau pour ton anniversaire.", temps: "futursimple" },
+        { phrase: "Elle invitera ses amies à sa fête.", temps: "futursimple" },
+        { phrase: "Ils iront au cinéma demain soir.", temps: "futursimple" },
+        { phrase: "Vous visiterez le musée dimanche.", temps: "futursimple" },
+        { phrase: "Je lirai ce livre pendant les vacances.", temps: "futursimple" },
+        { phrase: "Tu verras tes grands-parents à Noël.", temps: "futursimple" },
+        { phrase: "On organisera une fête samedi prochain.", temps: "futursimple" },
+        { phrase: "Elles feront leurs valises demain matin.", temps: "futursimple" },
+        { phrase: "J'achèterai une nouvelle voiture l'année prochaine.", temps: "futursimple" },
+        { phrase: "Tu viendras à la fête samedi ?", temps: "futursimple" },
+        { phrase: "Nous regarderons ce film ce soir.", temps: "futursimple" },
+        { phrase: "Il fera ses devoirs après le dîner.", temps: "futursimple" },
+        { phrase: "Vous resterez chez vous ce week-end ?", temps: "futursimple" },
+        { phrase: "Je retrouverai mes clés un jour.", temps: "futursimple" },
+        { phrase: "Elle préparera son repas ce soir.", temps: "futursimple" },
+        { phrase: "Nous achèterons un cadeau pour Marie.", temps: "futursimple" },
+        { phrase: "Tu fermeras la porte en sortant.", temps: "futursimple" },
+        { phrase: "Ils partiront en vacances en juillet prochain.", temps: "futursimple" }
+    ];
+
+    const TEMPS_LABEL = { futur: "futur proche", futursimple: "futur simple" };
+    const NB_DEFI = 60;
+    const TEMPS_PAR_DEFI = 25;
+
+    let mode = "local";
+    let role = null;
+    let phrases = [];
+    let currentIndex = 0;
+    let scores = [0, 0];
+    let gameActive = false;
+    let timerInterval = null;
+    let timeLeft = TEMPS_PAR_DEFI;
+    let mySlot = 0;
+    let names = ["Joueur 1", "Joueur 2"];
+
+    let answered = [false, false];
+    let answerCorrect = [false, false];
+
+    let peer = null;
+    let conn = null;
+
+    const $ = id => document.getElementById(id);
+    const screens = { mode: $("modeScreen"), online: $("onlineScreen"), local: $("localScreen"), solo: $("soloScreen"), game: $("gameScreen") };
+    const els = {
+        p1Label: $("p1Label"), p2Label: $("p2Label"), score1: $("score1"), score2: $("score2"),
+        tourIndicator: $("tourIndicator"), phraseActuelle: $("phraseActuelle"),
+        boutonsReponse: $("boutonsReponse"), feedbackMessage: $("feedbackMessage"),
+        compteurPhrases: $("compteurPhrases"), timerDisplay: $("timerDisplay"),
+        onlineStatus: $("onlineStatus"), onlineInfo: $("onlineInfo")
+    };
+
+    function showScreen(name) {
+        Object.values(screens).forEach(s => s.classList.add("hidden"));
+        screens[name].classList.remove("hidden");
+    }
+    function status(msg, err) {
+        els.onlineStatus.textContent = msg;
+        els.onlineStatus.className = "status-line" + (err ? " err" : "");
+    }
+
+    $("btnOnline").addEventListener("click", () => { mode = "online"; showScreen("online"); });
+    $("btnLocal").addEventListener("click", () => { mode = "local"; showScreen("local"); });
+    $("btnSolo").addEventListener("click", () => { mode = "solo"; updateSoloBest(); showScreen("solo"); });
+    $("backFromOnline").addEventListener("click", () => showScreen("mode"));
+    $("backFromLocal").addEventListener("click", () => showScreen("mode"));
+    $("backFromSolo").addEventListener("click", () => showScreen("mode"));
+    $("backFromGame").addEventListener("click", () => {
+        stopTimer(); gameActive = false;
+        if (conn) { try { conn.close(); } catch(e){} }
+        if (peer) { try { peer.destroy(); } catch(e){} }
+        conn = null; peer = null;
+        showScreen("mode");
+    });
+
+    $("localStartBtn").addEventListener("click", () => {
+        names = [($("p1Name").value.trim() || "Joueur 1"), ($("p2Name").value.trim() || "Joueur 2")];
+        mySlot = 0; role = null;
+        startMatch();
+    });
+
+    function soloBestScore() {
+        try { return parseInt(localStorage.getItem("chronoduel-best-futur-a") || "0", 10) || 0; }
+        catch (e) { return 0; }
+    }
+    function saveSoloBest(v) {
+        try { localStorage.setItem("chronoduel-best-futur-a", String(v)); } catch (e) {}
+    }
+    function updateSoloBest() {
+        const b = soloBestScore();
+        $("soloBest").textContent = b > 0 ? "🏅 Ton meilleur score : " + b + "/" + NB_DEFI : "";
+    }
+    function startSolo() {
+        phrases = phrasesListe.slice();
+        shuffleArray(phrases);
+        phrases = phrases.slice(0, NB_DEFI);
+        currentIndex = 0; scores = [0, 0];
+        gameActive = true; mySlot = 0; role = null;
+        names = [($("soloName").value.trim() || "Champion"), "—"];
+        answered = [false, false];
+        answerCorrect = [false, false];
+        showScreen("game");
+        updateScoreboard();
+        nextPhrase();
+    }
+    $("soloStartBtn").addEventListener("click", startSolo);
+
+    function randomCode() {
+        const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+        let c = "";
+        for (let i = 0; i < 4; i++) c += alphabet[Math.floor(Math.random() * alphabet.length)];
+        return c;
+    }
+    function peerIdFor(code) { return "chronoduel-futur-a-2026-" + code.toUpperCase(); }
+
+    $("createBtn").addEventListener("click", () => {
+        const myName = ($("hostName").value.trim() || "Prof");
+        const code = randomCode();
+        role = "host"; mySlot = 0;
+        $("createBtn").disabled = true;
+        status("⏳ Création de la partie…");
+        peer = new Peer(peerIdFor(code), { debug: 0 });
+        peer.on("open", () => {
+            status("✅ Partie créée ! Communique ce code à ton élève puis attends sa connexion :");
+            const div = document.createElement("div");
+            div.className = "room-code"; div.id = "codeBox";
+            div.textContent = code;
+            els.onlineStatus.insertAdjacentElement("afterend", div);
+        });
+        peer.on("error", err => {
+            status("❌ Erreur : " + err.type + " — vérifie la connexion internet, puis réessaie.", true);
+            $("createBtn").disabled = false;
+        });
+        peer.on("connection", c => {
+            if (conn) { try { c.close(); } catch(e){} return; }
+            conn = c;
+            conn.on("open", () => {
+                send({ type: "hello", name: myName });
+            });
+            conn.on("data", onData);
+            conn.on("close", () => {
+                conn = null;
+                if (gameActive) { gameActive = false; stopTimer(); status("🔌 L'élève s'est déconnecté.", true); showScreen("online"); }
+            });
+        });
+    });
+
+    $("joinBtn").addEventListener("click", () => {
+        const code = $("joinCode").value.trim().toUpperCase();
+        const myName = ($("guestName").value.trim() || "Élève");
+        if (code.length !== 4) { status("Entre le code à 4 lettres donné par le prof.", true); return; }
+        role = "guest"; mySlot = 1;
+        names[1] = myName;
+        $("joinBtn").disabled = true;
+        status("⏳ Connexion à la partie " + code + "…");
+        peer = new Peer(null, { debug: 0 });
+        peer.on("open", () => {
+            conn = peer.connect(peerIdFor(code), { reliable: true });
+            conn.on("open", () => { send({ type: "hello", name: myName }); status("✅ Connecté ! En attente du prof…"); });
+            conn.on("data", onData);
+            conn.on("close", () => {
+                conn = null;
+                if (gameActive) { gameActive = false; stopTimer(); status("🔌 Le prof s'est déconnecté.", true); showScreen("online"); }
+            });
+        });
+        peer.on("error", err => {
+            status("❌ Impossible de rejoindre (" + err.type + "). Vérifie le code et que le prof ait bien créé la partie.", true);
+            $("joinBtn").disabled = false;
+        });
+    });
+
+    function send(obj) { if (conn && conn.open) { try { conn.send(obj); } catch(e){} } }
+
+    function onData(msg) {
+        switch (msg.type) {
+            case "hello":
+                if (role === "host") {
+                    names[1] = msg.name || "Élève";
+                    names[0] = ($("hostName").value.trim() || "Prof");
+                    status("✅ " + names[1] + " est connecté ! La partie démarre…");
+                    setTimeout(() => startMatch(), 800);
+                } else {
+                    names[0] = msg.name || "Prof";
+                }
+                break;
+            case "state":
+                names = msg.names; scores = msg.scores; currentIndex = msg.currentIndex;
+                timeLeft = msg.timeLeft;
+                gameActive = msg.gameActive;
+                phrases = msg.phrases;
+                answered = msg.answered || [false, false];
+                answerCorrect = msg.answerCorrect || [false, false];
+                if (screens.game.classList.contains("hidden")) showScreen("game");
+                renderFromState(msg.feedback, msg.finished);
+                break;
+            case "answer":
+                if (role === "host" && gameActive) {
+                    receiveAnswer(msg.slot, msg.temps);
+                }
+                break;
+            case "restart":
+                if (role === "guest") {
+                    phrases = msg.phrases;
+                    startGuestMatch();
+                }
+                break;
+        }
+    }
+
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+    }
+
+    function startMatch() {
+        phrases = phrasesListe.slice();
+        shuffleArray(phrases);
+        phrases = phrases.slice(0, NB_DEFI);
+        currentIndex = 0; scores = [0, 0];
+        answered = [false, false];
+        answerCorrect = [false, false];
+        gameActive = true;
+        if (role === "host") send({ type: "restart", phrases: phrases });
+        showScreen("game");
+        updateScoreboard();
+        nextPhrase();
+    }
+
+    function startGuestMatch() {
+        scores = [0, 0]; currentIndex = 0; gameActive = true;
+        answered = [false, false];
+        answerCorrect = [false, false];
+        showScreen("game");
+        updateScoreboard();
+        nextPhrase();
+    }
+
+    function updateScoreboard() {
+        if (mode === "solo") {
+            els.p1Label.textContent = "⭐ " + names[0];
+            els.p2Label.textContent = "🏅 Record";
+            els.score1.textContent = scores[0];
+            els.score2.textContent = soloBestScore();
+        } else {
+            els.p1Label.textContent = "🔵 " + names[0];
+            els.p2Label.textContent = "🔴 " + names[1];
+            els.score1.textContent = scores[0];
+            els.score2.textContent = scores[1];
+        }
+        els.compteurPhrases.textContent = "Défi " + Math.min(currentIndex + 1, phrases.length) + "/" + phrases.length;
+    }
+
+    function shuffledOptions() {
+        const options = [
+            ["Futur proche", "futur", "futur"],
+            ["Futur simple", "futursimple", "futursimple"]
+        ];
+        shuffleArray(options);
+        return options;
+    }
+
+    function makeButtonsFragment(playerSlot, active) {
+        const frag = document.createDocumentFragment();
+        const options = shuffledOptions();
+        options.forEach(([text, key, cls]) => {
+            const btn = document.createElement("button");
+            btn.className = "btn-reponse " + cls + (active ? "" : " attente");
+            btn.textContent = text;
+            btn.disabled = !active;
+            if (answered[playerSlot]) {
+                btn.disabled = true;
+                btn.classList.add("attente");
+            }
+            btn.addEventListener("click", () => handleAnswer(playerSlot, key));
+            frag.appendChild(btn);
+        });
+        return frag;
+    }
+
+    function renderButtons() {
+        els.boutonsReponse.innerHTML = "";
+
+        if (mode === "solo") {
+            const wrap = document.createElement("div");
+            wrap.className = "boutons-reponse";
+            wrap.appendChild(makeButtonsFragment(0, gameActive && !answered[0]));
+            els.boutonsReponse.appendChild(wrap);
+            return;
+        }
+
+        const zone1 = document.createElement("div");
+        zone1.className = "player-zone blue";
+        const header1 = document.createElement("div");
+        header1.className = "zone-header";
+        const name1 = document.createElement("span");
+        name1.textContent = "🔵 " + names[0];
+        const stat1 = document.createElement("span");
+        stat1.className = "zone-status" + (answered[0] ? " done" : "");
+        stat1.textContent = answered[0] ? (answerCorrect[0] ? "✅ A répondu" : "❌ A répondu") : "En attente…";
+        header1.appendChild(name1); header1.appendChild(stat1);
+        zone1.appendChild(header1);
+        const buttons1 = document.createElement("div");
+        buttons1.className = "zone-buttons";
+        const active1 = gameActive && !answered[0] && (mode === "local" || mySlot === 0);
+        buttons1.appendChild(makeButtonsFragment(0, active1));
+        zone1.appendChild(buttons1);
+        els.boutonsReponse.appendChild(zone1);
+
+        const zone2 = document.createElement("div");
+        zone2.className = "player-zone red";
+        const header2 = document.createElement("div");
+        header2.className = "zone-header";
+        const name2 = document.createElement("span");
+        name2.textContent = "🔴 " + names[1];
+        const stat2 = document.createElement("span");
+        stat2.className = "zone-status" + (answered[1] ? " done" : "");
+        stat2.textContent = answered[1] ? (answerCorrect[1] ? "✅ A répondu" : "❌ A répondu") : "En attente…";
+        header2.appendChild(name2); header2.appendChild(stat2);
+        zone2.appendChild(header2);
+        const buttons2 = document.createElement("div");
+        buttons2.className = "zone-buttons";
+        const active2 = gameActive && !answered[1] && (mode === "local" || mySlot === 1);
+        buttons2.appendChild(makeButtonsFragment(1, active2));
+        zone2.appendChild(buttons2);
+        els.boutonsReponse.appendChild(zone2);
+    }
+
+    function nextPhrase() {
+        if (!gameActive) return;
+        stopTimer();
+        answered = [false, false];
+        answerCorrect = [false, false];
+        const p = phrases[currentIndex];
+        els.phraseActuelle.textContent = p.phrase;
+        els.feedbackMessage.textContent = "À vous de jouer ! À quel temps est cette phrase ?";
+        els.tourIndicator.textContent = mode === "solo"
+            ? "🎤 À toi de jouer !"
+            : "⚔️ Les deux joueurs répondent en même temps !";
+        updateScoreboard();
+        renderButtons();
+        timeLeft = TEMPS_PAR_DEFI;
+        els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
+        if (mode === "online" && role === "host") broadcastState(null);
+        startTimer();
+    }
+
+    function broadcastState(feedback, finished) {
+        if (mode !== "online" || role !== "host") return;
+        send({
+            type: "state",
+            names: names, scores: scores, currentIndex: currentIndex,
+            timeLeft: timeLeft,
+            gameActive: gameActive, phrases: phrases,
+            answered: answered, answerCorrect: answerCorrect,
+            feedback: feedback, finished: !!finished
+        });
+    }
+
+    function renderFromState(feedback, finished) {
+        if (phrases && phrases[currentIndex]) {
+            els.phraseActuelle.textContent = phrases[currentIndex].phrase;
+        }
+        els.tourIndicator.textContent = (mode === "online")
+            ? "⚔️ Les deux joueurs répondent en même temps !"
+            : "🎤 À toi de jouer !";
+        els.feedbackMessage.textContent = feedback || "À vous de jouer ! À quel temps est cette phrase ?";
+        els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
+        updateScoreboard();
+        renderButtons();
+    }
+
+    function handleAnswer(slot, tempsChoisi) {
+        if (!gameActive) return;
+        if (answered[slot]) return;
+        if (mode === "online" && mySlot !== slot) return;
+
+        if (mode === "online" && role === "guest") {
+            answered[slot] = true;
+            send({ type: "answer", slot: slot, temps: tempsChoisi });
+            els.feedbackMessage.textContent = "📡 Réponse envoyée…";
+            renderButtons();
+            return;
+        }
+
+        processAnswer(slot, tempsChoisi);
+    }
+
+    function processAnswer(slot, tempsChoisi) {
+        if (!gameActive || answered[slot]) return;
+        const p = phrases[currentIndex];
+        const correct = tempsChoisi === p.temps;
+        answered[slot] = true;
+        answerCorrect[slot] = correct;
+        if (correct) {
+            scores[slot]++;
+            els.feedbackMessage.textContent = "✅ " + names[slot] + " a trouvé ! +1 point";
+        } else {
+            els.feedbackMessage.textContent = "❌ " + names[slot] + " s'est trompé. C'était du " + TEMPS_LABEL[p.temps] + ".";
+        }
+        updateScoreboard();
+        renderButtons();
+        if (mode === "online" && role === "host") broadcastState(els.feedbackMessage.textContent);
+        checkBothAnswered();
+    }
+
+    function receiveAnswer(slot, tempsChoisi) {
+        if (!gameActive || answered[slot]) return;
+        processAnswer(slot, tempsChoisi);
+    }
+
+    function checkBothAnswered() {
+        if (mode === "solo") {
+            if (answered[0]) {
+                stopTimer();
+                setTimeout(advance, 1500);
+            }
+        } else {
+            if (answered[0] && answered[1]) {
+                stopTimer();
+                setTimeout(advance, 1500);
+            }
+        }
+    }
+
+    function advance() {
+        if (!gameActive) return;
+        if (currentIndex < phrases.length - 1) {
+            currentIndex++;
+            nextPhrase();
+        } else {
+            endGame();
+        }
+    }
+
+    function endGame() {
+        gameActive = false;
+        stopTimer();
+        let msg;
+        if (mode === "solo") {
+            const record = soloBestScore();
+            const nouveau = scores[0] > record;
+            saveSoloBest(Math.max(record, scores[0]));
+            msg = "🏆 Terminé, " + names[0] + " ! Score : " + scores[0] + "/" + phrases.length;
+            msg += nouveau ? " 🏅 Nouveau record !" : " (record à battre : " + Math.max(record, scores[0]) + ")";
+        } else if (scores[0] > scores[1]) msg = "🏆 Duel terminé ! " + names[0] + " gagne " + scores[0] + " à " + scores[1] + " !";
+        else if (scores[1] > scores[0]) msg = "🏆 Duel terminé ! " + names[1] + " gagne " + scores[1] + " à " + scores[0] + " !";
+        else msg = "🏆 Duel terminé ! Égalité " + scores[0] + " partout !";
+        els.feedbackMessage.textContent = msg;
+        els.tourIndicator.textContent = "🏁 Fin du duel";
+        renderButtons();
+        if (mode === "online" && role === "host") broadcastState(msg, true);
+    }
+
+    function startTimer() {
+        stopTimer();
+        timerInterval = setInterval(() => {
+            if (!gameActive) { stopTimer(); return; }
+            timeLeft--;
+            els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
+            if (mode !== "online" || role === "host") {
+                if (timeLeft <= 0) {
+                    stopTimer();
+                    const p = phrases[currentIndex];
+                    const fb = "⏰ Temps écoulé ! C'était du " + TEMPS_LABEL[p.temps] + ".";
+                    els.feedbackMessage.textContent = fb;
+                    answered[0] = true; answered[1] = true;
+                    updateScoreboard();
+                    renderButtons();
+                    if (mode === "online" && role === "host") broadcastState(fb);
+                    setTimeout(advance, 2000);
+                } else if (mode === "online" && role === "host" && timeLeft % 5 === 0) {
+                    broadcastState(null);
+                }
+            }
+        }, 1000);
+    }
+
+    function stopTimer() { if (timerInterval) { clearInterval(timerInterval); timerInterval = null; } }
+
+    $("restartBtn").addEventListener("click", () => {
+        stopTimer();
+        if (mode === "online") {
+            if (role === "host") {
+                startMatch();
+            } else {
+                els.feedbackMessage.textContent = "⏳ Demande une nouvelle partie au prof !";
+            }
+        } else if (mode === "solo") {
+            startSolo();
+        } else {
+            startMatch();
+        }
+    });
+
+    showScreen("mode");
+})();
+</script>
+</body>
+</html>
