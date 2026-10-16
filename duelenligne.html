@@ -14,7 +14,7 @@ body {
     padding: 16px; color: white;
 }
 .game-container {
-    max-width: 900px; width: 100%;
+    max-width: 1000px; width: 100%;
     background: rgba(255,255,255,0.1);
     backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
     border-radius: 48px; border: 2px solid rgba(255,255,255,0.2);
@@ -31,7 +31,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
     border-radius: 40px; font-size: .9rem; box-shadow: 0 2px 4px rgba(0,0,0,.3); }
 .hidden { display: none !important; }
 
-/* Écran choix du mode */
 .mode-choice { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
 .mode-card { flex: 1 1 280px; background: rgba(0,0,0,0.3); border-radius: 32px; padding: 28px 20px;
     text-align: center; border: 2px solid rgba(255,255,255,0.25); cursor: pointer; transition: .2s; }
@@ -40,7 +39,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
 .mode-card h2 { margin: 10px 0 8px; font-size: 1.4rem; }
 .mode-card p { color: #b0c4de; font-size: 1.05rem; line-height: 1.5; }
 
-/* Cartes joueurs / formulaire */
 .players-setup { background: rgba(255,255,255,0.05); border-radius: 40px; padding: 25px;
     margin-bottom: 25px; border: 1px solid rgba(255,255,255,0.2);
     display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; }
@@ -65,7 +63,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
 .status-line { text-align: center; font-size: 1.15rem; color: #b0c4de; margin: 10px 0 5px; }
 .status-line.err { color: #fca5a5; }
 
-/* Jeu */
 .scoreboard { display: flex; justify-content: space-between; align-items: center;
     background: rgba(0,0,0,0.4); border-radius: 120px; padding: 12px 30px; margin: 20px 0 25px 0;
     font-size: 1.4rem; font-weight: 700; border: 1px solid #ffffff30; gap: 8px; flex-wrap: wrap; }
@@ -87,6 +84,8 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
 .btn-reponse:active { transform: translateY(6px); box-shadow: 0 4px 0 #334155; }
 .btn-reponse:disabled { opacity: 0.4; transform: none; pointer-events: none; }
 .btn-reponse.attente { opacity: .55; pointer-events: none; }
+.btn-reponse.correct { background: #22c55e !important; color: white; }
+.btn-reponse.wrong { background: #ef4444 !important; color: white; }
 .timer-info { font-size: 1.8rem; background: #1e2a47; display: inline-block; padding: 12px 40px;
     border-radius: 60px; color: #ffd966; border: 2px solid #ffd966; margin: 15px auto 5px; font-weight: 600; }
 .feedback-message { min-height: 60px; font-size: 1.7rem; font-weight: 500; color: #fde047; margin: 10px 0; }
@@ -98,6 +97,18 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
 .back-btn { background: none; border: none; color: #b0c4de; font-size: 1.1rem; cursor: pointer;
     text-decoration: underline; margin-top: 15px; }
 .back-btn:hover { color: white; }
+
+.player-zone { background: rgba(0,0,0,0.3); border-radius: 32px; padding: 18px;
+    margin: 10px 0; border: 2px solid rgba(255,255,255,0.15); }
+.player-zone.blue { border-color: #3b82f6; }
+.player-zone.red { border-color: #ef4444; }
+.player-zone .zone-header { font-size: 1.1rem; font-weight: 700; margin-bottom: 10px;
+    display: flex; justify-content: space-between; align-items: center; }
+.player-zone .zone-status { font-size: .9rem; font-weight: 500; color: #b0c4de; }
+.player-zone .zone-status.done { color: #86efac; }
+.player-zone .zone-buttons { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+.player-zone .zone-buttons .btn-reponse { flex: 1 1 100px; padding: 14px 8px; font-size: 1.1rem;
+    box-shadow: 0 6px 0 #64748b; min-height: 60px; }
 @media (max-width: 600px) {
     .phrase-a-deviner { font-size: 2rem; }
     .scoreboard { font-size: 1rem; padding: 10px 15px; }
@@ -117,7 +128,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         <span class="badge">Futur simple</span>
     </div>
 
-    <!-- ÉCRAN 1 : CHOIX DU MODE -->
     <div id="modeScreen">
         <div class="mode-choice">
             <div class="mode-card" id="btnOnline">
@@ -138,7 +148,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         </div>
     </div>
 
-    <!-- ÉCRAN 2 : CONNEXION EN LIGNE -->
     <div id="onlineScreen" class="hidden">
         <div class="players-setup">
             <div class="player-card blue">
@@ -160,7 +169,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         <div class="status-line"><button class="back-btn" id="backFromOnline">← Retour</button></div>
     </div>
 
-    <!-- ÉCRAN 2 bis : MÊME ÉCRAN -->
     <div id="localScreen" class="hidden">
         <div class="players-setup">
             <div class="player-card blue">
@@ -180,7 +188,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         <div class="status-line"><button class="back-btn" id="backFromLocal">← Retour</button></div>
     </div>
 
-    <!-- ÉCRAN SOLO -->
     <div id="soloScreen" class="hidden">
         <div class="players-setup">
             <div class="player-card blue" style="flex:0 1 340px;">
@@ -196,7 +203,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         <div class="status-line"><button class="back-btn" id="backFromSolo">← Retour</button></div>
     </div>
 
-    <!-- ÉCRAN JEU -->
     <div id="gameScreen" class="hidden">
         <div class="scoreboard">
             <span id="p1Label">🔵 Joueur 1</span>
@@ -208,7 +214,7 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         <div class="question-panel">
             <div class="consigne" id="tourIndicator">…</div>
             <div class="phrase-a-deviner" id="phraseActuelle">…</div>
-            <div class="boutons-reponse" id="boutonsReponse"></div>
+            <div id="boutonsReponse"></div>
             <div class="timer-info" id="timerDisplay">⏱️ 25s</div>
             <div class="feedback-message" id="feedbackMessage">…</div>
         </div>
@@ -225,7 +231,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
 
 <script>
 (function () {
-    // ---------- LISTE DE PHRASES AVEC TEMPS ----------
     const phrasesListe = [
         { phrase: "Je mange une pomme", temps: "present" },
         { phrase: "Tu as fini ton travail", temps: "passe" },
@@ -309,27 +314,26 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
     ];
 
     const TEMPS_LABEL = { present: "présent", passe: "passé composé", futur: "futur proche", futursimple: "futur simple" };
-    const NB_DEFI = 24;          // nombre de défis par partie
-    const TEMPS_PAR_DEFI = 25;   // secondes
+    const NB_DEFI = 60;
+    const TEMPS_PAR_DEFI = 25;
 
-    // ---------- ÉTAT ----------
-    let mode = "local";          // "local" ou "online"
-    let role = null;             // "host" ou "guest" (online)
-    let phrases = [];            // phrases de la partie en cours
+    let mode = "local";
+    let role = null;
+    let phrases = [];
     let currentIndex = 0;
-    let scores = [0, 0];        // [joueur1, joueur2]
-    let currentPlayer = 0;       // 0 ou 1
+    let scores = [0, 0];
     let gameActive = false;
     let timerInterval = null;
     let timeLeft = TEMPS_PAR_DEFI;
-    let canAnswer = false;
-    let mySlot = 0;              // mon index de joueur (local: n'importe, online: 0=hôte, 1=invité)
+    let mySlot = 0;
     let names = ["Joueur 1", "Joueur 2"];
 
-    let peer = null;
-    let conn = null;            // DataConnection (online)
+    let answered = [false, false];
+    let answerCorrect = [false, false];
 
-    // ---------- DOM ----------
+    let peer = null;
+    let conn = null;
+
     const $ = id => document.getElementById(id);
     const screens = { mode: $("modeScreen"), online: $("onlineScreen"), local: $("localScreen"), solo: $("soloScreen"), game: $("gameScreen") };
     const els = {
@@ -349,7 +353,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         els.onlineStatus.className = "status-line" + (err ? " err" : "");
     }
 
-    // ---------- NAVIGATION ----------
     $("btnOnline").addEventListener("click", () => { mode = "online"; showScreen("online"); });
     $("btnLocal").addEventListener("click", () => { mode = "local"; showScreen("local"); });
     $("btnSolo").addEventListener("click", () => { mode = "solo"; updateSoloBest(); showScreen("solo"); });
@@ -364,14 +367,12 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         showScreen("mode");
     });
 
-    // ---------- MODE LOCAL ----------
     $("localStartBtn").addEventListener("click", () => {
         names = [($("p1Name").value.trim() || "Joueur 1"), ($("p2Name").value.trim() || "Joueur 2")];
         mySlot = 0; role = null;
-        startMatch(Math.random() < 0.5 ? 0 : 1);
+        startMatch();
     });
 
-    // ---------- MODE SOLO ----------
     function soloBestScore() {
         try { return parseInt(localStorage.getItem("chronoduel-best") || "0", 10) || 0; }
         catch (e) { return 0; }
@@ -387,16 +388,17 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         phrases = phrasesListe.slice();
         shuffleArray(phrases);
         phrases = phrases.slice(0, NB_DEFI);
-        currentIndex = 0; scores = [0, 0]; currentPlayer = 0;
+        currentIndex = 0; scores = [0, 0];
         gameActive = true; mySlot = 0; role = null;
         names = [($("soloName").value.trim() || "Champion"), "—"];
+        answered = [false, false];
+        answerCorrect = [false, false];
         showScreen("game");
         updateScoreboard();
         nextPhrase();
     }
     $("soloStartBtn").addEventListener("click", startSolo);
 
-    // ---------- MODE EN LIGNE (PeerJS) ----------
     function randomCode() {
         const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ";
         let c = "";
@@ -424,7 +426,7 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
             $("createBtn").disabled = false;
         });
         peer.on("connection", c => {
-            if (conn) { try { c.close(); } catch(e){} return; } // une seule partie
+            if (conn) { try { c.close(); } catch(e){} return; }
             conn = c;
             conn.on("open", () => {
                 send({ type: "hello", name: myName });
@@ -470,25 +472,27 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
                     names[1] = msg.name || "Élève";
                     names[0] = ($("hostName").value.trim() || "Prof");
                     status("✅ " + names[1] + " est connecté ! La partie démarre…");
-                    setTimeout(() => startMatch(Math.random() < 0.5 ? 0 : 1), 800);
+                    setTimeout(() => startMatch(), 800);
                 } else {
                     names[0] = msg.name || "Prof";
                 }
                 break;
-            case "state":        // hôte -> élève : état complet du jeu
+            case "state":
                 names = msg.names; scores = msg.scores; currentIndex = msg.currentIndex;
-                currentPlayer = msg.currentPlayer; timeLeft = msg.timeLeft;
+                timeLeft = msg.timeLeft;
                 gameActive = msg.gameActive;
                 phrases = msg.phrases;
+                answered = msg.answered || [false, false];
+                answerCorrect = msg.answerCorrect || [false, false];
                 if (screens.game.classList.contains("hidden")) showScreen("game");
                 renderFromState(msg.feedback, msg.finished);
                 break;
-            case "answer":       // élève -> hôte : réponse de l'élève
-                if (role === "host" && gameActive && currentPlayer === 1 && canAnswer) {
-                    handleAnswer(msg.temps);
+            case "answer":
+                if (role === "host" && gameActive) {
+                    receiveAnswer(msg.slot, msg.temps);
                 }
                 break;
-            case "restart":      // hôte -> élève : nouvelle partie
+            case "restart":
                 if (role === "guest") {
                     phrases = msg.phrases;
                     startGuestMatch();
@@ -497,7 +501,6 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         }
     }
 
-    // ---------- LOGIQUE DE JEU ----------
     function shuffleArray(arr) {
         for (let i = arr.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
@@ -505,11 +508,13 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         }
     }
 
-    function startMatch(firstPlayer) {
+    function startMatch() {
         phrases = phrasesListe.slice();
         shuffleArray(phrases);
         phrases = phrases.slice(0, NB_DEFI);
-        currentIndex = 0; scores = [0, 0]; currentPlayer = firstPlayer;
+        currentIndex = 0; scores = [0, 0];
+        answered = [false, false];
+        answerCorrect = [false, false];
         gameActive = true;
         if (role === "host") send({ type: "restart", phrases: phrases });
         showScreen("game");
@@ -518,7 +523,9 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
     }
 
     function startGuestMatch() {
-        scores = [0, 0]; currentIndex = 0; gameActive = true; currentPlayer = 0;
+        scores = [0, 0]; currentIndex = 0; gameActive = true;
+        answered = [false, false];
+        answerCorrect = [false, false];
         showScreen("game");
         updateScoreboard();
         nextPhrase();
@@ -539,42 +546,96 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         els.compteurPhrases.textContent = "Défi " + Math.min(currentIndex + 1, phrases.length) + "/" + phrases.length;
     }
 
-    function isMyTurn() {
-        if (mode !== "online") return true;
-        return currentPlayer === mySlot;
+    function shuffledOptions() {
+        const options = [
+            ["Présent", "present", "present"],
+            ["Passé composé", "passe", "passe"],
+            ["Futur proche", "futur", "futur"],
+            ["Futur simple", "futursimple", "futur"]
+        ];
+        shuffleArray(options);
+        return options;
     }
 
-    function renderButtons(active) {
-        els.boutonsReponse.innerHTML = "";
-        const options = [["Présent", "present", "present"], ["Passé composé", "passe", "passe"], ["Futur proche", "futur", "futur"], ["Futur simple", "futursimple", "futur"]];
-        // Ordre des boutons mélangé à CHAQUE défi : la bonne réponse n'est jamais
-        // à la même position, aucune suite logique possible.
-        shuffleArray(options);
-        options
-        .forEach(([text, key, cls]) => {
+    function makeButtonsFragment(playerSlot, active) {
+        const frag = document.createDocumentFragment();
+        const options = shuffledOptions();
+        options.forEach(([text, key, cls]) => {
             const btn = document.createElement("button");
             btn.className = "btn-reponse " + cls + (active ? "" : " attente");
             btn.textContent = text;
             btn.disabled = !active;
-            btn.addEventListener("click", () => handleAnswer(key));
-            els.boutonsReponse.appendChild(btn);
+            if (answered[playerSlot]) {
+                btn.disabled = true;
+                btn.classList.add("attente");
+            }
+            btn.addEventListener("click", () => handleAnswer(playerSlot, key));
+            frag.appendChild(btn);
         });
+        return frag;
+    }
+
+    function renderButtons() {
+        els.boutonsReponse.innerHTML = "";
+
+        if (mode === "solo") {
+            const wrap = document.createElement("div");
+            wrap.className = "boutons-reponse";
+            wrap.appendChild(makeButtonsFragment(0, gameActive && !answered[0]));
+            els.boutonsReponse.appendChild(wrap);
+            return;
+        }
+
+        const zone1 = document.createElement("div");
+        zone1.className = "player-zone blue";
+        const header1 = document.createElement("div");
+        header1.className = "zone-header";
+        const name1 = document.createElement("span");
+        name1.textContent = "🔵 " + names[0];
+        const stat1 = document.createElement("span");
+        stat1.className = "zone-status" + (answered[0] ? " done" : "");
+        stat1.textContent = answered[0] ? (answerCorrect[0] ? "✅ A répondu" : "❌ A répondu") : "En attente…";
+        header1.appendChild(name1); header1.appendChild(stat1);
+        zone1.appendChild(header1);
+        const buttons1 = document.createElement("div");
+        buttons1.className = "zone-buttons";
+        const active1 = gameActive && !answered[0] && (mode === "local" || mySlot === 0);
+        buttons1.appendChild(makeButtonsFragment(0, active1));
+        zone1.appendChild(buttons1);
+        els.boutonsReponse.appendChild(zone1);
+
+        const zone2 = document.createElement("div");
+        zone2.className = "player-zone red";
+        const header2 = document.createElement("div");
+        header2.className = "zone-header";
+        const name2 = document.createElement("span");
+        name2.textContent = "🔴 " + names[1];
+        const stat2 = document.createElement("span");
+        stat2.className = "zone-status" + (answered[1] ? " done" : "");
+        stat2.textContent = answered[1] ? (answerCorrect[1] ? "✅ A répondu" : "❌ A répondu") : "En attente…";
+        header2.appendChild(name2); header2.appendChild(stat2);
+        zone2.appendChild(header2);
+        const buttons2 = document.createElement("div");
+        buttons2.className = "zone-buttons";
+        const active2 = gameActive && !answered[1] && (mode === "local" || mySlot === 1);
+        buttons2.appendChild(makeButtonsFragment(1, active2));
+        zone2.appendChild(buttons2);
+        els.boutonsReponse.appendChild(zone2);
     }
 
     function nextPhrase() {
         if (!gameActive) return;
-        canAnswer = true;
         stopTimer();
+        answered = [false, false];
+        answerCorrect = [false, false];
         const p = phrases[currentIndex];
         els.phraseActuelle.textContent = p.phrase;
-        els.feedbackMessage.textContent = "Choisis le temps du verbe !";
-        const jn = names[currentPlayer];
-        els.tourIndicator.textContent = (mode === "online" && !isMyTurn())
-            ? "📡 " + jn + " joue… regarde bien !"
-            : "🎤 À " + jn + " de jouer !";
+        els.feedbackMessage.textContent = "À vous de jouer ! Choisissez le temps du verbe.";
+        els.tourIndicator.textContent = mode === "solo"
+            ? "🎤 À toi de jouer !"
+            : "⚔️ Les deux joueurs répondent en même temps !";
         updateScoreboard();
-        const active = (mode === "local") || isMyTurn();
-        renderButtons(active);
+        renderButtons();
         timeLeft = TEMPS_PAR_DEFI;
         els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
         if (mode === "online" && role === "host") broadcastState(null);
@@ -586,8 +647,9 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         send({
             type: "state",
             names: names, scores: scores, currentIndex: currentIndex,
-            currentPlayer: currentPlayer, timeLeft: timeLeft,
+            timeLeft: timeLeft,
             gameActive: gameActive, phrases: phrases,
+            answered: answered, answerCorrect: answerCorrect,
             feedback: feedback, finished: !!finished
         });
     }
@@ -596,49 +658,73 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         if (phrases && phrases[currentIndex]) {
             els.phraseActuelle.textContent = phrases[currentIndex].phrase;
         }
-        const jn = names[currentPlayer];
-        els.tourIndicator.textContent = isMyTurn() ? "🎤 À toi de jouer !" : "📡 " + jn + " joue… regarde bien !";
-        els.feedbackMessage.textContent = feedback || "Choisis le temps du verbe !";
+        els.tourIndicator.textContent = (mode === "online")
+            ? "⚔️ Les deux joueurs répondent en même temps !"
+            : "🎤 À toi de jouer !";
+        els.feedbackMessage.textContent = feedback || "À vous de jouer ! Choisissez le temps du verbe.";
         els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
-        updateScoreboard();
-        renderButtons(isMyTurn() && gameActive && !finished);
+        updateScoreboard();  // <-- TOUJOURS mis à jour avec les scores reçus
+        renderButtons();
     }
 
-    function handleAnswer(tempsChoisi) {
-        if (!gameActive || !canAnswer) return;
-        if (mode === "online" && !isMyTurn()) return;
-        // L'élève envoie sa réponse à l'hôte qui arbitre
+    function handleAnswer(slot, tempsChoisi) {
+        if (!gameActive) return;
+        if (answered[slot]) return;
+        if (mode === "online" && mySlot !== slot) return;
+
         if (mode === "online" && role === "guest") {
-            canAnswer = false;
-            renderButtons(false);
-            send({ type: "answer", temps: tempsChoisi });
+            answered[slot] = true;
+            send({ type: "answer", slot: slot, temps: tempsChoisi });
             els.feedbackMessage.textContent = "📡 Réponse envoyée…";
+            renderButtons();
             return;
         }
-        // Arbitrage (mode local ou hôte)
-        canAnswer = false;
-        stopTimer();
+
+        processAnswer(slot, tempsChoisi);
+    }
+
+    function processAnswer(slot, tempsChoisi) {
+        if (!gameActive || answered[slot]) return;
         const p = phrases[currentIndex];
         const correct = tempsChoisi === p.temps;
-        let feedback;
+        answered[slot] = true;
+        answerCorrect[slot] = correct;
         if (correct) {
-            scores[currentPlayer]++;
-            feedback = "✅ Bravo " + names[currentPlayer] + " ! +1 point";
+            scores[slot]++;
+            els.feedbackMessage.textContent = "✅ " + names[slot] + " a trouvé ! +1 point";
         } else {
-            feedback = "❌ C'était du " + TEMPS_LABEL[p.temps] + " !";
+            els.feedbackMessage.textContent = "❌ " + names[slot] + " s'est trompé. C'était du " + TEMPS_LABEL[p.temps] + ".";
         }
-        els.feedbackMessage.textContent = feedback;
-        updateScoreboard();
-        renderButtons(false);
-        if (mode === "online" && role === "host") broadcastState(feedback);
-        setTimeout(advance, 2000);
+        updateScoreboard();  // <-- mise à jour immédiate du score
+        renderButtons();
+        // Diffuse immédiatement le nouvel état (scores inclus) à l'élève
+        if (mode === "online" && role === "host") broadcastState(els.feedbackMessage.textContent);
+        checkBothAnswered();
+    }
+
+    function receiveAnswer(slot, tempsChoisi) {
+        if (!gameActive || answered[slot]) return;
+        processAnswer(slot, tempsChoisi);
+    }
+
+    function checkBothAnswered() {
+        if (mode === "solo") {
+            if (answered[0]) {
+                stopTimer();
+                setTimeout(advance, 1500);
+            }
+        } else {
+            if (answered[0] && answered[1]) {
+                stopTimer();
+                setTimeout(advance, 1500);
+            }
+        }
     }
 
     function advance() {
         if (!gameActive) return;
         if (currentIndex < phrases.length - 1) {
             currentIndex++;
-            if (mode !== "solo") currentPlayer = 1 - currentPlayer;
             nextPhrase();
         } else {
             endGame();
@@ -660,7 +746,7 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         else msg = "🏆 Duel terminé ! Égalité " + scores[0] + " partout !";
         els.feedbackMessage.textContent = msg;
         els.tourIndicator.textContent = "🏁 Fin du duel";
-        renderButtons(false);
+        renderButtons();
         if (mode === "online" && role === "host") broadcastState(msg, true);
     }
 
@@ -670,19 +756,19 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
             if (!gameActive) { stopTimer(); return; }
             timeLeft--;
             els.timerDisplay.textContent = "⏱️ " + timeLeft + "s";
-            // L'hôte gère l'écoulement du temps pour tout le monde
             if (mode !== "online" || role === "host") {
-                if (timeLeft <= 0 && canAnswer) {
-                    canAnswer = false;
+                if (timeLeft <= 0) {
                     stopTimer();
                     const p = phrases[currentIndex];
                     const fb = "⏰ Temps écoulé ! C'était du " + TEMPS_LABEL[p.temps] + ".";
                     els.feedbackMessage.textContent = fb;
-                    renderButtons(false);
-                    if (mode === "online" && role === "host") { broadcastState(fb); }
+                    answered[0] = true; answered[1] = true;
+                    updateScoreboard();
+                    renderButtons();
+                    if (mode === "online" && role === "host") broadcastState(fb);
                     setTimeout(advance, 2000);
                 } else if (mode === "online" && role === "host" && timeLeft % 5 === 0) {
-                    broadcastState(null); // resynchronise régulièrement
+                    broadcastState(null);
                 }
             }
         }, 1000);
@@ -694,14 +780,14 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         stopTimer();
         if (mode === "online") {
             if (role === "host") {
-                startMatch(Math.random() < 0.5 ? 0 : 1);
+                startMatch();
             } else {
                 els.feedbackMessage.textContent = "⏳ Demande une nouvelle partie au prof !";
             }
         } else if (mode === "solo") {
             startSolo();
         } else {
-            startMatch(Math.random() < 0.5 ? 0 : 1);
+            startMatch();
         }
     });
 
