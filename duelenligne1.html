@@ -222,6 +222,9 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
 <script>
 (function () {
     // ---------- 80 PHRASES : 3 PROPOSITIONS = 3 TEMPS DIFFÉRENTS ----------
+    // Position de la bonne réponse VARIÉE dans le tableau source (0, 1 ou 2)
+    // Les 2 mauvaises options varient aussi (présent/passé, futur/futur simple, etc.)
+    // Un second mélange est fait à l'affichage → double randomisation.
     const phrasesListe = [
         // ===== PRÉSENT (20) =====
         { phrase: "Je ... une pomme.", infinitif: "manger", temps: "present",
@@ -232,57 +235,57 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Il ... très bien.", infinitif: "chanter", temps: "present",
           options: [
-            { forme: "chante", temps: "present" },
             { forme: "a chanté", temps: "passe" },
+            { forme: "chante", temps: "present" },
             { forme: "va chanter", temps: "futur" }
           ]},
         { phrase: "Nous ... chaque soir.", infinitif: "danser", temps: "present",
           options: [
-            { forme: "dansons", temps: "present" },
+            { forme: "danserons", temps: "futursimple" },
             { forme: "avons dansé", temps: "passe" },
-            { forme: "danserons", temps: "futursimple" }
+            { forme: "dansons", temps: "present" }
           ]},
         { phrase: "Vous ... le café.", infinitif: "prendre", temps: "present",
           options: [
             { forme: "prenez", temps: "present" },
-            { forme: "avez pris", temps: "passe" },
-            { forme: "allez prendre", temps: "futur" }
+            { forme: "allez prendre", temps: "futur" },
+            { forme: "avez pris", temps: "passe" }
           ]},
         { phrase: "Tu ... une lettre.", infinitif: "écrire", temps: "present",
           options: [
-            { forme: "écris", temps: "present" },
             { forme: "as écrit", temps: "passe" },
-            { forme: "écriras", temps: "futursimple" }
+            { forme: "écriras", temps: "futursimple" },
+            { forme: "écris", temps: "present" }
           ]},
         { phrase: "On ... français.", infinitif: "parler", temps: "present",
           options: [
+            { forme: "va parler", temps: "futur" },
             { forme: "parle", temps: "present" },
-            { forme: "a parlé", temps: "passe" },
-            { forme: "va parler", temps: "futur" }
+            { forme: "a parlé", temps: "passe" }
           ]},
         { phrase: "Elle ... un magazine.", infinitif: "lire", temps: "present",
           options: [
+            { forme: "lira", temps: "futursimple" },
             { forme: "lit", temps: "present" },
-            { forme: "a lu", temps: "passe" },
-            { forme: "lira", temps: "futursimple" }
+            { forme: "a lu", temps: "passe" }
           ]},
         { phrase: "Nous ... ensemble.", infinitif: "réfléchir", temps: "present",
           options: [
-            { forme: "réfléchissons", temps: "present" },
             { forme: "avons réfléchi", temps: "passe" },
+            { forme: "réfléchissons", temps: "present" },
             { forme: "allons réfléchir", temps: "futur" }
           ]},
         { phrase: "Il ... beaucoup.", infinitif: "pleuvoir", temps: "present",
           options: [
-            { forme: "pleut", temps: "present" },
+            { forme: "pleuvra", temps: "futursimple" },
             { forme: "a plu", temps: "passe" },
-            { forme: "pleuvra", temps: "futursimple" }
+            { forme: "pleut", temps: "present" }
           ]},
         { phrase: "Nous ... un gâteau.", infinitif: "vouloir", temps: "present",
           options: [
+            { forme: "voudrons", temps: "futursimple" },
             { forme: "voulons", temps: "present" },
-            { forme: "avons voulu", temps: "passe" },
-            { forme: "voudrons", temps: "futursimple" }
+            { forme: "avons voulu", temps: "passe" }
           ]},
         { phrase: "Vous ... en vacances.", infinitif: "partir", temps: "present",
           options: [
@@ -292,89 +295,89 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Tu ... un paysage.", infinitif: "dessiner", temps: "present",
           options: [
-            { forme: "dessines", temps: "present" },
             { forme: "as dessiné", temps: "passe" },
-            { forme: "dessineras", temps: "futursimple" }
+            { forme: "dessineras", temps: "futursimple" },
+            { forme: "dessines", temps: "present" }
           ]},
         { phrase: "On ... la fenêtre.", infinitif: "ouvrir", temps: "present",
           options: [
-            { forme: "ouvre", temps: "present" },
             { forme: "a ouvert", temps: "passe" },
+            { forme: "ouvre", temps: "present" },
             { forme: "va ouvrir", temps: "futur" }
           ]},
         { phrase: "Je ... le métro.", infinitif: "prendre", temps: "present",
           options: [
-            { forme: "prends", temps: "present" },
+            { forme: "prendrai", temps: "futursimple" },
             { forme: "ai pris", temps: "passe" },
-            { forme: "prendrai", temps: "futursimple" }
+            { forme: "prends", temps: "present" }
           ]},
         { phrase: "Ils ... de la musique.", infinitif: "écouter", temps: "present",
           options: [
             { forme: "écoutent", temps: "present" },
-            { forme: "ont écouté", temps: "passe" },
-            { forme: "vont écouter", temps: "futur" }
+            { forme: "vont écouter", temps: "futur" },
+            { forme: "ont écouté", temps: "passe" }
           ]},
         { phrase: "Je ... tous les jours.", infinitif: "courir", temps: "present",
           options: [
-            { forme: "cours", temps: "present" },
             { forme: "ai couru", temps: "passe" },
+            { forme: "cours", temps: "present" },
             { forme: "courrai", temps: "futursimple" }
           ]},
         { phrase: "Il ... en montagne.", infinitif: "neiger", temps: "present",
           options: [
+            { forme: "va neiger", temps: "futur" },
             { forme: "neige", temps: "present" },
-            { forme: "a neigé", temps: "passe" },
-            { forme: "va neiger", temps: "futur" }
+            { forme: "a neigé", temps: "passe" }
           ]},
         { phrase: "Nous ... profondément.", infinitif: "dormir", temps: "present",
           options: [
-            { forme: "dormons", temps: "present" },
+            { forme: "dormirons", temps: "futursimple" },
             { forme: "avons dormi", temps: "passe" },
-            { forme: "dormirons", temps: "futursimple" }
+            { forme: "dormons", temps: "present" }
           ]},
         { phrase: "Tu ... avec nous ?", infinitif: "venir", temps: "present",
           options: [
             { forme: "viens", temps: "present" },
-            { forme: "es venu", temps: "passe" },
-            { forme: "vas venir", temps: "futur" }
+            { forme: "vas venir", temps: "futur" },
+            { forme: "es venu", temps: "passe" }
           ]},
         { phrase: "Je ... du sport.", infinitif: "faire", temps: "present",
           options: [
+            { forme: "ferai", temps: "futursimple" },
             { forme: "fais", temps: "present" },
-            { forme: "ai fait", temps: "passe" },
-            { forme: "ferai", temps: "futursimple" }
+            { forme: "ai fait", temps: "passe" }
           ]},
 
         // ===== PASSÉ COMPOSÉ (20) =====
         { phrase: "Tu ... ton travail.", infinitif: "finir", temps: "passe",
           options: [
-            { forme: "finis", temps: "present" },
             { forme: "as fini", temps: "passe" },
+            { forme: "finis", temps: "present" },
             { forme: "finiras", temps: "futursimple" }
           ]},
         { phrase: "Elle ... en vacances.", infinitif: "partir", temps: "passe",
           options: [
             { forme: "part", temps: "present" },
-            { forme: "est partie", temps: "passe" },
-            { forme: "va partir", temps: "futur" }
+            { forme: "va partir", temps: "futur" },
+            { forme: "est partie", temps: "passe" }
           ]},
         { phrase: "J'... du pain.", infinitif: "acheter", temps: "passe",
           options: [
-            { forme: "achète", temps: "present" },
+            { forme: "achèterai", temps: "futursimple" },
             { forme: "ai acheté", temps: "passe" },
-            { forme: "achèterai", temps: "futursimple" }
+            { forme: "achète", temps: "present" }
           ]},
         { phrase: "Elles ... tôt.", infinitif: "arriver", temps: "passe",
           options: [
-            { forme: "arrivent", temps: "present" },
             { forme: "sont arrivées", temps: "passe" },
+            { forme: "arrivent", temps: "present" },
             { forme: "vont arriver", temps: "futur" }
           ]},
         { phrase: "Nous ... un spectacle.", infinitif: "voir", temps: "passe",
           options: [
-            { forme: "voyons", temps: "present" },
+            { forme: "verrons", temps: "futursimple" },
             { forme: "avons vu", temps: "passe" },
-            { forme: "verrons", temps: "futursimple" }
+            { forme: "voyons", temps: "present" }
           ]},
         { phrase: "Ils ... par l'escalier.", infinitif: "descendre", temps: "passe",
           options: [
@@ -385,14 +388,14 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         { phrase: "J'... mes clés.", infinitif: "perdre", temps: "passe",
           options: [
             { forme: "perds", temps: "present" },
-            { forme: "ai perdu", temps: "passe" },
-            { forme: "perdrai", temps: "futursimple" }
+            { forme: "perdrai", temps: "futursimple" },
+            { forme: "ai perdu", temps: "passe" }
           ]},
         { phrase: "Tu ... le train.", infinitif: "prendre", temps: "passe",
           options: [
-            { forme: "prends", temps: "present" },
             { forme: "as pris", temps: "passe" },
-            { forme: "vas prendre", temps: "futur" }
+            { forme: "vas prendre", temps: "futur" },
+            { forme: "prends", temps: "present" }
           ]},
         { phrase: "Je ... dans la rue.", infinitif: "tomber", temps: "passe",
           options: [
@@ -402,15 +405,15 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Elles ... tôt.", infinitif: "se lever", temps: "passe",
           options: [
-            { forme: "se lèvent", temps: "present" },
+            { forme: "vont se lever", temps: "futur" },
             { forme: "se sont levées", temps: "passe" },
-            { forme: "vont se lever", temps: "futur" }
+            { forme: "se lèvent", temps: "present" }
           ]},
         { phrase: "J'... un poème.", infinitif: "écrire", temps: "passe",
           options: [
-            { forme: "écris", temps: "present" },
             { forme: "ai écrit", temps: "passe" },
-            { forme: "écrirai", temps: "futursimple" }
+            { forme: "écrirai", temps: "futursimple" },
+            { forme: "écris", temps: "present" }
           ]},
         { phrase: "Elle ... à pied.", infinitif: "venir", temps: "passe",
           options: [
@@ -420,9 +423,9 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Ils ... au football.", infinitif: "jouer", temps: "passe",
           options: [
+            { forme: "joueront", temps: "futursimple" },
             { forme: "jouent", temps: "present" },
-            { forme: "ont joué", temps: "passe" },
-            { forme: "joueront", temps: "futursimple" }
+            { forme: "ont joué", temps: "passe" }
           ]},
         { phrase: "Vous ... longtemps.", infinitif: "rester", temps: "passe",
           options: [
@@ -432,21 +435,21 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Tu ... bien ?", infinitif: "dormir", temps: "passe",
           options: [
-            { forme: "dors", temps: "present" },
             { forme: "as dormi", temps: "passe" },
-            { forme: "dormiras", temps: "futursimple" }
+            { forme: "dormiras", temps: "futursimple" },
+            { forme: "dors", temps: "present" }
           ]},
         { phrase: "Elle ... son dessert.", infinitif: "finir", temps: "passe",
           options: [
-            { forme: "finit", temps: "present" },
+            { forme: "va finir", temps: "futur" },
             { forme: "a fini", temps: "passe" },
-            { forme: "va finir", temps: "futur" }
+            { forme: "finit", temps: "present" }
           ]},
         { phrase: "Nous ... chez nous.", infinitif: "rester", temps: "passe",
           options: [
-            { forme: "restons", temps: "present" },
+            { forme: "resterons", temps: "futursimple" },
             { forme: "sommes restés", temps: "passe" },
-            { forme: "resterons", temps: "futursimple" }
+            { forme: "restons", temps: "present" }
           ]},
         { phrase: "J'... mon téléphone.", infinitif: "oublier", temps: "passe",
           options: [
@@ -456,47 +459,47 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Vous ... !", infinitif: "réussir", temps: "passe",
           options: [
+            { forme: "allez réussir", temps: "futur" },
             { forme: "réussissez", temps: "present" },
-            { forme: "avez réussi", temps: "passe" },
-            { forme: "allez réussir", temps: "futur" }
+            { forme: "avez réussi", temps: "passe" }
           ]},
         { phrase: "Je ... les mains.", infinitif: "se laver", temps: "passe",
           options: [
             { forme: "me lave", temps: "present" },
-            { forme: "me suis lavé", temps: "passe" },
-            { forme: "me laverai", temps: "futursimple" }
+            { forme: "me laverai", temps: "futursimple" },
+            { forme: "me suis lavé", temps: "passe" }
           ]},
 
         // ===== FUTUR PROCHE (20) =====
         { phrase: "Nous ... Paris.", infinitif: "visiter", temps: "futur",
           options: [
             { forme: "visitons", temps: "present" },
-            { forme: "avons visité", temps: "passe" },
-            { forme: "allons visiter", temps: "futur" }
+            { forme: "allons visiter", temps: "futur" },
+            { forme: "avons visité", temps: "passe" }
           ]},
         { phrase: "Ils ... un film.", infinitif: "regarder", temps: "futur",
           options: [
-            { forme: "regardent", temps: "present" },
+            { forme: "vont regarder", temps: "futur" },
             { forme: "ont regardé", temps: "passe" },
-            { forme: "vont regarder", temps: "futur" }
+            { forme: "regardent", temps: "present" }
           ]},
         { phrase: "Tu ... ta sœur.", infinitif: "rencontrer", temps: "futur",
           options: [
-            { forme: "rencontres", temps: "present" },
             { forme: "as rencontré", temps: "passe" },
+            { forme: "rencontres", temps: "present" },
             { forme: "vas rencontrer", temps: "futur" }
           ]},
         { phrase: "On ... le dîner.", infinitif: "préparer", temps: "futur",
           options: [
             { forme: "prépare", temps: "present" },
-            { forme: "a préparé", temps: "passe" },
-            { forme: "va préparer", temps: "futur" }
+            { forme: "va préparer", temps: "futur" },
+            { forme: "a préparé", temps: "passe" }
           ]},
         { phrase: "Elle ... l'italien.", infinitif: "apprendre", temps: "futur",
           options: [
-            { forme: "apprend", temps: "present" },
             { forme: "a appris", temps: "passe" },
-            { forme: "va apprendre", temps: "futur" }
+            { forme: "va apprendre", temps: "futur" },
+            { forme: "apprend", temps: "present" }
           ]},
         { phrase: "Vous ... au Japon.", infinitif: "voyager", temps: "futur",
           options: [
@@ -506,27 +509,27 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Nous ... .", infinitif: "déménager", temps: "futur",
           options: [
+            { forme: "allons déménager", temps: "futur" },
             { forme: "déménageons", temps: "present" },
-            { forme: "avons déménagé", temps: "passe" },
-            { forme: "allons déménager", temps: "futur" }
+            { forme: "avons déménagé", temps: "passe" }
           ]},
         { phrase: "Ils ... une voiture.", infinitif: "acheter", temps: "futur",
           options: [
             { forme: "achètent", temps: "present" },
-            { forme: "ont acheté", temps: "passe" },
-            { forme: "vont acheter", temps: "futur" }
+            { forme: "vont acheter", temps: "futur" },
+            { forme: "ont acheté", temps: "passe" }
           ]},
         { phrase: "Vous ... ce livre.", infinitif: "adorer", temps: "futur",
           options: [
-            { forme: "adorez", temps: "present" },
             { forme: "avez adoré", temps: "passe" },
+            { forme: "adorez", temps: "present" },
             { forme: "allez adorer", temps: "futur" }
           ]},
         { phrase: "Tu ... ton examen.", infinitif: "réussir", temps: "futur",
           options: [
-            { forme: "réussis", temps: "present" },
+            { forme: "vas réussir", temps: "futur" },
             { forme: "as réussi", temps: "passe" },
-            { forme: "vas réussir", temps: "futur" }
+            { forme: "réussis", temps: "present" }
           ]},
         { phrase: "Il ... beau demain.", infinitif: "faire", temps: "futur",
           options: [
@@ -536,15 +539,15 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Nous ... ton anniversaire.", infinitif: "fêter", temps: "futur",
           options: [
-            { forme: "fêtons", temps: "present" },
             { forme: "avons fêté", temps: "passe" },
-            { forme: "allons fêter", temps: "futur" }
+            { forme: "allons fêter", temps: "futur" },
+            { forme: "fêtons", temps: "present" }
           ]},
         { phrase: "Je ... me promener.", infinitif: "aller", temps: "futur",
           options: [
-            { forme: "vais", temps: "present" },
             { forme: "suis allé", temps: "passe" },
-            { forme: "vais aller", temps: "futur" }
+            { forme: "vais aller", temps: "futur" },
+            { forme: "vais", temps: "present" }
           ]},
         { phrase: "Elle ... des fleurs.", infinitif: "acheter", temps: "futur",
           options: [
@@ -554,33 +557,33 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Nous ... en montagne.", infinitif: "skier", temps: "futur",
           options: [
-            { forme: "skions", temps: "present" },
+            { forme: "allons skier", temps: "futur" },
             { forme: "avons skié", temps: "passe" },
-            { forme: "allons skier", temps: "futur" }
+            { forme: "skions", temps: "present" }
           ]},
         { phrase: "Vous ... !", infinitif: "gagner", temps: "futur",
           options: [
             { forme: "gagnez", temps: "present" },
-            { forme: "avez gagné", temps: "passe" },
-            { forme: "allez gagner", temps: "futur" }
+            { forme: "allez gagner", temps: "futur" },
+            { forme: "avez gagné", temps: "passe" }
           ]},
         { phrase: "Tu ... célèbre.", infinitif: "devenir", temps: "futur",
           options: [
-            { forme: "deviens", temps: "present" },
             { forme: "es devenu", temps: "passe" },
-            { forme: "vas devenir", temps: "futur" }
+            { forme: "vas devenir", temps: "futur" },
+            { forme: "deviens", temps: "present" }
           ]},
         { phrase: "Elles ... à la fête.", infinitif: "chanter", temps: "futur",
           options: [
             { forme: "chantent", temps: "present" },
-            { forme: "ont chanté", temps: "passe" },
-            { forme: "vont chanter", temps: "futur" }
+            { forme: "vont chanter", temps: "futur" },
+            { forme: "ont chanté", temps: "passe" }
           ]},
         { phrase: "Il ... ce soir.", infinitif: "pleuvoir", temps: "futur",
           options: [
+            { forme: "va pleuvoir", temps: "futur" },
             { forme: "pleut", temps: "present" },
-            { forme: "a plu", temps: "passe" },
-            { forme: "va pleuvoir", temps: "futur" }
+            { forme: "a plu", temps: "passe" }
           ]},
         { phrase: "On ... au restaurant.", infinitif: "manger", temps: "futur",
           options: [
@@ -592,15 +595,15 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
         // ===== FUTUR SIMPLE (20) =====
         { phrase: "Je ... au restaurant.", infinitif: "manger", temps: "futursimple",
           options: [
-            { forme: "mange", temps: "present" },
             { forme: "ai mangé", temps: "passe" },
-            { forme: "mangerai", temps: "futursimple" }
+            { forme: "mangerai", temps: "futursimple" },
+            { forme: "mange", temps: "present" }
           ]},
         { phrase: "Tu ... tes devoirs demain.", infinitif: "finir", temps: "futursimple",
           options: [
+            { forme: "finiras", temps: "futursimple" },
             { forme: "finis", temps: "present" },
-            { forme: "as fini", temps: "passe" },
-            { forme: "finiras", temps: "futursimple" }
+            { forme: "as fini", temps: "passe" }
           ]},
         { phrase: "Nous ... à la plage cet été.", infinitif: "aller", temps: "futursimple",
           options: [
@@ -610,27 +613,27 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Elle ... sur scène.", infinitif: "chanter", temps: "futursimple",
           options: [
-            { forme: "chante", temps: "present" },
+            { forme: "chantera", temps: "futursimple" },
             { forme: "a chanté", temps: "passe" },
-            { forme: "chantera", temps: "futursimple" }
+            { forme: "chante", temps: "present" }
           ]},
         { phrase: "Ils ... très tôt.", infinitif: "partir", temps: "futursimple",
           options: [
             { forme: "partent", temps: "present" },
-            { forme: "sont partis", temps: "passe" },
-            { forme: "partiront", temps: "futursimple" }
+            { forme: "partiront", temps: "futursimple" },
+            { forme: "sont partis", temps: "passe" }
           ]},
         { phrase: "Vous ... la leçon.", infinitif: "comprendre", temps: "futursimple",
           options: [
-            { forme: "comprenez", temps: "present" },
             { forme: "avez compris", temps: "passe" },
+            { forme: "comprenez", temps: "present" },
             { forme: "comprendrez", temps: "futursimple" }
           ]},
         { phrase: "On ... bien.", infinitif: "voir", temps: "futursimple",
           options: [
+            { forme: "verra", temps: "futursimple" },
             { forme: "voit", temps: "present" },
-            { forme: "a vu", temps: "passe" },
-            { forme: "verra", temps: "futursimple" }
+            { forme: "a vu", temps: "passe" }
           ]},
         { phrase: "Je ... te voir samedi.", infinitif: "venir", temps: "futursimple",
           options: [
@@ -640,33 +643,33 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Tu ... en retard.", infinitif: "être", temps: "futursimple",
           options: [
-            { forme: "es", temps: "present" },
+            { forme: "seras", temps: "futursimple" },
             { forme: "as été", temps: "passe" },
-            { forme: "seras", temps: "futursimple" }
+            { forme: "es", temps: "present" }
           ]},
         { phrase: "Nous ... une surprise.", infinitif: "avoir", temps: "futursimple",
           options: [
-            { forme: "avons", temps: "present" },
             { forme: "avons eu", temps: "passe" },
-            { forme: "aurons", temps: "futursimple" }
+            { forme: "aurons", temps: "futursimple" },
+            { forme: "avons", temps: "present" }
           ]},
         { phrase: "Il ... beau demain.", infinitif: "faire", temps: "futursimple",
           options: [
+            { forme: "fera", temps: "futursimple" },
             { forme: "fait", temps: "present" },
-            { forme: "a fait", temps: "passe" },
-            { forme: "fera", temps: "futursimple" }
+            { forme: "a fait", temps: "passe" }
           ]},
         { phrase: "Elle ... le japonais.", infinitif: "apprendre", temps: "futursimple",
           options: [
             { forme: "apprend", temps: "present" },
-            { forme: "a appris", temps: "passe" },
-            { forme: "apprendra", temps: "futursimple" }
+            { forme: "apprendra", temps: "futursimple" },
+            { forme: "a appris", temps: "passe" }
           ]},
         { phrase: "Vous ... le premier train.", infinitif: "prendre", temps: "futursimple",
           options: [
-            { forme: "prenez", temps: "present" },
             { forme: "avez pris", temps: "passe" },
-            { forme: "prendrez", temps: "futursimple" }
+            { forme: "prendrez", temps: "futursimple" },
+            { forme: "prenez", temps: "present" }
           ]},
         { phrase: "Je ... la vérité.", infinitif: "dire", temps: "futursimple",
           options: [
@@ -676,9 +679,9 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Ils ... une maison.", infinitif: "construire", temps: "futursimple",
           options: [
+            { forme: "construiront", temps: "futursimple" },
             { forme: "construisent", temps: "present" },
-            { forme: "ont construit", temps: "passe" },
-            { forme: "construiront", temps: "futursimple" }
+            { forme: "ont construit", temps: "passe" }
           ]},
         { phrase: "Tu ... travailler plus.", infinitif: "devoir", temps: "futursimple",
           options: [
@@ -688,27 +691,27 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
           ]},
         { phrase: "Nous ... tard ce soir.", infinitif: "rentrer", temps: "futursimple",
           options: [
-            { forme: "rentrons", temps: "present" },
             { forme: "sommes rentrés", temps: "passe" },
-            { forme: "rentrerons", temps: "futursimple" }
+            { forme: "rentrerons", temps: "futursimple" },
+            { forme: "rentrons", temps: "present" }
           ]},
         { phrase: "Elle ... nager très vite.", infinitif: "savoir", temps: "futursimple",
           options: [
+            { forme: "saura", temps: "futursimple" },
             { forme: "sait", temps: "present" },
-            { forme: "a su", temps: "passe" },
-            { forme: "saura", temps: "futursimple" }
+            { forme: "a su", temps: "passe" }
           ]},
         { phrase: "J'... des fleurs à maman.", infinitif: "offrir", temps: "futursimple",
           options: [
-            { forme: "offre", temps: "present" },
             { forme: "ai offert", temps: "passe" },
+            { forme: "offre", temps: "present" },
             { forme: "offrirai", temps: "futursimple" }
           ]},
         { phrase: "Ils ... la réponse.", infinitif: "savoir", temps: "futursimple",
           options: [
+            { forme: "sauront", temps: "futursimple" },
             { forme: "savent", temps: "present" },
-            { forme: "ont su", temps: "passe" },
-            { forme: "sauront", temps: "futursimple" }
+            { forme: "ont su", temps: "passe" }
           ]}
     ];
 
@@ -778,11 +781,11 @@ h1 { font-size: 2.3rem; font-weight: 800; text-align: center; letter-spacing: -0
 
     // ---------- MODE SOLO ----------
     function soloBestScore() {
-        try { return parseInt(localStorage.getItem("chronoduel-best-conj3") || "0", 10) || 0; }
+        try { return parseInt(localStorage.getItem("chronoduel-best-conj4") || "0", 10) || 0; }
         catch (e) { return 0; }
     }
     function saveSoloBest(v) {
-        try { localStorage.setItem("chronoduel-best-conj3", String(v)); } catch (e) {}
+        try { localStorage.setItem("chronoduel-best-conj4", String(v)); } catch (e) {}
     }
     function updateSoloBest() {
         const b = soloBestScore();
