@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>A2 – La légende de Chang'e | Fête de la Lune</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF5;--ink:#1C1917;--muted:#6B6159;
+  --coral:#D85A30;--coral-l:#FAECE7;--coral-m:#F0997B;--coral-d:#993C1D;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;--teal-d:#085041;
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;--amber-d:#854F0B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+  --rose:#C2185B;--rose-l:#FCE4EC;--rose-m:#F48FB1;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:2rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#1a1a3e 0%,#4b2e83 45%,#f5c542 100%);color:#fff;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'🌕';position:absolute;top:10px;right:20px;font-size:4.5rem;opacity:0.35;transform:rotate(10deg)}
+.hero::after{content:'🏮';position:absolute;bottom:-10px;left:15px;font-size:4rem;opacity:0.3;transform:rotate(-10deg)}
+.hero-eyebrow{font-size:11px;font-weight:700;letter-spacing:0.14em;color:#FFD93D;text-transform:uppercase;margin-bottom:0.5rem}
+.hero h1{font-family:'DM Serif Display',serif;font-size:2rem;line-height:1.2;margin-bottom:0.6rem}
+.hero h1 em{color:#FFD93D;font-style:italic}
+.hero-sub{font-size:0.85rem;color:rgba(255,255,255,0.85);margin-bottom:1.25rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,0.15);border:0.5px solid rgba(255,255,255,0.3);border-radius:40px;padding:5px 14px;font-size:0.78rem;color:#fff;font-weight:500}
+
+/* LAYOUT */
+.wrap{padding:1.5rem 1.75rem;max-width:760px;margin:0 auto}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;gap:10px;margin:2.5rem 0 1.1rem;padding-top:1.5rem;border-top:0.5px solid rgba(0,0,0,0.08)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;flex-shrink:0}
+.sec-head h2{font-family:'DM Serif Display',serif;font-size:1.35rem;font-weight:400}
+
+/* TEXTE */
+.text-story{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;line-height:1.9;font-size:0.95rem;position:relative;overflow:hidden}
+.text-story::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#4b2e83,#f5c542)}
+.text-story strong{color:var(--purple-d)}
+.text-story em{color:var(--coral-d);font-style:italic}
+.text-story .pass{background:var(--teal-l);border-radius:4px;padding:0 3px;font-weight:600;color:var(--teal-d)}
+.text-story .imparfait{background:var(--amber-l);border-radius:4px;padding:0 3px;font-weight:600;color:var(--amber-d)}
+.text-story .expr{background:var(--purple-l);border-radius:4px;padding:0 3px;font-weight:600;color:var(--purple-d)}
+
+/* VOCAB */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:1rem}
+.vocab-card{background:white;border-radius:12px;border:0.5px solid rgba(0,0,0,0.08);padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06);border-color:var(--rose-m)}
+.vocab-card .vocab-en{opacity:0;transition:opacity 0.25s;font-size:0.82rem;color:var(--muted);text-align:right}
+.vocab-card.revealed .vocab-en{opacity:1}
+.vocab-card::after{content:'👆';position:absolute;bottom:4px;right:8px;font-size:0.7rem;opacity:0.3}
+.vocab-card.revealed::after{content:'✓';color:var(--teal);opacity:0.7}
+.vocab-fr{font-weight:500;font-size:0.9rem}
+
+/* FORMULES */
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:1rem}
+.formula-card{border-radius:14px;padding:1rem 1.125rem;border:0.5px solid transparent}
+.fc-coral{background:var(--coral-l);border-color:var(--coral-m)}.fc-coral strong{color:var(--coral-d)}
+.fc-teal{background:var(--teal-l);border-color:var(--teal-m)}.fc-teal strong{color:var(--teal-d)}
+.fc-purple{background:var(--purple-l);border-color:var(--purple-m)}.fc-purple strong{color:var(--purple-d)}
+.fc-amber{background:var(--amber-l);border-color:var(--amber-m)}.fc-amber strong{color:var(--amber-d)}
+.fc-blue{background:var(--blue-l);border-color:var(--blue-m)}.fc-blue strong{color:var(--blue)}
+.fc-green{background:var(--green-l);border-color:var(--green-m)}.fc-green strong{color:var(--green)}
+.fc-rose{background:var(--rose-l);border-color:var(--rose-m)}.fc-rose strong{color:var(--rose)}
+.formula-card strong{font-size:0.95rem;display:block;margin-bottom:4px}
+.formula-ex{font-size:0.82rem;margin-top:8px;font-style:italic;opacity:0.85}
+
+/* RÈGLES / TABLEAUX */
+.adj-rule{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.adj-rule p{font-size:0.9rem;color:var(--muted);margin-bottom:1rem;line-height:1.6}
+.adj-rule p strong{color:var(--ink)}
+.adj-table{width:100%;border-collapse:collapse;font-size:0.87rem}
+.adj-table th{background:var(--purple-l);color:var(--purple-d);font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid var(--purple-m)}
+.adj-table td{padding:10px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.adj-table tr:last-child td{border-bottom:none}
+.adj-table td strong{color:var(--teal)}
+.badge-pc{background:var(--purple-l);color:var(--purple-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-imp{background:var(--teal-l);color:var(--teal-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-pqp{background:var(--coral-l);color:var(--coral-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-rose{background:var(--rose-l);color:var(--rose);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.adj-examples{background:var(--amber-l);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem;font-size:0.88rem;line-height:2.1}
+.adj-examples strong{color:var(--amber-d)}
+
+/* ENCADRÉ RAPPEL */
+.rappel{background:var(--blue-l);border-radius:14px;border:0.5px solid var(--blue-m);padding:1.1rem 1.3rem;margin-top:1rem;font-size:0.88rem;line-height:1.8}
+.rappel h4{color:var(--blue);font-size:0.95rem;margin-bottom:0.5rem;font-family:'DM Serif Display',serif;font-weight:400}
+.rappel ul{padding-left:1.2rem;margin:0.4rem 0}
+.rappel li{margin-bottom:0.35rem}
+.rappel code{background:white;padding:1px 6px;border-radius:5px;font-size:0.85rem;color:var(--purple-d);font-weight:600}
+
+/* TEST DE VOCABULAIRE */
+.vocab-test{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.4rem 1.5rem;margin-top:1rem}
+.vocab-test-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1rem}
+.vocab-test-head h3{font-family:'DM Serif Display',serif;font-size:1.15rem;font-weight:400;color:var(--rose)}
+.vocab-test-hint{font-size:0.78rem;color:var(--muted);background:var(--amber-l);padding:5px 12px;border-radius:20px;border:0.5px solid var(--amber-m)}
+.vocab-test-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:580px){.vocab-test-grid{grid-template-columns:1fr}}
+.vocab-test-row{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:12px;padding:10px 14px;border:0.5px solid rgba(0,0,0,0.06);transition:all 0.2s}
+.vocab-test-en{font-size:0.85rem;color:var(--muted);flex:1;font-weight:500}
+.vocab-test-arrow{color:var(--rose-m);font-size:0.9rem}
+.vocab-test-fr{font-size:0.9rem;font-weight:600;color:var(--rose);cursor:pointer;padding:4px 10px;border-radius:20px;background:white;border:1px dashed var(--rose-m);transition:all 0.25s;flex:1;text-align:center;user-select:none}
+.vocab-test-fr.blurred{filter:blur(6px);color:var(--rose);background:var(--rose-l);border-style:solid;cursor:pointer}
+.vocab-test-fr.blurred:hover{filter:blur(4px);background:#f8bbd0}
+.vocab-test-fr.revealed{filter:blur(0);background:var(--purple-l);color:var(--purple-d);border-color:var(--purple-m);border-style:solid;animation:popIn 0.35s}
+.vocab-test-counter{font-size:0.78rem;color:var(--muted);text-align:right;margin-top:0.75rem}
+
+/* BARRE DE PROGRESSION */
+.progress-bar{position:sticky;top:0;z-index:50;background:rgba(255,251,245,0.95);backdrop-filter:blur(8px);padding:0.75rem 1.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:10px;background:rgba(0,0,0,0.07);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#4b2e83,#f5c542,#5DCAA5);border-radius:20px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-score{font-size:0.82rem;font-weight:700;color:var(--purple-d);min-width:70px;text-align:right}
+.progress-emoji{font-size:1.2rem;transition:transform 0.3s}
+.progress-emoji.pop{transform:scale(1.5) rotate(10deg)}
+
+/* EXERCICES */
+.exercise-wrap{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);overflow:hidden;margin-top:1rem}
+.ex-head{padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ex-head-1{background:linear-gradient(90deg,#534AB7,#AFA9EC)}
+.ex-head-2{background:linear-gradient(90deg,#BA7517,#EF9F27)}
+.ex-head-3{background:linear-gradient(90deg,#0F6E56,#5DCAA5)}
+.ex-head-4{background:linear-gradient(90deg,#C2185B,#F48FB1)}
+.ex-head-5{background:linear-gradient(90deg,#185FA5,#85B7EB)}
+.ex-head-6{background:linear-gradient(90deg,#3B6D11,#97C459)}
+.ex-head-7{background:linear-gradient(90deg,#993C1D,#F0997B)}
+.ex-head-8{background:linear-gradient(90deg,#4b2e83,#f5c542)}
+.ex-head-9{background:linear-gradient(90deg,#085041,#5DCAA5)}
+.ex-head p{color:rgba(255,255,255,0.95);font-size:0.83rem;margin:0;font-weight:500}
+.ex-head strong{color:#fff;text-shadow:0 1px 2px rgba(0,0,0,0.2)}
+.ex-badge{background:rgba(255,255,255,0.25);color:white;font-size:0.75rem;padding:3px 12px;border-radius:20px;font-weight:600}
+
+.q-list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+.q-item{border:0.5px solid rgba(0,0,0,0.07);border-radius:12px;padding:1rem 1.1rem;background:var(--cream);transition:all 0.3s;position:relative;overflow:hidden}
+.q-item.solved{background:linear-gradient(135deg,var(--teal-l),#f0fdf4);border-color:var(--teal-m)}
+.q-item.shake{animation:shake 0.4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-num{font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+.q-text{font-size:0.92rem;margin-bottom:0.5rem;line-height:1.55}
+.q-text strong{color:var(--rose)}
+.q-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.q-input{padding:8px 16px;font-size:0.9rem;border:1.5px solid rgba(0,0,0,0.15);border-radius:40px;font-family:'DM Sans',sans-serif;background:white;color:var(--ink);width:230px;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.q-input-1:focus{border-color:#534AB7;box-shadow:0 0 0 3px rgba(83,74,183,0.2)}
+.q-input-5:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.15)}
+.q-input-6:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(59,109,17,0.15)}
+.q-input-7:focus{border-color:var(--coral);box-shadow:0 0 0 3px rgba(216,90,48,0.15)}
+.q-btn{color:white;border:none;padding:8px 20px;border-radius:40px;font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s,transform 0.1s}
+.q-btn-1{background:#534AB7}.q-btn-1:hover{background:#3C3489;transform:scale(0.97)}
+.q-btn-5{background:var(--blue)}.q-btn-5:hover{background:#14508a;transform:scale(0.97)}
+.q-btn-6{background:var(--green)}.q-btn-6:hover{background:#2a4f0d;transform:scale(0.97)}
+.q-btn-7{background:var(--coral)}.q-btn-7:hover{background:var(--coral-d);transform:scale(0.97)}
+.q-fb{margin-top:8px;font-size:0.83rem;min-height:1.4rem}
+.ok{background:var(--teal-l);color:var(--teal-d);padding:5px 14px;border-radius:20px;display:inline-block;font-weight:500;animation:popIn 0.3s}
+.nope{background:var(--coral-l);color:var(--coral-d);padding:5px 14px;border-radius:20px;display:inline-block;animation:popIn 0.3s}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* CHOIX MULTIPLES */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem}
+@media(max-width:520px){.choice-grid{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid rgba(0,0,0,0.1);border-radius:14px;padding:12px 14px;text-align:left;font-family:'DM Sans',sans-serif;font-size:0.88rem;cursor:pointer;transition:all 0.18s;color:var(--ink);position:relative;overflow:hidden}
+.choice-btn:hover{border-color:var(--rose-m);transform:translateY(-2px);box-shadow:0 4px 12px rgba(194,24,91,0.1)}
+.choice-btn.selected{border-color:var(--rose);background:var(--rose-l);font-weight:500}
+.choice-btn.correct{border-color:var(--teal);background:var(--teal-l);color:var(--teal-d);font-weight:600;animation:popIn 0.3s}
+.choice-btn.correct::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--teal);font-weight:700;font-size:1.1rem}
+.choice-btn.wrong{border-color:var(--coral-m);background:var(--coral-l);color:var(--coral-d);animation:shake 0.4s}
+.choice-btn.wrong::after{content:'✗';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--coral);font-weight:700;font-size:1.1rem}
+.choice-btn:disabled{cursor:default;opacity:0.9}
+
+/* MATCHING */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.match-cols{grid-template-columns:1fr}}
+.match-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.5rem}
+.match-item{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.87rem;cursor:pointer;transition:all 0.18s;margin-bottom:8px}
+.match-item:hover{border-color:var(--rose-m)}
+.match-item.active{border-color:var(--rose);background:var(--rose-l);box-shadow:0 0 0 3px rgba(194,24,91,0.15)}
+.match-item.matched{background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d);cursor:default;opacity:0.85}
+.match-item.matched::after{content:' ✓';color:var(--teal);font-weight:700}
+.match-item.wrong-pair{animation:shake 0.4s}
+
+/* CLICK-REVEAL (dialogue) */
+.reveal-block{background:white;border-radius:14px;border:0.5px solid rgba(0,0,0,0.08);padding:1.1rem 1.3rem;margin-top:1rem}
+.reveal-line{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:0.5px dashed rgba(0,0,0,0.1);font-size:0.9rem;flex-wrap:wrap}
+.reveal-line:last-child{border-bottom:none}
+.reveal-line .speaker{font-weight:700;color:var(--rose);min-width:70px}
+.reveal-line .sentence{flex:1}
+.reveal-line .hidden-answer{background:var(--purple-l);color:var(--purple-d);padding:3px 12px;border-radius:20px;font-weight:600;cursor:pointer;border:1px dashed var(--purple-m);transition:all 0.2s}
+.reveal-line .hidden-answer:hover{background:#ddd9fb}
+.reveal-line .hidden-answer.shown{background:var(--teal-l);color:var(--teal-d);border-style:solid;border-color:var(--teal-m);cursor:default}
+
+/* TRI (drag-like via click) */
+.sort-container{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.sort-container{grid-template-columns:1fr}}
+.sort-zone{border:2px dashed rgba(0,0,0,0.15);border-radius:14px;padding:12px;min-height:100px}
+.sort-zone h5{font-size:0.82rem;text-transform:uppercase;letter-spacing:0.05em;color:var(--muted);margin-bottom:0.6rem;text-align:center}
+.sort-zone.dropped{border-style:solid;border-color:var(--teal-m);background:var(--teal-l)}
+.sort-chip{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:20px;padding:8px 14px;font-size:0.85rem;cursor:pointer;transition:all 0.18s;margin:0 6px 6px 0;display:inline-block}
+.sort-chip:hover{border-color:var(--rose-m);transform:translateY(-1px)}
+.sort-chip.selected{border-color:var(--rose);background:var(--rose-l);box-shadow:0 0 0 3px rgba(194,24,91,0.15)}
+.sort-chip.correct-zone{background:var(--teal-l);border-color:var(--teal-m);color:var(--teal-d)}
+.sort-chip.wrong-zone{background:var(--coral-l);border-color:var(--coral-m);color:var(--coral-d);animation:shake 0.4s}
+
+/* MEMO */
+.memo{background:var(--ink);color:white;border-radius:16px;padding:1.5rem;margin-top:2rem}
+.memo h3{font-family:'DM Serif Display',serif;font-size:1.1rem;font-weight:400;color:#FFD93D;margin-bottom:1rem}
+.memo-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.memo-col h4{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.memo-row{font-size:0.84rem;color:rgba(255,255,255,0.8);margin-bottom:6px;line-height:1.5}
+.memo-row strong{color:#AFA9EC}
+.memo-row em{color:#FFD54F;font-style:italic}
+
+/* RESET + FOOTER */
+.reset-bar{display:flex;justify-content:flex-end;padding:0.75rem 1.75rem 0}
+.reset-btn{background:white;border:0.5px solid rgba(0,0,0,0.15);padding:8px 20px;border-radius:40px;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:0.83rem;color:var(--muted);transition:background 0.15s}
+.reset-btn:hover{background:#f1f0eb}
+footer{text-align:center;font-size:0.78rem;color:var(--muted);padding:1.5rem 1.75rem;border-top:0.5px solid rgba(0,0,0,0.07);line-height:1.7;margin-top:2rem}
+
+@media(max-width:580px){
+  .hero h1{font-size:1.55rem}
+  .memo-cols{grid-template-columns:1fr}
+  .wrap{padding:1rem 1.1rem}
+  .progress-bar{padding:0.6rem 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Cours personnalisé · Niveau A2</div>
+  <h1>La légende de Chang'e<br><em>et la Fête de la Lune</em></h1>
+  <div class="hero-sub">Niveau A2 — passé composé · imparfait · vocabulaire de la légende</div>
+  <div class="pills">
+    <span class="pill">il y avait</span>
+    <span class="pill">a tiré</span>
+    <span class="pill">a bu</span>
+    <span class="pill">est devenue</span>
+    <span class="pill">a volé</span>
+    <span class="pill">était triste</span>
+  </div>
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar">
+  <span class="progress-emoji" id="progressEmoji">🌕</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-score" id="progressScore">0 / 70</span>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. TEXTE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">1</div>
+    <h2>Texte : la légende de Chang'e</h2>
+  </div>
+  <div class="text-story">
+    Il y a très longtemps, en Chine, <span class="imparfait">il y avait</span> <strong>dix soleils</strong> dans le ciel. Il <span class="imparfait">faisait</span> très chaud. Les plantes et les animaux <span class="imparfait">mouraient</span>. Les gens <span class="imparfait">étaient</span> très malheureux.
+    <br><br>
+    Un jour, un jeune homme courageux, <strong>Houyi</strong>, <span class="pass">a pris</span> son arc et ses flèches. Il <span class="pass">a tiré</span> sur <strong>neuf soleils</strong>. Les neuf soleils <span class="pass">sont tombés</span>. Maintenant, il y a seulement <strong>un soleil</strong> dans le ciel. Les gens <span class="imparfait">étaient</span> très contents.
+    <br><br>
+    Le roi <span class="pass">a donné</span> à Houyi une <strong>boisson magique</strong>. Cette boisson donne la vie éternelle. Mais Houyi ne <span class="imparfait">voulait</span> pas boire la boisson. Il <span class="imparfait">voulait</span> rester sur la Terre avec sa femme, <strong>Chang'e</strong>.
+    <br><br>
+    Houyi <span class="pass">a caché</span> la boisson dans la maison. Un jour, Chang'e <span class="pass">a trouvé</span> la boisson. Elle <span class="pass">a bu</span> la boisson magique. Alors, Chang'e <span class="pass">est devenue</span> très légère. Elle <span class="pass">a volé</span> dans le ciel. Elle <span class="pass">est arrivée</span> sur la <strong>Lune</strong>.
+    <br><br>
+    Houyi <span class="imparfait">était</span> très triste. Il <span class="pass">a regardé</span> la Lune. Il <span class="pass">a vu</span> Chang'e sur la Lune. Il <span class="pass">a préparé</span> des gâteaux et des fruits pour elle. C'est pourquoi, chaque année, pendant la <strong>Fête de la Lune</strong>, les familles mangent des <strong>gâteaux de lune</strong> <span class="expr">et regardent la Lune ensemble</span>.
+  </div>
+
+  <!-- 2. VOCABULAIRE INTERACTIF -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">2</div>
+    <h2>Les mots de la légende <span style="font-size:0.7rem;color:var(--muted);font-family:'DM Sans'">(cliquez pour voir la traduction)</span></h2>
+  </div>
+  <div class="vocab-grid" id="vocabGrid">
+    <div class="vocab-card"><span class="vocab-fr">un soleil</span><span class="vocab-en">a sun</span></div>
+    <div class="vocab-card"><span class="vocab-fr">une flèche</span><span class="vocab-en">an arrow</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un arc</span><span class="vocab-en">a bow</span></div>
+    <div class="vocab-card"><span class="vocab-fr">tirer</span><span class="vocab-en">to shoot</span></div>
+    <div class="vocab-card"><span class="vocab-fr">courageux</span><span class="vocab-en">brave</span></div>
+    <div class="vocab-card"><span class="vocab-fr">une boisson</span><span class="vocab-en">a drink</span></div>
+    <div class="vocab-card"><span class="vocab-fr">magique</span><span class="vocab-en">magical</span></div>
+    <div class="vocab-card"><span class="vocab-fr">la vie éternelle</span><span class="vocab-en">eternal life</span></div>
+    <div class="vocab-card"><span class="vocab-fr">cacher</span><span class="vocab-en">to hide</span></div>
+    <div class="vocab-card"><span class="vocab-fr">léger / légère</span><span class="vocab-en">light</span></div>
+    <div class="vocab-card"><span class="vocab-fr">voler</span><span class="vocab-en">to fly</span></div>
+    <div class="vocab-card"><span class="vocab-fr">la Lune</span><span class="vocab-en">the Moon</span></div>
+    <div class="vocab-card"><span class="vocab-fr">triste</span><span class="vocab-en">sad</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un gâteau de lune</span><span class="vocab-en">a mooncake</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un roi</span><span class="vocab-en">a king</span></div>
+    <div class="vocab-card"><span class="vocab-fr">les gens</span><span class="vocab-en">people</span></div>
+  </div>
+
+  <!-- 3. STRUCTURES CLÉS + RAPPELS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">3</div>
+    <h2>Le passé composé et l'imparfait</h2>
+  </div>
+  <div class="formula-grid">
+    <div class="formula-card fc-teal"><strong>Passé composé</strong> → avoir/être (présent) + participe passé<div class="formula-ex">📌 Il a tiré sur neuf soleils.</div></div>
+    <div class="formula-card fc-amber"><strong>Imparfait</strong> → radical + -ais, -ais, -ait…<div class="formula-ex">📌 Il faisait très chaud.</div></div>
+    <div class="formula-card fc-coral"><strong>Passé composé = action</strong><div class="formula-ex">📌 Chang'e a bu la boisson.</div></div>
+    <div class="formula-card fc-purple"><strong>Imparfait = description</strong><div class="formula-ex">📌 Les gens étaient malheureux.</div></div>
+    <div class="formula-card fc-blue"><strong>Avec être</strong> → accord du participe<div class="formula-ex">📌 Elle est devenue légère.</div></div>
+    <div class="formula-card fc-green"><strong>Verbes irréguliers</strong> → à mémoriser<div class="formula-ex">📌 être → été · avoir → eu · faire → fait</div></div>
+  </div>
+
+  <div class="rappel">
+    <h4>🟣 Rappel 1 — Le passé composé</h4>
+    On utilise <code>avoir</code> ou <code>être</code> au présent + participe passé.
+    <ul>
+      <li>Houyi <strong>a tiré</strong> sur neuf soleils.</li>
+      <li>Chang'e <strong>a bu</strong> la boisson magique.</li>
+      <li>Elle <strong>est arrivée</strong> sur la Lune.</li>
+    </ul>
+    ⚠️ Avec <strong>être</strong>, le participe passé s'accorde : <em>elle est arrivé<strong>e</strong></em>.
+  </div>
+
+  <div class="rappel" style="background:var(--amber-l);border-color:var(--amber-m)">
+    <h4 style="color:var(--amber-d)">🟡 Rappel 2 — L'imparfait</h4>
+    On ajoute les terminaisons <code>-ais, -ais, -ait, -ions, -iez, -aient</code> au radical.
+    <ul>
+      <li>Il <strong>faisait</strong> très chaud.</li>
+      <li>Les gens <strong>étaient</strong> malheureux.</li>
+      <li>Houyi <strong>voulait</strong> rester sur la Terre.</li>
+      <li>Les plantes <strong>mouraient</strong>.</li>
+    </ul>
+    ⚠️ Verbe irrégulier : être → <em>j'étais, tu étais, il était, nous étions…</em>
+  </div>
+
+  <!-- 4. RÈGLE ILLUSTRÉE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">4</div>
+    <h2>Passé composé ou imparfait ?</h2>
+  </div>
+  <div class="adj-rule">
+    <p><strong>Le passé composé</strong> : une action <em>précise, terminée</em>, qui fait avancer l'histoire.<br>
+    <strong>L'imparfait</strong> : une <em>description</em>, une habitude, un état ou une action en cours dans le passé.<br>
+    <strong>Attention aux verbes pronominaux et à l'accord</strong> avec <em>être</em>.</p>
+    <table class="adj-table">
+      <thead>
+        <tr><th>Temps</th><th>Formation</th><th>Exemple</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="badge-imp">Passé composé</span></td><td>avoir/être + participe passé</td><td><strong>Il a tiré</strong> sur neuf soleils.</td></tr>
+        <tr><td><span class="badge-pqp">Imparfait</span></td><td>radical + -ais, -ait…</td><td><strong>Il faisait</strong> très chaud.</td></tr>
+        <tr><td><span class="badge-rose">Avec être</span></td><td>accord du participe</td><td><strong>Elle est arrivée</strong> sur la Lune.</td></tr>
+        <tr><td><span class="badge-pc">Imparfait description</span></td><td>décor, état</td><td><strong>Les gens étaient</strong> malheureux.</td></tr>
+        <tr><td><span class="badge-imp">Négation PC</span></td><td>ne + avoir/être + pas + PP</td><td><strong>Il n'a pas bu</strong> la boisson.</td></tr>
+        <tr><td><span class="badge-pqp">Négation imparfait</span></td><td>ne + verbe + pas</td><td><strong>Il ne voulait pas</strong> partir.</td></tr>
+      </tbody>
+    </table>
+    <div class="adj-examples">
+      <strong>Expressions à retenir :</strong><br>
+      <span class="expr">il y avait</span> → imparfait (description)<br>
+      <span class="expr">il a tiré</span> → passé composé (action)<br>
+      <span class="expr">elle a bu</span> → passé composé (action)<br>
+      <span class="expr">elle est devenue</span> → passé composé (être)<br>
+      <span class="expr">elle a volé</span> → passé composé (action)<br>
+      <span class="expr">il était triste</span> → imparfait (état)<br>
+      <span class="expr">il a préparé</span> → passé composé (action)<br>
+      <span class="expr">les gens étaient contents</span> → imparfait (état)
+    </div>
+  </div>
+
+  <!-- 4★. TEST DE VOCABULAIRE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">4★</div>
+    <h2>Test de vocabulaire · trouve le mot français</h2>
+  </div>
+  <div class="vocab-test">
+    <div class="vocab-test-head">
+      <h3>🇬🇧 → 🇫🇷 Clique sur le mot flouté pour le révéler</h3>
+      <span class="vocab-test-hint">💡 Devine avant de cliquer !</span>
+    </div>
+    <div class="vocab-test-grid" id="vocabTestGrid"></div>
+    <div class="vocab-test-counter" id="vocabTestCounter">0 / 16 mots révélés</div>
+  </div>
+
+  <!-- 5. EXERCICE 1 — QCM passé composé ou imparfait -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">5</div>
+    <h2>Exercice 1 — passé composé ou imparfait ? (QCM)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Clique sur la bonne réponse. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge1">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist1"></div>
+  </div>
+
+  <!-- 6. EXERCICE 2 — QCM conjugaison -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">6</div>
+    <h2>Exercice 2 — choisis la bonne forme du passé</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Clique sur la forme correcte. <strong>Vert = correct</strong>, <strong>rouge = erreur</strong>.</p>
+      <span class="ex-badge" id="badge2">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist2"></div>
+  </div>
+
+  <!-- 7. EXERCICE 3 — COMPLÉTER passé composé -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">7</div>
+    <h2>Exercice 3 — complète au passé composé</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-3">
+      <p>Écris la forme correcte avec <strong>avoir/être + participe passé</strong> puis clique sur <strong>Vérifier</strong>.</p>
+      <span class="ex-badge" id="badge3">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist3"></div>
+  </div>
+
+  <!-- 8. EXERCICE 4 — COMPLÉTER imparfait -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green)">8</div>
+    <h2>Exercice 4 — complète à l'imparfait</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-6">
+      <p>Écris le verbe à l'<strong>imparfait</strong> puis clique sur <strong>Vérifier</strong>.</p>
+      <span class="ex-badge" id="badge4">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist4"></div>
+  </div>
+
+  <!-- 9. EXERCICE 5 — RELIER (passé composé) -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">9</div>
+    <h2>Exercice 5 — relie les paires (passé composé)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-5">
+      <p>Clique sur un <strong>début</strong> puis sur la <strong>fin</strong> qui correspond.</p>
+      <span class="ex-badge" id="badge5">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist5"></div>
+  </div>
+
+  <!-- 10. EXERCICE 6 — RELIER (imparfait) -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">10</div>
+    <h2>Exercice 6 — relie les paires (imparfait)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Clique sur un <strong>début</strong> puis sur la <strong>fin</strong> qui correspond.</p>
+      <span class="ex-badge" id="badge6">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist6"></div>
+  </div>
+
+  <!-- 11. EXERCICE 7 — DIALOGUE À TROUS (click-reveal) -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">11</div>
+    <h2>Exercice 7 — dialogue : clique pour révéler la forme correcte</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-7">
+      <p>Lis le dialogue entre une grand-mère et son petit-fils. Clique sur chaque pastille violette pour voir la bonne forme du passé.</p>
+      <span class="ex-badge" id="badge7">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist7"></div>
+  </div>
+
+  <!-- 12. EXERCICE 8 — TRIER (passé composé vs imparfait) -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green)">12</div>
+    <h2>Exercice 8 — trie les phrases : passé composé ou imparfait ?</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-8">
+      <p>Clique sur une phrase, puis clique sur la bonne catégorie.</p>
+      <span class="ex-badge" id="badge8">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist8"></div>
+  </div>
+
+  <!-- 13. EXERCICE 9 — TRANSFORMATION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">13</div>
+    <h2>Exercice 9 — transforme à l'imparfait</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-9">
+      <p>Réécris la phrase à l'<strong>imparfait</strong> (sans changer le sujet).</p>
+      <span class="ex-badge" id="badge9">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist9"></div>
+  </div>
+
+  <!-- 14. EXERCICE 10 — PRODUCTION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">14</div>
+    <h2>Exercice 10 — à toi de jouer !</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head" style="background:linear-gradient(90deg,#4b2e83,#f5c542)">
+      <p>Production libre — utilise le passé composé et l'imparfait.</p>
+    </div>
+    <div class="q-list">
+      <div class="q-item" style="background:var(--purple-l);border-color:var(--purple-m)">
+        <div class="q-text" style="color:var(--purple-d)">
+          <strong>🎤 À l'oral ou à l'écrit :</strong>
+          <ol style="margin-top:0.6rem;padding-left:1.3rem;line-height:2">
+            <li>Raconte la légende de Chang'e avec <strong>5 phrases au passé composé</strong>.</li>
+            <li>Décris comment étaient les gens et le ciel avant l'histoire (<strong>5 phrases à l'imparfait</strong>).</li>
+            <li>Utilise <strong>être</strong> et <strong>avoir</strong> à l'imparfait dans deux phrases.</li>
+            <li>Écris deux phrases à la <strong>forme négative</strong> au passé.</li>
+            <li>Quelle différence fais-tu entre <em>il a tiré</em> et <em>il tirait</em> ?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" id="resetBtn">⟳ Réinitialiser tous les exercices</button>
+  </div>
+
+  <!-- MEMO -->
+  <div class="memo">
+    <h3>Récapitulatif</h3>
+    <div class="memo-cols">
+      <div class="memo-col">
+        <h4>Passé composé</h4>
+        <div class="memo-row"><strong>avoir/être (présent) + participe passé</strong></div>
+        <div class="memo-row"><em>Houyi a tiré sur neuf soleils.</em></div>
+        <div class="memo-row"><em>Chang'e a bu la boisson.</em></div>
+        <div class="memo-row"><em>Elle est arrivée sur la Lune.</em></div>
+        <div class="memo-row" style="margin-top:8px"><strong>Négation :</strong> ne + avoir/être + pas + PP</div>
+        <div class="memo-row"><em>Il n'a pas bu la boisson.</em></div>
+      </div>
+      <div class="memo-col">
+        <h4>Imparfait</h4>
+        <div class="memo-row"><strong>radical + -ais, -ais, -ait, -ions, -iez, -aient</strong></div>
+        <div class="memo-row"><em>Il faisait très chaud.</em></div>
+        <div class="memo-row"><em>Les gens étaient malheureux.</em></div>
+        <div class="memo-row"><em>Houyi voulait rester sur Terre.</em></div>
+        <div class="memo-row" style="margin-top:8px"><strong>Irréguliers :</strong> être → j'étais · avoir → j'avais · faire → je faisais · aller → j'allais</div>
+        <div class="memo-row"><em>Il était triste.</em></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Cours personnalisé A2 · passé composé · imparfait · vocabulaire de la légende<br>
+  « La légende de Chang'e et la Fête de la Lune »
+</footer>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+
+// TEST DE VOCABULAIRE — 16 mots
+const vocabTest = [
+  { en: "a sun", fr: "un soleil" },
+  { en: "an arrow", fr: "une flèche" },
+  { en: "a bow", fr: "un arc" },
+  { en: "to shoot", fr: "tirer" },
+  { en: "brave", fr: "courageux" },
+  { en: "a drink", fr: "une boisson" },
+  { en: "magical", fr: "magique" },
+  { en: "eternal life", fr: "la vie éternelle" },
+  { en: "to hide", fr: "cacher" },
+  { en: "light", fr: "léger / légère" },
+  { en: "to fly", fr: "voler" },
+  { en: "the Moon", fr: "la Lune" },
+  { en: "sad", fr: "triste" },
+  { en: "a mooncake", fr: "un gâteau de lune" },
+  { en: "a king", fr: "un roi" },
+  { en: "people", fr: "les gens" }
+];
+
+// EXERCICE 1 — QCM : passé composé ou imparfait ?
+const qcm1 = [
+  { q: "« Il y a très longtemps, il ______ dix soleils. » (imparfait — description)",
+    options: ["a eu", "y avait", "y a"],
+    correct: 1, hint: "Imparfait de description → il y avait." },
+  { q: "« Houyi ______ sur neuf soleils. » (passé composé — action)",
+    options: ["tirait", "a tiré", "tire"],
+    correct: 1, hint: "Passé composé = action terminée → il a tiré." },
+  { q: "« Les gens ______ très malheureux. » (imparfait — état)",
+    options: ["ont été", "étaient", "sont"],
+    correct: 1, hint: "Imparfait d'état → ils étaient malheureux." },
+  { q: "« Chang'e ______ la boisson magique. » (passé composé — action)",
+    options: ["buvait", "a bu", "boit"],
+    correct: 1, hint: "Passé composé = action terminée → elle a bu." },
+  { q: "« Il ______ très chaud. » (imparfait — description)",
+    options: ["a fait", "faisait", "fait"],
+    correct: 1, hint: "Imparfait de description → il faisait chaud." },
+  { q: "« Chang'e ______ sur la Lune. » (passé composé avec être)",
+    options: ["arrivait", "est arrivée", "arrive"],
+    correct: 1, hint: "Passé composé avec être → elle est arrivée." },
+  { q: "« Houyi ______ rester sur la Terre. » (imparfait — volonté)",
+    options: ["a voulu", "voulait", "veut"],
+    correct: 1, hint: "Imparfait de volonté → il voulait rester." },
+  { q: "« Il ______ des gâteaux pour Chang'e. » (passé composé — action)",
+    options: ["préparait", "a préparé", "prépare"],
+    correct: 1, hint: "Passé composé = action → il a préparé." }
+];
+
+// EXERCICE 2 — QCM conjugaison
+const qcm2 = [
+  { q: "Houyi ______ son arc. (passé composé de prendre)",
+    options: ["a pris", "prenait", "prend"],
+    correct: 0, hint: "Passé composé : avoir + pris → il a pris." },
+  { q: "Les plantes ______. (imparfait de mourir)",
+    options: ["sont mortes", "mouraient", "meurent"],
+    correct: 1, hint: "Imparfait de mourir → elles mouraient." },
+  { q: "Elle ______ très légère. (passé composé de devenir)",
+    options: ["est devenue", "devenait", "devient"],
+    correct: 0, hint: "Passé composé avec être → elle est devenue." },
+  { q: "Les gens ______ contents. (imparfait d'être)",
+    options: ["ont été", "étaient", "sont"],
+    correct: 1, hint: "Imparfait d'être → ils étaient." },
+  { q: "Chang'e ______ la boisson. (passé composé de boire)",
+    options: ["a bu", "buvait", "boit"],
+    correct: 0, hint: "Passé composé : avoir + bu → elle a bu." },
+  { q: "Houyi ______ la Lune. (passé composé de regarder)",
+    options: ["regardait", "a regardé", "regarde"],
+    correct: 1, hint: "Passé composé = action → il a regardé." },
+  { q: "Il ______ très triste. (imparfait d'être)",
+    options: ["a été", "était", "est"],
+    correct: 1, hint: "Imparfait d'état → il était triste." },
+  { q: "Elle ______ dans le ciel. (passé composé de voler)",
+    options: ["a volé", "volait", "vole"],
+    correct: 0, hint: "Passé composé = action → elle a volé." }
+];
+
+// EXERCICE 3 — Compléter au passé composé
+const completerPC = [
+  { text: "Houyi ______ (tirer) sur neuf soleils.", ans: ["a tiré"], hint: "avoir + tiré → il a tiré" },
+  { text: "Chang'e ______ (boire) la boisson magique.", ans: ["a bu"], hint: "avoir + bu → elle a bu" },
+  { text: "Elle ______ (arriver) sur la Lune.", ans: ["est arrivée", "est arrivee"], hint: "être + arrivée → elle est arrivée" },
+  { text: "Houyi ______ (préparer) des gâteaux.", ans: ["a préparé", "a prepare"], hint: "avoir + préparé → il a préparé" },
+  { text: "Les neuf soleils ______ (tomber).", ans: ["sont tombés", "sont tombes"], hint: "être + tombés → ils sont tombés" },
+  { text: "Elle ______ (devenir) très légère.", ans: ["est devenue"], hint: "être + devenue → elle est devenue" }
+];
+
+// EXERCICE 4 — Compléter à l'imparfait
+const completerImparfait = [
+  { text: "Il ______ (faire) très chaud.", ans: ["faisait"], hint: "imparfait de faire → il faisait" },
+  { text: "Les gens ______ (être) malheureux.", ans: ["étaient", "etaient"], hint: "imparfait d'être → ils étaient" },
+  { text: "Houyi ______ (vouloir) rester sur Terre.", ans: ["voulait"], hint: "imparfait de vouloir → il voulait" },
+  { text: "Les plantes ______ (mourir).", ans: ["mouraient"], hint: "imparfait de mourir → elles mouraient" },
+  { text: "Il y ______ (avoir) dix soleils.", ans: ["avait"], hint: "imparfait d'avoir → il y avait" },
+  { text: "Les gens ______ (être) très contents.", ans: ["étaient", "etaient"], hint: "imparfait d'être → ils étaient" }
+];
+
+// EXERCICE 5 — Relier (passé composé) — 8 paires
+const pairesPC = [
+  { left: "Houyi a pris", right: "son arc et ses flèches." },
+  { left: "Il a tiré", right: "sur neuf soleils." },
+  { left: "Chang'e a trouvé", right: "la boisson magique." },
+  { left: "Elle a bu", right: "la boisson magique." },
+  { left: "Elle est arrivée", right: "sur la Lune." },
+  { left: "Houyi a regardé", right: "la Lune." },
+  { left: "Il a préparé", right: "des gâteaux et des fruits." },
+  { left: "Les neuf soleils sont", right: "tombés du ciel." }
+];
+
+// EXERCICE 6 — Relier (imparfait) — 8 paires
+const pairesImparfait = [
+  { left: "Il y avait", right: "dix soleils dans le ciel." },
+  { left: "Il faisait", right: "très chaud." },
+  { left: "Les plantes", right: "mouraient." },
+  { left: "Les gens étaient", right: "très malheureux." },
+  { left: "Houyi voulait", right: "rester sur la Terre." },
+  { left: "Il ne voulait pas", right: "boire la boisson." },
+  { left: "Houyi était", right: "très triste." },
+  { left: "Les gens étaient", right: "très contents." }
+];
+
+// EXERCICE 7 — Dialogue à trous (click-reveal)
+const dialogue = [
+  { speaker: "Petit-fils", before: "Grand-mère, pourquoi est-ce qu'il y", answer: "avait", after: "dix soleils ?" },
+  { speaker: "Grand-mère", before: "Parce qu'il", answer: "faisait", after: "très chaud sur la Terre." },
+  { speaker: "Petit-fils", before: "Et qu'est-ce que Houyi", answer: "a fait", after: "?" },
+  { speaker: "Grand-mère", before: "Il", answer: "a tiré", after: "sur neuf soleils avec son arc." },
+  { speaker: "Petit-fils", before: "Et Chang'e, qu'est-ce qu'elle", answer: "a bu", after: "?" },
+  { speaker: "Grand-mère", before: "Elle", answer: "a bu", after: "la boisson magique." },
+  { speaker: "Petit-fils", before: "Où est-ce qu'elle", answer: "est arrivée", after: "?" },
+  { speaker: "Grand-mère", before: "Elle", answer: "est arrivée", after: "sur la Lune, et elle y est encore !" }
+];
+
+// EXERCICE 8 — Trier : passé composé vs imparfait
+const triPhrases = [
+  { text: "Houyi a tiré sur neuf soleils.", cat: "pc" },
+  { text: "Il faisait très chaud.", cat: "imp" },
+  { text: "Chang'e a bu la boisson.", cat: "pc" },
+  { text: "Les gens étaient malheureux.", cat: "imp" },
+  { text: "Elle est arrivée sur la Lune.", cat: "pc" },
+  { text: "Il y avait dix soleils.", cat: "imp" },
+  { text: "Houyi a préparé des gâteaux.", cat: "pc" },
+  { text: "Houyi voulait rester sur Terre.", cat: "imp" }
+];
+
+// EXERCICE 9 — Transformation à l'imparfait
+const transformations = [
+  { text: "Il fait très chaud.", ans: ["il faisait très chaud"], hint: "faire → il faisait" },
+  { text: "Les gens sont malheureux.", ans: ["les gens étaient malheureux", "les gens etaient malheureux"], hint: "être → ils étaient" },
+  { text: "Il y a dix soleils.", ans: ["il y avait dix soleils"], hint: "avoir → il y avait" },
+  { text: "Houyi veut rester sur Terre.", ans: ["houyi voulait rester sur terre"], hint: "vouloir → il voulait" },
+  { text: "Les plantes meurent.", ans: ["les plantes mouraient"], hint: "mourir → elles mouraient" },
+  { text: "Les gens sont contents.", ans: ["les gens étaient contents", "les gens etaient contents"], hint: "être → ils étaient" }
+];
+
+/* ============================================================
+   UTILITAIRE : MÉLANGE ALÉATOIRE
+   ============================================================ */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function shuffleQCM(data) {
+  return data.map(item => {
+    const correctText = item.options[item.correct];
+    const shuffled = shuffle(item.options);
+    return { ...item, options: shuffled, correct: shuffled.indexOf(correctText) };
+  });
+}
+
+/* ============================================================
+   PROGRESSION
+   ============================================================ */
+const TOTAL_POINTS = 8 + 8 + 6 + 6 + 8 + 8 + 8 + 8 + 6 + 8;
+const solvedItems = {
+  ex1: new Set(), ex2: new Set(), ex3: new Set(), ex4: new Set(),
+  ex5: new Set(), ex6: new Set(), ex7: new Set(), ex8: new Set(), ex9: new Set()
+};
+
+function updateProgress() {
+  const totalSolved = Object.values(solvedItems).reduce((s, set) => s + set.size, 0);
+  const pct = Math.min(100, (totalSolved / TOTAL_POINTS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressScore').textContent = totalSolved + ' / ' + TOTAL_POINTS;
+  const emoji = document.getElementById('progressEmoji');
+  if (pct >= 100) { emoji.textContent = '🏆'; emoji.classList.add('pop'); setTimeout(()=>emoji.classList.remove('pop'), 600); }
+  else if (pct >= 75) emoji.textContent = '🌕';
+  else if (pct >= 50) emoji.textContent = '🏮';
+  else if (pct >= 25) emoji.textContent = '📚';
+  else emoji.textContent = '🌕';
+
+  document.getElementById('badge1').textContent = solvedItems.ex1.size + ' / 8';
+  document.getElementById('badge2').textContent = solvedItems.ex2.size + ' / 8';
+  document.getElementById('badge3').textContent = solvedItems.ex3.size + ' / 6';
+  document.getElementById('badge4').textContent = solvedItems.ex4.size + ' / 6';
+  document.getElementById('badge5').textContent = solvedItems.ex5.size + ' / 8';
+  document.getElementById('badge6').textContent = solvedItems.ex6.size + ' / 8';
+  document.getElementById('badge7').textContent = solvedItems.ex7.size + ' / 8';
+  document.getElementById('badge8').textContent = solvedItems.ex8.size + ' / 8';
+  document.getElementById('badge9').textContent = solvedItems.ex9.size + ' / 6';
+
+  if (pct >= 100 && !window._confettiDone) {
+    window._confettiDone = true;
+    launchConfetti();
+  }
+}
+
+/* ============================================================
+   CONFETTIS
+   ============================================================ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#4b2e83','#f5c542','#5DCAA5','#F48FB1','#EF9F27','#AFA9EC'];
+  for (let i = 0; i < 100; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = c.style.width;
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   VOCABULAIRE FLOUTÉ
+   ============================================================ */
+const vocabTestGrid = document.getElementById('vocabTestGrid');
+const vocabTestCounter = document.getElementById('vocabTestCounter');
+let vocabRevealed = 0;
+
+vocabTest.forEach((item, idx) => {
+  const row = document.createElement('div');
+  row.className = 'vocab-test-row';
+  row.innerHTML = `
+    <span class="vocab-test-en">${item.en}</span>
+    <span class="vocab-test-arrow">→</span>
+    <span class="vocab-test-fr blurred" data-idx="${idx}">${item.fr}</span>
+  `;
+  vocabTestGrid.appendChild(row);
+});
+
+vocabTestGrid.querySelectorAll('.vocab-test-fr').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('revealed')) return;
+    this.classList.remove('blurred');
+    this.classList.add('revealed');
+    vocabRevealed++;
+    vocabTestCounter.textContent = vocabRevealed + ' / ' + vocabTest.length + ' mots révélés';
+    if (vocabRevealed === vocabTest.length) {
+      vocabTestCounter.textContent = '🎉 Bravo ! Tous les mots sont révélés.';
+      vocabTestCounter.style.color = 'var(--rose)';
+      vocabTestCounter.style.fontWeight = '600';
+    }
+  });
+});
+
+/* ============================================================
+   QCM GÉNÉRIQUE
+   ============================================================ */
+function buildQCM(listId, rawData, solvedSet) {
+  const list = document.getElementById(listId);
+  const data = shuffleQCM(rawData);
+  list.innerHTML = '';
+
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="qcm-status"></span></div>
+      <div class="q-text">${item.q}</div>
+      <div class="choice-grid">
+        ${item.options.map((opt, i) => `<button class="choice-btn" data-idx="${idx}" data-opt="${i}">${opt}</button>`).join('')}
+      </div>
+      <div class="q-fb"></div>
+    `;
+    list.appendChild(div);
+  });
+
+  list.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = parseInt(this.dataset.idx);
+      const opt = parseInt(this.dataset.opt);
+      const parent = this.closest('.q-item');
+      if (parent.classList.contains('solved')) return;
+
+      parent.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected','correct','wrong');
+      });
+      this.classList.add('selected');
+
+      const item = data[idx];
+      const fb = parent.querySelector('.q-fb');
+      const status = parent.querySelector('.qcm-status');
+
+      if (opt === item.correct) {
+        this.classList.add('correct');
+        parent.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+        parent.classList.add('solved');
+        status.textContent = '✅';
+        fb.innerHTML = `<span class="ok">✓ Exact ! ${item.hint}</span>`;
+        if (!solvedSet.has(idx)) { solvedSet.add(idx); updateProgress(); }
+      } else {
+        this.classList.add('wrong');
+        parent.classList.add('shake');
+        setTimeout(() => parent.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Pas tout à fait… Réessaie !</span>`;
+        setTimeout(() => this.classList.remove('wrong'), 800);
+      }
+    });
+  });
+}
+
+/* ============================================================
+   COMPLÉTER GÉNÉRIQUE
+   ============================================================ */
+function buildCompleter(listId, data, solvedSet, inputClass, btnClass) {
+  const list = document.getElementById(listId);
+  list.innerHTML = '';
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="comp-status"></span></div>
+      <div class="q-text">${item.text}</div>
+      <div class="q-row">
+        <input class="q-input ${inputClass}" type="text" placeholder="Votre réponse" autocomplete="off">
+        <button class="q-btn ${btnClass}">Vérifier</button>
+      </div>
+      <div class="q-fb"></div>
+    `;
+    list.appendChild(div);
+  });
+
+  list.querySelectorAll('.q-item').forEach((item, idx) => {
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    const fb = item.querySelector('.q-fb');
+    const status = item.querySelector('.comp-status');
+
+    function check() {
+      if (item.classList.contains('solved')) return;
+      const v = inp.value.trim().toLowerCase();
+      if (!v) { fb.innerHTML = '<span class="nope">✏️ Écris une réponse avant de vérifier.</span>'; return; }
+      const norm = s => s.trim().toLowerCase().replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const good = data[idx].ans.some(a => norm(a) === norm(v));
+      if (good) {
+        item.classList.add('solved');
+        status.textContent = '✅';
+        inp.disabled = true;
+        btn.disabled = true;
+        btn.textContent = '✓';
+        btn.style.background = 'var(--teal)';
+        fb.innerHTML = `<span class="ok">✓ Bravo ! ${data[idx].hint}</span>`;
+        if (!solvedSet.has(idx)) { solvedSet.add(idx); updateProgress(); }
+      } else {
+        item.classList.add('shake');
+        setTimeout(() => item.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Incorrect. Indice : ${data[idx].hint}</span>`;
+      }
+    }
+    btn.addEventListener('click', check);
+    inp.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  });
+}
+
+/* ============================================================
+   MATCHING GÉNÉRIQUE
+   ============================================================ */
+function buildMatching(listId, data, solvedSet) {
+  const list = document.getElementById(listId);
+  list.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'q-item';
+  wrap.innerHTML = `
+    <div class="q-num"><span>Relie les paires</span><span class="match-status">0 / ${data.length}</span></div>
+    <div class="match-cols">
+      <div class="match-col"><h5>Débuts</h5><div class="match-left"></div></div>
+      <div class="match-col"><h5>Fins</h5><div class="match-right"></div></div>
+    </div>
+    <div class="q-fb"></div>
+  `;
+  list.appendChild(wrap);
+
+  const leftCol = wrap.querySelector('.match-left');
+  const rightCol = wrap.querySelector('.match-right');
+  const shuffledLeft = shuffle(data);
+  const shuffledRight = shuffle(data);
+
+  shuffledLeft.forEach((p) => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.side = 'left';
+    el.dataset.idx = data.indexOf(p);
+    el.textContent = p.left;
+    leftCol.appendChild(el);
+  });
+  shuffledRight.forEach((p) => {
+    const el = document.createElement('div');
+    el.className = 'match-item';
+    el.dataset.side = 'right';
+    el.dataset.idx = data.indexOf(p);
+    el.textContent = p.right;
+    rightCol.appendChild(el);
+  });
+
+  let selectedLeft = null;
+  let matchedCount = 0;
+
+  wrap.querySelectorAll('.match-item').forEach(el => {
+    el.addEventListener('click', function() {
+      if (this.classList.contains('matched')) return;
+      const side = this.dataset.side;
+
+      if (side === 'left') {
+        wrap.querySelectorAll('.match-item[data-side="left"]').forEach(x => x.classList.remove('active'));
+        this.classList.add('active');
+        selectedLeft = this;
+        return;
+      }
+
+      if (!selectedLeft) {
+        this.classList.add('wrong-pair');
+        setTimeout(() => this.classList.remove('wrong-pair'), 400);
+        wrap.querySelector('.q-fb').innerHTML = '<span class="nope">👈 Choisis d\'abord un début de phrase à gauche.</span>';
+        return;
+      }
+
+      if (selectedLeft.dataset.idx === this.dataset.idx) {
+        selectedLeft.classList.remove('active');
+        selectedLeft.classList.add('matched');
+        this.classList.add('matched');
+        matchedCount++;
+        wrap.querySelector('.match-status').textContent = matchedCount + ' / ' + data.length;
+        wrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien joué ! ${matchedCount}/${data.length} paires trouvées.</span>`;
+        if (!solvedSet.has(parseInt(this.dataset.idx))) {
+          solvedSet.add(parseInt(this.dataset.idx));
+          updateProgress();
+        }
+        selectedLeft = null;
+        if (matchedCount === data.length) {
+          wrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les paires sont reliées ! Excellent travail.</span>';
+        }
+      } else {
+        this.classList.add('wrong-pair');
+        selectedLeft.classList.add('wrong-pair');
+        setTimeout(() => {
+          this.classList.remove('wrong-pair');
+          selectedLeft && selectedLeft.classList.remove('wrong-pair');
+        }, 400);
+        wrap.querySelector('.q-fb').innerHTML = '<span class="nope">✗ Ce n\'est pas la bonne paire. Réessaie !</span>';
+      }
+    });
+  });
+}
+
+/* ============================================================
+   DIALOGUE À TROUS (CLICK-REVEAL)
+   ============================================================ */
+function buildDialogue(listId, data, solvedSet) {
+  const list = document.getElementById(listId);
+  list.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'q-item';
+  wrap.innerHTML = `<div class="q-num"><span>Dialogue</span><span class="dial-status">0 / ${data.length}</span></div>`;
+  data.forEach((item, idx) => {
+    const line = document.createElement('div');
+    line.className = 'reveal-line';
+    line.innerHTML = `
+      <span class="speaker">${item.speaker} :</span>
+      <span class="sentence">${item.before} <span class="hidden-answer" data-idx="${idx}">? ? ?</span> ${item.after}</span>
+    `;
+    wrap.appendChild(line);
+  });
+  const fb = document.createElement('div');
+  fb.className = 'q-fb';
+  wrap.appendChild(fb);
+  list.appendChild(wrap);
+
+  let count = 0;
+  wrap.querySelectorAll('.hidden-answer').forEach(el => {
+    el.addEventListener('click', function() {
+      if (this.classList.contains('shown')) return;
+      const idx = parseInt(this.dataset.idx);
+      this.textContent = data[idx].answer;
+      this.classList.add('shown');
+      count++;
+      wrap.querySelector('.dial-status').textContent = count + ' / ' + data.length;
+      if (!solvedSet.has(idx)) { solvedSet.add(idx); updateProgress(); }
+      if (count === data.length) {
+        fb.innerHTML = '<span class="ok">🎉 Dialogue complet ! Bravo !</span>';
+      }
+    });
+  });
+}
+
+/* ============================================================
+   TRI (passé composé vs imparfait)
+   ============================================================ */
+function buildTri(listId, data, solvedSet) {
+  const list = document.getElementById(listId);
+  list.innerHTML = '';
+  const wrap = document.createElement('div');
+  wrap.className = 'q-item';
+  wrap.innerHTML = `
+    <div class="q-num"><span>Trie les phrases</span><span class="tri-status">0 / ${data.length}</span></div>
+    <div class="sort-zone" id="pool-${listId}" style="border-style:solid;border-color:var(--purple-m);background:var(--purple-l);min-height:auto;margin-bottom:12px">
+      <h5>📦 Phrases à trier</h5>
+      <div class="sort-chips-container"></div>
+    </div>
+    <div class="sort-container">
+      <div class="sort-zone" data-cat="pc">
+        <h5>🟢 Passé composé</h5>
+        <div class="sort-chips-container"></div>
+      </div>
+      <div class="sort-zone" data-cat="imp">
+        <h5>🟡 Imparfait</h5>
+        <div class="sort-chips-container"></div>
+      </div>
+    </div>
+    <div class="q-fb"></div>
+  `;
+  list.appendChild(wrap);
+
+  const pool = wrap.querySelector(`#pool-${listId} .sort-chips-container`);
+  const zonePC = wrap.querySelector('.sort-zone[data-cat="pc"] .sort-chips-container');
+  const zoneImp = wrap.querySelector('.sort-zone[data-cat="imp"] .sort-chips-container');
+  const fb = wrap.querySelector('.q-fb');
+  const status = wrap.querySelector('.tri-status');
+
+  const shuffled = shuffle(data);
+  shuffled.forEach((item, idx) => {
+    const chip = document.createElement('span');
+    chip.className = 'sort-chip';
+    chip.textContent = item.text;
+    chip.dataset.cat = item.cat;
+    chip.dataset.idx = data.indexOf(item);
+    pool.appendChild(chip);
+  });
+
+  let selectedChip = null;
+  let count = 0;
+
+  wrap.querySelectorAll('.sort-chip').forEach(chip => {
+    chip.addEventListener('click', function() {
+      if (this.classList.contains('correct-zone')) return;
+      wrap.querySelectorAll('.sort-chip').forEach(c => c.classList.remove('selected'));
+      this.classList.add('selected');
+      selectedChip = this;
+    });
+  });
+
+  wrap.querySelectorAll('.sort-zone[data-cat]').forEach(zone => {
+    zone.addEventListener('click', function() {
+      if (!selectedChip) {
+        fb.innerHTML = '<span class="nope">👆 Clique d\'abord sur une phrase.</span>';
+        return;
+      }
+      const targetCat = this.dataset.cat;
+      if (selectedChip.dataset.cat === targetCat) {
+        selectedChip.classList.remove('selected');
+        selectedChip.classList.add('correct-zone');
+        this.querySelector('.sort-chips-container').appendChild(selectedChip);
+        this.classList.add('dropped');
+        count++;
+        status.textContent = count + ' / ' + data.length;
+        const idx = parseInt(selectedChip.dataset.idx);
+        if (!solvedSet.has(idx)) { solvedSet.add(idx); updateProgress(); }
+        fb.innerHTML = `<span class="ok">✓ Bien placé ! ${count}/${data.length}</span>`;
+        selectedChip = null;
+        if (count === data.length) {
+          fb.innerHTML = '<span class="ok">🎉 Toutes les phrases sont triées ! Parfait !</span>';
+        }
+      } else {
+        selectedChip.classList.add('wrong-zone');
+        const chip = selectedChip;
+        setTimeout(() => chip.classList.remove('wrong-zone'), 500);
+        fb.innerHTML = '<span class="nope">✗ Non, ce n\'est pas la bonne catégorie. Réessaie !</span>';
+      }
+    });
+  });
+}
+
+/* ============================================================
+   CONSTRUCTION INITIALE
+   ============================================================ */
+function buildAll() {
+  buildQCM('qlist1', qcm1, solvedItems.ex1);
+  buildQCM('qlist2', qcm2, solvedItems.ex2);
+  buildCompleter('qlist3', completerPC, solvedItems.ex3, 'q-input-1', 'q-btn-1');
+  buildCompleter('qlist4', completerImparfait, solvedItems.ex4, 'q-input-6', 'q-btn-6');
+  buildMatching('qlist5', pairesPC, solvedItems.ex5);
+  buildMatching('qlist6', pairesImparfait, solvedItems.ex6);
+  buildDialogue('qlist7', dialogue, solvedItems.ex7);
+  buildTri('qlist8', triPhrases, solvedItems.ex8);
+  buildCompleter('qlist9', transformations, solvedItems.ex9, 'q-input-7', 'q-btn-7');
+}
+
+/* ============================================================
+   VOCABULAIRE INTERACTIF (cartes du haut)
+   ============================================================ */
+document.querySelectorAll('.vocab-card').forEach(card => {
+  card.addEventListener('click', function() {
+    this.classList.toggle('revealed');
+  });
+});
+
+/* ============================================================
+   RESET
+   ============================================================ */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  Object.values(solvedItems).forEach(set => set.clear());
+  window._confettiDone = false;
+  vocabRevealed = 0;
+  vocabTestCounter.textContent = '0 / ' + vocabTest.length + ' mots révélés';
+  vocabTestCounter.style.color = 'var(--muted)';
+  vocabTestCounter.style.fontWeight = 'normal';
+  buildAll();
+  updateProgress();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+buildAll();
+updateProgress();
+</script>
+</body>
+</html>
