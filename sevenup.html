@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>« Seven Up ! » — FLE B2/C1 adultes</title>
+<style>
+  :root{
+    --bg:#eef6f1;
+    --bg-alt:#e4f1ff;
+    --paper:#ffffff;
+    --ink:#152a26;
+    --ink-soft:#4c625d;
+    --teal:#0f8b8d;
+    --teal-dark:#0b6668;
+    --coral:#ef5b4e;
+    --coral-dark:#c8402f;
+    --gold:#f2a93b;
+    --gold-dark:#c98416;
+    --violet:#7c5cff;
+    --violet-dark:#5a3ce0;
+    --leaf:#3fa34d;
+    --leaf-dark:#2c7d38;
+    --line:#d8e3dc;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Segoe UI', 'Trebuchet MS', sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:Georgia, 'Times New Roman', serif;
+    font-weight:700;
+    margin:0 0 0.4em 0;
+    color:var(--ink);
+  }
+  .wrap{max-width:940px;margin:0 auto;padding:0 24px 90px;}
+
+  /* HERO */
+  .hero{
+    padding:56px 24px 44px;
+    background:
+      radial-gradient(circle at 88% -20%, rgba(242,169,59,0.28), transparent 55%),
+      radial-gradient(circle at 0% 115%, rgba(63,163,77,0.22), transparent 55%),
+      linear-gradient(180deg, var(--bg-alt), var(--bg));
+    border-bottom:3px solid var(--ink);
+  }
+  .hero-inner{max-width:940px;margin:0 auto;}
+  .eyebrow{
+    display:inline-block;
+    font-size:0.78rem;
+    color:var(--teal-dark);
+    background:#ffffff;
+    border:1.5px solid var(--teal);
+    padding:5px 12px;
+    border-radius:999px;
+    margin-bottom:18px;
+    font-weight:700;
+  }
+  .hero h1{
+    font-size:clamp(1.9rem, 4.5vw, 3rem);
+    line-height:1.08;
+  }
+  .hero h1 em{
+    font-style:italic;
+    background:linear-gradient(120deg, var(--coral), var(--gold));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero p{
+    max-width:680px;
+    font-size:1.02rem;
+    color:var(--ink-soft);
+  }
+  .hero-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .pill{
+    font-size:0.82rem;
+    padding:6px 13px;
+    border-radius:8px;
+    background:#ffffff;
+    border:1.5px solid var(--line);
+    color:var(--ink-soft);
+    font-weight:500;
+  }
+
+  section{padding:50px 0;border-bottom:2px dashed var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .section-tag{
+    display:inline-block;
+    font-size:0.78rem;
+    font-weight:700;
+    padding:3px 10px;
+    border-radius:6px;
+    margin-bottom:10px;
+    color:#fff;
+  }
+  .tag-teal{background:var(--teal);}
+  .tag-gold{background:var(--gold-dark);}
+  .tag-violet{background:var(--violet);}
+  .tag-coral{background:var(--coral);}
+  .tag-leaf{background:var(--leaf-dark);}
+
+  section h2{font-size:1.7rem;}
+  .lead{color:var(--ink-soft);max-width:700px;margin-bottom:26px;}
+
+  /* ARTICLE */
+  .article-box{
+    background:var(--paper);
+    border:2px solid var(--ink);
+    border-radius:4px 22px 4px 22px;
+    padding:30px 34px;
+    box-shadow:8px 8px 0 var(--gold);
+  }
+  .article-box h3{
+    font-size:1.35rem;
+    color:var(--teal-dark);
+    margin-bottom:4px;
+  }
+  .article-sub{color:var(--ink-soft); font-size:0.9rem; margin-bottom:20px;}
+  .article-box p{margin:0 0 15px 0; font-size:1rem;}
+  .article-box h4{
+    font-size:1.08rem;
+    color:var(--coral-dark);
+    margin:24px 0 8px;
+  }
+  blockquote{
+    margin:20px 0;
+    padding:16px 20px;
+    border-left:5px solid var(--coral);
+    background:#fff3f1;
+    font-family:Georgia, serif;
+    font-style:italic;
+    font-size:1.1rem;
+    color:var(--coral-dark);
+  }
+  details.vocab-ref{
+    margin-top:24px;
+    background:var(--bg-alt);
+    border-radius:12px;
+    padding:14px 18px;
+  }
+  details.vocab-ref summary{
+    cursor:pointer;
+    font-weight:700;
+    color:var(--teal-dark);
+  }
+  table.vocab-table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+    font-size:0.9rem;
+  }
+  table.vocab-table td{
+    padding:7px 8px;
+    border-bottom:1px solid var(--line);
+    vertical-align:top;
+  }
+  table.vocab-table td:first-child{font-weight:700; color:var(--teal-dark); white-space:nowrap;}
+
+  /* GAME BOARD */
+  .game-board{display:grid;grid-template-columns:1fr 1fr;gap:14px 22px;}
+  @media(max-width:640px){.game-board{grid-template-columns:1fr;}}
+  .game-col h3{font-size:0.85rem;color:var(--ink-soft);margin-bottom:12px;text-transform:uppercase;letter-spacing:.03em;}
+  .card{
+    display:block;width:100%;text-align:left;
+    background:var(--paper);
+    border:2px solid var(--line);
+    color:var(--ink);
+    padding:13px 16px;border-radius:10px;margin-bottom:10px;
+    font-size:0.93rem;
+    cursor:pointer;transition:transform .12s ease, border-color .15s ease;
+  }
+  .card:hover{border-color:var(--gold); transform:translateY(-1px);}
+  .card.selected{border-color:var(--violet); background:#f2eeff;}
+  .card.matched{background:#eafaec; border-color:var(--leaf); color:var(--leaf-dark); cursor:default;}
+  .card.wrong{animation:shake .32s ease; border-color:var(--coral);}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-5px);}75%{transform:translateX(5px);}}
+  .game-status{margin-top:16px;font-size:0.92rem;color:var(--ink-soft);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+  .reset-btn{
+    background:var(--ink); color:#fff; border:none;
+    padding:8px 15px;border-radius:8px;
+    font-size:0.85rem;cursor:pointer;font-weight:700;
+  }
+  .reset-btn:hover{background:var(--teal-dark);}
+  .score-tag{background:var(--paper);padding:5px 12px;border-radius:7px;border:1.5px solid var(--line);font-weight:600;}
+
+  /* GRAMMAR */
+  .grammar-box{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-left:6px solid var(--gold);
+    border-radius:4px 16px 16px 4px;
+    padding:22px 26px;
+    margin-bottom:20px;
+  }
+  .grammar-box.alt{border-left-color:var(--violet);}
+  .grammar-box.warn{border-left-color:var(--coral);}
+  .grammar-box h3{font-size:1.08rem;color:var(--gold-dark);margin-bottom:10px;}
+  .grammar-box.alt h3{color:var(--violet-dark);}
+  .grammar-box.warn h3{color:var(--coral-dark);}
+  .grammar-ex{
+    background:var(--bg-alt);
+    border-radius:10px;padding:13px 16px;margin:10px 0;font-size:0.95rem;
+  }
+  .grammar-ex .src{color:var(--ink-soft);font-size:0.75rem;display:block;margin-bottom:5px;font-weight:700;}
+  .grammar-ex.bad{background:#fdeceb;}
+
+  /* CHOICE-BLANK EXERCISES */
+  .choice-item{
+    background:var(--bg-alt);
+    border-radius:12px;
+    padding:16px 18px;
+    margin:14px 0;
+  }
+  .choice-sentence{margin:0 0 12px 0;font-size:0.97rem;}
+  .blank{
+    display:inline-block;
+    min-width:90px;
+    text-align:center;
+    padding:2px 8px;
+    border-bottom:2px solid var(--ink);
+    font-weight:700;
+    color:var(--ink-soft);
+  }
+  .blank.filled-ok{color:var(--leaf-dark); border-color:var(--leaf);}
+  .choice-opts{display:flex;flex-wrap:wrap;gap:8px;}
+  .opt-chip{
+    background:#fff;border:2px solid var(--line);color:var(--ink);
+    padding:7px 13px;border-radius:999px;
+    font-size:0.87rem;cursor:pointer;transition:.12s ease;
+  }
+  .opt-chip:hover{border-color:var(--gold);}
+  .opt-chip.right{background:#eafaec;border-color:var(--leaf);color:var(--leaf-dark);}
+  .opt-chip.wrongpick{background:#fdeceb;border-color:var(--coral);color:var(--coral-dark);animation:shake .32s ease;}
+  .opt-chip[disabled]{cursor:default;}
+
+  /* TRUE/FALSE */
+  .tf-item{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:14px;
+    padding:18px 20px;
+    margin-bottom:14px;
+  }
+  .tf-statement{font-weight:600;margin-bottom:12px;font-size:0.96rem;}
+  .tf-btns{display:flex;gap:10px;}
+  .tf-btn{
+    border:2px solid var(--ink);
+    background:#fff;color:var(--ink);
+    padding:8px 20px;border-radius:8px;font-weight:700;
+    cursor:pointer;font-size:0.88rem;
+  }
+  .tf-btn.true-btn:hover{background:#eafaec;border-color:var(--leaf);}
+  .tf-btn.false-btn:hover{background:#fdeceb;border-color:var(--coral);}
+  .tf-btn.picked-right{background:#eafaec;border-color:var(--leaf);color:var(--leaf-dark);}
+  .tf-btn.picked-wrong{background:#fdeceb;border-color:var(--coral);color:var(--coral-dark);}
+  .tf-btn[disabled]{cursor:default;opacity:.75;}
+  .tf-explain{
+    margin-top:12px;font-size:0.87rem;color:var(--ink-soft);
+    border-left:3px solid var(--gold);padding-left:10px;display:none;
+  }
+
+  /* QUIZ */
+  .quiz-item{
+    background:var(--paper);
+    border:2px solid var(--line);
+    border-radius:16px 16px 16px 4px;
+    padding:22px 24px;margin-bottom:18px;
+  }
+  .quiz-q{font-weight:700;margin-bottom:14px;font-size:1rem;}
+  .quiz-opts{display:grid;gap:9px;}
+  .opt-btn{
+    text-align:left;background:var(--bg-alt);border:2px solid var(--line);color:var(--ink);
+    padding:11px 14px;border-radius:9px;
+    font-size:0.92rem;cursor:pointer;transition:all .12s ease;
+  }
+  .opt-btn:hover{border-color:var(--gold);}
+  .opt-btn.correct{background:#eafaec;border-color:var(--leaf);color:var(--leaf-dark);}
+  .opt-btn.incorrect{background:#fdeceb;border-color:var(--coral);color:var(--coral-dark);}
+  .opt-btn[disabled]{cursor:default;}
+  .quiz-explain{margin-top:12px;font-size:0.88rem;color:var(--ink-soft);display:none;border-left:3px solid var(--violet);padding-left:12px;}
+
+  .score-banner{
+    text-align:center;background:var(--paper);border:2px solid var(--ink);
+    border-radius:14px;padding:20px;margin-top:8px;font-size:1rem;font-weight:600;
+  }
+  .score-banner span{color:var(--coral-dark);font-weight:700;}
+
+  .prod-box{
+    background:var(--paper);
+    border:2px solid var(--ink);
+    border-radius:14px;
+    padding:24px 28px;
+    margin-bottom:16px;
+  }
+  footer{text-align:center;padding:32px 24px 60px;color:var(--ink-soft);font-size:0.82rem;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="eyebrow">FLE — B2 / C1 adultes</span>
+    <h1>« Seven Up ! » : 63 ans devant la caméra — <em>tel que, quoique, quelle que soit…</em></h1>
+    <p>Un texte resserré sur le documentaire britannique le plus fascinant de l'histoire, plus un focus sur les confusions classiques : <em>tel que / tel quel, quelque / quelle que soit, quoique / quoi qu'il en soit</em>. Jeux et quiz interactifs inclus.</p>
+    <div class="hero-meta">
+      <span class="pill">Compréhension écrite</span>
+      <span class="pill">Lexique médias &amp; société</span>
+      <span class="pill">Grammaire : tel, quelque, quoique</span>
+      <span class="pill">Jeux &amp; quiz</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- TEXTE -->
+  <section>
+    <span class="section-tag tag-teal">00 — Texte support</span>
+    <h2>L'article</h2>
+    <p class="lead">Lisez le texte en entier avant de faire les exercices. Les mots en italique illustrent les points de grammaire de la fiche.</p>
+
+    <div class="article-box">
+      <h3>« Seven Up ! » : épilogue d'une expérience sociologique de 63 ans</h3>
+      <p class="article-sub">D'après The i Paper — adapté pour le FLE — 2026</p>
+
+      <p>En 1964, quatorze enfants britanniques de 7 ans — dix garçons et quatre filles, issus de milieux sociaux contrastés — ont été filmés pour la télévision. L'idée s'inspirait d'une maxime ancienne : les sept premières années déterminent l'adulte que nous devenons. <em>Quelle que soit</em> la validité scientifique de cette thèse, la série est devenue le documentaire le plus fascinant jamais produit : les mêmes personnes, <em>telles quelles</em>, retrouvées tous les sept ans, de 1964 à aujourd'hui.</p>
+
+      <p>Confiée dès le deuxième opus à Michael Apted — futur réalisateur hollywoodien —, l'entreprise a suivi ses participants à travers les <em>vicissitudes</em> de l'existence : mariages, échecs, reconversions. Certains se sont désistés ; d'autres sont revenus. Peter Davies, parti à 28 ans après quelques critiques sur Margaret Thatcher — les tabloïds lui étaient « tombés dessus » —, est réapparu vingt-huit ans plus tard, écrivain et musicien.</p>
+
+      <p>Mais la série a aussi révélé les préjugés de son propre réalisateur. Dans <em>49 Up</em>, Jackie Bassett lui reprochait de ne parler aux femmes que d'hommes, de sexe et de bébés. On le voit demander à Tony, 21 ans, issu d'un milieu ouvrier, s'il craignait de « sombrer dans la délinquance » — <em>quand bien même</em> rien ne le laissait présager. « Pourquoi est-ce que je serais méchant ? », rétorquait celui-ci.</p>
+
+      <p>Apted est mort en 2021 ; Asif Kapadia, documentariste oscarisé, a réalisé le dernier chapitre, <em>70 Up</em>. Les participants y paraissent sereins. <em>Quoique</em> certains aient regretté la simplification de leur portrait au montage, nul ne semble regretter l'aventure. « Je doute qu'on revoie <em>quelque chose</em> de comparable à la télévision », conclut Peter Davies.</p>
+
+      <blockquote>« Moi, je ne ressens pas de tristesse, du moins pas pour l'instant. »</blockquote>
+
+      <details class="vocab-ref">
+        <summary>Voir le vocabulaire complet du texte (FR → EN)</summary>
+        <table class="vocab-table">
+          <tr><td>un épilogue</td><td>an epilogue</td></tr>
+          <tr><td>une maxime</td><td>a maxim, a saying</td></tr>
+          <tr><td>les vicissitudes</td><td>the ups and downs</td></tr>
+          <tr><td>se désister</td><td>to withdraw, to drop out</td></tr>
+          <tr><td>un tabloïd</td><td>a tabloid</td></tr>
+          <tr><td>sombrer dans la délinquance</td><td>to slide into crime</td></tr>
+          <tr><td>un préjugé</td><td>a prejudice, a bias</td></tr>
+          <tr><td>le montage</td><td>editing</td></tr>
+          <tr><td>rétorquer</td><td>to retort</td></tr>
+          <tr><td>présager</td><td>to foreshadow</td></tr>
+          <tr><td>une reconversion</td><td>a career change</td></tr>
+          <tr><td>serein / sereine</td><td>serene, at peace</td></tr>
+          <tr><td>issu(e) de</td><td>coming from, born into</td></tr>
+          <tr><td>du moins</td><td>at least</td></tr>
+        </table>
+      </details>
+    </div>
+  </section>
+
+  <!-- JEU VOCABULAIRE -->
+  <section>
+    <span class="section-tag tag-teal">01 — Vocabulaire</span>
+    <h2>Jeu : associez le mot à sa définition</h2>
+    <p class="lead">Cliquez sur un mot à gauche, puis sur sa définition à droite. Les cartes sont mélangées à chaque partie.</p>
+
+    <div class="game-board">
+      <div class="game-col"><h3>Mots</h3><div id="terms1"></div></div>
+      <div class="game-col"><h3>Définitions</h3><div id="defs1"></div></div>
+    </div>
+    <div class="game-status">
+      <span class="score-tag">Paires trouvées : <span id="matchCount1">0</span> / 7</span>
+      <button class="reset-btn" onclick="game1.init()">↻ Recommencer</button>
+    </div>
+  </section>
+
+  <!-- GRAMMAIRE 1 : TEL -->
+  <section>
+    <span class="section-tag tag-gold">02 — Grammaire : TEL</span>
+    <h2>Tel que, telle que, tels que, telles que — tel quel</h2>
+    <p class="lead">« Tel » s'accorde en genre et en nombre avec le nom auquel il se rapporte. Deux emplois à ne pas confondre : la comparaison (<em>tel que</em> = « comme ») et l'état inchangé (<em>tel quel</em> = « sans modification »).</p>
+
+    <div class="grammar-box">
+      <h3>📐 Tel que = « comme, à l'image de »</h3>
+      <div class="grammar-ex">
+        <span class="src">Exemple — Seven Up !</span>
+        Une expérience <strong>telle que</strong> celle de « Seven Up ! » ne se reproduira sans doute jamais. <em>(une expérience → fém. sing.)</em>
+      </div>
+      <div class="grammar-ex">
+        <span class="src">Exemple</span>
+        Des documentaires <strong>tels que</strong> « Seven Up ! » changent notre regard sur la société. <em>(masc. plur.)</em>
+      </div>
+    </div>
+
+    <div class="grammar-box">
+      <h3>📦 Tel quel = « dans cet état, sans modification »</h3>
+      <div class="grammar-ex">
+        <span class="src">Exemple — Seven Up !</span>
+        La série montre les participants <strong>tels quels</strong> : leurs portraits n'étaient jamais retouchés. <em>(masc. plur.)</em>
+      </div>
+      <div class="grammar-ex">
+        <span class="src">Exemple</span>
+        J'ai publié son témoignage <strong>tel quel</strong>, sans rien couper. <em>(masc. sing.)</em>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.05rem;margin-top:24px;">✏️ Exercice — cliquez sur la forme correcte</h3>
+    <div id="ex1"></div>
+  </section>
+
+  <!-- GRAMMAIRE 2 : QUELQUE -->
+  <section>
+    <span class="section-tag tag-violet">03 — Grammaire : QUELQUE</span>
+    <h2>Quelque, quelques, quelle que soit</h2>
+    <p class="lead">Trois emplois très différents — et une faute très fréquente au B2/C1.</p>
+
+    <div class="grammar-box">
+      <h3>🔢 Quelque / quelques = déterminant (« un petit nombre de »)</h3>
+      <div class="grammar-ex">
+        <span class="src">Extrait — Seven Up !</span>
+        Parti après <strong>quelques</strong> critiques sur Margaret Thatcher.
+      </div>
+      <div class="grammar-ex">
+        <span class="src">Extrait — Seven Up !</span>
+        « Je doute qu'on revoie <strong>quelque chose</strong> de comparable à la télévision. » <em>(toujours en deux mots, invariable)</em>
+      </div>
+    </div>
+
+    <div class="grammar-box warn">
+      <h3>⚠️ Quelle que soit = « peu importe » — « quelque soit » n'existe pas !</h3>
+      <p>Devant un verbe (<em>être</em> au subjonctif), <strong>quel</strong> et <strong>que</strong> s'écrivent en deux mots et s'accordent avec le sujet du verbe.</p>
+      <div class="grammar-ex">
+        <span class="src">Extrait — Seven Up !</span>
+        <strong>Quelle que soit</strong> la validité de cette thèse, la série est devenue un document unique. <em>(la thèse → fém. sing.)</em>
+      </div>
+      <div class="grammar-ex bad">
+        <span class="src">❌ Faux → ✅ Correct</span>
+        ❌ Quelque soit la validité… → ✅ <strong>Quelle que soit</strong> la validité… &nbsp;|&nbsp; <strong>Quels que soient</strong> les obstacles <em>(masc. plur.)</em> ; <strong>quelles que soient</strong> les difficultés <em>(fém. plur.)</em>.
+      </div>
+    </div>
+
+    <h3 style="font-size:1.05rem;margin-top:24px;">✏️ Exercice — cliquez sur la forme correcte</h3>
+    <div id="ex2"></div>
+  </section>
+
+  <!-- GRAMMAIRE 3 : QUOIQUE -->
+  <section>
+    <span class="section-tag tag-coral">04 — Grammaire : QUOIQUE / QUOI QUE</span>
+    <h2>Quoique, quoi que, quoi qu'il en soit</h2>
+    <p class="lead">Ils se prononcent de la même façon mais ne s'écrivent — ni ne fonctionnent — pareil.</p>
+
+    <div class="grammar-box">
+      <h3>🔀 Quoique = « bien que » (+ subjonctif, un seul mot)</h3>
+      <div class="grammar-ex">
+        <span class="src">Extrait — Seven Up !</span>
+        <strong>Quoique</strong> certains aient regretté la simplification de leur portrait, nul ne semble regretter l'aventure.
+      </div>
+      <div class="grammar-ex">
+        <span class="src">Astuce</span>
+        Si vous pouvez remplacer par « bien que » → écrivez <strong>quoique</strong>.
+      </div>
+    </div>
+
+    <div class="grammar-box">
+      <h3>❓ Quoi que = « quelle que soit la chose que » (deux mots)</h3>
+      <div class="grammar-ex">
+        <span class="src">Exemple</span>
+        <strong>Quoi qu'</strong>il dise, on le filmera. <em>(= la chose qu'il dise)</em>
+      </div>
+    </div>
+
+    <div class="grammar-box warn">
+      <h3>🌀 Quoi qu'il en soit = « de toute façon » (quatre mots, figé)</h3>
+      <div class="grammar-ex bad">
+        <span class="src">❌ Faux → ✅ Correct</span>
+        ❌ Quoiqu'il en soit → ✅ <strong>Quoi qu'il en soit</strong>
+      </div>
+    </div>
+
+    <h3 style="font-size:1.05rem;margin-top:24px;">✏️ Exercice — cliquez sur la forme correcte</h3>
+    <div id="ex3"></div>
+  </section>
+
+  <!-- VRAI / FAUX -->
+  <section>
+    <span class="section-tag tag-leaf">05 — Vrai ou faux</span>
+    <h2>Testez votre lecture attentive</h2>
+    <p class="lead">Cliquez sur Vrai ou Faux. Une explication apparaît à chaque réponse.</p>
+    <div id="tfContainer"></div>
+  </section>
+
+  <!-- QUIZ -->
+  <section>
+    <span class="section-tag tag-violet">06 — Quiz final</span>
+    <h2>Quiz à choix multiples</h2>
+    <p class="lead">Texte et grammaire. Les options sont mélangées à chaque rechargement.</p>
+    <div id="quizContainer"></div>
+    <div class="score-banner">Score : <span id="quizScore">0</span> / <span id="quizTotal">0</span></div>
+  </section>
+
+  <!-- EXPRESSION -->
+  <section>
+    <span class="section-tag tag-leaf">07 — Expression écrite (B2/C1)</span>
+    <h2>À vous d'écrire</h2>
+    <p class="lead">Consignes inspirées des épreuves DELF B2 / DALF C1.</p>
+    <div class="prod-box">
+      <h3>Sujet 1 — B2 (≈ 250 mots, 45 min)</h3>
+      <p>« Les sept premières années de notre vie déterminent-elles l'adulte que nous devenons ? » Rédigez un texte argumenté en employant au moins trois structures de la fiche (<em>quelle que soit, quoique, tel que, quoi qu'il en soit</em>). Soulignez-les.</p>
+    </div>
+    <div class="prod-box">
+      <h3>Sujet 2 — C1 (synthèse, ≈ 220 mots)</h3>
+      <p>Un documentaire peut-il être « objectif » si son réalisateur porte des préjugés ? Développez deux points de vue en vous appuyant sur « Seven Up ! », avec introduction, arguments illustrés et conclusion nuancée.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>Support de cours FLE — B2/C1 adultes — d'après l'article « Seven Up ! » (The i Paper, 2026).</footer>
+
+<script>
+function shuffle(arr){
+  const a = [...arr];
+  for(let i = a.length - 1; i > 0; i--){
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ===================== JEU D'ASSOCIATION ===================== */
+function createMatchingGame(termsElId, defsElId, countElId, pairs){
+  let selectedTerm = null, selectedDef = null, matched = 0;
+  const termsBox = document.getElementById(termsElId);
+  const defsBox = document.getElementById(defsElId);
+  const countEl = document.getElementById(countElId);
+
+  function init(){
+    matched = 0; selectedTerm = null; selectedDef = null;
+    countEl.textContent = '0';
+    termsBox.innerHTML = ''; defsBox.innerHTML = '';
+
+    shuffle(pairs).forEach(p => {
+      const btn = document.createElement('button');
+      btn.className = 'card'; btn.textContent = p.term;
+      btn.onclick = () => selectTerm(btn, p.term);
+      termsBox.appendChild(btn);
+    });
+    shuffle(pairs).forEach(p => {
+      const btn = document.createElement('button');
+      btn.className = 'card'; btn.textContent = p.def;
+      btn.onclick = () => selectDef(btn, p.def);
+      defsBox.appendChild(btn);
+    });
+  }
+
+  function selectTerm(el, term){
+    if(el.classList.contains('matched')) return;
+    [...termsBox.children].forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedTerm = { el, term };
+    tryMatch();
+  }
+  function selectDef(el, def){
+    if(el.classList.contains('matched')) return;
+    [...defsBox.children].forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedDef = { el, def };
+    tryMatch();
+  }
+  function tryMatch(){
+    if(!selectedTerm || !selectedDef) return;
+    const correct = pairs.find(p => p.term === selectedTerm.term && p.def === selectedDef.def);
+    if(correct){
+      selectedTerm.el.classList.remove('selected'); selectedDef.el.classList.remove('selected');
+      selectedTerm.el.classList.add('matched'); selectedDef.el.classList.add('matched');
+      matched++; countEl.textContent = matched;
+    } else {
+      selectedTerm.el.classList.add('wrong'); selectedDef.el.classList.add('wrong');
+      const t = selectedTerm.el, d = selectedDef.el;
+      setTimeout(() => {
+        t.classList.remove('selected','wrong');
+        d.classList.remove('selected','wrong');
+      }, 400);
+    }
+    selectedTerm = null; selectedDef = null;
+  }
+
+  return { init };
+}
+
+const pairsSet1 = [
+  { term: "un épilogue", def: "partie finale d'une œuvre, d'une histoire" },
+  { term: "les vicissitudes", def: "les hauts et les bas, les épreuves de la vie" },
+  { term: "se désister", def: "renoncer à participer, se retirer" },
+  { term: "un préjugé", def: "opinion préconçue, souvent erronée" },
+  { term: "rétorquer", def: "répondre vivement, avec esprit" },
+  { term: "présager", def: "annoncer, laisser prévoir" },
+  { term: "sombrer dans la délinquance", def: "glisser peu à peu vers la petite criminalité" },
+];
+
+const game1 = createMatchingGame('terms1','defs1','matchCount1', pairsSet1);
+game1.init();
+
+/* ===================== PHRASES À TROUS ===================== */
+function renderChoiceBlanks(containerId, items){
+  const container = document.getElementById(containerId);
+  items.forEach(item => {
+    const wrap = document.createElement('div');
+    wrap.className = 'choice-item';
+
+    const sentence = document.createElement('p');
+    sentence.className = 'choice-sentence';
+    sentence.innerHTML = item.before + ' <span class="blank">______</span> ' + item.after;
+    wrap.appendChild(sentence);
+
+    const blankSpan = sentence.querySelector('.blank');
+
+    const optsBox = document.createElement('div');
+    optsBox.className = 'choice-opts';
+
+    shuffle([item.answer, ...item.distractors]).forEach(opt => {
+      const chip = document.createElement('button');
+      chip.className = 'opt-chip';
+      chip.textContent = opt;
+      chip.onclick = () => {
+        if(opt === item.answer){
+          blankSpan.textContent = opt;
+          blankSpan.classList.add('filled-ok');
+          chip.classList.add('right');
+          [...optsBox.children].forEach(c => c.disabled = true);
+        } else {
+          chip.classList.add('wrongpick');
+          setTimeout(() => chip.classList.remove('wrongpick'), 400);
+        }
+      };
+      optsBox.appendChild(chip);
+    });
+
+    wrap.appendChild(optsBox);
+    container.appendChild(wrap);
+  });
+}
+
+/* Exercice 1 — tel que / tel quel */
+renderChoiceBlanks('ex1', [
+  { before:"Une expérience", after:"celle de « Seven Up ! » ne se reproduira sans doute jamais.", answer:"telle que", distractors:["tel que","tel quel","telles que"] },
+  { before:"Des documentaires", after:"« Seven Up ! » changent notre regard sur la société.", answer:"tels que", distractors:["tel que","tel quel","telle que"] },
+  { before:"Les témoignages ont été diffusés", after:", sans retouche.", answer:"tels quels", distractors:["tel quel","telles quelles","telle quelle"] },
+  { before:"La série montre chaque participant", after:", sans embellissement.", answer:"tel quel", distractors:["telle quelle","tel que","tels que"] },
+  { before:"Les interviews des participantes ont été publiées", after:".", answer:"telles quelles", distractors:["tel quel","tels quels","telles que"] },
+]);
+
+/* Exercice 2 — quelque / quelle que soit */
+renderChoiceBlanks('ex2', [
+  { before:"Peter Davies est parti après", after:"critiques sur Margaret Thatcher.", answer:"quelques", distractors:["quelque","quelle que soit","quoi que"] },
+  { before:"", after:"la validité de la thèse, la série est devenue un document unique.", answer:"Quelle que soit", distractors:["Quelque soit","Quelques","Quoi que"] },
+  { before:"", after:"les obstacles, Apted a poursuivi le projet pendant 40 ans.", answer:"Quels que soient", distractors:["Quelques soient","Quelque soient","Quelles que soient"] },
+  { before:"", after:"les difficultés rencontrées, les participants sont restés fidèles.", answer:"Quelles que soient", distractors:["Quelques soient","Quelque soient","Quoi qu'elles soient"] },
+  { before:"Je doute qu'on revoie", after:"de comparable à la télévision.", answer:"quelque chose", distractors:["quelques choses","quoi que ce soit","telle chose"] },
+]);
+
+/* Exercice 3 — quoique / quoi que */
+renderChoiceBlanks('ex3', [
+  { before:"", after:"certains aient regretté leur portrait simplifié, nul ne regrette l'aventure.", answer:"Quoique", distractors:["Quoi que","Quelle que soit","Quelque"] },
+  { before:"", after:"il dise, le réalisateur le filmera.", answer:"quoi qu'", distractors:["quoiqu'","quelque","quelle que soit"] },
+  { before:"", after:", l'épilogue de « 70 Up » arrive au bon moment.", answer:"Quoi qu'il en soit", distractors:["Quoiqu'il en soit","Quel qu'il en soit","Quelque en soit"] },
+  { before:"", after:"le projet ait débuté en 1964, il reste d'une actualité frappante. (= bien que)", answer:"Quoique", distractors:["Quoi que","Quels que soient","Quelques"] },
+  { before:"", after:"vous en pensiez, cette série a marqué l'histoire de la télévision.", answer:"Quoi que", distractors:["Quoique","Quelle que soit","Quelque"] },
+]);
+
+/* ===================== VRAI / FAUX ===================== */
+const tfData = [
+  { s:"La série repose sur l'idée que les sept premières années de vie déterminent l'adulte.", correct:true, explain:"Vrai — c'est la maxime qui a inspiré les créateurs du premier épisode." },
+  { s:"Michael Apted a réalisé le tout premier épisode en 1964.", correct:false, explain:"Faux — il était chargé de production sur le premier épisode ; il a réalisé les suivants, dès le deuxième opus." },
+  { s:"Peter Davies a quitté la série à 28 ans, après des critiques sur Margaret Thatcher.", correct:true, explain:"Vrai — les tabloïds lui étaient « tombés dessus », ce qui l'a poussé à partir." },
+  { s:"Jackie Bassett reprochait à Apted son traitement des femmes dans la série.", correct:true, explain:"Vrai — dans « 49 Up », elle lui reprochait de ne parler aux femmes que d'hommes, de sexe et de bébés." },
+  { s:"Asif Kapadia avait déjà réalisé des épisodes de la série avant « 70 Up ».", correct:false, explain:"Faux — il a pris les rênes du dernier chapitre après la mort d'Apted en 2021." },
+  { s:"Tony, issu d'un milieu ouvrier, a été interrogé sur un risque supposé de délinquance.", correct:true, explain:"Vrai — à 21 ans, Apted lui a demandé s'il craignait de « sombrer dans la délinquance », révélant ses préjugés." },
+];
+
+const tfContainer = document.getElementById('tfContainer');
+tfData.forEach(item => {
+  const box = document.createElement('div');
+  box.className = 'tf-item';
+  const stmt = document.createElement('div');
+  stmt.className = 'tf-statement';
+  stmt.textContent = item.s;
+  box.appendChild(stmt);
+
+  const btns = document.createElement('div');
+  btns.className = 'tf-btns';
+
+  const explainEl = document.createElement('div');
+  explainEl.className = 'tf-explain';
+  explainEl.textContent = item.explain;
+
+  ['Vrai','Faux'].forEach(label => {
+    const b = document.createElement('button');
+    b.className = 'tf-btn ' + (label === 'Vrai' ? 'true-btn' : 'false-btn');
+    b.textContent = label;
+    b.onclick = () => {
+      const isTrue = label === 'Vrai';
+      const allBtns = btns.querySelectorAll('.tf-btn');
+      allBtns.forEach(x => x.disabled = true);
+      if(isTrue === item.correct){
+        b.classList.add('picked-right');
+      } else {
+        b.classList.add('picked-wrong');
+        [...allBtns].find(x => (x.textContent==='Vrai') === item.correct).classList.add('picked-right');
+      }
+      explainEl.style.display = 'block';
+    };
+    btns.appendChild(b);
+  });
+
+  box.appendChild(btns);
+  box.appendChild(explainEl);
+  tfContainer.appendChild(box);
+});
+
+/* ===================== QUIZ ===================== */
+const quizData = [
+  { q:"En quelle année la série a-t-elle commencé ?",
+    options:[
+      {t:"1954", ok:false},
+      {t:"1964", ok:true},
+      {t:"1974", ok:false},
+      {t:"1984", ok:false}],
+    explain:"Le premier épisode, « Seven Up ! », a été diffusé en 1964." },
+  { q:"Combien d'enfants ont participé au premier épisode ?",
+    options:[
+      {t:"7", ok:false},
+      {t:"10", ok:false},
+      {t:"14", ok:true},
+      {t:"21", ok:false}],
+    explain:"Quatorze enfants de 7 ans — dix garçons et quatre filles, issus de milieux sociaux contrastés." },
+  { q:"Comment s'écrit correctement : « … la validité de cette thèse, la série reste unique » ?",
+    options:[
+      {t:"Quelque soit", ok:false},
+      {t:"Quelle que soit", ok:true},
+      {t:"Quelles que soit", ok:false},
+      {t:"Quoiqu'il soit", ok:false}],
+    explain:"Devant un verbe (être au subjonctif), « quel » et « que » s'écrivent en deux mots et s'accordent avec le sujet (la thèse → fém. sing.). « Quelque soit » n'existe pas !" },
+  { q:"« Il a publié son témoignage … , sans rien couper » : quelle forme convient ?",
+    options:[
+      {t:"tel que", ok:false},
+      {t:"tel quel", ok:true},
+      {t:"telle quelle", ok:false},
+      {t:"tels quels", ok:false}],
+    explain:"« Tel quel » = « sans modification », accordé avec « témoignage » (masc. sing.). « Tel que » introduirait une comparaison." },
+  { q:"Quelle phrase est correcte ?",
+    options:[
+      {t:"Quoiqu'il en soit, la boucle est bouclée.", ok:false},
+      {t:"Quoi qu'il en soit, la boucle est bouclée.", ok:true},
+      {t:"Quel qu'il en soit, la boucle est bouclée.", ok:false},
+      {t:"Quoiqu'il ensoit, la boucle est bouclée.", ok:false}],
+    explain:"Locution figée en quatre mots : « quoi » + « qu'il en soit » (subjonctif) = « de toute façon »." },
+  { q:"« Quoique » peut toujours être remplacé par…",
+    options:[
+      {t:"quoi que", ok:false},
+      {t:"bien que", ok:true},
+      {t:"quelle que soit", ok:false},
+      {t:"quelque", ok:false}],
+    explain:"« Quoique » est une conjonction de concession équivalente à « bien que », suivie du subjonctif." },
+  { q:"Qui a réalisé « 70 Up », le dernier chapitre ?",
+    options:[
+      {t:"Michael Apted", ok:false},
+      {t:"Asif Kapadia", ok:true},
+      {t:"Peter Davies", ok:false},
+      {t:"Jackie Bassett", ok:false}],
+    explain:"Apted est mort en 2021 ; Asif Kapadia, documentariste oscarisé, a réalisé l'ultime volet." },
+];
+
+const quizContainer = document.getElementById('quizContainer');
+document.getElementById('quizTotal').textContent = quizData.length;
+let score = 0;
+
+quizData.forEach((item, idx) => {
+  const box = document.createElement('div');
+  box.className = 'quiz-item';
+
+  const q = document.createElement('div');
+  q.className = 'quiz-q';
+  q.textContent = (idx + 1) + '. ' + item.q;
+  box.appendChild(q);
+
+  const optsBox = document.createElement('div');
+  optsBox.className = 'quiz-opts';
+
+  const explainEl = document.createElement('div');
+  explainEl.className = 'quiz-explain';
+  explainEl.textContent = item.explain;
+
+  shuffle(item.options).forEach(opt => {
+    const optBtn = document.createElement('button');
+    optBtn.className = 'opt-btn';
+    optBtn.textContent = opt.t;
+    optBtn.onclick = () => {
+      const allBtns = optsBox.querySelectorAll('.opt-btn');
+      allBtns.forEach(b => b.disabled = true);
+      if(opt.ok){
+        optBtn.classList.add('correct');
+        score++;
+        document.getElementById('quizScore').textContent = score;
+      } else {
+        optBtn.classList.add('incorrect');
+        const correctBtn = [...optsBox.children].find(b => b.textContent === item.options.find(o => o.ok).t);
+        if(correctBtn) correctBtn.classList.add('correct');
+      }
+      explainEl.style.display = 'block';
+    };
+    optsBox.appendChild(optBtn);
+  });
+
+  box.appendChild(optsBox);
+  box.appendChild(explainEl);
+  quizContainer.appendChild(box);
+});
+</script>
+
+</body>
+</html>
