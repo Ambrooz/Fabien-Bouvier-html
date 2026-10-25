@@ -1,0 +1,318 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mission Rédaction – Écrire un fait divers (Seconde)</title>
+<style>
+  :root{
+    --encre:#1a1a2e; --rouge:#c1272d; --bleu:#0f4c81; --or:#b8860b;
+    --papier:#fffdf7; --clair:#f6f4ef; --ligne:#d9d4c7; --jeu:#eef7ee; --vert:#2e7d32;
+  }
+  *{box-sizing:border-box}
+  body{font-family:"Segoe UI", Georgia, system-ui, sans-serif; color:var(--encre); background:#fff; margin:0; font-size:10.5pt; line-height:1.45;}
+  .page{max-width:210mm; margin:0 auto; padding:7mm 10mm}
+
+  /* ---- Bandeau journal ---- */
+  .journal{
+    border:2.5px solid var(--encre); padding:10px 14px 8px; margin-bottom:10px;
+    text-align:center; background:var(--papier);
+  }
+  .journal .journal-nom{
+    font-family:Georgia,serif; font-weight:bold; font-size:24pt; letter-spacing:2px;
+    border-bottom:1px solid var(--encre); border-top:3px double var(--encre);
+    padding:4px 0; margin-bottom:4px;
+  }
+  .journal .journal-sous{font-size:8.5pt; display:flex; justify-content:space-between; font-style:italic}
+  .journal h1{font-size:13pt; margin:8px 0 2px; color:var(--rouge); text-transform:uppercase; letter-spacing:1px}
+  .journal .edition{font-size:9pt; color:#555}
+
+  h2{
+    font-size:11.5pt; background:var(--encre); color:#fff; padding:4px 10px; border-radius:3px;
+    margin:14px 0 7px; page-break-after:avoid;
+  }
+  h2 .tag{font-size:8.5pt; font-weight:normal; opacity:.8; margin-left:6px}
+  h3{font-size:10.5pt; color:var(--bleu); margin:9px 0 3px; page-break-after:avoid}
+
+  .mission{
+    border:2px solid var(--rouge); background:#fdf3f3; border-radius:6px; padding:8px 12px; margin:9px 0;
+    page-break-inside:avoid;
+  }
+  .mission .m-titre{font-weight:bold; color:var(--rouge)}
+  .astuce{
+    border-left:5px solid var(--or); background:#fdf8e7; padding:7px 12px; border-radius:4px; margin:8px 0;
+    page-break-inside:avoid; font-size:9.8pt;
+  }
+  .astuce .a-titre{font-weight:bold; color:var(--or)}
+  .jeu{
+    border:1.5px dashed var(--vert); background:var(--jeu); border-radius:6px; padding:8px 12px; margin:9px 0;
+    page-break-inside:avoid;
+  }
+  .jeu .j-titre{font-weight:bold; color:var(--vert)}
+  .def{border-left:5px solid var(--rouge); background:#fdf3f3; padding:7px 12px; border-radius:4px; margin:8px 0; page-break-inside:avoid}
+  .def b{color:var(--rouge)}
+  .encadre{border:1.5px solid var(--bleu); border-left:5px solid var(--bleu); background:var(--clair); padding:8px 12px; border-radius:4px; margin:8px 0}
+
+  table{border-collapse:collapse; width:100%; margin:7px 0; font-size:9.5pt}
+  tr{page-break-inside:avoid; break-inside:avoid}
+  h2+h3, h3+table, h3+ol, h3+p{page-break-before:avoid}
+  th,td{border:1px solid var(--ligne); padding:4px 7px; text-align:left; vertical-align:top}
+  th{background:var(--clair)}
+  ul,ol{margin:5px 0 5px 18px; padding:0}
+  li{margin:2px 0}
+  .deux{display:flex; gap:14px; flex-wrap:wrap}
+  .deux>div{flex:1 1 45%; min-width:44%}
+
+  .article-modele{
+    border:1px solid var(--ligne); padding:9px 13px; font-family:Georgia, serif; font-size:9.5pt; background:var(--papier);
+    page-break-inside:avoid; break-inside:avoid;
+  }
+  .article-modele .titre{font-weight:bold; text-transform:uppercase; font-size:10.5pt}
+  .article-modele .chapeau{font-style:italic; border-bottom:1px solid var(--ligne); padding-bottom:3px; margin-bottom:5px}
+  .annote{background:#fff3bf}
+
+  .badge{
+    display:inline-block; border:1.5px solid var(--or); border-radius:12px; padding:1px 9px;
+    font-size:8.5pt; margin:2px 3px 2px 0; background:#fdf8e7; white-space:nowrap;
+  }
+  .coche{font-size:10pt}
+
+  .mots-meles td{width:22px; height:22px; text-align:center; padding:0; font-family:monospace; font-size:11pt; border:1px solid var(--ligne)}
+
+  .lignes{border:1px solid var(--ligne); border-radius:4px; padding:9px 11px; margin-top:7px}
+  .lignes .l{border-bottom:1px dotted #999; height:25px}
+  .rep{border-bottom:1px dotted #999; height:26px; margin-left:22px}
+  .rep:first-of-type{margin-top:4px}
+
+  .foot{font-size:8pt; color:#777; border-top:1px solid var(--ligne); margin-top:14px; padding-top:4px; display:flex; justify-content:space-between}
+  .pagebreak{page-break-before:always}
+  @page{size:A4; margin:9mm}
+  @media print{
+    body{font-size:8.8pt; line-height:1.32}
+    .page{padding:0; max-width:none}
+    h2,.journal{-webkit-print-color-adjust:exact; print-color-adjust:exact}
+    h2{font-size:10.5pt; margin:9px 0 5px; padding:3px 8px}
+    h3{font-size:9.5pt; margin:7px 0 3px}
+    .journal .journal-nom{font-size:17pt; letter-spacing:1.5px}
+    .journal h1{font-size:11pt}
+    .journal .edition{font-size:8.5pt}
+    .journal{padding:6px 10px 5px}
+    .def,.astuce,.jeu,.mission,.encadre{padding:5px 9px; margin:6px 0; font-size:8.8pt}
+    .article-modele{padding:6px 10px; font-size:8.6pt; margin-top:5px !important}
+    .article-modele .titre{font-size:9.5pt}
+    table{font-size:8.6pt; margin:5px 0}
+    th,td{padding:3px 5px}
+    .lignes .l{height:22px}
+    .rep{height:22px}
+    .foot{margin-top:8px}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="journal">
+  <div class="journal-nom">LE PÉRISCOPE</div>
+  <div class="journal-sous"><span>N° spécial — Édition des élèves de Seconde</span><span>« S'informer, informer, communiquer »</span></div>
+  <h1>⚠️ Alerte à la rédaction : on vous recrute !</h1>
+  <div class="edition">Ce matin, le rédacteur en chef a une urgence : <b>un fait divers vient de se produire</b> et il n'y a personne pour écrire l'article. C'est à vous. Objectif : <b>un article de 10 lignes, objectif, sourcé, publiable</b>. D'ici là, vous devez tout apprendre du métier.</div>
+</div>
+
+<div class="encadre">
+  <b>✅ Votre mission finale :</b> rédiger <b>un article de fait divers d'une dizaine de lignes</b> — titre, chapeau, corps (5W + sources), signature — <b>sans jamais donner votre avis</b>.
+</div>
+
+<h2>1. Votre matériel de journaliste <span class="tag">→ ce que vous savez déjà (ou presque !)</span></h2>
+<div class="deux">
+  <div>
+    <div class="def"><b>Information :</b> un message fondé sur des <b>faits vérifiés</b> — pas une rumeur, pas une opinion. Texte, photo, son ou vidéo : peu importe, tant que c'est vérifié.</div>
+    <div class="def"><b>Source :</b> l'origine de l'info. <b>Primaire</b> = de première main (témoin direct, vidéo, photo, document). <b>Secondaire</b> = via intermédiaire (« mon frère m'a dit que… »). <b>Un bon journaliste ne se fie jamais à une seule source.</b></div>
+  </div>
+  <div>
+    <div class="def"><b>Objectif :</b> décrit la réalité <b>sans goût, sans préjugé, sans émotion</b> de celui qui écrit.<br>
+    <b>Subjectif :</b> exprime un point de vue personnel. En clair : le lecteur ne doit jamais deviner si vous trouvez l'histoire tragique, drôle ou scandaleuse.</div>
+    <div class="astuce"><span class="a-titre">💡 Secret de rédac n°1 :</span> être objectif, ce n'est pas avoir <i>aucune</i> opinion — c'est la <b>laisser à la porte de la rédaction</b>. Vos émotions finissent… dans la corbeille à papier. Pas dans l'article.</div>
+  </div>
+</div>
+
+<h2>2. Le fait divers : la star discrète du journal <span class="tag">→ le genre le plus lu… et le plus difficile à écrire !</span></h2>
+<div class="def">
+  <b>Fait divers :</b> événement de la vie quotidienne, sans portée générale — accident, incendie, cambriolage, sauvetage, fugue animalière… C'est un <b>récit vrai</b>, fondé sur des faits <b>vérifiés</b> et <b>attribués à des sources</b>. Petit événement, grandes exigences : précision, objectivité, et un suspense qui accroche le lecteur dès le titre.
+</div>
+
+<h3>📰 Vrai ou fake ? 4 articles soumis à votre flair de journaliste…</h3>
+<p style="font-size:9.5pt"><b>Consigne :</b> deux de ces articles sont <b>authentiques</b>, deux sont des <b>fake news</b> (mais lesquels ?). Pour chacun, notez <b>VRAI</b> ou <b>FAKE</b>, puis listez vos <b>indices</b> : la source est-elle citée et sérieuse ? l'auteur est-il identifié ? le ton est-il sensationnel ? les infos (date, lieu, chiffres) sont-elles vérifiables ?</p>
+<div class="article-modele">
+  <div class="titre">Un pigeon « espion » arrêté au Pakistan</div>
+  <div class="chapeau">Capturé près de la frontière indienne, un pigeon porteur d'un anneau gravé d'un numéro suspecté d'espionnage a été placé… en garde à vue.</div>
+  <p>En mai 2015, un pigeon s'est posé près de la frontière pakistanaise, un anneau gravé d'un numéro indien à la patte. Les villageois, persuadés qu'il s'agissait d'un « espion », l'ont remis à la police, qui a ouvert une enquête et confisqué l'oiseau. L'Inde a démenti utiliser des pigeons espions, qualifiant l'affaire de « comique ». Le volatile a été relâché quelques mois plus tard, sans charges.</p>
+  <p style="text-align:right; font-family:'Segoe UI',sans-serif; font-size:8.5pt"><i>Source : dépêche de l'agence AFP, mai 2015, reprise par la presse pakistanaise.</i></p>
+  <p style="border-top:1px dotted #999; margin-top:5px; font-family:'Segoe UI',sans-serif; font-size:9pt"><b>Mon verdict :</b> VRAI ☐ &nbsp; FAKE ☐ &nbsp; — Mes indices : <span style="display:inline-block; width:40%"></span></p>
+</div>
+<div class="article-modele" style="margin-top:6px">
+  <div class="titre">Une renne bloque le trafic ferroviaire suédois : plusieurs heures de retard</div>
+  <div class="chapeau">Un train du nord de la Suède est resté immobilisé plusieurs heures dans un tunnel, une renne refusant de quitter la voie, avant que des éleveurs ne viennent la récupérer.</div>
+  <p>Chaque hiver, les rennes des éleveurs samés descendent des montagnes : la loi leur garantit un droit de pâture, parfois au milieu des voies. Ce jour-là, l'animal s'est installé au chaud dans le tunnel, sans envie d'en bouger. Le conducteur a dû attendre l'arrivée des éleveurs, contactés par la compagnie. Aucun blessé, mais des centaines de voyageurs en retard. Selon la compagnie, ce genre d'incident se produirait plusieurs fois par an.</p>
+  <p style="text-align:right; font-family:'Segoe UI',sans-serif; font-size:8.5pt"><i>Source : communiqué de la compagnie ferroviaire suédoise (SJ), relayé par l'agence de presse TT, janvier 2019.</i></p>
+  <p style="border-top:1px dotted #999; margin-top:5px; font-family:'Segoe UI',sans-serif; font-size:9pt"><b>Mon verdict :</b> VRAI ☐ &nbsp; FAKE ☐ &nbsp; — Mes indices : <span style="display:inline-block; width:40%"></span></p>
+</div>
+<div class="article-modele" style="margin-top:6px">
+  <div class="titre">🚨 URGENT : un requin géant repéré dans la Seine — « Nagez à vos risques et périls ! »</div>
+  <div class="chapeau">Un requin-bouledogue de trois mètres aurait été vu près du pont Neuf. Les autorités cacheraient tout « pour ne pas affoler les touristes ».</div>
+  <p>Un internaute affirme avoir filmé le squale : la vidéo, partagée 50 000 fois en une nuit, montrerait une « ombre menaçante ». Aucune date, aucun témoin nommé, aucune photo nette. Un « expert » qui ne donne ni son nom ni son laboratoire affirme que « la Seine est de plus en plus dangereuse ». La préfecture a démenti : aucun requin n'a jamais été observé dans la Seine, où ces animaux ne peuvent pas survivre.</p>
+  <p style="text-align:right; font-family:'Segoe UI',sans-serif; font-size:8.5pt"><i>Source : compte anonyme « @AlertesParis77 » créé la veille ; aucun journal, aucune agence de presse n'a confirmé ; la préfecture dément.</i></p>
+  <p style="border-top:1px dotted #999; margin-top:5px; font-family:'Segoe UI',sans-serif; font-size:9pt"><b>Mon verdict :</b> VRAI ☐ &nbsp; FAKE ☐ &nbsp; — Mes indices : <span style="display:inline-block; width:40%"></span></p>
+</div>
+<div class="article-modele" style="margin-top:6px">
+  <div class="titre">EXCLUSIF : un éléphant s'échappe d'un cirque et prend le tram à Bordeaux 🐘🚋</div>
+  <div class="chapeau">L'animal aurait validé son ticket avant de s'asseoir « poliment » à l'arrière. Les voyageurs auraient applaudi.</div>
+  <p>Hier (jour inconnu), un éléphant se serait échappé d'un cirque et aurait pris la ligne B du tram à l'arrêt Pey-Berland. « Il a même validé son ticket », raconte un « témoin » anonyme. Ni le cirque, ni la compagnie des transports n'ont confirmé le moindre incident. Aucune photo nette, aucun soigneur joignable : tout repose sur un message partagé des milliers de fois sur les réseaux sociaux.</p>
+  <p style="text-align:right; font-family:'Segoe UI',sans-serif; font-size:8.5pt"><i>Source : message viral d'origine inconnue ; la compagnie des transports et le cirque contestent ; aucun média sérieux n'en a parlé.</i></p>
+  <p style="border-top:1px dotted #999; margin-top:5px; font-family:'Segoe UI',sans-serif; font-size:9pt"><b>Mon verdict :</b> VRAI ☐ &nbsp; FAKE ☐ &nbsp; — Mes indices : <span style="display:inline-block; width:40%"></span></p>
+</div>
+
+<h2>3. La recette secrète : la pyramide inversée <span class="tag">→ écrire comme un pro</span></h2>
+<p>Le journaliste n'écrit pas comme un romancier : il place <b>le plus important au début</b>. Pourquoi ? Parce que le lecteur pressé (et le rédacteur en chef !) doit tout comprendre au premier coup d'œil.</p>
+<table>
+  <tr><th style="width:20%">Élément</th><th>À quoi ça sert</th><th style="width:32%">Exemple</th></tr>
+  <tr><td><b>📣 Titre</b></td><td>Accroche et résume. Souvent au présent, jamais de jugement.</td><td><i>Incendie dans le XIXᵉ : un immeuble évacué</i></td></tr>
+  <tr><td><b>🪶 Chapeau</b></td><td>2-3 lignes en italique : l'essentiel (quoi, où, quand, bilan).</td><td><i>Un incendie s'est déclaré hier matin…</i></td></tr>
+  <tr><td><b>🧱 Corps</b></td><td>Le récit, du plus important au moins important (témoignages, circonstances, sources).</td><td>Déroulé, bilan, enquête en cours…</td></tr>
+  <tr><td><b>✒️ Signature</b></td><td>Auteur, média, date : la garantie de crédibilité. On assume ce qu'on publie !</td><td><i>Avec AFP, 17/11/2014</i></td></tr>
+</table>
+
+<h3>🕵️ Les 5 questions du détective (les « 5W ») — votre article doit y répondre toutes !</h3>
+<div class="encadre" style="text-align:center; font-size:10.5pt">
+  <b>WHO ?</b> Qui ? &nbsp;·&nbsp; <b>WHAT ?</b> Quoi ? &nbsp;·&nbsp; <b>WHERE ?</b> Où ? &nbsp;·&nbsp; <b>WHEN ?</b> Quand ? &nbsp;·&nbsp; <b>WHY / HOW ?</b> Pourquoi ? Comment ?
+</div>
+
+<h2>4. Le modèle à étudier <span class="tag">→ observez un vrai pro, puis surlignez !</span></h2>
+<div class="article-modele">
+  <div class="titre">Incendie d'un immeuble parisien : un mort, six blessés légers</div>
+  <div class="chapeau">Un incendie survenu hier matin vers 6h30 dans un immeuble du XIXᵉ arrondissement de Paris a fait un mort et six blessés légers, dont deux pompiers, a-t-on appris de source policière.</div>
+  <p>Le feu s'est déclaré <span class="annote">au 2ᵉ étage (où ?)</span> <span class="annote">hier vers 6h30 (quand ?)</span>. Une bougie allumée dans un appartement <span class="annote">serait (conditionnel = info non confirmée !)</span> à l'origine du sinistre. Les pompiers sont intervenus rapidement ; deux d'entre eux ont été légèrement blessés <span class="annote">(bilan précis)</span>. Selon la police, <span class="annote">(source citée)</span> l'enquête se poursuit pour déterminer les causes exactes.</p>
+  <p style="text-align:right"><i>Écrit par M.P. avec AFP, 17/11/2014</i></p>
+</div>
+<div class="astuce"><span class="a-titre">💡 Secret de rédac n°2 :</span> aucun « c'est scandaleux », aucun « malheureusement », aucun « heureusement ». Les faits sont <b>attribués</b> à des sources (« selon la police ») : c'est <i>elle</i> qui parle, pas vous.</div>
+
+<h2>5. Entraînement de la rédaction <span class="tag">→ jeux et missions : à vos stylos !</span></h2>
+
+<div class="jeu">
+  <span class="j-titre">🎮 JEU 1 — L'intrus : chassez le jugement !</span><br>
+  Dans chaque phrase, <b>barrez l'intrus</b> (le mot ou l'expression qui dénonce une opinion du journaliste) puis vérifiez : la phrase devient-elle objective ?
+  <ol>
+    <li>Le maire a <u>scandaleusement</u> refusé de commenter l'affaire.</li>
+    <li><u>Heureusement</u>, les pompiers sont arrivés à temps.</li>
+    <li>Le conducteur, <u>véritable irresponsable</u>, roulait à 90 km/h.</li>
+    <li><u>Hélas</u>, l'enquête n'a rien donné.</li>
+    <li>Le voleur a commis un cambriolage <u>incroyablement audacieux</u> la nuit dernière.</li>
+  </ol>
+</div>
+
+<h3>🎮 JEU 2 — Objectif ou subjectif ? <span style="font-weight:normal;font-size:9pt">(cochez la bonne colonne)</span></h3>
+<table>
+  <tr><th style="width:70%">Phrase</th><th>Objectif</th><th>Subjectif</th></tr>
+  <tr><td>1. Le match a eu lieu samedi au stade municipal.</td><td>☐</td><td>☐</td></tr>
+  <tr><td>2. C'était le meilleur film de l'année !</td><td>☐</td><td>☐</td></tr>
+  <tr><td>3. L'accident a fait trois blessés, selon la police.</td><td>☐</td><td>☐</td></tr>
+  <tr><td>4. Heureusement, personne n'était dans le bus.</td><td>☐</td><td>☐</td></tr>
+  <tr><td>5. La température a atteint 35 °C hier à Paris.</td><td>☐</td><td>☐</td></tr>
+  <tr><td>6. Ce voleur est vraiment trop bête.</td><td>☐</td><td>☐</td></tr>
+  <tr><td>7. La voisine affirme avoir entendu un bruit « vers 22 h ».</td><td>☐</td><td>☐</td></tr>
+  <tr><td>8. Quelle soirée magnifique !</td><td>☐</td><td>☐</td></tr>
+</table>
+
+<h3>🎮 JEU 3 — Le grand tri des adverbes</h3>
+<p><b>a)</b> Triez chaque adverbe dans le bon bac : <i>certainement, probablement, malheureusement, heureusement, peut-être, hélas, apparemment, scandaleusement, vraisemblablement, étonnamment, sans doute, étrangement</i>.</p>
+<table>
+  <tr><th style="width:33%">🕵️ Prudence<br><span style="font-weight:normal;font-size:8.5pt">(accepté dans un article : l'info n'est pas certaine)</span></th><th style="width:33%">✔️ Certitude</th><th>🚫 Jugement / émotion<br><span style="font-weight:normal;font-size:8.5pt">(à bannir de vos articles !)</span></th></tr>
+  <tr><td style="height:52px"></td><td></td><td></td></tr>
+  <tr><td style="height:52px"></td><td></td><td></td></tr>
+</table>
+<p><b>b) Opération sauvetage :</b> réécrivez chaque phrase pour la rendre <b>publiable</b> (supprimez ou remplacez l'adverbe de jugement — vous pouvez utiliser un introducteur : <i>selon, d'après</i>…) :</p>
+<ol>
+  <li>Le maire a scandaleusement refusé de commenter l'affaire. →</li>
+  <div class="rep"></div>
+  <li>Heureusement, les pompiers sont arrivés à temps. →</li>
+  <div class="rep"></div>
+  <li>Étrangement, la porte était ouverte. →</li>
+  <div class="rep"></div>
+</ol>
+<div class="astuce"><span class="a-titre">💡 Secret de rédac n°3 :</span> l'adverbe de prudence est votre meilleur ami : « vraisemblablement », « apparemment » signalent <b>au lecteur</b> que l'information n'est pas confirmée. Honnêteté totale ! L'adverbe d'émotion (« hélas », « heureusement »), lui, raconte <b>votre</b> cœur. Corbeille.</div>
+
+<h3>🎮 JEU 4 — Le conditionnel : le temps de la prudence</h3>
+<p><b>a)</b> Conjuguez au <b>conditionnel</b>, puis soulignez l'indice dans la phrase qui justifie ce choix :</p>
+<ol>
+  <li>Le blessé ……………………………… (sortir) de l'hôpital d'ici à la fin de la semaine, selon le personnel soignant.</li>
+  <li>Une cigarette mal éteinte ……………………………… (être) à l'origine du feu, mais l'enquête se poursuit.</li>
+  <li>Le suspect ……………………………… (avoir) un complice : « rien n'est exclu », affirme le procureur.</li>
+</ol>
+<p><b>b) Info ou rumeur ?</b> Marquez <b>✔ = fait confirmé</b> ou <b>? = hypothèse</b> :</p>
+<ol>
+  <li>La police a confirmé que le conducteur était ivre. …</li>
+  <li>Le voisin affirme que l'alarme n'a jamais fonctionné. …</li>
+  <li>Le conducteur aurait pris la fuite à pied. …</li>
+  <li>On raconte que le chat du voisin aurait tout vu. …</li>
+</ol>
+
+<h3>🎮 JEU 5 — Le trou dans le récit</h3>
+<p>Complétez avec <b>passé composé</b> (les faits) ou <b>imparfait</b> (les circonstances) — le piège : « ses jours ne sont pas en danger » reste au présent !</p>
+<div class="article-modele" style="border:1px solid var(--ligne); border-radius:4px">
+Hier soir, vers 22 h, un automobiliste ……………………………… (perdre) le contrôle de son véhicule. Il ……………………………… (rouler) trop vite et la chaussée ……………………………… (être) mouillée. La voiture ……………………………… (quitter) la route et ……………………………… (finir) sa course dans un fossé. Un promeneur, qui ……………………………… (promener) son chien, ……………………………… (alerter) les secours. Le conducteur ……………………………… (être) transporté à l'hôpital ; ses jours ne ……………………………… (être) pas en danger, selon le SAMU.
+</div>
+<div class="astuce"><span class="a-titre">💡 Secret de rédac n°4 :</span> <b>passé composé</b> = ce qui s'est passé (l'événement). <b>Imparfait</b> = le décor, les circonstances (la pluie, la nuit…). <b>Présent</b> = ce qui est vrai maintenant (l'enquête, l'état de la victime).</div>
+
+<h3>🎮 JEU 6 — Titre à la une !</h3>
+<p>Entourez le meilleur titre (objectif, précis, accrocheur) et <b>barrez les autres en expliquant pourquoi</b> :</p>
+<table>
+  <tr><th style="width:55%">Fait divers</th><th>Titres candidats</th></tr>
+  <tr><td rowspan="3">Un chien tombé dans un canal est sauvé par deux jeunes, lundi à Nantes.</td><td>A. Nantes : un chien sauvé d'un canal par deux jeunes</td></tr>
+  <tr><td>B. Encore un accident évité de justesse !</td></tr>
+  <tr><td>C. Deux héros sauvent un pauvre animal</td></tr>
+  <tr><td rowspan="3">Un radar relève 2 000 excès de vitesse en une semaine devant le lycée.</td><td>A. Les lycéens conduisent n'importe comment</td></tr>
+  <tr><td>B. 2 000 excès de vitesse relevés devant le lycée en une semaine</td></tr>
+  <tr><td>C. Un radar… et ça fait tout le reste</td></tr>
+</table>
+
+<h2>6. ✍️ Mission finale : votre article de 10 lignes <span class="tag">→ la une du Périscope vous attend</span></h2>
+<div class="mission">
+  <span class="m-titre">🎯 SUJET — le carnet de notes du reporter (les infos sont en vrac : à vous de les trier !) :</span>
+  <div class="encadre" style="margin:6px 0">
+  • samedi dernier, vers 14 h &nbsp; • un chiot beagle de 4 mois tombe dans un regard ouvert, place du Marché<br>
+  • Léo, 15 ans, lycéen, le sort en quelques minutes &nbsp; • des commerçants préviennent les pompiers, deux pompiers volontaires arrivent<br>
+  • « il allait bien » (selon les pompiers) &nbsp; • le chiot rendu à sa propriétaire, aucun blessé<br>
+  • une passante filme la scène : vidéo vue plus de 300 000 fois sur TikTok<br>
+  <b>⚠️ Rumeur entendue sur les réseaux :</b> « Léo aurait organisé le sauvetage pour faire le buzz » (comptes anonymes, jamais confirmée). À vous de décider : l'écarter, ou la traiter prudemment (conditionnel + source !)
+  </div>
+  <b>Étape 1 :</b> remplissez d'abord le tableau du briefing ci-dessous (rangez chaque info à sa place, trouvez le « comment/pourquoi »).<br>
+  <b>Étape 2 :</b> rédigez l'article : <b>titre + chapeau + corps (10 lignes : les 5W, vos sources, un conditionnel bien placé) + signature</b>. Règle d'or : si votre lecteur peut deviner <i>votre humeur</i>, c'est perdu ! Quand c'est fini, échangez avec un(e) camarade : chacun relit l'article de l'autre et laisse <b>une force + une piste d'amélioration</b> en marge.
+</div>
+
+<h3>🕵️ D'abord, mon briefing (plan de bataille à remplir avant d'écrire)</h3>
+<table>
+  <tr><th style="width:35%">Question du détective</th><th>Mes réponses (notes rapides)</th></tr>
+  <tr><td><b>🕵️ Qui ?</b> (personnes, âge, rôle)</td><td style="height:24px"></td></tr>
+  <tr><td><b>🕵️ Quoi ?</b> (le fait, le bilan)</td><td style="height:24px"></td></tr>
+  <tr><td><b>🕵️ Où ?</b> (ville, quartier, lieu précis)</td><td style="height:24px"></td></tr>
+  <tr><td><b>🕵️ Quand ?</b> (jour, heure)</td><td style="height:24px"></td></tr>
+  <tr><td><b>🕵️ Comment ? Pourquoi ?</b></td><td style="height:24px"></td></tr>
+  <tr><td><b>🔍 Mes sources</b> (qui affirme quoi ?)</td><td style="height:24px"></td></tr>
+  <tr><td><b>📰 Mon titre provisoire</b></td><td style="height:24px"></td></tr>
+</table>
+
+<h3>✒️ Puis, mon article</h3>
+<div class="lignes">
+  <div style="font-weight:bold; border-bottom:1px solid #999; height:24px"></div>
+  <div class="l"></div><div class="l"></div><div class="l"></div><div class="l"></div>
+  <div class="l"></div><div class="l"></div><div class="l"></div><div class="l"></div>
+  <div class="l"></div><div class="l"></div><div class="l"></div><div class="l"></div>
+</div>
+
+<div class="foot">
+  <span>Séquence « S'informer, informer, communiquer » — Séance d'écriture</span>
+  <span>Seconde — Français · Le Périscope, édition spéciale</span>
+</div>
+
+</div>
+</body>
+</html>
