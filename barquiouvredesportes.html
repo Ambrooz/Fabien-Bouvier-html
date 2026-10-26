@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Cours B4 – Léa change de stratégie | Le bar qui ouvre les portes</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF5;--ink:#1C1917;--muted:#6B6159;
+  --coral:#D85A30;--coral-l:#FAECE7;--coral-m:#F0997B;--coral-d:#993C1D;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;--teal-d:#085041;
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;--amber-d:#854F0B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:2rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#BA7517 0%,#1C1917 55%,#D85A30 100%);color:white;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(239,159,39,0.18);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-70px;left:30px;width:160px;height:160px;border-radius:50%;background:rgba(240,153,123,0.12);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#FAC775;text-transform:uppercase;margin-bottom:0.5rem}
+.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.1rem;line-height:1.2;margin-bottom:0.6rem}
+.hero h1 em{color:#FAC775;font-style:italic}
+.hero-sub{font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.25rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:40px;padding:5px 14px;font-size:0.78rem;color:rgba(255,255,255,0.85)}
+
+/* LAYOUT */
+.wrap{padding:1.5rem 1.75rem;max-width:760px;margin:0 auto}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;gap:10px;margin:2.5rem 0 1.1rem;padding-top:1.5rem;border-top:0.5px solid rgba(0,0,0,0.08)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;flex-shrink:0}
+.sec-head h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.35rem;font-weight:400}
+
+/* TEXTE */
+.text-story{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;line-height:1.8;font-size:0.95rem;position:relative;overflow:hidden}
+.text-story::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--amber),var(--coral))}
+.text-story strong{color:var(--coral-d)}
+.text-story em{color:var(--amber-d);font-style:italic}
+.text-story .sv{background:var(--amber-l);border-radius:4px;padding:0 3px;font-weight:500}
+.text-story .pol{background:var(--teal-l);border-radius:4px;padding:0 3px;font-weight:500}
+.text-story .link{background:var(--purple-l);border-radius:4px;padding:0 3px;font-weight:500}
+.text-story .imp{background:var(--coral-l);border-radius:4px;padding:0 3px;font-weight:500}
+
+/* VOCAB */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:1rem}
+.vocab-card{background:white;border-radius:12px;border:0.5px solid rgba(0,0,0,0.08);padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06);border-color:var(--amber-m)}
+.vocab-card .vocab-en{opacity:0;transition:opacity 0.25s;font-size:0.82rem;color:var(--muted);text-align:right}
+.vocab-card.revealed .vocab-en{opacity:1}
+.vocab-card::after{content:'👆';position:absolute;bottom:4px;right:8px;font-size:0.7rem;opacity:0.3}
+.vocab-card.revealed::after{content:'✓';color:var(--amber-d);opacity:0.7}
+.vocab-fr{font-weight:500;font-size:0.9rem}
+
+/* FORMULES */
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:1rem}
+.formula-card{border-radius:14px;padding:1rem 1.125rem;border:0.5px solid transparent}
+.fc-coral{background:var(--coral-l);border-color:var(--coral-m)}.fc-coral strong{color:var(--coral-d)}
+.fc-teal{background:var(--teal-l);border-color:var(--teal-m)}.fc-teal strong{color:var(--teal-d)}
+.fc-purple{background:var(--purple-l);border-color:var(--purple-m)}.fc-purple strong{color:var(--purple-d)}
+.fc-amber{background:var(--amber-l);border-color:var(--amber-m)}.fc-amber strong{color:var(--amber-d)}
+.fc-blue{background:var(--blue-l);border-color:var(--blue-m)}.fc-blue strong{color:var(--blue)}
+.fc-green{background:var(--green-l);border-color:var(--green-m)}.fc-green strong{color:var(--green)}
+.formula-card strong{font-size:0.95rem;display:block;margin-bottom:4px}
+.formula-ex{font-size:0.82rem;margin-top:8px;font-style:italic;opacity:0.85}
+
+/* RÈGLES / TABLEAUX */
+.adj-rule{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.adj-rule p{font-size:0.9rem;color:var(--muted);margin-bottom:1rem;line-height:1.6}
+.adj-rule p strong{color:var(--ink)}
+.adj-table{width:100%;border-collapse:collapse;font-size:0.87rem}
+.adj-table th{background:var(--amber-l);color:var(--amber-d);font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid var(--amber-m)}
+.adj-table td{padding:10px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.adj-table tr:last-child td{border-bottom:none}
+.adj-table td strong{color:var(--amber-d)}
+.badge-sv{background:var(--amber-l);color:var(--amber-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-pol{background:var(--teal-l);color:var(--teal-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-imp{background:var(--coral-l);color:var(--coral-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.adj-examples{background:var(--amber-l);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem;font-size:0.88rem;line-height:2.1}
+.adj-examples strong{color:var(--amber-d)}
+
+/* TEST DE VOCABULAIRE */
+.vocab-test{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.4rem 1.5rem;margin-top:1rem}
+.vocab-test-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1rem}
+.vocab-test-head h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.15rem;font-weight:400;color:var(--amber-d)}
+.vocab-test-hint{font-size:0.78rem;color:var(--muted);background:var(--amber-l);padding:5px 12px;border-radius:20px;border:0.5px solid var(--amber-m)}
+.vocab-test-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:580px){.vocab-test-grid{grid-template-columns:1fr}}
+.vocab-test-row{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:12px;padding:10px 14px;border:0.5px solid rgba(0,0,0,0.06)}
+.vocab-test-en{font-size:0.85rem;color:var(--muted);flex:1;font-weight:500}
+.vocab-test-arrow{color:var(--amber-m);font-size:0.9rem}
+.vocab-test-fr{font-size:0.9rem;font-weight:600;color:var(--amber-d);cursor:pointer;padding:4px 10px;border-radius:20px;background:white;border:1px dashed var(--amber-m);transition:all 0.25s;flex:1;text-align:center;user-select:none}
+.vocab-test-fr.blurred{filter:blur(6px);color:var(--amber);background:var(--amber-l);border-style:solid}
+.vocab-test-fr.blurred:hover{filter:blur(4px);background:#f7e5c2}
+.vocab-test-fr.revealed{filter:blur(0);background:var(--teal-l);color:var(--teal-d);border-color:var(--teal-m);border-style:solid;animation:popIn 0.35s}
+.vocab-test-counter{font-size:0.78rem;color:var(--muted);text-align:right;margin-top:0.75rem}
+
+/* BARRE DE PROGRESSION */
+.progress-bar{position:sticky;top:0;z-index:50;background:rgba(255,251,245,0.95);backdrop-filter:blur(8px);padding:0.75rem 1.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:10px;background:rgba(0,0,0,0.07);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--amber),var(--coral),var(--purple));border-radius:20px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-score{font-size:0.82rem;font-weight:700;color:var(--amber-d);min-width:70px;text-align:right}
+.progress-emoji{font-size:1.2rem;transition:transform 0.3s}
+.progress-emoji.pop{transform:scale(1.5) rotate(10deg)}
+
+/* EXERCICES */
+.exercise-wrap{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);overflow:hidden;margin-top:1rem}
+.ex-head{padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ex-head-1{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.ex-head-2{background:linear-gradient(90deg,var(--teal-d),var(--teal))}
+.ex-head-3{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.ex-head-4{background:linear-gradient(90deg,var(--coral-d),var(--coral))}
+.ex-head-5{background:linear-gradient(90deg,var(--green),#5a9e1f)}
+.ex-head p{color:rgba(255,255,255,0.9);font-size:0.83rem;margin:0}
+.ex-head strong{color:#FAC775}
+.ex-badge{background:rgba(255,255,255,0.15);color:white;font-size:0.75rem;padding:3px 12px;border-radius:20px;font-weight:600}
+
+.q-list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+.q-item{border:0.5px solid rgba(0,0,0,0.07);border-radius:12px;padding:1rem 1.1rem;background:var(--cream);transition:all 0.3s;position:relative;overflow:hidden}
+.q-item.solved{background:linear-gradient(135deg,var(--amber-l),#fdf6e7);border-color:var(--amber-m)}
+.q-item.shake{animation:shake 0.4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-num{font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+.q-text{font-size:0.92rem;margin-bottom:0.5rem;line-height:1.55}
+.q-text strong{color:var(--amber-d)}
+.q-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.q-input{padding:8px 16px;font-size:0.9rem;border:1.5px solid rgba(0,0,0,0.15);border-radius:40px;font-family:'DM Sans',system-ui,sans-serif;background:white;color:var(--ink);width:210px;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.q-input-1:focus{border-color:var(--amber);box-shadow:0 0 0 3px rgba(186,117,23,0.15)}
+.q-btn{color:white;border:none;padding:8px 20px;border-radius:40px;font-family:'DM Sans',system-ui,sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s,transform 0.1s}
+.q-btn-1{background:var(--amber)}.q-btn-1:hover{background:var(--amber-d);transform:scale(0.97)}
+.q-btn-2{background:var(--teal)}.q-btn-2:hover{background:var(--teal-d);transform:scale(0.97)}
+.q-fb{margin-top:8px;font-size:0.83rem;min-height:1.4rem}
+.ok{background:var(--amber-l);color:var(--amber-d);padding:5px 14px;border-radius:20px;display:inline-block;font-weight:500;animation:popIn 0.3s}
+.nope{background:var(--coral-l);color:var(--coral-d);padding:5px 14px;border-radius:20px;display:inline-block;animation:popIn 0.3s}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* CHOIX MULTIPLES */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem}
+@media(max-width:520px){.choice-grid{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid rgba(0,0,0,0.1);border-radius:14px;padding:12px 14px;text-align:left;font-family:'DM Sans',system-ui,sans-serif;font-size:0.88rem;cursor:pointer;transition:all 0.18s;color:var(--ink);position:relative;overflow:hidden}
+.choice-btn:hover{border-color:var(--amber-m);transform:translateY(-2px);box-shadow:0 4px 12px rgba(186,117,23,0.1)}
+.choice-btn.selected{border-color:var(--amber);background:var(--amber-l);font-weight:500}
+.choice-btn.correct{border-color:var(--amber);background:var(--amber-l);color:var(--amber-d);font-weight:600;animation:popIn 0.3s}
+.choice-btn.correct::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--amber);font-weight:700;font-size:1.1rem}
+.choice-btn.wrong{border-color:var(--coral-m);background:var(--coral-l);color:var(--coral-d);animation:shake 0.4s}
+.choice-btn.wrong::after{content:'✗';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--coral);font-weight:700;font-size:1.1rem}
+.choice-btn:disabled{cursor:default;opacity:0.9}
+
+/* TRI */
+.sort-zone{display:flex;flex-wrap:wrap;gap:10px;margin:0.75rem 0;min-height:52px;padding:10px;background:var(--cream);border-radius:12px;border:2px dashed rgba(0,0,0,0.1)}
+.sort-zone.over{border-color:var(--amber);background:var(--amber-l)}
+.sort-chip{background:white;border:1.5px solid rgba(0,0,0,0.12);border-radius:40px;padding:7px 16px;font-size:0.85rem;cursor:grab;transition:all 0.15s;user-select:none;font-family:'DM Sans',system-ui,sans-serif}
+.sort-chip:hover{border-color:var(--amber-m);transform:translateY(-2px);box-shadow:0 3px 8px rgba(0,0,0,0.08)}
+.sort-chip.dragging{opacity:0.4;cursor:grabbing}
+.sort-chip.placed{cursor:default;background:var(--amber-l);border-color:var(--amber-m);color:var(--amber-d);font-weight:500}
+.sort-chip.placed::before{content:'✓ ';color:var(--amber)}
+.sort-zone.correct-zone{border-color:var(--amber);background:var(--amber-l)}
+.sort-zone.wrong-zone{border-color:var(--coral-m);background:var(--coral-l)}
+.sort-label{font-size:0.85rem;font-weight:600;color:var(--muted);margin-top:0.5rem}
+
+/* MATCHING */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.match-cols{grid-template-columns:1fr}}
+.match-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.5rem}
+.match-item{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.87rem;cursor:pointer;transition:all 0.18s;margin-bottom:8px}
+.match-item:hover{border-color:var(--amber-m)}
+.match-item.active{border-color:var(--amber);background:var(--amber-l);box-shadow:0 0 0 3px rgba(186,117,23,0.15)}
+.match-item.matched{background:var(--amber-l);border-color:var(--amber-m);color:var(--amber-d);cursor:default;opacity:0.85}
+.match-item.matched::after{content:' ✓';color:var(--amber);font-weight:700}
+.match-item.wrong-pair{animation:shake 0.4s}
+
+/* CONFETTIS */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0.9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* MEMO */
+.memo{background:var(--ink);color:white;border-radius:16px;padding:1.5rem;margin-top:2rem}
+.memo h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;font-weight:400;color:#FAC775;margin-bottom:1rem}
+.memo-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.memo-col h4{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.memo-row{font-size:0.84rem;color:rgba(255,255,255,0.8);margin-bottom:6px;line-height:1.5}
+.memo-row strong{color:#FAC775}
+.memo-row em{color:#AFA9EC;font-style:italic}
+
+/* RESET + FOOTER */
+.reset-bar{display:flex;justify-content:flex-end;padding:0.75rem 1.75rem 0}
+.reset-btn{background:white;border:0.5px solid rgba(0,0,0,0.15);padding:8px 20px;border-radius:40px;cursor:pointer;font-family:'DM Sans',system-ui,sans-serif;font-size:0.83rem;color:var(--muted);transition:background 0.15s}
+.reset-btn:hover{background:#f1f0eb}
+footer{text-align:center;font-size:0.78rem;color:var(--muted);padding:1.5rem 1.75rem;border-top:0.5px solid rgba(0,0,0,0.07);line-height:1.7;margin-top:2rem}
+
+@media(max-width:580px){
+  .hero h1{font-size:1.55rem}
+  .memo-cols{grid-template-columns:1fr}
+  .wrap{padding:1rem 1.1rem}
+  .progress-bar{padding:0.6rem 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Cours personnalisé · Léa · Partie 4</div>
+  <h1>Changer de stratégie<br><em>le bar qui ouvre les portes</em></h1>
+  <div class="hero-sub">Niveau B2 — expressions du service · politesse · se présenter et créer des liens</div>
+  <div class="pills">
+    <span class="pill">expressions de serveuse</span>
+    <span class="pill">conditionnel de politesse</span>
+    <span class="pill">créer son réseau · networking</span>
+    <span class="pill">se présenter en 30 secondes</span>
+  </div>
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar">
+  <span class="progress-emoji" id="progressEmoji">🎯</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-score" id="progressScore">0 / 31</span>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. TEXTE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">1</div>
+    <h2>Texte : une stratégie inattendue</h2>
+  </div>
+  <div class="text-story">
+    <strong>Trois semaines après la présentation ratée…</strong> L'investisseur n'a pas suivi. Menta n'a pas obtenu son financement, et l'équipe a dû se séparer. <em>Léa se retrouve sans emploi, à Montréal, avec un loyer à payer.</em>
+    <br><br>
+    <span class="link">Plutôt que d'envoyer encore des candidatures invisibles</span>, Léa change de stratégie. Elle a remarqué un café-bar du quartier, « Le Comptoir », où se retrouvent chaque soir des fondateurs de start-up, des graphistes et des développeurs. Elle <span class="imp">se dit</span> : « Si je travaille là-bas, je <span class="imp">rencontrerai</span> naturellement tout l'écosystème. Personne n'ignore la serveuse qui écoute. » Le lendemain, elle <span class="link">frappe à la porte</span> et demande à parler au patron. « Je <span class="pol">voudrais</span> travailler ici le soir. Je suis rapide, souriante, et je parle trois langues. » Le patron sourit : « Vous <span class="pol">pourriez</span> commencer jeudi ? »
+    <br><br>
+    Jeudi soir, première heure de service. Léa apprend le métier : « <span class="sv">Je vous amène la carte tout de suite !</span> », « <span class="sv">Vous avez choisi ?</span> », « <span class="sv">Je vous fais un café ?</span> » Quand un client hésite, elle conseille <span class="pol">gentiment</span> : « Je <span class="pol">vous recommande</span> la tarte du jour, elle est délicieuse. » Un client réclame l'addition : « <span class="sv">Bien sûr, je vous l'apporte dans une minute !</span> » Une dame demande où sont les toilettes : « <span class="sv">Elles sont au fond, à droite, <span class="sv">je vous y accompagne si vous voulez</span>. »
+    <br><br>
+    Mais le soir, Le Comptoir devient le QG des start-uppers. Un habitué, Karim, s'assoit au comptoir. Léa le sert, <span class="pol">puis engage la conversation</span> : « Alors, vous travaillez sur quoi en ce moment ? » Karim parle de son application de nutrition. Léa écoute, pose des questions, <span class="link">sans jamais imposer sa propre histoire</span>. Au moment de l'addition, elle dit simplement : « Si un jour vous <span class="imp">cherchez</span> quelqu'un pour le développement produit, je <span class="imp">serais</span> ravie d'en discuter. Voilà ma carte. » <em>Pas de discours, pas de désespoir : une phrase courte et souriante.</em>
+    <br><br>
+    En trois semaines, Léa a <span class="link">tissé un vrai réseau</span> : elle connaît douze personnes de l'écosystème, elle a <span class="link">rendu service</span> à plusieurs d'entre elles (elle a présenté un graphiste à un fondateur), et deux entretiens informels sont prévus. Karim lui a même proposé de la <span class="link">recommander</span> auprès d'une start-up qui cherche une cheffe produit.
+    <br><br>
+    <em>« Les offres d'emploi ne se trouvent pas seulement sur Internet, écrit-elle dans son journal. Elles se trouvent au bout d'un comptoir, entre deux cafés. Mon plan B n'était pas une marche arrière — c'était un détour plus rapide. »</em>
+  </div>
+
+  <!-- 2. VOCABULAIRE INTERACTIF -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">2</div>
+    <h2>Vocabulaire du bar & du networking <span style="font-size:0.7rem;color:var(--muted);font-family:'DM Sans'">(cliquez pour révéler)</span></h2>
+  </div>
+  <div class="vocab-grid" id="vocabGrid">
+    <div class="vocab-card"><span class="vocab-fr">le comptoir</span><span class="vocab-en">the counter / bar</span></div>
+    <div class="vocab-card"><span class="vocab-fr">la carte / le menu</span><span class="vocab-en">the menu</span></div>
+    <div class="vocab-card"><span class="vocab-fr">une commande / prendre la commande</span><span class="vocab-en">an order / to take the order</span></div>
+    <div class="vocab-card"><span class="vocab-fr">l'addition</span><span class="vocab-en">the bill</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un pourboire</span><span class="vocab-en">a tip</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un habitué</span><span class="vocab-en">a regular customer</span></div>
+    <div class="vocab-card"><span class="vocab-fr">servir / se faire servir</span><span class="vocab-en">to serve / to be served</span></div>
+    <div class="vocab-card"><span class="vocab-fr">recommander un plat</span><span class="vocab-en">to recommend a dish</span></div>
+    <div class="vocab-card"><span class="vocab-fr">tisser un réseau</span><span class="vocab-en">to build a network</span></div>
+    <div class="vocab-card"><span class="vocab-fr">frapper à la porte</span><span class="vocab-en">to knock on the door</span></div>
+    <div class="vocab-card"><span class="vocab-fr">engager la conversation</span><span class="vocab-en">to start a conversation</span></div>
+    <div class="vocab-card"><span class="vocab-fr">rendre service (à quelqu'un)</span><span class="vocab-en">to do someone a favour</span></div>
+    <div class="vocab-card"><span class="vocab-fr">recommander quelqu'un</span><span class="vocab-en">to recommend / refer someone</span></div>
+    <div class="vocab-card"><span class="vocab-fr">un détour / une marche arrière</span><span class="vocab-en">a detour / a step backwards</span></div>
+  </div>
+
+  <!-- 3. STRUCTURES CLÉS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">3</div>
+    <h2>Structures clés</h2>
+  </div>
+  <div class="formula-grid">
+    <div class="formula-card fc-amber"><strong>je vous + verbe</strong> → réflexe de serveuse<div class="formula-ex">📌 Je vous amène la carte. Je vous l'apporte.</div></div>
+    <div class="formula-card fc-teal"><strong>conditionnel de politesse</strong><div class="formula-ex">📌 Je voudrais… / Vous pourriez… / Je vous recommande…</div></div>
+    <div class="formula-card fc-purple"><strong>si + présent → futur</strong> → plan B<div class="formula-ex">📌 Si un jour vous cherchez, je serais ravie d'en discuter.</div></div>
+    <div class="formula-card fc-coral"><strong>pronoms : je vous <em>le</em> / <em>la</em> / <em>les</em> / <em>l'</em> en</strong><div class="formula-ex">📌 Je vous l'apporte. Je vous y accompagne.</div></div>
+    <div class="formula-card fc-blue"><strong>question poli inversée</strong><div class="formula-ex">📌 Vous avez choisi ? / Je vous fais un café ?</div></div>
+    <div class="formula-card fc-green"><strong>se présenter en 30 secondes</strong><div class="formula-ex">📌 Qui je suis + ce que je fais + ce que je cherche.</div></div>
+  </div>
+
+  <!-- 4. RÈGLE ILLUSTRÉE — EXPRESSIONS DU SERVICE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">4</div>
+    <h2>Les expressions typiques du service</h2>
+  </div>
+  <div class="adj-rule">
+    <p>En France, le service a ses <strong>formules toutes faites</strong> : on les apprend par cœur ! Notez le fameux « <strong>je vous…</strong> » qui revient dans presque toutes les phrases de serveur·se.</p>
+    <table class="adj-table">
+      <thead>
+        <tr><th>Moment</th><th>Le serveur / la serveuse dit…</th><th>Sens</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="badge-sv">accueil</span></td><td><strong>Je vous amène la carte tout de suite !</strong></td><td>arrivée du client</td></tr>
+        <tr><td><span class="badge-sv">commande</span></td><td><strong>Vous avez choisi ? / Je vous écoute !</strong></td><td>prêt à prendre la commande</td></tr>
+        <tr><td><span class="badge-sv">conseil</span></td><td><strong>Je vous recommande la tarte du jour.</strong></td><td>suggestion polie</td></tr>
+        <tr><td><span class="badge-sv">service</span></td><td><strong>Je vous l'apporte dans une minute !</strong></td><td>avec pronoms (l' = le plat)</td></tr>
+        <tr><td><span class="badge-sv">addition</span></td><td><strong>Je vous apporte l'addition ? / Voilà, monsieur.</strong></td><td>fin du repas</td></tr>
+        <tr><td><span class="badge-pol">politesse</span></td><td><strong>Bon appétit ! / Bonne journée ! / Au revoir !</strong></td><td>formules de fin</td></tr>
+      </tbody>
+    </table>
+    <div class="adj-examples">
+      <strong>La politesse du client :</strong><br>
+      « <em>Est-ce que je pourrais avoir…</em> » (très poli) · « <em>Je voudrais…</em> » · « <em>Je vais prendre…</em> » · « <em>L'addition, s'il vous plaît !</em> »<br>
+      <strong>Attention :</strong> « Je veux… » est <strong>trop direct</strong> au restaurant — préférez « je voudrais… ».
+    </div>
+  </div>
+
+  <!-- 4 bis. RÈGLE — POLITESSE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">4★</div>
+    <h2>La politesse : degrés et conditionnel</h2>
+  </div>
+  <div class="adj-rule">
+    <p>Plus on veut être poli·e, plus on « allonge » la phrase : <strong>conditionnel</strong> &gt; présent &gt; impératif. Le conditionnel adoucit tout.</p>
+    <table class="adj-table">
+      <thead>
+        <tr><th>Niveau</th><th>Exemple</th><th>À utiliser quand…</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="badge-imp">familier</span></td><td><strong>Donne-moi un café.</strong></td><td>amis proches seulement</td></tr>
+        <tr><td><span class="badge-sv">neutre</span></td><td><strong>Je vais prendre un café.</strong></td><td>commande courante</td></tr>
+        <tr><td><span class="badge-pol">poli</span></td><td><strong>Je voudrais un café.</strong></td><td>restaurant, inconnus</td></tr>
+        <tr><td><span class="badge-pol">très poli</span></td><td><strong>Est-ce que je pourrais avoir un café ?</strong></td><td>situation formelle</td></tr>
+      </tbody>
+    </table>
+    <div class="adj-examples">
+      <strong>Côté serveur·se :</strong> « Vous <em>pourriez</em> commencer jeudi ? » (poli) · « Je <em>vous en</em> apporte une autre ? » (en = de la tarte)
+    </div>
+  </div>
+
+  <!-- 4 ter. TEST DE VOCABULAIRE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">4★★</div>
+    <h2>Test de vocabulaire · trouve le mot français</h2>
+  </div>
+  <div class="vocab-test">
+    <div class="vocab-test-head">
+      <h3>🇬🇧 → 🇫🇷 Clique sur le mot flouté pour le révéler</h3>
+      <span class="vocab-test-hint">💡 Devine avant de cliquer !</span>
+    </div>
+    <div class="vocab-test-grid" id="vocabTestGrid"></div>
+    <div class="vocab-test-counter" id="vocabTestCounter">0 / 14 mots révélés</div>
+  </div>
+
+  <!-- 5. EXERCICE 1 — QCM SITUATIONS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">5</div>
+    <h2>Exercice 1 — que dit la serveuse ? (QCM)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Choisissez la phrase de service qui convient à la situation.</p>
+      <span class="ex-badge" id="badge1">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist1"></div>
+  </div>
+
+  <!-- 6. EXERCICE 2 — POLITESSE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">6</div>
+    <h2>Exercice 2 — réécrivez poliment</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Transformez la phrase trop directe en phrase polie (conditionnel).</p>
+      <span class="ex-badge" id="badge2">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist2"></div>
+  </div>
+
+  <!-- 7. EXERCICE 3 — COMPLÉTER AVEC PRONOMS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">7</div>
+    <h2>Exercice 3 — complétez avec le bon pronom</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-3">
+      <p>Complétez avec <strong>le / la / l' / les / en / y</strong>.</p>
+      <span class="ex-badge" id="badge3">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist3"></div>
+  </div>
+
+  <!-- 8. EXERCICE 4 — RELIER SITUATION ↔ PHRASE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">8</div>
+    <h2>Exercice 4 — relie la situation et la phrase</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-4">
+      <p>Cliquez sur une <strong>situation</strong> puis sur la <strong>phrase</strong> correspondante.</p>
+      <span class="ex-badge" id="badge4">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist4"></div>
+  </div>
+
+  <!-- 9. EXERCICE 5 — TRI FORMEL / FAMILIER -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green)">9</div>
+    <h2>Exercice 5 — formel, poli ou familier ?</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-5">
+      <p>Glisse chaque phrase dans la bonne catégorie.</p>
+      <span class="ex-badge" id="badge5">0 / 9</span>
+    </div>
+    <div class="q-list" id="qlist5"></div>
+  </div>
+
+  <!-- 10. EXERCICE 6 — PRODUCTION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">10</div>
+    <h2>Exercice 6 — à toi de jouer !</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head" style="background:linear-gradient(90deg,var(--purple-d),var(--purple))">
+      <p>Mise en situation : le bar « Le Comptoir » et le networking.</p>
+    </div>
+    <div class="q-list">
+      <div class="q-item" style="background:var(--purple-l);border-color:var(--purple-m)">
+        <div class="q-text" style="color:var(--purple-d)">
+          <strong>🎤 À l'oral ou à l'écrit :</strong>
+          <ol style="margin-top:0.6rem;padding-left:1.3rem;line-height:2">
+            <li>Jeu de rôle : tu es serveur·se. Un client entre, s'assoit, hésite, commande et demande l'addition. <strong>Écris le dialogue complet</strong> (6 répliques minimum).</li>
+            <li><strong>Présente-toi en 30 secondes</strong> comme Léa : qui tu es, ce que tu sais faire, ce que tu cherches — sans avoir l'air désespéré·e.</li>
+            <li>Comment <strong>engager la conversation</strong> avec un inconnu sans être envahissant ? Donne trois questions ouvertes.</li>
+            <li>As-tu déjà <strong>rendu service</strong> à quelqu'un… qui t'a rendu service ensuite ? Raconte.</li>
+            <li>« Mon plan B n'était pas une marche arrière, c'était un détour plus rapide. » Es-tu d'accord ? Quel <strong>détour</strong> as-tu déjà pris pour atteindre un objectif ?</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" id="resetBtn">⟳ Réinitialiser tous les exercices</button>
+  </div>
+
+  <!-- MEMO -->
+  <div class="memo">
+    <h3>Récapitulatif</h3>
+    <div class="memo-cols">
+      <div class="memo-col">
+        <h4>Expressions du service</h4>
+        <div class="memo-row"><strong>Je vous amène la carte</strong> · <strong>vous avez choisi ?</strong></div>
+        <div class="memo-row"><strong>Je vous fais un café ?</strong> (question inversée)</div>
+        <div class="memo-row"><strong>Je vous l'apporte dans une minute !</strong></div>
+        <div class="memo-row"><strong>Je vous recommande…</strong> · <strong>l'addition, s'il vous plaît</strong></div>
+        <div class="memo-row"><strong>Bon appétit · bonne journée !</strong></div>
+      </div>
+      <div class="memo-col">
+        <h4>Politesse & networking</h4>
+        <div class="memo-row"><strong>je voudrais…</strong> (poli) ≠ <strong>je veux…</strong> (trop direct)</div>
+        <div class="memo-row"><strong>Est-ce que je pourrais…</strong> (très poli)</div>
+        <div class="memo-row"><strong>tisser un réseau · rendre service</strong></div>
+        <div class="memo-row"><strong>engager la conversation · recommander quelqu'un</strong></div>
+        <div class="memo-row" style="margin-top:8px;font-style:italic;color:rgba(255,255,255,0.5)">« Les offres se trouvent au bout d'un comptoir. »</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Cours personnalisé pour Léa · le bar qui ouvre les portes · B2<br>
+  « un détour peut être plus rapide qu'une marche arrière »
+</footer>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+
+// TEST DE VOCABULAIRE
+const vocabTest = [
+  { en: "the counter / bar", fr: "le comptoir" },
+  { en: "the menu", fr: "la carte" },
+  { en: "the bill", fr: "l'addition" },
+  { en: "a tip", fr: "un pourboire" },
+  { en: "a regular customer", fr: "un habitué" },
+  { en: "to take the order", fr: "prendre la commande" },
+  { en: "to recommend a dish", fr: "recommander un plat" },
+  { en: "to build a network", fr: "tisser un réseau" },
+  { en: "to knock on the door", fr: "frapper à la porte" },
+  { en: "to start a conversation", fr: "engager la conversation" },
+  { en: "to do someone a favour", fr: "rendre service" },
+  { en: "to refer someone", fr: "recommander quelqu'un" },
+  { en: "a detour", fr: "un détour" },
+  { en: "a step backwards", fr: "une marche arrière" }
+];
+
+// EXERCICE 1 — QCM situations de service
+const qcm = [
+  { q: "Un client vient de s'asseoir. Que dis-tu ?", options: ["Vous avez choisi ?", "Je vous amène la carte tout de suite !", "L'addition, s'il vous plaît !"], correct: 1, hint: "À l'arrivée → on apporte la carte : « Je vous amène la carte tout de suite ! »" },
+  { q: "Le client regarde la carte depuis 5 minutes. Que dis-tu ?", options: ["Je vous fais un café ?", "Vous avez choisi ?", "Je vous l'apporte dans une minute !"], correct: 1, hint: "Pour prendre la commande : « Vous avez choisi ? » ou « Je vous écoute ! »" },
+  { q: "Le client demande un conseil sur un dessert. Que dis-tu ?", options: ["Je vous recommande la tarte du jour, elle est délicieuse.", "Je veux la tarte.", "Vous mangez quoi ?"], correct: 0, hint: "Conseil poli → « Je vous recommande… »" },
+  { q: "Le client demande l'addition. Que dis-tu ?", options: ["Au revoir, bonne route !", "Bien sûr, je vous l'apporte dans une minute !", "Je vous amène la carte !"], correct: 1, hint: "Pour l'addition : « Je vous l'apporte » (l' = l'addition)." },
+  { q: "Un habitué demande où sont les toilettes. Que dis-tu ?", options: ["Au fond, à droite, je vous y accompagne si vous voulez.", "Je vous en amène une autre ?", "Vous avez choisi ?"], correct: 0, hint: "« y » remplace le lieu : « je vous y accompagne »." }
+];
+
+// EXERCICE 2 — Réécrire poliment
+const politesse = [
+  { text: "« Je veux un café. » → (poli) : Je ______ un café.", ans: ["voudrais"], hint: "conditionnel : je voudrais" },
+  { text: "« Est-ce que je peux avoir la carte ? » → (très poli) : Est-ce que je ______ avoir la carte ?", ans: ["pourrais"], hint: "conditionnel de pouvoir : je pourrais" },
+  { text: "« Tu me donnes l'addition ! » → (poli) : Vous ______ apporter l'addition, s'il vous plaît ?", ans: ["pourriez"], hint: "conditionnel : vous pourriez" },
+  { text: "« Je prends la tarte. » → (poli, serveur) : Je vous ______ la tarte du jour.", ans: ["recommande"], hint: "conseil poli : je vous recommande" },
+  { text: "« Vous commencez jeudi ? » → (plus doux) : Vous ______ commencer jeudi ?", ans: ["pourriez"], hint: "conditionnel qui adoucit : vous pourriez" }
+];
+
+// EXERCICE 3 — Pronoms
+const pronoms = [
+  { text: "— L'addition, s'il vous plaît ! — Bien sûr, je vous ______ apporte dans une minute.", ans: ["la", "l'"], hint: "l'addition → la / l' (je vous l'apporte)" },
+  { text: "— De la tarte, il en reste ? — Oui, je vous ______ apporte une part !", ans: ["en"], hint: "« de la tarte » → en (je vous en apporte)" },
+  { text: "Les toilettes sont au fond — je vous ______ accompagne si vous voulez.", ans: ["y"], hint: "le lieu → y (je vous y accompagne)" },
+  { text: "Vos cafés sont prêts, je ______ apporte tout de suite.", ans: ["les", "vous les"], hint: "les cafés → les (je les apporte / je vous les apporte)" },
+  { text: "Votre vin rouge arrive — je ______ sers monsieur.", ans: ["vous le", "le"], hint: "le vin → le (je vous le sers)" },
+  { text: "Le dessert, vous ______ avez goûté ?", ans: ["y", "l'"], hint: "« au dessert » → y ; ou « le dessert » → l' (vous y avez goûté / vous l'avez goûté)" }
+];
+
+// EXERCICE 4 — Relier situation ↔ phrase
+const paires = [
+  { left: "accueil du client", right: "Je vous amène la carte tout de suite !" },
+  { left: "prise de commande", right: "Je vous écoute !" },
+  { left: "conseil sur un plat", right: "Je vous recommande la tarte du jour." },
+  { left: "client pressé", right: "Je vous l'apporte dans une minute !" },
+  { left: "fin du service", right: "Voilà l'addition. Bonne journée !" },
+  { left: "client qui part sans finir", right: "Tout était bien ? Au revoir, à bientôt !" }
+];
+
+// EXERCICE 5 — Tri formel / poli / familier
+const triData = {
+  categories: [
+    { id: "familier", label: "Familier (amis)" },
+    { id: "poli", label: "Poli (restaurant)" },
+    { id: "trespoli", label: "Très poli (formel)" }
+  ],
+  chips: [
+    { text: "Donne-moi un café.", cat: "familier" },
+    { text: "Je voudrais un café.", cat: "poli" },
+    { text: "Est-ce que je pourrais avoir un café ?", cat: "trespoli" },
+    { text: "T'as une table pour deux ?", cat: "familier" },
+    { text: "Vous avez une table pour deux ?", cat: "poli" },
+    { text: "Je voudrais réserver, s'il vous plaît.", cat: "poli" },
+    { text: "Auriez-vous un moment pour discuter ?", cat: "trespoli" },
+    { text: "On discute deux minutes ?", cat: "familier" },
+    { text: "Pourriez-vous me rappeler demain ?", cat: "trespoli" }
+  ]
+};
+
+/* ============================================================
+   PROGRESSION
+   ============================================================ */
+const TOTAL_POINTS = qcm.length + politesse.length + pronoms.length + paires.length + triData.chips.length; // 5+5+6+6+9 = 31
+let solvedItems = { ex1: new Set(), ex2: new Set(), ex3: new Set(), ex4: new Set(), ex5: new Set() };
+
+function updateProgress() {
+  const totalSolved = solvedItems.ex1.size + solvedItems.ex2.size + solvedItems.ex3.size + solvedItems.ex4.size + solvedItems.ex5.size;
+  const maxPoints = TOTAL_POINTS;
+  const pct = Math.min(100, (totalSolved / maxPoints) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressScore').textContent = totalSolved + ' / ' + maxPoints;
+  const emoji = document.getElementById('progressEmoji');
+  if (pct >= 100) { emoji.textContent = '🏆'; emoji.classList.add('pop'); setTimeout(()=>emoji.classList.remove('pop'), 600); }
+  else if (pct >= 75) emoji.textContent = '🔥';
+  else if (pct >= 50) emoji.textContent = '💪';
+  else if (pct >= 25) emoji.textContent = '📚';
+  else emoji.textContent = '🎯';
+
+  document.getElementById('badge1').textContent = solvedItems.ex1.size + ' / ' + qcm.length;
+  document.getElementById('badge2').textContent = solvedItems.ex2.size + ' / ' + politesse.length;
+  document.getElementById('badge3').textContent = solvedItems.ex3.size + ' / ' + pronoms.length;
+  document.getElementById('badge4').textContent = solvedItems.ex4.size + ' / ' + paires.length;
+  document.getElementById('badge5').textContent = solvedItems.ex5.size + ' / ' + triData.chips.length;
+
+  if (pct >= 100 && !window._confettiDone) {
+    window._confettiDone = true;
+    launchConfetti();
+  }
+}
+
+/* ============================================================
+   CONFETTIS
+   ============================================================ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#BA7517','#0F6E56','#D85A30','#534AB7','#185FA5','#FAC775'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = c.style.width;
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   VOCABULAIRE FLOUTÉ
+   ============================================================ */
+const vocabTestGrid = document.getElementById('vocabTestGrid');
+const vocabTestCounter = document.getElementById('vocabTestCounter');
+let vocabRevealed = 0;
+
+vocabTest.forEach((item, idx) => {
+  const row = document.createElement('div');
+  row.className = 'vocab-test-row';
+  row.innerHTML = `
+    <span class="vocab-test-en">${item.en}</span>
+    <span class="vocab-test-arrow">→</span>
+    <span class="vocab-test-fr blurred" data-idx="${idx}">${item.fr}</span>
+  `;
+  vocabTestGrid.appendChild(row);
+});
+
+vocabTestGrid.querySelectorAll('.vocab-test-fr').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('revealed')) return;
+    this.classList.remove('blurred');
+    this.classList.add('revealed');
+    vocabRevealed++;
+    vocabTestCounter.textContent = vocabRevealed + ' / ' + vocabTest.length + ' mots révélés';
+    if (vocabRevealed === vocabTest.length) {
+      vocabTestCounter.textContent = '🎉 Bravo ! Tous les mots sont révélés.';
+      vocabTestCounter.style.color = 'var(--amber-d)';
+      vocabTestCounter.style.fontWeight = '600';
+    }
+  });
+});
+
+/* ============================================================
+   FABRIQUES D'EXERCICES
+   ============================================================ */
+function buildInputExercise(listId, data, solvedSet, btnClass) {
+  const qlist = document.getElementById(listId);
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="comp-status"></span></div>
+      <div class="q-text">${item.text}</div>
+      <div class="q-row">
+        <input class="q-input q-input-1" type="text" placeholder="Votre réponse" autocomplete="off">
+        <button class="q-btn ${btnClass}">Vérifier</button>
+      </div>
+      <div class="q-fb"></div>
+    `;
+    qlist.appendChild(div);
+  });
+
+  qlist.querySelectorAll('.q-item').forEach((item, idx) => {
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    const fb = item.querySelector('.q-fb');
+    const status = item.querySelector('.comp-status');
+
+    function check() {
+      if (item.classList.contains('solved')) return;
+      const v = inp.value.trim();
+      if (!v) { fb.innerHTML = '<span class="nope">✏️ Écris une réponse avant de vérifier.</span>'; return; }
+      const norm = s => s.trim().toLowerCase().replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+      const good = data[idx].ans.some(a => norm(a) === norm(v));
+      if (good) {
+        item.classList.add('solved');
+        status.textContent = '✅';
+        inp.disabled = true;
+        btn.disabled = true;
+        btn.textContent = '✓';
+        fb.innerHTML = `<span class="ok">✓ Bravo ! ${data[idx].hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        item.classList.add('shake');
+        setTimeout(() => item.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Incorrect. Indice : ${data[idx].hint}</span>`;
+      }
+    }
+    btn.addEventListener('click', check);
+    inp.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  });
+
+  return qlist;
+}
+
+function buildQcm(listId, data, solvedSet) {
+  const qlist = document.getElementById(listId);
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="qcm-status"></span></div>
+      <div class="q-text">${item.q}</div>
+      <div class="choice-grid">
+        ${item.options.map((opt, i) => `<button class="choice-btn" data-idx="${idx}" data-opt="${i}">${opt}</button>`).join('')}
+      </div>
+      <div class="q-fb"></div>
+    `;
+    qlist.appendChild(div);
+  });
+
+  qlist.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = parseInt(this.dataset.idx);
+      const opt = parseInt(this.dataset.opt);
+      const parent = this.closest('.q-item');
+      if (parent.classList.contains('solved')) return;
+
+      parent.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected','correct','wrong');
+        b.disabled = false;
+      });
+      this.classList.add('selected');
+
+      const item = data[idx];
+      const fb = parent.querySelector('.q-fb');
+      const status = parent.querySelector('.qcm-status');
+
+      if (opt === item.correct) {
+        this.classList.add('correct');
+        this.disabled = true;
+        parent.classList.add('solved');
+        parent.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+        status.textContent = '✅';
+        fb.innerHTML = `<span class="ok">✓ Exact ! ${item.hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        this.classList.add('wrong');
+        parent.classList.add('shake');
+        setTimeout(() => parent.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Pas tout à fait… Réessaie !</span>`;
+        setTimeout(() => this.classList.remove('wrong'), 800);
+      }
+    });
+  });
+  return qlist;
+}
+
+const qlist1 = buildQcm('qlist1', qcm, solvedItems.ex1);
+const qlist2 = buildInputExercise('qlist2', politesse, solvedItems.ex2, 'q-btn-2');
+const qlist3 = buildInputExercise('qlist3', pronoms, solvedItems.ex3, 'q-btn-1');
+
+/* ============================================================
+   EXERCICE 4 — RELIER
+   ============================================================ */
+const qlist4 = document.getElementById('qlist4');
+const matchWrap = document.createElement('div');
+matchWrap.className = 'q-item';
+matchWrap.innerHTML = `
+  <div class="q-num"><span>Relie les paires</span><span class="match-status"></span></div>
+  <div class="match-cols">
+    <div class="match-col"><h5>Situations</h5><div id="matchLeft"></div></div>
+    <div class="match-col"><h5>Phrases</h5><div id="matchRight"></div></div>
+  </div>
+  <div class="q-fb"></div>
+`;
+qlist4.appendChild(matchWrap);
+
+const leftCol = matchWrap.querySelector('#matchLeft');
+const rightCol = matchWrap.querySelector('#matchRight');
+const shuffledRight = [...paires].sort(() => Math.random() - 0.5);
+
+paires.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'left';
+  el.dataset.idx = i;
+  el.textContent = p.left;
+  leftCol.appendChild(el);
+});
+shuffledRight.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'right';
+  el.dataset.idx = paires.indexOf(p);
+  el.textContent = p.right;
+  rightCol.appendChild(el);
+});
+
+let selectedLeft = null;
+let matchedCount = 0;
+
+matchWrap.querySelectorAll('.match-item').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('matched')) return;
+    const side = this.dataset.side;
+
+    if (side === 'left') {
+      matchWrap.querySelectorAll('.match-item[data-side="left"]').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+      selectedLeft = this;
+      return;
+    }
+
+    if (!selectedLeft) {
+      this.classList.add('wrong-pair');
+      setTimeout(() => this.classList.remove('wrong-pair'), 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">👈 Choisis d\'abord une situation à gauche.</span>';
+      return;
+    }
+
+    if (selectedLeft.dataset.idx === this.dataset.idx) {
+      selectedLeft.classList.remove('active');
+      selectedLeft.classList.add('matched');
+      this.classList.add('matched');
+      matchedCount++;
+      matchWrap.querySelector('.match-status').textContent = matchedCount + ' / ' + paires.length;
+      matchWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien joué ! ${matchedCount}/${paires.length} paires trouvées.</span>`;
+      if (!solvedItems.ex4.has(parseInt(this.dataset.idx))) {
+        solvedItems.ex4.add(parseInt(this.dataset.idx));
+        updateProgress();
+      }
+      selectedLeft = null;
+      if (matchedCount === paires.length) {
+        matchWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les paires sont reliées ! Excellent travail.</span>';
+      }
+    } else {
+      this.classList.add('wrong-pair');
+      selectedLeft.classList.add('wrong-pair');
+      setTimeout(() => {
+        this.classList.remove('wrong-pair');
+        selectedLeft && selectedLeft.classList.remove('wrong-pair');
+      }, 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">✗ Ce n\'est pas la bonne situation. Réessaie !</span>';
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 5 — TRI
+   ============================================================ */
+const qlist5 = document.getElementById('qlist5');
+const triWrap = document.createElement('div');
+triWrap.className = 'q-item';
+triWrap.innerHTML = `
+  <div class="q-num"><span>Glisse les étiquettes dans la bonne catégorie</span><span class="tri-status"></span></div>
+  <div class="sort-zone" id="chipsZone"></div>
+  <div id="catZones"></div>
+  <div class="q-fb"></div>
+`;
+qlist5.appendChild(triWrap);
+
+const chipsZone = triWrap.querySelector('#chipsZone');
+const catZones = triWrap.querySelector('#catZones');
+
+triData.categories.forEach(cat => {
+  const zone = document.createElement('div');
+  zone.innerHTML = `<div class="sort-label">${cat.label}</div>`;
+  const z = document.createElement('div');
+  z.className = 'sort-zone';
+  z.dataset.cat = cat.id;
+  z.id = 'zone-' + cat.id;
+  zone.appendChild(z);
+  catZones.appendChild(zone);
+});
+
+const shuffledChips = [...triData.chips].sort(() => Math.random() - 0.5);
+shuffledChips.forEach(chip => {
+  const el = document.createElement('div');
+  el.className = 'sort-chip';
+  el.draggable = true;
+  el.dataset.cat = chip.cat;
+  el.textContent = chip.text;
+  chipsZone.appendChild(el);
+});
+
+let draggedChip = null;
+document.querySelectorAll('.sort-chip').forEach(chip => {
+  chip.addEventListener('dragstart', function(e) {
+    draggedChip = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  chip.addEventListener('dragend', function() {
+    this.classList.remove('dragging');
+    draggedChip = null;
+  });
+});
+
+document.querySelectorAll('.sort-zone').forEach(zone => {
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('over');
+  });
+  zone.addEventListener('dragleave', function() {
+    this.classList.remove('over');
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('over');
+    if (!draggedChip) return;
+    const cat = this.dataset.cat;
+    if (draggedChip.dataset.cat === cat) {
+      draggedChip.classList.add('placed');
+      draggedChip.draggable = false;
+      this.appendChild(draggedChip);
+      this.classList.add('correct-zone');
+      setTimeout(() => this.classList.remove('correct-zone'), 600);
+      const chipText = draggedChip.textContent;
+      if (!solvedItems.ex5.has(chipText)) {
+        solvedItems.ex5.add(chipText);
+        updateProgress();
+      }
+      triWrap.querySelector('.tri-status').textContent = solvedItems.ex5.size + ' / ' + triData.chips.length;
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien classé ! ${solvedItems.ex5.size}/${triData.chips.length}.</span>`;
+      if (solvedItems.ex5.size === triData.chips.length) {
+        triWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les étiquettes sont bien rangées !</span>';
+      }
+    } else {
+      this.classList.add('wrong-zone');
+      setTimeout(() => this.classList.remove('wrong-zone'), 500);
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="nope">✗ Cette phrase n'appartient pas à « ${triData.categories.find(c=>c.id===cat).label} ».</span>`;
+    }
+  });
+});
+
+/* ============================================================
+   VOCABULAIRE INTERACTIF (cartes du haut)
+   ============================================================ */
+document.querySelectorAll('.vocab-card').forEach(card => {
+  card.addEventListener('click', function() {
+    this.classList.toggle('revealed');
+  });
+});
+
+/* ============================================================
+   RESET
+   ============================================================ */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  // reset QCM
+  qlist1.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('solved');
+    item.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('selected','correct','wrong');
+      b.disabled = false;
+    });
+    item.querySelector('.q-fb').innerHTML = '';
+    item.querySelector('.qcm-status').textContent = '';
+  });
+  // reset inputs (ex2 + ex3)
+  [qlist2, qlist3].forEach(ql => {
+    ql.querySelectorAll('.q-item').forEach(item => {
+      item.classList.remove('solved');
+      const inp = item.querySelector('.q-input');
+      const btn = item.querySelector('.q-btn');
+      inp.value = '';
+      inp.disabled = false;
+      btn.disabled = false;
+      btn.textContent = 'Vérifier';
+      btn.style.background = '';
+      item.querySelector('.q-fb').innerHTML = '';
+      item.querySelector('.comp-status').textContent = '';
+    });
+  });
+  // reset relier
+  matchWrap.querySelectorAll('.match-item').forEach(el => {
+    el.classList.remove('matched','active','wrong-pair');
+  });
+  selectedLeft = null;
+  matchedCount = 0;
+  matchWrap.querySelector('.match-status').textContent = '';
+  matchWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset tri
+  const allChips = triWrap.querySelectorAll('.sort-chip');
+  allChips.forEach(chip => {
+    chip.classList.remove('placed');
+    chip.draggable = true;
+    chipsZone.appendChild(chip);
+  });
+  const chipsArr = [...chipsZone.querySelectorAll('.sort-chip')];
+  chipsArr.sort(() => Math.random() - 0.5).forEach(c => chipsZone.appendChild(c));
+  triWrap.querySelector('.tri-status').textContent = '';
+  triWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset score
+  solvedItems.ex1.clear();
+  solvedItems.ex2.clear();
+  solvedItems.ex3.clear();
+  solvedItems.ex4.clear();
+  solvedItems.ex5.clear();
+  window._confettiDone = false;
+  updateProgress();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateProgress();
+</script>
+</body>
+</html>

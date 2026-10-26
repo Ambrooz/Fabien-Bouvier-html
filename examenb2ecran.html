@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>DELF B2 · Leçon jeu · Les écrans et les jeunes</title>
+<style>
+  :root {
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #1f2937; background: #f5f1e8; line-height: 1.6;
+  }
+  body { margin: 0; }
+  .page { max-width: 760px; margin: 0 auto; padding: 24px 20px 60px; }
+  header {
+    background: #14532d; color: #fff; padding: 26px 24px;
+    border-radius: 14px; margin-bottom: 20px;
+  }
+  header h1 { margin: 0 0 6px; font-size: 1.5em; }
+  header p { margin: 4px 0; color: #d1fae5; }
+  .etape {
+    background: #14532d; color: #fff; display: flex; align-items: center; gap: 12px;
+    padding: 10px 18px; border-radius: 999px; margin: 30px 0 12px; font-weight: 700;
+  }
+  .etape .num {
+    background: #facc15; color: #1f2937; width: 32px; height: 32px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; flex: none;
+  }
+  .etape small { font-weight: normal; opacity: .85; }
+  .carte {
+    background: #fff; border-radius: 14px; padding: 20px 22px;
+    box-shadow: 0 2px 6px rgba(0,0,0,.08); margin: 12px 0;
+  }
+  .info {
+    background: #eef7ee; border-left: 5px solid #15803d;
+    padding: 10px 14px; border-radius: 8px; margin: 12px 0 4px;
+  }
+  .info::before { content: "💡 "; }
+  .attention {
+    background: #fef2f2; border-left: 5px solid #b91c1c;
+    padding: 10px 14px; border-radius: 8px; margin: 12px 0 4px;
+  }
+  .attention::before { content: "⚠️ "; }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: .93em; margin: 8px 0; }
+  th, td { border: 1px solid #d1d5db; padding: 7px 10px; text-align: left; }
+  th { background: #dcfce7; color: #14532d; }
+
+  /* ---- Document officiel ---- */
+  .doc-officiel {
+    background: #fff; border: 3px solid #14532d; border-radius: 10px;
+    padding: 16px 20px; margin: 12px 0; position: relative;
+  }
+  .doc-officiel .sujet-n {
+    position: absolute; top: -14px; left: 14px;
+    background: #14532d; color: #fff; padding: 3px 14px;
+    border-radius: 999px; font-size: .8em; letter-spacing: 1px;
+  }
+  .doc-officiel h3 { margin: 10px 0 4px; color: #14532d; font-size: 1.15em; }
+  .doc-officiel .source {
+    font-style: italic; color: #6b7280; font-size: .85em;
+    border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 8px;
+  }
+  .doc-officiel blockquote {
+    margin: 8px 0; padding: 8px 12px; background: #f9fafb;
+    border-left: 3px solid #cbd5e1; font-style: italic;
+  }
+  .consigne {
+    background: #facc15; padding: 10px 14px; border-radius: 8px;
+    margin: 12px 0 0; font-weight: 600;
+  }
+
+  /* ---- Jeu paires ---- */
+  .paires-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .pcol { display: flex; flex-direction: column; gap: 8px; }
+  .paire {
+    padding: 8px 14px; border-radius: 999px; border: 2px solid #cbd5e1;
+    background: #fff; cursor: pointer; font-size: .93em; user-select: none;
+    text-align: left;
+  }
+  .paire.colG { border-color: #14532d; font-weight: 600; color: #14532d; }
+  .paire.colD { border-color: #b45309; color: #92400e; }
+  .paire.sel { background: #facc15; border-color: #facc15; }
+  .paire.err { background: #fef2f2; border-color: #b91c1c; }
+  .paire.ok { background: #dcfce7; border-color: #15803d; color: #14532d; opacity: .6; cursor: default; }
+  .score {
+    display: inline-block; background: #14532d; color: #fff;
+    padding: 4px 14px; border-radius: 999px; font-size: .9em; margin-top: 8px;
+  }
+
+  /* ---- Cartes vocabulaire ---- */
+  .grille { display: grid; grid-template-columns: repeat(auto-fit, minmax(215px, 1fr)); gap: 10px; }
+  .voc {
+    background: #14532d; color: #fff; border-radius: 10px; padding: 12px 14px;
+    cursor: pointer; text-align: center; min-height: 52px; user-select: none;
+    transition: transform .15s;
+  }
+  .voc:hover { transform: scale(1.03); }
+  .voc small { opacity: .75; display: block; font-size: .8em; }
+  .voc.retournee { background: #fff; color: #14532d; border: 2px solid #15803d; }
+
+  /* ---- Texte à trous : réponses floues ---- */
+  .exo {
+    background: #f9fafb; border: 2px solid #e5e7eb; border-radius: 12px;
+    padding: 14px 16px; margin: 10px 0;
+  }
+  .exo h4 { margin: 0 0 8px; color: #14532d; }
+  .mot {
+    display: inline-block; padding: 1px 10px; margin: 0 2px; cursor: pointer;
+    filter: blur(5px); background: #dcfce7; border-radius: 6px; color: #14532d;
+    font-weight: 700; transition: filter .25s;
+  }
+  .mot.vu { filter: blur(0); background: #14532d; color: #fff; }
+  .aide { font-size: .85em; color: #6b7280; }
+
+  details {
+    background: #e0e7ff; border-radius: 10px; margin: 10px 0;
+  }
+  details summary {
+    cursor: pointer; padding: 12px 16px; font-weight: 700; color: #14532d;
+    user-select: none;
+  }
+  details .corr { padding: 4px 16px 14px; border-top: 1px solid #c7d2fe; }
+  details .corr p { margin: 10px 0; }
+
+  /* ---- Quiz débat ---- */
+  .qcm {
+    background: #f9fafb; border: 2px solid #e5e7eb; border-radius: 12px;
+    padding: 14px 16px; margin: 12px 0;
+  }
+  .qcm h4 { margin: 0 0 10px; color: #92400e; }
+  .opt {
+    display: block; width: 100%; text-align: left; margin: 8px 0;
+    background: #fff; border: 2px solid #cbd5e1; border-radius: 10px;
+    padding: 10px 14px; cursor: pointer; font-size: .95em;
+  }
+  .opt:hover { border-color: #14532d; }
+  .opt.ok { border-color: #15803d; background: #dcfce7; }
+  .opt.ko { border-color: #b91c1c; background: #fef2f2; }
+  .fb { display: none; margin-top: 10px; padding: 10px 14px; border-radius: 8px; background: #eef7ee; border-left: 4px solid #15803d; }
+  .qcm.open .fb { display: block; }
+  footer { margin-top: 44px; color: #6b7280; text-align: center; font-style: italic; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <h1>🎮 DELF B2 — Production orale en jeu</h1>
+  <p><strong>Un seul sujet</strong> : <em>« Les écrans et les jeunes »</em></p>
+  <p>Préparation 30 min · Passation ~20 min · 25 points</p>
+</header>
+
+<!-- ÉTAPE 1 -->
+<div class="etape"><span class="num">1</span> Le format de l'épreuve 📋</div>
+<div class="carte">
+  <table>
+    <tr><th>Partie</th><th>Durée</th><th>Ta mission</th></tr>
+    <tr><td>1 · Monologue suivi</td><td>5–7 min</td><td>Donner ton avis argumenté</td></tr>
+    <tr><td>2 · Débat</td><td>10–13 min</td><td>Défendre ton avis contre le jury</td></tr>
+  </table>
+  <div class="attention">Au B2, le jury n'est <strong>pas neutre</strong> : il joue le rôle de ton <strong>opposant</strong>. Pas d'entretien dirigé comme au B1.</div>
+</div>
+
+<!-- ÉTAPE 2 -->
+<div class="etape"><span class="num">2</span> Jeu des paires : la boîte à outils 🧩</div>
+<div class="carte">
+  <p>Colonne de gauche : les <strong>expressions</strong> · colonne de droite : leurs <strong>fonctions</strong>. L'ordre est mélangé ! Clique sur une expression, puis sur la fonction qui correspond. Trouve les 6 paires !</p>
+  <div class="paires-cols">
+    <div class="pcol" id="colG"></div>
+    <div class="pcol" id="colD"></div>
+  </div>
+  <span class="score" id="s1">Trouvés : 0 / 6</span>
+</div>
+
+<!-- ÉTAPE 3 -->
+<div class="etape"><span class="num">3</span> Le vocabulaire du sujet 📖</div>
+<div class="carte">
+  <p>Clique sur chaque carte pour la retourner 🇬🇧 → 🇫🇷</p>
+  <div class="grille">
+    <div class="voc" data-fr="passer trop de temps devant les écrans">overusing screens</div>
+    <div class="voc" data-fr="la dépendance / être accro">addiction</div>
+    <div class="voc" data-fr="la concentration">concentration</div>
+    <div class="voc" data-fr="les réseaux sociaux">social media</div>
+    <div class="voc" data-fr="le temps d'écran">screen time</div>
+    <div class="voc" data-fr="le sommeil">sleep</div>
+    <div class="voc" data-fr="l'esprit critique">critical thinking</div>
+    <div class="voc" data-fr="encadrer / limiter">to regulate</div>
+  </div>
+  <table style="margin-top:14px">
+    <tr><th> 🇫🇷 Mot / expression</th><th>Comment l'utiliser</th></tr>
+    <tr><td><strong>un usage excessif</strong></td><td>« Un usage <em>excessif</em> des écrans peut nuire au sommeil. »</td></tr>
+    <tr><td><strong>nuire à</strong></td><td>« La fatigue <em> nuit à</em> la concentration. »</td></tr>
+    <tr><td><strong>être exposé à</strong></td><td>« Les enfants sont <em>exposés à</em> des contenus inadaptés. »</td></tr>
+    <tr><td><strong>développer / cultiver l'esprit critique</strong></td><td>« Il faut <em>cultiver l'esprit critique</em> face aux fake news. »</td></tr>
+    <tr><td><strong>un encadrement</strong></td><td>« Je suis pour un <em>encadrement</em>, pas une interdiction. »</td></tr>
+    <tr><td><strong>en moyenne</strong></td><td>« Ils passent, <em>en moyenne</em>, 4 heures par jour devant un écran. »</td></tr>
+    <tr><td><strong>la santé mentale</strong></td><td>« Les écrans peuvent affecter la <em>santé mentale</em>. »</td></tr>
+    <tr><td><strong>le bien-être</strong></td><td>« Trouver un équilibre, c'est une question de <em>bien-être</em>. »</td></tr>
+  </table>
+  <div class="info">Bonus : « <strong>Certes…, mais…</strong> » (concession), « <strong>il ne faut pas oublier que…</strong> », « <strong>de mon point de vue…</strong> »</div>
+</div>
+
+<!-- ÉTAPE 4 -->
+<div class="etape"><span class="num">4</span> Tâche 1 · Ton exposé 🎤</div>
+<div class="carte">
+
+  <div class="doc-officiel">
+    <span class="sujet-n">SUJET 1</span>
+    <h3>Les écrans : une menace pour la jeunesse ?</h3>
+    <div class="source">D'après un article de presse français</div>
+    <p>En France, les 13–18 ans passent <strong>en moyenne plus de 4 heures par jour</strong> devant un écran, selon une étude publiée cette année. Les pédiatres alertent sur le manque de sommeil et la baisse de concentration à l'école. Selon eux, l'usage intensif des téléphones et des réseaux sociaux retarde l'endormissement et réduit la capacité d'attention en classe. Certains parlent même d'une « génération fatiguée », qui lit moins, dort moins et communique moins en face à face.</p>
+    <p>Mais d'autres experts nuancent ce tableau alarmiste : les écrans, disent-ils, sont aussi des fenêtres ouvertes sur le monde, des outils d'apprentissage et de créativité. Faut-il alors interdire, encadrer, ou simplement éduquer ?</p>
+    <blockquote>« Mes enfants sont plus calmes avec leur téléphone, mais je ne sais plus leur parler », confie Vincent, père de famille.</blockquote>
+    <blockquote>« Les écrans ouvrent les jeunes au monde. Il faut les accompagner, pas les priver », répond Christine, professeure.</blockquote>
+    <p class="consigne">📝 <strong>Consigne :</strong> Dégagez le thème du document et présentez votre point de vue : faut-il limiter le temps d'écran des jeunes ?</p>
+  </div>
+
+  <div class="exo">
+    <h4>🧠 Exercice 1 · Devine les mots cachés</h4>
+    <p class="aide">Les mots importants sont flous : <strong>clique dessus pour les révéler</strong>. Essaie de deviner avant de cliquer !</p>
+    <p>① « Le document que j'ai lu aborde la question des <span class="mot">écrans</span> et de la <span class="mot">santé</span> des jeunes. »<br />
+    ② « Dans un <span class="mot">premier</span> temps, je montrerai que les écrans ont des avantages. »<br />
+    ③ « Dans un <span class="mot">second</span> temps, j'en <span class="mot">soulignerai</span> les limites. »<br />
+    ④ « Pour <span class="mot">conclure</span>, je dirais que tout dépend de l'<span class="mot">usage</span> que l'on en fait. »</p>
+  </div>
+
+  <div class="exo">
+    <h4>🧠 Exercice 2 · Les connecteurs pour briller</h4>
+    <p class="aide">Clique pour vérifier chaque mot flou.</p>
+    <p>« <span class="mot">Certes</span>, les écrans sont utiles, <span class="mot">mais</span> 4 heures par jour, c'est trop. <span class="mot">En effet</span>, un usage excessif <span class="mot"> nuit à</span> le sommeil. <span class="mot">Par ailleurs</span>, il ne faut pas oublier le sport et la lecture. <span class="mot">En somme</span>, je suis pour un <span class="mot">encadrement</span> plutôt qu'une interdiction. »</p>
+  </div>
+
+  <div class="info">Plan simple : <strong>Intro → d'une part… → d'autre part… → conclusion nuancée</strong>. Note seulement des mots-clés : tu ne dois pas lire tes notes.</div>
+
+  <details><summary>👀 Voir le modèle d'exposé complet (5–7 min)</summary>
+    <div class="corr">
+      <p><strong>① Intro :</strong> « Le document que j'ai lu aborde la question des écrans et de la santé des jeunes. Il oppose deux visions : celle des experts inquiets et celle des experts optimistes. La question est : faut-il limiter le temps d'écran des jeunes ? »</p>
+      <p><strong>② D'une part :</strong> « D'une part, les écrans ont des avantages réels. Ils permettent d'apprendre, de découvrir d'autres cultures et de rester en contact avec ses amis. Par exemple, certaines applications aident à réviser les langues ou les mathématiques. »</p>
+      <p><strong>③ D'autre part :</strong> « D'autre part, un usage excessif peut nuire au sommeil, à la concentration et à la vie sociale. Certes, les écrans sont utiles, mais 4 heures par jour, c'est trop. Il ne faut pas oublier le sport, la lecture et les rencontres en vrai. »</p>
+      <p><strong>④ Conclusion :</strong> « En somme, je ne suis pas pour une interdiction, mais pour un encadrement : des règles claires, fixées par les parents, et surtout une éducation à un usage responsable. L'écran est un outil ; c'est nous qui devons rester maître de l'outil. »</p>
+    </div>
+  </details>
+</div>
+
+<!-- ÉTAPE 5 -->
+<div class="etape"><span class="num">5</span> Tâche 2 · Le débat 💬</div>
+<div class="carte">
+  <p>Le jury conteste ta position. Pour chaque objection, choisis la <strong>meilleure réponse</strong> (technique : <em>concession → mais → précision</em>).</p>
+
+  <div class="qcm">
+    <h4>Objection 1 · « Interdire les écrans, c'est naïf : les jeunes trouveront toujours un moyen… »</h4>
+    <button class="opt">« Je ne suis pas d'accord : une interdiction peut fonctionner si elle est bien appliquée. »</button>
+    <button class="opt" data-ok="1">« Vous avez raison, une interdiction totale serait vaine. Mais un encadrement, avec des règles claires, reste efficace. »</button>
+    <button class="opt">« C'est faux, les jeunes respectent toujours les règles quand elles sont justes. »</button>
+    <div class="fb">✔ Parfait : tu accordes une partie du terrain (« vous avez raison… mais… »), puis tu précises ta position. C'est exactement ce que le jury veut voir au B2.</div>
+  </div>
+
+  <div class="qcm">
+    <h4>Objection 2 · « Les écrans, c'est aussi la liberté d'apprendre : pourquoi priver les jeunes de cette richesse ? »</h4>
+    <button class="opt" data-ok="1">« Je le reconnais volontiers : internet est une richesse immense. Néanmoins, sans esprit critique, on croit tout ce qu'on y lit. »</button>
+    <button class="opt">« Internet est une source de savoir immense, sur ce point je suis tout à fait d'accord avec vous. »</button>
+    <button class="opt">« Non, internet ne sert qu'à regarder des vidéos sans réfléchir, c'est une perte de temps. »</button>
+    <div class="fb">✔ Excellent : concession (« je le reconnais volontiers ») + contre-argument (« néanmoins ») + élargissement (l'esprit critique).</div>
+  </div>
+
+  <div class="qcm">
+    <h4>Objection 3 · « C'est aux parents de gérer ça, pas à la société… »</h4>
+    <button class="opt">« Pas du tout, l'État doit décider de tout, même des règles fixées à la maison. »</button>
+    <button class="opt">« Les parents ne s'occupent pas de leurs enfants de toute façon, ils n'y peuvent rien. »</button>
+    <button class="opt" data-ok="1">« Sur ce point, je vous rejoins : les parents sont responsables. Toutefois, une aide publique me semble utile. »</button>
+    <div class="fb">✔ Idéal : accord partiel + « toutefois » + proposition concrète. Tu défends ta position sans agresser le jury.</div>
+  </div>
+
+  <div class="exo">
+    <h4>🧠 Exercice 3 · Les expressions de riposte (mots flous)</h4>
+    <p class="aide">Devine, puis clique pour révéler.</p>
+    <p>« Je comprends votre point de vue, <span class="mot">cependant</span>… » · « Vous avez raison de le <span class="mot">souligner</span>, <span class="mot">toutefois</span>… » · « Je le reconnais <span class="mot">volontiers</span>, <span class="mot">néanmoins</span>… » · « Permettez-moi de <span class="mot">nuancer</span>… » · « Si j'ai bien <span class="mot">compris</span>, vous pensez que… ? »</p>
+  </div>
+
+  <div class="info">Si tu ne comprends pas une question : « <strong>Pourriez-vous préciser votre pensée ?</strong> » — c'est autorisé et c'est une interaction de niveau B2 !</div>
+</div>
+
+<!-- ÉTAPE 6 -->
+<div class="etape"><span class="num">6</span> Mémo 📌</div>
+<div class="carte">
+  <table>
+    <tr><th>Partie</th><th>Réflexe clé</th></tr>
+    <tr><td>Monologue (7 pts)</td><td>Intro → d'une part → d'autre part → conclusion nuancée</td></tr>
+    <tr><td>Débat (6 pts)</td><td>« Certes…, mais…, et je précise que… »</td></tr>
+    <tr><td>Langue (12 pts)</td><td>Connecteurs variés, concession, exemples précis</td></tr>
+  </table>
+  <p style="text-align:center; font-size:1.05em; margin-top:14px">Ton but : être claire, nuancée et souriante. Tu es prête, Alice ! 🍀</p>
+</div>
+
+<footer>Leçon 2 · Fabien · Format officiel DELF B2 / CECRL · Un sujet = deux tâches 🎯</footer>
+</div>
+
+<script>
+/* ---- Jeu paires ---- */
+(function () {
+  var paires = [
+    ["Certes…, mais…", "Faire une concession"],
+    ["D'une part…, d'autre part…", "Annoncer deux arguments"],
+    ["En somme…", "Conclure"],
+    ["Prenons l'exemple de…", "Illustrer son propos"],
+    ["Je comprends votre point de vue, cependant…", "Riposter au jury"],
+    ["Pourriez-vous préciser votre pensée ?", "Demander une reformulation"]
+  ];
+  var zone = null;
+  var gauche = paires.map(function (p, i) { return { t: p[0], i: i }; });
+  var droite = paires.map(function (p, i) { return { t: p[1], i: i }; });
+  function shuffle(a) { for (var j = a.length - 1; j > 0; j--) { var k = Math.floor(Math.random() * (j + 1)); var tmp = a[j]; a[j] = a[k]; a[k] = tmp; } return a; }
+  shuffle(gauche); shuffle(droite);
+  var selG = null, selD = null, trouve = 0;
+  function creer(o, col) {
+    var b = document.createElement("button");
+    b.className = "paire " + col;
+    b.textContent = o.t; b.dataset.i = o.i;
+    b.onclick = function () { choix(b, col); };
+    document.getElementById(col === "colG" ? "colG" : "colD").appendChild(b);
+  }
+  gauche.forEach(function (o) { creer(o, "colG"); });
+  droite.forEach(function (o) { creer(o, "colD"); });
+  function choix(b, col) {
+    if (b.classList.contains("ok")) return;
+    if (col === "colG") { if (selG) selG.classList.remove("sel"); selG = b; }
+    else { if (selD) selD.classList.remove("sel"); selD = b; }
+    b.classList.add("sel");
+    if (selG && selD) {
+      if (selG.dataset.i === selD.dataset.i) {
+        selG.className = "paire ok"; selD.className = "paire ok";
+        trouve++; document.getElementById("s1").textContent = "Trouvés : " + trouve + " / 6";
+        if (trouve === 6) document.getElementById("s1").textContent = "🎉 Bravo, les 6 paires sont trouvées !";
+      } else {
+        var a = selG, c = selD;
+        a.classList.add("err"); c.classList.add("err");
+        setTimeout(function () { a.classList.remove("sel", "err"); c.classList.remove("sel", "err"); }, 500);
+      }
+      selG = null; selD = null;
+    }
+  }
+})();
+
+/* ---- Cartes vocabulaire ---- */
+document.querySelectorAll(".voc").forEach(function (c) {
+  var en = c.textContent;
+  c.onclick = function () {
+    c.classList.toggle("retournee");
+    if (c.classList.contains("retournee")) c.textContent = "🇫🇷 " + c.dataset.fr;
+    else c.textContent = en;
+  };
+});
+
+/* ---- Mots flous : clique pour révéler ---- */
+document.querySelectorAll(".mot").forEach(function (m) {
+  m.onclick = function () { m.classList.add("vu"); };
+});
+
+/* ---- Quiz débat ---- */
+document.querySelectorAll(".qcm").forEach(function (q) {
+  q.querySelectorAll(".opt").forEach(function (o) {
+    o.onclick = function () {
+      q.classList.add("open");
+      q.querySelectorAll(".opt").forEach(function (b) {
+        b.classList.remove("ok");
+        if (b.dataset.ok) b.classList.add("ok");
+        b.disabled = true;
+      });
+      if (!o.dataset.ok) o.classList.add("ko");
+    };
+  });
+});
+</script>
+</body>
+</html>
