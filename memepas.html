@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Entraînement B2+ — négations fines (série 3)</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF5;--ink:#1C1917;--muted:#6B6159;
+  --coral:#D85A30;--coral-l:#FAECE7;--coral-m:#F0997B;--coral-d:#993C1D;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;--teal-d:#085041;
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;--amber-d:#854F0B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:2rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#185FA5 0%,#1C1917 55%,#0F6E56 100%);color:white;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(133,183,235,0.18);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-70px;left:30px;width:160px;height:160px;border-radius:50%;background:rgba(93,202,165,0.12);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#85B7EB;text-transform:uppercase;margin-bottom:0.5rem}
+.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.1rem;line-height:1.2;margin-bottom:0.6rem}
+.hero h1 em{color:#85B7EB;font-style:italic}
+.hero-sub{font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.25rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:40px;padding:5px 14px;font-size:0.78rem;color:rgba(255,255,255,0.85)}
+
+/* LAYOUT */
+.wrap{padding:1.5rem 1.75rem;max-width:760px;margin:0 auto}
+
+/* RAPPEL */
+.rappel{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;margin-top:0.5rem}
+.rappel h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.15rem;font-weight:400;margin-bottom:0.7rem;color:var(--blue)}
+.rappel-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px;font-size:0.87rem}
+.rappel-item{background:var(--blue-l);border-radius:10px;padding:8px 12px;line-height:1.5}
+.rappel-item strong{color:var(--blue)}
+.rappel-item em{color:var(--amber-d);font-style:italic}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;gap:10px;margin:2.5rem 0 1.1rem;padding-top:1.5rem;border-top:0.5px solid rgba(0,0,0,0.08)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;flex-shrink:0}
+.sec-head h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.35rem;font-weight:400}
+
+/* BARRE DE PROGRESSION */
+.progress-bar{position:sticky;top:0;z-index:50;background:rgba(255,251,245,0.95);backdrop-filter:blur(8px);padding:0.75rem 1.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:10px;background:rgba(0,0,0,0.07);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--blue),var(--teal),var(--purple));border-radius:20px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-score{font-size:0.82rem;font-weight:700;color:var(--blue);min-width:70px;text-align:right}
+.progress-emoji{font-size:1.2rem;transition:transform 0.3s}
+.progress-emoji.pop{transform:scale(1.5) rotate(10deg)}
+
+/* EXERCICES */
+.exercise-wrap{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);overflow:hidden;margin-top:1rem}
+.ex-head{padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ex-head-1{background:linear-gradient(90deg,var(--blue),#4a8ec9)}
+.ex-head-2{background:linear-gradient(90deg,var(--teal-d),var(--teal))}
+.ex-head-3{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.ex-head-4{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.ex-head-5{background:linear-gradient(90deg,var(--coral-d),var(--coral))}
+.ex-head-6{background:linear-gradient(90deg,var(--green),#5a9e1f)}
+.ex-head p{color:rgba(255,255,255,0.9);font-size:0.83rem;margin:0}
+.ex-head strong{color:#9FE3C6}
+.ex-badge{background:rgba(255,255,255,0.15);color:white;font-size:0.75rem;padding:3px 12px;border-radius:20px;font-weight:600}
+
+.q-list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+.q-item{border:0.5px solid rgba(0,0,0,0.07);border-radius:12px;padding:1rem 1.1rem;background:var(--cream);transition:all 0.3s;position:relative;overflow:hidden}
+.q-item.solved{background:linear-gradient(135deg,var(--blue-l),#e9f3fb);border-color:var(--blue-m)}
+.q-item.shake{animation:shake 0.4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-num{font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+.q-text{font-size:0.92rem;margin-bottom:0.5rem;line-height:1.55}
+.q-text strong{color:var(--blue)}
+.q-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.q-input{padding:8px 16px;font-size:0.9rem;border:1.5px solid rgba(0,0,0,0.15);border-radius:40px;font-family:'DM Sans',system-ui,sans-serif;background:white;color:var(--ink);width:210px;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.q-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(24,95,165,0.15)}
+.q-btn{color:white;border:none;padding:8px 20px;border-radius:40px;font-family:'DM Sans',system-ui,sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s,transform 0.1s}
+.q-btn-1{background:var(--blue)}.q-btn-1:hover{background:#0e4a80;transform:scale(0.97)}
+.q-btn-2{background:var(--teal)}.q-btn-2:hover{background:var(--teal-d);transform:scale(0.97)}
+.q-btn-3{background:var(--amber)}.q-btn-3:hover{background:var(--amber-d);transform:scale(0.97)}
+.q-fb{margin-top:8px;font-size:0.83rem;min-height:1.4rem}
+.ok{background:var(--teal-l);color:var(--teal-d);padding:5px 14px;border-radius:20px;display:inline-block;font-weight:500;animation:popIn 0.3s}
+.nope{background:var(--coral-l);color:var(--coral-d);padding:5px 14px;border-radius:20px;display:inline-block;animation:popIn 0.3s}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* CHOIX MULTIPLES */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem}
+@media(max-width:520px){.choice-grid{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid rgba(0,0,0,0.1);border-radius:14px;padding:12px 14px;text-align:left;font-family:'DM Sans',system-ui,sans-serif;font-size:0.88rem;cursor:pointer;transition:all 0.18s;color:var(--ink);position:relative;overflow:hidden}
+.choice-btn:hover{border-color:var(--blue-m);transform:translateY(-2px);box-shadow:0 4px 12px rgba(24,95,165,0.1)}
+.choice-btn.selected{border-color:var(--blue);background:var(--blue-l);font-weight:500}
+.choice-btn.correct{border-color:var(--blue);background:var(--blue-l);color:var(--blue);font-weight:600;animation:popIn 0.3s}
+.choice-btn.correct::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--blue);font-weight:700;font-size:1.1rem}
+.choice-btn.wrong{border-color:var(--coral-m);background:var(--coral-l);color:var(--coral-d);animation:shake 0.4s}
+.choice-btn.wrong::after{content:'✗';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--coral);font-weight:700;font-size:1.1rem}
+.choice-btn:disabled{cursor:default;opacity:0.9}
+
+/* TRI */
+.sort-zone{display:flex;flex-wrap:wrap;gap:10px;margin:0.75rem 0;min-height:52px;padding:10px;background:var(--cream);border-radius:12px;border:2px dashed rgba(0,0,0,0.1)}
+.sort-zone.over{border-color:var(--blue);background:var(--blue-l)}
+.sort-chip{background:white;border:1.5px solid rgba(0,0,0,0.12);border-radius:40px;padding:7px 16px;font-size:0.85rem;cursor:grab;transition:all 0.15s;user-select:none;font-family:'DM Sans',system-ui,sans-serif}
+.sort-chip:hover{border-color:var(--blue-m);transform:translateY(-2px);box-shadow:0 3px 8px rgba(0,0,0,0.08)}
+.sort-chip.dragging{opacity:0.4;cursor:grabbing}
+.sort-chip.placed{cursor:default;background:var(--blue-l);border-color:var(--blue-m);color:var(--blue);font-weight:500}
+.sort-chip.placed::before{content:'✓ ';color:var(--blue)}
+.sort-zone.correct-zone{border-color:var(--blue);background:var(--blue-l)}
+.sort-zone.wrong-zone{border-color:var(--coral-m);background:var(--coral-l)}
+.sort-label{font-size:0.85rem;font-weight:600;color:var(--muted);margin-top:0.5rem}
+
+/* MATCHING */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.match-cols{grid-template-columns:1fr}}
+.match-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.5rem}
+.match-item{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.87rem;cursor:pointer;transition:all 0.18s;margin-bottom:8px}
+.match-item:hover{border-color:var(--blue-m)}
+.match-item.active{border-color:var(--blue);background:var(--blue-l);box-shadow:0 0 0 3px rgba(24,95,165,0.15)}
+.match-item.matched{background:var(--blue-l);border-color:var(--blue-m);color:var(--blue);cursor:default;opacity:0.85}
+.match-item.matched::after{content:' ✓';color:var(--blue);font-weight:700}
+.match-item.wrong-pair{animation:shake 0.4s}
+
+/* CONFETTIS */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0.9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* MEMO */
+.memo{background:var(--ink);color:white;border-radius:16px;padding:1.5rem;margin-top:2rem}
+.memo h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;font-weight:400;color:#85B7EB;margin-bottom:1rem}
+.memo-cols{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.memo-col h4{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.memo-row{font-size:0.84rem;color:rgba(255,255,255,0.8);margin-bottom:6px;line-height:1.5}
+.memo-row strong{color:#85B7EB}
+.memo-row em{color:#9FE3C6;font-style:italic}
+
+/* RESET + FOOTER */
+.reset-bar{display:flex;justify-content:flex-end;padding:0.75rem 1.75rem 0}
+.reset-btn{background:white;border:0.5px solid rgba(0,0,0,0.15);padding:8px 20px;border-radius:40px;cursor:pointer;font-family:'DM Sans',system-ui,sans-serif;font-size:0.83rem;color:var(--muted);transition:background 0.15s}
+.reset-btn:hover{background:#f1f0eb}
+footer{text-align:center;font-size:0.78rem;color:var(--muted);padding:1.5rem 1.75rem;border-top:0.5px solid rgba(0,0,0,0.07);line-height:1.7;margin-top:2rem}
+
+@media(max-width:580px){
+  .hero h1{font-size:1.55rem}
+  .memo-cols{grid-template-columns:1fr}
+  .wrap{padding:1rem 1.1rem}
+  .progress-bar{padding:0.6rem 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Cours personnalisé · Léa · Série 3</div>
+  <h1>Négations fines<br><em>même pas, toujours pas, pas encore…</em></h1>
+  <div class="hero-sub">Niveau B2+ — 6 exercices · inclusion négative · attente · gradation · résignation</div>
+  <div class="pills">
+    <span class="pill">même pas · pas même</span>
+    <span class="pill">même plus · même moins</span>
+    <span class="pill">toujours pas · pas encore</span>
+    <span class="pill">plus du tout · plus jamais</span>
+    <span class="pill">tout de même</span>
+  </div>
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar">
+  <span class="progress-emoji" id="progressEmoji">🎯</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-score" id="progressScore">0 / 40</span>
+</div>
+
+<div class="wrap">
+
+  <!-- RAPPEL EXPRESS -->
+  <div class="rappel">
+    <h2>⚡ Rappel express : la négation, dans le détail</h2>
+    <div class="rappel-grid">
+      <div class="rappel-item"><strong>même pas</strong> = pas même, inclusion négative → <em>not even</em> · « Il n'a <u>même pas</u> dit bonjour. »</div>
+      <div class="rappel-item"><strong>même plus</strong> = gradation : ce qui était vrai a cessé → <em>not even… anymore</em> · « Il ne répond <u>même plus</u> à mes messages. »</div>
+      <div class="rappel-item"><strong>même moins</strong> = gradation inverse → <em>even less</em> · « Je ne cours pas vite, je cours <u>même moins</u> vite qu'avant. »</div>
+      <div class="rappel-item"><strong>toujours pas</strong> = l'attente continue → <em>still not</em> · « Ton colis n'est <u>toujours pas</u> arrivé ! »</div>
+      <div class="rappel-item"><strong>pas encore</strong> = ce n'est pas le moment, sans impatience → <em>not yet</em> · « Elle n'est <u>pas encore</u> rentrée, c'est normal. »</div>
+      <div class="rappel-item"><strong>plus du tout / plus jamais</strong> = arrêt total → <em>no longer at all / never again</em> · « Je ne fume <u>plus du tout</u>. »</div>
+      <div class="rappel-item"><strong>tout de même</strong> = malgré tout → <em>nevertheless</em> · « C'est cher, <u>tout de même</u> ! »</div>
+      <div class="rappel-item"><strong>ordre figé :</strong> on dit « <u>pas encore</u> », jamais « <s>encore pas</s> » !</div>
+    </div>
+  </div>
+
+  <!-- 1. EXERCICE 1 — QCM -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">1</div>
+    <h2>Exercice 1 — QCM : la bonne nuance</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Attente, inclusion, gradation ou arrêt ? Choisis la nuance exacte.</p>
+      <span class="ex-badge" id="badge1">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist1"></div>
+  </div>
+
+  <!-- 2. EXERCICE 2 — COMPLÉTER -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">2</div>
+    <h2>Exercice 2 — complète (8 phrases)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Écris : <strong>même pas · même plus · même moins · toujours pas · pas encore · plus du tout</strong>.</p>
+      <span class="ex-badge" id="badge2">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist2"></div>
+  </div>
+
+  <!-- 3. EXERCICE 3 — PHRASE CORRECTE ? -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">3</div>
+    <h2>Exercice 3 — quelle phrase est correcte ?</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-3">
+      <p>Une seule des deux phrases est correcte. Laquelle ?</p>
+      <span class="ex-badge" id="badge3">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist3"></div>
+  </div>
+
+  <!-- 4. EXERCICE 4 — RELIER -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">4</div>
+    <h2>Exercice 4 — relie l'expression et son sens</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-4">
+      <p>Clique sur une <strong>expression</strong> puis sur son <strong>sens</strong>.</p>
+      <span class="ex-badge" id="badge4">0 / 8</span>
+    </div>
+    <div class="q-list" id="qlist4"></div>
+  </div>
+
+  <!-- 5. EXERCICE 5 — TRI -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--coral-l);color:var(--coral-d)">5</div>
+    <h2>Exercice 5 — attente, inclusion, gradation ou arrêt ?</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-5">
+      <p>Glisse chaque phrase dans la bonne catégorie.</p>
+      <span class="ex-badge" id="badge5">0 / 12</span>
+    </div>
+    <div class="q-list" id="qlist5"></div>
+  </div>
+
+  <!-- 6. EXERCICE 6 — PRODUCTION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green)">6</div>
+    <h2>Exercice 6 — à toi de jouer !</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-6">
+      <p>Mise en situation : raconter une rupture, un changement, une attente.</p>
+    </div>
+    <div class="q-list">
+      <div class="q-item" style="background:var(--purple-l);border-color:var(--purple-m)">
+        <div class="q-text" style="color:var(--purple-d)">
+          <strong>🎤 À l'oral ou à l'écrit :</strong>
+          <ol style="margin-top:0.6rem;padding-left:1.3rem;line-height:2">
+            <li><strong>L'attente :</strong> raconte quelque chose que tu attends <em>depuis longtemps</em> (colis, réponse, résultats…). Utilise « toujours pas » puis « pas encore » et explique la différence de ton.</li>
+            <li><strong>La dégradation :</strong> décris une amitié ou une habitude qui s'est affaiblie : « Avant, on se parlait ; maintenant, elle ne me répond <em>même plus</em>… » Continue avec « même moins ».</li>
+            <li><strong>L'inclusion négative :</strong> raconte un moment où tu (ou quelqu'un) as oublié l'essentiel : « Il est parti sans <em>même pas</em>… »</li>
+            <li><strong>L'arrêt total :</strong> une chose que tu ne fais <em>plus du tout</em> (ou <em>plus jamais</em>) — et pourquoi.</li>
+            <li><strong>La résignation :</strong> une situation que tu acceptes avec un soupir : « …, <em>tout de même</em> ! »</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" id="resetBtn">⟳ Réinitialiser tous les exercices</button>
+  </div>
+
+  <!-- MEMO -->
+  <div class="memo">
+    <h3>Récapitulatif express</h3>
+    <div class="memo-cols">
+      <div class="memo-col">
+        <h4>Les négations fines</h4>
+        <div class="memo-row"><strong>même pas</strong> = pas même, inclusion négative</div>
+        <div class="memo-row"><strong>même plus</strong> = gradation : ça s'est arrêté · <strong>même moins</strong> = encore moins</div>
+        <div class="memo-row"><strong>toujours pas</strong> = l'attente continue (impatience) ≠ <strong>pas encore</strong> = pas le moment (neutre)</div>
+        <div class="memo-row"><strong>plus du tout / plus jamais</strong> = arrêt total, définitif</div>
+        <div class="memo-row"><strong>tout de même</strong> = malgré tout, résignation ou étonnement</div>
+      </div>
+      <div class="memo-col">
+        <h4>Les pièges du jour</h4>
+        <div class="memo-row">ordre figé : « <em>pas encore</em> », jamais « <s>encore pas</s> »</div>
+        <div class="memo-row">« même plus » exige une négation : « il ne répond <em>même plus</em> »</div>
+        <div class="memo-row">« toujours pas » garde l'idée d'attente : <em>the package still hasn't arrived</em></div>
+        <div class="memo-row">« plus » négatif se prononce [plu] : « je ne mange plus »</div>
+        <div class="memo-row" style="margin-top:8px;font-style:italic;color:rgba(255,255,255,0.5)">« Il n'a même pas attendu ; il ne m'écrit même plus. Je l'attends toujours pas, je sais — pas encore. »</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Entraînement personnalisé pour Léa · Négations fines · B2+<br>
+  « même pas, toujours pas, plus du tout : toutes les façons de dire non avec nuance »
+</footer>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+
+// EXERCICE 1 — QCM
+const qcm = [
+  { q: "« J'ai commandé ce colis il y a un mois : il n'est ______ arrivé ! » (attente + impatience)", options: ["pas encore", "toujours pas", "même pas"], correct: 1, hint: "L'attente dure et l'impatience monte → toujours pas." },
+  { q: "« Elle est partie sans ______ dire au revoir. » (inclusion négative)", options: ["toujours pas", "même pas", "pas encore"], correct: 1, hint: "Pas même le strict minimum → même pas." },
+  { q: "« Le bébé dort ? — Non, il dort ______, mais c'est normal, il est tôt. » (neutre, sans impatience)", options: ["pas encore", "toujours pas", "même plus"], correct: 0, hint: "Ce n'est simplement pas le moment → pas encore." },
+  { q: "« Avant il m'appelait chaque semaine ; maintenant il ne m'appelle ______. » (gradation : ça s'est arrêté)", options: ["même pas", "même plus", "toujours pas"], correct: 1, hint: "Avant oui, maintenant non : le lien s'est arrêté → même plus." },
+  { q: "« Ce film ne m'a ______ plu que le premier — au contraire, j'ai ______ aimé la suite. » (gradation inverse)", options: ["même plus · même moins", "même moins · même plus", "toujours pas · pas encore"], correct: 0, hint: "Moins bien que le premier → même plus plu ; encore moins la suite → même moins aimé." },
+  { q: "« J'ai arrêté le sucre depuis un an : je n'en prends ______, ni dans le café, ni en dessert. » (arrêt total)", options: ["pas encore", "plus du tout", "toujours pas"], correct: 1, hint: "Arrêt complet, aucune exception → plus du tout." }
+];
+
+// EXERCICE 2 — compléter
+const expr = [
+  { text: "« Trois semaines que je lui ai écrit : aucune réponse ______. » (attente)", ans: ["toujours pas", "toujours pas"], hint: "l'attente continue → toujours pas" },
+  { text: "« Il est entré, s'est assis et n'a ______ enlevé son manteau. » (inclusion négative)", ans: ["même pas", "meme pas"], hint: "pas même ce geste élémentaire → même pas" },
+  { text: "« Le train arrive dans dix minutes ; les voyageurs ne sont ______ tous là. » (neutre, c'est tôt)", ans: ["pas encore", "pas encore"], hint: "pas le moment, ton neutre → pas encore" },
+  { text: "« Elle m'évitait déjà ; maintenant elle ne me salue ______. » (gradation)", ans: ["même plus", "meme plus"], hint: "elle s'est arrêtée de saluer → même plus" },
+  { text: "« Je ne suis pas douée en italien ; en allemand, je le suis ______ ! » (gradation inverse)", ans: ["même moins", "meme moins"], hint: "encore moins douée → même moins" },
+  { text: "« Le film commence dans une heure, mais je n'ai ______ mes billets. » (ça va venir, pas d'inquiétude)", ans: ["pas encore", "pas encore"], hint: "ça va venir, pas de panique → pas encore" },
+  { text: "« Avant je lisais le soir ; maintenant je ne lis ______ — le téléphone a tout pris. » (arrêt total)", ans: ["plus du tout", "plus du tout"], hint: "arrêt complet → plus du tout" },
+  { text: "« C'est la troisième fois qu'il annule la sortie ; ______ , je ne lui en veux pas. » (malgré tout)", ans: ["tout de même", "tout de meme"], hint: "malgré tout → tout de même" }
+];
+
+// EXERCICE 3 — quelle phrase est correcte ?
+const correctSentence = [
+  { q: "Ordre des mots :", options: ["Elle n'est encore pas prête.", "Elle n'est pas encore prête."], correct: 1, hint: "L'ordre figé est « pas encore », jamais « encore pas »." },
+  { q: "« Plus » et la négation :", options: ["Je ne mange plus jamais de viande.", "Je ne mange jamais plus de viande."], correct: 1, hint: "« plus jamais » est l'ordre consacré : « plus jamais de viande ». (L'autre est grammaticalement possible mais non idiomatique.)" },
+  { q: "« Même plus » sans négation :", options: ["Il répond même plus vite qu'avant.", "Il ne répond même plus vite qu'avant."], correct: 0, hint: "Ici « même » + adverbe « plus vite » = comparaison positive : pas besoin de « ne… pas ». La négation casserait le sens !" },
+  { q: "« Toujours pas » vs « pas encore » :", options: ["Le facteur n'est toujours pas passé, je m'inquiète.", "Le facteur n'est pas encore passé, je m'inquiète."], correct: 0, hint: "Avec l'inquiétude/l'impatience, c'est « toujours pas » (l'attente dépasse la norme)." },
+  { q: "« Même pas » et l'infinitif :", options: ["Il est parti sans même pas dire au revoir.", "Il est parti sans même dire au revoir."], correct: 1, hint: "Après « sans », on dit « sans même » : « sans même dire ». « Sans même pas » est incorrect." },
+  { q: "« Plus du tout » :", options: ["Je n'y crois plus du tout.", "Je n'y crois pas du tout plus."], correct: 0, hint: "L'ordre est « ne… plus du tout » : le « plus » se place avant « du tout »." }
+];
+
+// EXERCICE 4 — relier (8 paires)
+const paires = [
+  { left: "même pas", right: "inclusion négative : pas même le minimum" },
+  { left: "même plus", right: "gradation : ce qui existait a cessé" },
+  { left: "même moins", right: "gradation inverse : encore moins que..." },
+  { left: "toujours pas", right: "attente qui continue (impatience)" },
+  { left: "pas encore", right: "ce n'est pas le moment (neutre)" },
+  { left: "plus du tout", right: "arrêt total, aucune exception" },
+  { left: "plus jamais", right: "arrêt définitif : never again" },
+  { left: "tout de même", right: "malgré tout : nevertheless" }
+];
+
+// EXERCICE 5 — tri (12 chips, 4 catégories)
+const triData = {
+  categories: [
+    { id: "attente", label: "⏳ Attente (toujours pas / pas encore)" },
+    { id: "inclusion", label: "🚫 Inclusion négative (même pas)" },
+    { id: "gradation", label: "📉 Gradation (même plus / même moins)" },
+    { id: "arret", label: "🛑 Arrêt (plus du tout / plus jamais)" }
+  ],
+  chips: [
+    { text: "Mon mot de passe n'arrive toujours pas sur ma boîte mail.", cat: "attente" },
+    { text: "Le dessert n'est pas encore prêt, le dîner est long.", cat: "attente" },
+    { text: "Il n'a même pas ouvert le cadeau qu'elle lui avait fait.", cat: "inclusion" },
+    { text: "Sans même regarder la facture, il a tout payé.", cat: "inclusion" },
+    { text: "Elle ne vient même plus aux réunions de famille.", cat: "gradation" },
+    { text: "Je ne comprends pas l'italien, et l'espagnol même moins.", cat: "gradation" },
+    { text: "Depuis l'accident, il ne conduit plus jamais la nuit.", cat: "arret" },
+    { text: "Elle ne regarde plus du tout la télévision.", cat: "arret" },
+    { text: "Le soleil n'est toujours pas revenu, quelle journée !", cat: "attente" },
+    { text: "On n'a même pas eu le temps de dire au revoir.", cat: "inclusion" },
+    { text: "Le premier tome était long ; le deuxième l'est même plus.", cat: "gradation" },
+    { text: "Je n'ai plus jamais repris ce chemin après la tempête.", cat: "arret" }
+  ]
+};
+
+/* ============================================================
+   PROGRESSION
+   ============================================================ */
+const TOTAL_POINTS = qcm.length + expr.length + correctSentence.length + paires.length + triData.chips.length; // 6+8+6+8+12 = 40
+let solvedItems = { ex1: new Set(), ex2: new Set(), ex3: new Set(), ex4: new Set(), ex5: new Set() };
+
+function updateProgress() {
+  const totalSolved = solvedItems.ex1.size + solvedItems.ex2.size + solvedItems.ex3.size + solvedItems.ex4.size + solvedItems.ex5.size;
+  const pct = Math.min(100, (totalSolved / TOTAL_POINTS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressScore').textContent = totalSolved + ' / ' + TOTAL_POINTS;
+  const emoji = document.getElementById('progressEmoji');
+  if (pct >= 100) { emoji.textContent = '🏆'; emoji.classList.add('pop'); setTimeout(()=>emoji.classList.remove('pop'), 600); }
+  else if (pct >= 75) emoji.textContent = '🔥';
+  else if (pct >= 50) emoji.textContent = '💪';
+  else if (pct >= 25) emoji.textContent = '📚';
+  else emoji.textContent = '🎯';
+
+  document.getElementById('badge1').textContent = solvedItems.ex1.size + ' / ' + qcm.length;
+  document.getElementById('badge2').textContent = solvedItems.ex2.size + ' / ' + expr.length;
+  document.getElementById('badge3').textContent = solvedItems.ex3.size + ' / ' + correctSentence.length;
+  document.getElementById('badge4').textContent = solvedItems.ex4.size + ' / ' + paires.length;
+  document.getElementById('badge5').textContent = solvedItems.ex5.size + ' / ' + triData.chips.length;
+
+  if (pct >= 100 && !window._confettiDone) {
+    window._confettiDone = true;
+    launchConfetti();
+  }
+}
+
+/* ============================================================
+   CONFETTIS
+   ============================================================ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#185FA5','#0F6E56','#534AB7','#D85A30','#85B7EB','#9FE3C6'];
+  for (let i = 0; i < 90; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = c.style.width;
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   FABRIQUES D'EXERCICES
+   ============================================================ */
+function buildInputExercise(listId, data, solvedSet, btnClass) {
+  const qlist = document.getElementById(listId);
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="comp-status"></span></div>
+      <div class="q-text">${item.text}</div>
+      <div class="q-row">
+        <input class="q-input" type="text" placeholder="Votre réponse" autocomplete="off">
+        <button class="q-btn ${btnClass}">Vérifier</button>
+      </div>
+      <div class="q-fb"></div>
+    `;
+    qlist.appendChild(div);
+  });
+
+  qlist.querySelectorAll('.q-item').forEach((item, idx) => {
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    const fb = item.querySelector('.q-fb');
+    const status = item.querySelector('.comp-status');
+
+    function check() {
+      if (item.classList.contains('solved')) return;
+      const v = inp.value;
+      if (!v.trim()) { fb.innerHTML = '<span class="nope">✏️ Écris une réponse avant de vérifier.</span>'; return; }
+      const norm = s => s.trim().toLowerCase().replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,"'");
+      const good = data[idx].ans.some(a => { const na = norm(a); return na === norm(v) || norm(v).replace(/[ ,.…]/g,'') === na.replace(/[ ,.…]/g,''); });
+      if (good) {
+        item.classList.add('solved');
+        status.textContent = '✅';
+        inp.disabled = true;
+        btn.disabled = true;
+        btn.textContent = '✓';
+        fb.innerHTML = `<span class="ok">✓ Bravo ! ${data[idx].hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        item.classList.add('shake');
+        setTimeout(() => item.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Incorrect. Indice : ${data[idx].hint}</span>`;
+      }
+    }
+    btn.addEventListener('click', check);
+    inp.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  });
+
+  return qlist;
+}
+
+function buildQcm(listId, data, solvedSet) {
+  const qlist = document.getElementById(listId);
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="qcm-status"></span></div>
+      <div class="q-text">${item.q}</div>
+      <div class="choice-grid">
+        ${item.options.map((opt, i) => `<button class="choice-btn" data-idx="${idx}" data-opt="${i}">${opt}</button>`).join('')}
+      </div>
+      <div class="q-fb"></div>
+    `;
+    qlist.appendChild(div);
+  });
+
+  qlist.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = parseInt(this.dataset.idx);
+      const opt = parseInt(this.dataset.opt);
+      const parent = this.closest('.q-item');
+      if (parent.classList.contains('solved')) return;
+
+      parent.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected','correct','wrong');
+        b.disabled = false;
+      });
+      this.classList.add('selected');
+
+      const item = data[idx];
+      const fb = parent.querySelector('.q-fb');
+      const status = parent.querySelector('.qcm-status');
+
+      if (opt === item.correct) {
+        this.classList.add('correct');
+        this.disabled = true;
+        parent.classList.add('solved');
+        parent.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+        status.textContent = '✅';
+        fb.innerHTML = `<span class="ok">✓ Exact ! ${item.hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        this.classList.add('wrong');
+        parent.classList.add('shake');
+        setTimeout(() => parent.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Pas tout à fait… Réessaie !</span>`;
+        setTimeout(() => this.classList.remove('wrong'), 800);
+      }
+    });
+  });
+  return qlist;
+}
+
+const qlist1 = buildQcm('qlist1', qcm, solvedItems.ex1);
+const qlist2 = buildInputExercise('qlist2', expr, solvedItems.ex2, 'q-btn-2');
+const qlist3 = buildQcm('qlist3', correctSentence, solvedItems.ex3);
+
+/* ============================================================
+   EXERCICE 4 — RELIER
+   ============================================================ */
+const qlist4 = document.getElementById('qlist4');
+const matchWrap = document.createElement('div');
+matchWrap.className = 'q-item';
+matchWrap.innerHTML = `
+  <div class="q-num"><span>Relie les paires</span><span class="match-status"></span></div>
+  <div class="match-cols">
+    <div class="match-col"><h5>Expressions</h5><div id="matchLeft"></div></div>
+    <div class="match-col"><h5>Sens</h5><div id="matchRight"></div></div>
+  </div>
+  <div class="q-fb"></div>
+`;
+qlist4.appendChild(matchWrap);
+
+const leftCol = matchWrap.querySelector('#matchLeft');
+const rightCol = matchWrap.querySelector('#matchRight');
+const shuffledRight = [...paires].sort(() => Math.random() - 0.5);
+
+paires.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'left';
+  el.dataset.idx = i;
+  el.textContent = p.left;
+  leftCol.appendChild(el);
+});
+shuffledRight.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'right';
+  el.dataset.idx = paires.indexOf(p);
+  el.textContent = p.right;
+  rightCol.appendChild(el);
+});
+
+let selectedLeft = null;
+let matchedCount = 0;
+
+matchWrap.querySelectorAll('.match-item').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('matched')) return;
+    const side = this.dataset.side;
+
+    if (side === 'left') {
+      matchWrap.querySelectorAll('.match-item[data-side="left"]').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+      selectedLeft = this;
+      return;
+    }
+
+    if (!selectedLeft) {
+      this.classList.add('wrong-pair');
+      setTimeout(() => this.classList.remove('wrong-pair'), 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">👈 Choisis d\'abord une expression à gauche.</span>';
+      return;
+    }
+
+    if (selectedLeft.dataset.idx === this.dataset.idx) {
+      selectedLeft.classList.remove('active');
+      selectedLeft.classList.add('matched');
+      this.classList.add('matched');
+      matchedCount++;
+      matchWrap.querySelector('.match-status').textContent = matchedCount + ' / ' + paires.length;
+      matchWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien joué ! ${matchedCount}/${paires.length} paires trouvées.</span>`;
+      if (!solvedItems.ex4.has(parseInt(this.dataset.idx))) {
+        solvedItems.ex4.add(parseInt(this.dataset.idx));
+        updateProgress();
+      }
+      selectedLeft = null;
+      if (matchedCount === paires.length) {
+        matchWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les paires sont reliées ! Excellent travail.</span>';
+      }
+    } else {
+      this.classList.add('wrong-pair');
+      selectedLeft.classList.add('wrong-pair');
+      const wrongEl = selectedLeft;
+      setTimeout(() => {
+        this.classList.remove('wrong-pair');
+        wrongEl && wrongEl.classList.remove('wrong-pair');
+      }, 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">✗ Ce n\'est pas le bon sens. Réessaie !</span>';
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 5 — TRI
+   ============================================================ */
+const qlist5 = document.getElementById('qlist5');
+const triWrap = document.createElement('div');
+triWrap.className = 'q-item';
+triWrap.innerHTML = `
+  <div class="q-num"><span>Glisse les étiquettes dans la bonne catégorie</span><span class="tri-status"></span></div>
+  <div class="sort-zone" id="chipsZone"></div>
+  <div id="catZones"></div>
+  <div class="q-fb"></div>
+`;
+qlist5.appendChild(triWrap);
+
+const chipsZone = triWrap.querySelector('#chipsZone');
+const catZones = triWrap.querySelector('#catZones');
+
+triData.categories.forEach(cat => {
+  const zone = document.createElement('div');
+  zone.innerHTML = `<div class="sort-label">${cat.label}</div>`;
+  const z = document.createElement('div');
+  z.className = 'sort-zone';
+  z.dataset.cat = cat.id;
+  z.id = 'zone-' + cat.id;
+  zone.appendChild(z);
+  catZones.appendChild(zone);
+});
+
+const shuffledChips = [...triData.chips].sort(() => Math.random() - 0.5);
+shuffledChips.forEach(chip => {
+  const el = document.createElement('div');
+  el.className = 'sort-chip';
+  el.draggable = true;
+  el.dataset.cat = chip.cat;
+  el.textContent = chip.text;
+  chipsZone.appendChild(el);
+});
+
+let draggedChip = null;
+document.querySelectorAll('.sort-chip').forEach(chip => {
+  chip.addEventListener('dragstart', function(e) {
+    draggedChip = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  chip.addEventListener('dragend', function() {
+    this.classList.remove('dragging');
+    draggedChip = null;
+  });
+});
+
+document.querySelectorAll('.sort-zone').forEach(zone => {
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('over');
+  });
+  zone.addEventListener('dragleave', function() {
+    this.classList.remove('over');
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('over');
+    if (!draggedChip) return;
+    const cat = this.dataset.cat;
+    if (draggedChip.dataset.cat === cat) {
+      draggedChip.classList.add('placed');
+      draggedChip.draggable = false;
+      this.appendChild(draggedChip);
+      this.classList.add('correct-zone');
+      setTimeout(() => this.classList.remove('correct-zone'), 600);
+      const chipText = draggedChip.textContent;
+      if (!solvedItems.ex5.has(chipText)) {
+        solvedItems.ex5.add(chipText);
+        updateProgress();
+      }
+      triWrap.querySelector('.tri-status').textContent = solvedItems.ex5.size + ' / ' + triData.chips.length;
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien classé ! ${solvedItems.ex5.size}/${triData.chips.length}.</span>`;
+      if (solvedItems.ex5.size === triData.chips.length) {
+        triWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les étiquettes sont bien rangées !</span>';
+      }
+    } else {
+      this.classList.add('wrong-zone');
+      setTimeout(() => this.classList.remove('wrong-zone'), 500);
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="nope">✗ Cette phrase n'appartient pas à « ${triData.categories.find(c=>c.id===cat).label} ».</span>`;
+    }
+  });
+});
+
+/* ============================================================
+   RESET
+   ============================================================ */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  // reset QCM (ex1 + ex3)
+  [qlist1, qlist3].forEach(ql => {
+    ql.querySelectorAll('.q-item').forEach(item => {
+      item.classList.remove('solved');
+      item.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected','correct','wrong');
+        b.disabled = false;
+      });
+      item.querySelector('.q-fb').innerHTML = '';
+      item.querySelector('.qcm-status').textContent = '';
+    });
+  });
+  // reset inputs (ex2)
+  qlist2.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('solved');
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    inp.value = '';
+    inp.disabled = false;
+    btn.disabled = false;
+    btn.textContent = 'Vérifier';
+    item.querySelector('.q-fb').innerHTML = '';
+    item.querySelector('.comp-status').textContent = '';
+  });
+  // reset relier
+  matchWrap.querySelectorAll('.match-item').forEach(el => {
+    el.classList.remove('matched','active','wrong-pair');
+  });
+  selectedLeft = null;
+  matchedCount = 0;
+  matchWrap.querySelector('.match-status').textContent = '';
+  matchWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset tri
+  const allChips = triWrap.querySelectorAll('.sort-chip');
+  allChips.forEach(chip => {
+    chip.classList.remove('placed');
+    chip.draggable = true;
+    chipsZone.appendChild(chip);
+  });
+  const chipsArr = [...chipsZone.querySelectorAll('.sort-chip')];
+  chipsArr.sort(() => Math.random() - 0.5).forEach(c => chipsZone.appendChild(c));
+  triWrap.querySelector('.tri-status').textContent = '';
+  triWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset score
+  solvedItems.ex1.clear();
+  solvedItems.ex2.clear();
+  solvedItems.ex3.clear();
+  solvedItems.ex4.clear();
+  solvedItems.ex5.clear();
+  window._confettiDone = false;
+  updateProgress();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateProgress();
+</script>
+</body>
+</html>
