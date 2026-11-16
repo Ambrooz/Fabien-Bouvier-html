@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Leçon d'actualité B2/C1 — Nvidia : la chute spectaculaire de Jensen Huang</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#FFFBF5;--ink:#1C1917;--muted:#6B6159;
+  --coral:#D85A30;--coral-l:#FAECE7;--coral-m:#F0997B;--coral-d:#993C1D;
+  --teal:#0F6E56;--teal-l:#E1F5EE;--teal-m:#5DCAA5;--teal-d:#085041;
+  --purple:#534AB7;--purple-l:#EEEDFE;--purple-m:#AFA9EC;--purple-d:#3C3489;
+  --amber:#BA7517;--amber-l:#FAEEDA;--amber-m:#EF9F27;--amber-d:#854F0B;
+  --blue:#185FA5;--blue-l:#E6F1FB;--blue-m:#85B7EB;
+  --green:#3B6D11;--green-l:#EAF3DE;--green-m:#97C459;
+  --red:#C0271A;--red-l:#FBEAE8;--red-m:#E8867D;--red-d:#7E1811;
+  --gold:#D9A418;
+}
+body{font-family:'DM Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;padding-bottom:2rem}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#3C3489 0%,#1C1917 55%,#0F6E56 100%);color:white;padding:2.5rem 2rem 2rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50px;right:-50px;width:220px;height:220px;border-radius:50%;background:rgba(217,164,24,0.18);pointer-events:none}
+.hero::after{content:'';position:absolute;bottom:-70px;left:30px;width:160px;height:160px;border-radius:50%;background:rgba(133,183,235,0.14);pointer-events:none}
+.hero-eyebrow{font-size:11px;font-weight:600;letter-spacing:0.14em;color:#FAC775;text-transform:uppercase;margin-bottom:0.5rem}
+.hero h1{font-family:'DM Serif Display',Georgia,serif;font-size:2.1rem;line-height:1.2;margin-bottom:0.6rem}
+.hero h1 em{color:#FAC775;font-style:italic}
+.hero-sub{font-size:0.85rem;color:rgba(255,255,255,0.6);margin-bottom:1.25rem}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{background:rgba(255,255,255,0.1);border:0.5px solid rgba(255,255,255,0.2);border-radius:40px;padding:5px 14px;font-size:0.78rem;color:rgba(255,255,255,0.85)}
+
+/* LAYOUT */
+.wrap{padding:1.5rem 1.75rem;max-width:760px;margin:0 auto}
+
+/* SECTION HEADERS */
+.sec-head{display:flex;align-items:center;gap:10px;margin:2.5rem 0 1.1rem;padding-top:1.5rem;border-top:0.5px solid rgba(0,0,0,0.08)}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.82rem;font-weight:600;flex-shrink:0}
+.sec-head h2{font-family:'DM Serif Display',Georgia,serif;font-size:1.35rem;font-weight:400}
+
+/* TEXTE */
+.text-story{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;line-height:1.9;font-size:1rem;position:relative;overflow:hidden}
+.text-story::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,var(--purple),var(--gold))}
+.text-story strong{color:var(--red-d)}
+.text-story em{color:var(--amber-d);font-style:italic}
+.text-story .sv{background:var(--amber-l);border-radius:4px;padding:0 3px;font-weight:500}
+.text-story .pol{background:var(--teal-l);border-radius:4px;padding:0 3px;font-weight:500}
+.text-story .link{background:var(--purple-l);border-radius:4px;padding:0 3px;font-weight:500}
+.text-story .imp{background:var(--coral-l);border-radius:4px;padding:0 3px;font-weight:500}
+
+/* VOCAB */
+.vocab-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px;margin-top:1rem}
+.vocab-card{background:white;border-radius:12px;border:0.5px solid rgba(0,0,0,0.08);padding:0.75rem 1rem;display:flex;justify-content:space-between;align-items:center;gap:10px;cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden}
+.vocab-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.06);border-color:var(--red-m)}
+.vocab-card .vocab-en{opacity:0;transition:opacity 0.25s;font-size:0.82rem;color:var(--muted);text-align:right}
+.vocab-card.revealed .vocab-en{opacity:1}
+.vocab-card::after{content:'👆';position:absolute;bottom:4px;right:8px;font-size:0.7rem;opacity:0.3}
+.vocab-card.revealed::after{content:'✓';color:var(--red-d);opacity:0.7}
+.vocab-fr{font-weight:500;font-size:0.9rem}
+
+/* FORMULES */
+.formula-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px;margin-top:1rem}
+.formula-card{border-radius:14px;padding:1rem 1.125rem;border:0.5px solid transparent}
+.fc-coral{background:var(--coral-l);border-color:var(--coral-m)}.fc-coral strong{color:var(--coral-d)}
+.fc-teal{background:var(--teal-l);border-color:var(--teal-m)}.fc-teal strong{color:var(--teal-d)}
+.fc-purple{background:var(--purple-l);border-color:var(--purple-m)}.fc-purple strong{color:var(--purple-d)}
+.fc-amber{background:var(--amber-l);border-color:var(--amber-m)}.fc-amber strong{color:var(--amber-d)}
+.fc-blue{background:var(--blue-l);border-color:var(--blue-m)}.fc-blue strong{color:var(--blue)}
+.fc-green{background:var(--green-l);border-color:var(--green-m)}.fc-green strong{color:var(--green)}
+.fc-red{background:var(--red-l);border-color:var(--red-m)}.fc-red strong{color:var(--red-d)}
+.formula-card strong{font-size:0.95rem;display:block;margin-bottom:4px}
+.formula-ex{font-size:0.82rem;margin-top:8px;font-style:italic;opacity:0.85}
+
+/* RÈGLES / TABLEAUX */
+.adj-rule{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.25rem 1.5rem;margin-bottom:1rem}
+.adj-rule p{font-size:0.92rem;color:var(--muted);margin-bottom:1rem;line-height:1.7}
+.adj-rule p strong{color:var(--ink)}
+.adj-table{width:100%;border-collapse:collapse;font-size:0.89rem}
+.adj-table th{background:var(--red-l);color:var(--red-d);font-weight:600;padding:8px 12px;text-align:left;border-bottom:2px solid var(--red-m)}
+.adj-table td{padding:10px 12px;border-bottom:0.5px solid rgba(0,0,0,0.06)}
+.adj-table tr:last-child td{border-bottom:none}
+.adj-table td strong{color:var(--red-d)}
+.badge-sv{background:var(--amber-l);color:var(--amber-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-pol{background:var(--teal-l);color:var(--teal-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.badge-imp{background:var(--coral-l);color:var(--coral-d);padding:2px 10px;border-radius:20px;font-size:0.8rem;font-weight:500}
+.adj-examples{background:var(--red-l);border-radius:12px;padding:1rem 1.25rem;margin-top:1rem;font-size:0.9rem;line-height:2.1}
+.adj-examples strong{color:var(--red-d)}
+
+/* TEST DE VOCABULAIRE */
+.vocab-test{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);padding:1.4rem 1.5rem;margin-top:1rem}
+.vocab-test-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:1rem}
+.vocab-test-head h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.15rem;font-weight:400;color:var(--red-d)}
+.vocab-test-hint{font-size:0.78rem;color:var(--muted);background:var(--red-l);padding:5px 12px;border-radius:20px;border:0.5px solid var(--red-m)}
+.vocab-test-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media(max-width:580px){.vocab-test-grid{grid-template-columns:1fr}}
+.vocab-test-row{display:flex;align-items:center;gap:10px;background:var(--cream);border-radius:12px;padding:10px 14px;border:0.5px solid rgba(0,0,0,0.06)}
+.vocab-test-en{font-size:0.85rem;color:var(--muted);flex:1;font-weight:500}
+.vocab-test-arrow{color:var(--red-m);font-size:0.9rem}
+.vocab-test-fr{font-size:0.9rem;font-weight:600;color:var(--red-d);cursor:pointer;padding:4px 10px;border-radius:20px;background:white;border:1px dashed var(--red-m);transition:all 0.25s;flex:1;text-align:center;user-select:none}
+.vocab-test-fr.blurred{filter:blur(6px);color:var(--red);background:var(--red-l);border-style:solid}
+.vocab-test-fr.blurred:hover{filter:blur(4px);background:#f7d8d3}
+.vocab-test-fr.revealed{filter:blur(0);background:var(--teal-l);color:var(--teal-d);border-color:var(--teal-m);border-style:solid;animation:popIn 0.35s}
+.vocab-test-counter{font-size:0.78rem;color:var(--muted);text-align:right;margin-top:0.75rem}
+
+/* BARRE DE PROGRESSION */
+.progress-bar{position:sticky;top:0;z-index:50;background:rgba(255,251,245,0.95);backdrop-filter:blur(8px);padding:0.75rem 1.75rem;border-bottom:0.5px solid rgba(0,0,0,0.08);display:flex;align-items:center;gap:12px}
+.progress-track{flex:1;height:10px;background:rgba(0,0,0,0.07);border-radius:20px;overflow:hidden}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--red),var(--gold),var(--purple));border-radius:20px;transition:width 0.5s cubic-bezier(.4,0,.2,1)}
+.progress-score{font-size:0.82rem;font-weight:700;color:var(--red-d);min-width:70px;text-align:right}
+.progress-emoji{font-size:1.2rem;transition:transform 0.3s}
+.progress-emoji.pop{transform:scale(1.5) rotate(10deg)}
+
+/* EXERCICES */
+.exercise-wrap{background:white;border-radius:16px;border:0.5px solid rgba(0,0,0,0.08);overflow:hidden;margin-top:1rem}
+.ex-head{padding:0.85rem 1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.ex-head-1{background:linear-gradient(90deg,var(--red-d),var(--red))}
+.ex-head-2{background:linear-gradient(90deg,var(--purple-d),var(--purple))}
+.ex-head-3{background:linear-gradient(90deg,var(--amber-d),var(--amber))}
+.ex-head-4{background:linear-gradient(90deg,var(--teal-d),var(--teal))}
+.ex-head-5{background:linear-gradient(90deg,var(--green),#5a9e1f)}
+.ex-head-6{background:linear-gradient(90deg,var(--coral-d),var(--coral))}
+.ex-head p{color:rgba(255,255,255,0.9);font-size:0.83rem;margin:0}
+.ex-head strong{color:#FAC775}
+.ex-badge{background:rgba(255,255,255,0.15);color:white;font-size:0.75rem;padding:3px 12px;border-radius:20px;font-weight:600}
+
+.q-list{padding:1rem 1.25rem;display:flex;flex-direction:column;gap:1rem}
+.q-item{border:0.5px solid rgba(0,0,0,0.07);border-radius:12px;padding:1rem 1.1rem;background:var(--cream);transition:all 0.3s;position:relative;overflow:hidden}
+.q-item.solved{background:linear-gradient(135deg,var(--red-l),#fdf3f0);border-color:var(--red-m)}
+.q-item.shake{animation:shake 0.4s}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-num{font-size:0.75rem;font-weight:600;color:var(--muted);margin-bottom:0.35rem;text-transform:uppercase;letter-spacing:0.06em;display:flex;justify-content:space-between;align-items:center}
+.q-text{font-size:0.95rem;margin-bottom:0.5rem;line-height:1.6}
+.q-text strong{color:var(--red-d)}
+.q-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.q-input{padding:8px 16px;font-size:0.9rem;border:1.5px solid rgba(0,0,0,0.15);border-radius:40px;font-family:'DM Sans',system-ui,sans-serif;background:white;color:var(--ink);width:210px;outline:none;transition:border-color 0.15s,box-shadow 0.15s}
+.q-input:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(192,39,26,0.15)}
+.q-btn{color:white;border:none;padding:8px 20px;border-radius:40px;font-family:'DM Sans',system-ui,sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;transition:background 0.15s,transform 0.1s}
+.q-btn-1{background:var(--red)}.q-btn-1:hover{background:var(--red-d);transform:scale(0.97)}
+.q-btn-2{background:var(--purple)}.q-btn-2:hover{background:var(--purple-d);transform:scale(0.97)}
+.q-btn-3{background:var(--amber)}.q-btn-3:hover{background:var(--amber-d);transform:scale(0.97)}
+.q-btn-6{background:var(--coral)}.q-btn-6:hover{background:var(--coral-d);transform:scale(0.97)}
+.q-fb{margin-top:8px;font-size:0.83rem;min-height:1.4rem}
+.ok{background:var(--red-l);color:var(--red-d);padding:5px 14px;border-radius:20px;display:inline-block;font-weight:500;animation:popIn 0.3s}
+.nope{background:var(--purple-l);color:var(--purple-d);padding:5px 14px;border-radius:20px;display:inline-block;animation:popIn 0.3s}
+@keyframes popIn{0%{transform:scale(0.85);opacity:0}100%{transform:scale(1);opacity:1}}
+
+/* CHOIX MULTIPLES */
+.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:0.5rem}
+@media(max-width:520px){.choice-grid{grid-template-columns:1fr}}
+.choice-btn{background:white;border:2px solid rgba(0,0,0,0.1);border-radius:14px;padding:12px 14px;text-align:left;font-family:'DM Sans',system-ui,sans-serif;font-size:0.9rem;cursor:pointer;transition:all 0.18s;color:var(--ink);position:relative;overflow:hidden}
+.choice-btn:hover{border-color:var(--red-m);transform:translateY(-2px);box-shadow:0 4px 12px rgba(192,39,26,0.1)}
+.choice-btn.selected{border-color:var(--red);background:var(--red-l);font-weight:500}
+.choice-btn.correct{border-color:var(--red);background:var(--red-l);color:var(--red-d);font-weight:600;animation:popIn 0.3s}
+.choice-btn.correct::after{content:'✓';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--red);font-weight:700;font-size:1.1rem}
+.choice-btn.wrong{border-color:var(--purple-m);background:var(--purple-l);color:var(--purple-d);animation:shake 0.4s}
+.choice-btn.wrong::after{content:'✗';position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--purple);font-weight:700;font-size:1.1rem}
+.choice-btn:disabled{cursor:default;opacity:0.9}
+
+/* TRI */
+.sort-zone{display:flex;flex-wrap:wrap;gap:10px;margin:0.75rem 0;min-height:52px;padding:10px;background:var(--cream);border-radius:12px;border:2px dashed rgba(0,0,0,0.1)}
+.sort-zone.over{border-color:var(--red);background:var(--red-l)}
+.sort-chip{background:white;border:1.5px solid rgba(0,0,0,0.12);border-radius:40px;padding:7px 16px;font-size:0.87rem;cursor:grab;transition:all 0.15s;user-select:none;font-family:'DM Sans',system-ui,sans-serif}
+.sort-chip:hover{border-color:var(--red-m);transform:translateY(-2px);box-shadow:0 3px 8px rgba(0,0,0,0.08)}
+.sort-chip.dragging{opacity:0.4;cursor:grabbing}
+.sort-chip.placed{cursor:default;background:var(--red-l);border-color:var(--red-m);color:var(--red-d);font-weight:500}
+.sort-chip.placed::before{content:'✓ ';color:var(--red)}
+.sort-zone.correct-zone{border-color:var(--red);background:var(--red-l)}
+.sort-zone.wrong-zone{border-color:var(--purple-m);background:var(--purple-l)}
+.sort-label{font-size:0.85rem;font-weight:600;color:var(--muted);margin-top:0.5rem}
+
+/* MATCHING */
+.match-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:0.5rem}
+@media(max-width:520px){.match-cols{grid-template-columns:1fr}}
+.match-col h5{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--muted);margin-bottom:0.5rem}
+.match-item{background:white;border:1.5px solid rgba(0,0,0,0.1);border-radius:12px;padding:10px 14px;font-size:0.89rem;cursor:pointer;transition:all 0.18s;margin-bottom:8px}
+.match-item:hover{border-color:var(--red-m)}
+.match-item.active{border-color:var(--red);background:var(--red-l);box-shadow:0 0 0 3px rgba(192,39,26,0.15)}
+.match-item.matched{background:var(--red-l);border-color:var(--red-m);color:var(--red-d);cursor:default;opacity:0.85}
+.match-item.matched::after{content:' ✓';color:var(--red);font-weight:700}
+.match-item.wrong-pair{animation:shake 0.4s}
+
+/* CONFETTIS */
+.confetti-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;overflow:hidden}
+.confetti{position:absolute;width:10px;height:10px;opacity:0.9;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ENCADRÉ CONTEXTE */
+.context-box{background:var(--ink);color:white;border-radius:16px;padding:1.25rem 1.5rem;margin-top:1rem}
+.context-box h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.05rem;font-weight:400;color:#FAC775;margin-bottom:0.6rem}
+.context-box p{font-size:0.88rem;color:rgba(255,255,255,0.8);line-height:1.8;margin-bottom:0.6rem}
+.context-box p:last-child{margin-bottom:0}
+.context-box strong{color:#FAC775}
+
+/* MEMO */
+.memo{background:var(--ink);color:white;border-radius:16px;padding:1.5rem;margin-top:2rem}
+.memo h3{font-family:'DM Serif Display',Georgia,serif;font-size:1.1rem;font-weight:400;color:#FAC775;margin-bottom:1rem}
+.memo-cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.25rem}
+.memo-col h4{font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:0.6rem}
+.memo-row{font-size:0.84rem;color:rgba(255,255,255,0.8);margin-bottom:6px;line-height:1.5}
+.memo-row strong{color:#FAC775}
+.memo-row em{color:#AFA9EC;font-style:italic}
+
+/* RESET + FOOTER */
+.reset-bar{display:flex;justify-content:flex-end;padding:0.75rem 1.75rem 0}
+.reset-btn{background:white;border:0.5px solid rgba(0,0,0,0.15);padding:8px 20px;border-radius:40px;cursor:pointer;font-family:'DM Sans',system-ui,sans-serif;font-size:0.83rem;color:var(--muted);transition:background 0.15s}
+.reset-btn:hover{background:#f1f0eb}
+footer{text-align:center;font-size:0.78rem;color:var(--muted);padding:1.5rem 1.75rem;border-top:0.5px solid rgba(0,0,0,0.07);line-height:1.7;margin-top:2rem}
+
+@media(max-width:580px){
+  .hero h1{font-size:1.55rem}
+  .memo-cols{grid-template-columns:1fr}
+  .wrap{padding:1rem 1.1rem}
+  .progress-bar{padding:0.6rem 1.1rem}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-eyebrow">Leçon d'actualité · FLE · B2/C1 · 13 novembre 2026</div>
+  <h1>Nvidia : la <em>chute spectaculaire</em><br>de Jensen Huang</h1>
+  <div class="hero-sub">Analyser une actualité économique · la concession et l'opposition (bien que + subjonctif, malgré, néanmoins) · le lexique journalistique</div>
+  <div class="pills">
+    <span class="pill">empêtré dans un scandale</span>
+    <span class="pill">bien que + subjonctif</span>
+    <span class="pill">malgré / néanmoins</span>
+    <span class="pill">susciter une polémique</span>
+    <span class="pill">rendre des comptes</span>
+  </div>
+</div>
+
+<!-- BARRE DE PROGRESSION -->
+<div class="progress-bar">
+  <span class="progress-emoji" id="progressEmoji">🎯</span>
+  <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+  <span class="progress-score" id="progressScore">0 / 27</span>
+</div>
+
+<div class="wrap">
+
+  <!-- 1. TEXTE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--red-l);color:var(--red-d)">1</div>
+    <h2>Texte : la fin d'une ère à la Silicon Valley</h2>
+  </div>
+  <div class="text-story">
+    <strong>Bien qu'il ait dirigé</strong> Nvidia d'une main de fer pendant trente-trois ans, Jensen Huang n'a pas su — ou pas voulu — éviter sa propre chute. Jeudi 12 novembre 2026, le fondateur de la multinationale américaine des <span class="pol">puces électroniques</span> a <span class="imp">démissionné</span> de son poste de président, <strong>empêtré</strong> dans un scandale qui a <strong>secoué</strong> tout le secteur de la tech, dont lui et son entreprise sont devenus des acteurs <strong>incontournables</strong>.
+    <br><br>
+    « La chute spectaculaire de Jensen Huang fait suite à ses <span class="link">aveux</span> [du 8 novembre] concernant une relation avec une femme que les autorités américaines soupçonnent d'être une <span class="imp">espionne chinoise</span> », résume <em>The Financial Times</em>. Un premier scandale auquel est venue s'ajouter, mercredi 11 novembre, la révélation par <em>The New York Times</em> d'une autre <span class="pol">relation extraconjugale</span> que l'homme de 63 ans aurait eue avec une <span class="sv">responsable</span> de l'entreprise.
+    <br><br>
+    Le dirigeant sera <strong>remplacé</strong> <span class="sv">à titre temporaire</span> par Colette Kress, l'actuelle vice-présidente exécutive et directrice financière, qui a accepté d'assurer l'<strong>intérim</strong> jusqu'à ce qu'« un <span class="link">successeur</span> permanent soit nommé », a indiqué le <span class="pol">conseil d'administration</span> dans un communiqué. Une décision attendue, <strong>mais</strong> qui en surprend plus d'un : <strong>malgré</strong> les polémiques <strong>suscitées</strong> par ses relations extraconjugales, Jensen Huang <strong>semblait intouchable</strong>.
+    <br><br>
+    <strong>Bien qu'une enquête interne ait été ouverte</strong> au sein de Nvidia dès le 8 novembre, « de nombreux analystes doutaient que Huang, qui avait exercé un contrôle strict sur l'entreprise depuis sa création, puisse perdre son poste », souligne <em>The Washington Post</em>. Le succès de Nvidia — devenue l'une des entreprises les plus riches du monde grâce au boom de l'intelligence artificielle — et la <span class="sv">veste en cuir</span> qu'il quittait rarement avaient fait de lui « l'une des figures les plus <strong>emblématiques</strong> » du secteur.
+    <br><br>
+    Le natif de Taïwan bénéficiait en outre d'une relation <strong>étroite</strong> avec la Maison-Blanche. Lundi 9 novembre, Donald Trump, dont il était devenu une sorte de conseiller <span class="sv">officieux</span> sur l'IA, l'avait <strong>défendu</strong> en le qualifiant de « type bien ». Un soutien qui ne relève pas seulement de la <strong>bonne entente</strong> entre les deux hommes : « Nvidia joue un rôle <strong>crucial</strong> dans la bonne santé du marché boursier, l'administration Trump considérant l'essor de l'intelligence artificielle comme le <strong>moteur</strong> du prochain chapitre de l'économie américaine », explique le quotidien.
+    <br><br>
+    Si Jensen Huang ne dirige plus Nvidia à partir de ce jeudi, le communiqué ne précise pas s'il continuera ou non de peser sur les décisions de la firme. Sa démission « <strong>marque la fin d'une époque</strong> au cours de laquelle il a alimenté l'essor mondial de l'IA et s'est imposé comme une figure <strong>géopolitique</strong> majeure. Il laisse l'une des entreprises les plus <strong>valorisées</strong> au monde à la recherche d'un nouveau leader », écrit <em>The Wall Street Journal</em>.
+    <br><br>
+    En Bourse, les valeurs de l'IA ont été <strong>chahutées</strong> par le scandale. <strong>Quoi qu'il en soit</strong>, pour la Silicon Valley, la leçon est claire : même les patrons les plus puissants devront désormais <strong>rendre des comptes</strong>.
+    <br><br>
+    <em>Moralité : bien que le pouvoir protège souvent, il ne dispense jamais des règles. Néanmoins, la chute d'un titan fait toujours des vagues.</em>
+  </div>
+
+  <!-- ENCADRÉ CONTEXTE -->
+  <div class="context-box">
+    <h3>📍 Pour bien comprendre</h3>
+    <p><strong>Nvidia</strong> : fondée en 1993 par Jensen Huang, cette entreprise américaine fabrique les <strong>puces électroniques</strong> (GPU) qui font tourner l'intelligence artificielle, de ChatGPT aux centres de données. Sa valorisation boursière en fait l'une des premières capitalisations mondiales : son sort influence l'ensemble des marchés.</p>
+    <p><strong>Le conseil d'administration</strong> : l'organe qui représente les actionnaires et nomme (ou révoque) le dirigeant. C'est lui qui a accepté la démission et désigné Colette Kress pour l'<strong>intérim</strong>.</p>
+    <p><strong>La bourse et les valeurs de l'IA</strong> : les « valeurs » sont les actions cotées. Le scandale a fait <strong>chahuter</strong> (secouer, faire fluctuer violemment) les cours des entreprises liées à l'IA, tant Nvidia pèse dans les indices américains.</p>
+    <p><strong>Le lexique de la presse</strong> : « empêtré », « aveux », « susciter une polémique », « rendre des comptes »… Les journaux utilisent un vocabulaire imagé et des connecteurs de concession (<em>bien que, malgré, néanmoins</em>) pour nuancer leur récit. Cet article est adapté de Courrier international (12 novembre 2026), qui cite The Financial Times, The New York Times, The Washington Post et The Wall Street Journal.</p>
+  </div>
+
+  <!-- 2. VOCABULAIRE INTERACTIF -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">2</div>
+    <h2>Lexique journalistique et économique <span style="font-size:0.7rem;color:var(--muted);font-family:'DM Sans'">(cliquez pour révéler)</span></h2>
+  </div>
+  <div class="vocab-grid" id="vocabGrid">
+    <div class="vocab-card"><span class="vocab-fr">être empêtré (dans)</span><span class="vocab-en">to be bogged down / mired (in)</span></div>
+    <div class="vocab-card"><span class="vocab-fr">des aveux / avouer</span><span class="vocab-en">a confession / to confess</span></div>
+    <div class="vocab-card"><span class="vocab-fr">susciter une polémique</span><span class="vocab-en">to spark a controversy</span></div>
+    <div class="vocab-card"><span class="vocab-fr">secouer (un secteur)</span><span class="vocab-en">to shake up (a sector)</span></div>
+    <div class="vocab-card"><span class="vocab-fr">intouchable</span><span class="vocab-en">untouchable</span></div>
+    <div class="vocab-card"><span class="vocab-fr">emblématique</span><span class="vocab-en">emblematic, iconic</span></div>
+    <div class="vocab-card"><span class="vocab-fr">assurer l'intérim</span><span class="vocab-en">to fill in temporarily, to act as interim</span></div>
+    <div class="vocab-card"><span class="vocab-fr">une relation étroite</span><span class="vocab-en">a close relationship</span></div>
+    <div class="vocab-card"><span class="vocab-fr">officieux</span><span class="vocab-en">unofficial</span></div>
+    <div class="vocab-card"><span class="vocab-fr">chahuté(e)</span><span class="vocab-en">turbulent, shaken</span></div>
+    <div class="vocab-card"><span class="vocab-fr">valorisé(e) (en bourse)</span><span class="vocab-en">valued / high-valued</span></div>
+    <div class="vocab-card"><span class="vocab-fr">rendre des comptes</span><span class="vocab-en">to be held accountable</span></div>
+    <div class="vocab-card"><span class="vocab-fr">marquer la fin d'une époque</span><span class="vocab-en">to mark the end of an era</span></div>
+    <div class="vocab-card"><span class="vocab-fr">faire des vagues</span><span class="vocab-en">to make waves</span></div>
+    <div class="vocab-card"><span class="vocab-fr">démissionner de son poste</span><span class="vocab-en">to resign from one's position</span></div>
+  </div>
+
+  <!-- 3. STRUCTURES CLÉS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--red-l);color:var(--red-d)">3</div>
+    <h2>Structures clés</h2>
+  </div>
+  <div class="formula-grid">
+    <div class="formula-card fc-red"><strong>bien que + subjonctif</strong><div class="formula-ex">📌 Bien qu'il ait dirigé Nvidia pendant 33 ans, il est tombé.</div></div>
+    <div class="formula-card fc-teal"><strong>malgré + nom</strong><div class="formula-ex">📌 Malgré les polémiques, il semblait intouchable.</div></div>
+    <div class="formula-card fc-purple"><strong>néanmoins / toutefois / en revanche</strong><div class="formula-ex">📌 La décision était attendue ; néanmoins, elle surprend.</div></div>
+    <div class="formula-card fc-amber"><strong>faire suite à / être suivi de</strong><div class="formula-ex">📌 La chute fait suite à ses aveux du 8 novembre.</div></div>
+    <div class="formula-card fc-blue"><strong>le conditionnel du renseignement</strong><div class="formula-ex">📌 une relation qu'il « aurait eue » avec une responsable (info non confirmée)</div></div>
+    <div class="formula-card fc-green"><strong>quoi qu'il en soit</strong><div class="formula-ex">📌 Quoi qu'il en soit, la leçon est claire.</div></div>
+  </div>
+
+  <!-- 4. RÈGLE 1 — CONCESSION ET OPPOSITION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--red-l);color:var(--red-d)">4</div>
+    <h2>Grammaire : exprimer la concession et l'opposition</h2>
+  </div>
+  <div class="adj-rule">
+    <p>Les journalistes adorent les <strong>nuances</strong> : « oui, mais… ». Pour exprimer la <strong>concession</strong> (admettre un argument contraire) et l'<strong>opposition</strong> (contraster deux idées), le français dispose d'un arsenal précis. Attention : la construction change selon l'expression !</p>
+    <table class="adj-table">
+      <thead>
+        <tr><th>Expression</th><th>Construction</th><th>Exemple de l'article</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="badge-imp">bien que / quoique</span></td><td>+ <strong>subjonctif</strong></td><td><strong>Bien qu'une enquête ait été ouverte</strong>, les analystes doutaient qu'il puisse tomber.</td></tr>
+        <tr><td><span class="badge-pol">malgré / en dépit de</span></td><td>+ <strong>nom</strong></td><td><strong>Malgré les polémiques</strong>, il semblait intouchable.</td></tr>
+        <tr><td><span class="badge-sv">même si</span></td><td>+ <strong>indicatif</strong></td><td><strong>Même si</strong> le pouvoir protège, il ne dispense pas des règles.</td></tr>
+        <tr><td><span class="badge-imp">toutefois / néanmoins / cependant</span></td><td><strong>adverbe</strong> (nuance)</td><td>La décision était attendue ; <strong>néanmoins</strong>, elle surprend.</td></tr>
+        <tr><td><span class="badge-pol">en revanche / a contrario</span></td><td><strong>opposition franche</strong></td><td>Kress dirige <strong>en revanche</strong> à titre temporaire.</td></tr>
+        <tr><td><span class="badge-sv">quoi que / quoi qu'il en soit</span></td><td>+ <strong>subjonctif</strong></td><td><strong>Quoi qu'il en soit</strong>, la leçon est claire.</td></tr>
+      </tbody>
+    </table>
+    <div class="adj-examples">
+      <strong>📌 Le piège du subjonctif :</strong> <em>bien qu'il <strong>ait</strong> dirigé · bien qu'elle <strong>soit</strong> nommée · bien qu'il <strong>puisse</strong> perdre son poste · <strong>douter que</strong> + subjonctif : les analystes doutaient qu'il <strong>puisse</strong> chuter.</em><br>
+      <strong>📌 Ne pas confondre :</strong> <em>« <strong>quoique</strong> » (bien que) ≠ « <strong>quoi que</strong> » (quelle que soit la chose que) : Quoi qu'il arrive, la bourse restera nerveuse.</em><br>
+      <strong>📌 Registre :</strong> <em>bien que / néanmoins / en dépit de = écrit ; même si / mais = oral et écrit.</em>
+    </div>
+  </div>
+
+  <!-- 4 bis. RÈGLE 2 — LE CONDITIONNEL JOURNALISTIQUE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">4★</div>
+    <h2>Grammaire : le conditionnel du renseignement</h2>
+  </div>
+  <div class="adj-rule">
+    <p>Dans la presse, le <strong>conditionnel</strong> permet de rapporter une information <strong>non confirmée</strong> : le journaliste ne s'engage pas. C'est ce qu'on appelle le « conditionnel du renseignement » ou « conditionnel journalistique ».</p>
+    <table class="adj-table">
+      <thead>
+        <tr><th>Information confirmée (indicatif)</th><th>Information rapportée (conditionnel)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Il <strong>a eu</strong> une relation avec une responsable.</td><td>une relation qu'il <strong>aurait eue</strong> avec une responsable</td></tr>
+        <tr><td>La femme <strong>est</strong> une espionne.</td><td>une femme que les autorités soupçonnent d'<strong>être</strong> une espionne</td></tr>
+        <tr><td>Huang <strong>démissionnera</strong> jeudi.</td><td>Huang <strong>démissionnerait</strong> jeudi (rumeur avant l'annonce)</td></tr>
+      </tbody>
+    </table>
+    <div class="adj-examples">
+      <strong>📌 Autres moyens de rester prudent :</strong> <em>il semblerait que + subjonctif · selon / d'après + source · une information à prendre avec des pincettes · une rumeur insistante (non vérifiée).</em><br>
+      <strong>⚠️ Nuance :</strong> le conditionnel journalistique n'exprime ni l'hypothèse ni la politesse ici : il signale que <strong>la source n'est pas officielle</strong>.
+    </div>
+  </div>
+
+  <!-- 4 ter. TEST DE VOCABULAIRE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--blue-l);color:var(--blue)">4★★</div>
+    <h2>Test de vocabulaire · trouve l'expression française</h2>
+  </div>
+  <div class="vocab-test">
+    <div class="vocab-test-head">
+      <h3>🇬🇧 → 🇫🇷 Clique sur l'expression floutée pour la révéler</h3>
+      <span class="vocab-test-hint">💡 Devine avant de cliquer !</span>
+    </div>
+    <div class="vocab-test-grid" id="vocabTestGrid"></div>
+    <div class="vocab-test-counter" id="vocabTestCounter">0 / 14 expressions révélées</div>
+  </div>
+
+  <!-- 5. EXERCICE 1 — CLIQUE SUR LA BONNE PHRASE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--red-l);color:var(--red-d)">5</div>
+    <h2>Exercice 1 — clique sur la bonne phrase (concession)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-1">
+      <p>Deux phrases sont possibles : clique sur la <strong>grammaticalement correcte</strong>.</p>
+      <span class="ex-badge" id="badge2">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist2"></div>
+  </div>
+
+  <!-- 6. EXERCICE 2 — SUBJONCTIF APRÈS BIEN QUE -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">6</div>
+    <h2>Exercice 2 — bien que + subjonctif (présent ou passé)</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-2">
+      <p>Complète avec le verbe au <strong>subjonctif présent ou passé</strong>.</p>
+      <span class="ex-badge" id="badge3">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist3"></div>
+  </div>
+
+  <!-- 7. EXERCICE 3 — MALGRÉ OU BIEN QUE ? -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--amber-l);color:var(--amber-d)">7</div>
+    <h2>Exercice 3 — complète : malgré / bien que / néanmoins</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-3">
+      <p>Choisis la bonne expression de <strong>concession</strong>.</p>
+      <span class="ex-badge" id="badge4">0 / 5</span>
+    </div>
+    <div class="q-list" id="qlist4"></div>
+  </div>
+
+  <!-- 8. EXERCICE 4 — RELIER EXPRESSION ↔ SENS -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--teal-l);color:var(--teal-d)">8</div>
+    <h2>Exercice 4 — relie l'expression et son sens</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-4">
+      <p>Clique sur une <strong>expression</strong> puis sur son <strong>sens</strong>.</p>
+      <span class="ex-badge" id="badge5">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist5"></div>
+  </div>
+
+  <!-- 9. EXERCICE 5 — TRI -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--green-l);color:var(--green)">9</div>
+    <h2>Exercice 5 — subjonctif ou pas ?</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head ex-head-5">
+      <p>Glisse chaque expression dans la bonne catégorie.</p>
+      <span class="ex-badge" id="badge6">0 / 6</span>
+    </div>
+    <div class="q-list" id="qlist6"></div>
+  </div>
+
+  <!-- 10. EXERCICE 6 — PRODUCTION -->
+  <div class="sec-head">
+    <div class="sec-num" style="background:var(--purple-l);color:var(--purple-d)">10</div>
+    <h2>Exercice 6 — à toi de jouer !</h2>
+  </div>
+  <div class="exercise-wrap">
+    <div class="ex-head" style="background:linear-gradient(90deg,var(--purple-d),var(--purple))">
+      <p>Mise en situation : éditorialiste économique.</p>
+    </div>
+    <div class="q-list">
+      <div class="q-item" style="background:var(--purple-l);border-color:var(--purple-m)">
+        <div class="q-text" style="color:var(--purple-d)">
+          <strong>🎤 À l'oral ou à l'écrit :</strong>
+          <ol style="margin-top:0.6rem;padding-left:1.3rem;line-height:2">
+            <li><strong>Résume l'affaire en 5 phrases</strong> en utilisant le conditionnel journalistique pour les informations non confirmées.</li>
+            <li><strong>Écris 3 phrases de concession</strong> : une avec « bien que + subjonctif », une avec « malgré + nom », une avec « néanmoins ».</li>
+            <li><strong>Tu es éditorialiste.</strong> Rédige un titre et un chapeau (2 phrases) sur la chute de Huang, avec au moins un connecteur de concession.</li>
+            <li><strong>Débat</strong> : la vie privée d'un dirigeant doit-elle avoir des conséquences sur sa fonction ? Nuance ton avis avec « bien que », « certes… mais », « en revanche ».</li>
+            <li><strong>Prospective</strong> : quelles conséquences pour Nvidia, pour la bourse, pour la Silicon Valley ? Utilise le futur et « quoi qu'il en soit ».</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="reset-bar">
+    <button class="reset-btn" id="resetBtn">⟳ Réinitialiser tous les exercices</button>
+  </div>
+
+  <!-- MEMO -->
+  <div class="memo">
+    <h3>Récapitulatif</h3>
+    <div class="memo-cols">
+      <div class="memo-col">
+        <h4>Concession / opposition</h4>
+        <div class="memo-row"><strong>bien que / quoique</strong> + subjonctif</div>
+        <div class="memo-row"><strong>malgré / en dépit de</strong> + nom</div>
+        <div class="memo-row"><strong>néanmoins · toutefois · en revanche</strong></div>
+        <div class="memo-row"><strong>quoi qu'il en soit</strong> = de toute façon</div>
+      </div>
+      <div class="memo-col">
+        <h4>Conditionnel journalistique</h4>
+        <div class="memo-row">info non confirmée : il <strong>aurait eu</strong>…</div>
+        <div class="memo-row">il semblerait que + <strong>subjonctif</strong></div>
+        <div class="memo-row"><strong>selon / d'après</strong> + source</div>
+      </div>
+      <div class="memo-col">
+        <h4>Lexique de la presse éco</h4>
+        <div class="memo-row"><strong>empêtré · aveux · susciter · chahuté</strong></div>
+        <div class="memo-row"><strong>intérim · conseil d'administration</strong></div>
+        <div class="memo-row" style="margin-top:8px;font-style:italic;color:rgba(255,255,255,0.5)">« Bien que le pouvoir protège, il ne dispense jamais des règles. »</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Leçon d'actualité FLE · B2/C1 · d'après « Le patron de Nvidia Jensen Huang démissionne, une “chute spectaculaire” », Courrier international, 12 novembre 2026<br>
+  « bien que le pouvoir protège souvent, il ne dispense jamais des règles »
+</footer>
+
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+/* ============================================================
+   DONNÉES
+   ============================================================ */
+
+// TEST DE VOCABULAIRE
+const vocabTest = [
+  { en: "to be mired / bogged down (in)", fr: "être empêtré (dans)" },
+  { en: "a confession, admissions", fr: "des aveux" },
+  { en: "to spark a controversy", fr: "susciter une polémique" },
+  { en: "to shake up (a sector)", fr: "secouer (un secteur)" },
+  { en: "untouchable", fr: "intouchable" },
+  { en: "emblematic, iconic", fr: "emblématique" },
+  { en: "to act as interim", fr: "assurer l'intérim" },
+  { en: "a close relationship", fr: "une relation étroite" },
+  { en: "unofficial", fr: "officieux" },
+  { en: "turbulent, shaken (markets)", fr: "chahuté" },
+  { en: "high-valued (stock)", fr: "valorisé" },
+  { en: "to be held accountable", fr: "rendre des comptes" },
+  { en: "to mark the end of an era", fr: "marquer la fin d'une époque" },
+  { en: "to make waves", fr: "faire des vagues" }
+];
+
+// EXERCICE 1 — clique sur la bonne phrase (concession)
+const adjPos = [
+  { q: "Le 12 novembre…", options: ["Bien qu'il ait dirigé Nvidia pendant 33 ans, Huang a démissionné.", "Bien qu'il a dirigé Nvidia pendant 33 ans, Huang a démissionné."], correct: 0, hint: "bien que + SUBJONCTIF : qu'il ait dirigé (et non « a dirigé »)." },
+  { q: "Chez Nvidia…", options: ["Malgré une enquête interne ait été ouverte, il semblait intouchable.", "Malgré l'ouverture d'une enquête interne, il semblait intouchable."], correct: 1, hint: "malgré + NOM (jamais une phrase conjuguée) : malgré l'ouverture d'une enquête." },
+  { q: "Dans la presse…", options: ["La décision était attendue ; néanmoins, elle en surprend plus d'un.", "La décision était attendue ; malgré, elle en surprend plus d'un."], correct: 0, hint: "néanmoins est un adverbe, il s'emploie seul. « Malgré » exige un nom après." },
+  { q: "Avant l'annonce…", options: ["Selon la rumeur, Huang démissionnerait jeudi.", "Selon la rumeur, Huang démissionne jeudi."], correct: 0, hint: "info non confirmée → conditionnel journalistique : démissionnerait." },
+  { q: "Pour conclure…", options: ["Quoi qu'il en soit, la Silicon Valley devra rendre des comptes.", "Quoiqu'il en soit, la Silicon Valley devra rendre des comptes."], correct: 0, hint: "« quoi qu'il en soit » = quoi + que (2 mots). « Quoique » signifie « bien que »." }
+];
+
+// EXERCICE 2 — bien que + subjonctif
+const subjonctifEx = [
+  { text: "Bien qu'il ______ Nvidia pendant 33 ans, il a perdu son poste. (diriger)", ans: ["ait dirigé", "ait dirige"], hint: "subjonctif passé : ait + participe → ait dirigé" },
+  { text: "Bien qu'une enquête ______, les analystes doutaient. (être ouverte)", ans: ["ait été ouverte"], hint: "subjonctif passé passif : ait été ouverte" },
+  { text: "Bien que Huang ______ 63 ans, il avait l'énergie d'un jeune patron. (avoir)", ans: ["ait"], hint: "avoir au subjonctif présent : ait (bien qu'il ait 63 ans)" },
+  { text: "Les analystes doutaient qu'il ______ perdre son poste. (pouvoir)", ans: ["puisse"], hint: "pouvoir au subjonctif : puisse (douter que + subjonctif)" },
+  { text: "Bien que la bourse ______ nerveuse, la tech garde des soutiens. (être)", ans: ["soit"], hint: "être au subjonctif : soit" }
+];
+
+// EXERCICE 3 — malgré / bien que / néanmoins
+const concessionEx = [
+  { text: "______ les polémiques suscitées par ses relations, Huang semblait intouchable. (+ nom)", ans: ["malgré", "en dépit de"], hint: "malgré + nom : malgré les polémiques" },
+  { text: "______ il ait avoué, il a d'abord gardé son poste. (+ phrase au subjonctif)", ans: ["bien que", "quoique"], hint: "bien que / quoique + subjonctif" },
+  { text: "La décision était attendue ; ______, elle surprend plus d'un. (adverbe)", ans: ["néanmoins", "toutefois", "cependant", "neanmoins"], hint: "adverbe de nuance : néanmoins / toutefois / cependant" },
+  { text: "Huang a démissionné ; ______, la bourse reste nerveuse. (opposition franche)", ans: ["en revanche", "en revanche,"], hint: "opposition franche : en revanche" },
+  { text: "______, les patrons de la tech devront rendre des comptes. (expression figée = de toute façon)", ans: ["quoi qu'il en soit", "quoi qu'en soit", "quoi quil en soit"], hint: "expression figée : quoi qu'il en soit (quoi + que, 2 mots)" }
+];
+
+// EXERCICE 4 — relier expression ↔ sens
+const paires = [
+  { left: "être empêtré dans", right: "être coincé, bloqué dans une affaire" },
+  { left: "susciter une polémique", right: "provoquer un débat, une controverse" },
+  { left: "assurer l'intérim", right: "diriger temporairement en attendant un successeur" },
+  { left: "rendre des comptes", right: "être obligé d'expliquer et d'assumer ses actes" },
+  { left: "faire des vagues", right: "provoquer de fortes réactions" },
+  { left: "marquer la fin d'une époque", right: "symboliser la fin d'une période historique" }
+];
+
+// EXERCICE 5 — tri : subjonctif / pas de subjonctif
+const triData = {
+  categories: [
+    { id: "subj", label: "🧩 Subjonctif (bien que, douter que, il semblerait que…)" },
+    { id: "ind", label: "✅ Pas de subjonctif (malgré + nom, même si + indicatif)" }
+  ],
+  chips: [
+    { text: "bien qu'il ait dirigé…", cat: "subj" },
+    { text: "les analystes doutaient qu'il puisse…", cat: "subj" },
+    { text: "il semblerait que la bourse soit nerveuse", cat: "subj" },
+    { text: "malgré les polémiques…", cat: "ind" },
+    { text: "même si le pouvoir protège…", cat: "ind" },
+    { text: "en dépit d'une enquête interne…", cat: "ind" }
+  ]
+};
+
+/* ============================================================
+   PROGRESSION
+   ============================================================ */
+const TOTAL_POINTS = adjPos.length + subjonctifEx.length + concessionEx.length + paires.length + triData.chips.length; // 5+5+5+6+6 = 27
+let solvedItems = { ex1: new Set(), ex2: new Set(), ex3: new Set(), ex4: new Set(), ex5: new Set() };
+
+function updateProgress() {
+  const totalSolved = solvedItems.ex1.size + solvedItems.ex2.size + solvedItems.ex3.size + solvedItems.ex4.size + solvedItems.ex5.size;
+  const pct = Math.min(100, (totalSolved / TOTAL_POINTS) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressScore').textContent = totalSolved + ' / ' + TOTAL_POINTS;
+  const emoji = document.getElementById('progressEmoji');
+  if (pct >= 100) { emoji.textContent = '🏆'; emoji.classList.add('pop'); setTimeout(()=>emoji.classList.remove('pop'), 600); }
+  else if (pct >= 75) emoji.textContent = '🔥';
+  else if (pct >= 50) emoji.textContent = '💪';
+  else if (pct >= 25) emoji.textContent = '📚';
+  else emoji.textContent = '🎯';
+
+  document.getElementById('badge2').textContent = solvedItems.ex1.size + ' / ' + adjPos.length;
+  document.getElementById('badge3').textContent = solvedItems.ex2.size + ' / ' + subjonctifEx.length;
+  document.getElementById('badge4').textContent = solvedItems.ex3.size + ' / ' + concessionEx.length;
+  document.getElementById('badge5').textContent = solvedItems.ex4.size + ' / ' + paires.length;
+  document.getElementById('badge6').textContent = solvedItems.ex5.size + ' / ' + triData.chips.length;
+
+  if (pct >= 100 && !window._confettiDone) {
+    window._confettiDone = true;
+    launchConfetti();
+  }
+}
+
+/* ============================================================
+   CONFETTIS
+   ============================================================ */
+function launchConfetti() {
+  const container = document.getElementById('confettiContainer');
+  const colors = ['#C0271A','#BA7517','#534AB7','#0F6E56','#185FA5','#FAC775'];
+  for (let i = 0; i < 80; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + '%';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.width = (6 + Math.random() * 8) + 'px';
+    c.style.height = c.style.width;
+    c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    c.style.animationDelay = Math.random() * 0.5 + 's';
+    container.appendChild(c);
+    setTimeout(() => c.remove(), 4500);
+  }
+}
+
+/* ============================================================
+   VOCABULAIRE FLOUTÉ
+   ============================================================ */
+const vocabTestGrid = document.getElementById('vocabTestGrid');
+const vocabTestCounter = document.getElementById('vocabTestCounter');
+let vocabRevealed = 0;
+
+vocabTest.forEach((item, idx) => {
+  const row = document.createElement('div');
+  row.className = 'vocab-test-row';
+  row.innerHTML = `
+    <span class="vocab-test-en">${item.en}</span>
+    <span class="vocab-test-arrow">→</span>
+    <span class="vocab-test-fr blurred" data-idx="${idx}">${item.fr}</span>
+  `;
+  vocabTestGrid.appendChild(row);
+});
+
+vocabTestGrid.querySelectorAll('.vocab-test-fr').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('revealed')) return;
+    this.classList.remove('blurred');
+    this.classList.add('revealed');
+    vocabRevealed++;
+    vocabTestCounter.textContent = vocabRevealed + ' / ' + vocabTest.length + ' expressions révélées';
+    if (vocabRevealed === vocabTest.length) {
+      vocabTestCounter.textContent = '🎉 Bravo ! Toutes les expressions sont révélées.';
+      vocabTestCounter.style.color = 'var(--red-d)';
+      vocabTestCounter.style.fontWeight = '600';
+    }
+  });
+});
+
+/* ============================================================
+   FABRIQUES D'EXERCICES
+   ============================================================ */
+function buildInputExercise(listId, data, solvedSet, btnClass) {
+  const qlist = document.getElementById(listId);
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="comp-status"></span></div>
+      <div class="q-text">${item.text}</div>
+      <div class="q-row">
+        <input class="q-input" type="text" placeholder="Votre réponse" autocomplete="off">
+        <button class="q-btn ${btnClass}">Vérifier</button>
+      </div>
+      <div class="q-fb"></div>
+    `;
+    qlist.appendChild(div);
+  });
+
+  qlist.querySelectorAll('.q-item').forEach((item, idx) => {
+    const inp = item.querySelector('.q-input');
+    const btn = item.querySelector('.q-btn');
+    const fb = item.querySelector('.q-fb');
+    const status = item.querySelector('.comp-status');
+
+    function check() {
+      if (item.classList.contains('solved')) return;
+      const v = inp.value;
+      if (!v.trim()) { fb.innerHTML = '<span class="nope">✏️ Écris une réponse avant de vérifier.</span>'; return; }
+      const norm = s => s.trim().toLowerCase().replace(/\s+/g,' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[’']/g,"'").replace(/,$/,'');
+      const good = data[idx].ans.some(a => norm(a) === norm(v));
+      if (good) {
+        item.classList.add('solved');
+        status.textContent = '✅';
+        inp.disabled = true;
+        btn.disabled = true;
+        btn.textContent = '✓';
+        fb.innerHTML = `<span class="ok">✓ Bravo ! ${data[idx].hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        item.classList.add('shake');
+        setTimeout(() => item.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Incorrect. Indice : ${data[idx].hint}</span>`;
+      }
+    }
+    btn.addEventListener('click', check);
+    inp.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); check(); } });
+  });
+
+  return qlist;
+}
+
+function buildQcm(listId, data, solvedSet) {
+  const qlist = document.getElementById(listId);
+  data.forEach((item, idx) => {
+    const div = document.createElement('div');
+    div.className = 'q-item';
+    div.innerHTML = `
+      <div class="q-num"><span>Question ${idx+1} / ${data.length}</span><span class="qcm-status"></span></div>
+      <div class="q-text">${item.q}</div>
+      <div class="choice-grid">
+        ${item.options.map((opt, i) => `<button class="choice-btn" data-idx="${idx}" data-opt="${i}">${opt}</button>`).join('')}
+      </div>
+      <div class="q-fb"></div>
+    `;
+    qlist.appendChild(div);
+  });
+
+  qlist.querySelectorAll('.choice-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+      const idx = parseInt(this.dataset.idx);
+      const opt = parseInt(this.dataset.opt);
+      const parent = this.closest('.q-item');
+      if (parent.classList.contains('solved')) return;
+
+      parent.querySelectorAll('.choice-btn').forEach(b => {
+        b.classList.remove('selected','correct','wrong');
+        b.disabled = false;
+      });
+      this.classList.add('selected');
+
+      const item = data[idx];
+      const fb = parent.querySelector('.q-fb');
+      const status = parent.querySelector('.qcm-status');
+
+      if (opt === item.correct) {
+        this.classList.add('correct');
+        this.disabled = true;
+        parent.classList.add('solved');
+        parent.querySelectorAll('.choice-btn').forEach(b => b.disabled = true);
+        status.textContent = '✅';
+        fb.innerHTML = `<span class="ok">✓ Exact ! ${item.hint}</span>`;
+        if (!solvedSet.has(idx)) {
+          solvedSet.add(idx);
+          updateProgress();
+        }
+      } else {
+        this.classList.add('wrong');
+        parent.classList.add('shake');
+        setTimeout(() => parent.classList.remove('shake'), 400);
+        fb.innerHTML = `<span class="nope">✗ Pas tout à fait… Réessaie !</span>`;
+        setTimeout(() => this.classList.remove('wrong'), 800);
+      }
+    });
+  });
+  return qlist;
+}
+
+const qlist2 = buildQcm('qlist2', adjPos, solvedItems.ex1);
+const qlist3 = buildInputExercise('qlist3', subjonctifEx, solvedItems.ex2, 'q-btn-2');
+const qlist4 = buildInputExercise('qlist4', concessionEx, solvedItems.ex3, 'q-btn-3');
+
+/* ============================================================
+   EXERCICE 4 — RELIER
+   ============================================================ */
+const qlist5 = document.getElementById('qlist5');
+const matchWrap = document.createElement('div');
+matchWrap.className = 'q-item';
+matchWrap.innerHTML = `
+  <div class="q-num"><span>Relie les paires</span><span class="match-status"></span></div>
+  <div class="match-cols">
+    <div class="match-col"><h5>Expressions</h5><div id="matchLeft"></div></div>
+    <div class="match-col"><h5>Sens</h5><div id="matchRight"></div></div>
+  </div>
+  <div class="q-fb"></div>
+`;
+qlist5.appendChild(matchWrap);
+
+const leftCol = matchWrap.querySelector('#matchLeft');
+const rightCol = matchWrap.querySelector('#matchRight');
+const shuffledRight = [...paires].sort(() => Math.random() - 0.5);
+
+paires.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'left';
+  el.dataset.idx = i;
+  el.textContent = p.left;
+  leftCol.appendChild(el);
+});
+shuffledRight.forEach((p, i) => {
+  const el = document.createElement('div');
+  el.className = 'match-item';
+  el.dataset.side = 'right';
+  el.dataset.idx = paires.indexOf(p);
+  el.textContent = p.right;
+  rightCol.appendChild(el);
+});
+
+let selectedLeft = null;
+let matchedCount = 0;
+
+matchWrap.querySelectorAll('.match-item').forEach(el => {
+  el.addEventListener('click', function() {
+    if (this.classList.contains('matched')) return;
+    const side = this.dataset.side;
+
+    if (side === 'left') {
+      matchWrap.querySelectorAll('.match-item[data-side="left"]').forEach(x => x.classList.remove('active'));
+      this.classList.add('active');
+      selectedLeft = this;
+      return;
+    }
+
+    if (!selectedLeft) {
+      this.classList.add('wrong-pair');
+      setTimeout(() => this.classList.remove('wrong-pair'), 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">👈 Choisis d\'abord une expression à gauche.</span>';
+      return;
+    }
+
+    if (selectedLeft.dataset.idx === this.dataset.idx) {
+      selectedLeft.classList.remove('active');
+      selectedLeft.classList.add('matched');
+      this.classList.add('matched');
+      matchedCount++;
+      matchWrap.querySelector('.match-status').textContent = matchedCount + ' / ' + paires.length;
+      matchWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien joué ! ${matchedCount}/${paires.length} paires trouvées.</span>`;
+      if (!solvedItems.ex4.has(parseInt(this.dataset.idx))) {
+        solvedItems.ex4.add(parseInt(this.dataset.idx));
+        updateProgress();
+      }
+      selectedLeft = null;
+      if (matchedCount === paires.length) {
+        matchWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les paires sont reliées ! Excellent travail.</span>';
+      }
+    } else {
+      this.classList.add('wrong-pair');
+      selectedLeft.classList.add('wrong-pair');
+      setTimeout(() => {
+        this.classList.remove('wrong-pair');
+        selectedLeft && selectedLeft.classList.remove('wrong-pair');
+      }, 400);
+      matchWrap.querySelector('.q-fb').innerHTML = '<span class="nope">✗ Ce n\'est pas le bon sens. Réessaie !</span>';
+    }
+  });
+});
+
+/* ============================================================
+   EXERCICE 5 — TRI
+   ============================================================ */
+const qlist6 = document.getElementById('qlist6');
+const triWrap = document.createElement('div');
+triWrap.className = 'q-item';
+triWrap.innerHTML = `
+  <div class="q-num"><span>Glisse les étiquettes dans la bonne catégorie</span><span class="tri-status"></span></div>
+  <div class="sort-zone" id="chipsZone"></div>
+  <div id="catZones"></div>
+  <div class="q-fb"></div>
+`;
+qlist6.appendChild(triWrap);
+
+const chipsZone = triWrap.querySelector('#chipsZone');
+const catZones = triWrap.querySelector('#catZones');
+
+triData.categories.forEach(cat => {
+  const zone = document.createElement('div');
+  zone.innerHTML = `<div class="sort-label">${cat.label}</div>`;
+  const z = document.createElement('div');
+  z.className = 'sort-zone';
+  z.dataset.cat = cat.id;
+  z.id = 'zone-' + cat.id;
+  zone.appendChild(z);
+  catZones.appendChild(zone);
+});
+
+const shuffledChips = [...triData.chips].sort(() => Math.random() - 0.5);
+shuffledChips.forEach(chip => {
+  const el = document.createElement('div');
+  el.className = 'sort-chip';
+  el.draggable = true;
+  el.dataset.cat = chip.cat;
+  el.textContent = chip.text;
+  chipsZone.appendChild(el);
+});
+
+let draggedChip = null;
+document.querySelectorAll('.sort-chip').forEach(chip => {
+  chip.addEventListener('dragstart', function(e) {
+    draggedChip = this;
+    this.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  chip.addEventListener('dragend', function() {
+    this.classList.remove('dragging');
+    draggedChip = null;
+  });
+});
+
+document.querySelectorAll('.sort-zone').forEach(zone => {
+  zone.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    this.classList.add('over');
+  });
+  zone.addEventListener('dragleave', function() {
+    this.classList.remove('over');
+  });
+  zone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    this.classList.remove('over');
+    if (!draggedChip) return;
+    const cat = this.dataset.cat;
+    if (draggedChip.dataset.cat === cat) {
+      draggedChip.classList.add('placed');
+      draggedChip.draggable = false;
+      this.appendChild(draggedChip);
+      this.classList.add('correct-zone');
+      setTimeout(() => this.classList.remove('correct-zone'), 600);
+      const chipText = draggedChip.textContent;
+      if (!solvedItems.ex5.has(chipText)) {
+        solvedItems.ex5.add(chipText);
+        updateProgress();
+      }
+      triWrap.querySelector('.tri-status').textContent = solvedItems.ex5.size + ' / ' + triData.chips.length;
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="ok">✓ Bien classé ! ${solvedItems.ex5.size}/${triData.chips.length}.</span>`;
+      if (solvedItems.ex5.size === triData.chips.length) {
+        triWrap.querySelector('.q-fb').innerHTML = '<span class="ok">🎉 Toutes les étiquettes sont bien rangées !</span>';
+      }
+    } else {
+      this.classList.add('wrong-zone');
+      setTimeout(() => this.classList.remove('wrong-zone'), 500);
+      triWrap.querySelector('.q-fb').innerHTML = `<span class="nope">✗ Cette expression n'appartient pas à « ${triData.categories.find(c=>c.id===cat).label} ».</span>`;
+    }
+  });
+});
+
+/* ============================================================
+   VOCABULAIRE INTERACTIF (cartes du haut)
+   ============================================================ */
+document.querySelectorAll('.vocab-card').forEach(card => {
+  card.addEventListener('click', function() {
+    this.classList.toggle('revealed');
+  });
+});
+
+/* ============================================================
+   RESET
+   ============================================================ */
+document.getElementById('resetBtn').addEventListener('click', () => {
+  // reset QCM
+  qlist2.querySelectorAll('.q-item').forEach(item => {
+    item.classList.remove('solved');
+    item.querySelectorAll('.choice-btn').forEach(b => {
+      b.classList.remove('selected','correct','wrong');
+      b.disabled = false;
+    });
+    item.querySelector('.q-fb').innerHTML = '';
+    item.querySelector('.qcm-status').textContent = '';
+  });
+  // reset inputs (subjonctif + concession)
+  [qlist3, qlist4].forEach(ql => {
+    ql.querySelectorAll('.q-item').forEach(item => {
+      item.classList.remove('solved');
+      const inp = item.querySelector('.q-input');
+      const btn = item.querySelector('.q-btn');
+      inp.value = '';
+      inp.disabled = false;
+      btn.disabled = false;
+      btn.textContent = 'Vérifier';
+      item.querySelector('.q-fb').innerHTML = '';
+      item.querySelector('.comp-status').textContent = '';
+    });
+  });
+  // reset relier
+  matchWrap.querySelectorAll('.match-item').forEach(el => {
+    el.classList.remove('matched','active','wrong-pair');
+  });
+  selectedLeft = null;
+  matchedCount = 0;
+  matchWrap.querySelector('.match-status').textContent = '';
+  matchWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset tri
+  const allChips = triWrap.querySelectorAll('.sort-chip');
+  allChips.forEach(chip => {
+    chip.classList.remove('placed');
+    chip.draggable = true;
+    chipsZone.appendChild(chip);
+  });
+  const chipsArr = [...chipsZone.querySelectorAll('.sort-chip')];
+  chipsArr.sort(() => Math.random() - 0.5).forEach(c => chipsZone.appendChild(c));
+  triWrap.querySelector('.tri-status').textContent = '';
+  triWrap.querySelector('.q-fb').innerHTML = '';
+
+  // reset score
+  solvedItems.ex1.clear();
+  solvedItems.ex2.clear();
+  solvedItems.ex3.clear();
+  solvedItems.ex4.clear();
+  solvedItems.ex5.clear();
+  window._confettiDone = false;
+  updateProgress();
+});
+
+/* ============================================================
+   INIT
+   ============================================================ */
+updateProgress();
+</script>
+</body>
+</html>
